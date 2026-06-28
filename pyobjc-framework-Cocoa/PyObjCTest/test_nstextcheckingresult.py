@@ -1,13 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextCheckingResult(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSTextCheckingType)
-
-    @min_os_level("10.6")
-    def test_constants(self):
         self.assertEqual(Foundation.NSTextCheckingTypeOrthography, 1 << 0)
         self.assertEqual(Foundation.NSTextCheckingTypeSpelling, 1 << 1)
         self.assertEqual(Foundation.NSTextCheckingTypeGrammar, 1 << 2)
@@ -18,6 +15,9 @@ class TestNSTextCheckingResult(TestCase):
         self.assertEqual(Foundation.NSTextCheckingTypeDash, 1 << 7)
         self.assertEqual(Foundation.NSTextCheckingTypeReplacement, 1 << 8)
         self.assertEqual(Foundation.NSTextCheckingTypeCorrection, 1 << 9)
+        self.assertEqual(Foundation.NSTextCheckingTypeRegularExpression, 1 << 10)
+        self.assertEqual(Foundation.NSTextCheckingTypePhoneNumber, 1 << 11)
+        self.assertEqual(Foundation.NSTextCheckingTypeTransitInformation, 1 << 12)
 
         self.assertEqual(Foundation.NSTextCheckingAllSystemTypes, 0xFFFFFFFF)
         self.assertEqual(Foundation.NSTextCheckingAllCustomTypes, (0xFFFFFFFF << 32))
@@ -29,6 +29,7 @@ class TestNSTextCheckingResult(TestCase):
             ),
         )
 
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSTextCheckingNameKey, str)
         self.assertIsInstance(Foundation.NSTextCheckingJobTitleKey, str)
         self.assertIsInstance(Foundation.NSTextCheckingOrganizationKey, str)
@@ -38,17 +39,9 @@ class TestNSTextCheckingResult(TestCase):
         self.assertIsInstance(Foundation.NSTextCheckingZIPKey, str)
         self.assertIsInstance(Foundation.NSTextCheckingCountryKey, str)
         self.assertIsInstance(Foundation.NSTextCheckingPhoneKey, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(Foundation.NSTextCheckingTypeRegularExpression, 1 << 10)
-        self.assertEqual(Foundation.NSTextCheckingTypePhoneNumber, 1 << 11)
-        self.assertEqual(Foundation.NSTextCheckingTypeTransitInformation, 1 << 12)
-
         self.assertIsInstance(Foundation.NSTextCheckingAirlineKey, str)
         self.assertIsInstance(Foundation.NSTextCheckingFlightKey, str)
 
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertResultHasType(
             Foundation.NSTextCheckingResult.range, Foundation.NSRange.__typestr__
@@ -110,8 +103,6 @@ class TestNSTextCheckingResult(TestCase):
             Foundation.NSRange.__typestr__,
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgHasType(
             Foundation.NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,  # noqa: B950
             0,

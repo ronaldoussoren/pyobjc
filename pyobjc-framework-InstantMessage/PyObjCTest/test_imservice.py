@@ -1,8 +1,24 @@
 import InstantMessage
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestIMService(TestCase):
+    def test_enums(self):
+        self.assertIsTypedEnum(InstantMessage.IMPersonStatus)
+        self.assertEqual(InstantMessage.IMPersonStatusUnknown, 0)
+        self.assertEqual(InstantMessage.IMPersonStatusOffline, 1)
+        self.assertEqual(InstantMessage.IMPersonStatusIdle, 2)
+        self.assertEqual(InstantMessage.IMPersonStatusAway, 3)
+        self.assertEqual(InstantMessage.IMPersonStatusAvailable, 4)
+        self.assertEqual(InstantMessage.IMPersonStatusNoStatus, 5)
+
+        self.assertIsTypedEnum(InstantMessage.IMServiceStatus)
+        self.assertEqual(InstantMessage.IMServiceStatusLoggedOut, 0)
+        self.assertEqual(InstantMessage.IMServiceStatusDisconnected, 1)
+        self.assertEqual(InstantMessage.IMServiceStatusLoggingOut, 2)
+        self.assertEqual(InstantMessage.IMServiceStatusLoggingIn, 3)
+        self.assertEqual(InstantMessage.IMServiceStatusLoggedIn, 4)
+
     def test_constants(self):
         self.assertIsInstance(InstantMessage.IMServiceStatusChangedNotification, str)
         self.assertIsInstance(InstantMessage.IMMyStatusChangedNotification, str)
@@ -11,19 +27,6 @@ class TestIMService(TestCase):
         self.assertIsInstance(
             InstantMessage.IMStatusImagesChangedAppearanceNotification, str
         )
-
-        self.assertEqual(InstantMessage.IMPersonStatusUnknown, 0)
-        self.assertEqual(InstantMessage.IMPersonStatusOffline, 1)
-        self.assertEqual(InstantMessage.IMPersonStatusIdle, 2)
-        self.assertEqual(InstantMessage.IMPersonStatusAway, 3)
-        self.assertEqual(InstantMessage.IMPersonStatusAvailable, 4)
-        self.assertEqual(InstantMessage.IMPersonStatusNoStatus, 5)
-
-        self.assertEqual(InstantMessage.IMServiceStatusLoggedOut, 0)
-        self.assertEqual(InstantMessage.IMServiceStatusDisconnected, 1)
-        self.assertEqual(InstantMessage.IMServiceStatusLoggingOut, 2)
-        self.assertEqual(InstantMessage.IMServiceStatusLoggingIn, 3)
-        self.assertEqual(InstantMessage.IMServiceStatusLoggedIn, 4)
 
         self.assertIsInstance(InstantMessage.IMPersonServiceNameKey, str)
         self.assertIsInstance(InstantMessage.IMPersonScreenNameKey, str)
@@ -43,8 +46,7 @@ class TestIMService(TestCase):
         self.assertIsInstance(InstantMessage.IMCapabilityAudioConference, str)
         self.assertIsInstance(InstantMessage.IMCapabilityVideoConference, str)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
+    def test_functions(self):
         v = InstantMessage.IMComparePersonStatus(
             InstantMessage.IMPersonStatusOffline, InstantMessage.IMPersonStatusAway
         )

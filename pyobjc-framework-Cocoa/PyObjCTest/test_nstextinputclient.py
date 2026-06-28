@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextInputClientHelper(AppKit.NSObject):
@@ -57,7 +57,7 @@ class TestNSTextInputClientHelper(AppKit.NSObject):
 
 
 class TestNSTextInputClient(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextCursorAccessoryPlacement)
         self.assertEqual(AppKit.NSTextCursorAccessoryPlacementUnspecified, 0)
         self.assertEqual(AppKit.NSTextCursorAccessoryPlacementBackward, 1)
@@ -69,9 +69,10 @@ class TestNSTextInputClient(TestCase):
         self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenRight, 7)
         self.assertEqual(AppKit.NSTextCursorAccessoryPlacementOffscreenBottom, 8)
 
-    @min_os_level("10.5")
-    def test_methods(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSTextInputClient", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTextInputClientHelper.insertText_replacementRange_,
             1,

@@ -4,20 +4,12 @@ import CoreLocation
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    os_release,
-    os_level_key,
-    expectedFailureIf,
 )
 
 
 class TestCLError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreLocation.CLError)
-
-    @min_os_level("10.6")
-    def test_constants(self):
-        self.assertIsInstance(CoreLocation.kCLErrorDomain, str)
-
         self.assertEqual(CoreLocation.kCLErrorLocationUnknown, 0)
         self.assertEqual(CoreLocation.kCLErrorDenied, 1)
         self.assertEqual(CoreLocation.kCLErrorNetwork, 2)
@@ -36,14 +28,16 @@ class TestCLError(TestCase):
         self.assertEqual(CoreLocation.kCLErrorRangingFailure, 17)
         self.assertEqual(CoreLocation.kCLErrorPromptDeclined, 18)
 
-        if int(os.uname()[2].split(".")[0]) < 12:
+        if int(os.uname()[2].split(".")[0]) < 12:  # before 10.12
             self.assertEqual(CoreLocation.kCLErrorGeocodeFoundNoResult, 7)
             self.assertEqual(CoreLocation.kCLErrorGeocodeCanceled, 8)
         else:
             self.assertEqual(CoreLocation.kCLErrorGeocodeFoundNoResult, 8)
             self.assertEqual(CoreLocation.kCLErrorGeocodeCanceled, 10)
 
-    @min_os_level("10.7")
-    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.13"))
-    def test_constants10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(CoreLocation.kCLErrorDomain, str)
+
+    @min_os_level("10.13")
+    def test_constants10_13(self):
         self.assertIsInstance(CoreLocation.kCLErrorUserInfoAlternateRegionKey, str)

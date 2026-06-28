@@ -3,8 +3,7 @@ import Quartz
 
 
 class TestCIFeature(TestCase):
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.CIFeatureTypeFace, str)
 
     @min_os_level("10.10")
@@ -16,7 +15,6 @@ class TestCIFeature(TestCase):
         self.assertIsInstance(Quartz.CIFeatureTypeQRCode, str)
         self.assertIsInstance(Quartz.CIFeatureTypeText, str)
 
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.CIFaceFeature.hasLeftEyePosition)
         self.assertResultIsBOOL(Quartz.CIFaceFeature.hasRightEyePosition)

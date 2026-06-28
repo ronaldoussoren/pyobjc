@@ -42,12 +42,8 @@ class TestNSView(TestCase):
 
 
 class TestHeader(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
-        self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
-        self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAutoresizingMaskOptions)
         self.assertEqual(AppKit.NSViewNotSizable, 0)
         self.assertEqual(AppKit.NSViewMinXMargin, 1)
@@ -63,34 +59,17 @@ class TestHeader(TestCase):
         self.assertEqual(AppKit.NSBezelBorder, 2)
         self.assertEqual(AppKit.NSGrooveBorder, 3)
 
-        self.assertIsInstance(AppKit.NSViewFrameDidChangeNotification, str)
-        self.assertIsInstance(AppKit.NSViewFocusDidChangeNotification, str)
-        self.assertIsInstance(AppKit.NSViewBoundsDidChangeNotification, str)
-        self.assertIsInstance(AppKit.NSViewGlobalFrameDidChangeNotification, str)
-
         self.assertIsEnumType(AppKit.NSViewExclusiveGestureBehavior)
         self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorInherit, 0)
         self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorExclusive, 1)
         self.assertEqual(AppKit.NSViewExclusiveGestureBehaviorNotExclusive, 2)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(AppKit.NSFullScreenModeAllScreens, str)
-        self.assertIsInstance(AppKit.NSFullScreenModeSetting, str)
-        self.assertIsInstance(AppKit.NSFullScreenModeWindowLevel, str)
-        self.assertIsInstance(AppKit.NSViewDidUpdateTrackingAreasNotification, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(
-            AppKit.NSFullScreenModeApplicationPresentationOptions, str
-        )
 
         self.assertIsEnumType(AppKit.NSViewLayerContentsRedrawPolicy)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawNever, 0)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawDuringViewResize, 2)
         self.assertEqual(AppKit.NSViewLayerContentsRedrawBeforeViewResize, 3)
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawCrossfade, 4)
 
         self.assertIsEnumType(AppKit.NSViewLayerContentsPlacement)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleAxesIndependently, 0)
@@ -108,15 +87,31 @@ class TestHeader(TestCase):
         self.assertEqual(AppKit.NSViewLayerContentsPlacementLeft, 10)
         self.assertEqual(AppKit.NSViewLayerContentsPlacementTopLeft, 11)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSDefinitionOptionKey, str)
+        self.assertIsTypedEnum(AppKit.NSDefinitionPresentationType, str)
+        self.assertIsTypedEnum(AppKit.NSViewFullScreenModeOptionKey, str)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSViewFrameDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewFocusDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewBoundsDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewGlobalFrameDidChangeNotification, str)
+
+        self.assertIsInstance(AppKit.NSFullScreenModeAllScreens, str)
+        self.assertIsInstance(AppKit.NSFullScreenModeSetting, str)
+        self.assertIsInstance(AppKit.NSFullScreenModeWindowLevel, str)
+        self.assertIsInstance(AppKit.NSViewDidUpdateTrackingAreasNotification, str)
+
+        self.assertIsInstance(
+            AppKit.NSFullScreenModeApplicationPresentationOptions, str
+        )
+
         self.assertIsInstance(AppKit.NSDefinitionPresentationTypeKey, str)
         self.assertIsInstance(AppKit.NSDefinitionPresentationTypeOverlay, str)
         self.assertIsInstance(
             AppKit.NSDefinitionPresentationTypeDictionaryApplication, str
         )
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertEqual(AppKit.NSViewLayerContentsRedrawCrossfade, 4)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSView.isDescendantOf_)
@@ -193,15 +188,11 @@ class TestHeader(TestCase):
             AppKit.NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_, 3
         )
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertArgIsBOOL(AppKit.NSView.setWantsLayer_, 0)
         self.assertResultIsBOOL(AppKit.NSView.wantsLayer)
         self.assertResultIsBOOL(AppKit.NSView.enterFullScreenMode_withOptions_)
         self.assertResultIsBOOL(AppKit.NSView.isInFullScreenMode)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSView.canDrawConcurrently)
         self.assertArgIsBOOL(AppKit.NSView.setCanDrawConcurrently_, 0)
         self.assertResultIsBOOL(AppKit.NSView.acceptsTouchEvents)
@@ -226,8 +217,6 @@ class TestHeader(TestCase):
             AppKit.NSPoint.__typestr__ + AppKit.NSRange.__typestr__,
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSView.isDrawingFindIndicator)
 
         try:
@@ -243,12 +232,8 @@ class TestHeader(TestCase):
             TestNSViewHelper.layer_shouldInheritContentsScale_fromWindow_
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSView.wantsUpdateLayer)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(AppKit.NSView.canDrawSubviewsIntoLayer)
         self.assertArgIsBOOL(AppKit.NSView.setCanDrawSubviewsIntoLayer_, 0)
         self.assertResultIsBOOL(AppKit.NSView.layerUsesCoreImageFilters)

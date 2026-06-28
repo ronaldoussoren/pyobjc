@@ -1,9 +1,8 @@
 import AddressBook
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABPersonPicker(TestCase):
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         m = AddressBook.ABPersonPicker.showRelativeToRect_ofView_preferredEdge_
         self.assertArgHasType(m, 0, AddressBook.NSRect.__typestr__)

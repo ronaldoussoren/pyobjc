@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, cast_uint
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, cast_uint
 import WebKit
 import objc
 
@@ -221,8 +221,6 @@ class TestWebUIDelegate(TestCase):
             objc._C_NSUInteger,
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBOOL(
             TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,  # noqa: B950
             2,

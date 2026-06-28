@@ -4,6 +4,9 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "enum_type": {
+   "LSSharedFileListResolutionFlags": { "typestr": "I" }
+  },
   "enum": {
    "kLSInitializeDefaults": { "value": 1 },
    "kLSLaunchReserved2": { "value": 4 },

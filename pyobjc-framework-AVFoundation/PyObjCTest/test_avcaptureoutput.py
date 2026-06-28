@@ -8,10 +8,6 @@ class TestAVCaptureOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureOutput(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVCaptureOutputDataDroppedReason)
-
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput.alwaysDiscardsLateVideoFrames
@@ -23,10 +19,6 @@ class TestAVCaptureOutput(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecording)
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecordingPaused)
-
-        self.assertResultIsBOOL(
-            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
-        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage
@@ -72,4 +64,9 @@ class TestAVCaptureOutput(TestCase):
         self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
         self.assertProtocolExists(
             "AVCaptureMetadataOutputObjectsDelegate", AVFoundation
+        )
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
         )

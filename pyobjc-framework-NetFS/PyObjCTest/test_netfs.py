@@ -70,8 +70,7 @@ class TestNetFS(TestCase):
         self.assertEqual(NetFS.kNetFSOpenURLMountKey, "OpenURLMount")
         self.assertEqual(NetFS.kNetFSMountedURLKey, "MountedURL")
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
+    def test_functions(self):
         self.assertArgIsOut(NetFS.NetFSMountURLSync, 6)
 
         NetFSMountURLBlock = b"vi^v@"
@@ -81,8 +80,6 @@ class TestNetFS(TestCase):
 
         NetFS.NetFSMountURLCancel
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         NetFS.NetFSMountURLProbe
 
     @min_os_level("10.10")

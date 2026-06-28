@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCompositionTrack(TestCase):
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableCompositionTrack.insertTimeRange_ofTrack_atTime_error_

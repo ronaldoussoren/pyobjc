@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter  # noqa: F401
 
 
 class TestGKFriendRequestComposeViewController(TestCase):
-    @min_os_level("10.8")
     def test_protocols(self):
         self.assertProtocolExists(
             "GKFriendRequestComposeViewControllerDelegate", GameCenter

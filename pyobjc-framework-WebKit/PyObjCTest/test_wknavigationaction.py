@@ -3,11 +3,8 @@ import WebKit
 
 
 class TestWKNavigationAction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKNavigationType)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(WebKit.WKNavigationTypeLinkActivated, 0)
         self.assertEqual(WebKit.WKNavigationTypeFormSubmitted, 1)
         self.assertEqual(WebKit.WKNavigationTypeBackForward, 2)

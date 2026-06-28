@@ -128,18 +128,6 @@ class TestNSFileManager(TestCase):
         self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyDefault, 0)
         self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
 
-    @min_os_level("10.14")
-    def test_constants_missing10_9(self):
-        self.assertIsInstance(Foundation.NSFileProtectionKey, str)
-        self.assertIsInstance(Foundation.NSFileProtectionNone, str)
-        self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
-        self.assertIsInstance(Foundation.NSFileProtectionCompleteUnlessOpen, str)
-        self.assertIsInstance(
-            Foundation.NSFileProtectionCompleteUntilFirstUserAuthentication, str
-        )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
         self.assertEqual(Foundation.NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
 
@@ -158,9 +146,17 @@ class TestNSFileManager(TestCase):
             Foundation.NSFileManagerItemReplacementWithoutDeletingBackupItem, 1 << 1
         )
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(Foundation.NSUbiquityIdentityDidChangeNotification, str)
+
+    @min_os_level("10.14")
+    def test_constants_missing10_9(self):
+        self.assertIsInstance(Foundation.NSFileProtectionKey, str)
+        self.assertIsInstance(Foundation.NSFileProtectionNone, str)
+        self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
+        self.assertIsInstance(Foundation.NSFileProtectionCompleteUnlessOpen, str)
+        self.assertIsInstance(
+            Foundation.NSFileProtectionCompleteUntilFirstUserAuthentication, str
+        )
 
     @min_os_level("10.10")
     def test_constants10_10(self):
@@ -200,8 +196,7 @@ class TestNSFileManager(TestCase):
     def test_constants14_0(self):
         self.assertIsInstance(Foundation.NSFileProtectionCompleteWhenUserInactive, str)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertArgIsOut(
             Foundation.NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_,  # noqa: B950
             3,
@@ -242,8 +237,6 @@ class TestNSFileManager(TestCase):
             5,
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_  # noqa: B950
         )
@@ -296,8 +289,6 @@ class TestNSFileManager(TestCase):
             2,
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_
         )
@@ -308,137 +299,56 @@ class TestNSFileManager(TestCase):
             Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_, 2
         )
 
-    @min_os_level("10.10")
-    def test_methods10_10(self):
+        self.assertArgIsBOOL(
+            Foundation.NSFileManager.fileAttributesAtPath_traverseLink_, 1
+        )
+        self.assertResultIsBOOL(Foundation.NSFileManager.changeFileAttributes_atPath_)
         self.assertResultIsBOOL(
-            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_
+            Foundation.NSFileManager.createSymbolicLinkAtPath_pathContent_
         )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
-            0,
-        )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
-            3,
-        )
-
         self.assertResultIsBOOL(
-            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_
+            Foundation.NSFileManager.createDirectoryAtPath_attributes_
         )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
+        self.assertResultIsBOOL(Foundation.NSFileManager.linkPath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.copyPath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.movePath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.removeFileAtPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.changeCurrentDirectoryPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_isDirectory_)
+        self.assertArgHasType(
+            Foundation.NSFileManager.fileExistsAtPath_isDirectory_,
+            1,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertResultIsBOOL(Foundation.NSFileManager.isReadableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isWritableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isExecutableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isDeletableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.contentsEqualAtPath_andPath_)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.createFileAtPath_contents_attributes_
+        )
+        self.assertResultHasType(
+            Foundation.NSFileManager.fileSystemRepresentationWithPath_,
+            b"^" + objc._C_CHAR_AS_TEXT,
+        )
+        self.assertResultIsNullTerminated(
+            Foundation.NSFileManager.fileSystemRepresentationWithPath_
+        )
+        self.assertArgHasType(
+            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_,
             0,
+            b"n^" + objc._C_CHAR_AS_TEXT,
         )
-        self.assertArgIsOut(
-            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
-            4,
+        self.assertArgSizeInArg(
+            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1
         )
 
-    def test_output(self):
-        obj = Foundation.NSFileManager.defaultManager()
-        m = obj.setAttributes_ofItemAtPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsImmutable)
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsAppendOnly)
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileExtensionHidden)
 
-        m = (
-            obj.createDirectoryAtPath_withIntermediateDirectories_attributes_error_.__metadata__()  # noqa: B950
-        )
-        self.assertEqual(m["arguments"][3]["type"], b"Z")
-        self.assertTrue(m["arguments"][5]["type"].startswith(b"o^"))
-
-        m = obj.contentsOfDirectoryAtPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-        m = obj.subpathsOfDirectoryAtPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-        m = obj.attributesOfItemAtPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-        m = obj.attributesOfFileSystemForPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-        m = obj.createSymbolicLinkAtPath_withDestinationPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
-
-        m = obj.destinationOfSymbolicLinkAtPath_error_.__metadata__()
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-        m = obj.copyItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
-
-        m = obj.moveItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
-
-        m = obj.linkItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
-
-        m = obj.removeItemAtPath_error_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
-
-    def test_protocols(self):
-        class FileManagerTest1(Foundation.NSObject):
-            def fileManager_shouldCopyItemAtPath_toPath_(self, fm, src, dst):
-                return True
-
-            def fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_(
-                self, fm, error, src, dst
-            ):
-                return True
-
-            def fileManager_shouldMoveItemAtPath_toPath_(self, fm, src, dst):
-                return True
-
-            def fileManager_shouldProceedAfterError_movingItemAtPath_toPath_(
-                self, fm, error, src, dst
-            ):
-                return True
-
-            def fileManager_shouldLinkItemAtPath_toPath_(self, fm, src, dst):
-                return True
-
-            def fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_(
-                self, fm, error, src, dst
-            ):
-                return True
-
-            def fileManager_shouldRemoveItemAtPath_(self, fm, src):
-                return True
-
-            def fileManager_shouldProceedAfterError_removingItemAtPath_(
-                self, fm, error, src
-            ):
-                return True
-
-        obj = FileManagerTest1.alloc().init()
-        m = obj.fileManager_shouldCopyItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_.__metadata__()
-        )
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = obj.fileManager_shouldMoveItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_movingItemAtPath_toPath_.__metadata__()
-        )
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = obj.fileManager_shouldLinkItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = (
-            obj.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_.__metadata__()
-        )
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = obj.fileManager_shouldRemoveItemAtPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-        m = obj.fileManager_shouldProceedAfterError_removingItemAtPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], b"Z")
-
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(
             Foundation.NSFileManager.setAttributes_ofItemAtPath_error_
         )
@@ -490,56 +400,31 @@ class TestNSFileManager(TestCase):
         self.assertResultIsBOOL(Foundation.NSFileManager.removeItemAtPath_error_)
         self.assertArgIsOut(Foundation.NSFileManager.removeItemAtPath_error_, 1)
 
-    def test_methods(self):
-        self.assertArgIsBOOL(
-            Foundation.NSFileManager.fileAttributesAtPath_traverseLink_, 1
-        )
-        self.assertResultIsBOOL(Foundation.NSFileManager.changeFileAttributes_atPath_)
+    @min_os_level("10.10")
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
-            Foundation.NSFileManager.createSymbolicLinkAtPath_pathContent_
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_
         )
-        self.assertResultIsBOOL(
-            Foundation.NSFileManager.createDirectoryAtPath_attributes_
-        )
-        self.assertResultIsBOOL(Foundation.NSFileManager.linkPath_toPath_handler_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.copyPath_toPath_handler_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.movePath_toPath_handler_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.removeFileAtPath_handler_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.changeCurrentDirectoryPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_isDirectory_)
-        self.assertArgHasType(
-            Foundation.NSFileManager.fileExistsAtPath_isDirectory_,
-            1,
-            b"o^" + objc._C_NSBOOL,
-        )
-        self.assertResultIsBOOL(Foundation.NSFileManager.isReadableFileAtPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.isWritableFileAtPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.isExecutableFileAtPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.isDeletableFileAtPath_)
-        self.assertResultIsBOOL(Foundation.NSFileManager.contentsEqualAtPath_andPath_)
-        self.assertResultIsBOOL(
-            Foundation.NSFileManager.createFileAtPath_contents_attributes_
-        )
-        self.assertResultHasType(
-            Foundation.NSFileManager.fileSystemRepresentationWithPath_,
-            b"^" + objc._C_CHAR_AS_TEXT,
-        )
-        self.assertResultIsNullTerminated(
-            Foundation.NSFileManager.fileSystemRepresentationWithPath_
-        )
-        self.assertArgHasType(
-            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_,
+        self.assertArgIsOut(
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
             0,
-            b"n^" + objc._C_CHAR_AS_TEXT,
         )
-        self.assertArgSizeInArg(
-            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1
+        self.assertArgIsOut(
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
+            3,
         )
 
-        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsImmutable)
-        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsAppendOnly)
-        self.assertResultIsBOOL(Foundation.NSDictionary.fileExtensionHidden)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
+            0,
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
+            4,
+        )
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -586,7 +471,11 @@ class TestNSFileManager(TestCase):
             b"v@@",
         )
 
-    def test_protocolsMethods(self):
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSFileManagerDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldProceedAfterError_
         )
@@ -615,8 +504,6 @@ class TestNSFileManager(TestCase):
             TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtPath_
         )
 
-    @min_os_level("10.6")
-    def test_protocols10_6(self):
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldCopyItemAtURL_toURL_
         )
@@ -642,6 +529,47 @@ class TestNSFileManager(TestCase):
             TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtURL_
         )
 
-    @min_sdk_level("10.10")
-    def test_protocols10_10(self):
-        self.assertProtocolExists("NSFileManagerDelegate", Foundation)
+    def test_output(self):
+        obj = Foundation.NSFileManager.defaultManager()
+        m = obj.setAttributes_ofItemAtPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+
+        m = (
+            obj.createDirectoryAtPath_withIntermediateDirectories_attributes_error_.__metadata__()  # noqa: B950
+        )
+        self.assertEqual(m["arguments"][3]["type"], b"Z")
+        self.assertTrue(m["arguments"][5]["type"].startswith(b"o^"))
+
+        m = obj.contentsOfDirectoryAtPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
+
+        m = obj.subpathsOfDirectoryAtPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
+
+        m = obj.attributesOfItemAtPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
+
+        m = obj.attributesOfFileSystemForPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
+
+        m = obj.createSymbolicLinkAtPath_withDestinationPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+
+        m = obj.destinationOfSymbolicLinkAtPath_error_.__metadata__()
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
+
+        m = obj.copyItemAtPath_toPath_error_.__metadata__()
+        self.assertEqual(m["retval"]["type"], b"Z")
+        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+
+        m = obj.moveItemAtPath_toPath_error_.__metadata__()
+        self.assertEqual(m["retval"]["type"], b"Z")
+        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+
+        m = obj.linkItemAtPath_toPath_error_.__metadata__()
+        self.assertEqual(m["retval"]["type"], b"Z")
+        self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
+
+        m = obj.removeItemAtPath_error_.__metadata__()
+        self.assertEqual(m["retval"]["type"], b"Z")
+        self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))

@@ -5,8 +5,7 @@ CLGeocodeCompletionHandler = b"v@@"
 
 
 class TestCLGeocoder(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             CoreLocation.CLGeocoder.geocodeAddressDictionary_completionHandler_,
             1,

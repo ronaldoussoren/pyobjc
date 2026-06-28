@@ -1,18 +1,15 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCGGradient(TestCase):
-    @min_os_level("10.5")
     def test_types(self):
         self.assertIsCFType(Quartz.CGGradientRef)
 
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertEqual(Quartz.kCGGradientDrawsBeforeStartLocation, 1)
         self.assertEqual(Quartz.kCGGradientDrawsAfterEndLocation, 2)
 
-    @min_os_level("10.5")
     def test_functions(self):
         self.assertIsInstance(Quartz.CGGradientGetTypeID(), int)
 

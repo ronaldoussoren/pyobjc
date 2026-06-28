@@ -1,26 +1,27 @@
 import InputMethodKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestIMKCandidates(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(InputMethodKit.IMKCandidatePanelType)
         self.assertEqual(InputMethodKit.kIMKSingleColumnScrollingCandidatePanel, 1)
         self.assertEqual(InputMethodKit.kIMKScrollingGridCandidatePanel, 2)
         self.assertEqual(InputMethodKit.kIMKSingleRowSteppingCandidatePanel, 3)
 
+        self.assertIsEnumType(InputMethodKit.IMKCandidatesLocationHint)
         self.assertEqual(InputMethodKit.kIMKLocateCandidatesAboveHint, 1)
         self.assertEqual(InputMethodKit.kIMKLocateCandidatesBelowHint, 2)
         self.assertEqual(InputMethodKit.kIMKLocateCandidatesLeftHint, 3)
         self.assertEqual(InputMethodKit.kIMKLocateCandidatesRightHint, 4)
 
+        self.assertIsEnumType(InputMethodKit.IMKStyleType)
         self.assertEqual(InputMethodKit.kIMKMain, 0)
         self.assertEqual(InputMethodKit.kIMKAnnotation, 1)
         self.assertEqual(InputMethodKit.kIMKSubList, 2)
 
+    def test_constants(self):
         self.assertIsInstance(InputMethodKit.IMKCandidatesOpacityAttributeName, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(InputMethodKit.IMKCandidatesSendServerKeyEventFirst, str)
 
     def test_methods(self):
@@ -28,8 +29,6 @@ class TestIMKCandidates(TestCase):
         self.assertResultIsBOOL(InputMethodKit.IMKCandidates.dismissesAutomatically)
         self.assertArgIsBOOL(InputMethodKit.IMKCandidates.setDismissesAutomatically_, 0)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(
             InputMethodKit.IMKCandidates.selectCandidateWithIdentifier_
         )

@@ -9,32 +9,23 @@ class TestNSSharingServiceHelper(AppKit.NSObject):
 
 
 class TestNSSharingService(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSSharingServiceName, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSCloudKitSharingServiceOptions)
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSharingContentScope)
+        self.assertEqual(AppKit.NSSharingContentScopeItem, 0)
+        self.assertEqual(AppKit.NSSharingContentScopePartial, 1)
+        self.assertEqual(AppKit.NSSharingContentScopeFull, 2)
 
-    @min_os_level("10.12")
-    def test_constants10_12(self):
-        self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, str)
-
+        self.assertIsEnumType(AppKit.NSCloudKitSharingServiceOptions)
         self.assertEqual(AppKit.NSCloudKitSharingServiceStandard, 0)
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowPublic, 1 << 0)
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowPrivate, 1 << 1)
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowReadOnly, 1 << 4)
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowReadWrite, 1 << 5)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, str)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, str)
-        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsFacebookProfileImage, str)
-        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, str)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSSharingServiceName, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnFacebook, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTwitter, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostOnSinaWeibo, str)
@@ -51,19 +42,22 @@ class TestNSSharingService(TestCase):
         self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnYouku, str)
         self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnTudou, str)
 
-        self.assertEqual(AppKit.NSSharingContentScopeItem, 0)
-        self.assertEqual(AppKit.NSSharingContentScopePartial, 1)
-        self.assertEqual(AppKit.NSSharingContentScopeFull, 2)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsFacebookProfileImage, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, str)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, str)
+
+    def test_methods(self):
         self.assertArgIsBlock(
             AppKit.NSSharingService.initWithTitle_image_alternateImage_handler_, 3, b"v"
         )
         self.assertResultIsBOOL(AppKit.NSSharingService.canPerformWithItems_)
 
-    @min_sdk_level("10.7")
-    def test_protocols10_7(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
         self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)
 

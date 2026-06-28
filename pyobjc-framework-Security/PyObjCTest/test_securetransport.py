@@ -7,16 +7,16 @@ SSLWriteFunc = b"i@n^vN^L"
 
 
 class TestSecureTransport(TestCase):
-    def test_types(self):
-        self.assertIsCFType(Security.SSLContextRef)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Security.SSLCiphersuiteGroup)
         self.assertEqual(Security.kSSLCiphersuiteGroupDefault, 0)
         self.assertEqual(Security.kSSLCiphersuiteGroupCompatibility, 1)
         self.assertEqual(Security.kSSLCiphersuiteGroupLegacy, 2)
         self.assertEqual(Security.kSSLCiphersuiteGroupATS, 3)
         self.assertEqual(Security.kSSLCiphersuiteGroupATSCompatibility, 4)
 
+        self.assertIsEnumType(Security.SSLProtocol)
         self.assertEqual(Security.kSSLProtocolUnknown, 0)
         self.assertEqual(Security.kSSLProtocol3, 2)
         self.assertEqual(Security.kTLSProtocol1, 4)
@@ -30,6 +30,7 @@ class TestSecureTransport(TestCase):
         self.assertEqual(Security.kTLSProtocol1Only, 5)
         self.assertEqual(Security.kSSLProtocolAll, 6)
 
+        self.assertIsEnumType(Security.SSLSessionOption)
         self.assertEqual(Security.kSSLSessionOptionBreakOnServerAuth, 0)
         self.assertEqual(Security.kSSLSessionOptionBreakOnCertRequested, 1)
         self.assertEqual(Security.kSSLSessionOptionBreakOnClientAuth, 2)
@@ -41,17 +42,20 @@ class TestSecureTransport(TestCase):
         self.assertEqual(Security.kSSLSessionOptionAllowRenegotiation, 8)
         self.assertEqual(Security.kSSLSessionOptionEnableSessionTickets, 9)
 
+        self.assertIsEnumType(Security.SSLSessionState)
         self.assertEqual(Security.kSSLIdle, 0)
         self.assertEqual(Security.kSSLHandshake, 1)
         self.assertEqual(Security.kSSLConnected, 2)
         self.assertEqual(Security.kSSLClosed, 3)
         self.assertEqual(Security.kSSLAborted, 4)
 
+        self.assertIsEnumType(Security.SSLClientCertificateState)
         self.assertEqual(Security.kSSLClientCertNone, 0)
         self.assertEqual(Security.kSSLClientCertRequested, 1)
         self.assertEqual(Security.kSSLClientCertSent, 2)
         self.assertEqual(Security.kSSLClientCertRejected, 3)
 
+        # Unnamed enum:
         self.assertEqual(Security.errSSLProtocol, -9800)
         self.assertEqual(Security.errSSLNegotiation, -9801)
         self.assertEqual(Security.errSSLFatalAlert, -9802)
@@ -104,25 +108,6 @@ class TestSecureTransport(TestCase):
         self.assertEqual(Security.errSSLUnexpectedRecord, -9849)
         self.assertEqual(Security.errSSLWeakPeerEphemeralDHKey, -9850)
         self.assertEqual(Security.errSSLClientHelloReceived, -9851)
-
-        self.assertEqual(
-            Security.errSSLServerAuthCompleted, Security.errSSLPeerAuthCompleted
-        )
-        self.assertEqual(
-            Security.errSSLClientAuthCompleted, Security.errSSLPeerAuthCompleted
-        )
-        self.assertEqual(Security.errSSLLast, Security.errSSLUnexpectedRecord)
-
-        self.assertEqual(Security.kSSLServerSide, 0)
-        self.assertEqual(Security.kSSLClientSide, 1)
-
-        self.assertEqual(Security.kSSLStreamType, 0)
-        self.assertEqual(Security.kSSLDatagramType, 1)
-
-        self.assertEqual(Security.kNeverAuthenticate, 0)
-        self.assertEqual(Security.kAlwaysAuthenticate, 1)
-        self.assertEqual(Security.kTryAuthenticate, 2)
-
         self.assertEqual(Security.errSSLTransportReset, -9852)
         self.assertEqual(Security.errSSLNetworkTimeout, -9853)
         self.assertEqual(Security.errSSLConfigurationFailed, -9854)
@@ -138,6 +123,27 @@ class TestSecureTransport(TestCase):
         self.assertEqual(Security.errSSLUnknownPSKIdentity, -9864)
         self.assertEqual(Security.errSSLUnrecognizedName, -9865)
 
+        self.assertEqual(
+            Security.errSSLServerAuthCompleted, Security.errSSLPeerAuthCompleted
+        )
+        self.assertEqual(
+            Security.errSSLClientAuthCompleted, Security.errSSLPeerAuthCompleted
+        )
+        self.assertEqual(Security.errSSLLast, Security.errSSLUnexpectedRecord)
+
+        self.assertIsEnumType(Security.SSLProtocolSide)
+        self.assertEqual(Security.kSSLServerSide, 0)
+        self.assertEqual(Security.kSSLClientSide, 1)
+
+        self.assertIsEnumType(Security.SSLConnectionType)
+        self.assertEqual(Security.kSSLStreamType, 0)
+        self.assertEqual(Security.kSSLDatagramType, 1)
+
+        self.assertIsEnumType(Security.SSLAuthenticate)
+        self.assertEqual(Security.kNeverAuthenticate, 0)
+        self.assertEqual(Security.kAlwaysAuthenticate, 1)
+        self.assertEqual(Security.kTryAuthenticate, 2)
+
     @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSSLSessionConfig_default, str)
@@ -152,6 +158,9 @@ class TestSecureTransport(TestCase):
         self.assertIsInstance(Security.kSSLSessionConfig_anonymous, str)
         self.assertIsInstance(Security.kSSLSessionConfig_3DES_fallback, str)
         self.assertIsInstance(Security.kSSLSessionConfig_TLSv1_3DES_fallback, str)
+
+    def test_types(self):
+        self.assertIsCFType(Security.SSLContextRef)
 
     def test_functions(self):
         self.assertIsInstance(Security.SSLContextGetTypeID(), int)
@@ -412,8 +421,6 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLClose, objc._C_INT)
         self.assertArgHasType(Security.SSLClose, 0, objc._C_ID)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         self.assertResultHasType(Security.SSLSetSessionOption, objc._C_INT)
         self.assertArgHasType(Security.SSLSetSessionOption, 0, objc._C_ID)
         self.assertArgHasType(Security.SSLSetSessionOption, 1, objc._C_INT)
@@ -433,8 +440,6 @@ class TestSecureTransport(TestCase):
         )
         self.assertArgIsCFRetained(Security.SSLCopyPeerTrust, 1)
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         self.assertResultHasType(Security.SSLCreateContext, objc._C_ID)
         self.assertResultIsCFRetained(Security.SSLCreateContext)
         self.assertArgHasType(Security.SSLCreateContext, 0, objc._C_ID)

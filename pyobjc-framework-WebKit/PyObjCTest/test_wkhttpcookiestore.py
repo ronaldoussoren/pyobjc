@@ -4,7 +4,7 @@ import objc
 
 
 class TestWKError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKCookiePolicy)
         self.assertEqual(WebKit.WKCookiePolicyAllow, 0)
         self.assertEqual(WebKit.WKCookiePolicyDisallow, 1)

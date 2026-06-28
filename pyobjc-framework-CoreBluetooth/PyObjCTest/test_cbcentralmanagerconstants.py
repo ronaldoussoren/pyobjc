@@ -6,7 +6,6 @@ class TestCBCentral(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(CoreBluetooth.CBConnectionEventMatchingOption, str)
 
-    @min_os_level("10.9")
     def test_constants(self):
         self.assertIsInstance(
             CoreBluetooth.CBCentralManagerOptionShowPowerAlertKey, str

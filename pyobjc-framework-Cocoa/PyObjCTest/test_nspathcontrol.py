@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -18,12 +18,7 @@ class TestNSPathControlHelper(AppKit.NSObject):
 
 
 class TestNSPathControl(TestCase):
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(AppKit.NSPathControl.isEditable)
-        self.assertArgIsBOOL(AppKit.NSPathControl.setEditable_, 0)
 
-    @min_os_level("10.5")
     def test_methods(self):
         m = AppKit.NSPathControl.setDoubleAction_.__metadata__()
         self.assertEqual(m["arguments"][2]["sel_of_type"], b"v@:@")
@@ -32,7 +27,11 @@ class TestNSPathControl(TestCase):
             AppKit.NSPathControl.setDraggingSourceOperationMask_forLocal_, 1
         )
 
-    @min_sdk_level("10.6")
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(AppKit.NSPathControl.isEditable)
+        self.assertArgIsBOOL(AppKit.NSPathControl.setEditable_, 0)
+
     def test_protocols(self):
         self.assertProtocolExists("NSPathControlDelegate", AppKit)
 

@@ -9,8 +9,7 @@ class TestAVAssetReaderOutput(TestCase):
             "AVAssetReaderCaptionValidationHandling", AVFoundation
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetReaderOutput.alwaysCopiesSampleData)
         self.assertArgIsBOOL(
             AVFoundation.AVAssetReaderOutput.setAlwaysCopiesSampleData_, 0

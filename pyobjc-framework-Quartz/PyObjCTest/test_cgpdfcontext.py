@@ -4,101 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCGPDFContext(TestCase):
-    def test_functions(self):
-        data = NSMutableData.data()
-        self.assertIsInstance(data, Quartz.CFMutableDataRef)
-
-        consumer = Quartz.CGDataConsumerCreateWithCFData(data)
-        self.assertIsInstance(consumer, Quartz.CGDataConsumerRef)
-
-        self.assertArgIsIn(Quartz.CGPDFContextCreate, 1)
-        self.assertResultIsCFRetained(Quartz.CGPDFContextCreate)
-        context = Quartz.CGPDFContextCreate(consumer, None, None)
-        self.assertIsInstance(context, Quartz.CGContextRef)
-
-        if hasattr(Quartz, "CGPDFContextClose"):
-            Quartz.CGPDFContextClose(context)
-
-        self.assertResultIsCFRetained(Quartz.CGPDFContextCreateWithURL)
-        url = Quartz.CFURLCreateWithFileSystemPath(
-            None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
-        )
-        self.assertArgIsIn(Quartz.CGPDFContextCreateWithURL, 1)
-        context = Quartz.CGPDFContextCreateWithURL(url, None, None)
-        self.assertIsInstance(context, Quartz.CGContextRef)
-
-        Quartz.CGPDFContextBeginPage(context, None)
-
-        Quartz.CGPDFContextSetURLForRect(context, url, ((0, 0), (10, 10)))
-        Quartz.CGPDFContextAddDestinationAtPoint(context, "target", (50, 50))
-
-        Quartz.CGPDFContextSetDestinationForRect(
-            context, "target", ((100, 120), (50, 60))
-        )
-
-        Quartz.CGPDFContextEndPage(context)
-
-        if hasattr(Quartz, "CGPDFContextClose"):
-            Quartz.CGPDFContextClose(context)
-
-    @min_os_level("10.5")
-    def test_functions10_5(self):
-        # Note actual test is in the function below this one.
-        Quartz.CGPDFContextClose
-
-    @min_os_level("10.7")
-    def test_functions10_7(self):
-        data = NSMutableData.data()
-        consumer = Quartz.CGDataConsumerCreateWithCFData(data)
-        context = Quartz.CGPDFContextCreate(consumer, None, None)
-
-        metadata = (
-            b"""<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><?xpacket end='w'?>"""
-        )
-        Quartz.CGPDFContextAddDocumentMetadata(
-            context, NSMutableData.dataWithBytes_length_(metadata, len(metadata))
-        )
-
-    @min_os_level("10.13")
-    def test_functions10_13(self):
-        Quartz.CGPDFContextSetOutline
-
-    @min_os_level("10.15")
-    def test_functions10_15(self):
-        Quartz.CGPDFTagTypeGetName
-        Quartz.CGPDFContextBeginTag
-        Quartz.CGPDFContextEndTag
-
-    @min_os_level("15.0")
-    def test_functions15_0(self):
-        Quartz.CGPDFContextSetParentTree
-        Quartz.CGPDFContextSetIDTree
-        Quartz.CGPDFContextSetPageTagStructureTree
-
-    def test_constants(self):
-        self.assertIsInstance(Quartz.kCGPDFContextMediaBox, str)
-        self.assertIsInstance(Quartz.kCGPDFContextCropBox, str)
-        self.assertIsInstance(Quartz.kCGPDFContextBleedBox, str)
-        self.assertIsInstance(Quartz.kCGPDFContextTrimBox, str)
-        self.assertIsInstance(Quartz.kCGPDFContextArtBox, str)
-        self.assertIsInstance(Quartz.kCGPDFContextTitle, str)
-        self.assertIsInstance(Quartz.kCGPDFContextAuthor, str)
-        self.assertIsInstance(Quartz.kCGPDFContextKeywords, str)
-        self.assertIsInstance(Quartz.kCGPDFContextCreator, str)
-        self.assertIsInstance(Quartz.kCGPDFContextOwnerPassword, str)
-        self.assertIsInstance(Quartz.kCGPDFContextUserPassword, str)
-        self.assertIsInstance(Quartz.kCGPDFContextEncryptionKeyLength, str)
-        self.assertIsInstance(Quartz.kCGPDFContextAllowsPrinting, str)
-        self.assertIsInstance(Quartz.kCGPDFContextAllowsCopying, str)
-        self.assertIsInstance(Quartz.kCGPDFContextOutputIntent, str)
-        self.assertIsInstance(Quartz.kCGPDFXOutputIntentSubtype, str)
-        self.assertIsInstance(Quartz.kCGPDFXOutputConditionIdentifier, str)
-        self.assertIsInstance(Quartz.kCGPDFXOutputCondition, str)
-        self.assertIsInstance(Quartz.kCGPDFXRegistryName, str)
-        self.assertIsInstance(Quartz.kCGPDFXInfo, str)
-        self.assertIsInstance(Quartz.kCGPDFXDestinationOutputProfile, str)
-        self.assertIsInstance(Quartz.kCGPDFContextOutputIntents, str)
-
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGPDFTagType)
         self.assertEqual(Quartz.CGPDFTagTypeDocument, 100)
         self.assertEqual(Quartz.CGPDFTagTypePart, 101)
         self.assertEqual(Quartz.CGPDFTagTypeArt, 102)
@@ -150,8 +57,30 @@ class TestCGPDFContext(TestCase):
         self.assertEqual(Quartz.CGPDFTagTypeForm, 702)
         self.assertEqual(Quartz.CGPDFTagTypeObject, 800)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
+    def test_constants(self):
+        self.assertIsInstance(Quartz.kCGPDFContextMediaBox, str)
+        self.assertIsInstance(Quartz.kCGPDFContextCropBox, str)
+        self.assertIsInstance(Quartz.kCGPDFContextBleedBox, str)
+        self.assertIsInstance(Quartz.kCGPDFContextTrimBox, str)
+        self.assertIsInstance(Quartz.kCGPDFContextArtBox, str)
+        self.assertIsInstance(Quartz.kCGPDFContextTitle, str)
+        self.assertIsInstance(Quartz.kCGPDFContextAuthor, str)
+        self.assertIsInstance(Quartz.kCGPDFContextKeywords, str)
+        self.assertIsInstance(Quartz.kCGPDFContextCreator, str)
+        self.assertIsInstance(Quartz.kCGPDFContextOwnerPassword, str)
+        self.assertIsInstance(Quartz.kCGPDFContextUserPassword, str)
+        self.assertIsInstance(Quartz.kCGPDFContextEncryptionKeyLength, str)
+        self.assertIsInstance(Quartz.kCGPDFContextAllowsPrinting, str)
+        self.assertIsInstance(Quartz.kCGPDFContextAllowsCopying, str)
+        self.assertIsInstance(Quartz.kCGPDFContextOutputIntent, str)
+        self.assertIsInstance(Quartz.kCGPDFXOutputIntentSubtype, str)
+        self.assertIsInstance(Quartz.kCGPDFXOutputConditionIdentifier, str)
+        self.assertIsInstance(Quartz.kCGPDFXOutputCondition, str)
+        self.assertIsInstance(Quartz.kCGPDFXRegistryName, str)
+        self.assertIsInstance(Quartz.kCGPDFXInfo, str)
+        self.assertIsInstance(Quartz.kCGPDFXDestinationOutputProfile, str)
+        self.assertIsInstance(Quartz.kCGPDFContextOutputIntents, str)
+
         self.assertIsInstance(Quartz.kCGPDFContextSubject, str)
 
     @min_os_level("10.13")
@@ -169,3 +98,70 @@ class TestCGPDFContext(TestCase):
     def test_constants11_0(self):
         self.assertIsInstance(Quartz.kCGPDFContextCreateLinearizedPDF, str)
         self.assertIsInstance(Quartz.kCGPDFContextCreatePDFA, str)
+
+    def test_functions(self):
+        data = NSMutableData.data()
+        self.assertIsInstance(data, Quartz.CFMutableDataRef)
+
+        consumer = Quartz.CGDataConsumerCreateWithCFData(data)
+        self.assertIsInstance(consumer, Quartz.CGDataConsumerRef)
+
+        self.assertArgIsIn(Quartz.CGPDFContextCreate, 1)
+        self.assertResultIsCFRetained(Quartz.CGPDFContextCreate)
+        context = Quartz.CGPDFContextCreate(consumer, None, None)
+        self.assertIsInstance(context, Quartz.CGContextRef)
+
+        if hasattr(Quartz, "CGPDFContextClose"):
+            Quartz.CGPDFContextClose(context)
+
+        self.assertResultIsCFRetained(Quartz.CGPDFContextCreateWithURL)
+        url = Quartz.CFURLCreateWithFileSystemPath(
+            None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
+        )
+        self.assertArgIsIn(Quartz.CGPDFContextCreateWithURL, 1)
+        context = Quartz.CGPDFContextCreateWithURL(url, None, None)
+        self.assertIsInstance(context, Quartz.CGContextRef)
+
+        Quartz.CGPDFContextBeginPage(context, None)
+
+        Quartz.CGPDFContextSetURLForRect(context, url, ((0, 0), (10, 10)))
+        Quartz.CGPDFContextAddDestinationAtPoint(context, "target", (50, 50))
+
+        Quartz.CGPDFContextSetDestinationForRect(
+            context, "target", ((100, 120), (50, 60))
+        )
+
+        Quartz.CGPDFContextEndPage(context)
+
+        if hasattr(Quartz, "CGPDFContextClose"):
+            Quartz.CGPDFContextClose(context)
+
+        # Note actual test is in the function below this one.
+        Quartz.CGPDFContextClose
+
+        data = NSMutableData.data()
+        consumer = Quartz.CGDataConsumerCreateWithCFData(data)
+        context = Quartz.CGPDFContextCreate(consumer, None, None)
+
+        metadata = (
+            b"""<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><?xpacket end='w'?>"""
+        )
+        Quartz.CGPDFContextAddDocumentMetadata(
+            context, NSMutableData.dataWithBytes_length_(metadata, len(metadata))
+        )
+
+    @min_os_level("10.13")
+    def test_functions10_13(self):
+        Quartz.CGPDFContextSetOutline
+
+    @min_os_level("10.15")
+    def test_functions10_15(self):
+        Quartz.CGPDFTagTypeGetName
+        Quartz.CGPDFContextBeginTag
+        Quartz.CGPDFContextEndTag
+
+    @min_os_level("15.0")
+    def test_functions15_0(self):
+        Quartz.CGPDFContextSetParentTree
+        Quartz.CGPDFContextSetIDTree
+        Quartz.CGPDFContextSetPageTagStructureTree

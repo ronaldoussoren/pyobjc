@@ -4,7 +4,7 @@ import Cinematic
 
 
 class TestCNRenderingSession(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Cinematic.CNRenderingQuality)
         self.assertEqual(Cinematic.CNRenderingQualityThumbnail, 0)
         self.assertEqual(Cinematic.CNRenderingQualityPreview, 1)

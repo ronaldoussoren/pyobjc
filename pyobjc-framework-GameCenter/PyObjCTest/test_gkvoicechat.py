@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     os_release,
     expectedFailureIf,
 )
@@ -10,8 +9,8 @@ import GameCenter
 
 
 class TestGKVoiceChat(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKVoiceChatPlayerState)
         self.assertEqual(GameCenter.GKVoiceChatPlayerConnected, 0)
         self.assertEqual(GameCenter.GKVoiceChatPlayerDisconnected, 1)
         self.assertEqual(GameCenter.GKVoiceChatPlayerSpeaking, 2)
@@ -19,8 +18,7 @@ class TestGKVoiceChat(TestCase):
         self.assertEqual(GameCenter.GKVoiceChatPlayerConnecting, 4)
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertArgIsBOOL(GameCenter.GKVoiceChat.setPlayer_muted_, 1)
 
         self.assertResultIsBlock(

@@ -1,24 +1,27 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKError(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
+        self.assertIsEnumType(GameCenter.GKSendDataMode)
         self.assertEqual(GameCenter.GKSendDataReliable, 0)
         self.assertEqual(GameCenter.GKSendDataUnreliable, 1)
 
+        self.assertIsEnumType(GameCenter.GKSessionMode)
         self.assertEqual(GameCenter.GKSessionModeServer, 0)
         self.assertEqual(GameCenter.GKSessionModeClient, 1)
         self.assertEqual(GameCenter.GKSessionModePeer, 2)
 
+        self.assertIsEnumType(GameCenter.GKPeerConnectionState)
         self.assertEqual(GameCenter.GKPeerStateAvailable, 0)
         self.assertEqual(GameCenter.GKPeerStateUnavailable, 1)
         self.assertEqual(GameCenter.GKPeerStateConnected, 2)
         self.assertEqual(GameCenter.GKPeerStateDisconnected, 3)
         self.assertEqual(GameCenter.GKPeerStateConnecting, 4)
 
+        self.assertIsEnumType(GameCenter.GKVoiceChatServiceError)
         self.assertEqual(GameCenter.GKVoiceChatServiceInternalError, 32000)
         self.assertEqual(GameCenter.GKVoiceChatServiceNoRemotePacketsError, 32001)
         self.assertEqual(GameCenter.GKVoiceChatServiceUnableToConnectError, 32002)

@@ -4,7 +4,7 @@ Some simple tests to check that the framework is properly wrapped.
 
 import objc
 import WebKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestWebKit(TestCase):
@@ -30,7 +30,6 @@ class TestWebKit(TestCase):
         self.assertHasAttr(WebKit, "DOMRangeException")
         self.assertIsInstance(WebKit.DOMRangeException, str)
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("DOMEventListener", WebKit)
         self.assertProtocolExists("DOMEventTarget", WebKit)

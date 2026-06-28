@@ -1,7 +1,7 @@
 import Foundation
 import objc
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 MachPortClasses = tuple(
     cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort"
@@ -20,8 +20,7 @@ class TestMachPort(TestCase):
     def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFMachPortGetTypeID(), int)
 
-    @min_os_level("10.8")
-    def test_create10_8(self):
+    def test_create2(self):
         class Context:
             pass
 
@@ -32,7 +31,6 @@ class TestMachPort(TestCase):
 
         port, shouldFree = CoreFoundation.CFMachPortCreate(None, callout, context, None)
 
-        # On OSX 10.7 or earlier this test passed, on OSX 10.8 it doesn't???
         self.assertIsInstance(port, MachPortClasses)
 
     def test_create(self):

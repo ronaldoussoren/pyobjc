@@ -4,7 +4,8 @@ import objc
 
 
 class TestCGImageSource(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGImageSourceStatus)
         self.assertEqual(Quartz.kCGImageStatusUnexpectedEOF, -5)
         self.assertEqual(Quartz.kCGImageStatusInvalidData, -4)
         self.assertEqual(Quartz.kCGImageStatusUnknownType, -3)
@@ -12,6 +13,7 @@ class TestCGImageSource(TestCase):
         self.assertEqual(Quartz.kCGImageStatusIncomplete, -1)
         self.assertEqual(Quartz.kCGImageStatusComplete, 0)
 
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGImageSourceTypeIdentifierHint, str)
         self.assertIsInstance(Quartz.kCGImageSourceShouldCache, str)
         self.assertIsInstance(Quartz.kCGImageSourceShouldAllowFloat, str)
@@ -21,9 +23,6 @@ class TestCGImageSource(TestCase):
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailFromImageAlways, str)
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, str)
         self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, str)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Quartz.kCGImageSourceShouldCacheImmediately, str)
 
     @min_os_level("10.11")
@@ -76,12 +75,8 @@ class TestCGImageSource(TestCase):
         Quartz.CGImageSourceGetStatus
         Quartz.CGImageSourceGetStatusAtIndex
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGImageSourceCopyMetadataAtIndex)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         Quartz.CGImageSourceRemoveCacheAtIndex
 
     @min_os_level("10.13")

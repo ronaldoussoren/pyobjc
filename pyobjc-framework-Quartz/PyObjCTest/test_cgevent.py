@@ -137,8 +137,6 @@ class TestCGEvent(TestCase):
         self.assertEqual(a, len(s))
         self.assertEqual(s, t)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
         self.assertResultIsCFRetained(Quartz.CGEventCreateScrollWheelEvent)
         evt = Quartz.CGEventCreateScrollWheelEvent(
             None, Quartz.kCGScrollEventUnitPixel, 2, 99, 44

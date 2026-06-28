@@ -1,6 +1,6 @@
 import objc
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSetInteraction(TestCase):
@@ -165,8 +165,6 @@ class TestVariadic(TestCase):
 
         self.assertArgIsBOOL(Foundation.NSSet.initWithSet_copyItems_, 1)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSSet.enumerateObjectsUsingBlock_, 0, b"v@o^" + objc._C_NSBOOL
         )

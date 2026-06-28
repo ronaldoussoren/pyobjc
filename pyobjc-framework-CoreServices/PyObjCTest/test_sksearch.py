@@ -1,5 +1,5 @@
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -82,12 +82,6 @@ class TestSKSearch(TestCase):
 
         cnt = CoreServices.SKSearchResultsGetCount(orig_res)
         self.assertIsInstance(cnt, int)
-
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            # The API does not work on macOS 10.7 or later.
-            # (Verified with an ObjC reproducer).
-            # See issue #9
-            self.assertGreater(cnt, 0)
 
         res = orig_res
 

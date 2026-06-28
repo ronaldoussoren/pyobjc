@@ -4,16 +4,12 @@ import SpriteKit
 
 
 class TestSKTexture(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKTextureFilteringMode)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(SpriteKit.SKTextureFilteringNearest, 0)
         self.assertEqual(SpriteKit.SKTextureFilteringLinear, 1)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKTexture.setUsesMipmaps_, 0)
         self.assertResultIsBOOL(SpriteKit.SKTexture.usesMipmaps)
 

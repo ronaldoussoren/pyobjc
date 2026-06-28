@@ -6,7 +6,6 @@ import socket
 import CoreFoundation
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     skipUnless,
     os_level_key,
     os_release,
@@ -549,8 +548,7 @@ class TestStream(TestCase):
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventCanAcceptBytes)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
+    def test_functions(self):
         CoreFoundation.CFReadStreamSetDispatchQueue  # Nothing to test
         CoreFoundation.CFWriteStreamSetDispatchQueue  # Nothing to test
         CoreFoundation.CFReadStreamCopyDispatchQueue  # Nothing to test

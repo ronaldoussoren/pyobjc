@@ -4,7 +4,7 @@ import AccessoryAccess
 
 
 class TestAAUSBAccessoryMatchingCriteria(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AccessoryAccess.AAUSBAccessoryMatchingCriteriaInterfaceMatchingOption
         )

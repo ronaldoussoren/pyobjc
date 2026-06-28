@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScroller(TestCase):
@@ -32,8 +32,6 @@ class TestNSScroller(TestCase):
         self.assertEqual(AppKit.NSScrollerIncrementArrow, 0)
         self.assertEqual(AppKit.NSScrollerDecrementArrow, 1)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSScrollerStyleLegacy, 0)
         self.assertEqual(AppKit.NSScrollerStyleOverlay, 1)
 
@@ -48,6 +46,4 @@ class TestNSScroller(TestCase):
         self.assertArgIsBOOL(AppKit.NSScroller.drawKnobSlotInRect_highlight_, 1)
         self.assertArgIsBOOL(AppKit.NSScroller.highlight_, 0)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSScroller.isCompatibleWithOverlayScrollers)

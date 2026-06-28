@@ -2,7 +2,6 @@ import CoreFoundation
 import objc
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     os_level_key,
     os_release,
     skipUnless,
@@ -285,6 +284,20 @@ class TestRunLoop(TestCase):
         self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3], runloop_mode)
 
+        lst = []
+        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
+            None,
+            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
+            0.0,
+            0,
+            0,
+            lambda x: lst.append(x),
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
+        CoreFoundation.CFRunLoopTimerSetTolerance(ref, 5.0)
+        v = CoreFoundation.CFRunLoopTimerGetTolerance(ref)
+        self.assertIsInstance(v, float)
+
     @skipUnless(
         not (
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
@@ -295,8 +308,7 @@ class TestRunLoop(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+    def test_functions_broken(self):
         self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
 
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
@@ -313,18 +325,6 @@ class TestRunLoop(TestCase):
 
         self.assertEqual(lst, [True])
 
-    @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
-        "Crash on 10.13, 10.14??",
-    )
-    @skipUnless(
-        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
-        "Crash on macOS 15 beta",
-    )
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         self.assertArgIsBOOL(CoreFoundation.CFRunLoopObserverCreateWithHandler, 2)
         self.assertArgIsBlock(
             CoreFoundation.CFRunLoopObserverCreateWithHandler,
@@ -382,19 +382,3 @@ class TestRunLoop(TestCase):
         self.assertNotEqual(lst, [])
         for a in lst:
             self.assertEqual(a, ref)
-
-    @min_os_level("10.9")
-    def test_functions10_9(self):
-        lst = []
-        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
-            None,
-            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
-            0.0,
-            0,
-            0,
-            lambda x: lst.append(x),
-        )
-        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
-        CoreFoundation.CFRunLoopTimerSetTolerance(ref, 5.0)
-        v = CoreFoundation.CFRunLoopTimerGetTolerance(ref)
-        self.assertIsInstance(v, float)

@@ -18,12 +18,7 @@ class TestNSNetServicesHelper(Foundation.NSObject):
 
 class TestNSNetservices(TestCase):
     def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSNetServiceOptions)
         self.assertIsEnumType(Foundation.NSNetServicesError)
-
-    def test_constants(self):
-        self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
-        self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)
         self.assertEqual(Foundation.NSNetServicesUnknownError, -72000)
         self.assertEqual(Foundation.NSNetServicesCollisionError, -72001)
         self.assertEqual(Foundation.NSNetServicesNotFoundError, -72002)
@@ -35,11 +30,14 @@ class TestNSNetservices(TestCase):
         self.assertEqual(
             Foundation.NSNetServicesMissingRequiredConfigurationError, -72008
         )
-        self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+        self.assertIsEnumType(Foundation.NSNetServiceOptions)
+        self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
         self.assertEqual(Foundation.NSNetServiceListenForConnections, 1 << 1)
+
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
+        self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)
 
     def test_output(self):
         o = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(

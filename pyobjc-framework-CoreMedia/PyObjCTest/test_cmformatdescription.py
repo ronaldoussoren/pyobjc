@@ -5,11 +5,13 @@ import objc
 
 
 class TestCMFormatDescription(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_InvalidParameter, -12710)
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_AllocationFailed, -12711)
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_ValueNotAvailable, -12718)
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMMediaType_Video, fourcc(b"vide"))
         self.assertEqual(CoreMedia.kCMMediaType_Audio, fourcc(b"soun"))
         self.assertEqual(CoreMedia.kCMMediaType_Muxed, fourcc(b"muxx"))
@@ -20,6 +22,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMediaType_Metadata, fourcc(b"meta"))
         self.assertEqual(CoreMedia.kCMMediaType_TaggedBufferGroup, fourcc(b"tbgr"))
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
         self.assertEqual(
@@ -27,16 +30,55 @@ class TestCMFormatDescription(TestCase):
         )
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DisparityHEVC, fourcc(b"dish"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DepthHEVC, fourcc(b"deph"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AV1, fourcc(b"av01"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_Animation, fourcc(b"rle "))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_Cinepak, fourcc(b"cvid"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG, fourcc(b"jpeg"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_OpenDML, fourcc(b"dmb1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_XL, fourcc(b"jxlc"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo, fourcc(b"SVQ1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo3, fourcc(b"SVQ3"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b"h263"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b"avc1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b"hvc1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b"muxa"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DolbyVisionHEVC, fourcc(b"dvh1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_VP9, fourcc(b"vp09"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCNTSC, fourcc(b"dvc "))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPAL, fourcc(b"dvcp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCProPAL, fourcc(b"dvpp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50NTSC, fourcc(b"dv5n"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50PAL, fourcc(b"dv5p"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p60, fourcc(b"dvhp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p50, fourcc(b"dvhq"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i60, fourcc(b"dvh6"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i50, fourcc(b"dvh5"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p30, fourcc(b"dvh3"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p25, fourcc(b"dvh2"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444XQ, fourcc(b"ap4x"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444, fourcc(b"ap4h"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422HQ, fourcc(b"apch"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
+        self.assertEqual(
+            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
+        )
 
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
+
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMAudioCodecType_AAC_LCProtected, fourcc(b"paac"))
         self.assertEqual(
             CoreMedia.kCMAudioCodecType_AAC_AudibleProtected, fourcc(b"aaac")
         )
 
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DisparityHEVC, fourcc(b"dish"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DepthHEVC, fourcc(b"deph"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AV1, fourcc(b"av01"))
-
+        # Unnamed enum
         self.assertEqual(
             CoreMedia.kCMAudioFormatDescriptionMask_StreamBasicDescription, 1 << 0
         )
@@ -51,6 +93,7 @@ class TestCMFormatDescription(TestCase):
             | CoreMedia.kCMAudioFormatDescriptionMask_Extensions,
         )
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMPixelFormat_32ARGB, 32)
         self.assertEqual(CoreMedia.kCMPixelFormat_32BGRA, fourcc(b"BGRA"))
         self.assertEqual(CoreMedia.kCMPixelFormat_24RGB, 24)
@@ -71,46 +114,6 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(
             CoreMedia.kCMVideoCodecType_422YpCbCr8, CoreMedia.kCMPixelFormat_422YpCbCr8
         )
-        self.assertEqual(CoreMedia.kCMVideoCodecType_Animation, fourcc(b"rle "))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_Cinepak, fourcc(b"cvid"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG, fourcc(b"jpeg"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_OpenDML, fourcc(b"dmb1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_XL, fourcc(b"jxlc"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo, fourcc(b"SVQ1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo3, fourcc(b"SVQ3"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b"h263"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b"avc1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b"hvc1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b"muxa"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DolbyVisionHEVC, fourcc(b"dvh1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_VP9, fourcc(b"vp09"))
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCNTSC, fourcc(b"dvc "))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPAL, fourcc(b"dvcp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCProPAL, fourcc(b"dvpp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50NTSC, fourcc(b"dv5n"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50PAL, fourcc(b"dv5p"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p60, fourcc(b"dvhp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p50, fourcc(b"dvhq"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i60, fourcc(b"dvh6"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i50, fourcc(b"dvh5"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p30, fourcc(b"dvh3"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p25, fourcc(b"dvh2"))
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444XQ, fourcc(b"ap4x"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444, fourcc(b"ap4h"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422HQ, fourcc(b"apch"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
-        self.assertEqual(
-            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
-        )
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
 
         self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_HDV_720p30, fourcc(b"hdv1"))
         self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_HDV_1080i60, fourcc(b"hdv2"))
@@ -271,8 +274,7 @@ class TestCMFormatDescription(TestCase):
 
         self.assertEqual(CoreMedia.kCMMediaType_AuxiliaryPicture, fourcc(b"auxv"))
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_OriginalCompressionSettings, str
         )
@@ -382,8 +384,6 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_Value, str)
         self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_LocalID, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionColorPrimaries_P22, str)
 
     @min_os_level("10.10")
@@ -755,7 +755,6 @@ class TestCMFormatDescription(TestCase):
         self.assertIsCFType(CoreMedia.CMFormatDescriptionRef)
 
     @expectedFailure
-    @min_os_level("10.7")
     def test_functions_manual(self):
         self.assertNotIsInstance(
             CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets, objc.function
@@ -771,7 +770,6 @@ class TestCMFormatDescription(TestCase):
             "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex"
         )  # Needs manual wrapper
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertArgIsOut(CoreMedia.CMFormatDescriptionCreate, 4)
         self.assertArgIsCFRetained(CoreMedia.CMFormatDescriptionCreate, 4)

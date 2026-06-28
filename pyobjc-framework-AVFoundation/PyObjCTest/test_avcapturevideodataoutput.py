@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureVideoDataOutput(TestCase):
@@ -54,7 +54,6 @@ class TestAVCaptureVideoDataOutput(TestCase):
             0,
         )
 
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists(
             "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation

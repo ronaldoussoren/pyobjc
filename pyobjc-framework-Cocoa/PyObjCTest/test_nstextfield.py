@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -88,6 +88,5 @@ class TestNSTextField(TestCase):
             AppKit.NSTextField.setResolvesNaturalAlignmentWithBaseWritingDirection_, 0
         )
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSTextFieldDelegate", AppKit)

@@ -6,7 +6,6 @@ import Foundation
 from Foundation import NSAutoreleasePool, NSLog, NSObject
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     expectedFailureIf,
     os_level_key,
     os_release,
@@ -91,7 +90,6 @@ class TestRegr(TestCase):
             )
         )
 
-    @min_os_level("10.6")
     @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.15"))
     def test_binary_plist(self):
         for pl in ({"key": 2**64 - 1}, {"key": 2**16 - 1}):

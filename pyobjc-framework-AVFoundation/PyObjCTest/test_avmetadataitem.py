@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataItem(TestCase):
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVMetadataItem.statusOfValueForKey_error_, 1)
 

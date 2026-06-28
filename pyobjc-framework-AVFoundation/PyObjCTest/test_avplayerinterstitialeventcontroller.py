@@ -3,14 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerInterstitialEventController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVPlayerInterstitialEventRestrictions)
-        self.assertIsTypedEnum(AVFoundation.AVPlayerInterstitialEventCue, str)
-        self.assertIsEnumType(
-            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatus
-        )
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerInterstitialEventRestrictionNone, 0)
         self.assertEqual(
             AVFoundation.AVPlayerInterstitialEventRestrictionConstrainsSeekingForwardInPrimaryContent,
@@ -26,6 +20,9 @@ class TestAVPlayerInterstitialEventController(TestCase):
             AVFoundation.AVPlayerInterstitialEventRestrictionNone,
         )
 
+        self.assertIsEnumType(
+            AVFoundation.AVPlayerInterstitialEventAssetListResponseStatus
+        )
         self.assertEqual(
             AVFoundation.AVPlayerInterstitialEventAssetListResponseStatusAvailable, 0
         )
@@ -55,6 +52,9 @@ class TestAVPlayerInterstitialEventController(TestCase):
         self.assertEqual(
             AVFoundation.AVPlayerInterstitialEventSkippableEventStateNoLongerEligible, 3
         )
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVPlayerInterstitialEventCue, str)
 
     @min_os_level("11.3")
     def test_constants11_3(self):

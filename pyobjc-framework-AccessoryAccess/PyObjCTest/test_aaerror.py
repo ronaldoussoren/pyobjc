@@ -4,7 +4,7 @@ import AccessoryAccess
 
 
 class TestAAError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AccessoryAccess.AAErrorCode)
         self.assertEqual(AccessoryAccess.AAErrorCodeInternal, 1)
         self.assertEqual(

@@ -54,12 +54,12 @@ class TestMTLTensor(TestCase):
         self.assertEqual(Metal.MTLTensorDataTypeUInt32, Metal.MTLDataTypeUInt)
         self.assertEqual(Metal.MTLTensorDataTypeInt4, 143)
         self.assertEqual(Metal.MTLTensorDataTypeUInt4, 144)
-        self.assertEqual(Metal.MTLTensorDataTypeFloat8UE8M0, 145)
+        self.assertEqual(Metal.MTLTensorDataTypeMetalFloat8UE8M0, 145)
         self.assertEqual(Metal.MTLTensorDataTypeUInt2, 149)
         self.assertEqual(Metal.MTLTensorDataTypeInt2, 150)
-        self.assertEqual(Metal.MTLTensorDataTypeFloat8E5M2, 141)
-        self.assertEqual(Metal.MTLTensorDataTypeFloat8E4M3, 142)
-        self.assertEqual(Metal.MTLTensorDataTypeFloat4E2M1, 148)
+        self.assertEqual(Metal.MTLTensorDataTypeMetalFloat8E5M2, 141)
+        self.assertEqual(Metal.MTLTensorDataTypeMetalFloat8E4M3, 142)
+        self.assertEqual(Metal.MTLTensorDataTypeMetalFloat4E2M1, 148)
 
         self.assertEqual(Metal.MTL_TENSOR_MAX_RANK, 16)
 

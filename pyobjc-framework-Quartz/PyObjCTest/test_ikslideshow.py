@@ -21,11 +21,36 @@ class TestIKSlideShowHelper(Quartz.NSObject):
 
 
 class TestIKSlideshow(TestCase):
-    @min_os_level("10.5")
+    def test_constants(self):
+        self.assertIsInstance(Quartz.IKSlideshowModeImages, str)
+        self.assertIsInstance(Quartz.IKSlideshowModePDF, str)
+        self.assertIsInstance(Quartz.IKSlideshowModeOther, str)
+        self.assertIsInstance(Quartz.IKSlideshowWrapAround, str)
+        self.assertIsInstance(Quartz.IKSlideshowStartPaused, str)
+        self.assertIsInstance(Quartz.IKSlideshowStartIndex, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayBox, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayMode, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplaysAsBook, str)
+        self.assertIsInstance(Quartz.IK_iPhotoBundleIdentifier, str)
+
+        self.assertIsInstance(Quartz.IKSlideshowScreen, str)
+        self.assertIsInstance(Quartz.IKSlideshowAudioFile, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayBox, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayMode, str)
+        self.assertIsInstance(Quartz.IKSlideshowPDFDisplaysAsBook, str)
+        self.assertIsInstance(Quartz.IK_ApertureBundleIdentifier, str)
+        self.assertIsInstance(Quartz.IK_MailBundleIdentifier, str)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(Quartz.IK_PhotosBundleIdentifier, str)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.IKSlideshow.canExportToApplication_)
+
     def test_protocols(self):
         self.assertProtocolExists("IKSlideshowDataSource", Quartz)
 
-    @min_os_level("10.5")
     def test_protocol_methods(self):
         self.assertResultHasType(
             TestIKSlideShowHelper.numberOfSlideshowItems, objc._C_NSUInteger
@@ -47,34 +72,3 @@ class TestIKSlideshow(TestCase):
         self.assertArgHasType(
             TestIKSlideShowHelper.slideshowDidChangeCurrentIndex_, 0, objc._C_NSUInteger
         )
-
-    @min_os_level("10.5")
-    def test_methods(self):
-        self.assertResultIsBOOL(Quartz.IKSlideshow.canExportToApplication_)
-
-    @min_os_level("10.5")
-    def test_constants(self):
-        self.assertIsInstance(Quartz.IKSlideshowModeImages, str)
-        self.assertIsInstance(Quartz.IKSlideshowModePDF, str)
-        self.assertIsInstance(Quartz.IKSlideshowModeOther, str)
-        self.assertIsInstance(Quartz.IKSlideshowWrapAround, str)
-        self.assertIsInstance(Quartz.IKSlideshowStartPaused, str)
-        self.assertIsInstance(Quartz.IKSlideshowStartIndex, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayBox, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayMode, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplaysAsBook, str)
-        self.assertIsInstance(Quartz.IK_iPhotoBundleIdentifier, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(Quartz.IKSlideshowScreen, str)
-        self.assertIsInstance(Quartz.IKSlideshowAudioFile, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayBox, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplayMode, str)
-        self.assertIsInstance(Quartz.IKSlideshowPDFDisplaysAsBook, str)
-        self.assertIsInstance(Quartz.IK_ApertureBundleIdentifier, str)
-        self.assertIsInstance(Quartz.IK_MailBundleIdentifier, str)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(Quartz.IK_PhotosBundleIdentifier, str)

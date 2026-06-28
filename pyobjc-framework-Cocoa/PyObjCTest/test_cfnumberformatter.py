@@ -146,8 +146,6 @@ class TestNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterInternationalCurrencySymbol, str
         )
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(
             CoreFoundation.kCFNumberFormatterCurrencyGroupingSeparator, str
         )

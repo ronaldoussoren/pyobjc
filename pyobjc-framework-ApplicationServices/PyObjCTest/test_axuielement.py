@@ -3,9 +3,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAXUIElement(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(HIServices.AXCopyMultipleAttributeOptions)
+        self.assertEqual(HIServices.kAXCopyMultipleAttributeOptionStopOnError, 1)
+
+    def test_constants(self):
+        self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)
+
     def test_types(self):
         self.assertIsCFType(HIServices.AXUIElementRef)
         self.assertIsCFType(HIServices.AXObserverRef)
+
+    @min_os_level("12.0")
+    def test_types12_0(self):
+        self.assertIsCFType(HIServices.AXTextMarkerRef)
+        self.assertIsCFType(HIServices.AXTextMarkerRangeRef)
 
     def test_functions(self):
         self.assertResultIsBOOL(HIServices.AXAPIEnabled)
@@ -81,8 +93,6 @@ class TestAXUIElement(TestCase):
 
         self.assertResultIsNotCFRetained(HIServices.AXObserverGetRunLoopSource)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         AXObserverCallbackWithInfo = (
             b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
         )
@@ -98,22 +108,8 @@ class TestAXUIElement(TestCase):
         self.assertArgIsOut(HIServices.AXObserverCreateWithInfoCallback, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreateWithInfoCallback, 2)
 
-    def test_constants(self):
-        self.assertEqual(HIServices.kAXCopyMultipleAttributeOptionStopOnError, 1)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)
-
-    @min_os_level("12.0")
-    def test_types12_0(self):
-        # XXX: 12.0 SDK headers have no availability constraints for these???
-        self.assertIsCFType(HIServices.AXTextMarkerRef)
-        self.assertIsCFType(HIServices.AXTextMarkerRangeRef)
-
     @min_os_level("12.0")
     def test_functions12_0(self):
-        # XXX: 12.0 SDK headers have no availability constraints for these???
         HIServices.AXTextMarkerGetTypeID
 
         self.assertResultIsCFRetained(HIServices.AXTextMarkerCreate)

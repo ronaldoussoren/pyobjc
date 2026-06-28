@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -9,18 +9,18 @@ class TestNSAlertHelper(AppKit.NSObject):
 
 
 class TestNSAlert(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSAlertStyle)
-
-    def test_constants(self):
+    def test_enums(self):
+        # Legacy (NSAlertStyle)
         self.assertEqual(AppKit.NSWarningAlertStyle, 0)
         self.assertEqual(AppKit.NSInformationalAlertStyle, 1)
         self.assertEqual(AppKit.NSCriticalAlertStyle, 2)
 
+        self.assertIsEnumType(AppKit.NSAlertStyle)
         self.assertEqual(AppKit.NSAlertStyleWarning, 0)
         self.assertEqual(AppKit.NSAlertStyleInformational, 1)
         self.assertEqual(AppKit.NSAlertStyleCritical, 2)
 
+        self.assertIsEnumType(AppKit.NSModalResponse)
         self.assertEqual(AppKit.NSAlertFirstButtonReturn, 1000)
         self.assertEqual(AppKit.NSAlertSecondButtonReturn, 1001)
         self.assertEqual(AppKit.NSAlertThirdButtonReturn, 1002)
@@ -44,22 +44,18 @@ class TestNSAlert(TestCase):
         self.assertResultIsBOOL(AppKit.NSAlert.showsHelp)
         self.assertArgIsBOOL(AppKit.NSAlert.setShowsHelp_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSAlert.showsSuppressionButton)
         self.assertArgIsBOOL(AppKit.NSAlert.setShowsSuppressionButton_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             AppKit.NSAlert.beginSheetModalForWindow_completionHandler_,
             1,
             b"v" + objc._C_NSInteger,
         )
 
-    def test_protocols(self):
-        self.assertResultIsBOOL(TestNSAlertHelper.alertShowHelp_)
-
     @min_sdk_level("10.10")
     def test_protocols10_10(self):
         self.assertProtocolExists("NSAlertDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestNSAlertHelper.alertShowHelp_)

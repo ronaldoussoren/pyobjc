@@ -4,7 +4,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBUUID(TestCase):
-    @min_os_level("10.9")
     def test_constants(self):
         self.assertIsInstance(
             CoreBluetooth.CBUUIDCharacteristicExtendedPropertiesString, str
@@ -45,6 +44,5 @@ class TestCBUUID(TestCase):
             CoreBluetooth.CBUUIDCharacteristicObservationScheduleString, str
         )
 
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(CoreBluetooth.CBUUID, objc.objc_class)

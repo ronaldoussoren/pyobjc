@@ -3,14 +3,10 @@ import CloudKit
 
 
 class TestCKSyncEngine(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKSyncEngineSyncReason)
         self.assertEqual(CloudKit.CKSyncEngineSyncReasonScheduled, 0)
         self.assertEqual(CloudKit.CKSyncEngineSyncReasonManual, 1)
-
-    @min_sdk_level("14.0")
-    def test_protocols(self):
-        self.assertProtocolExists("CKSyncEngineDelegate", CloudKit)
 
     @min_os_level("14.0")
     def test_methods14_0(self):
@@ -33,3 +29,7 @@ class TestCKSyncEngine(TestCase):
     @min_os_level("14.2")
     def test_methods14_2(self):
         self.assertResultIsBOOL(CloudKit.CKSyncEngineFetchChangesScope.containsZoneID_)
+
+    @min_sdk_level("14.0")
+    def test_protocols(self):
+        self.assertProtocolExists("CKSyncEngineDelegate", CloudKit)

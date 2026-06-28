@@ -77,8 +77,6 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeSetAttributes, 1)
         self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeReplaceFile, 2)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageScalingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageAllowClippingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageFillColorKey, str)
@@ -192,8 +190,6 @@ class TestNSWorkspace(TestCase):
             AppKit.NSWorkspace.slideImage_from_to_, 2, AppKit.NSPoint.__typestr__
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsOut(
             AppKit.NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3
         )

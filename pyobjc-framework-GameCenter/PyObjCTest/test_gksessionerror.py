@@ -1,13 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKSessionError(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(GameCenter.GKSessionErrorDomain, str)
-
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKSessionError)
         self.assertEqual(GameCenter.GKSessionInvalidParameterError, 30500)
         self.assertEqual(GameCenter.GKSessionPeerNotFoundError, 30501)
         self.assertEqual(GameCenter.GKSessionDeclinedError, 30502)
@@ -24,3 +22,6 @@ class TestGKSessionError(TestCase):
         self.assertEqual(GameCenter.GKSessionInternalError, 30203)
         self.assertEqual(GameCenter.GKSessionUnknownError, 30204)
         self.assertEqual(GameCenter.GKSessionSystemError, 30205)
+
+    def test_constants(self):
+        self.assertIsInstance(GameCenter.GKSessionErrorDomain, str)

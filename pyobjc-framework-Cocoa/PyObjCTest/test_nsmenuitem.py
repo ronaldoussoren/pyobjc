@@ -19,8 +19,6 @@ class TestNSMenuItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSMenuItem.isAlternate)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setAlternate_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.isHighlighted)
         self.assertResultIsBOOL(AppKit.NSMenuItem.isHidden)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setHidden_, 0)

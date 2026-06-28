@@ -44,7 +44,6 @@ class TestGCMicroGamepadSnapshot(TestCase):
         self.assertIsInstance(v.buttonX, float)
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] in ("10.9", "10.10", "10.11"))
-    @min_os_level("10.9")
     def test_functions(self):
         self.assertResultIsBOOL(GameController.GCMicroGamepadSnapShotDataV100FromNSData)
         self.assertArgIsOut(GameController.GCMicroGamepadSnapShotDataV100FromNSData, 0)

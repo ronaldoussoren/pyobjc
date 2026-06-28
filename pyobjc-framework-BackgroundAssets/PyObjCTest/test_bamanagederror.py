@@ -3,7 +3,7 @@ import BackgroundAssets
 
 
 class TestBAManagedError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BAManagedErrorCode)
         self.assertEqual(BackgroundAssets.BAManagedErrorCodeAssetPackNotFound, 0)
         self.assertEqual(BackgroundAssets.BAManagedErrorCodeFileNotFound, 1)

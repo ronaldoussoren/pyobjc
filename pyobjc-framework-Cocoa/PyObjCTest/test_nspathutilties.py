@@ -1,6 +1,6 @@
 import Foundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPathUtilities(TestCase):
@@ -76,8 +76,6 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(Foundation.NSSystemDomainMask, 8)
         self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(Foundation.NSAutosavedInformationDirectory, 11)
 
         self.assertEqual(Foundation.NSInputMethodsDirectory, 16)
@@ -89,8 +87,6 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(Foundation.NSPreferencePanesDirectory, 22)
         self.assertEqual(Foundation.NSItemReplacementDirectory, 99)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSApplicationScriptsDirectory, 23)
         self.assertEqual(Foundation.NSTrashDirectory, 102)
 

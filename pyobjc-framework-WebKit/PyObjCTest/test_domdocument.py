@@ -20,8 +20,6 @@ class TestDOMDocument(TestCase):
         self.assertArgIsBOOL(WebKit.DOMDocument.createNodeIterator____, 3)
         self.assertArgIsBOOL(WebKit.DOMDocument.createTreeWalker____, 3)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMDocument.xmlStandalone)
         self.assertArgIsBOOL(WebKit.DOMDocument.setXmlStandalone_, 0)
 

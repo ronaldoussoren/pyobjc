@@ -6,8 +6,7 @@ class TestNSAppearance(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSAppearanceName, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSAppearanceNameAqua, str)
         self.assertIsInstance(AppKit.NSAppearanceNameLightContent, str)
 
@@ -41,6 +40,5 @@ class TestNSAppearance(TestCase):
             AppKit.NSAppearance.performAsCurrentDrawingAppearance_, 0, b"v"
         )
 
-    @min_os_level("10.9")
     def test_protocols(self):
         self.assertProtocolExists("NSAppearanceCustomization", AppKit)

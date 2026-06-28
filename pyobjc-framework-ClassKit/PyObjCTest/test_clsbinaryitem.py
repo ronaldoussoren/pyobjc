@@ -4,10 +4,8 @@ import ClassKit
 
 
 class TestCLSBinaryItem(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ClassKit.CLSBinaryValueType)
-
-    def test_constants(self):
         self.assertEqual(ClassKit.CLSBinaryValueTypeTrueFalse, 0)
         self.assertEqual(ClassKit.CLSBinaryValueTypePassFail, 1)
         self.assertEqual(ClassKit.CLSBinaryValueTypeYesNo, 2)

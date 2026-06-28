@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -59,7 +59,6 @@ class TestNSRuleEditor(TestCase):
             AppKit.NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1
         )
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSRuleEditorDelegate", AppKit)
 

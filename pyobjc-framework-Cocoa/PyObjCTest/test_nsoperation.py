@@ -46,8 +46,6 @@ class TestNSOperation(TestCase):
         self.assertResultIsBOOL(Foundation.NSOperationQueue.isSuspended)
         self.assertArgIsBOOL(Foundation.NSOperationQueue.setSuspended_, 0)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBlock(Foundation.NSOperation.completionBlock, b"v")
         self.assertArgIsBlock(Foundation.NSOperation.setCompletionBlock_, 0, b"v")
 
@@ -63,8 +61,6 @@ class TestNSOperation(TestCase):
             Foundation.NSOperationQueue.addOperationWithBlock_, 0, b"v"
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSOperation.isAsynchronous)
 
     @min_os_level("10.15")

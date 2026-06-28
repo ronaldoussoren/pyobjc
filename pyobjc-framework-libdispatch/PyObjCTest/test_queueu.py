@@ -22,8 +22,6 @@ class TestQueueAPI(TestCase):
         self.assertEqual(dispatch.DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM, 1)
         self.assertEqual(dispatch.DISPATCH_AUTORELEASE_FREQUENCY_NEVER, 2)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(dispatch.DISPATCH_QUEUE_CONCURRENT, objc.objc_object)
 
     @min_os_level("10.12")
@@ -40,7 +38,6 @@ class TestQueueAPI(TestCase):
             objc.objc_object,
         )
 
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(dispatch.dispatch_async, objc._C_VOID)
         self.assertArgHasType(
@@ -125,8 +122,6 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(dispatch.dispatch_after_f, 2, objc._C_PTR + objc._C_VOID)
         self.assertArgIsFunction(dispatch.dispatch_after_f, 3, b"v^v", 1)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         self.assertResultHasType(dispatch.dispatch_barrier_async, objc._C_VOID)
         self.assertArgHasType(
             dispatch.dispatch_barrier_async, 0, objc._C_ID

@@ -1,16 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKOverlayRenderer(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKOverlayRenderer, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKOverlayRenderer.canDrawMapRect_zoomScale_)
 
-    @min_os_level("10.9")
     def test_functions(self):
         MapKit.MKRoadWidthAtZoomScale

@@ -1,14 +1,11 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestSecTransform(TestCase):
-    def test_constants(self):
-        self.assertIsInstance(Security.kSecTransformErrorDomain, str)
-        self.assertIsInstance(Security.kSecTransformPreviousErrorKey, str)
-        self.assertIsInstance(Security.kSecTransformAbortOriginatorKey, str)
-
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(Security.kSecTransformErrorAttributeNotFound, 1)
         self.assertEqual(Security.kSecTransformErrorInvalidOperation, 2)
         self.assertEqual(Security.kSecTransformErrorNotInitializedCorrectly, 3)
@@ -30,16 +27,18 @@ class TestSecTransform(TestCase):
         self.assertEqual(Security.kSecTransformErrorAborted, 20)
         self.assertEqual(Security.kSecTransformInvalidArgument, 21)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(Security.kSecTransformErrorDomain, str)
+        self.assertIsInstance(Security.kSecTransformPreviousErrorKey, str)
+        self.assertIsInstance(Security.kSecTransformAbortOriginatorKey, str)
+
         self.assertIsInstance(Security.kSecTransformInputAttributeName, str)
         self.assertIsInstance(Security.kSecTransformOutputAttributeName, str)
         self.assertIsInstance(Security.kSecTransformDebugAttributeName, str)
         self.assertIsInstance(Security.kSecTransformTransformName, str)
         self.assertIsInstance(Security.kSecTransformAbortAttributeName, str)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    def test_functions(self):
         self.assertResultHasType(
             Security.SecTransformCreateFromExternalRepresentation, objc._C_ID
         )

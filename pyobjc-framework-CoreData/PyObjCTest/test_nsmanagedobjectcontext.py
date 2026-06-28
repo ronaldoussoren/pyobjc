@@ -3,31 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSManagedObjectContext(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSManagedObjectContextConcurrencyType)
-
-    @min_os_level("10.12.4")
-    def test_constants10_12_4(self):
-        self.assertIsInstance(
-            CoreData.NSManagedObjectContextDidSaveObjectIDsNotification, str
-        )
-        self.assertIsInstance(
-            CoreData.NSManagedObjectContextDidMergeChangesObjectIDsNotification, str
-        )
-        self.assertIsInstance(CoreData.NSInsertedObjectIDsKey, str)
-        self.assertIsInstance(CoreData.NSUpdatedObjectIDsKey, str)
-        self.assertIsInstance(CoreData.NSDeletedObjectIDsKey, str)
-
-    @min_os_level("10.12")
-    def test_constants10_12(self):
-        self.assertIsInstance(CoreData.NSManagedObjectContextQueryGenerationKey, str)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(CoreData.NSRefreshedObjectsKey, str)
-        self.assertIsInstance(CoreData.NSInvalidatedObjectsKey, str)
-        self.assertIsInstance(CoreData.NSInvalidatedAllObjectsKey, str)
-        self.assertIsInstance(CoreData.NSManagedObjectContextWillSaveNotification, str)
+        self.assertEqual(CoreData.NSConfinementConcurrencyType, 0)
+        self.assertEqual(CoreData.NSPrivateQueueConcurrencyType, 1)
+        self.assertEqual(CoreData.NSMainQueueConcurrencyType, 2)
 
     def test_constants(self):
         self.assertIsInstance(CoreData.NSManagedObjectContextDidSaveNotification, str)
@@ -48,9 +28,26 @@ class TestNSManagedObjectContext(TestCase):
         self.assertIsInstance(CoreData.NSOverwriteMergePolicy, CoreData.NSObject)
         self.assertIsInstance(CoreData.NSRollbackMergePolicy, CoreData.NSObject)
 
-        self.assertEqual(CoreData.NSConfinementConcurrencyType, 0)
-        self.assertEqual(CoreData.NSPrivateQueueConcurrencyType, 1)
-        self.assertEqual(CoreData.NSMainQueueConcurrencyType, 2)
+        self.assertIsInstance(CoreData.NSRefreshedObjectsKey, str)
+        self.assertIsInstance(CoreData.NSInvalidatedObjectsKey, str)
+        self.assertIsInstance(CoreData.NSInvalidatedAllObjectsKey, str)
+        self.assertIsInstance(CoreData.NSManagedObjectContextWillSaveNotification, str)
+
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(CoreData.NSManagedObjectContextQueryGenerationKey, str)
+
+    @min_os_level("10.12.4")
+    def test_constants10_12_4(self):
+        self.assertIsInstance(
+            CoreData.NSManagedObjectContextDidSaveObjectIDsNotification, str
+        )
+        self.assertIsInstance(
+            CoreData.NSManagedObjectContextDidMergeChangesObjectIDsNotification, str
+        )
+        self.assertIsInstance(CoreData.NSInsertedObjectIDsKey, str)
+        self.assertIsInstance(CoreData.NSUpdatedObjectIDsKey, str)
+        self.assertIsInstance(CoreData.NSDeletedObjectIDsKey, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(CoreData.NSManagedObjectContext.hasChanges)
@@ -76,8 +73,6 @@ class TestNSManagedObjectContext(TestCase):
             CoreData.NSManagedObjectContext.setRetainsRegisteredObjects_, 0
         )
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertArgIsOut(
             CoreData.NSManagedObjectContext.countForFetchRequest_error_, 1
         )
@@ -88,14 +83,10 @@ class TestNSManagedObjectContext(TestCase):
             CoreData.NSManagedObjectContext.obtainPermanentIDsForObjects_error_, 1
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsOut(
             CoreData.NSManagedObjectContext.existingObjectWithID_error_, 1
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBlock(CoreData.NSManagedObjectContext.performBlock_, 0, b"v")
         self.assertArgIsBlock(
             CoreData.NSManagedObjectContext.performBlockAndWait_, 0, b"v"

@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSNotification(TestCase):
@@ -10,8 +10,6 @@ class TestNSNotification(TestCase):
             b"v@:@",
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSNotificationCenter.addObserverForName_object_queue_usingBlock_,
             3,

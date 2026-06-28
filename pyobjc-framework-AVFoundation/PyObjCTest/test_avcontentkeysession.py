@@ -11,14 +11,28 @@ class TestAVContentKeySessionHelper(AVFoundation.NSObject):
 
 
 class TestAVContentKeySession(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AVFoundation.AVContentKeyRequestStatus)
+        self.assertEqual(
+            AVFoundation.AVContentKeyRequestStatusRequestingResponse, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVContentKeyRequestStatusReceivedResponse, 1
+        )  # noqa: B950
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusRenewed, 2)
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusRetried, 3)
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusCancelled, 4)
+        self.assertEqual(AVFoundation.AVContentKeyRequestStatusFailed, 5)
+
+        self.assertIsEnumType(AVFoundation.AVExternalContentProtectionStatus)
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusPending, 0)
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusSufficient, 1)
+        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusInsufficient, 2)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(
             AVFoundation.AVContentKeySessionServerPlaybackContextOption, str
         )
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVContentKeyRequestStatus)
-        self.assertIsEnumType(AVFoundation.AVExternalContentProtectionStatus)
 
     @min_os_level("10.12.4")
     def test_constants10_12_4(self):
@@ -38,24 +52,9 @@ class TestAVContentKeySession(TestCase):
             str,  # noqa: B950
         )
 
-        self.assertEqual(
-            AVFoundation.AVContentKeyRequestStatusRequestingResponse, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVContentKeyRequestStatusReceivedResponse, 1
-        )  # noqa: B950
-        self.assertEqual(AVFoundation.AVContentKeyRequestStatusRenewed, 2)
-        self.assertEqual(AVFoundation.AVContentKeyRequestStatusRetried, 3)
-        self.assertEqual(AVFoundation.AVContentKeyRequestStatusCancelled, 4)
-        self.assertEqual(AVFoundation.AVContentKeyRequestStatusFailed, 5)
-
         self.assertIsInstance(
             AVFoundation.AVContentKeyRequestProtocolVersionsKey, str
         )  # noqa: B950
-
-        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusPending, 0)
-        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusSufficient, 1)
-        self.assertEqual(AVFoundation.AVExternalContentProtectionStatusInsufficient, 2)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -83,14 +82,6 @@ class TestAVContentKeySession(TestCase):
     def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVContentKeyRequestShouldRandomizeDeviceIdentifierKey, str
-        )
-
-    def test_methods(self):
-        self.assertResultIsBOOL(
-            TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_  # noqa: B950
-        )
-        self.assertResultIsBOOL(
-            TestAVContentKeySessionHelper.mayRequireContentKeysForMediaDataProcessing  # noqa: B950
         )
 
     @min_os_level("10.12.4")
@@ -160,3 +151,11 @@ class TestAVContentKeySession(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AVContentKeySessionDelegate", AVFoundation)
         self.assertProtocolExists("AVContentKeyRecipient", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestAVContentKeySessionHelper.contentKeySession_shouldRetryContentKeyRequest_reason_  # noqa: B950
+        )
+        self.assertResultIsBOOL(
+            TestAVContentKeySessionHelper.mayRequireContentKeysForMediaDataProcessing  # noqa: B950
+        )

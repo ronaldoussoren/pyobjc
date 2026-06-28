@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
 class TestDOMHTMLPreElement(TestCase):
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLPreElement.wrap)
         self.assertArgIsBOOL(WebKit.DOMHTMLPreElement.setWrap_, 0)

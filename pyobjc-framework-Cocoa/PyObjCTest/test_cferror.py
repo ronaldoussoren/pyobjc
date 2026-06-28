@@ -5,7 +5,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestError(TestCase):
-    @min_os_level("10.5")
     def test_types(self):
         try:
             NSCFError = objc.lookUpClass("__NSCFError")
@@ -14,11 +13,9 @@ class TestError(TestCase):
 
         self.assertIs(CoreFoundation.CFErrorRef, NSCFError)
 
-    @min_os_level("10.5")
     def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFErrorGetTypeID(), int)
 
-    @min_os_level("10.5")
     def test_creation(self):
         userInfo = {"foo": "bar"}
         err = CoreFoundation.CFErrorCreate(
@@ -54,7 +51,6 @@ class TestError(TestCase):
         dct = CoreFoundation.CFErrorCopyUserInfo(err)
         self.assertEqual(dct, {"key1": "value1", "key2": "value2"})
 
-    @min_os_level("10.5")
     def test_inspect(self):
         userInfo = {
             "foo": "bar",
@@ -90,7 +86,6 @@ class TestError(TestCase):
         v = CoreFoundation.CFErrorCopyRecoverySuggestion(err)
         self.assertEqual(v, "recovery suggestion")
 
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFErrorDomainPOSIX, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDomainOSStatus, str)
@@ -104,8 +99,6 @@ class TestError(TestCase):
         self.assertIsInstance(CoreFoundation.kCFErrorDescriptionKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorUnderlyingErrorKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(CoreFoundation.kCFErrorURLKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorFilePathKey, str)
 

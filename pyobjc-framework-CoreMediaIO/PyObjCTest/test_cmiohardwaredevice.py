@@ -1,5 +1,5 @@
 import CoreMediaIO
-from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
+from PyObjCTools.TestSupport import TestCase, fourcc
 import objc
 
 CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
@@ -179,7 +179,6 @@ class TestCMIOHardwareDevice(TestCase):
             CoreMediaIO.kCMIODevicePropertyLocationExternalWirelessDevice, 4
         )
 
-    @min_os_level("10.7")
     def test_functions(self):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream

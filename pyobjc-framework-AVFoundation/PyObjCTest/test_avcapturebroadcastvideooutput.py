@@ -10,7 +10,7 @@ class TestAVCaptureBroadcastVideoOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureBroadcastVideoOutput(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AVFoundation.AVCaptureBroadcastVideoOutputDroppedFrameReplacementPolicy
         )

@@ -7,7 +7,7 @@ AVAudioNodeTapBlock = b"v@@"
 
 
 class TestAVAudioIONode(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioVoiceProcessingSpeechActivityEvent)
         self.assertEqual(AVFoundation.AVAudioVoiceProcessingSpeechActivityStarted, 0)
         self.assertEqual(AVFoundation.AVAudioVoiceProcessingSpeechActivityEnded, 1)
@@ -26,8 +26,10 @@ class TestAVAudioIONode(TestCase):
             AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMax, 30
         )
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVLayerVideoGravity, str)
+
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, str)

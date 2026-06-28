@@ -1,10 +1,9 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreWLANUtil(TestCase):
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    def test_functions(self):
         self.assertArgIsOut(CoreWLAN.CWKeychainCopyEAPUsernameAndPassword, 1)
         self.assertArgIsCFRetained(CoreWLAN.CWKeychainCopyEAPUsernameAndPassword, 1)
         self.assertArgIsOut(CoreWLAN.CWKeychainCopyEAPUsernameAndPassword, 2)
@@ -27,8 +26,6 @@ class TestCoreWLANUtil(TestCase):
         self.assertArgIsOut(CoreWLAN.CWKeychainCopyPassword, 1)
         self.assertArgIsCFRetained(CoreWLAN.CWKeychainCopyPassword, 1)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiPassword, 2)
         self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiEAPUsernameAndPassword, 2)
         self.assertArgIsOut(CoreWLAN.CWKeychainFindWiFiEAPUsernameAndPassword, 3)

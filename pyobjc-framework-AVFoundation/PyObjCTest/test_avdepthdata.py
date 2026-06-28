@@ -3,14 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVDepthData(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVDepthDataAccuracy)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVDepthDataQuality)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVDepthDataQualityLow, 0)
         self.assertEqual(AVFoundation.AVDepthDataQualityHigh, 1)
 
+        self.assertIsEnumType(AVFoundation.AVDepthDataAccuracy)
         self.assertEqual(AVFoundation.AVDepthDataAccuracyRelative, 0)
         self.assertEqual(AVFoundation.AVDepthDataAccuracyAbsolute, 1)
 

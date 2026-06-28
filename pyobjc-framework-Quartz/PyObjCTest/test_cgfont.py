@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
@@ -24,9 +24,6 @@ class TestCGFont(TestCase):
         self.assertEqual(Quartz.CGGlyphMin, 0)
         self.assertEqual(Quartz.CGGlyphMax, Quartz.kCGGlyphMax)
 
-    @min_os_level("10.5")
-    # Most functions should work on 10.4 as well, except for the convenient
-    # contruction functions
     def test_functions(self):
         self.assertIsInstance(Quartz.CGFontGetTypeID(), int)
 

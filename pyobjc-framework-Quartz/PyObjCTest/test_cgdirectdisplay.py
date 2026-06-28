@@ -1,24 +1,13 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
 
 class TestCGDirectDisplay(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(Quartz.kCGDisplayShowDuplicateLowResolutionModes, str)
-
-    @min_os_level("10.8")
-    def test_functions10_8(self):
-        mainID = Quartz.CGMainDisplayID()
-        mode = Quartz.CGDisplayCopyDisplayMode(mainID)
-        self.assertIsInstance(mode, Quartz.CGDisplayModeRef)
-
-        w = Quartz.CGDisplayModeGetPixelWidth(mode)
-        self.assertIsInstance(w, int)
-
-        h = Quartz.CGDisplayModeGetPixelHeight(mode)
-        self.assertIsInstance(h, int)
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGCaptureOptions)
+        self.assertEqual(Quartz.kCGCaptureNoOptions, 0)
+        self.assertEqual(Quartz.kCGCaptureNoFill, 1)
 
     def test_constants(self):
         self.assertEqual(Quartz.kCGNullDirectDisplay, 0)
@@ -48,12 +37,13 @@ class TestCGDirectDisplay(TestCase):
             Quartz.kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput"
         )
 
-        self.assertEqual(Quartz.kCGCaptureNoOptions, 0)
-        self.assertEqual(Quartz.kCGCaptureNoFill, 1)
-
         self.assertNotHasAttr(Quartz, "kCGDirectMainDisplay")
 
         self.assertEqual(Quartz.CGDisplayNoErr, Quartz.kCGErrorSuccess)
+        self.assertIsInstance(Quartz.kCGDisplayShowDuplicateLowResolutionModes, str)
+
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGDisplayModeRef)
 
     def test_functions(self):
         self.assertIsInstance(Quartz.CGMainDisplayID(), int)
@@ -328,12 +318,16 @@ class TestCGDirectDisplay(TestCase):
         )
         self.assertArgSizeInArg(Quartz.CGSetDisplayTransferByByteTable, 4, 1)
 
-    @min_os_level("10.6")
-    def test_types10_6(self):
-        self.assertIsCFType(Quartz.CGDisplayModeRef)
+        mainID = Quartz.CGMainDisplayID()
+        mode = Quartz.CGDisplayCopyDisplayMode(mainID)
+        self.assertIsInstance(mode, Quartz.CGDisplayModeRef)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+        w = Quartz.CGDisplayModeGetPixelWidth(mode)
+        self.assertIsInstance(w, int)
+
+        h = Quartz.CGDisplayModeGetPixelHeight(mode)
+        self.assertIsInstance(h, int)
+
         mainID = Quartz.CGMainDisplayID()
 
         self.assertResultIsCFRetained(Quartz.CGDisplayCopyAllDisplayModes)

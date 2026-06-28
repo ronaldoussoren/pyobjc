@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManagerAuthorizationState
         )
@@ -18,13 +18,6 @@ class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManagerAuthorizationStateNotDetermined,
             2,
-        )
-
-    @min_sdk_level("14.4")
-    def test_protocols(self):
-        self.assertProtocolExists(
-            "ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest",
-            AuthenticationServices,
         )
 
     @min_os_level("13.3")
@@ -47,4 +40,11 @@ class TestASAuthorizationWebBrowserPublicKeyCredentialManager(TestCase):
             AuthenticationServices.ASAuthorizationWebBrowserPublicKeyCredentialManager.platformCredentialsForRelyingParty_completionHandler_,
             1,
             b"v@",
+        )
+
+    @min_sdk_level("14.4")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "ASAuthorizationWebBrowserSecurityKeyPublicKeyCredentialAssertionRequest",
+            AuthenticationServices,
         )

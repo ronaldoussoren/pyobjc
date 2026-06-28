@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 import MapKit
 
 
 class TestMKCircleRenderer(TestCase):
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(MapKit.MKCircleRenderer, objc.objc_class)

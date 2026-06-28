@@ -8,16 +8,12 @@ class TestNSScreen(TestCase):
         self.assertEqual(AppKit.NSScreenTouchCapabilitiesNone, 0)
         self.assertEqual(AppKit.NSScreenTouchCapabilitiesMultiTouch, 1 << 0)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSScreenColorSpaceDidChangeNotification, str)
 
     def test_methods(self):
         m = AppKit.NSScreen.supportedWindowDepths.__metadata__()
         self.assertTrue(m["retval"]["c_array_delimited_by_null"])
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultHasType(
             AppKit.NSScreen.convertRectToBacking_, AppKit.NSRect.__typestr__
         )
@@ -37,8 +33,6 @@ class TestNSScreen(TestCase):
             AppKit.NSScreen.backingAlignedRect_options_, 0, AppKit.NSRect.__typestr__
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(AppKit.NSScreen.screensHaveSeparateSpaces)
 
     @min_os_level("10.12")

@@ -18,24 +18,22 @@ class TestAVSpeechSynthesisHelper(AVFoundation.NSObject):
 
 
 class TestAVSpeechSynthesis(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVSpeechBoundary)
-        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceGender)
-        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceQuality)
-        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisMarkerMark)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVSpeechBoundaryImmediate, 0)
         self.assertEqual(AVFoundation.AVSpeechBoundaryWord, 1)
 
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceQuality)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityDefault, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityEnhanced, 2)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceQualityPremium, 3)
 
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisVoiceGender)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderUnspecified, 0)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderMale, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisVoiceGenderFemale, 2)
 
+        self.assertIsEnumType(AVFoundation.AVSpeechSynthesisMarkerMark)
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkPhoneme, 0)
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkWord, 1)
         self.assertEqual(AVFoundation.AVSpeechSynthesisMarkerMarkSentence, 2)
@@ -89,13 +87,6 @@ class TestAVSpeechSynthesis(TestCase):
     def test_constants14_0(self):
         self.assertIsInstance(
             AVFoundation.AVSpeechSynthesisAvailableVoicesDidChangeNotification, str
-        )
-
-    def test_methods(self):
-        self.assertArgHasType(
-            TestAVSpeechSynthesisHelper.speechSynthesizer_willSpeakRangeOfSpeechString_utterance_,  # noqa: B950
-            1,
-            AVFoundation.NSRange.__typestr__,
         )
 
     @min_os_level("10.14")
@@ -154,3 +145,10 @@ class TestAVSpeechSynthesis(TestCase):
     @min_sdk_level("10.14")
     def test_protocols(self):
         self.assertProtocolExists("AVSpeechSynthesizerDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestAVSpeechSynthesisHelper.speechSynthesizer_willSpeakRangeOfSpeechString_utterance_,  # noqa: B950
+            1,
+            AVFoundation.NSRange.__typestr__,
+        )

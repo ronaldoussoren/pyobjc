@@ -1,9 +1,9 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
-class FindHelper(AppKit.NSObject):
+class TestNSTextFinderHelper(AppKit.NSObject):
     def rectsForCharacterRange_(self, r):
         return 1
 
@@ -51,12 +51,8 @@ class TestNSTextFinder(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPasteboardTypeTextFinderOptionKey, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextFinderAction)
-        self.assertIsEnumType(AppKit.NSTextFinderMatchingType)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSTextFinderActionShowFindInterface, 1)
         self.assertEqual(AppKit.NSTextFinderActionNextMatch, 2)
         self.assertEqual(AppKit.NSTextFinderActionPreviousMatch, 3)
@@ -71,16 +67,17 @@ class TestNSTextFinder(TestCase):
         self.assertEqual(AppKit.NSTextFinderActionShowReplaceInterface, 12)
         self.assertEqual(AppKit.NSTextFinderActionHideReplaceInterface, 13)
 
-        self.assertIsInstance(AppKit.NSTextFinderCaseInsensitiveKey, str)
-        self.assertIsInstance(AppKit.NSTextFinderMatchingTypeKey, str)
-
+        self.assertIsEnumType(AppKit.NSTextFinderMatchingType)
         self.assertEqual(AppKit.NSTextFinderMatchingTypeContains, 0)
         self.assertEqual(AppKit.NSTextFinderMatchingTypeStartsWith, 1)
         self.assertEqual(AppKit.NSTextFinderMatchingTypeFullWord, 2)
         self.assertEqual(AppKit.NSTextFinderMatchingTypeEndsWith, 3)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSTextFinderCaseInsensitiveKey, str)
+        self.assertIsInstance(AppKit.NSTextFinderMatchingTypeKey, str)
+
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextFinder.validateAction_)
         self.assertResultIsBOOL(AppKit.NSTextFinder.findIndicatorNeedsUpdate)
         self.assertArgIsBOOL(AppKit.NSTextFinder.setFindIndicatorNeedsUpdate_, 0)
@@ -93,66 +90,70 @@ class TestNSTextFinder(TestCase):
             AppKit.NSTextFinder.setIncrementalSearchingShouldDimContentView_, 0
         )
 
-    @min_os_level("10.10")
     def test_protocols(self):
         self.assertProtocolExists("NSTextFinderClient", AppKit)
 
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
-        self.assertResultIsBOOL(FindHelper.isSelectable)
-        self.assertResultIsBOOL(FindHelper.allowsMultipleSelection)
-        self.assertResultIsBOOL(FindHelper.isEditable)
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestNSTextFinderHelper.isSelectable)
+        self.assertResultIsBOOL(TestNSTextFinderHelper.allowsMultipleSelection)
+        self.assertResultIsBOOL(TestNSTextFinderHelper.isEditable)
 
         self.assertArgHasType(
-            FindHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
+            TestNSTextFinderHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            FindHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
+            TestNSTextFinderHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
             1,
             b"o^" + AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            FindHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
+            TestNSTextFinderHelper.stringAtIndex_effectiveRange_endswithSearchBoundary_,
             2,
             b"o^" + objc._C_NSBOOL,
         )
 
-        self.assertResultHasType(FindHelper.stringLength, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestNSTextFinderHelper.stringLength, objc._C_NSUInteger
+        )
 
         self.assertResultHasType(
-            FindHelper.firstSelectedRange, AppKit.NSRange.__typestr__
+            TestNSTextFinderHelper.firstSelectedRange, AppKit.NSRange.__typestr__
         )
         self.assertArgHasType(
-            FindHelper.scrollRangeToVisible_, 0, AppKit.NSRange.__typestr__
+            TestNSTextFinderHelper.scrollRangeToVisible_, 0, AppKit.NSRange.__typestr__
         )
-        self.assertResultIsBOOL(FindHelper.shouldReplaceCharactersInRanges_withStrings_)
+        self.assertResultIsBOOL(
+            TestNSTextFinderHelper.shouldReplaceCharactersInRanges_withStrings_
+        )
         self.assertArgHasType(
-            FindHelper.replaceCharactersInRange_withString_,
+            TestNSTextFinderHelper.replaceCharactersInRange_withString_,
             0,
             AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            FindHelper.rectsForCharacterRange_, 0, AppKit.NSRange.__typestr__
+            TestNSTextFinderHelper.rectsForCharacterRange_,
+            0,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            FindHelper.contentViewAtIndex_effectiveCharacterRange_,
+            TestNSTextFinderHelper.contentViewAtIndex_effectiveCharacterRange_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            FindHelper.contentViewAtIndex_effectiveCharacterRange_,
+            TestNSTextFinderHelper.contentViewAtIndex_effectiveCharacterRange_,
             1,
             b"o^" + AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            FindHelper.drawCharactersInRange_forContentView_,
+            TestNSTextFinderHelper.drawCharactersInRange_forContentView_,
             0,
             AppKit.NSRange.__typestr__,
         )
 
         self.assertProtocolExists("NSTextFinderBarContainer", AppKit)
 
-        self.assertResultIsBOOL(FindHelper.isFindBarVisible)
-        self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)
+        self.assertResultIsBOOL(TestNSTextFinderHelper.isFindBarVisible)
+        self.assertArgIsBOOL(TestNSTextFinderHelper.setFindBarVisible_, 0)

@@ -6,12 +6,71 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBezierPath(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSBezierPathElement)
-        self.assertIsEnumType(AppKit.NSLineCapStyle)
-        self.assertIsEnumType(AppKit.NSLineJoinStyle)
-        self.assertIsEnumType(AppKit.NSWindingRule)
+    def test_enums(self):
+        # Legacy alias:
+        self.assertEqual(AppKit.NSButtLineCapStyle, 0)
+        self.assertEqual(AppKit.NSRoundLineCapStyle, 1)
+        self.assertEqual(AppKit.NSSquareLineCapStyle, 2)
 
+        # Legacy alias:
+        self.assertEqual(AppKit.NSMiterLineJoinStyle, 0)
+        self.assertEqual(AppKit.NSRoundLineJoinStyle, 1)
+        self.assertEqual(AppKit.NSBevelLineJoinStyle, 2)
+
+        # Legacy alias:
+        self.assertEqual(AppKit.NSNonZeroWindingRule, 0)
+        self.assertEqual(AppKit.NSEvenOddWindingRule, 1)
+
+        self.assertEqual(AppKit.NSMoveToBezierPathElement, 0)
+        self.assertEqual(AppKit.NSLineToBezierPathElement, 1)
+        self.assertEqual(AppKit.NSCurveToBezierPathElement, 2)
+        self.assertEqual(AppKit.NSClosePathBezierPathElement, 3)
+
+        self.assertIsEnumType(AppKit.NSLineCapStyle)
+        self.assertEqual(AppKit.NSLineCapStyleButt, 0)
+        self.assertEqual(AppKit.NSLineCapStyleRound, 1)
+        self.assertEqual(AppKit.NSLineCapStyleSquare, 2)
+
+        self.assertIsEnumType(AppKit.NSLineJoinStyle)
+        self.assertEqual(AppKit.NSLineJoinStyleMiter, 0)
+        self.assertEqual(AppKit.NSLineJoinStyleRound, 1)
+        self.assertEqual(AppKit.NSLineJoinStyleBevel, 2)
+
+        self.assertIsEnumType(AppKit.NSWindingRule)
+        self.assertEqual(AppKit.NSWindingRuleNonZero, 0)
+        self.assertEqual(AppKit.NSWindingRuleEvenOdd, 1)
+
+        self.assertIsEnumType(AppKit.NSBezierPathElement)
+        self.assertEqual(AppKit.NSBezierPathElementMoveTo, 0)
+        self.assertEqual(AppKit.NSBezierPathElementLineTo, 1)
+        self.assertEqual(AppKit.NSBezierPathElementCurveTo, 2)
+        self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
+        self.assertEqual(AppKit.NSBezierPathElementCubicCurveTo, 2)
+        self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
+        self.assertEqual(AppKit.NSBezierPathElementQuadraticCurveTo, 4)
+        self.assertEqual(
+            AppKit.NSBezierPathElementCurveTo, AppKit.NSBezierPathElementCubicCurveTo
+        )
+
+    def test_methods(self):
+        self.assertResultIsBOOL(AppKit.NSBezierPath.isEmpty)
+        self.assertResultIsBOOL(AppKit.NSBezierPath.containsPoint_)
+        self.assertResultIsBOOL(AppKit.NSBezierPath.cachesBezierPath)
+        self.assertArgIsBOOL(AppKit.NSBezierPath.setCachesBezierPath_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSBezierPath.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_clockwise_,  # noqa: B950
+            4,
+        )
+
+        self.assertArgSizeInArg(
+            AppKit.NSBezierPath.appendBezierPathWithGlyphs_count_inFont_, 0, 1
+        )
+
+        # XXX: AppKit.NSBezierPath.drawPackedGlyphs_atPoint_
+        # XXX: AppKit.NSBezierPath.appendBezierPathWithPackedGlyphs_
+
+
+class TestNSBezierPathUsage(TestCase):
     def assertPointEquals(self, point1, point2):
         self.assertAlmostEqual(point1[0], point2[0])
         self.assertAlmostEqual(point1[1], point2[1])
@@ -113,59 +172,3 @@ class TestNSBezierPath(TestCase):
         self.assertPointEquals(points[0], (0, 1))  # control point 1
         self.assertPointEquals(points[1], (2, 3))  # control point 2
         self.assertPointEquals(points[2], (3, 4))  # end point
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSButtLineCapStyle, 0)
-        self.assertEqual(AppKit.NSRoundLineCapStyle, 1)
-        self.assertEqual(AppKit.NSSquareLineCapStyle, 2)
-
-        self.assertEqual(AppKit.NSMiterLineJoinStyle, 0)
-        self.assertEqual(AppKit.NSRoundLineJoinStyle, 1)
-        self.assertEqual(AppKit.NSBevelLineJoinStyle, 2)
-
-        self.assertEqual(AppKit.NSNonZeroWindingRule, 0)
-        self.assertEqual(AppKit.NSEvenOddWindingRule, 1)
-
-        self.assertEqual(AppKit.NSMoveToBezierPathElement, 0)
-        self.assertEqual(AppKit.NSLineToBezierPathElement, 1)
-        self.assertEqual(AppKit.NSCurveToBezierPathElement, 2)
-        self.assertEqual(AppKit.NSClosePathBezierPathElement, 3)
-
-        self.assertEqual(AppKit.NSLineCapStyleButt, 0)
-        self.assertEqual(AppKit.NSLineCapStyleRound, 1)
-        self.assertEqual(AppKit.NSLineCapStyleSquare, 2)
-
-        self.assertEqual(AppKit.NSLineJoinStyleMiter, 0)
-        self.assertEqual(AppKit.NSLineJoinStyleRound, 1)
-        self.assertEqual(AppKit.NSLineJoinStyleBevel, 2)
-
-        self.assertEqual(AppKit.NSWindingRuleNonZero, 0)
-        self.assertEqual(AppKit.NSWindingRuleEvenOdd, 1)
-
-        self.assertEqual(AppKit.NSBezierPathElementMoveTo, 0)
-        self.assertEqual(AppKit.NSBezierPathElementLineTo, 1)
-        self.assertEqual(AppKit.NSBezierPathElementCurveTo, 2)
-        self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
-        self.assertEqual(AppKit.NSBezierPathElementCubicCurveTo, 2)
-        self.assertEqual(AppKit.NSBezierPathElementClosePath, 3)
-        self.assertEqual(AppKit.NSBezierPathElementQuadraticCurveTo, 4)
-        self.assertEqual(
-            AppKit.NSBezierPathElementCurveTo, AppKit.NSBezierPathElementCubicCurveTo
-        )
-
-    def test_methods(self):
-        self.assertResultIsBOOL(AppKit.NSBezierPath.isEmpty)
-        self.assertResultIsBOOL(AppKit.NSBezierPath.containsPoint_)
-        self.assertResultIsBOOL(AppKit.NSBezierPath.cachesBezierPath)
-        self.assertArgIsBOOL(AppKit.NSBezierPath.setCachesBezierPath_, 0)
-        self.assertArgIsBOOL(
-            AppKit.NSBezierPath.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_clockwise_,  # noqa: B950
-            4,
-        )
-
-        self.assertArgSizeInArg(
-            AppKit.NSBezierPath.appendBezierPathWithGlyphs_count_inFont_, 0, 1
-        )
-
-        # XXX: AppKit.NSBezierPath.drawPackedGlyphs_atPoint_
-        # XXX: AppKit.NSBezierPath.appendBezierPathWithPackedGlyphs_

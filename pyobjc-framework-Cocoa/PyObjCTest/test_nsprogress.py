@@ -8,7 +8,6 @@ class TestNSProgress(TestCase):
         self.assertIsTypedEnum(AppKit.NSProgressKind, str)
         self.assertIsTypedEnum(AppKit.NSProgressUserInfoKey, str)
 
-    @min_os_level("10.9")
     def test_constants(self):
         self.assertIsInstance(AppKit.NSProgressEstimatedTimeRemainingKey, str)
         self.assertIsInstance(AppKit.NSProgressThroughputKey, str)
@@ -35,7 +34,6 @@ class TestNSProgress(TestCase):
     def test_constants12_0(self):
         self.assertIsInstance(AppKit.NSProgressFileOperationKindDuplicating, str)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSProgress.isCancellable)
         self.assertArgIsBOOL(AppKit.NSProgress.setCancellable_, 0)

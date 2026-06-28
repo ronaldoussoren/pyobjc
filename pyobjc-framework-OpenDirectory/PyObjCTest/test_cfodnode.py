@@ -54,8 +54,6 @@ class TestCFODNode(TestCase):
 
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomCall, 3)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(CFOpenDirectory.ODNodeCustomFunction, 3)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopyPolicies)

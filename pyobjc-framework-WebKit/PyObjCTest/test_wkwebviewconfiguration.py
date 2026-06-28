@@ -5,19 +5,15 @@ import WebKit
 
 
 class TestWKWebViewConfiguration(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(WebKit.WKAudiovisualMediaTypes)
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKUserInterfaceDirectionPolicy)
-
-    def test_constants(self):
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicyContent, 0)
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicySystem, 1)
 
+        self.assertIsEnumType(WebKit.WKAudiovisualMediaTypes)
         self.assertEqual(WebKit.WKAudiovisualMediaTypeNone, 0)
         self.assertEqual(WebKit.WKAudiovisualMediaTypeAudio, 1 << 0)
         self.assertEqual(WebKit.WKAudiovisualMediaTypeVideo, 1 << 1)
-
-        # The entire enum is only available in 64-bit code.
         self.assertEqual(WebKit.WKAudiovisualMediaTypeAll, sys.maxsize * 2 + 1)
 
     @min_os_level("10.10")

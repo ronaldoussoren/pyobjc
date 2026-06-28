@@ -1,18 +1,13 @@
 import InputMethodKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestIMKServer(TestCase):
-    def test_broken_constants(self):
-        # The definitions below are defined on 10.5, but not actually
-        # exported by the framework.
-        #
-        # See also: Radar #6783035
+    def test_constants(self):
         self.assertIsInstance(InputMethodKit.IMKModeDictionary, str)
         self.assertIsInstance(InputMethodKit.IMKDelegateClass, str)
         self.assertIsInstance(InputMethodKit.IMKControllerClass, str)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(InputMethodKit.IMKServer.new().paletteWillTerminate)
         self.assertResultIsBOOL(InputMethodKit.IMKServer.new().lastKeyEventWasDeadKey)

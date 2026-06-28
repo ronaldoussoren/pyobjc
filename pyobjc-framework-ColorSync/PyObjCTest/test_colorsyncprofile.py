@@ -9,7 +9,6 @@ class TestColorSyncProfile(TestCase):
         self.assertIsCFType(ColorSync.ColorSyncProfileRef)
         self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 
-    @min_os_level("10.4")
     def test_functions10_4(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsWideGamut, objc._C_BOOL)
 

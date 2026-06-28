@@ -3,7 +3,7 @@ import BackgroundAssets
 
 
 class TestBATypes(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BAContentRequest)
         self.assertEqual(BackgroundAssets.BAContentRequestInstall, 1)
         self.assertEqual(BackgroundAssets.BAContentRequestUpdate, 2)

@@ -4,19 +4,15 @@ import GameController
 
 
 class TestGCControllerElement(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCSystemGestureState)
-
-    def test_constants(self):
         self.assertEqual(GameController.GCSystemGestureStateEnabled, 0)
         self.assertEqual(GameController.GCSystemGestureStateAlwaysReceive, 1)
         self.assertEqual(GameController.GCSystemGestureStateDisabled, 2)
 
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(GameController.GCControllerElement, objc.objc_class)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(GameController.GCControllerElement.isAnalog)
 

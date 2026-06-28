@@ -1,5 +1,5 @@
 import SyncServices
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestISyncConflictPropertyTypeHelper(SyncServices.NSObject):
@@ -15,10 +15,9 @@ class TestISyncConflictPropertyTypeHelper(SyncServices.NSObject):
 
 class TestISyncConflictPropertyType(TestCase):
     def test_protocols(self):
+        self.assertProtocolExists("ISyncConflictPropertyType", SyncServices)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRelationship)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isToMany)
         self.assertResultIsBOOL(TestISyncConflictPropertyTypeHelper.isRequired)
-
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
-        self.assertProtocolExists("ISyncConflictPropertyType", SyncServices)

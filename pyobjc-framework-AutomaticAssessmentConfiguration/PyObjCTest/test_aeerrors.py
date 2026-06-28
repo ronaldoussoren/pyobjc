@@ -3,11 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAEErrors(TestCase):
-    def test_constants(self):
-        self.assertIsInstance(
-            AutomaticAssessmentConfiguration.AEAssessmentErrorDomain, str
-        )
-
+    def test_enums(self):
         self.assertIsEnumType(AutomaticAssessmentConfiguration.AEAssessmentErrorCode)
         self.assertEqual(AutomaticAssessmentConfiguration.AEAssessmentErrorUnknown, 1)
         self.assertEqual(
@@ -24,6 +20,11 @@ class TestAEErrors(TestCase):
         self.assertEqual(
             AutomaticAssessmentConfiguration.AEAssessmentErrorRequiredParticipantsNotAvailable,
             5,
+        )
+
+    def test_constants(self):
+        self.assertIsInstance(
+            AutomaticAssessmentConfiguration.AEAssessmentErrorDomain, str
         )
 
     @min_os_level("26.0")

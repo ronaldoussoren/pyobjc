@@ -31,8 +31,6 @@ class TestNSProcessInfo(TestCase):
         self.assertEqual(Foundation.NSSunOSOperatingSystem, 6)
         self.assertEqual(Foundation.NSOSF1OperatingSystem, 7)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertEqual(Foundation.NSActivityIdleDisplaySleepDisabled, 1 << 40)
         self.assertEqual(Foundation.NSActivityIdleSystemSleepDisabled, 1 << 20)
         self.assertEqual(Foundation.NSActivitySuddenTerminationDisabled, 1 << 14)
@@ -72,7 +70,6 @@ class TestNSProcessInfo(TestCase):
             Foundation.NSProcessInfoPowerStateDidChangeNotification, str
         )
 
-    @min_os_level("10.6")
     def test_nsdisabled_sudden_termination(self):
         # annoyingly we cannot easily test if this has an effect, but
         # this at least guards against typos.
@@ -89,8 +86,7 @@ class TestNSProcessInfo(TestCase):
         except TestException:
             pass
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Foundation.NSProcessInfo.setAutomaticTerminationSupportEnabled_, 0
         )
@@ -111,8 +107,6 @@ class TestNSProcessInfo(TestCase):
         except TestException:
             pass
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             Foundation.NSProcessInfo.performActivityWithOptions_reason_usingBlock_,
             2,

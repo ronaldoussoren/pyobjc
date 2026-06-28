@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
+from PyObjCTools.TestSupport import TestCase, max_os_level
 import Quartz
 import objc
 
@@ -15,7 +15,6 @@ class TestImageKitDeprecatedHelper(Quartz.NSObject):
 
 
 class TestImageKitDeprecated(TestCase):
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertEqual(
             Quartz.IKImagePickerAllowsVideoCaptureKey,
@@ -59,7 +58,13 @@ class TestImageKitDeprecated(TestCase):
         self.assertIsInstance(Quartz.IKPictureTakerShowEmptyPicture, str)
         self.assertIsInstance(Quartz.IKPictureTakerCropAreaSizeKey, str)
 
-    @min_os_level("10.5")
+    @max_os_level("10.13")
+    def test_constants_removed_10_13(self):
+        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeBackground, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeForeground, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeSelection, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypePlaceHolder, str)
+
     def test_methods(self):
         self.assertArgIsSEL(
             Quartz.IKImagePicker.beginImagePickerWithDelegate_didEndSelector_contextInfo_,
@@ -72,8 +77,7 @@ class TestImageKitDeprecated(TestCase):
             b"v@:@" + objc._C_NSUInteger + b"^v",
         )
 
-    @min_os_level("10.5")
-    def test_protocols(self):
+    def test_protocol_methods(self):
         # self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 
         self.assertResultHasType(
@@ -93,10 +97,3 @@ class TestImageKitDeprecated(TestCase):
             2,
             objc._C_NSUInteger,
         )
-
-    @os_level_between("10.6", "10.13")
-    def test_constants10_6(self):
-        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeBackground, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeForeground, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypeSelection, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCellLayerTypePlaceHolder, str)

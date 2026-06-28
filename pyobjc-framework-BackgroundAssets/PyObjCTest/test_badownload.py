@@ -3,7 +3,7 @@ import BackgroundAssets
 
 
 class TestBADownload(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BADownloadState)
         self.assertEqual(BackgroundAssets.BADownloadStateFailed, -1)
         self.assertEqual(BackgroundAssets.BADownloadStateCreated, 0)
@@ -11,9 +11,10 @@ class TestBADownload(TestCase):
         self.assertEqual(BackgroundAssets.BADownloadStateDownloading, 2)
         self.assertEqual(BackgroundAssets.BADownloadStateFinished, 3)
 
+        self.assertIsEnumType(BackgroundAssets.BADownloaderPriority)
+
     @min_os_level("13.0")
     def test_constants13_0(self):
-        self.assertIsEnumType(BackgroundAssets.BADownloaderPriority)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityMin, int)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityDefault, int)
         self.assertIsInstance(BackgroundAssets.BADownloaderPriorityMax, int)

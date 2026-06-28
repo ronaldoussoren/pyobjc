@@ -217,8 +217,6 @@ class TestBase(TestCase):
         if v is not None:
             self.assertIsInstance(v, CoreFoundation.CFAllocatorRef)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_1, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_2, 476.10)
@@ -227,8 +225,7 @@ class TestBase(TestCase):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_5, 476.15)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_6, 476.17)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
+    def test_functions(self):
         obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         CoreFoundation.CFRetain(obj)
         CoreFoundation.CFAutorelease(obj)

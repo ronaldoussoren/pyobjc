@@ -6,7 +6,6 @@ from objc import simd
 
 
 class TestSKPhysicsWorld(TestCase):
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertArgIsBlock(
             SpriteKit.SKPhysicsWorld.enumerateBodiesAtPoint_usingBlock_, 1, b"v@o^Z"

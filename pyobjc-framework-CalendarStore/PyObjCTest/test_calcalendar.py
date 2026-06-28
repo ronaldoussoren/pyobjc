@@ -1,5 +1,5 @@
 import CalendarStore
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalCalendar(TestCase):
@@ -10,8 +10,6 @@ class TestCalCalendar(TestCase):
         self.assertIsInstance(CalendarStore.CalCalendarTypeSubscription, str)
         self.assertIsInstance(CalendarStore.CalCalendarTypeIMAP, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(CalendarStore.CalCalendarTypeExchange, str)
 
     def test_methods(self):

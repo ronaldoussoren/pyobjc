@@ -3,12 +3,8 @@ import EventKit
 
 
 class TestEKSource(TestCase):
-    @min_os_level("10.8")
-    def test_basic(self):
-        self.assertTrue(hasattr(EventKit, "EKSource"))
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(EventKit.EKSourceType)
         self.assertEqual(EventKit.EKSourceTypeLocal, 0)
         self.assertEqual(EventKit.EKSourceTypeExchange, 1)
         self.assertEqual(EventKit.EKSourceTypeCalDAV, 2)
@@ -16,6 +12,7 @@ class TestEKSource(TestCase):
         self.assertEqual(EventKit.EKSourceTypeSubscribed, 4)
         self.assertEqual(EventKit.EKSourceTypeBirthdays, 5)
 
+        self.assertIsEnumType(EventKit.EKEntityType)
         self.assertEqual(EventKit.EKEntityTypeEvent, 0)
         self.assertEqual(EventKit.EKEntityTypeReminder, 1)
 

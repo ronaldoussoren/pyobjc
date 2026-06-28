@@ -1,16 +1,14 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestIKDeviceBrowserView(TestCase):
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_constants(self):
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeTable, 0)
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeOutline, 1)
         self.assertEqual(Quartz.IKDeviceBrowserViewDisplayModeIcon, 2)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.IKDeviceBrowserView.displaysLocalCameras)
         self.assertArgIsBOOL(Quartz.IKDeviceBrowserView.setDisplaysLocalCameras_, 0)
 
@@ -23,6 +21,5 @@ class TestIKDeviceBrowserView(TestCase):
         self.assertResultIsBOOL(Quartz.IKDeviceBrowserView.displaysNetworkScanners)
         self.assertArgIsBOOL(Quartz.IKDeviceBrowserView.setDisplaysNetworkScanners_, 0)
 
-    @min_os_level("10.10")
     def test_protocols(self):
         self.assertProtocolExists("IKDeviceBrowserViewDelegate", Quartz)

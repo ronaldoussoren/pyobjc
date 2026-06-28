@@ -129,3 +129,12 @@ class TestHKHealthStore(TestCase):
                 3,
                 b"vZ@",
             )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        with self.subTest("getEarliestAuthorizedSampleDateForTypes"):
+            self.assertArgIsBlock(
+                HealthKit.HKHealthStore.getEarliestAuthorizedSampleDateForTypes_completion_,
+                2,
+                b"v@@@",
+            )

@@ -27,43 +27,8 @@ class TestCVPixelFormatDescription(TestCase):
         self.assertIsInstance(Quartz.kCVPixelFormatOpenGLCompatibility, str)
         self.assertIsInstance(Quartz.kCVPixelFormatFillExtendedPixelsCallback, str)
 
-    def test_functions(self):
-        self.assertResultIsCFRetained(
-            Quartz.CVPixelFormatDescriptionCreateWithPixelFormatType
-        )
-        v = Quartz.CVPixelFormatDescriptionCreateWithPixelFormatType(
-            None, Quartz.kCVPixelFormatType_32ARGB
-        )
-        self.assertIsInstance(v, Quartz.CFDictionaryRef)
-
-        self.assertResultIsCFRetained(
-            Quartz.CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes
-        )
-        v = Quartz.CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes(None)
-        self.assertIsInstance(v, Quartz.CFArrayRef)
-        self.assertNotEqual(len(v), 0)
-        self.assertIsInstance(v[0], int)
-
-        tp = 42
-        while tp in v:
-            tp += 1
-
-        Quartz.CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType({}, tp)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCVPixelFormatBlackBlock, str)
 
-    @min_os_level("12.0")
-    def test_functions12_0(self):
-        self.assertResultIsBOOL(Quartz.CVIsCompressedPixelFormatAvailable)
-
-    @min_os_level("26.0")
-    def test_functions26_0(self):
-        self.assertResultIsCFRetained(Quartz.CVPixelFormatTypeCopyFourCharCodeString)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCVPixelFormatContainsAlpha, str)
 
     @min_os_level("10.10")
@@ -89,3 +54,34 @@ class TestCVPixelFormatDescription(TestCase):
     @min_os_level("15.0")
     def test_constants15_0(self):
         self.assertIsInstance(Quartz.kCVPixelFormatBitsPerComponent, str)
+
+    def test_functions(self):
+        self.assertResultIsCFRetained(
+            Quartz.CVPixelFormatDescriptionCreateWithPixelFormatType
+        )
+        v = Quartz.CVPixelFormatDescriptionCreateWithPixelFormatType(
+            None, Quartz.kCVPixelFormatType_32ARGB
+        )
+        self.assertIsInstance(v, Quartz.CFDictionaryRef)
+
+        self.assertResultIsCFRetained(
+            Quartz.CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes
+        )
+        v = Quartz.CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes(None)
+        self.assertIsInstance(v, Quartz.CFArrayRef)
+        self.assertNotEqual(len(v), 0)
+        self.assertIsInstance(v[0], int)
+
+        tp = 42
+        while tp in v:
+            tp += 1
+
+        Quartz.CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType({}, tp)
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        self.assertResultIsBOOL(Quartz.CVIsCompressedPixelFormatAvailable)
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertResultIsCFRetained(Quartz.CVPixelFormatTypeCopyFourCharCodeString)

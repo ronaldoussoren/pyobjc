@@ -1,13 +1,11 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCWNetworkProfile(TestCase):
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreWLAN.CWNetworkProfile.isEqualToNetworkProfile_)
 
-    @min_os_level("10.7")
     def test_convenience(self):
         c1 = CoreWLAN.CWNetworkProfile.alloc().init()
         c2 = CoreWLAN.CWNetworkProfile.alloc().init()

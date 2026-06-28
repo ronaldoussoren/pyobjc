@@ -1,14 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSByteCountFormatter(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSByteCountFormatterCountStyle)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSByteCountFormatterUnits)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSByteCountFormatterUseDefault, 0)
         self.assertEqual(Foundation.NSByteCountFormatterUseBytes, 1 << 0)
         self.assertEqual(Foundation.NSByteCountFormatterUseKB, 1 << 1)
@@ -20,13 +16,14 @@ class TestNSByteCountFormatter(TestCase):
         self.assertEqual(Foundation.NSByteCountFormatterUseZB, 1 << 7)
         self.assertEqual(Foundation.NSByteCountFormatterUseYBOrHigher, 0x0FF << 8)
         self.assertEqual(Foundation.NSByteCountFormatterUseAll, 0x0FFFF)
+
+        self.assertIsEnumType(Foundation.NSByteCountFormatterCountStyle)
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleFile, 0)
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleMemory, 1)
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleDecimal, 2)
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleBinary, 3)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSByteCountFormatter.allowsNonnumericFormatting
         )

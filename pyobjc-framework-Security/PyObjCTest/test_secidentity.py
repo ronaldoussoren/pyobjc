@@ -4,8 +4,7 @@ import objc
 
 
 class TestSecIdentity(TestCase):
-    @min_os_level("10.6")
-    def test_constants_10_6(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecIdentityDomainDefault, str)
         self.assertIsInstance(Security.kSecIdentityDomainKerberosKDC, str)
 

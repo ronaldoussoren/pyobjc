@@ -1,6 +1,6 @@
 import Foundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRegularExpression(TestCase):
@@ -9,8 +9,7 @@ class TestNSRegularExpression(TestCase):
         self.assertIsEnumType(Foundation.NSMatchingOptions)
         self.assertIsEnumType(Foundation.NSRegularExpressionOptions)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSRegularExpressionCaseInsensitive, 1 << 0)
         self.assertEqual(
             Foundation.NSRegularExpressionAllowCommentsAndWhitespace, 1 << 1
@@ -33,8 +32,7 @@ class TestNSRegularExpression(TestCase):
         self.assertEqual(Foundation.NSMatchingRequiredEnd, 1 << 3)
         self.assertEqual(Foundation.NSMatchingInternalError, 1 << 4)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsOut(
             Foundation.NSRegularExpression.regularExpressionWithPattern_options_error_,
             2,

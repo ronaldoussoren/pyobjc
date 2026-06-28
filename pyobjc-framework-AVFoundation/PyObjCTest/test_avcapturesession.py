@@ -8,12 +8,22 @@ from PyObjCTools.TestSupport import (
 
 
 class TestAVCaptureSession(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVCaptureSessionInterruptionReason)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
-        self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
 
-    @min_os_level("10.7")
+        self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
+        self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
+        self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
+        self.assertEqual(AVFoundation.AVVideoFieldModeBottomOnly, 2)
+        self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVCaptureSessionPreset, str)
+
     def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionRuntimeErrorNotification, str
@@ -26,11 +36,6 @@ class TestAVCaptureSession(TestCase):
             AVFoundation.AVCaptureSessionDidStopRunningNotification, str
         )
 
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
-
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetHigh, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetMedium, str)
@@ -40,14 +45,6 @@ class TestAVCaptureSession(TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset640x480, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, str)
-
-        self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
-        self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
-        self.assertEqual(AVFoundation.AVVideoFieldModeBottomOnly, 2)
-        self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, str)
 
@@ -68,7 +65,6 @@ class TestAVCaptureSession(TestCase):
     def test_protocols26_0(self):
         self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate", AVFoundation)
 
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canSetSessionPreset_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddInput_)

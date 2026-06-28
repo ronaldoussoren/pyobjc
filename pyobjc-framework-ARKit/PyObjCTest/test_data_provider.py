@@ -10,7 +10,7 @@ class TestDataProvider(TestCase):
         # self.assertIsSubclass(ARKit.ar_data_providers_t, objc.objc_object)
         pass
 
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(ARKit.ar_data_provider_state_t)
         self.assertEqual(ARKit.ar_data_provider_state_initialized, 0)
         self.assertEqual(ARKit.ar_data_provider_state_running, 1)

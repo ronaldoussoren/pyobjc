@@ -1,27 +1,22 @@
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
-    os_release,
-    expectedFailure,
-    expectedFailureIf,
 )
 
 import GameCenter
 
 
 class TestGKLeaderboard(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
+        self.assertIsEnumType(GameCenter.GKLeaderboardTimeScope)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeToday, 0)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeWeek, 1)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeAllTime, 2)
 
+        self.assertIsEnumType(GameCenter.GKLeaderboardPlayerScope)
         self.assertEqual(GameCenter.GKLeaderboardPlayerScopeGlobal, 0)
         self.assertEqual(GameCenter.GKLeaderboardPlayerScopeFriendsOnly, 1)
 
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameCenter.GKLeaderboard.isLoading)
         self.assertArgIsBlock(
             GameCenter.GKLeaderboard.loadScoresWithCompletionHandler_, 0, b"v@@"
@@ -38,9 +33,6 @@ class TestGKLeaderboard(TestCase):
             b"v@",
         )
 
-    @expectedFailure
-    @min_os_level("10.8")
-    def test_methods10_8_fail(self):
         self.assertArgIsBlock(
-            GameCenter.GKLeaderboard.loadImageWithCompletionHandler_, 1, b"v@@"
+            GameCenter.GKLeaderboard.loadImageWithCompletionHandler_, 0, b"v@@"
         )

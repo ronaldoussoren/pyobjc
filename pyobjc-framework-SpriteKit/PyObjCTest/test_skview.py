@@ -10,8 +10,7 @@ class TestSKViewHelper(SpriteKit.NSObject):
 
 
 class TestSKView(TestCase):
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKView.setPaused_, 0)
         self.assertResultIsBOOL(SpriteKit.SKView.isPaused)
         self.assertArgIsBOOL(SpriteKit.SKView.setShowsFPS_, 0)
@@ -47,5 +46,6 @@ class TestSKView(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("SKViewDelegate", SpriteKit)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestSKViewHelper.view_shouldRenderAtTime_)
         self.assertArgHasType(TestSKViewHelper.view_shouldRenderAtTime_, 1, objc._C_DBL)

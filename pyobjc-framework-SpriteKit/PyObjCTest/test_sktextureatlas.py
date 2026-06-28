@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SpriteKit
 
 
 class TestSKTextureAtlas(TestCase):
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             SpriteKit.SKTextureAtlas.preloadTextureAtlases_withCompletionHandler_,
             1,

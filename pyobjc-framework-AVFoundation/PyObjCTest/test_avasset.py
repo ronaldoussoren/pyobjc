@@ -8,10 +8,82 @@ class TestAVAssetHelper(AVFoundation.NSObject):
 
 
 class TestAVAsset(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAssetReferenceRestrictions)
+        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)
+        self.assertEqual(
+            AVFoundation.AVAssetReferenceRestrictionForbidRemoteReferenceToLocal, 1 << 0
+        )
+        self.assertEqual(
+            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote, 1 << 1
+        )
+        self.assertEqual(
+            AVFoundation.AVAssetReferenceRestrictionForbidCrossSiteReference, 1 << 2
+        )
+        self.assertEqual(
+            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToLocal, 1 << 3
+        )
+        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidAll, 0xFFFF)
+        self.assertEqual(
+            AVFoundation.AVAssetReferenceRestrictionDefaultPolicy,
+            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote,
+        )
 
-    @min_os_level("10.7")
+    def test_constants(self):
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, str
+        )
+        self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, str)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetShouldSupportAliasDataReferencesKey, str
+        )
+
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVAssetContainsFragmentsDidChangeNotification, str
+        )
+        self.assertIsInstance(AVFoundation.AVAssetWasDefragmentedNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVAssetChapterMetadataGroupsDidChangeNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetMediaSelectionGroupsDidChangeNotification, str
+        )
+
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, str)
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, str
+        )
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetURLRequestAttributionKey, str)
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetHTTPUserAgentKey, str)
+        self.assertIsInstance(AVFoundation.AVURLAssetPrimarySessionIdentifierKey, str)
+
+    @min_os_level("14.0")
+    def test_constants14_0(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetOverrideMIMETypeKey, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetShouldParseExternalSphericalTagsKey, str
+        )
+
     def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAsset.providesPreciseDurationAndTiming)
         self.assertResultIsBOOL(AVFoundation.AVAsset.hasProtectedContent)
@@ -82,81 +154,6 @@ class TestAVAsset(TestCase):
             AVFoundation.AVURLAsset.loadTracksWithMediaCharacteristic_completionHandler_,
             1,
             b"v@@",
-        )
-
-    @min_os_level("10.7")
-    def test_constants(self):
-        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)
-        self.assertEqual(
-            AVFoundation.AVAssetReferenceRestrictionForbidRemoteReferenceToLocal, 1 << 0
-        )
-        self.assertEqual(
-            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote, 1 << 1
-        )
-        self.assertEqual(
-            AVFoundation.AVAssetReferenceRestrictionForbidCrossSiteReference, 1 << 2
-        )
-        self.assertEqual(
-            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToLocal, 1 << 3
-        )
-        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidAll, 0xFFFF)
-        self.assertEqual(
-            AVFoundation.AVAssetReferenceRestrictionDefaultPolicy,
-            AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote,
-        )
-
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, str
-        )
-        self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, str)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetShouldSupportAliasDataReferencesKey, str
-        )
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetContainsFragmentsDidChangeNotification, str
-        )
-        self.assertIsInstance(AVFoundation.AVAssetWasDefragmentedNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVAssetChapterMetadataGroupsDidChangeNotification, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetMediaSelectionGroupsDidChangeNotification, str
-        )
-
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, str)
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, str
-        )
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetURLRequestAttributionKey, str)
-
-    @min_os_level("13.0")
-    def test_constants13_0(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetHTTPUserAgentKey, str)
-        self.assertIsInstance(AVFoundation.AVURLAssetPrimarySessionIdentifierKey, str)
-
-    @min_os_level("14.0")
-    def test_constants14_0(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetOverrideMIMETypeKey, str)
-
-    @min_os_level("26.0")
-    def test_constants26_0(self):
-        self.assertIsInstance(
-            AVFoundation.AVURLAssetShouldParseExternalSphericalTagsKey, str
         )
 
     @min_sdk_level("10.11")

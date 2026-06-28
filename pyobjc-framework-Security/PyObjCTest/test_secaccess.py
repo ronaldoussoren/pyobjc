@@ -9,7 +9,8 @@ import objc
 
 
 class TestSecAccess(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Security.SecAccessOwnerType)
         self.assertEqual(Security.kSecUseOnlyUID, 1)
         self.assertEqual(Security.kSecUseOnlyGID, 2)
         self.assertEqual(Security.kSecHonorRoot, 0x100)
@@ -17,8 +18,7 @@ class TestSecAccess(TestCase):
             Security.kSecMatchBits, Security.kSecUseOnlyUID | Security.kSecUseOnlyGID
         )
 
-    @min_os_level("10.7")
-    def test_constants_10_7(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecACLAuthorizationAny, str)
         self.assertIsInstance(Security.kSecACLAuthorizationLogin, str)
         self.assertIsInstance(Security.kSecACLAuthorizationGenKey, str)

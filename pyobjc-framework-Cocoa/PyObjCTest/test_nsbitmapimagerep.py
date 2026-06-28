@@ -6,15 +6,94 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBitmapImageRep(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSBitmapFormat)
+        self.assertEqual(AppKit.NSBitmapFormatAlphaFirst, 1 << 0)
+        self.assertEqual(AppKit.NSBitmapFormatAlphaNonpremultiplied, 1 << 1)
+        self.assertEqual(AppKit.NSBitmapFormatFloatingPointSamples, 1 << 2)
+        self.assertEqual(AppKit.NSBitmapFormatSixteenBitLittleEndian, 1 << 8)
+        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitLittleEndian, 1 << 9)
+        self.assertEqual(AppKit.NSBitmapFormatSixteenBitBigEndian, 1 << 10)
+        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
+
+        # Legacy alias:
+        self.assertEqual(AppKit.NSAlphaFirstBitmapFormat, 1 << 0)
+        self.assertEqual(AppKit.NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
+        self.assertEqual(AppKit.NSFloatingPointSamplesBitmapFormat, 1 << 2)
+        self.assertEqual(AppKit.NS16BitLittleEndianBitmapFormat, (1 << 8))
+        self.assertEqual(AppKit.NS32BitLittleEndianBitmapFormat, (1 << 9))
+        self.assertEqual(AppKit.NS16BitBigEndianBitmapFormat, (1 << 10))
+        self.assertEqual(AppKit.NS32BitBigEndianBitmapFormat, (1 << 11))
+
+        self.assertIsEnumType(AppKit.NSBitmapImageFileType)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeTIFF, 0)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeBMP, 1)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeGIF, 2)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG, 3)
+        self.assertEqual(AppKit.NSBitmapImageFileTypePNG, 4)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG2000, 5)
+
+        # Legacy alias:
+        self.assertEqual(AppKit.NSTIFFFileType, 0)
+        self.assertEqual(AppKit.NSBMPFileType, 1)
+        self.assertEqual(AppKit.NSGIFFileType, 2)
+        self.assertEqual(AppKit.NSJPEGFileType, 3)
+        self.assertEqual(AppKit.NSPNGFileType, 4)
+        self.assertEqual(AppKit.NSJPEG2000FileType, 5)
+
+        self.assertIsEnumType(AppKit.NSImageRepLoadStatus)
+        self.assertEqual(AppKit.NSImageRepLoadStatusUnknownType, -1)
+        self.assertEqual(AppKit.NSImageRepLoadStatusReadingHeader, -2)
+        self.assertEqual(AppKit.NSImageRepLoadStatusWillNeedAllData, -3)
+        self.assertEqual(AppKit.NSImageRepLoadStatusInvalidData, -4)
+        self.assertEqual(AppKit.NSImageRepLoadStatusUnexpectedEOF, -5)
+        self.assertEqual(AppKit.NSImageRepLoadStatusCompleted, -6)
+
+        self.assertIsEnumType(AppKit.NSTIFFCompression)
+        self.assertEqual(AppKit.NSTIFFCompressionNone, 1)
+        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX3, 3)
+        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX4, 4)
+        self.assertEqual(AppKit.NSTIFFCompressionLZW, 5)
+        self.assertEqual(AppKit.NSTIFFCompressionJPEG, 6)
+        self.assertEqual(AppKit.NSTIFFCompressionNEXT, 32766)
+        self.assertEqual(AppKit.NSTIFFCompressionPackBits, 32773)
+        self.assertEqual(AppKit.NSTIFFCompressionOldJPEG, 32865)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSBitmapImageRepPropertyKey, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSBitmapFormat)
-        self.assertIsEnumType(AppKit.NSBitmapImageFileType)
-        self.assertIsEnumType(AppKit.NSImageRepLoadStatus)
-        self.assertIsEnumType(AppKit.NSTIFFCompression)
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSImageCompressionMethod, str)
+        self.assertIsInstance(AppKit.NSImageCompressionFactor, str)
+        self.assertIsInstance(AppKit.NSImageDitherTransparency, str)
+        self.assertIsInstance(AppKit.NSImageRGBColorTable, str)
+        self.assertIsInstance(AppKit.NSImageInterlaced, str)
+        self.assertIsInstance(AppKit.NSImageColorSyncProfileData, str)
+        self.assertIsInstance(AppKit.NSImageFrameCount, str)
+        self.assertIsInstance(AppKit.NSImageCurrentFrame, str)
+        self.assertIsInstance(AppKit.NSImageCurrentFrameDuration, str)
+        self.assertIsInstance(AppKit.NSImageLoopCount, str)
+        self.assertIsInstance(AppKit.NSImageGamma, str)
+        self.assertIsInstance(AppKit.NSImageProgressive, str)
+        self.assertIsInstance(AppKit.NSImageEXIFData, str)
+        self.assertIsInstance(AppKit.NSImageFallbackBackgroundColor, str)
 
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(AppKit.NSImageIPTCData, str)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.isPlanar)
+        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.canBeCompressedUsing_)
+        self.assertArgIsBOOL(
+            AppKit.NSBitmapImageRep.incrementalLoadFromData_complete_, 1
+        )
+
+        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 0)
+        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 1)
+
+
+class TestNSBitmapImageRepUsage(TestCase):
     def test_creation(self):
         # widthxheight RGB 24bpp image
         width = 256
@@ -212,75 +291,6 @@ class TestBadCreation(TestCase):
                 0,
             )
 
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTIFFCompressionNone, 1)
-        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX3, 3)
-        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX4, 4)
-        self.assertEqual(AppKit.NSTIFFCompressionLZW, 5)
-        self.assertEqual(AppKit.NSTIFFCompressionJPEG, 6)
-        self.assertEqual(AppKit.NSTIFFCompressionNEXT, 32766)
-        self.assertEqual(AppKit.NSTIFFCompressionPackBits, 32773)
-        self.assertEqual(AppKit.NSTIFFCompressionOldJPEG, 32865)
-
-        self.assertEqual(AppKit.NSTIFFFileType, 0)
-        self.assertEqual(AppKit.NSBMPFileType, 1)
-        self.assertEqual(AppKit.NSGIFFileType, 2)
-        self.assertEqual(AppKit.NSJPEGFileType, 3)
-        self.assertEqual(AppKit.NSPNGFileType, 4)
-        self.assertEqual(AppKit.NSJPEG2000FileType, 5)
-
-        self.assertEqual(AppKit.NSBitmapImageFileTypeTIFF, 0)
-        self.assertEqual(AppKit.NSBitmapImageFileTypeBMP, 1)
-        self.assertEqual(AppKit.NSBitmapImageFileTypeGIF, 2)
-        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG, 3)
-        self.assertEqual(AppKit.NSBitmapImageFileTypePNG, 4)
-        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG2000, 5)
-
-        self.assertEqual(AppKit.NSBitmapFormatAlphaFirst, 1 << 0)
-        self.assertEqual(AppKit.NSBitmapFormatAlphaNonpremultiplied, 1 << 1)
-        self.assertEqual(AppKit.NSBitmapFormatFloatingPointSamples, 1 << 2)
-        self.assertEqual(AppKit.NSBitmapFormatSixteenBitLittleEndian, 1 << 8)
-        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitLittleEndian, 1 << 9)
-        self.assertEqual(AppKit.NSBitmapFormatSixteenBitBigEndian, 1 << 10)
-        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
-
-        self.assertEqual(AppKit.NSImageRepLoadStatusUnknownType, -1)
-        self.assertEqual(AppKit.NSImageRepLoadStatusReadingHeader, -2)
-        self.assertEqual(AppKit.NSImageRepLoadStatusWillNeedAllData, -3)
-        self.assertEqual(AppKit.NSImageRepLoadStatusInvalidData, -4)
-        self.assertEqual(AppKit.NSImageRepLoadStatusUnexpectedEOF, -5)
-        self.assertEqual(AppKit.NSImageRepLoadStatusCompleted, -6)
-
-        self.assertEqual(AppKit.NSAlphaFirstBitmapFormat, 1 << 0)
-        self.assertEqual(AppKit.NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
-        self.assertEqual(AppKit.NSFloatingPointSamplesBitmapFormat, 1 << 2)
-
-        self.assertIsInstance(AppKit.NSImageCompressionMethod, str)
-        self.assertIsInstance(AppKit.NSImageCompressionFactor, str)
-        self.assertIsInstance(AppKit.NSImageDitherTransparency, str)
-        self.assertIsInstance(AppKit.NSImageRGBColorTable, str)
-        self.assertIsInstance(AppKit.NSImageInterlaced, str)
-        self.assertIsInstance(AppKit.NSImageColorSyncProfileData, str)
-        self.assertIsInstance(AppKit.NSImageFrameCount, str)
-        self.assertIsInstance(AppKit.NSImageCurrentFrame, str)
-        self.assertIsInstance(AppKit.NSImageCurrentFrameDuration, str)
-        self.assertIsInstance(AppKit.NSImageLoopCount, str)
-        self.assertIsInstance(AppKit.NSImageGamma, str)
-        self.assertIsInstance(AppKit.NSImageProgressive, str)
-        self.assertIsInstance(AppKit.NSImageEXIFData, str)
-        self.assertIsInstance(AppKit.NSImageFallbackBackgroundColor, str)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertEqual(AppKit.NS16BitLittleEndianBitmapFormat, (1 << 8))
-        self.assertEqual(AppKit.NS32BitLittleEndianBitmapFormat, (1 << 9))
-        self.assertEqual(AppKit.NS16BitBigEndianBitmapFormat, (1 << 10))
-        self.assertEqual(AppKit.NS32BitBigEndianBitmapFormat, (1 << 11))
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(AppKit.NSImageIPTCData, str)
-
     def test_thread_compression(self):
         lst, nr = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
         self.assertIsInstance(lst, tuple)
@@ -288,13 +298,3 @@ class TestBadCreation(TestCase):
         self.assertEqual(len(lst), nr)
         self.assertNotEqual(len(lst), 0)
         self.assertIsInstance(lst[0], int)
-
-    def test_methods(self):
-        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.isPlanar)
-        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.canBeCompressedUsing_)
-        self.assertArgIsBOOL(
-            AppKit.NSBitmapImageRep.incrementalLoadFromData_complete_, 1
-        )
-
-        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 0)
-        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 1)

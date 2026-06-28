@@ -1,33 +1,9 @@
 import AppKit  # noqa: F401
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestProtocolsExisting(TestCase):
-    @min_sdk_level("10.10")
-    def test_protocols10_10(self):
-        self.assertProtocolExists("NSAlertDelegate", AppKit)
-        self.assertProtocolExists("NSApplicationDelegate", AppKit)
-        self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
-        self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)
-        self.assertProtocolExists("NSDockTilePlugIn", AppKit)
-        self.assertProtocolExists("NSDrawerDelegate", AppKit)
-        self.assertProtocolExists("NSImageDelegate", AppKit)
-        self.assertProtocolExists("NSPageControllerDelegate", AppKit)
-        self.assertProtocolExists("NSPathCellDelegate", AppKit)
-        self.assertProtocolExists("NSSoundDelegate", AppKit)
-        self.assertProtocolExists("NSSpeechRecognizerDelegate", AppKit)
-        self.assertProtocolExists("NSSpeechSynthesizerDelegate", AppKit)
-        self.assertProtocolExists("NSTextFinderClient", AppKit)
-        self.assertProtocolExists("NSTextStorageDelegate", AppKit)
-        self.assertProtocolExists("NSTokenFieldCellDelegate", AppKit)
-        self.assertProtocolExists("NSTokenFieldDelegate", AppKit)
-        self.assertProtocolExists("NSUserInterfaceItemSearching", AppKit)
-        self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
-        self.assertProtocolExists("NSSplitViewDelegate", AppKit)
-        self.assertProtocolExists("NSTabViewDelegate", AppKit)
-
-    @min_os_level("10.6")
-    def test_protocols10_6(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
         self.assertProtocolExists("NSAnimationDelegate", AppKit)
         self.assertProtocolExists("NSBrowserDelegate", AppKit)
@@ -69,8 +45,6 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSValidatedUserInterfaceItem", AppKit)
         self.assertProtocolExists("NSWindowDelegate", AppKit)
 
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
         self.assertProtocolExists("NSDraggingDestination", AppKit)
         self.assertProtocolExists("NSDraggingSource", AppKit)
         self.assertProtocolExists("NSPopoverDelegate", AppKit)
@@ -79,7 +53,28 @@ class TestProtocolsExisting(TestCase):
         self.assertProtocolExists("NSUserInterfaceItemIdentification", AppKit)
         self.assertProtocolExists("NSWindowRestoration", AppKit)
 
-    @min_sdk_level("10.8")
-    def test_protocols10_8(self):
         self.assertProtocolExists("NSSharingServiceDelegate", AppKit)
         self.assertProtocolExists("NSSharingServicePickerDelegate", AppKit)
+
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSAlertDelegate", AppKit)
+        self.assertProtocolExists("NSApplicationDelegate", AppKit)
+        self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
+        self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)
+        self.assertProtocolExists("NSDockTilePlugIn", AppKit)
+        self.assertProtocolExists("NSDrawerDelegate", AppKit)
+        self.assertProtocolExists("NSImageDelegate", AppKit)
+        self.assertProtocolExists("NSPageControllerDelegate", AppKit)
+        self.assertProtocolExists("NSPathCellDelegate", AppKit)
+        self.assertProtocolExists("NSSoundDelegate", AppKit)
+        self.assertProtocolExists("NSSpeechRecognizerDelegate", AppKit)
+        self.assertProtocolExists("NSSpeechSynthesizerDelegate", AppKit)
+        self.assertProtocolExists("NSTextFinderClient", AppKit)
+        self.assertProtocolExists("NSTextStorageDelegate", AppKit)
+        self.assertProtocolExists("NSTokenFieldCellDelegate", AppKit)
+        self.assertProtocolExists("NSTokenFieldDelegate", AppKit)
+        self.assertProtocolExists("NSUserInterfaceItemSearching", AppKit)
+        self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
+        self.assertProtocolExists("NSSplitViewDelegate", AppKit)
+        self.assertProtocolExists("NSTabViewDelegate", AppKit)

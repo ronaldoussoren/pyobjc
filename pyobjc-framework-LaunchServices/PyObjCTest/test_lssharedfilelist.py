@@ -10,12 +10,12 @@ with warnings.catch_warnings():
 
 
 class TestLSSharedFileList(TestCase):
-    def test_types(self):
-        self.assertIsCFType(LaunchServices.LSSharedFileListRef)
-        self.assertIsCFType(LaunchServices.LSSharedFileListItemRef)
+    def test_enums(self):
+        self.assertIsEnumType(LaunchServices.LSSharedFileListResolutionFlags)
+        self.assertEqual(LaunchServices.kLSSharedFileListNoUserInteraction, 1)
+        self.assertEqual(LaunchServices.kLSSharedFileListDoNotMountVolumes, 2)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
+    def test_constants(self):
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteVolumes, str)
         self.assertIsInstance(LaunchServices.kLSSharedFileListFavoriteItems, str)
         self.assertIsInstance(
@@ -35,12 +35,8 @@ class TestLSSharedFileList(TestCase):
         )
         self.assertIsInstance(LaunchServices.kLSSharedFileListItemHidden, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(LaunchServices.kLSSharedFileListLoginItemHidden, str)
 
-    @min_os_level("10.5")
-    def test_constants_magic10_5(self):
         self.assertIsInstance(
             LaunchServices.kLSSharedFileListItemBeforeFirst,
             LaunchServices.LSSharedFileListItemRef,
@@ -50,9 +46,9 @@ class TestLSSharedFileList(TestCase):
             LaunchServices.LSSharedFileListItemRef,
         )
 
-    def test_constants(self):
-        self.assertEqual(LaunchServices.kLSSharedFileListNoUserInteraction, 1)
-        self.assertEqual(LaunchServices.kLSSharedFileListDoNotMountVolumes, 2)
+    def test_types(self):
+        self.assertIsCFType(LaunchServices.LSSharedFileListRef)
+        self.assertIsCFType(LaunchServices.LSSharedFileListItemRef)
 
     def test_functions(self):
         self.assertIsInstance(LaunchServices.LSSharedFileListGetTypeID(), int)
@@ -166,6 +162,13 @@ class TestLSSharedFileList(TestCase):
 
         LaunchServices.LSSharedFileListRemoveAllItems
 
+    @min_os_level("10.10")
+    def test_functions10_10(self):
+        self.assertResultIsCFRetained(
+            LaunchServices.LSSharedFileListItemCopyResolvedURL
+        )
+        self.assertArgIsOut(LaunchServices.LSSharedFileListItemCopyResolvedURL, 2)
+
     @expectedFailure
     def test_missing(self):
         # Needs more infrastructure
@@ -173,10 +176,3 @@ class TestLSSharedFileList(TestCase):
 
         # FSRef suckage
         self.fail("LSSharedFileListItemRef")
-
-    @min_os_level("10.10")
-    def test_functions10_10(self):
-        self.assertResultIsCFRetained(
-            LaunchServices.LSSharedFileListItemCopyResolvedURL
-        )
-        self.assertArgIsOut(LaunchServices.LSSharedFileListItemCopyResolvedURL, 2)

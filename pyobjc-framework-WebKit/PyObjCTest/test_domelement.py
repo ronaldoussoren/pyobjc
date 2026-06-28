@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
@@ -13,6 +13,4 @@ class TestDOMElement(TestCase):
         self.assertArgIsBOOL(WebKit.DOMElement.scrollIntoViewIfNeeded_, 0)
         self.assertResultIsBOOL(WebKit.DOMElement.hasAttributeNS__)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMElement.contains_)

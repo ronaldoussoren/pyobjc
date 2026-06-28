@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCMTextMarkup(TestCase):
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_ForegroundColorARGB, str)
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_BackgroundColorARGB, str)
         self.assertIsInstance(

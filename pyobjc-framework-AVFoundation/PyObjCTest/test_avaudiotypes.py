@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioTypes(TestCase):
-    @min_os_level("10.7")
     def test_structs(self):
         v = AVFoundation.AVAudio3DPoint()
         self.assertIsInstance(v.x, float)

@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVOutputSettingsAssistent(TestCase):
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset640x480, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset960x540, str)
         self.assertIsInstance(AVFoundation.AVOutputSettingsPreset1280x720, str)

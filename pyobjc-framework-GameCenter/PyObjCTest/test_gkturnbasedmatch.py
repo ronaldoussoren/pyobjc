@@ -12,13 +12,14 @@ class TestGKTurnBasedMatchHelper(GameCenter.NSObject):
 
 
 class TestGKTurnBasedMatch(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKTurnBasedMatchStatus)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusUnknown, 0)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusOpen, 1)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusEnded, 2)
         self.assertEqual(GameCenter.GKTurnBasedMatchStatusMatching, 3)
 
+        self.assertIsEnumType(GameCenter.GKTurnBasedParticipantStatus)
         self.assertEqual(GameCenter.GKTurnBasedParticipantStatusUnknown, 0)
         self.assertEqual(GameCenter.GKTurnBasedParticipantStatusInvited, 1)
         self.assertEqual(GameCenter.GKTurnBasedParticipantStatusDeclined, 2)
@@ -26,6 +27,7 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertEqual(GameCenter.GKTurnBasedParticipantStatusActive, 4)
         self.assertEqual(GameCenter.GKTurnBasedParticipantStatusDone, 5)
 
+        self.assertIsEnumType(GameCenter.GKTurnBasedMatchOutcome)
         self.assertEqual(GameCenter.GKTurnBasedMatchOutcomeNone, 0)
         self.assertEqual(GameCenter.GKTurnBasedMatchOutcomeQuit, 1)
         self.assertEqual(GameCenter.GKTurnBasedMatchOutcomeWon, 2)
@@ -38,14 +40,14 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertEqual(GameCenter.GKTurnBasedMatchOutcomeFourth, 9)
         self.assertEqual(GameCenter.GKTurnBasedMatchOutcomeCustomRange, 0x00FF0000)
 
+        self.assertIsEnumType(GameCenter.GKTurnBasedExchangeStatus)
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusUnknown, 0)
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusActive, 1)
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusComplete, 2)
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusResolved, 3)
         self.assertEqual(GameCenter.GKTurnBasedExchangeStatusCanceled, 4)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(GameCenter.GKTurnTimeoutDefault, float)
         self.assertIsInstance(GameCenter.GKTurnTimeoutNone, float)
 
@@ -54,22 +56,7 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertIsInstance(GameCenter.GKExchangeTimeoutDefault, float)
         self.assertIsInstance(GameCenter.GKExchangeTimeoutNone, float)
 
-    @min_os_level("10.8")
-    def test_protocols(self):
-        self.assertProtocolExists("GKTurnBasedEventListener", GameCenter)
-
-        self.assertArgIsBOOL(
-            TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
-            2,
-        )
-
-        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate", GameCenter)
-        self.assertArgIsBOOL(
-            TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
-        )
-
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameCenter.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_,
             1,
@@ -122,8 +109,6 @@ class TestGKTurnBasedMatch(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             GameCenter.GKTurnBasedMatch.rematchWithCompletionHandler_, 0, b"v@@"
         )
@@ -170,4 +155,18 @@ class TestGKTurnBasedMatch(TestCase):
             GameCenter.GKTurnBasedExchange.replyWithLocalizableMessageKey_arguments_data_completionHandler_,
             3,
             b"v@",
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("GKTurnBasedEventListener", GameCenter)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
+            2,
+        )
+
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate", GameCenter)
+        self.assertArgIsBOOL(
+            TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
         )

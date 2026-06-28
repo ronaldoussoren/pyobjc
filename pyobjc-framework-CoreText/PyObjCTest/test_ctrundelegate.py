@@ -4,16 +4,15 @@ import objc
 
 
 class TestCTRunDelegate(TestCase):
-    @min_os_level("10.9")
-    def test_types(self):
-        self.assertIsCFType(CoreText.CTRunDelegateRef)
-
-    @min_os_level("10.9")
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(CoreText.kCTRunDelegateVersion1, 1)
         self.assertEqual(
             CoreText.kCTRunDelegateCurrentVersion, CoreText.kCTRunDelegateVersion1
         )
+
+    def test_types(self):
+        self.assertIsCFType(CoreText.CTRunDelegateRef)
 
     @expectedFailure
     @min_os_level("10.9")

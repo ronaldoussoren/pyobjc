@@ -3,21 +3,16 @@ import Quartz
 
 
 class TestCIDetector(TestCase):
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.CIDetectorTypeFace, str)
         self.assertIsInstance(Quartz.CIDetectorAccuracy, str)
         self.assertIsInstance(Quartz.CIDetectorAccuracyLow, str)
         self.assertIsInstance(Quartz.CIDetectorAccuracyHigh, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(Quartz.CIDetectorTracking, str)
         self.assertIsInstance(Quartz.CIDetectorMinFeatureSize, str)
         self.assertIsInstance(Quartz.CIDetectorImageOrientation, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Quartz.CIDetectorEyeBlink, str)
         self.assertIsInstance(Quartz.CIDetectorSmile, str)
 
@@ -32,8 +27,6 @@ class TestCIDetector(TestCase):
     def test_constants10_11(self):
         self.assertIsInstance(Quartz.CIDetectorNumberOfAngles, str)
 
-    @min_os_level("10.11")
-    def test_constants10_11_64bit(self):
         self.assertIsInstance(Quartz.CIDetectorTypeText, str)
         self.assertIsInstance(Quartz.CIDetectorReturnSubFeatures, str)
 

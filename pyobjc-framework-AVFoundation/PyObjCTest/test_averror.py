@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVError(TestCase):
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVFoundationErrorDomain, str)
 

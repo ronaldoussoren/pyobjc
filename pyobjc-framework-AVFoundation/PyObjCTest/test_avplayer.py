@@ -3,26 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayer(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AVFoundation.AVPlayerRateDidChangeReason, str)
-        self.assertIsTypedEnum(AVFoundation.AVPlayerWaitingReason, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVPlayerActionAtItemEnd)
-        self.assertIsEnumType(AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicy)
-        self.assertIsEnumType(AVFoundation.AVPlayerHDRMode)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVPlayerStatus)
-        self.assertIsEnumType(AVFoundation.AVPlayerTimeControlStatus)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerStatusFailed, 2)
 
+        self.assertIsEnumType(AVFoundation.AVPlayerActionAtItemEnd)
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndAdvance, 0)
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndPause, 1)
         self.assertEqual(AVFoundation.AVPlayerActionAtItemEndNone, 2)
 
+        self.assertIsEnumType(AVFoundation.AVPlayerTimeControlStatus)
         self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPaused, 0)
         self.assertEqual(
             AVFoundation.AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate,
@@ -30,10 +22,12 @@ class TestAVPlayer(TestCase):
         )
         self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPlaying, 2)
 
+        self.assertIsEnumType(AVFoundation.AVPlayerHDRMode)
         self.assertEqual(AVFoundation.AVPlayerHDRModeHLG, 0x1)
         self.assertEqual(AVFoundation.AVPlayerHDRModeHDR10, 0x2)
         self.assertEqual(AVFoundation.AVPlayerHDRModeDolbyVision, 0x4)
 
+        self.assertIsEnumType(AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicy)
         self.assertEqual(
             AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic, 1
         )
@@ -49,6 +43,10 @@ class TestAVPlayer(TestCase):
         self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityDefault, 0)
         self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityLow, 1)
         self.assertEqual(AVFoundation.AVPlayerNetworkResourcePriorityHigh, 2)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVPlayerRateDidChangeReason, str)
+        self.assertIsTypedEnum(AVFoundation.AVPlayerWaitingReason, str)
 
     @min_os_level("10.12")
     def test_constants10_12(self):
@@ -119,7 +117,6 @@ class TestAVPlayer(TestCase):
             str,  # noqa: B950
         )
 
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVPlayer.seekToDate_completionHandler_, 1, b"vZ"
@@ -158,8 +155,6 @@ class TestAVPlayer(TestCase):
             AVFoundation.AVQueuePlayer.canInsertItem_afterItem_
         )  # noqa: B950
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayer.appliesMediaSelectionCriteriaAutomatically
         )

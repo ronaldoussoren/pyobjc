@@ -3,14 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSAccessibilityCustomRotor(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorSearchDirection)
-        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionPrevious, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionNext, 1)
 
+        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeCustom, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAny, 1)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAnnotation, 2)

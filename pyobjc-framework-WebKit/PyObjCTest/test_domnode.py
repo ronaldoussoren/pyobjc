@@ -1,9 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
 class TestDOMNode(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(WebKit.DOM_ELEMENT_NODE, 1)
         self.assertEqual(WebKit.DOM_ATTRIBUTE_NODE, 2)
         self.assertEqual(WebKit.DOM_TEXT_NODE, 3)
@@ -16,9 +17,6 @@ class TestDOMNode(TestCase):
         self.assertEqual(WebKit.DOM_DOCUMENT_TYPE_NODE, 10)
         self.assertEqual(WebKit.DOM_DOCUMENT_FRAGMENT_NODE, 11)
         self.assertEqual(WebKit.DOM_NOTATION_NODE, 12)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_DISCONNECTED, 1)
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_PRECEDING, 2)
         self.assertEqual(WebKit.DOM_DOCUMENT_POSITION_FOLLOWING, 4)
@@ -37,10 +35,6 @@ class TestDOMNode(TestCase):
 
         self.assertResultIsBOOL(WebKit.DOMNode.isContentEditable)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(WebKit.DOMNode.isDefaultNamespace_)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(WebKit.DOMNode.contains_)

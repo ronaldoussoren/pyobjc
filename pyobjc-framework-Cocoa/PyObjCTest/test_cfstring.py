@@ -554,11 +554,6 @@ class TestString(TestCase):
 
 
 class TestStringEncodingExt(TestCase):
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
-        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
-
     def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingMacJapanese, 1)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacChineseTrad, 2)
@@ -690,8 +685,10 @@ class TestStringEncodingExt(TestCase):
         self.assertEqual(CoreFoundation.kCFStringEncodingEBCDIC_CP037, 0x0C02)
         self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213_00, 0x0628)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
+
+    def test_functions(self):
         self.assertResultIsBOOL(CoreFoundation.CFStringIsSurrogateHighCharacter)
         self.assertTrue(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0xD800)))
         self.assertFalse(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0x0600)))
@@ -723,8 +720,6 @@ class TestStringEncodingExt(TestCase):
             # an array of UCS2 codepoints to a Pytho str object
             pass
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         loc = CoreFoundation.CFLocaleCopyCurrent()
 
         self.assertArgIsOut(CoreFoundation.CFStringGetHyphenationLocationBeforeIndex, 5)

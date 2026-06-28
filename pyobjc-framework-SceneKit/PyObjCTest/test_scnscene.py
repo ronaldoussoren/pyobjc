@@ -24,8 +24,6 @@ class TestSCNScene(TestCase):
             SceneKit.SCNSceneAttributeFrameRate, SceneKit.SCNSceneFrameRateAttributeKey
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNSceneExportDestinationURL, str)
 
     @min_os_level("10.10")
@@ -39,8 +37,6 @@ class TestSCNScene(TestCase):
     def test_methods(self):
         self.assertArgIsOut(SceneKit.SCNScene.sceneWithURL_options_error_, 2)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(
             SceneKit.SCNScene.writeToURL_options_delegate_progressHandler_
         )

@@ -3,27 +3,21 @@ import EventKit
 
 
 class TestEKEventStore(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(EventKit.EKSpan)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(EventKit.EKSpanThisEvent, 0)
         self.assertEqual(EventKit.EKSpanFutureEvents, 1)
 
-        self.assertIsInstance(EventKit.EKEventStoreChangedNotification, str)
-
+        self.assertIsEnumType(EventKit.EKAuthorizationStatus)
         self.assertEqual(EventKit.EKAuthorizationStatusNotDetermined, 0)
         self.assertEqual(EventKit.EKAuthorizationStatusRestricted, 1)
         self.assertEqual(EventKit.EKAuthorizationStatusDenied, 2)
         self.assertEqual(EventKit.EKAuthorizationStatusAuthorized, 3)
 
-    @min_os_level("10.8")
-    def test_basic(self):
-        self.assertTrue(hasattr(EventKit, "EKEventStore"))
+    def test_constants(self):
+        self.assertIsInstance(EventKit.EKEventStoreChangedNotification, str)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(EventKit.EKEventStore.commit_)
         self.assertArgIsOut(EventKit.EKEventStore.commit_, 0)
 
@@ -60,14 +54,12 @@ class TestEKEventStore(TestCase):
         self.assertArgIsBOOL(EventKit.EKEventStore.saveReminder_commit_error_, 1)
         self.assertArgIsOut(EventKit.EKEventStore.saveReminder_commit_error_, 2)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             EventKit.EKEventStore.requestAccessToEntityType_completion_, 1, b"vZ@"
         )
 
     @min_os_level("10.15")
-    def test_methods10_14(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(EventKit.EKEventStore.saveEvent_span_error_)
         self.assertArgIsOut(EventKit.EKEventStore.saveEvent_span_error_, 2)
 

@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -115,8 +115,6 @@ class TestNSObjCRuntime(TestCase):
 
         self.assertEqual(Foundation.NSNotFound, Foundation.NSIntegerMax)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5, 677.00)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5_1, 677.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_5_2, 677.15)
@@ -130,8 +128,6 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.NSSortConcurrent, 1 << 0)
         self.assertEqual(Foundation.NSSortStable, 1 << 4)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7, 833.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_1, 833.10)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_7_2, 833.20)

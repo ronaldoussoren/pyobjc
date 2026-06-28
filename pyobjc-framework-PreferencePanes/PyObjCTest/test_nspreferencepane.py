@@ -1,16 +1,15 @@
 import PreferencePanes
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPreferencePane(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(PreferencePanes.NSPreferencePaneUnselectReply)
-
-    def test_constants(self):
         self.assertEqual(PreferencePanes.NSUnselectCancel, 0)
         self.assertEqual(PreferencePanes.NSUnselectNow, 1)
         self.assertEqual(PreferencePanes.NSUnselectLater, 2)
 
+    def test_constants(self):
         self.assertIsInstance(
             PreferencePanes.NSPreferencePaneDoUnselectNotification, str
         )
@@ -24,15 +23,10 @@ class TestNSPreferencePane(TestCase):
         self.assertEqual(PreferencePanes.kNSPrefPaneHelpMenuTitleKey, "title")
         self.assertEqual(PreferencePanes.kNSPrefPaneHelpMenuAnchorKey, "anchor")
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(PreferencePanes.NSPrefPaneHelpMenuInfoPListKey, str)
         self.assertIsInstance(PreferencePanes.NSPrefPaneHelpMenuTitleKey, str)
         self.assertIsInstance(PreferencePanes.NSPrefPaneHelpMenuAnchorKey, str)
 
-    # @min_os_level('10.12')
-    # Added in 10.12, but available before that
-    def test_constants10_12(self):
         self.assertIsInstance(
             PreferencePanes.NSPreferencePaneSwitchToPaneNotification, str
         )
@@ -43,7 +37,7 @@ class TestNSPreferencePane(TestCase):
             PreferencePanes.NSPreferencePaneUpdateHelpMenuNotification, str
         )
 
-    def test_classes(self):
+    def test_methods(self):
         self.assertArgIsBOOL(PreferencePanes.NSPreferencePane.replyToShouldUnselect_, 0)
         self.assertResultIsBOOL(PreferencePanes.NSPreferencePane.autoSaveTextFields)
         self.assertResultIsBOOL(PreferencePanes.NSPreferencePane.isSelected)

@@ -10,8 +10,6 @@ class TestCVPixelBufferPool(TestCase):
         self.assertIsInstance(Quartz.kCVPixelBufferPoolMinimumBufferCountKey, str)
         self.assertIsInstance(Quartz.kCVPixelBufferPoolMaximumBufferAgeKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCVPixelBufferPoolAllocationThresholdKey, str)
         self.assertIsInstance(Quartz.kCVPixelBufferPoolFreeBufferNotification, str)
 
@@ -55,8 +53,6 @@ class TestCVPixelBufferPool(TestCase):
         self.assertEqual(rv, 0)
         self.assertIsInstance(image, Quartz.CVPixelBufferRef)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         self.assertArgIsOut(
             Quartz.CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3
         )

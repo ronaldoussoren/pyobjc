@@ -1,4 +1,3 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameCenter
@@ -7,16 +6,14 @@ GKChallengeComposeCompletionBlock = b"@Z@"
 
 
 class TestGKChallenge(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKChallengeState)
         self.assertEqual(GameCenter.GKChallengeStateInvalid, 0)
         self.assertEqual(GameCenter.GKChallengeStatePending, 1)
         self.assertEqual(GameCenter.GKChallengeStateCompleted, 2)
         self.assertEqual(GameCenter.GKChallengeStateDeclined, 3)
 
-    @min_os_level("10.8")
-    def test_classes10_8(self):
-        self.assertIsInstance(GameCenter.GKChallenge, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgIsBlock(
             GameCenter.GKChallenge.loadReceivedChallengesWithCompletionHandler_,
             0,

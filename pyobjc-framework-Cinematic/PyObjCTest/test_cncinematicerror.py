@@ -4,7 +4,7 @@ import Cinematic
 
 
 class TestCNCinematicError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Cinematic.CNCinematicErrorCode)
         self.assertEqual(Cinematic.CNCinematicErrorCodeUnknown, 1)
         self.assertEqual(Cinematic.CNCinematicErrorCodeUnreadable, 2)

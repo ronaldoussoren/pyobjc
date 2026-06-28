@@ -1,10 +1,16 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSManagedObject(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSSnapshotEventType)
+        self.assertEqual(CoreData.NSSnapshotEventUndoInsertion, 1 << 1)
+        self.assertEqual(CoreData.NSSnapshotEventUndoDeletion, 1 << 2)
+        self.assertEqual(CoreData.NSSnapshotEventUndoUpdate, 1 << 3)
+        self.assertEqual(CoreData.NSSnapshotEventRollback, 1 << 4)
+        self.assertEqual(CoreData.NSSnapshotEventRefresh, 1 << 5)
+        self.assertEqual(CoreData.NSSnapshotEventMergePolicy, 1 << 6)
 
     def test_methods(self):
         descr = CoreData.NSEntityDescription.alloc().init()
@@ -30,29 +36,12 @@ class TestNSManagedObject(TestCase):
         self.assertResultIsBOOL(CoreData.NSManagedObject.validateForUpdate_)
         self.assertArgIsOut(CoreData.NSManagedObject.validateForUpdate_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasFaultForRelationshipNamed_)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(
             CoreData.NSManagedObject.contextShouldIgnoreUnmodeledPropertyChanges
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasChanges)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasPersistentChangedValues)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(CoreData.NSSnapshotEventUndoInsertion, 1 << 1)
-        self.assertEqual(CoreData.NSSnapshotEventUndoDeletion, 1 << 2)
-        self.assertEqual(CoreData.NSSnapshotEventUndoUpdate, 1 << 3)
-        self.assertEqual(CoreData.NSSnapshotEventRollback, 1 << 4)
-        self.assertEqual(CoreData.NSSnapshotEventRefresh, 1 << 5)
-        self.assertEqual(CoreData.NSSnapshotEventMergePolicy, 1 << 6)

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import ScriptingBridge
 
 
@@ -11,9 +11,10 @@ class TestSBApplication(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(ScriptingBridge.SBApplication.isRunning)
 
-    @min_os_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("SBApplicationDelegate", ScriptingBridge)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestSBApplicationHelper.eventDidFail_withError_,
             0,

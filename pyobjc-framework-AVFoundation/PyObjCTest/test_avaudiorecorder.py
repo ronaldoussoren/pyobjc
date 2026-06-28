@@ -8,7 +8,6 @@ class TestAVAudioRecorderHelper(AVFoundation.NSObject):
 
 
 class TestAVAudioRecorder(TestCase):
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAudioRecorder.initWithURL_settings_error_, 2)
 
@@ -24,8 +23,6 @@ class TestAVAudioRecorder(TestCase):
             TestAVAudioRecorderHelper.audioRecorderDidFinishRecording_successfully_, 1
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_)
 
     @min_os_level("10.12")

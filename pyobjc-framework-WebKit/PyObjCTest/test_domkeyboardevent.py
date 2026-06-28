@@ -9,10 +9,6 @@ class TestDOMKeyboardEvent(TestCase):
         self.assertEqual(WebKit.DOM_KEY_LOCATION_RIGHT, 2)
         self.assertEqual(WebKit.DOM_KEY_LOCATION_NUMPAD, 3)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
-        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.altGraphKey)
-
     def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.ctrlKey)
         self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.shiftKey)
@@ -127,3 +123,5 @@ class TestDOMKeyboardEvent(TestCase):
             WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             9,
         )
+
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.altGraphKey)

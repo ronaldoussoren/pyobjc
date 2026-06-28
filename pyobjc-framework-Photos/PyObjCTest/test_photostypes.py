@@ -53,6 +53,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHCollectionListSubtypeMomentListCluster, 1)
         self.assertEqual(Photos.PHCollectionListSubtypeMomentListYear, 2)
         self.assertEqual(Photos.PHCollectionListSubtypeRegularFolder, 100)
+        self.assertEqual(Photos.PHCollectionListSubtypeRootFolder, 101)
         self.assertEqual(Photos.PHCollectionListSubtypeSmartFolderEvents, 200)
         self.assertEqual(Photos.PHCollectionListSubtypeSmartFolderFaces, 201)
 

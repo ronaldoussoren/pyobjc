@@ -3,13 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMovie(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVMovieWritingOptions)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(AVFoundation.AVMovieReferenceRestrictionsKey, str)
-
         self.assertEqual(
             AVFoundation.AVMovieWritingAddMovieHeaderToDestination, 0
         )  # noqa: B950
@@ -17,6 +12,10 @@ class TestAVMovie(TestCase):
             AVFoundation.AVMovieWritingTruncateDestinationToMovieHeaderOnly,
             1 << 0,  # noqa: B950
         )
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(AVFoundation.AVMovieReferenceRestrictionsKey, str)
 
         self.assertIsInstance(
             AVFoundation.AVFragmentedMovieContainsMovieFragmentsDidChangeNotification,  # noqa: B950

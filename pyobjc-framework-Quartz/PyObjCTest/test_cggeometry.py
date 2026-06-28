@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
@@ -147,8 +147,6 @@ class TestCGGeometry(TestCase):
         self.assertTrue(Quartz.CGRectContainsRect(rect, rect) is True)
         self.assertTrue(Quartz.CGRectIntersectsRect(rect, rect) is True)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
         d = Quartz.CGPointCreateDictionaryRepresentation((10, 5))
         self.assertIsInstance(d, Quartz.CFDictionaryRef)
 
@@ -177,8 +175,6 @@ class TestCGGeometry(TestCase):
         self.assertIsInstance(p, Quartz.CGRect)
         self.assertEqual(p, Quartz.CGRectMake(0, 10, 20, 30))
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         v = Quartz.CGVectorMake(2.5, 3.5)
         self.assertIsInstance(v, Quartz.CGVector)
         self.assertEqual(v.dx, 2.5)

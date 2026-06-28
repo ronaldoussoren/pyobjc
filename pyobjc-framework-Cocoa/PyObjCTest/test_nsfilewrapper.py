@@ -1,12 +1,17 @@
 import AppKit
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSFileWrapper(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSFileWrapperReadingOptions)
+        self.assertEqual(AppKit.NSFileWrapperReadingImmediate, 1 << 0)
+        self.assertEqual(AppKit.NSFileWrapperReadingWithoutMapping, 1 << 1)
+
         self.assertIsEnumType(Foundation.NSFileWrapperWritingOptions)
+        self.assertEqual(AppKit.NSFileWrapperWritingAtomic, 1 << 0)
+        self.assertEqual(AppKit.NSFileWrapperWritingWithNameUpdating, 1 << 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -25,15 +30,6 @@ class TestNSFileWrapper(TestCase):
         self.assertResultIsBOOL(AppKit.NSFileWrapper.needsToBeUpdatedFromPath_)
         self.assertResultIsBOOL(AppKit.NSFileWrapper.updateFromPath_)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(AppKit.NSFileWrapperReadingImmediate, 1 << 0)
-        self.assertEqual(AppKit.NSFileWrapperReadingWithoutMapping, 1 << 1)
-        self.assertEqual(AppKit.NSFileWrapperWritingAtomic, 1 << 0)
-        self.assertEqual(AppKit.NSFileWrapperWritingWithNameUpdating, 1 << 1)
-
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsOut(AppKit.NSFileWrapper.initWithURL_options_error_, 2)
         self.assertResultIsBOOL(AppKit.NSFileWrapper.matchesContentsOfURL_)
         self.assertResultIsBOOL(AppKit.NSFileWrapper.readFromURL_options_error_)

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -69,11 +69,8 @@ class TestNSMatrix(TestCase):
         self.assertArgIsBOOL(AppKit.NSMatrix.setTabKeyTraversesCells_, 0)
         self.assertResultIsBOOL(AppKit.NSMatrix.tabKeyTraversesCells)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSMatrix.setAutorecalculatesCellSize_, 0)
         self.assertResultIsBOOL(AppKit.NSMatrix.autorecalculatesCellSize)
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSMatrixDelegate", AppKit)

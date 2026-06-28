@@ -7,11 +7,6 @@ class TestIOSurfaceAPI(TestCase):
     def test_cftypess(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
-    @min_os_level("10.12")
-    def test_constants10_12(self):
-        self.assertIsInstance(IOSurface.kIOSurfacePixelSizeCastingAllowed, str)
-
-    @min_os_level("10.6")
     def test_constants(self):
         self.assertIsInstance(IOSurface.kIOSurfaceAllocSize, str)
         self.assertIsInstance(IOSurface.kIOSurfaceWidth, str)
@@ -103,6 +98,10 @@ class TestIOSurfaceAPI(TestCase):
             IOSurface.kIOSurfaceCopybackInnerCache << IOSurface.kIOSurfaceMapCacheShift,
         )
 
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(IOSurface.kIOSurfacePixelSizeCastingAllowed, str)
+
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(IOSurface.kIOSurfacePlaneBitsPerElement, str)
@@ -115,7 +114,6 @@ class TestIOSurfaceAPI(TestCase):
     def test_constants13_0(self):
         self.assertIsInstance(IOSurface.kIOSurfaceName, str)
 
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertIsInstance(IOSurface.IOSurfaceGetTypeID(), int)
 
@@ -179,8 +177,6 @@ class TestIOSurfaceAPI(TestCase):
 
         self.assertResultIsBOOL(IOSurface.IOSurfaceIsInUse)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         IOSurface.IOSurfaceCreateXPCObject
 
         self.assertResultIsCFRetained(IOSurface.IOSurfaceLookupFromXPCObject)

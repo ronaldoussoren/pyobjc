@@ -14,10 +14,8 @@ class TestAVQueuedSampleBufferRenderingHelper(AVFoundation.NSObject):
 
 
 class TestAVQueuedSampleBufferRendering(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVQueuedSampleBufferRenderingStatus)
-
-    def test_constants(self):
         self.assertEqual(
             AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0
         )  # noqa: B950
@@ -32,7 +30,7 @@ class TestAVQueuedSampleBufferRendering(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AVQueuedSampleBufferRendering", AVFoundation)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestAVQueuedSampleBufferRenderingHelper.isReadyForMoreMediaData
         )

@@ -1,15 +1,35 @@
 import os
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFURLEnumerator(TestCase):
-    @min_os_level("10.6")
+    def test_constants(self):
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorDefaultBehavior, 0)
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorDescendRecursively, 1 << 0)
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipInvisibles, 1 << 1)
+        self.assertEqual(
+            CoreFoundation.kCFURLEnumeratorGenerateFileReferenceURLs, 1 << 2
+        )
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipPackageContents, 1 << 3)
+        self.assertEqual(
+            CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPreOrder, 1 << 4
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPostOrder, 1 << 5
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLEnumeratorGenerateRelativePathURLs, 1 << 6
+        )
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorSuccess, 1)
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorEnd, 2)
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorError, 3)
+        self.assertEqual(CoreFoundation.kCFURLEnumeratorDirectoryPostOrderSuccess, 4)
+
     def test_types(self):
         self.assertIsCFType(CoreFoundation.CFURLEnumeratorRef)
 
-    @min_os_level("10.6")
     def test_functions(self):
         v = CoreFoundation.CFURLEnumeratorGetTypeID()
         self.assertIsInstance(v, int)
@@ -44,26 +64,3 @@ class TestCFURLEnumerator(TestCase):
         self.assertResultIsBOOL(CoreFoundation.CFURLEnumeratorGetSourceDidChange)
         v = CoreFoundation.CFURLEnumeratorGetSourceDidChange(ref)
         self.assertIsInstance(v, bool)
-
-    @min_os_level("10.6")
-    def test_constants(self):
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorDefaultBehavior, 0)
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorDescendRecursively, 1 << 0)
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipInvisibles, 1 << 1)
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorGenerateFileReferenceURLs, 1 << 2
-        )
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorSkipPackageContents, 1 << 3)
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPreOrder, 1 << 4
-        )
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorIncludeDirectoriesPostOrder, 1 << 5
-        )
-        self.assertEqual(
-            CoreFoundation.kCFURLEnumeratorGenerateRelativePathURLs, 1 << 6
-        )
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorSuccess, 1)
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorEnd, 2)
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorError, 3)
-        self.assertEqual(CoreFoundation.kCFURLEnumeratorDirectoryPostOrderSuccess, 4)

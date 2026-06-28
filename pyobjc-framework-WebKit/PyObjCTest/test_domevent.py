@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
@@ -17,8 +17,6 @@ class TestDOMEvent(TestCase):
         self.assertArgIsBOOL(WebKit.DOMEvent.initEvent___, 1)
         self.assertArgIsBOOL(WebKit.DOMEvent.initEvent___, 2)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMEvent.returnValue)
         self.assertArgIsBOOL(WebKit.DOMEvent.setReturnValue_, 0)
         self.assertResultIsBOOL(WebKit.DOMEvent.cancelBubble)

@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKMultiPoint(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKMultiPoint, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsVariableSize(
             MapKit.MKMultiPoint.points
         )  # XXX: Gone in 10.11 SDK headers?

@@ -4,11 +4,8 @@ import SpriteKit
 
 
 class TestSKScene(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKSceneScaleMode)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(SpriteKit.SKSceneScaleModeFill, 0)
         self.assertEqual(SpriteKit.SKSceneScaleModeAspectFill, 1)
         self.assertEqual(SpriteKit.SKSceneScaleModeAspectFit, 2)

@@ -1,13 +1,10 @@
-import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKSession(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
-        self.assertIsInstance(GameCenter.GKSession, objc.objc_class)
+    def test_methods(self):
         self.assertResultIsBOOL(GameCenter.GKSession.isAvailable)
         self.assertArgIsBOOL(GameCenter.GKSession.setAvailable_, 0)
 

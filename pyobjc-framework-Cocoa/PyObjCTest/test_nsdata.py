@@ -20,25 +20,6 @@ class TestNSData(TestCase):
         self.assertIsEnumType(Foundation.NSDataSearchOptions)
         self.assertIsEnumType(Foundation.NSDataWritingOptions)
 
-    def test_methods(self):
-        self.assertResultIsBOOL(Foundation.NSData.isEqualToData_)
-        self.assertResultIsBOOL(Foundation.NSData.writeToFile_atomically_)
-        self.assertArgIsBOOL(Foundation.NSData.writeToFile_atomically_, 1)
-        self.assertResultIsBOOL(Foundation.NSData.writeToURL_atomically_)
-        self.assertArgIsBOOL(Foundation.NSData.writeToURL_atomically_, 1)
-        self.assertResultIsBOOL(Foundation.NSData.writeToFile_options_error_)
-        self.assertArgIsOut(Foundation.NSData.writeToFile_options_error_, 2)
-        self.assertResultIsBOOL(Foundation.NSData.writeToURL_options_error_)
-        self.assertArgIsOut(Foundation.NSData.writeToURL_options_error_, 2)
-        self.assertArgIsOut(Foundation.NSData.dataWithContentsOfFile_options_error_, 2)
-        self.assertArgIsOut(Foundation.NSData.dataWithContentsOfURL_options_error_, 2)
-        self.assertArgIsOut(Foundation.NSData.initWithContentsOfFile_options_error_, 2)
-        self.assertArgIsOut(Foundation.NSData.initWithContentsOfURL_options_error_, 2)
-        self.assertArgIsIn(Foundation.NSData.dataWithBytesNoCopy_length_, 0)
-        self.assertArgSizeInArg(Foundation.NSData.dataWithBytes_length_, 0, 1)
-        self.assertArgIsIn(Foundation.NSData.initWithBytesNoCopy_length_, 0)
-        self.assertArgSizeInArg(Foundation.NSData.initWithBytes_length_, 0, 1)
-
     def test_constants(self):
         self.assertEqual(Foundation.NSMappedRead, 1)
         self.assertEqual(Foundation.NSUncachedRead, 2)
@@ -60,27 +41,19 @@ class TestNSData(TestCase):
         )
         self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)
         self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
         self.assertEqual(Foundation.NSDataWritingAtomic, 1 << 0)
         self.assertEqual(Foundation.NSDataSearchBackwards, 1 << 0)
         self.assertEqual(Foundation.NSDataSearchAnchored, 1 << 1)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(Foundation.NSDataReadingMappedAlways, 1 << 3)
 
         self.assertEqual(Foundation.NSDataReadingMappedIfSafe, 1 << 0)
         self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSDataWritingWithoutOverwriting, 1 << 1)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
         self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
         self.assertEqual(
@@ -90,15 +63,30 @@ class TestNSData(TestCase):
 
         self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
 
-    @min_os_level("10.15")
-    def test_constants10_15(self):
         self.assertEqual(Foundation.NSDataCompressionAlgorithmLZFSE, 0)
         self.assertEqual(Foundation.NSDataCompressionAlgorithmLZ4, 1)
         self.assertEqual(Foundation.NSDataCompressionAlgorithmLZMA, 2)
         self.assertEqual(Foundation.NSDataCompressionAlgorithmZlib, 3)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
+        self.assertResultIsBOOL(Foundation.NSData.isEqualToData_)
+        self.assertResultIsBOOL(Foundation.NSData.writeToFile_atomically_)
+        self.assertArgIsBOOL(Foundation.NSData.writeToFile_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSData.writeToURL_atomically_)
+        self.assertArgIsBOOL(Foundation.NSData.writeToURL_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSData.writeToFile_options_error_)
+        self.assertArgIsOut(Foundation.NSData.writeToFile_options_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSData.writeToURL_options_error_)
+        self.assertArgIsOut(Foundation.NSData.writeToURL_options_error_, 2)
+        self.assertArgIsOut(Foundation.NSData.dataWithContentsOfFile_options_error_, 2)
+        self.assertArgIsOut(Foundation.NSData.dataWithContentsOfURL_options_error_, 2)
+        self.assertArgIsOut(Foundation.NSData.initWithContentsOfFile_options_error_, 2)
+        self.assertArgIsOut(Foundation.NSData.initWithContentsOfURL_options_error_, 2)
+        self.assertArgIsIn(Foundation.NSData.dataWithBytesNoCopy_length_, 0)
+        self.assertArgSizeInArg(Foundation.NSData.dataWithBytes_length_, 0, 1)
+        self.assertArgIsIn(Foundation.NSData.initWithBytesNoCopy_length_, 0)
+        self.assertArgSizeInArg(Foundation.NSData.initWithBytes_length_, 0, 1)
+
         self.assertResultHasType(
             Foundation.NSData.rangeOfData_options_range_, Foundation.NSRange.__typestr__
         )
@@ -108,8 +96,6 @@ class TestNSData(TestCase):
             Foundation.NSRange.__typestr__,
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             Foundation.NSData.enumerateByteRangesUsingBlock_,
             0,

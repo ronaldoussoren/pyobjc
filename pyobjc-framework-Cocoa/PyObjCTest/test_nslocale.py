@@ -1,6 +1,6 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLocale(TestCase):
@@ -34,8 +34,6 @@ class TestNSLocale(TestCase):
         self.assertIsInstance(Foundation.NSIslamicCivilCalendar, str)
         self.assertIsInstance(Foundation.NSJapaneseCalendar, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSLocaleCollatorIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationBeginDelimiterKey, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationEndDelimiterKey, str)

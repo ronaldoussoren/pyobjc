@@ -12,7 +12,7 @@ class TestAVCaptureTimecodeGeneratorHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureTimecodeGenerator(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureTimecodeSourceType)
         self.assertEqual(AVFoundation.AVCaptureTimecodeSourceTypeFrameCount, 0)
         self.assertEqual(AVFoundation.AVCaptureTimecodeSourceTypeRealTimeClock, 1)
@@ -59,16 +59,6 @@ class TestAVCaptureTimecodeGenerator(TestCase):
         self.assertIsInstance(v.frameDuration, AVFoundation.CMTime)
         self.assertIsInstance(v.sourceType, int)
 
-    @min_os_level("26.0")
-    def test_functions(self):
-        self.assertResultIsCFRetained(
-            AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferAssociatedWithPresentationTimeStamp
-        )
-        self.assertResultIsCFRetained(
-            AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferForDuration
-        )
-        AVFoundation.AVCaptureTimecodeAdvancedByFrames
-
     @min_sdk_level("26.0")
     def test_protocols(self):
         self.assertProtocolExists("AVCaptureTimecodeGeneratorDelegate", AVFoundation)
@@ -84,3 +74,13 @@ class TestAVCaptureTimecodeGenerator(TestCase):
             1,
             objc._C_NSInteger,
         )
+
+    @min_os_level("26.0")
+    def test_functions(self):
+        self.assertResultIsCFRetained(
+            AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferAssociatedWithPresentationTimeStamp
+        )
+        self.assertResultIsCFRetained(
+            AVFoundation.AVCaptureTimecodeCreateMetadataSampleBufferForDuration
+        )
+        AVFoundation.AVCaptureTimecodeAdvancedByFrames

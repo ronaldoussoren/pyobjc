@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
@@ -13,13 +13,9 @@ class TestDOMHTMLInputElement(TestCase):
         self.assertResultIsBOOL(WebKit.DOMHTMLInputElement.readOnly)
         self.assertArgIsBOOL(WebKit.DOMHTMLInputElement.setReadOnly_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLInputElement.indeterminate)
         self.assertArgIsBOOL(WebKit.DOMHTMLInputElement.setIndeterminate_, 0)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLInputElement.autofocus)
         self.assertArgIsBOOL(WebKit.DOMHTMLInputElement.setAutofocus_, 0)
         self.assertResultIsBOOL(WebKit.DOMHTMLInputElement.multiple)

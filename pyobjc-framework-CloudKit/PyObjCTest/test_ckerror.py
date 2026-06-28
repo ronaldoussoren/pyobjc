@@ -3,18 +3,8 @@ import CloudKit
 
 
 class TestCKError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKErrorCode)
-
-    @min_os_level("10.10")
-    def test_constants(self):
-        self.assertIsInstance(CloudKit.CKErrorDomain, str)
-        self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, str)
-        self.assertIsInstance(CloudKit.CKRecordChangedErrorAncestorRecordKey, str)
-        self.assertIsInstance(CloudKit.CKRecordChangedErrorServerRecordKey, str)
-        self.assertIsInstance(CloudKit.CKRecordChangedErrorClientRecordKey, str)
-        self.assertIsInstance(CloudKit.CKErrorRetryAfterKey, str)
-
         self.assertEqual(CloudKit.CKErrorInternalError, 1)
         self.assertEqual(CloudKit.CKErrorPartialFailure, 2)
         self.assertEqual(CloudKit.CKErrorNetworkUnavailable, 3)
@@ -52,6 +42,15 @@ class TestCKError(TestCase):
         self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
         self.assertEqual(CloudKit.CKErrorAccountTemporarilyUnavailable, 36)
         self.assertEqual(CloudKit.CKErrorParticipantAlreadyInvited, 37)
+
+    @min_os_level("10.10")
+    def test_constants(self):
+        self.assertIsInstance(CloudKit.CKErrorDomain, str)
+        self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, str)
+        self.assertIsInstance(CloudKit.CKRecordChangedErrorAncestorRecordKey, str)
+        self.assertIsInstance(CloudKit.CKRecordChangedErrorServerRecordKey, str)
+        self.assertIsInstance(CloudKit.CKRecordChangedErrorClientRecordKey, str)
+        self.assertIsInstance(CloudKit.CKErrorRetryAfterKey, str)
 
     @min_os_level("12.0")
     def test_constants12_0(self):

@@ -1,20 +1,11 @@
 import CoreBluetooth
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBAdvertisementData(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(CoreBluetooth.CBAttributePermissions)
+    def test_enums(self):
         self.assertIsEnumType(CoreBluetooth.CBCharacteristicProperties)
-
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(CoreBluetooth.CBCharacteristic, objc.objc_class)
-        self.assertIsInstance(CoreBluetooth.CBMutableCharacteristic, objc.objc_class)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyBroadcast, 0x01)
         self.assertEqual(CoreBluetooth.CBCharacteristicPropertyRead, 0x02)
         self.assertEqual(
@@ -34,6 +25,7 @@ class TestCBAdvertisementData(TestCase):
             CoreBluetooth.CBCharacteristicPropertyIndicateEncryptionRequired, 0x200
         )
 
+        self.assertIsEnumType(CoreBluetooth.CBAttributePermissions)
         self.assertEqual(CoreBluetooth.CBAttributePermissionsReadable, 0x01)
         self.assertEqual(CoreBluetooth.CBAttributePermissionsWriteable, 0x02)
         self.assertEqual(
@@ -43,7 +35,10 @@ class TestCBAdvertisementData(TestCase):
             CoreBluetooth.CBAttributePermissionsWriteEncryptionRequired, 0x08
         )
 
-    @min_os_level("10.9")
+    def test_classes(self):
+        self.assertIsInstance(CoreBluetooth.CBCharacteristic, objc.objc_class)
+        self.assertIsInstance(CoreBluetooth.CBMutableCharacteristic, objc.objc_class)
+
     def test_methods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isBroadcasted)
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isNotifying)

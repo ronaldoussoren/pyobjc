@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 NSUserScriptTaskCompletionHandler = b"v@"
 NSUserUnixTaskCompletionHandler = b"v@"
@@ -8,8 +8,7 @@ NSUserAutomatorTaskCompletionHandler = b"@@"
 
 
 class TestNSUserScriptTask(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertArgIsOut(Foundation.NSUserScriptTask.initWithURL_error_, 1)
         self.assertArgIsBlock(
             Foundation.NSUserScriptTask.executeWithCompletionHandler_,

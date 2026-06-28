@@ -91,8 +91,6 @@ class TestSCNView(TestCase):
             TestSCNViewHelper.setRotationSensitivity_, 0, objc._C_CGFloat
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)
         self.assertResultIsBOOL(SceneKit.SCNView.allowsCameraControl)
 

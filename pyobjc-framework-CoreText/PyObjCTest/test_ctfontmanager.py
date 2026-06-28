@@ -4,8 +4,8 @@ import objc
 
 
 class TestCTFontManager(TestCase):
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTFontManagerScope)
         self.assertEqual(CoreText.kCTFontManagerScopeNone, 0)
         self.assertEqual(CoreText.kCTFontManagerScopeProcess, 1)
         self.assertEqual(CoreText.kCTFontManagerScopePersistent, 2)
@@ -14,19 +14,20 @@ class TestCTFontManager(TestCase):
             CoreText.kCTFontManagerScopeUser, CoreText.kCTFontManagerScopePersistent
         )
 
-        self.assertIsInstance(CoreText.kCTFontManagerBundleIdentifier, str)
-
+        self.assertIsEnumType(CoreText.CTFontManagerAutoActivationSetting)
         self.assertEqual(CoreText.kCTFontManagerAutoActivationDefault, 0)
         self.assertEqual(CoreText.kCTFontManagerAutoActivationDisabled, 1)
         self.assertEqual(CoreText.kCTFontManagerAutoActivationEnabled, 2)
         self.assertEqual(CoreText.kCTFontManagerAutoActivationPromptUser, 3)
 
+    def test_constants(self):
+        self.assertIsInstance(CoreText.kCTFontManagerBundleIdentifier, str)
+
         self.assertIsInstance(
             CoreText.kCTFontManagerRegisteredFontsChangedNotification, str
         )
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCopyAvailablePostScriptNames
         )
@@ -66,14 +67,10 @@ class TestCTFontManager(TestCase):
         CoreText.CTFontManagerGetAutoActivationSetting
         CoreText.CTFontManagerSetAutoActivationSetting
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCreateFontDescriptorFromData
         )
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         self.assertResultIsCFRetained(
             CoreText.CTFontManagerCreateFontDescriptorFromData
         )

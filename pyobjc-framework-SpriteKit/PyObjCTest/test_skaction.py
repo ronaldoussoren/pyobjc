@@ -7,17 +7,13 @@ SKActionTimingFunction = objc._C_FLT + objc._C_FLT
 
 
 class TestSKAction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKActionTimingMode)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(SpriteKit.SKActionTimingLinear, 0)
         self.assertEqual(SpriteKit.SKActionTimingEaseIn, 1)
         self.assertEqual(SpriteKit.SKActionTimingEaseOut, 2)
         self.assertEqual(SpriteKit.SKActionTimingEaseInEaseOut, 3)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertIsInstance(SpriteKit.SKAction, objc.objc_class)
 

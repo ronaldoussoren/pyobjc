@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -98,15 +98,13 @@ class TestNSBrowserHelper(AppKit.NSObject):
 
 
 class TestNSBrowser(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSBrowserColumnResizingType)
-        self.assertIsEnumType(AppKit.NSBrowserDropOperation)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSBrowserNoColumnResizing, 0)
         self.assertEqual(AppKit.NSBrowserAutoColumnResizing, 1)
         self.assertEqual(AppKit.NSBrowserUserColumnResizing, 2)
 
+        self.assertIsEnumType(AppKit.NSBrowserDropOperation)
         self.assertEqual(AppKit.NSBrowserDropOn, 0)
         self.assertEqual(AppKit.NSBrowserDropAbove, 1)
 
@@ -153,11 +151,24 @@ class TestNSBrowser(TestCase):
         self.assertResultIsBOOL(AppKit.NSBrowser.allowsTypeSelect)
         self.assertArgIsBOOL(AppKit.NSBrowser.setAllowsTypeSelect_, 0)
 
-    @min_sdk_level("10.6")
+        self.assertArgIsBOOL(AppKit.NSBrowser.setAutohidesScroller_, 0)
+        self.assertResultIsBOOL(AppKit.NSBrowser.autohidesScroller)
+        self.assertResultIsBOOL(AppKit.NSBrowser.isLeafItem_)
+        self.assertResultIsBOOL(AppKit.NSBrowser.getRow_column_forPoint_)
+        self.assertArgIsOut(AppKit.NSBrowser.getRow_column_forPoint_, 0)
+        self.assertArgIsOut(AppKit.NSBrowser.getRow_column_forPoint_, 1)
+        self.assertArgIsBOOL(AppKit.NSBrowser.editItemAtIndexPath_withEvent_select_, 2)
+
+        self.assertArgHasType(
+            TestNSBrowserHelper.browser_selectionIndexesForProposedSelection_inColumn_,
+            2,
+            objc._C_NSInteger,
+        )
+
     def test_protocols(self):
         self.assertProtocolExists("NSBrowserDelegate", AppKit)
 
-    def test_delegate_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSBrowserHelper.browser_selectCellWithString_inColumn_
         )
@@ -278,24 +289,6 @@ class TestNSBrowser(TestCase):
 
         # XXX: Redo testcase for delegate
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
-        self.assertArgIsBOOL(AppKit.NSBrowser.setAutohidesScroller_, 0)
-        self.assertResultIsBOOL(AppKit.NSBrowser.autohidesScroller)
-        self.assertResultIsBOOL(AppKit.NSBrowser.isLeafItem_)
-        self.assertResultIsBOOL(AppKit.NSBrowser.getRow_column_forPoint_)
-        self.assertArgIsOut(AppKit.NSBrowser.getRow_column_forPoint_, 0)
-        self.assertArgIsOut(AppKit.NSBrowser.getRow_column_forPoint_, 1)
-        self.assertArgIsBOOL(AppKit.NSBrowser.editItemAtIndexPath_withEvent_select_, 2)
-
-        self.assertArgHasType(
-            TestNSBrowserHelper.browser_selectionIndexesForProposedSelection_inColumn_,
-            2,
-            objc._C_NSInteger,
-        )
-
-    @min_os_level("10.6")
-    def test_delegate_methods10_6(self):
         self.assertResultIsBOOL(TestNSBrowserHelper.browser_isLeafItem_)
         self.assertResultHasType(
             TestNSBrowserHelper.browser_heightOfRow_inColumn_, objc._C_CGFloat

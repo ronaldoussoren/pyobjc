@@ -4,16 +4,17 @@ import objc
 
 
 class TestCMSDecoder(TestCase):
-    def test_types(self):
-        self.assertIsCFType(Security.CMSDecoderRef)
-
     def test_constants(self):
+        self.assertIsEnumType(Security.CMSSignerStatus)
         self.assertEqual(Security.kCMSSignerUnsigned, 0)
         self.assertEqual(Security.kCMSSignerValid, 1)
         self.assertEqual(Security.kCMSSignerNeedsDetachedContent, 2)
         self.assertEqual(Security.kCMSSignerInvalidSignature, 3)
         self.assertEqual(Security.kCMSSignerInvalidCert, 4)
         self.assertEqual(Security.kCMSSignerInvalidIndex, 5)
+
+    def test_types(self):
+        self.assertIsCFType(Security.CMSDecoderRef)
 
     def test_functions(self):
         self.assertIsInstance(Security.CMSDecoderGetTypeID(), int)
@@ -120,8 +121,6 @@ class TestCMSDecoder(TestCase):
         )
         self.assertArgIsCFRetained(Security.CMSDecoderCopyContent, 1)
 
-    @min_os_level("10.8")
-    def test_functions_10_8(self):
         self.assertResultHasType(Security.CMSDecoderCopySignerSigningTime, objc._C_INT)
         self.assertArgHasType(Security.CMSDecoderCopySignerSigningTime, 0, objc._C_ID)
         self.assertArgHasType(Security.CMSDecoderCopySignerSigningTime, 1, objc._C_ULNG)

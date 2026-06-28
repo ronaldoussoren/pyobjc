@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 import Quartz
 import objc
 
@@ -122,8 +122,6 @@ class TestCGRemoteOperation(TestCase):
             is Quartz.CGSetLocalEventsFilterDuringSuppressionState
         )
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGWindowServerCreateServerPort)
 
     @expectedFailure

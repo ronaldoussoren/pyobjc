@@ -9,6 +9,103 @@ from PyObjCTools.TestSupport import (
 
 
 class TestCFOpenDirectoryConstants(TestCase):
+    def test_enums(self):
+        self.assertIsEnum(CFOpenDirectory.ODNodeType)
+        self.assertEqual(CFOpenDirectory.kODNodeTypeAuthentication, 0x2201)
+        self.assertEqual(CFOpenDirectory.kODNodeTypeContacts, 0x2204)
+        self.assertEqual(CFOpenDirectory.kODNodeTypeNetwork, 0x2205)
+        self.assertEqual(CFOpenDirectory.kODNodeTypeLocalNodes, 0x2200)
+        self.assertEqual(CFOpenDirectory.kODNodeTypeConfigure, 0x2202)
+
+        self.assertIsEnum(CFOpenDirectory.ODMatchType)
+        self.assertEqual(CFOpenDirectory.kODMatchAny, 0x0001)
+        self.assertEqual(CFOpenDirectory.kODMatchEqualTo, 0x2001)
+        self.assertEqual(CFOpenDirectory.kODMatchBeginsWith, 0x2002)
+        self.assertEqual(CFOpenDirectory.kODMatchContains, 0x2004)
+        self.assertEqual(CFOpenDirectory.kODMatchEndsWith, 0x2003)
+        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveEqualTo, 0x2101)
+        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveBeginsWith, 0x2102)
+        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveContains, 0x2104)
+        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveEndsWith, 0x2103)
+        self.assertEqual(CFOpenDirectory.kODMatchGreaterThan, 0x2006)
+        self.assertEqual(CFOpenDirectory.kODMatchLessThan, 0x2007)
+
+        self.assertIsEnum(CFOpenDirectory.ODFrameworkErrors)
+        self.assertEqual(CFOpenDirectory.kODErrorSuccess, 0)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionLocalOnlyDaemonInUse, 1000)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionNormalDaemonInUse, 1001)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionDaemonNotRunning, 1002)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionDaemonRefused, 1003)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyCommunicationError, 1100)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyVersionMismatch, 1101)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyIPUnreachable, 1102)
+        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyUnknownHost, 1103)
+        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownName, 2000)
+        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownType, 2001)
+        self.assertEqual(CFOpenDirectory.kODErrorNodeDisabled, 2002)
+        self.assertEqual(CFOpenDirectory.kODErrorNodeConnectionFailed, 2100)
+        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownHost, 2200)
+        self.assertEqual(CFOpenDirectory.kODErrorQuerySynchronize, 3000)
+        self.assertEqual(CFOpenDirectory.kODErrorQueryInvalidMatchType, 3100)
+        self.assertEqual(CFOpenDirectory.kODErrorQueryUnsupportedMatchType, 3101)
+        self.assertEqual(CFOpenDirectory.kODErrorQueryTimeout, 3102)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordReadOnlyNode, 4000)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordPermissionError, 4001)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordParameterError, 4100)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordInvalidType, 4101)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordAlreadyExists, 4102)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordTypeDisabled, 4103)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordNoLongerExists, 4104)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeUnknownType, 4200)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeNotFound, 4201)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeValueSchemaError, 4202)
+        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeValueNotFound, 4203)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalid, 5000)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsMethodNotSupported, 5100)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsNotAuthorized, 5101)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsParameterError, 5102)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsOperationFailed, 5103)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerUnreachable, 5200)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerNotFound, 5201)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerError, 5202)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerTimeout, 5203)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactMaster, 5204)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactPrimary, 5204)
+        self.assertEqual(
+            CFOpenDirectory.kODErrorCredentialsServerCommunicationError, 5205
+        )
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountNotFound, 5300)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountDisabled, 5301)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountExpired, 5302)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountInactive, 5303)
+        self.assertEqual(
+            CFOpenDirectory.kODErrorCredentialsAccountTemporarilyLocked, 5304
+        )
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountLocked, 5305)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordExpired, 5400)
+        self.assertEqual(
+            CFOpenDirectory.kODErrorCredentialsPasswordChangeRequired, 5401
+        )
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordQualityFailed, 5402)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooShort, 5403)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooLong, 5404)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordNeedsLetter, 5405)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordNeedsDigit, 5406)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordChangeTooSoon, 5407)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordUnrecoverable, 5408)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalidLogonHours, 5500)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalidComputer, 5501)
+        self.assertEqual(CFOpenDirectory.kODErrorPluginOperationNotSupported, 10000)
+        self.assertEqual(CFOpenDirectory.kODErrorPluginError, 10001)
+        self.assertEqual(CFOpenDirectory.kODErrorDaemonError, 10002)
+        self.assertEqual(CFOpenDirectory.kODErrorPluginOperationTimeout, 10003)
+        self.assertEqual(CFOpenDirectory.kODErrorPolicyUnsupported, 6000)
+        self.assertEqual(CFOpenDirectory.kODErrorPolicyOutOfRange, 6001)
+
+        # Unnamed enum:
+        self.assertEqual(CFOpenDirectory.kODExpirationTimeExpired, 0)
+        self.assertEqual(CFOpenDirectory.kODExpirationTimeNeverExpires, -1)
+
     def test_constants(self):
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyAddress, str)
         self.assertIsInstance(CFOpenDirectory.kODSessionProxyPort, str)
@@ -381,96 +478,8 @@ class TestCFOpenDirectoryConstants(TestCase):
         )
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeWriteSecureHash, str)
 
-        self.assertEqual(CFOpenDirectory.kODNodeTypeAuthentication, 0x2201)
-        self.assertEqual(CFOpenDirectory.kODNodeTypeContacts, 0x2204)
-        self.assertEqual(CFOpenDirectory.kODNodeTypeNetwork, 0x2205)
-        self.assertEqual(CFOpenDirectory.kODNodeTypeLocalNodes, 0x2200)
-        self.assertEqual(CFOpenDirectory.kODNodeTypeConfigure, 0x2202)
-        self.assertEqual(CFOpenDirectory.kODMatchAny, 0x0001)
-        self.assertEqual(CFOpenDirectory.kODMatchEqualTo, 0x2001)
-        self.assertEqual(CFOpenDirectory.kODMatchBeginsWith, 0x2002)
-        self.assertEqual(CFOpenDirectory.kODMatchContains, 0x2004)
-        self.assertEqual(CFOpenDirectory.kODMatchEndsWith, 0x2003)
-        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveEqualTo, 0x2101)
-        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveBeginsWith, 0x2102)
-        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveContains, 0x2104)
-        self.assertEqual(CFOpenDirectory.kODMatchInsensitiveEndsWith, 0x2103)
-        self.assertEqual(CFOpenDirectory.kODMatchGreaterThan, 0x2006)
-        self.assertEqual(CFOpenDirectory.kODMatchLessThan, 0x2007)
-        self.assertEqual(CFOpenDirectory.kODErrorSuccess, 0)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionLocalOnlyDaemonInUse, 1000)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionNormalDaemonInUse, 1001)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionDaemonNotRunning, 1002)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionDaemonRefused, 1003)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyCommunicationError, 1100)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyVersionMismatch, 1101)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyIPUnreachable, 1102)
-        self.assertEqual(CFOpenDirectory.kODErrorSessionProxyUnknownHost, 1103)
-        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownName, 2000)
-        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownType, 2001)
-        self.assertEqual(CFOpenDirectory.kODErrorNodeDisabled, 2002)
-        self.assertEqual(CFOpenDirectory.kODErrorNodeConnectionFailed, 2100)
-        self.assertEqual(CFOpenDirectory.kODErrorNodeUnknownHost, 2200)
-        self.assertEqual(CFOpenDirectory.kODErrorQuerySynchronize, 3000)
-        self.assertEqual(CFOpenDirectory.kODErrorQueryInvalidMatchType, 3100)
-        self.assertEqual(CFOpenDirectory.kODErrorQueryUnsupportedMatchType, 3101)
-        self.assertEqual(CFOpenDirectory.kODErrorQueryTimeout, 3102)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordReadOnlyNode, 4000)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordPermissionError, 4001)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordParameterError, 4100)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordInvalidType, 4101)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordAlreadyExists, 4102)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordTypeDisabled, 4103)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordNoLongerExists, 4104)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeUnknownType, 4200)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeNotFound, 4201)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeValueSchemaError, 4202)
-        self.assertEqual(CFOpenDirectory.kODErrorRecordAttributeValueNotFound, 4203)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalid, 5000)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsMethodNotSupported, 5100)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsNotAuthorized, 5101)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsParameterError, 5102)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsOperationFailed, 5103)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerUnreachable, 5200)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerNotFound, 5201)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerError, 5202)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerTimeout, 5203)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactMaster, 5204)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactPrimary, 5204)
-        self.assertEqual(
-            CFOpenDirectory.kODErrorCredentialsServerCommunicationError, 5205
-        )
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountNotFound, 5300)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountDisabled, 5301)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountExpired, 5302)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountInactive, 5303)
-        self.assertEqual(
-            CFOpenDirectory.kODErrorCredentialsAccountTemporarilyLocked, 5304
-        )
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountLocked, 5305)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordExpired, 5400)
-        self.assertEqual(
-            CFOpenDirectory.kODErrorCredentialsPasswordChangeRequired, 5401
-        )
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordQualityFailed, 5402)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooShort, 5403)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooLong, 5404)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordNeedsLetter, 5405)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordNeedsDigit, 5406)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordChangeTooSoon, 5407)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordUnrecoverable, 5408)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalidLogonHours, 5500)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsInvalidComputer, 5501)
-        self.assertEqual(CFOpenDirectory.kODErrorPluginOperationNotSupported, 10000)
-        self.assertEqual(CFOpenDirectory.kODErrorPluginError, 10001)
-        self.assertEqual(CFOpenDirectory.kODErrorDaemonError, 10002)
-        self.assertEqual(CFOpenDirectory.kODErrorPluginOperationTimeout, 10003)
-        self.assertEqual(CFOpenDirectory.kODErrorPolicyUnsupported, 6000)
-        self.assertEqual(CFOpenDirectory.kODErrorPolicyOutOfRange, 6001)
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeSecureHash, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, str)
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeMetaAugmentedAttributes, str
@@ -487,20 +496,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeParentLocales, str)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypePrimaryLocale, str)
 
-    @expectedFailure
-    @min_os_level("10.7")
-    def test_constants10_7_missing(self):
-        self.assertIsInstance(
-            CFOpenDirectory.kODAuthenticationTypeSetCertificateHashAsCurrent, str
-        )
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, str)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeQueryInformation, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfiles, str)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfilesTimestamp, str)
         self.assertIsInstance(
@@ -534,11 +532,13 @@ class TestCFOpenDirectoryConstants(TestCase):
             CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesOfNonUse, str
         )
 
-        self.assertEqual(CFOpenDirectory.kODExpirationTimeExpired, 0)
-        self.assertEqual(CFOpenDirectory.kODExpirationTimeNeverExpires, -1)
+    @expectedFailure
+    def test_constants10_7_missing(self):
+        self.assertIsInstance(
+            CFOpenDirectory.kODAuthenticationTypeSetCertificateHashAsCurrent, str
+        )
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] in ("10.9", "10.10"))
-    @min_os_level("10.9")
     def test_constants10_9_missing(self):
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypeAccountMaximumMinutesUntilDisabled, str

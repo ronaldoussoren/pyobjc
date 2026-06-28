@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
-import GameCenter  # noqa: F401
+import GameCenter
 
 
 class TestGKLeaderboardViewController(TestCase):
-    @min_os_level("10.8")
     def test_protocols(self):
         self.assertProtocolExists("GKLeaderboardViewControllerDelegate", GameCenter)

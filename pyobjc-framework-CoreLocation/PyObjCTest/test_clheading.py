@@ -1,8 +1,7 @@
 import CoreLocation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCLHeading(TestCase):
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(CoreLocation.kCLHeadingFilterNone, float)

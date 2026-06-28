@@ -86,21 +86,10 @@ class TestLocale(TestCase):
         self.assertIsInstance(CoreFoundation.kCFIslamicCivilCalendar, str)
         self.assertIsInstance(CoreFoundation.kCFJapaneseCalendar, str)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
-        codes = CoreFoundation.CFLocaleCopyCommonISOCurrencyCodes()
-        self.assertIsInstance(codes, NSArray)
-        codes = CoreFoundation.CFLocaleCopyPreferredLanguages()
-        self.assertIsInstance(codes, NSArray)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(
             CoreFoundation.kCFLocaleCurrentLocaleDidChangeNotification, str
         )
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionUnknown, 0)
         self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionLeftToRight, 1)
         self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionRightToLeft, 2)
@@ -140,8 +129,12 @@ class TestLocale(TestCase):
         self.assertIsInstance(CoreFoundation.kCFDangiCalendar, str)
         self.assertIsInstance(CoreFoundation.kCFVietnameseCalendar, str)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+    def test_functions(self):
+        codes = CoreFoundation.CFLocaleCopyCommonISOCurrencyCodes()
+        self.assertIsInstance(codes, NSArray)
+        codes = CoreFoundation.CFLocaleCopyPreferredLanguages()
+        self.assertIsInstance(codes, NSArray)
+
         v = CoreFoundation.CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier("nl_NL")
         self.assertIsInstance(v, int)
 

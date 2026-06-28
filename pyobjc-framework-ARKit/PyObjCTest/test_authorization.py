@@ -4,7 +4,7 @@ import ARKit
 
 
 class TestAuthorization(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(ARKit.ar_authorization_status_t)
         self.assertEqual(ARKit.ar_authorization_status_not_determined, 0)
         self.assertEqual(ARKit.ar_authorization_status_allowed, 1)

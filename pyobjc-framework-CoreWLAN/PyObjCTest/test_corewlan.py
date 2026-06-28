@@ -1,9 +1,8 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreWLAN(TestCase):
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertEqual(CoreWLAN.CoreWLANFrameworkVersionNumber2_0, 200)
         self.assertIsInstance(CoreWLAN.CoreWLANFrameworkVersionNumber, float)

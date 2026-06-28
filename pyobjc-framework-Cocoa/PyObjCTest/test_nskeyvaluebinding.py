@@ -1,7 +1,6 @@
 import AppKit
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     min_sdk_level,
 )
 
@@ -136,8 +135,6 @@ class TestNSKeyValueBinding(TestCase):
         self.assertIsInstance(AppKit.NSValueTransformerNameBindingOption, str)
         self.assertIsInstance(AppKit.NSValueTransformerBindingOption, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSContentDictionaryBinding, str)
         self.assertIsInstance(AppKit.NSExcludedKeysBinding, str)
         self.assertIsInstance(AppKit.NSIncludedKeysBinding, str)
@@ -147,8 +144,6 @@ class TestNSKeyValueBinding(TestCase):
         self.assertIsInstance(AppKit.NSTransparentBinding, str)
         self.assertIsInstance(AppKit.NSContentPlacementTagBindingOption, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(AppKit.NSPositioningRectBinding, str)
 
     def test_functions(self):
@@ -163,8 +158,6 @@ class TestNSKeyValueBinding(TestCase):
 
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(
             TestNSKeyValueBindingHelper.commitEditingAndReturnError_
         )

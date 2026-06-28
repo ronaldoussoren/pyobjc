@@ -29,15 +29,11 @@ class TestNSPrintPanel(TestCase):
         self.assertEqual(AppKit.NSPrintPanelResultCancelled, 0)
         self.assertEqual(AppKit.NSPrintPanelResultPrinted, 1)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(AppKit.NSPrintPanelAccessorySummaryItemNameKey, str)
         self.assertIsInstance(
             AppKit.NSPrintPanelAccessorySummaryItemDescriptionKey, str
         )
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
 
         self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)

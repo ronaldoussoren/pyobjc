@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLLocation(TestCase):
-    @min_os_level("10.6")
     def test_structs(self):
         v = CoreLocation.CLLocationCoordinate2D()
         self.assertIsInstance(v.latitude, float)
@@ -14,7 +13,6 @@ class TestCLLocation(TestCase):
             b"{CLLocationCoordinate2D=dd}",
         )
 
-    @min_os_level("10.6")
     def test_constants(self):
         self.assertIsInstance(CoreLocation.kCLDistanceFilterNone, float)
 
@@ -24,8 +22,6 @@ class TestCLLocation(TestCase):
         self.assertIsInstance(CoreLocation.kCLLocationAccuracyKilometer, float)
         self.assertIsInstance(CoreLocation.kCLLocationAccuracyThreeKilometers, float)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(CoreLocation.kCLLocationAccuracyBestForNavigation, float)
         self.assertIsInstance(
             CoreLocation.kCLLocationCoordinate2DInvalid,
@@ -41,7 +37,6 @@ class TestCLLocation(TestCase):
     def test_constants11_0(self):
         self.assertIsInstance(CoreLocation.kCLLocationAccuracyReduced, float)
 
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertResultHasType(
             CoreLocation.CLLocation.coordinate,
@@ -69,8 +64,7 @@ class TestCLLocation(TestCase):
             CoreLocation.CLLocationSourceInformation.isProducedByAccessory
         )
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    def test_functions(self):
         self.assertResultIsBOOL(CoreLocation.CLLocationCoordinate2DIsValid)
         self.assertFalse(
             CoreLocation.CLLocationCoordinate2DIsValid(

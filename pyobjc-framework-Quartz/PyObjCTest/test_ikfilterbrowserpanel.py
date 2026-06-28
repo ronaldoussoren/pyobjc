@@ -1,10 +1,19 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
 
 class TestIKFilterBrowserPanel(TestCase):
-    @min_os_level("10.5")
+    def test_constants(self):
+        self.assertIsInstance(Quartz.IKFilterBrowserFilterSelectedNotification, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserFilterDoubleClickNotification, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserWillPreviewFilterNotification, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserShowCategories, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserShowPreview, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserExcludeCategories, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserExcludeFilters, str)
+        self.assertIsInstance(Quartz.IKFilterBrowserDefaultInputImage, str)
+
     def test_methods(self):
         self.assertArgIsSEL(
             Quartz.IKFilterBrowserPanel.beginWithOptions_modelessDelegate_didEndSelector_contextInfo_,
@@ -16,14 +25,3 @@ class TestIKFilterBrowserPanel(TestCase):
             3,
             b"v@:@" + objc._C_NSInteger + b"^v",
         )
-
-    @min_os_level("10.5")
-    def test_constants(self):
-        self.assertIsInstance(Quartz.IKFilterBrowserFilterSelectedNotification, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserFilterDoubleClickNotification, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserWillPreviewFilterNotification, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserShowCategories, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserShowPreview, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserExcludeCategories, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserExcludeFilters, str)
-        self.assertIsInstance(Quartz.IKFilterBrowserDefaultInputImage, str)

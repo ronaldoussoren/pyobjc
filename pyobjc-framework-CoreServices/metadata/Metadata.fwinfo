@@ -4,6 +4,9 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "enum_types": {
+   "MDLabelDomain": { "typestr": "i" }
+  },
   "functions": {
    "MDCopyLabelKinds": {
     "retval": {

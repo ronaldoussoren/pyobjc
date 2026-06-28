@@ -45,15 +45,11 @@ class TestNSURLRequest(TestCase):
             Foundation.NSMutableURLRequest.setHTTPShouldHandleCookies_, 0
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldUsePipelining)
         self.assertArgIsBOOL(
             Foundation.NSMutableURLRequest.setHTTPShouldUsePipelining_, 0
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.allowsCellularAccess)
         self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsCellularAccess_, 0)
 

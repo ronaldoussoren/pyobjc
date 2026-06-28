@@ -1,6 +1,6 @@
 # This just tests the definitions in the Foundation.NSKeyedArchiver header
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSKeyedArchiver(TestCase):
@@ -8,8 +8,6 @@ class TestNSKeyedArchiver(TestCase):
         self.assertIsInstance(Foundation.NSInvalidArchiveOperationException, str)
         self.assertIsInstance(Foundation.NSInvalidUnarchiveOperationException, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSKeyedArchiveRootObjectKey, str)
 
     def test_output(self):
@@ -68,8 +66,6 @@ class TestNSKeyedArchiver(TestCase):
             Foundation.NSCoder.decodeRectForKey_, Foundation.NSRect.__typestr__
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSKeyedArchiver.requiresSecureCoding)
         self.assertArgIsBOOL(Foundation.NSKeyedArchiver.setRequiresSecureCoding_, 0)
         self.assertResultIsBOOL(Foundation.NSKeyedUnarchiver.requiresSecureCoding)
@@ -108,7 +104,6 @@ class TestNSKeyedArchiver(TestCase):
             3,
         )
 
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("NSKeyedArchiverDelegate", Foundation)
         self.assertProtocolExists("NSKeyedUnarchiverDelegate", Foundation)

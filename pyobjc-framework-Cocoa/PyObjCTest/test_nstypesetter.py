@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTypesetterHelper(AppKit.NSTypesetter):
@@ -295,8 +295,6 @@ class TestNSTypesetter(TestCase):
             objc._C_CGFloat,
         )
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertArgHasType(
             AppKit.NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,  # noqa: B950
             2,

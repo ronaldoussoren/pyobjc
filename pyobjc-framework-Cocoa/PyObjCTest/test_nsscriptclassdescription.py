@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScriptClassDescription(TestCase):
@@ -12,8 +12,6 @@ class TestNSScriptClassDescription(TestCase):
             Foundation.NSScriptClassDescription.isLocationRequiredToCreateForKey_
         )
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(Foundation.NSScriptClassDescription.hasPropertyForKey_)
         self.assertResultIsBOOL(
             Foundation.NSScriptClassDescription.hasOrderedToManyRelationshipForKey_

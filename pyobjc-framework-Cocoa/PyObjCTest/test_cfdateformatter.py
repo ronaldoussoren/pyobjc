@@ -102,14 +102,11 @@ class TestDateFormatter(TestCase):
             | CoreFoundation.kCFISO8601DateFormatWithFullTime,
         )
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(
             CoreFoundation.kCFDateFormatterDoesRelativeDateFormattingKey, str
         )
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             CoreFoundation.CFDateFormatterCreateDateFormatFromTemplate
         )

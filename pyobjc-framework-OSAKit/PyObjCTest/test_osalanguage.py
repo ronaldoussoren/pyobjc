@@ -1,9 +1,10 @@
 import OSAKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestOSALanguage(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(OSAKit.OSALanguageFeatures)
         self.assertEqual(OSAKit.OSASupportsCompiling, 0x0002)
         self.assertEqual(OSAKit.OSASupportsGetSource, 0x0004)
         self.assertEqual(OSAKit.OSASupportsAECoercion, 0x0008)
@@ -13,9 +14,5 @@ class TestOSALanguage(TestCase):
         self.assertEqual(OSAKit.OSASupportsDialects, 0x0080)
         self.assertEqual(OSAKit.OSASupportsEventHandling, 0x0100)
 
-    def test_classes(self):
-        OSAKit.OSALanguage
-
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertResultIsBOOL(OSAKit.OSALanguage.isThreadSafe)

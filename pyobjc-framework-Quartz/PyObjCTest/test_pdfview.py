@@ -27,17 +27,8 @@ class TestPDFViewHelper(Quartz.NSObject):
 
 
 class TestPDFView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFAreaOfInterest)
-        self.assertIsEnumType(Quartz.PDFDisplayDirection)
-        self.assertIsEnumType(Quartz.PDFDisplayMode)
-        self.assertIsEnumType(Quartz.PDFInterpolationQuality)
-
-    def test_constants(self):
-        self.assertEqual(Quartz.kPDFDisplaySinglePage, 0)
-        self.assertEqual(Quartz.kPDFDisplaySinglePageContinuous, 1)
-        self.assertEqual(Quartz.kPDFDisplayTwoUp, 2)
-        self.assertEqual(Quartz.kPDFDisplayTwoUpContinuous, 3)
         self.assertEqual(Quartz.kPDFNoArea, 0)
         self.assertEqual(Quartz.kPDFPageArea, 1)
         self.assertEqual(Quartz.kPDFTextArea, 2)
@@ -50,6 +41,22 @@ class TestPDFView(TestCase):
         self.assertEqual(Quartz.kPDFImageArea, 256)
         self.assertEqual(Quartz.kPDFAnyArea, Quartz.NSIntegerMax)
 
+        self.assertIsEnumType(Quartz.PDFDisplayDirection)
+        self.assertEqual(Quartz.kPDFDisplayDirectionVertical, 0)
+        self.assertEqual(Quartz.kPDFDisplayDirectionHorizontal, 1)
+
+        self.assertIsEnumType(Quartz.PDFDisplayMode)
+        self.assertEqual(Quartz.kPDFDisplaySinglePage, 0)
+        self.assertEqual(Quartz.kPDFDisplaySinglePageContinuous, 1)
+        self.assertEqual(Quartz.kPDFDisplayTwoUp, 2)
+        self.assertEqual(Quartz.kPDFDisplayTwoUpContinuous, 3)
+
+        self.assertIsEnumType(Quartz.PDFInterpolationQuality)
+        self.assertEqual(Quartz.kPDFInterpolationQualityNone, 0)
+        self.assertEqual(Quartz.kPDFInterpolationQualityLow, 1)
+        self.assertEqual(Quartz.kPDFInterpolationQualityHigh, 2)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.PDFViewDocumentChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewChangedHistoryNotification, str)
         self.assertIsInstance(Quartz.PDFViewPageChangedNotification, str)
@@ -59,21 +66,10 @@ class TestPDFView(TestCase):
         self.assertIsInstance(Quartz.PDFViewPrintPermissionNotification, str)
         self.assertIsInstance(Quartz.PDFViewVisiblePagesChangedNotification, str)
 
-        self.assertEqual(Quartz.kPDFDisplayDirectionVertical, 0)
-        self.assertEqual(Quartz.kPDFDisplayDirectionHorizontal, 1)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Quartz.PDFViewAnnotationWillHitNotification, str)
         self.assertIsInstance(Quartz.PDFViewSelectionChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewDisplayModeChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewDisplayBoxChangedNotification, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(Quartz.kPDFInterpolationQualityNone, 0)
-        self.assertEqual(Quartz.kPDFInterpolationQualityLow, 1)
-        self.assertEqual(Quartz.kPDFInterpolationQualityHigh, 2)
 
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFView.canGoToFirstPage)
@@ -100,14 +96,10 @@ class TestPDFView(TestCase):
         self.assertResultIsBOOL(Quartz.PDFView.allowsDragging)
         self.assertArgIsBOOL(Quartz.PDFView.setAllowsDragging_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertArgIsBOOL(Quartz.PDFView.setCurrentSelection_animate_, 1)
         self.assertArgIsBOOL(Quartz.PDFView.printWithInfo_autoRotate_, 1)
         self.assertArgIsBOOL(Quartz.PDFView.printWithInfo_autoRotate_pageScaling_, 1)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.PDFView.enableDataDetectors)
         self.assertArgIsBOOL(Quartz.PDFView.setEnableDataDetectors_, 0)
 

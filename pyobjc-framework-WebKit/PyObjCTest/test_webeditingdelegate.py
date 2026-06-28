@@ -34,19 +34,17 @@ class TestWebEditingDelegateHelper(WebKit.NSObject):
 
 
 class TestWebEditingDelegate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WebViewInsertAction)
+        self.assertEqual(WebKit.WebViewInsertActionTyped, 0)
+        self.assertEqual(WebKit.WebViewInsertActionPasted, 1)
+        self.assertEqual(WebKit.WebViewInsertActionDropped, 2)
 
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("WebEditingDelegate", WebKit)
 
-    def test_constants(self):
-        self.assertEqual(WebKit.WebViewInsertActionTyped, 0)
-        self.assertEqual(WebKit.WebViewInsertActionPasted, 1)
-        self.assertEqual(WebKit.WebViewInsertActionDropped, 2)
-
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestWebEditingDelegateHelper.webView_shouldBeginEditingInDOMRange_
         )

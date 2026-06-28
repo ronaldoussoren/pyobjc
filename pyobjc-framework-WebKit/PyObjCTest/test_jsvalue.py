@@ -3,18 +3,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSValue(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertHasAttr(JavaScriptCore, "JSValue")
+    def test_constants(self):
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorConfigurableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, str)
 
+    def test_methods(self):
         self.assertArgIsBOOL(JavaScriptCore.JSValue.valueWithBool_inContext_, 0)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.toBool)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.deleteProperty_)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.hasProperty_)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isUndefined)
 
-        # XXX: On macOS 12 there is a class method 'isNull' shadowing the instance method
-        #      This only affects this test pattern, not normal users of the API.
         self.assertResultIsBOOL(JavaScriptCore.JSValue.pyobjc_instanceMethods.isNull)
 
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isBoolean)
@@ -26,7 +29,7 @@ class TestJSValue(TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isInstanceOf_)
 
     @min_os_level("10.11")
-    def test_classes10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isArray)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isDate)
 
@@ -40,12 +43,3 @@ class TestJSValue(TestCase):
     @min_os_level("15.0")
     def test_methods15_0(self):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isBigInt)
-
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, str)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, str)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorConfigurableKey, str)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, str)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, str)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, str)

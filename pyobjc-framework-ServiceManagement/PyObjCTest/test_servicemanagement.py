@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import ServiceManagement
 
 
 class TestServiceManagement(TestCase):
-    @min_os_level("10.6")
     def test_constants(self):
         self.assertEqual(
             ServiceManagement.kSMRightBlessPrivilegedHelper,
@@ -19,7 +18,6 @@ class TestServiceManagement(TestCase):
         self.assertIsInstance(ServiceManagement.kSMInfoKeyPrivilegedExecutables, str)
         self.assertIsInstance(ServiceManagement.kSMInfoKeyAuthorizedClients, str)
 
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(
             ServiceManagement.SMJobCopyDictionary, b"^{__CFDictionary=}"

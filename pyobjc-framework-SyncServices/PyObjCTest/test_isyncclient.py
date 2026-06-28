@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SyncServices
 
 
@@ -35,7 +35,5 @@ class TestISyncClient(TestCase):
             SyncServices.ISyncClient.setShouldSynchronize_withClientsOfType_, 0
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(SyncServices.ISyncClient.formatsRelationships)
         self.assertArgIsBOOL(SyncServices.ISyncClient.setFormatsRelationships_, 0)

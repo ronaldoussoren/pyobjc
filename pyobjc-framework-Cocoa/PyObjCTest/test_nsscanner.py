@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScannerUsage(TestCase):
@@ -78,7 +78,5 @@ class TestNSScannerUsage(TestCase):
         )
         self.assertResultIsBOOL(Foundation.NSScanner.isAtEnd)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(Foundation.NSScanner.scanUnsignedLongLong_)
         self.assertArgIsOut(Foundation.NSScanner.scanUnsignedLongLong_, 0)

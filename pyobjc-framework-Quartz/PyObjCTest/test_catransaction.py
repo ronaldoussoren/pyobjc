@@ -1,22 +1,17 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCATransaction(TestCase):
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(Quartz.kCATransactionAnimationDuration, str)
         self.assertIsInstance(Quartz.kCATransactionDisableActions, str)
+        self.assertIsInstance(Quartz.kCATransactionAnimationTimingFunction, str)
+        self.assertIsInstance(Quartz.kCATransactionCompletionBlock, str)
 
-    @min_os_level("10.6")
     def test_methods10_6(self):
         self.assertResultIsBOOL(Quartz.CATransaction.disableActions)
         self.assertArgIsBOOL(Quartz.CATransaction.setDisableActions_, 0)
 
         self.assertResultIsBlock(Quartz.CATransaction.completionBlock, b"v")
         self.assertArgIsBlock(Quartz.CATransaction.setCompletionBlock_, 0, b"v")
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(Quartz.kCATransactionAnimationTimingFunction, str)
-        self.assertIsInstance(Quartz.kCATransactionCompletionBlock, str)

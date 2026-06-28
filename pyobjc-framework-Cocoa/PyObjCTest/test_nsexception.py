@@ -1,6 +1,6 @@
 import Foundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSExceptionInteraction(TestCase):
@@ -41,8 +41,6 @@ class TestNSException(TestCase):
         self.assertIsInstance(Foundation.NSPortReceiveException, str)
         self.assertIsInstance(Foundation.NSOldStyleException, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Foundation.NSAssertionHandlerKey, str)
 
     def test_uncaught_exception_handler(self):

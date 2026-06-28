@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class RestorationHelper(AppKit.NSObject):
@@ -8,17 +8,12 @@ class RestorationHelper(AppKit.NSObject):
 
 
 class TestNSWindowRestoration(TestCase):
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
-        self.assertProtocolExists("NSWindowRestoration", AppKit)
-        self.assertArgIsBlock(
-            RestorationHelper.restoreWindowWithIdentifier_state_completionHandler_,
-            2,
-            b"v@@",
+    def test_constants(self):
+        self.assertIsInstance(
+            AppKit.NSApplicationDidFinishRestoringWindowsNotification, str
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSApplication.restoreWindowWithIdentifier_state_completionHandler_
         )
@@ -37,8 +32,12 @@ class TestNSWindowRestoration(TestCase):
             b"v@@",
         )
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertIsInstance(
-            AppKit.NSApplicationDidFinishRestoringWindowsNotification, str
+    def test_protocols(self):
+        self.assertProtocolExists("NSWindowRestoration", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBlock(
+            RestorationHelper.restoreWindowWithIdentifier_state_completionHandler_,
+            2,
+            b"v@@",
         )

@@ -122,25 +122,15 @@ class TestSCNSceneRendererHelper(SceneKit.NSObject):
 
 
 class TestSCNSceneRenderer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNAntialiasingMode)
+        self.assertEqual(SceneKit.SCNAntialiasingModeNone, 0)
+        self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling2X, 1)
+        self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling4X, 2)
+        self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling8X, 3)
+        self.assertEqual(SceneKit.SCNAntialiasingModeMultisampling16X, 4)
+
         self.assertIsEnumType(SceneKit.SCNDebugOptions)
-        self.assertIsEnumType(SceneKit.SCNRenderingAPI)
-
-    def test_constants(self):
-        self.assertIsInstance(SceneKit.SCNHitTestFirstFoundOnlyKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestSortResultsKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestClipToZRangeKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestBackFaceCullingKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestBoundingBoxOnlyKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestIgnoreChildNodesKey, str)
-        self.assertIsInstance(SceneKit.SCNHitTestRootNodeKey, str)
-
-        self.assertEqual(SceneKit.SCNRenderingAPIMetal, 0)
-        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLLegacy, 1)
-        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLCore32, 2)
-        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLCore41, 3)
-
         self.assertEqual(SceneKit.SCNDebugOptionNone, 0)
         self.assertEqual(SceneKit.SCNDebugOptionShowPhysicsShapes, 1 << 0)
         self.assertEqual(SceneKit.SCNDebugOptionShowBoundingBoxes, 1 << 1)
@@ -153,18 +143,17 @@ class TestSCNSceneRenderer(TestCase):
         self.assertEqual(SceneKit.SCNDebugOptionShowCreases, 1 << 8)
         self.assertEqual(SceneKit.SCNDebugOptionShowConstraints, 1 << 9)
         self.assertEqual(SceneKit.SCNDebugOptionShowCameras, 1 << 10)
-
-        self.assertIs(
+        self.assertEqual(
             SceneKit.SCNHitTestOptionFirstFoundOnly,
             SceneKit.SCNHitTestFirstFoundOnlyKey,
         )
-        self.assertIs(
+        self.assertEqual(
             SceneKit.SCNHitTestOptionSortResults, SceneKit.SCNHitTestSortResultsKey
         )
-        self.assertIs(
+        self.assertEqual(
             SceneKit.SCNHitTestOptionClipToZRange, SceneKit.SCNHitTestClipToZRangeKey
         )
-        self.assertIs(
+        self.assertEqual(
             SceneKit.SCNHitTestOptionBackFaceCulling,
             SceneKit.SCNHitTestBackFaceCullingKey,
         )
@@ -172,14 +161,28 @@ class TestSCNSceneRenderer(TestCase):
             SceneKit.SCNHitTestOptionBoundingBoxOnly,
             SceneKit.SCNHitTestBoundingBoxOnlyKey,
         )
-        self.assertIs(
+        self.assertEqual(
             SceneKit.SCNHitTestOptionIgnoreChildNodes,
             SceneKit.SCNHitTestIgnoreChildNodesKey,
         )
-        self.assertIs(SceneKit.SCNHitTestOptionRootNode, SceneKit.SCNHitTestRootNodeKey)
+        self.assertEqual(
+            SceneKit.SCNHitTestOptionRootNode, SceneKit.SCNHitTestRootNodeKey
+        )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+        self.assertIsEnumType(SceneKit.SCNRenderingAPI)
+        self.assertEqual(SceneKit.SCNRenderingAPIMetal, 0)
+        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLLegacy, 1)
+        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLCore32, 2)
+        self.assertEqual(SceneKit.SCNRenderingAPIOpenGLCore41, 3)
+
+    def test_constants(self):
+        self.assertIsInstance(SceneKit.SCNHitTestFirstFoundOnlyKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestSortResultsKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestClipToZRangeKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestBackFaceCullingKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestBoundingBoxOnlyKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestIgnoreChildNodesKey, str)
+        self.assertIsInstance(SceneKit.SCNHitTestRootNodeKey, str)
         self.assertIsInstance(SceneKit.SCNHitTestIgnoreHiddenNodesKey, str)
         self.assertIs(
             SceneKit.SCNHitTestOptionIgnoreHiddenNodes,
@@ -197,7 +200,7 @@ class TestSCNSceneRenderer(TestCase):
     def test_protocols10_10(self):
         self.assertProtocolExists("SCNSceneRendererDelegate", SceneKit)
 
-    def test_methods(self):
+    def test_protoocol_methods(self):
         self.assertArgIsBlock(
             TestSCNSceneRendererHelper.presentScene_withTransition_incomingPointOfView_completionHandler_,
             3,
@@ -297,8 +300,6 @@ class TestSCNSceneRenderer(TestCase):
             TestSCNSceneRendererHelper.renderer_didRenderScene_atTime_, 2, objc._C_DBL
         )
 
-    @min_os_level("10.15")
-    def test_methods10_15(self):
         self.assertResultIsBOOL(
             TestSCNSceneRendererHelper.isTemporalAntialiasingEnabled
         )

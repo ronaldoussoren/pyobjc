@@ -1,9 +1,8 @@
 import CoreMedia
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCMAudioDeviceClock(TestCase):
-    @min_os_level("10.8")
     def test_functions(self):
         self.assertArgIsOut(CoreMedia.CMAudioDeviceClockCreate, 2)
         self.assertArgIsCFRetained(CoreMedia.CMAudioDeviceClockCreate, 2)

@@ -8,7 +8,7 @@ xpc_session_reply_handler_t = b"v@@"
 
 
 class TestSession(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(xpc.xpc_session_create_flags_t)
         self.assertEqual(xpc.XPC_SESSION_CREATE_NONE, 0)
         self.assertEqual(xpc.XPC_SESSION_CREATE_INACTIVE, 1 << 0)

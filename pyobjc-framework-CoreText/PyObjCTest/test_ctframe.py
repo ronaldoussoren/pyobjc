@@ -2,30 +2,31 @@ import os
 
 import CoreText
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestCTFrame(TestCase):
-    def test_types(self):
-        self.assertIsInstance(CoreText.CTFrameRef, objc.objc_class)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTFrameProgression)
         self.assertEqual(CoreText.kCTFrameProgressionTopToBottom, 0)
         self.assertEqual(CoreText.kCTFrameProgressionRightToLeft, 1)
         self.assertEqual(CoreText.kCTFrameProgressionLeftToRight, 2)
 
+        self.assertIsEnumType(CoreText.CTFramePathFillRule)
         self.assertEqual(CoreText.kCTFramePathFillEvenOdd, 0)
         self.assertEqual(CoreText.kCTFramePathFillWindingNumber, 1)
 
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTFrameProgressionAttributeName, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(CoreText.kCTFramePathFillRuleAttributeName, str)
         self.assertIsInstance(CoreText.kCTFramePathWidthAttributeName, str)
         self.assertIsInstance(CoreText.kCTFrameClippingPathsAttributeName, str)
         self.assertIsInstance(CoreText.kCTFramePathClippingPathAttributeName, str)
+
+    def test_types(self):
+        self.assertIsInstance(CoreText.CTFrameRef, objc.objc_class)
 
     def test_functions(self):
         v = CoreText.CTFrameGetTypeID()

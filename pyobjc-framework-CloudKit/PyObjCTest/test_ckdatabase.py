@@ -4,8 +4,11 @@ import objc
 
 
 class TestCKDatabase(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKDatabaseScope)
+        self.assertEqual(CloudKit.CKDatabaseScopePublic, 1)
+        self.assertEqual(CloudKit.CKDatabaseScopePrivate, 2)
+        self.assertEqual(CloudKit.CKDatabaseScopeShared, 3)
 
     @min_os_level("10.10")
     def test_classes(self):
@@ -50,8 +53,3 @@ class TestCKDatabase(TestCase):
         self.assertArgIsBlock(
             CloudKit.CKDatabase.deleteSubscriptionWithID_completionHandler_, 1, b"v@@"
         )
-
-    def test_constants(self):
-        self.assertEqual(CloudKit.CKDatabaseScopePublic, 1)
-        self.assertEqual(CloudKit.CKDatabaseScopePrivate, 2)
-        self.assertEqual(CloudKit.CKDatabaseScopeShared, 3)

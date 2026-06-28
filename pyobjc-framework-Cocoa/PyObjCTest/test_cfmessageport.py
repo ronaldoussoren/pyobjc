@@ -1,6 +1,6 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestMessagePort(TestCase):
@@ -14,11 +14,6 @@ class TestMessagePort(TestCase):
         self.assertEqual(CoreFoundation.kCFMessagePortIsInvalid, -3)
         self.assertEqual(CoreFoundation.kCFMessagePortTransportError, -4)
         self.assertEqual(CoreFoundation.kCFMessagePortBecameInvalidError, -5)
-
-    @min_os_level("10.6")
-    @expectedFailure
-    def test_functions10_6(self):
-        self.fail("CFMessagePortSetDispatchQueue: dispatch_queue_t not wrapped yet")
 
     def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFMessagePortGetTypeID(), int)
@@ -87,7 +82,6 @@ class TestMessagePort(TestCase):
         self.assertFalse(CoreFoundation.CFMessagePortIsValid(port))
         self.assertTrue(didInvalidate)
 
-    @min_os_level("10.5")
     def test_sending(self):
         curloop = CoreFoundation.CFRunLoopGetCurrent()
         context = []

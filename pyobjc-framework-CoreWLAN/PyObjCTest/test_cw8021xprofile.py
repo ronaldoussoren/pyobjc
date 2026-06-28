@@ -1,15 +1,13 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCW8021XProfile(TestCase):
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreWLAN.CW8021XProfile.alwaysPromptForPassword)
         self.assertArgIsBOOL(CoreWLAN.CW8021XProfile.setAlwaysPromptForPassword_, 0)
         self.assertResultIsBOOL(CoreWLAN.CW8021XProfile.isEqualToProfile_)
 
-    @min_os_level("10.6")
     def test_convenience(self):
         p1 = CoreWLAN.CW8021XProfile.profile()
         p2 = CoreWLAN.CW8021XProfile.profile()

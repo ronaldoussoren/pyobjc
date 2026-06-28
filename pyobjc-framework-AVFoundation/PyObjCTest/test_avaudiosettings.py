@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioSettings(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioQuality)
         self.assertEqual(AVFoundation.AVAudioQualityMin, 0)
         self.assertEqual(AVFoundation.AVAudioQualityLow, 0x20)
@@ -59,8 +59,6 @@ class TestAVAudioSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVEncoderBitDepthHintKey, str)
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAudioQualityKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(AVFoundation.AVLinearPCMIsNonInterleaved, str)
         self.assertIs(
             AVFoundation.AVLinearPCMIsNonInterleavedKey,
@@ -69,8 +67,6 @@ class TestAVAudioSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVEncoderBitRatePerChannelKey, str)
         self.assertIsInstance(AVFoundation.AVChannelLayoutKey, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVEncoderAudioQualityForVBRKey, str)
         self.assertIsInstance(AVFoundation.AVEncoderBitRateStrategyKey, str)
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithmKey, str)

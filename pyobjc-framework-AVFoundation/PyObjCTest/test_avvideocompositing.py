@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVVideoCompositingHelper(AVFoundation.NSObject):
@@ -37,13 +37,11 @@ class TestAVVideoCompositing(TestCase):
         self.assertIsInstance(v.bottom, float)
         self.assertPickleRoundTrips(v)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVVideoCompositionRenderContext.highQualityRendering
         )
 
-    # @expectedFailure  # XXX
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertResultIsBOOL(
@@ -56,6 +54,14 @@ class TestAVVideoCompositing(TestCase):
             AVFoundation.TestAVVideoCompositingHelper.canConformColorOfSourceFrames
         )
 
+    def test_protocols(self):
+        self.assertProtocolExists("AVVideoCompositing", AVFoundation)
+        self.assertProtocolExists(
+            "AVVideoCompositionInstruction",
+            AVFoundation,
+            "AVVideoCompositionInstructionProtocol",
+        )
+
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.enablePostProcessing)
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.containsTweening)
@@ -64,13 +70,4 @@ class TestAVVideoCompositing(TestCase):
         )
         self.assertResultIsBOOL(
             TestAVVideoCompositingHelper.supportsWideColorSourceFrames
-        )
-
-    @min_sdk_level("10.9")
-    def test_protocols(self):
-        self.assertProtocolExists("AVVideoCompositing", AVFoundation)
-        self.assertProtocolExists(
-            "AVVideoCompositionInstruction",
-            AVFoundation,
-            "AVVideoCompositionInstructionProtocol",
         )

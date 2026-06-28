@@ -17,11 +17,9 @@ class TestGCExtendedGamepadSnapshot(TestCase):
             GameController.GCCurrentExtendedGamepadSnapshotDataVersion, int
         )
 
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(GameController.GCExtendedGamepadSnapshot, objc.objc_class)
 
-    @min_os_level("10.9")
     def test_functions(self):
         self.assertResultIsBOOL(
             GameController.GCExtendedGamepadSnapShotDataV100FromNSData
@@ -34,7 +32,6 @@ class TestGCExtendedGamepadSnapshot(TestCase):
             GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
         )
 
-    @min_os_level("10.9")
     def test_structs(self):
         self.assertEqual(
             GameController.GCExtendedGamepadSnapShotDataV100.__struct_pack__, 1

@@ -3,8 +3,14 @@ import WebKit
 
 
 class TestWebPolicyDelegate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WebNavigationType)
+        self.assertEqual(WebKit.WebNavigationTypeLinkClicked, 0)
+        self.assertEqual(WebKit.WebNavigationTypeFormSubmitted, 1)
+        self.assertEqual(WebKit.WebNavigationTypeBackForward, 2)
+        self.assertEqual(WebKit.WebNavigationTypeReload, 3)
+        self.assertEqual(WebKit.WebNavigationTypeFormResubmitted, 4)
+        self.assertEqual(WebKit.WebNavigationTypeOther, 5)
 
     def test_constants(self):
         self.assertIsInstance(WebKit.WebActionNavigationTypeKey, str)
@@ -12,13 +18,6 @@ class TestWebPolicyDelegate(TestCase):
         self.assertIsInstance(WebKit.WebActionButtonKey, str)
         self.assertIsInstance(WebKit.WebActionModifierFlagsKey, str)
         self.assertIsInstance(WebKit.WebActionOriginalURLKey, str)
-
-        self.assertEqual(WebKit.WebNavigationTypeLinkClicked, 0)
-        self.assertEqual(WebKit.WebNavigationTypeFormSubmitted, 1)
-        self.assertEqual(WebKit.WebNavigationTypeBackForward, 2)
-        self.assertEqual(WebKit.WebNavigationTypeReload, 3)
-        self.assertEqual(WebKit.WebNavigationTypeFormResubmitted, 4)
-        self.assertEqual(WebKit.WebNavigationTypeOther, 5)
 
     def test_protocols(self):
         self.assertProtocolExists(

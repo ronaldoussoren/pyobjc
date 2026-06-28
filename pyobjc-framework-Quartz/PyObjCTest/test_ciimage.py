@@ -17,15 +17,11 @@ class TestCIImage(TestCase):
         self.assertIsInstance(Quartz.kCIFormatRGBAh, int)
         self.assertIsInstance(Quartz.kCIImageColorSpace, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(Quartz.kCIImageProperties, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustEnhance, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustRedEye, str)
         self.assertIsInstance(Quartz.kCIImageAutoAdjustFeatures, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Quartz.kCIImageTextureTarget, str)
         self.assertIsInstance(Quartz.kCIImageTextureFormat, str)
 
@@ -129,8 +125,6 @@ class TestCIImage(TestCase):
         )
         self.assertArgIsBOOL(Quartz.CIImage.initWithTexture_size_flipped_colorSpace_, 2)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBOOL(Quartz.CIImage.imageWithTexture_size_flipped_options_, 2)
         self.assertArgIsBOOL(Quartz.CIImage.initWithTexture_size_flipped_options_, 2)
 

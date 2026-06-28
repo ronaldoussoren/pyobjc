@@ -78,8 +78,6 @@ class TestNSPanel(TestCase):
         self.assertEqual(AppKit.NSDocModalWindowMask, 1 << 6)
         self.assertEqual(AppKit.NSNonactivatingPanelMask, 1 << 7)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertEqual(AppKit.NSHUDWindowMask, 1 << 13)
 
     def test_methods(self):

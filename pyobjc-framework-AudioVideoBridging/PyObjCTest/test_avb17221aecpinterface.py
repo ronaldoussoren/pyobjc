@@ -24,8 +24,6 @@ class TestAVB17221AECPInterface(TestCase):
             TestAVB17221AECPInterfaceHelper.AECPDidReceiveResponse_onInterface_
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(
             AudioVideoBridging.AVB17221AECPInterface.sendCommand_toMACAddress_completionHandler_
         )

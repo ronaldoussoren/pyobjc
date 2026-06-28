@@ -1,8 +1,6 @@
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
-    expectedFailure,
-    os_level_between,
+    max_os_level,
 )
 import Quartz
 
@@ -12,16 +10,6 @@ class TestQCComposition(TestCase):
         self.assertIsInstance(Quartz.QCCompositionAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeDescriptionKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeCopyrightKey, str)
-
-    @os_level_between("10.5", "10.13")
-    def test_constants10_5_to_13(self):
-        # Removed in 10.14
-        self.assertIsInstance(Quartz.QCCompositionInputRSSFeedURLKey, str)
-        self.assertIsInstance(Quartz.QCCompositionInputRSSArticleDurationKey, str)
-        self.assertIsInstance(Quartz.QCCompositionProtocolRSSVisualizer, str)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Quartz.QCCompositionAttributeBuiltInKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeIsTimeDependentKey, str)
         self.assertIsInstance(Quartz.QCCompositionAttributeHasConsumersKey, str)
@@ -52,9 +40,8 @@ class TestQCComposition(TestCase):
         self.assertIsInstance(Quartz.QCCompositionProtocolScreenSaver, str)
         self.assertIsInstance(Quartz.QCCompositionProtocolMusicVisualizer, str)
 
-    @min_os_level("10.6")
-    @expectedFailure
-    def test_constants10_6(self):
-        self.assertIsInstance(Quartz.QCCompositionInputMeshKey, str)
-        self.assertIsInstance(Quartz.QCCompositionOutputMeshKey, str)
-        self.assertIsInstance(Quartz.QCCompositionProtocolMeshFilter, str)
+    @max_os_level("10.13")
+    def test_constants_removed_in_10_14(self):
+        self.assertIsInstance(Quartz.QCCompositionInputRSSFeedURLKey, str)
+        self.assertIsInstance(Quartz.QCCompositionInputRSSArticleDurationKey, str)
+        self.assertIsInstance(Quartz.QCCompositionProtocolRSSVisualizer, str)

@@ -1,9 +1,8 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSEntityMigrationPolicy(TestCase):
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(CoreData.NSMigrationManagerKey, str)
         self.assertIsInstance(CoreData.NSMigrationSourceObjectKey, str)
@@ -12,7 +11,6 @@ class TestNSEntityMigrationPolicy(TestCase):
         self.assertIsInstance(CoreData.NSMigrationPropertyMappingKey, str)
         self.assertIsInstance(CoreData.NSMigrationEntityPolicyKey, str)
 
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsBOOL(
             CoreData.NSEntityMigrationPolicy.beginEntityMapping_manager_error_

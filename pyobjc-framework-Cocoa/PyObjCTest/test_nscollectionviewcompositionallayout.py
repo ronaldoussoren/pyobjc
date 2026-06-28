@@ -44,11 +44,8 @@ class TestNSCollectionViewCompositionalLayoutHelper(AppKit.NSObject):
 
 
 class TestNSCollectionViewCompositionalLayout(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSDirectionalRectEdge)
-        self.assertIsEnumType(AppKit.NSRectAlignment)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSDirectionalRectEdgeNone, 0)
         self.assertEqual(AppKit.NSDirectionalRectEdgeTop, 1 << 0)
         self.assertEqual(AppKit.NSDirectionalRectEdgeLeading, 1 << 1)
@@ -62,6 +59,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
             | AppKit.NSDirectionalRectEdgeTrailing,
         )
 
+        self.assertIsEnumType(AppKit.NSRectAlignment)
         self.assertEqual(AppKit.NSRectAlignmentNone, 0)
         self.assertEqual(AppKit.NSRectAlignmentTop, 1)
         self.assertEqual(AppKit.NSRectAlignmentTopLeading, 2)
@@ -72,6 +70,9 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertEqual(AppKit.NSRectAlignmentTrailing, 7)
         self.assertEqual(AppKit.NSRectAlignmentTopTrailing, 8)
 
+        self.assertIsEnumType(
+            AppKit.NSCollectionLayoutSectionOrthogonalScrollingBehavior
+        )
         self.assertEqual(
             AppKit.NSCollectionLayoutSectionOrthogonalScrollingBehaviorNone, 0
         )
@@ -93,8 +94,6 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
             5,
         )
 
-    @min_os_level("10.15")
-    def test_constants10_15(self):
         self.assertIsInstance(
             AppKit.NSDirectionalEdgeInsetsZero, AppKit.NSDirectionalEdgeInsets
         )

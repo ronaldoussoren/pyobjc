@@ -1,25 +1,21 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 dispatch_data_applier_t = b"B@Ln^vL"
 
 
 class TestDataAPI(TestCase):
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(dispatch.dispatch_data_empty, objc.objc_object)
         self.assertIsInstance(dispatch.DISPATCH_DATA_DESTRUCTOR_FREE, objc.objc_object)
 
         self.assertIs(dispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT, None)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             dispatch.DISPATCH_DATA_DESTRUCTOR_MUNMAP, objc.objc_object
         )
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertResultIsRetained(dispatch.dispatch_data_create)
         self.assertResultHasType(dispatch.dispatch_data_create, objc._C_ID)

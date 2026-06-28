@@ -2,7 +2,7 @@ import os
 import time
 
 import FSEvents
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFSEvents(TestCase):
@@ -186,18 +186,14 @@ class TestFSEvents(TestCase):
             FSEvents.FSEventStreamRelease(ref)
             ref = None
 
-    def test_opaque(self):
-        self.assertHasAttr(FSEvents, "FSEventStreamRef")
-        self.assertIsOpaquePointer(FSEvents.FSEventStreamRef)
-
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         # Can't test beyond this because PyObjC doesn't support dispatch_queue_t yet
         self.assertHasAttr(FSEvents, "FSEventStreamSetDispatchQueue")
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         self.assertResultIsBOOL(FSEvents.FSEventStreamSetExclusionPaths)
+
+    def test_opaque(self):
+        self.assertHasAttr(FSEvents, "FSEventStreamRef")
+        self.assertIsOpaquePointer(FSEvents.FSEventStreamRef)
 
 
 class TestCallableMetadata(TestCase):

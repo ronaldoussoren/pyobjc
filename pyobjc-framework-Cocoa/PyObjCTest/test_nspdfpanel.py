@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPDFPanel(TestCase):
@@ -12,7 +12,6 @@ class TestNSPDFPanel(TestCase):
         self.assertEqual(AppKit.NSPDFPanelShowsOrientation, 1 << 3)
         self.assertEqual(AppKit.NSPDFPanelRequestsParentDirectory, 1 << 24)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertArgIsBlock(
             AppKit.NSPDFPanel.beginSheetWithPDFInfo_modalForWindow_completionHandler_,

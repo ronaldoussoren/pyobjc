@@ -1,5 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
@@ -7,10 +6,7 @@ MKMapSnapshotCompletionHandler = b"v@@"
 
 
 class TestMKMapSnapshotter(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKMapSnapshotter, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKMapSnapshotter.isLoading)
         # self.assertArgIsBOOL(MapKit.MKMapSnapshotter.setLoading_, 0)
 

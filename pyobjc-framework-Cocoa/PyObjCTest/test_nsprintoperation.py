@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPrintOperation(TestCase):
@@ -16,8 +16,6 @@ class TestNSPrintOperation(TestCase):
 
         self.assertIsInstance(AppKit.NSPrintOperationExistsException, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
         self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
 

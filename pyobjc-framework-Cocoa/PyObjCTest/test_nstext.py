@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -76,8 +76,6 @@ class TestNSText(TestCase):
         self.assertEqual(AppKit.NSTextMovementCancel, 0x17)
         self.assertEqual(AppKit.NSTextMovementOther, 0)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(AppKit.NSTextWritingDirectionEmbedding, 0 << 1)
         self.assertEqual(AppKit.NSTextWritingDirectionOverride, 1 << 1)
 
@@ -109,7 +107,6 @@ class TestNSText(TestCase):
         self.assertResultIsBOOL(AppKit.NSText.isVerticallyResizable)
         self.assertArgIsBOOL(AppKit.NSText.setVerticallyResizable_, 0)
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSTextDelegate", AppKit)
 

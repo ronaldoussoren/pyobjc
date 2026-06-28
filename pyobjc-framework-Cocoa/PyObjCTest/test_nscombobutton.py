@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSComboButton(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSComboButtonStyle)
         self.assertEqual(AppKit.NSComboButtonStyleSplit, 0)
         self.assertEqual(AppKit.NSComboButtonStyleUnified, 1)

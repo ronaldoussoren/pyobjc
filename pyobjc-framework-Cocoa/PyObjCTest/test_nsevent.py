@@ -301,8 +301,6 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSHelpFunctionKey, chr(0xF746))
         self.assertEqual(AppKit.NSModeSwitchFunctionKey, chr(0xF747))
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertEqual(AppKit.NSEventTypeGesture, 29)
         self.assertEqual(AppKit.NSEventTypeMagnify, 30)
         self.assertEqual(AppKit.NSEventTypeSwipe, 31)
@@ -317,8 +315,6 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSEventMaskBeginGesture, 1 << 19)
         self.assertEqual(AppKit.NSEventMaskEndGesture, 1 << 20)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSEventPhaseNone, 0)
         self.assertEqual(AppKit.NSEventPhaseBegan, 1)
         self.assertEqual(AppKit.NSEventPhaseStationary, 2)
@@ -334,8 +330,6 @@ class TestNSEvent(TestCase):
         self.assertEqual(AppKit.NSEventSwipeTrackingLockDirection, 1)
         self.assertEqual(AppKit.NSEventSwipeTrackingClampGestureAmount, 2)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(AppKit.NSEventTypeSmartMagnify, 32)
         self.assertEqual(AppKit.NSEventTypeQuickLook, 33)
         self.assertEqual(AppKit.NSEventMaskSmartMagnify, 1 << 32)
@@ -373,11 +367,6 @@ class TestNSEvent(TestCase):
         v = AppKit.NSEventMaskFromType(AppKit.NSOtherMouseDown)
         self.assertEqual(v, AppKit.NSOtherMouseDownMask)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
-        self.assertResultIsBOOL(AppKit.NSEvent.isMouseCoalescingEnabled)
-        self.assertArgIsBOOL(AppKit.NSEvent.setMouseCoalescingEnabled_, 0)
-
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSEvent.isARepeat)
         self.assertResultIsBOOL(AppKit.NSEvent.isEnteringProximity)
@@ -394,8 +383,9 @@ class TestNSEvent(TestCase):
 
         self.assertResultHasType(AppKit.NSEvent.userData, b"^v")
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+        self.assertResultIsBOOL(AppKit.NSEvent.isMouseCoalescingEnabled)
+        self.assertArgIsBOOL(AppKit.NSEvent.setMouseCoalescingEnabled_, 0)
+
         self.assertArgIsBlock(
             AppKit.NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b"v@"
         )
@@ -403,8 +393,6 @@ class TestNSEvent(TestCase):
             AppKit.NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b"@@"
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(AppKit.NSEvent.hasPreciseScrollingDeltas)
         self.assertResultIsBOOL(AppKit.NSEvent.isDirectionInvertedFromDevice)
         self.assertResultIsBOOL(AppKit.NSEvent.isSwipeTrackingFromScrollEventsEnabled)

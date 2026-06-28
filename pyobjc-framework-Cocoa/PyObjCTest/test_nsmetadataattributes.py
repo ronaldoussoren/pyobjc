@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMetaDataAttributes(TestCase):
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSMetadataItemFSNameKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemDisplayNameKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemURLKey, str)
@@ -27,8 +26,6 @@ class TestNSMetaDataAttributes(TestCase):
             Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSMetadataItemContentTypeKey, str)
         self.assertIsInstance(Foundation.NSMetadataItemContentTypeTreeKey, str)
         self.assertIsInstance(

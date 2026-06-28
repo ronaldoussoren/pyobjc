@@ -6,8 +6,7 @@ class TestCAGradientLayer(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAGradientLayerType, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAGradientLayerAxial, str)
         self.assertIsInstance(Quartz.kCAGradientLayerRadial, str)
 
@@ -15,8 +14,7 @@ class TestCAGradientLayer(TestCase):
     def test_constants10_14(self):
         self.assertIsInstance(Quartz.kCAGradientLayerConic, str)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultHasType(
             Quartz.CAGradientLayer.startPoint, Quartz.CGPoint.__typestr__
         )

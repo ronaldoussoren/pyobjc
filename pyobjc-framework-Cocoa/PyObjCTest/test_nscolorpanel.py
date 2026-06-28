@@ -1,28 +1,10 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSColorPanel(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSColorPanelMode)
-        self.assertIsEnumType(AppKit.NSColorPanelOptions)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertEqual(AppKit.NSNoModeColorPanel, -1)
-
-        self.assertEqual(AppKit.NSColorPanelModeNone, -1)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSGrayModeColorPanel, 0)
-        self.assertEqual(AppKit.NSRGBModeColorPanel, 1)
-        self.assertEqual(AppKit.NSCMYKModeColorPanel, 2)
-        self.assertEqual(AppKit.NSHSBModeColorPanel, 3)
-        self.assertEqual(AppKit.NSCustomPaletteModeColorPanel, 4)
-        self.assertEqual(AppKit.NSColorListModeColorPanel, 5)
-        self.assertEqual(AppKit.NSWheelModeColorPanel, 6)
-        self.assertEqual(AppKit.NSCrayonModeColorPanel, 7)
-
         self.assertEqual(AppKit.NSColorPanelModeGray, 0)
         self.assertEqual(AppKit.NSColorPanelModeRGB, 1)
         self.assertEqual(AppKit.NSColorPanelModeCMYK, 2)
@@ -32,6 +14,17 @@ class TestNSColorPanel(TestCase):
         self.assertEqual(AppKit.NSColorPanelModeWheel, 6)
         self.assertEqual(AppKit.NSColorPanelModeCrayon, 7)
 
+        # Legacy alias:
+        self.assertEqual(AppKit.NSGrayModeColorPanel, 0)
+        self.assertEqual(AppKit.NSRGBModeColorPanel, 1)
+        self.assertEqual(AppKit.NSCMYKModeColorPanel, 2)
+        self.assertEqual(AppKit.NSHSBModeColorPanel, 3)
+        self.assertEqual(AppKit.NSCustomPaletteModeColorPanel, 4)
+        self.assertEqual(AppKit.NSColorListModeColorPanel, 5)
+        self.assertEqual(AppKit.NSWheelModeColorPanel, 6)
+        self.assertEqual(AppKit.NSCrayonModeColorPanel, 7)
+
+        self.assertIsEnumType(AppKit.NSColorPanelOptions)
         self.assertEqual(AppKit.NSColorPanelGrayModeMask, 0x00000001)
         self.assertEqual(AppKit.NSColorPanelRGBModeMask, 0x00000002)
         self.assertEqual(AppKit.NSColorPanelCMYKModeMask, 0x00000004)
@@ -42,6 +35,10 @@ class TestNSColorPanel(TestCase):
         self.assertEqual(AppKit.NSColorPanelCrayonModeMask, 0x00000080)
         self.assertEqual(AppKit.NSColorPanelAllModesMask, 0x0000FFFF)
 
+        self.assertEqual(AppKit.NSNoModeColorPanel, -1)
+        self.assertEqual(AppKit.NSColorPanelModeNone, -1)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSColorPanelColorDidChangeNotification, str)
 
     def test_methods(self):

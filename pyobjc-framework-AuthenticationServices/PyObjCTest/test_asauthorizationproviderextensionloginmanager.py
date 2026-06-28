@@ -3,10 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestASAuthorizationProviderExtensionLoginManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethod
         )
+
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionKeyType
         )

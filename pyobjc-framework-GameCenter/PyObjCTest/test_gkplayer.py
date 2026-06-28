@@ -1,12 +1,11 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKPlayer(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertIsInstance(GameCenter.GKPlayer, objc.objc_class)
 
         self.assertArgIsBlock(
@@ -18,11 +17,7 @@ class TestGKPlayer(TestCase):
             GameCenter.GKPlayer.loadPhotoForSize_withCompletionHandler_, 1, b"v@@"
         )
 
-    @expectedFailure
-    @min_os_level("10.8")
-    def test_methods10_8_fail(self):
-        self.assertResultIsBOOL(GameCenter.GKPlayer.isFriend)
-        self.assertArgIsBOOL(GameCenter.GKPlayer.setIsFriend_, 0)
+        self.assertResultIsBOOL(GameCenter.GKPlayer().isFriend)
 
     def test_constants(self):
         self.assertEqual(GameCenter.GKPhotoSizeSmall, 0)
@@ -30,8 +25,6 @@ class TestGKPlayer(TestCase):
 
         self.assertIsInstance(GameCenter.GKPlayerDidChangeNotificationName, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(
             GameCenter.GKPlayerAuthenticationDidChangeNotificationName, str
         )

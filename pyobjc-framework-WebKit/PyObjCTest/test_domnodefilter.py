@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, cast_uint
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, cast_uint
 import WebKit
 import objc
 
@@ -9,19 +9,8 @@ class TestDOMNodeFilterHelper(WebKit.NSObject):
 
 
 class TestDOMNodeFilter(TestCase):
-    @min_sdk_level("10.11")
-    def test_protocols(self):
-        self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
-
-    def test_methods(self):
-        self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
-        self.assertResultIsBOOL(WebKit.DOMNodeIterator.expandEntityReferences)
-
-    @min_os_level("10.5")
-    def test_methods10_5(self):
-        self.assertResultIsBOOL(WebKit.DOMNodeIterator.pointerBeforeReferenceNode)
-
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(WebKit.DOM_FILTER_ACCEPT, 1)
         self.assertEqual(WebKit.DOM_FILTER_REJECT, 2)
         self.assertEqual(WebKit.DOM_FILTER_SKIP, 3)
@@ -38,3 +27,13 @@ class TestDOMNodeFilter(TestCase):
         self.assertEqual(WebKit.DOM_SHOW_DOCUMENT_TYPE, 0x00000200)
         self.assertEqual(WebKit.DOM_SHOW_DOCUMENT_FRAGMENT, 0x00000400)
         self.assertEqual(WebKit.DOM_SHOW_NOTATION, 0x00000800)
+
+    @min_sdk_level("10.11")
+    def test_protocols(self):
+        self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
+
+    def test_methods(self):
+        self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
+        self.assertResultIsBOOL(WebKit.DOMNodeIterator.expandEntityReferences)
+
+        self.assertResultIsBOOL(WebKit.DOMNodeIterator.pointerBeforeReferenceNode)

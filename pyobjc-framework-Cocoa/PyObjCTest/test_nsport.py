@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -49,7 +49,6 @@ class TestNSPort(TestCase):
 
         self.assertArgHasType(PortDelegate.handleMachMessage_, 0, b"^v")
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSPortDelegate", Foundation)
         self.assertProtocolExists("NSMachPortDelegate", Foundation)

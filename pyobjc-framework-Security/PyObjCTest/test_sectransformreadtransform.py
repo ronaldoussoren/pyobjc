@@ -1,11 +1,10 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestSecTransformReadTransform(TestCase):
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    def test_functions(self):
         self.assertResultHasType(
             Security.SecTransformCreateReadTransformWithReadStream, objc._C_ID
         )

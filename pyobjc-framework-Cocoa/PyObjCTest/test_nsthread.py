@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSThread(TestCase):
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSWillBecomeMultiThreadedNotification, str)
+        self.assertIsInstance(Foundation.NSDidBecomeSingleThreadedNotification, str)
+        self.assertIsInstance(Foundation.NSThreadWillExitNotification, str)
+
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSThread.isMultiThreaded)
         self.assertArgIsSEL(
@@ -28,8 +33,6 @@ class TestNSThread(TestCase):
             Foundation.NSThread.performSelectorOnMainThread_withObject_waitUntilDone_, 2
         )
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertArgIsSEL(
             Foundation.NSThread.initWithTarget_selector_object_, 1, b"v@:@"
         )
@@ -63,8 +66,3 @@ class TestNSThread(TestCase):
     def test_methods10_12(self):
         self.assertArgIsBlock(Foundation.NSThread.detachNewThreadWithBlock_, 0, b"v")
         self.assertArgIsBlock(Foundation.NSThread.initWithBlock_, 0, b"v")
-
-    def test_constants(self):
-        self.assertIsInstance(Foundation.NSWillBecomeMultiThreadedNotification, str)
-        self.assertIsInstance(Foundation.NSDidBecomeSingleThreadedNotification, str)
-        self.assertIsInstance(Foundation.NSThreadWillExitNotification, str)

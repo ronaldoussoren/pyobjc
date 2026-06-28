@@ -2,18 +2,19 @@ import objc
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    os_release,
-    expectedFailure,
-    expectedFailureIf,
+    min_sdk_level,
 )
 
 import GameCenter
 
 
 class TestGKLocalPlayer(TestCase):
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_constants(self):
+        self.assertIsInstance(
+            GameCenter.GKPlayerAuthenticationDidChangeNotificationName, str
+        )
+
+    def test_methods(self):
         self.assertIsInstance(GameCenter.GKLocalPlayer, objc.objc_class)
         self.assertResultIsBOOL(GameCenter.GKLocalPlayer.isAuthenticated)
 
@@ -34,14 +35,8 @@ class TestGKLocalPlayer(TestCase):
             GameCenter.GKLocalPlayer.authenticateWithCompletionHandler_, 0, b"v@"
         )
 
-    @expectedFailure
-    @min_os_level("10.8")
-    def test_methods10_8_fail(self):
-        self.assertResultIsBOOL(GameCenter.GKLocalPlayer.isUnderage)
+        self.assertResultIsBOOL(GameCenter.GKLocalPlayer().isUnderage)
 
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBlock(GameCenter.GKLocalPlayer.authenticateHandler, b"v@@")
         self.assertArgIsBlock(
             GameCenter.GKLocalPlayer.setAuthenticateHandler_, 0, b"v@@"
@@ -68,12 +63,6 @@ class TestGKLocalPlayer(TestCase):
             b"v@@@Q@",
         )
 
-    @min_os_level("10.10")
+    @min_sdk_level("10.10")
     def test_protocols(self):
         self.assertProtocolExists("GKLocalPlayerListener", GameCenter)
-
-    @min_os_level("10.8")
-    def test_constants(self):
-        self.assertIsInstance(
-            GameCenter.GKPlayerAuthenticationDidChangeNotificationName, str
-        )

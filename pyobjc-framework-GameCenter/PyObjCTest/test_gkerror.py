@@ -1,13 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKError(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(GameCenter.GKErrorDomain, str)
-
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKError)
         self.assertEqual(GameCenter.GKErrorUnknown, 1)
         self.assertEqual(GameCenter.GKErrorCancelled, 2)
         self.assertEqual(GameCenter.GKErrorCommunicationsFailure, 3)
@@ -35,3 +33,6 @@ class TestGKError(TestCase):
         self.assertEqual(GameCenter.GKErrorInvitationsDisabled, 25)
         self.assertEqual(GameCenter.GKErrorPlayerPhotoFailure, 26)
         self.assertEqual(GameCenter.GKErrorUbiquityContainerUnavailable, 27)
+
+    def test_constants(self):
+        self.assertIsInstance(GameCenter.GKErrorDomain, str)

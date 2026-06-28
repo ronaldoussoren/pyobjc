@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -29,7 +29,6 @@ class TestNSURLDownload(TestCase):
         self.assertArgIsBOOL(Foundation.NSURLDownload.setDeletesFileUponFailure_, 0)
         self.assertResultIsBOOL(Foundation.NSURLDownload.deletesFileUponFailure)
 
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("NSURLDownloadDelegate", Foundation)
 

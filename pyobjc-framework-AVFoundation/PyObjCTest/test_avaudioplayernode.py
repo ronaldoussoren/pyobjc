@@ -7,17 +7,15 @@ AVAudioPlayerNodeCompletionHandler = b"v" + objc._C_NSInteger
 
 
 class TestAVAudioPlayerNode(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioPlayerNodeBufferOptions)
-        self.assertIsEnumType(AVFoundation.AVAudioPlayerNodeCompletionCallbackType)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferLoops, 1 << 0)
         self.assertEqual(AVFoundation.AVAudioPlayerNodeBufferInterrupts, 1 << 1)
         self.assertEqual(
             AVFoundation.AVAudioPlayerNodeBufferInterruptsAtLoop, 1 << 2
         )  # noqa: B950
 
+        self.assertIsEnumType(AVFoundation.AVAudioPlayerNodeCompletionCallbackType)
         self.assertEqual(
             AVFoundation.AVAudioPlayerNodeCompletionDataConsumed, 0
         )  # noqa: B950

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -26,8 +26,6 @@ class TestNSResponder(TestCase):
         )
         self.assertResultIsBOOL(AppKit.NSResponder.presentError_)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(
             AppKit.NSResponder.wantsScrollEventsForSwipeTrackingOnAxis_
         )

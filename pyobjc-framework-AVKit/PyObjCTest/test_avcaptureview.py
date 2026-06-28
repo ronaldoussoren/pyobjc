@@ -4,16 +4,19 @@ import objc
 
 
 class TestAVCaptureView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVKit.AVCaptureViewControlsStyle)
+        self.assertEqual(AVKit.AVCaptureViewControlsStyleInline, 0)
+        self.assertEqual(AVKit.AVCaptureViewControlsStyleFloating, 1)
+        self.assertEqual(AVKit.AVCaptureViewControlsStyleInlineDeviceSelection, 2)
+        self.assertEqual(
+            AVKit.AVCaptureViewControlsStyleDefault,
+            AVKit.AVCaptureViewControlsStyleInline,
+        )
 
     @min_os_level("10.10")
     def test_classes(self):
         self.assertIsInstance(AVKit.AVCaptureView, objc.objc_class)
-
-    @min_os_level("10.10")
-    def test_protocols(self):
-        self.assertProtocolExists("AVCaptureViewDelegate", AVKit)
 
     @min_os_level("10.10")
     def test_methods(self):
@@ -25,11 +28,5 @@ class TestAVCaptureView(TestCase):
         )
 
     @min_os_level("10.10")
-    def test_constants(self):
-        self.assertEqual(AVKit.AVCaptureViewControlsStyleInline, 0)
-        self.assertEqual(AVKit.AVCaptureViewControlsStyleFloating, 1)
-        self.assertEqual(AVKit.AVCaptureViewControlsStyleInlineDeviceSelection, 2)
-        self.assertEqual(
-            AVKit.AVCaptureViewControlsStyleDefault,
-            AVKit.AVCaptureViewControlsStyleInline,
-        )
+    def test_protocols(self):
+        self.assertProtocolExists("AVCaptureViewDelegate", AVKit)

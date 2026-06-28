@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -42,8 +42,6 @@ class TestNSIndexSet(TestCase):
             Foundation.NSIndexSet.getIndexes_maxCount_inIndexRange_, 0
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateIndexesUsingBlock_,
             0,
@@ -107,8 +105,6 @@ class TestNSIndexSet(TestCase):
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateRangesUsingBlock_,
             0,

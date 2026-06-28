@@ -4,67 +4,6 @@ from PyObjCTools.TestSupport import os_level_key, os_release
 
 
 class TestABGlobals(TestCase):
-    @min_os_level("10.12")
-    def test_constants10_12(self):
-        self.assertIsInstance(AddressBook.kABOrganizationPhoneticProperty, str)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceTencentWeibo, str)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceYelp, str)
-        self.assertIsInstance(AddressBook.kABAlternateBirthdayComponentsProperty, str)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceSinaWeibo, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertIsInstance(AddressBook.kABMobileMeLabel, str)
-        self.assertIsInstance(AddressBook.kABBirthdayComponentsProperty, str)
-        self.assertIsInstance(AddressBook.kABOtherDateComponentsProperty, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageProperty, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageUsernameKey, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceKey, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceAIM, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceFacebook, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceGaduGadu, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceGoogleTalk, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceICQ, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceJabber, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceMSN, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceQQ, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceSkype, str)
-        self.assertIsInstance(AddressBook.kABInstantMessageServiceYahoo, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileProperty, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileURLKey, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileUsernameKey, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileUserIdentifierKey, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceKey, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceTwitter, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceFacebook, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceLinkedIn, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceFlickr, str)
-        self.assertIsInstance(AddressBook.kABSocialProfileServiceMySpace, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(AddressBook.kABPhoneiPhoneLabel, str)
-        self.assertEqual(AddressBook.kABShowAsResource, 2)
-        self.assertEqual(AddressBook.kABShowAsRoom, 3)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(AddressBook.kABCalendarURIsProperty, str)
-
-    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.14"))
-    def test_constants_10_7_broken(self):
-        self.assertIsInstance(AddressBook.kABEmailMobileMeLabel, str)
-        self.assertIsInstance(AddressBook.kABAIMMobileMeLabel, str)
-
     def test_constants(self):
         self.assertEqual(AddressBook.kABShowAsMask, 0o7)
         self.assertEqual(AddressBook.kABShowAsPerson, 0o0)
@@ -155,6 +94,55 @@ class TestABGlobals(TestCase):
         self.assertIsInstance(AddressBook.kABInsertedRecords, str)
         self.assertIsInstance(AddressBook.kABUpdatedRecords, str)
         self.assertIsInstance(AddressBook.kABDeletedRecords, str)
+
+        self.assertIsInstance(AddressBook.kABPhoneiPhoneLabel, str)
+        self.assertEqual(AddressBook.kABShowAsResource, 2)
+        self.assertEqual(AddressBook.kABShowAsRoom, 3)
+
+        self.assertIsInstance(AddressBook.kABCalendarURIsProperty, str)
+
+        self.assertIsInstance(AddressBook.kABMobileMeLabel, str)
+        self.assertIsInstance(AddressBook.kABBirthdayComponentsProperty, str)
+        self.assertIsInstance(AddressBook.kABOtherDateComponentsProperty, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageProperty, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageUsernameKey, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceKey, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceAIM, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceFacebook, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceGaduGadu, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceGoogleTalk, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceICQ, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceJabber, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceMSN, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceQQ, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceSkype, str)
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceYahoo, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileProperty, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileURLKey, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileUsernameKey, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileUserIdentifierKey, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceKey, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceTwitter, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceFacebook, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceLinkedIn, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceFlickr, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceMySpace, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceSinaWeibo, str)
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceTencentWeibo, str)
+
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.14"))
+    def test_constants_broken(self):
+        self.assertIsInstance(AddressBook.kABEmailMobileMeLabel, str)
+        self.assertIsInstance(AddressBook.kABAIMMobileMeLabel, str)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(AddressBook.kABSocialProfileServiceYelp, str)
+        self.assertIsInstance(AddressBook.kABAlternateBirthdayComponentsProperty, str)
+
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(AddressBook.kABOrganizationPhoneticProperty, str)
 
     def test_functions(self):
         v = AddressBook.ABLocalizedPropertyOrLabel(AddressBook.kABAssistantLabel)

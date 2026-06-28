@@ -8,15 +8,8 @@ class TestCALayerHelper(Quartz.NSObject):
 
 
 class TestCALayer(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
-        self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
-        self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
-        self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
-        self.assertIsTypedEnum(Quartz.CADynamicRange, str)
-
-    @min_os_level("10.5")
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CAAutoresizingMask)
         self.assertEqual(Quartz.kCALayerNotSizable, 0)
         self.assertEqual(Quartz.kCALayerMinXMargin, 1)
         self.assertEqual(Quartz.kCALayerWidthSizable, 2)
@@ -29,6 +22,20 @@ class TestCALayer(TestCase):
         self.assertEqual(Quartz.kCALayerBottomEdge, 4)
         self.assertEqual(Quartz.kCALayerTopEdge, 8)
 
+        self.assertIsEnumType(Quartz.CACornerMask)
+        self.assertEqual(Quartz.kCALayerMinXMinYCorner, 1 << 0)
+        self.assertEqual(Quartz.kCALayerMaxXMinYCorner, 1 << 1)
+        self.assertEqual(Quartz.kCALayerMinXMaxYCorner, 1 << 2)
+        self.assertEqual(Quartz.kCALayerMaxXMaxYCorner, 1 << 3)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
+        self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
+        self.assertIsTypedEnum(Quartz.CADynamicRange, str)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAGravityCenter, str)
         self.assertIsInstance(Quartz.kCAGravityTop, str)
         self.assertIsInstance(Quartz.kCAGravityBottom, str)
@@ -47,75 +54,6 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.kCAOnOrderOut, str)
         self.assertIsInstance(Quartz.kCATransition, str)
 
-        self.assertEqual(Quartz.kCALayerMinXMinYCorner, 1 << 0)
-        self.assertEqual(Quartz.kCALayerMaxXMinYCorner, 1 << 1)
-        self.assertEqual(Quartz.kCALayerMinXMaxYCorner, 1 << 2)
-        self.assertEqual(Quartz.kCALayerMaxXMaxYCorner, 1 << 3)
-
-    @min_os_level("10.5")
-    def test_methods(self):
-        self.assertResultIsBOOL(Quartz.CALayer.shouldArchiveValueForKey_)
-        self.assertResultIsBOOL(Quartz.CALayer.isHidden)
-        self.assertArgIsBOOL(Quartz.CALayer.setHidden_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.isDoubleSided)
-        self.assertArgIsBOOL(Quartz.CALayer.setDoubleSided_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.masksToBounds)
-        self.assertArgIsBOOL(Quartz.CALayer.setMasksToBounds_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.containsPoint_)
-        self.assertResultIsBOOL(Quartz.CALayer.isOpaque)
-        self.assertArgIsBOOL(Quartz.CALayer.setOpaque_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.needsDisplayOnBoundsChange)
-        self.assertArgIsBOOL(Quartz.CALayer.setNeedsDisplayOnBoundsChange_, 0)
-
-        self.assertResultHasType(
-            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
-        )
-
-    @min_os_level("10.6")
-    def test_methods10_6(self):
-        self.assertResultIsBOOL(Quartz.CALayer.needsDisplayForKey_)
-        self.assertResultIsBOOL(Quartz.CALayer.isGeometryFlipped)
-        self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.contentsAreFlipped)
-
-        self.assertResultHasType(
-            Quartz.CALayer.contentsCenter, Quartz.CGRect.__typestr__
-        )
-        self.assertArgHasType(
-            Quartz.CALayer.setContentsCenter_, 0, Quartz.CGRect.__typestr__
-        )
-        self.assertResultIsBOOL(Quartz.CALayer.needsDisplay)
-        self.assertResultIsBOOL(Quartz.CALayer.needsLayout)
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
-        self.assertResultIsBOOL(Quartz.CALayer.shouldRasterize)
-        self.assertArgIsBOOL(Quartz.CALayer.setShouldRasterize_, 0)
-
-    @min_os_level("10.8")
-    def test_methods10_8(self):
-        self.assertResultIsBOOL(Quartz.CALayer.drawsAsynchronously)
-        self.assertArgIsBOOL(Quartz.CALayer.setDrawsAsynchronously_, 0)
-
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(Quartz.CALayer.allowsEdgeAntialiasing)
-        self.assertArgIsBOOL(Quartz.CALayer.setAllowsEdgeAntialiasing_, 0)
-        self.assertResultIsBOOL(Quartz.CALayer.allowsGroupOpacity)
-        self.assertArgIsBOOL(Quartz.CALayer.setAllowsGroupOpacity_, 0)
-
-    @min_os_level("14.0")
-    def test_methods14_0(self):
-        self.assertResultIsBOOL(Quartz.CALayer.wantsExtendedDynamicRangeContent)
-        self.assertArgIsBOOL(Quartz.CALayer.setWantsExtendedDynamicRangeContent_, 0)
-
-    @min_os_level("15.0")
-    def test_methods15_0(self):
-        self.assertResultIsBOOL(Quartz.CALayer.wantsDynamicContentScaling)
-        self.assertArgIsBOOL(Quartz.CALayer.setWantsDynamicContentScaling_, 0)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAFilterTrilinear, str)
 
     @min_os_level("10.12")
@@ -147,7 +85,61 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
         self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
 
-    @min_sdk_level("10.6")
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.CALayer.shouldArchiveValueForKey_)
+        self.assertResultIsBOOL(Quartz.CALayer.isHidden)
+        self.assertArgIsBOOL(Quartz.CALayer.setHidden_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.isDoubleSided)
+        self.assertArgIsBOOL(Quartz.CALayer.setDoubleSided_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.masksToBounds)
+        self.assertArgIsBOOL(Quartz.CALayer.setMasksToBounds_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.containsPoint_)
+        self.assertResultIsBOOL(Quartz.CALayer.isOpaque)
+        self.assertArgIsBOOL(Quartz.CALayer.setOpaque_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.needsDisplayOnBoundsChange)
+        self.assertArgIsBOOL(Quartz.CALayer.setNeedsDisplayOnBoundsChange_, 0)
+
+        self.assertResultHasType(
+            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
+        )
+
+        self.assertResultIsBOOL(Quartz.CALayer.needsDisplayForKey_)
+        self.assertResultIsBOOL(Quartz.CALayer.isGeometryFlipped)
+        self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.contentsAreFlipped)
+
+        self.assertResultHasType(
+            Quartz.CALayer.contentsCenter, Quartz.CGRect.__typestr__
+        )
+        self.assertArgHasType(
+            Quartz.CALayer.setContentsCenter_, 0, Quartz.CGRect.__typestr__
+        )
+        self.assertResultIsBOOL(Quartz.CALayer.needsDisplay)
+        self.assertResultIsBOOL(Quartz.CALayer.needsLayout)
+
+        self.assertResultIsBOOL(Quartz.CALayer.shouldRasterize)
+        self.assertArgIsBOOL(Quartz.CALayer.setShouldRasterize_, 0)
+
+        self.assertResultIsBOOL(Quartz.CALayer.drawsAsynchronously)
+        self.assertArgIsBOOL(Quartz.CALayer.setDrawsAsynchronously_, 0)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(Quartz.CALayer.allowsEdgeAntialiasing)
+        self.assertArgIsBOOL(Quartz.CALayer.setAllowsEdgeAntialiasing_, 0)
+        self.assertResultIsBOOL(Quartz.CALayer.allowsGroupOpacity)
+        self.assertArgIsBOOL(Quartz.CALayer.setAllowsGroupOpacity_, 0)
+
+    @min_os_level("14.0")
+    def test_methods14_0(self):
+        self.assertResultIsBOOL(Quartz.CALayer.wantsExtendedDynamicRangeContent)
+        self.assertArgIsBOOL(Quartz.CALayer.setWantsExtendedDynamicRangeContent_, 0)
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertResultIsBOOL(Quartz.CALayer.wantsDynamicContentScaling)
+        self.assertArgIsBOOL(Quartz.CALayer.setWantsDynamicContentScaling_, 0)
+
     def test_protocols(self):
         self.assertProtocolExists("CAAction", Quartz)
 

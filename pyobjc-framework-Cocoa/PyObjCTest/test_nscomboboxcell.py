@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -25,8 +25,7 @@ class TestNSComboBoxCell(TestCase):
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.completes)
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setCompletes_, 0)
 
-    @min_sdk_level("10.7")
-    def test_protocols10_7(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
 
     def test_protocol_methods(self):

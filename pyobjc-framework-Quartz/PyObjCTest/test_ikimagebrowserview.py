@@ -39,8 +39,81 @@ class TestIKImageBrowserViewHelper(Quartz.NSObject):
 
 
 class TestIKImageBrowserView(TestCase):
-    @min_os_level("10.5")
-    def test_protocols(self):
+    def test_enums(self):
+        # Unnamed enum:
+        self.assertEqual(Quartz.IKCellsStyleNone, 0)
+        self.assertEqual(Quartz.IKCellsStyleShadowed, 1)
+        self.assertEqual(Quartz.IKCellsStyleOutlined, 2)
+        self.assertEqual(Quartz.IKCellsStyleTitled, 4)
+        self.assertEqual(Quartz.IKCellsStyleSubtitled, 8)
+
+        # Unnamed enum:
+        self.assertEqual(Quartz.IKGroupBezelStyle, 0)
+        self.assertEqual(Quartz.IKGroupDisclosureStyle, 1)
+
+        self.assertIsEnumType(Quartz.IKImageBrowserDropOperation)
+        self.assertEqual(Quartz.IKImageBrowserDropOn, 0)
+        self.assertEqual(Quartz.IKImageBrowserDropBefore, 1)
+
+    def test_constants(self):
+        self.assertIsInstance(Quartz.IKImageBrowserPathRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserNSURLRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserNSImageRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCGImageRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCGImageSourceRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserNSDataRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserNSBitmapImageRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserQTMovieRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserQTMoviePathRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserQCCompositionRepresentationType, str)
+        self.assertIsInstance(
+            Quartz.IKImageBrowserQCCompositionPathRepresentationType, str
+        )
+        self.assertIsInstance(Quartz.IKImageBrowserQuickLookPathRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserIconRefPathRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserIconRefRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserBackgroundColorKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserSelectionColorKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCellsOutlineColorKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserCellsTitleAttributesKey, str)
+        self.assertIsInstance(
+            Quartz.IKImageBrowserCellsHighlightedTitleAttributesKey, str
+        )
+        self.assertIsInstance(Quartz.IKImageBrowserCellsSubtitleAttributesKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupRangeKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupBackgroundColorKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupTitleKey, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupStyleKey, str)
+
+        self.assertIsInstance(Quartz.IKImageBrowserPDFPageRepresentationType, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupHeaderLayer, str)
+        self.assertIsInstance(Quartz.IKImageBrowserGroupHeaderLayer, str)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.constrainsToOriginalSize)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setConstrainsToOriginalSize_, 0)
+        self.assertArgIsBOOL(
+            Quartz.IKImageBrowserView.setSelectionIndexes_byExtendingSelection_, 1
+        )
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsMultipleSelection)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsMultipleSelection_, 0)
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsEmptySelection)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsEmptySelection_, 0)
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsReordering)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsReordering_, 0)
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.animates)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAnimates_, 0)
+
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.canControlQuickLookPanel)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setCanControlQuickLookPanel_, 0)
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsDroppingOnItems)
+        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsDroppingOnItems_, 0)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(Quartz.IKImageBrowserView.isGroupExpandedAtIndex_)
+
+    def test_protocol_methods(self):
         # self.assertIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
 
         self.assertResultHasType(
@@ -91,78 +164,3 @@ class TestIKImageBrowserView(TestCase):
             1,
             objc._C_NSUInteger,
         )
-
-    @min_os_level("10.5")
-    def test_methods(self):
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.constrainsToOriginalSize)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setConstrainsToOriginalSize_, 0)
-        self.assertArgIsBOOL(
-            Quartz.IKImageBrowserView.setSelectionIndexes_byExtendingSelection_, 1
-        )
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsMultipleSelection)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsMultipleSelection_, 0)
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsEmptySelection)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsEmptySelection_, 0)
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsReordering)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsReordering_, 0)
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.animates)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAnimates_, 0)
-
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.isGroupExpandedAtIndex_)
-
-    @min_os_level("10.5")
-    def test_constants(self):
-        self.assertEqual(Quartz.IKCellsStyleNone, 0)
-        self.assertEqual(Quartz.IKCellsStyleShadowed, 1)
-        self.assertEqual(Quartz.IKCellsStyleOutlined, 2)
-        self.assertEqual(Quartz.IKCellsStyleTitled, 4)
-        self.assertEqual(Quartz.IKCellsStyleSubtitled, 8)
-        self.assertEqual(Quartz.IKGroupBezelStyle, 0)
-        self.assertEqual(Quartz.IKGroupDisclosureStyle, 1)
-
-        self.assertIsInstance(Quartz.IKImageBrowserPathRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserNSURLRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserNSImageRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCGImageRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCGImageSourceRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserNSDataRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserNSBitmapImageRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserQTMovieRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserQTMoviePathRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserQCCompositionRepresentationType, str)
-        self.assertIsInstance(
-            Quartz.IKImageBrowserQCCompositionPathRepresentationType, str
-        )
-        self.assertIsInstance(Quartz.IKImageBrowserQuickLookPathRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserIconRefPathRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserIconRefRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserBackgroundColorKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserSelectionColorKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCellsOutlineColorKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserCellsTitleAttributesKey, str)
-        self.assertIsInstance(
-            Quartz.IKImageBrowserCellsHighlightedTitleAttributesKey, str
-        )
-        self.assertIsInstance(Quartz.IKImageBrowserCellsSubtitleAttributesKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupRangeKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupBackgroundColorKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupTitleKey, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupStyleKey, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(Quartz.IKImageBrowserDropOn, 0)
-        self.assertEqual(Quartz.IKImageBrowserDropBefore, 1)
-
-        self.assertIsInstance(Quartz.IKImageBrowserPDFPageRepresentationType, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupHeaderLayer, str)
-        self.assertIsInstance(Quartz.IKImageBrowserGroupHeaderLayer, str)
-
-    @min_os_level("10.6")
-    def test_methods10_6(self):
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.canControlQuickLookPanel)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setCanControlQuickLookPanel_, 0)
-        self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsDroppingOnItems)
-        self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsDroppingOnItems_, 0)

@@ -23,16 +23,12 @@ class TestNSFileHandle(TestCase):
         )
         self.assertArgIsBOOL(f.initWithFileDescriptor_closeOnDealloc_, 1)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsOut(
             Foundation.NSFileHandle.fileHandleForReadingFromURL_error_, 1
         )
         self.assertArgIsOut(Foundation.NSFileHandle.fileHandleForWritingToURL_error_, 1)
         self.assertArgIsOut(Foundation.NSFileHandle.fileHandleForUpdatingURL_error_, 1)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBlock(Foundation.NSFileHandle.setReadabilityHandler_, 0, b"v@")
         self.assertArgIsBlock(Foundation.NSFileHandle.setWriteabilityHandler_, 0, b"v@")
         self.assertResultIsBlock(Foundation.NSFileHandle.readabilityHandler, b"v@")

@@ -3,11 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTCompressionProperties(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(VideoToolbox.kVTUnlimitedFrameDelayCount, -1)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_NumberOfPendingFrames, str
         )
@@ -113,8 +113,6 @@ class TestVTCompressionProperties(TestCase):
         )
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_High_5_0, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_4_0, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_4_2, str)
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_H264_Baseline_5_0, str)

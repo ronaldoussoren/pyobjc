@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestASAuthorizationPublicKeyCredentialLargeBlobRegistrationInput(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationPublicKeyCredentialLargeBlobSupportRequirement
         )

@@ -2,7 +2,7 @@ import datetime
 import objc
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 NSCalendar = objc.lookUpClass("NSCalendar")
 NSLocale = objc.lookUpClass("NSLocale")
@@ -228,12 +228,8 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekdayOrdinal, 1 << 10)
         self.assertEqual(CoreFoundation.kCFCalendarComponentsWrap, 1 << 0)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(CoreFoundation.kCFCalendarUnitQuarter, 1 << 11)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfMonth, 1 << 12)
         self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfYear, 1 << 13)
         self.assertEqual(CoreFoundation.kCFCalendarUnitYearForWeekOfYear, 1 << 14)

@@ -14,10 +14,47 @@ AUMIDIEventListBlock = (
 
 
 class TestAVAudioEngine(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingError)
-        self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingMode)
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingErrorInitialized, -80801
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802
+        )
+
         self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingStatus)
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusError, -1
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode,  # noqa: B950
+            1,
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusCannotDoInCurrentContext,
+            2,  # noqa: B950
+        )
+
+        self.assertIsEnumType(AVFoundation.AVAudioEngineManualRenderingMode)
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingModeOffline, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1
+        )  # noqa: B950
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(
+            AVFoundation.AVAudioEngineConfigurationChangeNotification, str
+        )
 
     @min_os_level("10.10")
     def test_methods(self):
@@ -100,43 +137,4 @@ class TestAVAudioEngine(TestCase):
             AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_eventListProvider_,
             3,
             AUMIDIEventListBlock,
-        )
-
-    def test_constants(self):
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingErrorInitialized, -80801
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802
-        )
-
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusError, -1
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode,  # noqa: B950
-            1,
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusCannotDoInCurrentContext,
-            2,  # noqa: B950
-        )
-
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingModeOffline, 0
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1
-        )  # noqa: B950
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(
-            AVFoundation.AVAudioEngineConfigurationChangeNotification, str
         )

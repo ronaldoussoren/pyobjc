@@ -1,8 +1,7 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCWWirelessProfile(TestCase):
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreWLAN.CWWirelessProfile.isEqualToProfile_)

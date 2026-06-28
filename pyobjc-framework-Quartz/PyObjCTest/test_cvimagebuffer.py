@@ -45,8 +45,6 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVImageBufferYCbCrMatrix_ITU_R_601_4, str)
         self.assertIsInstance(Quartz.kCVImageBufferYCbCrMatrix_SMPTE_240M_1995, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCVImageBufferColorPrimaries_ITU_R_709_2, str)
         self.assertIsInstance(Quartz.kCVImageBufferColorPrimaries_EBU_3213, str)
         self.assertIsInstance(Quartz.kCVImageBufferColorPrimaries_SMPTE_C, str)
@@ -69,8 +67,6 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVImageBufferChromaSubsampling_411, str)
         self.assertIsInstance(Quartz.kCVImageBufferColorPrimariesKey, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCVImageBufferICCProfileKey, str)
         self.assertIsInstance(
             Quartz.kCVImageBufferTransferFunction_SMPTE_240M_1995, str
@@ -79,8 +75,6 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_EBU_3213, str)
         self.assertIsInstance(Quartz.kCVImageBufferTransferFunction_SMPTE_C, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(Quartz.kCVImageBufferColorPrimaries_P22, str)
 
     @min_os_level("10.10")
@@ -197,8 +191,6 @@ class TestCVImageBuffer(TestCase):
         )
         self.assertResultHasType(Quartz.CVImageBufferIsFlipped, objc._C_NSBOOL)
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         self.assertResultIsCFRetained(
             Quartz.CVImageBufferCreateColorSpaceFromAttachments
         )

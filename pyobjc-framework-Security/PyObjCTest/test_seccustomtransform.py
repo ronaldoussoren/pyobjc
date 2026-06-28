@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 SecTransformActionBlock = b"@"
@@ -115,8 +115,6 @@ class TestSecCustomTransform(TestCase):
         self.assertArgHasType(Security.SecTransformPushbackAttribute, 1, objc._C_ID)
         self.assertArgHasType(Security.SecTransformPushbackAttribute, 2, objc._C_ID)
 
-    @min_os_level("10.7")
-    def test_functions_10_7(self):
         self.assertResultHasType(Security.SecTransformRegister, objc._C_NSBOOL)
         self.assertArgHasType(Security.SecTransformRegister, 0, b"^{__CFString=}")
         self.assertArgIsFunction(

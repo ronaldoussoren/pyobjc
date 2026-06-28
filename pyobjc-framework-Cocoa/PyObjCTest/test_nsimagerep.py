@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSImageRep(TestCase):
@@ -33,8 +33,6 @@ class TestNSImageRep(TestCase):
         self.assertResultIsBOOL(AppKit.NSImageRep.canInitWithData_)
         self.assertResultIsBOOL(AppKit.NSImageRep.canInitWithPasteboard_)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(
             AppKit.NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_
         )

@@ -1,11 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGKVoiceChatService(TestCase):
-    # NOTE: Class GKVoiceChatService is not available on OSX
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
         self.assertIsInstance(GameCenter.GKVoiceChatServiceErrorDomain, str)

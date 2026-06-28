@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 import MapKit
@@ -6,7 +6,11 @@ import CoreLocation
 
 
 class TestMKGeometry(TestCase):
-    @min_os_level("10.9")
+    def test_constants(self):
+        self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MKMapSize)
+        self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
+        self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)
+
     def test_structs(self):
         s = MapKit.MKCoordinateSpan()
         self.assertIsInstance(s.latitudeDelta, float)
@@ -33,12 +37,6 @@ class TestMKGeometry(TestCase):
         self.assertIsInstance(s.size, MapKit.MKMapSize)
         self.assertPickleRoundTrips(s)
 
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertIsInstance(MapKit.MKMapSizeWorld, MapKit.MKMapSize)
-        self.assertIsInstance(MapKit.MKMapRectWorld, MapKit.MKMapRect)
-        self.assertIsInstance(MapKit.MKMapRectNull, MapKit.MKMapRect)
-
     def test_methods(self):
         self.assertResultHasType(
             MapKit.NSValue.MKCoordinateValue,
@@ -59,7 +57,6 @@ class TestMKGeometry(TestCase):
             MapKit.MKCoordinateSpan.__typestr__,
         )
 
-    @min_os_level("10.9")
     def test_functions(self):
         c = MapKit.MKCoordinateSpanMake(0.5, 2.5)
         self.assertIsInstance(c, MapKit.MKCoordinateSpan)

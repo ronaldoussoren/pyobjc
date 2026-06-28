@@ -7,13 +7,11 @@ class TestNSFileVersion(TestCase):
         self.assertIsEnumType(Foundation.NSFileVersionAddingOptions)
         self.assertIsEnumType(Foundation.NSFileVersionReplacingOptions)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSFileVersionAddingByMoving, 1 << 0)
         self.assertEqual(Foundation.NSFileVersionReplacingByMoving, 1 << 0)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsOut(
             Foundation.NSFileVersion.addVersionOfItemAtURL_withContentsOfURL_options_error_,
             3,

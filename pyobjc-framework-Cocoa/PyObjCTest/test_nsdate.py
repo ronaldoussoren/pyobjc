@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDate(TestCase):
@@ -9,6 +9,4 @@ class TestNSDate(TestCase):
     def test_constants(self):
         self.assertEqual(AppKit.NSTimeIntervalSince1970, 978_307_200.0)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSSystemClockDidChangeNotification, str)

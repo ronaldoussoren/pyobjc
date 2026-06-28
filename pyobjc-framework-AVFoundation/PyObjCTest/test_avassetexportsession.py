@@ -3,15 +3,30 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetExportSession(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAssetExportSessionStatus)
-        self.assertIsEnumType(AVFoundation.AVAssetTrackGroupOutputHandling)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusUnknown, 0)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting, 1)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusExporting, 2)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusCompleted, 3)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusFailed, 4)
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusCancelled, 5)
 
+        self.assertIsEnumType(AVFoundation.AVAssetTrackGroupOutputHandling)
+        self.assertEqual(AVFoundation.AVAssetTrackGroupOutputHandlingNone, 0)
+        self.assertEqual(
+            AVFoundation.AVAssetTrackGroupOutputHandlingPreserveAlternateTracks, 1 << 0
+        )
+        self.assertEqual(
+            AVFoundation.AVAssetTrackGroupOutputHandlingDefaultPolicy,
+            AVFoundation.AVAssetTrackGroupOutputHandlingNone,
+        )
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(
             AVFoundation.AVAssetExportSessionResumptionFailureReason, str
         )
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVAssetExportPreset640x480, str)
         self.assertIsInstance(AVFoundation.AVAssetExportPreset960x540, str)
@@ -37,24 +52,6 @@ class TestAVAssetExportSession(TestCase):
             AVFoundation.AVAssetExportPresetAppleProRes422LPCM, str
         )  # noqa: B950
 
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusUnknown, 0)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting, 1)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusExporting, 2)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusCompleted, 3)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusFailed, 4)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusCancelled, 5)
-
-        self.assertEqual(AVFoundation.AVAssetTrackGroupOutputHandlingNone, 0)
-        self.assertEqual(
-            AVFoundation.AVAssetTrackGroupOutputHandlingPreserveAlternateTracks, 1 << 0
-        )
-        self.assertEqual(
-            AVFoundation.AVAssetTrackGroupOutputHandlingDefaultPolicy,
-            AVFoundation.AVAssetTrackGroupOutputHandlingNone,
-        )
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(
             AVFoundation.AVAssetExportPresetAppleM4V1080pHD, str
         )  # noqa: B950
@@ -131,7 +128,6 @@ class TestAVAssetExportSession(TestCase):
             str,
         )
 
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVAssetExportSession.determineCompatibilityOfExportPreset_withAsset_outputFileType_completionHandler_,  # noqa: B950

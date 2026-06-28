@@ -1,11 +1,10 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestNSDraggingSession(TestCase):
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSDraggingSession.animatesToStartingPositionsOnCancelOrFail
         )

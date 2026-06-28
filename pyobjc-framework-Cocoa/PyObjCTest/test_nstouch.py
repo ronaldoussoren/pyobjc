@@ -1,15 +1,10 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSTouch(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTouchPhase)
-        self.assertIsEnumType(AppKit.NSTouchType)
-        self.assertIsEnumType(AppKit.NSTouchTypeMask)
-
-    @min_os_level("10.6")
-    def test_constants(self):
         self.assertEqual(AppKit.NSTouchPhaseBegan, 1 << 0)
         self.assertEqual(AppKit.NSTouchPhaseMoved, 1 << 1)
         self.assertEqual(AppKit.NSTouchPhaseStationary, 1 << 2)
@@ -23,13 +18,14 @@ class TestNSTouch(TestCase):
         )
         self.assertEqual(AppKit.NSTouchPhaseAny, 0xFFFFFFFFFFFFFFFF)
 
-        # 10.12
+        self.assertIsEnumType(AppKit.NSTouchType)
         self.assertEqual(AppKit.NSTouchTypeDirect, 0)
         self.assertEqual(AppKit.NSTouchTypeIndirect, 1)
+
+        self.assertIsEnumType(AppKit.NSTouchTypeMask)
         self.assertEqual(AppKit.NSTouchTypeMaskDirect, 1 << 0)
         self.assertEqual(AppKit.NSTouchTypeMaskIndirect, 1 << 1)
 
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTouch.isResting)
         self.assertResultHasType(AppKit.NSTouch.deviceSize, AppKit.NSSize.__typestr__)

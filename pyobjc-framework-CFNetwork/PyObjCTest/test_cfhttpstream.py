@@ -1,14 +1,10 @@
 import os
 
 import CFNetwork
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_key, os_release
+from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 
 
 class TestCFHTTPStream(TestCase):
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(CFNetwork.kCFStreamPropertyHTTPFinalRequest, str)
-
     def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainHTTP, int)
 
@@ -30,6 +26,8 @@ class TestCFHTTPStream(TestCase):
         self.assertIsInstance(
             CFNetwork.kCFStreamPropertyHTTPRequestBytesWrittenCount, str
         )
+
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyHTTPFinalRequest, str)
 
     def test_functions(self):
         url = CFNetwork.CFURLCreateWithString(None, "http://www.python.org/", None)
@@ -63,8 +61,7 @@ class TestCFHTTPStream(TestCase):
                 )
                 CFNetwork.CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-            if os_level_key(os_release()) < os_level_key("10.9"):
-                CFNetwork.CFHTTPReadStreamSetProxy(v, "localhost", 8080)
+            CFNetwork.CFHTTPReadStreamSetProxy(v, "localhost", 8080)
 
         finally:
             os.dup2(fd_2, 2)

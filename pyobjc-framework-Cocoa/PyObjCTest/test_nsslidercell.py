@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSliderCell(TestCase):
@@ -35,6 +35,4 @@ class TestNSSliderCell(TestCase):
         self.assertResultIsBOOL(AppKit.NSSliderCell.allowsTickMarkValuesOnly)
         self.assertArgIsBOOL(AppKit.NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBOOL(AppKit.NSSliderCell.barRectFlipped_, 0)

@@ -7,8 +7,7 @@ class TestCIRAWFilter(TestCase):
         self.assertIsTypedEnum(Quartz.CIRAWDecoderVersion, str)
         self.assertIsTypedEnum(Quartz.CIRAWFilterOption, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIInputDecoderVersionKey, str)
         self.assertIsInstance(Quartz.kCISupportedDecoderVersionsKey, str)
         self.assertIsInstance(Quartz.kCIInputBoostKey, str)
@@ -27,8 +26,6 @@ class TestCIRAWFilter(TestCase):
         self.assertIsInstance(Quartz.kCIInputBoostShadowAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputBiasKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Quartz.kCIInputNoiseReductionAmountKey, str)
         self.assertIsInstance(Quartz.kCIInputLinearSpaceFilter, str)
         self.assertIsInstance(Quartz.kCIActiveKeys, str)

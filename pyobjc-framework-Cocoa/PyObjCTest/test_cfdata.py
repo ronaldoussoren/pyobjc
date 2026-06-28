@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -85,13 +85,11 @@ class TestData(TestCase):
             CoreFoundation.CFDataGetBytes(mutableData, (0, 5), None), b"world"
         )
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFDataSearchBackwards, 1 << 0)
         self.assertEqual(CoreFoundation.kCFDataSearchAnchored, 1 << 1)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
+    def test_functions(self):
         data = CoreFoundation.CFDataCreate(None, b"hello world", 11)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         src = CoreFoundation.CFDataCreate(None, b"wor", 3)

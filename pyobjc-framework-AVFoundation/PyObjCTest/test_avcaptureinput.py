@@ -3,17 +3,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureInput(TestCase):
-    @min_os_level("10.7")
-    def test_constants(self):
-        self.assertIsInstance(
-            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
-        )
-
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureMultichannelAudioMode)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeNone, 0)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeStereo, 1)
         self.assertEqual(
             AVFoundation.AVCaptureMultichannelAudioModeFirstOrderAmbisonics, 2
+        )
+
+    def test_constants(self):
+        self.assertIsInstance(
+            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
         )
 
     def test_methods(self):
@@ -28,6 +28,16 @@ class TestAVCaptureInput(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesMouseClicks)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0
+        )
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
         )
 
     @min_os_level("12.0")
@@ -48,25 +58,13 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureDeviceInput_Tundra.initWithDevice_error_, 1
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
-        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
-        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
-
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
-        )
-        self.assertArgIsBOOL(
-            AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
-        )
-
-    @min_os_level("12.0")
-    def test_methods12_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput_Tundra.capturesCursor)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput_Tundra.setCapturesCursor_, 0
         )
 
+    @min_os_level("12.0")
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
         )

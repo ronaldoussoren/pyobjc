@@ -1,19 +1,15 @@
 import CoreText
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCTTypesetter(TestCase):
-    def test_types(self):
-        self.assertIsCFType(CoreText.CTTypesetterRef)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTTypesetterOptionDisableBidiProcessing, str)
         self.assertIsInstance(CoreText.kCTTypesetterOptionForcedEmbeddingLevel, str)
-
-    @min_os_level("10.14")
-    def test_constants10_14(self):
         self.assertIsInstance(CoreText.kCTTypesetterOptionAllowUnboundedLayout, str)
+
+    def test_types(self):
+        self.assertIsCFType(CoreText.CTTypesetterRef)
 
     def test_functions(self):
         self.assertIsInstance(CoreText.CTTypesetterGetTypeID(), int)
@@ -43,9 +39,6 @@ class TestCTTypesetter(TestCase):
         v = CoreText.CTTypesetterSuggestClusterBreak(ref, 0, 100.0)
         self.assertIsInstance(v, int)
 
-    @min_os_level("10.7")
-    def test_functions10_6(self):
-        # FIXME: For some reason these aren't avaible on OSX 10.6...
         self.assertResultIsCFRetained(CoreText.CTTypesetterCreateLineWithOffset)
         CoreText.CTTypesetterSuggestLineBreakWithOffset
         CoreText.CTTypesetterSuggestLineBreak

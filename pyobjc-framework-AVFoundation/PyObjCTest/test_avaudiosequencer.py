@@ -7,20 +7,20 @@ AVMusicEventEnumerationBlock = b"v@N^dN^Z"
 
 
 class TestAVAudioSequencer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVMusicSequenceLoadOptions)
-        self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
-        self.assertIsTypedEnum(AVFoundation.AVAudioSequencerInfoDictionaryKey, str)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
         self.assertEqual(
             AVFoundation.AVMusicSequenceLoadSMF_ChannelsToTracks, 1
         )  # noqa: B950
 
+        self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
         self.assertEqual(AVFoundation.AVMusicTrackLoopCountForever, -1)
 
         self.assertEqual(AVFoundation.AVMusicTimeStampEndOfTrack, sys.float_info.max)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVAudioSequencerInfoDictionaryKey, str)
 
     @min_os_level("13.0")
     def test_constants13_0(self):

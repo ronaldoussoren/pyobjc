@@ -4,28 +4,28 @@ import objc
 
 
 class TestMAAudibleMedia(TestCase):
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertIsInstance(
-            MediaAccessibility.kMACaptionAppearanceSettingsChangedNotification, str
-        )
+    def test_enums(self):
+        self.assertIsEnumType(MediaAccessibility.MACaptionAppearanceDomain)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainDefault, 0)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDomainUser, 1)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceDomainVideoConferencing, 2
         )
 
+        self.assertIsEnumType(MediaAccessibility.MACaptionAppearanceDisplayType)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceDisplayTypeForcedOnly, 0
         )
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDisplayTypeAutomatic, 1)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceDisplayTypeAlwaysOn, 2)
 
+        self.assertIsEnumType(MediaAccessibility.MACaptionAppearanceBehavior)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceBehaviorUseValue, 0)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceBehaviorUseContentIfAvailable, 1
         )
 
+        self.assertIsEnumType(MediaAccessibility.MACaptionAppearanceFontStyle)
         self.assertEqual(MediaAccessibility.kMACaptionAppearanceFontStyleDefault, 0)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceFontStyleMonospacedWithSerif, 1
@@ -45,6 +45,7 @@ class TestMAAudibleMedia(TestCase):
             MediaAccessibility.kMACaptionAppearanceFontStyleSmallCapital, 7
         )
 
+        self.assertIsEnumType(MediaAccessibility.MACaptionAppearanceTextEdgeStyle)
         self.assertEqual(
             MediaAccessibility.kMACaptionAppearanceTextEdgeStyleUndefined, 0
         )
@@ -58,6 +59,10 @@ class TestMAAudibleMedia(TestCase):
             MediaAccessibility.kMACaptionAppearanceTextEdgeStyleDropShadow, 5
         )
 
+    def test_constants(self):
+        self.assertIsInstance(
+            MediaAccessibility.kMACaptionAppearanceSettingsChangedNotification, str
+        )
         self.assertIsInstance(
             MediaAccessibility.MAMediaCharacteristicDescribesMusicAndSoundForAccessibility,
             str,
@@ -67,7 +72,6 @@ class TestMAAudibleMedia(TestCase):
             str,
         )
 
-    @min_os_level("10.9")
     def test_functions(self):
         self.assertResultHasType(
             MediaAccessibility.MACaptionAppearanceAddSelectedLanguage, objc._C_BOOL

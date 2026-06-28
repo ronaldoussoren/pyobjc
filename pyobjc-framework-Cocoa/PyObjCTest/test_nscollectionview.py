@@ -70,10 +70,37 @@ class TestNSCollectionViewHelper(AppKit.NSObject):
 
 
 class TestNSCollectionView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSCollectionViewDropOperation)
+        self.assertEqual(AppKit.NSCollectionViewDropOn, 0)
+        self.assertEqual(AppKit.NSCollectionViewDropBefore, 1)
+
         self.assertIsEnumType(AppKit.NSCollectionViewItemHighlightState)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightNone, 0)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightForSelection, 1)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightForDeselection, 2)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightAsDropTarget, 3)
+
         self.assertIsEnumType(AppKit.NSCollectionViewScrollPosition)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionBottom, 1 << 2)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionNearestHorizontalEdge, 1 << 9
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeft, 1 << 3)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionCenteredHorizontally, 1 << 4
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionRight, 1 << 5)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeadingEdge, 1 << 6)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionTrailingEdge, 1 << 7)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8
+        )
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSCollectionViewItem.isSelected)
@@ -86,8 +113,6 @@ class TestNSCollectionView(TestCase):
         self.assertResultIsBOOL(AppKit.NSCollectionView.allowsMultipleSelection)
         self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsMultipleSelection_, 0)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultHasType(
             AppKit.NSCollectionView.frameForItemAtIndex_, AppKit.NSRect.__typestr__
         )
@@ -191,39 +216,6 @@ class TestNSCollectionView(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSCollectionView.setBackgroundViewScrollsWithContent_, 0
         )
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionBottom, 1 << 2)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionNearestHorizontalEdge, 1 << 9
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeft, 1 << 3)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionCenteredHorizontally, 1 << 4
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionRight, 1 << 5)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeadingEdge, 1 << 6)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionTrailingEdge, 1 << 7)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8
-        )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(AppKit.NSCollectionViewDropOn, 0)
-        self.assertEqual(AppKit.NSCollectionViewDropBefore, 1)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightNone, 0)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightForSelection, 1)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightForDeselection, 2)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightAsDropTarget, 3)
 
     @min_sdk_level("10.10")
     def test_protocols(self):

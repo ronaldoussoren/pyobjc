@@ -5,12 +5,11 @@ import objc
 
 
 class TestATTrackingManager(TestCase):
-    def test_enum_types(self):
+
+    def test_enums(self):
         self.assertIsEnumType(
             AppTrackingTransparency.ATTrackingManagerAuthorizationStatus
         )
-
-    def test_constants(self):
         self.assertEqual(
             AppTrackingTransparency.ATTrackingManagerAuthorizationStatusNotDetermined, 0
         )

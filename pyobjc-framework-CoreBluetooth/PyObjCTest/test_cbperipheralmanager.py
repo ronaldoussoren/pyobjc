@@ -15,18 +15,14 @@ class TestCBPeriphalManagerHelper(CoreBluetooth.NSObject):
 
 
 class TestCBPeriphicalManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerAuthorizationStatus)
-        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerConnectionLatency)
-        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerState)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusNotDetermined, 0)
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusRestricted, 1)
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusDenied, 2)
         self.assertEqual(CoreBluetooth.CBPeripheralAuthorizationStatusAuthorized, 3)
 
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerState)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerStateUnknown, 0)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerStateResetting, 1)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerStateUnsupported, 2)
@@ -34,6 +30,7 @@ class TestCBPeriphicalManager(TestCase):
         self.assertEqual(CoreBluetooth.CBPeripheralManagerStatePoweredOff, 4)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerStatePoweredOn, 5)
 
+        self.assertIsEnumType(CoreBluetooth.CBPeripheralManagerConnectionLatency)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerConnectionLatencyLow, 0)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerConnectionLatencyMedium, 1)
         self.assertEqual(CoreBluetooth.CBPeripheralManagerConnectionLatencyHigh, 2)
@@ -49,23 +46,25 @@ class TestCBPeriphicalManager(TestCase):
             CoreBluetooth.CBPeripheralManagerAuthorizationStatusAuthorized, 3
         )
 
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(CoreBluetooth.CBPeripheralManager, objc.objc_class)
 
-    @min_os_level("10.9")
     def test_protocols(self):
         self.assertProtocolExists("CBPeripheralManagerDelegate", CoreBluetooth)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.isAdvertising)
         self.assertResultIsBOOL(
             CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_  # noqa: B950
         )
 
-        # XXX: A number of methods have a dispatch_queue as their argument
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertArgIsBOOL(
+            CoreBluetooth.CBPeripheralManager.publishL2CAPChannelWithEncryption_, 0
+        )
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCBPeriphalManagerHelper.peripheralManager_didPublishL2CAPChannel_error_,
             1,
@@ -80,10 +79,4 @@ class TestCBPeriphicalManager(TestCase):
             TestCBPeriphalManagerHelper.peripheralManager_didOpenL2CAPChannel_error_,
             1,
             objc._C_USHT,
-        )
-
-    @min_os_level("10.14")
-    def test_methods10_14(self):
-        self.assertArgIsBOOL(
-            CoreBluetooth.CBPeripheralManager.publishL2CAPChannelWithEncryption_, 0
         )

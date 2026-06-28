@@ -24,13 +24,13 @@ class TestNSCollectionViewFlowLayoutHelper(AppKit.NSObject):
 
 
 class TestNSCollectionViewFlowLayout(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSCollectionViewScrollDirection)
+        self.assertEqual(AppKit.NSCollectionViewScrollDirectionVertical, 0)
+        self.assertEqual(AppKit.NSCollectionViewScrollDirectionHorizontal, 1)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
-        self.assertEqual(AppKit.NSCollectionViewScrollDirectionVertical, 0)
-        self.assertEqual(AppKit.NSCollectionViewScrollDirectionHorizontal, 1)
         self.assertIsInstance(AppKit.NSCollectionElementKindSectionHeader, str)
         self.assertIsInstance(AppKit.NSCollectionElementKindSectionFooter, str)
 

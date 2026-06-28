@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 import Quartz
 
@@ -12,7 +12,12 @@ class TestCIImageProviderHelper(Quartz.NSObject):
 
 
 class TestCIImageProvider(TestCase):
-    def test_methods(self):
+    def test_constants(self):
+        self.assertIsInstance(Quartz.kCIImageProviderTileSize, str)
+        self.assertIsInstance(Quartz.kCIImageProviderUserInfo, str)
+        self.assertIsInstance(Quartz.kCIOutputNativeSizeKey, str)
+
+    def test_protoocol_methods(self):
         self.assertArgHasType(
             TestCIImageProviderHelper.provideImageData_bytesPerRow_origin__size__userInfo_,
             0,
@@ -53,11 +58,3 @@ class TestCIImageProvider(TestCase):
             6,
             objc._C_ID,
         )
-
-    def test_constants(self):
-        self.assertIsInstance(Quartz.kCIImageProviderTileSize, str)
-        self.assertIsInstance(Quartz.kCIImageProviderUserInfo, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(Quartz.kCIOutputNativeSizeKey, str)

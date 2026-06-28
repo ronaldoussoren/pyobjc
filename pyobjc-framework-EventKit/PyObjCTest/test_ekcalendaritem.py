@@ -1,15 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import EventKit
 
 
 class TestEKCalendarItem(TestCase):
-    @min_os_level("10.8")
-    def test_basic(self):
-        self.assertTrue(hasattr(EventKit, "EKCalendarItem"))
-
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasAlarms)
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasAttendees)
         self.assertResultIsBOOL(EventKit.EKCalendarItem.hasNotes)

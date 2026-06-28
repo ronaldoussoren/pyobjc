@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWKPreferences(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKInactiveSchedulingPolicy)
         self.assertEqual(WebKit.WKInactiveSchedulingPolicySuspend, 0)
         self.assertEqual(WebKit.WKInactiveSchedulingPolicyThrottle, 1)

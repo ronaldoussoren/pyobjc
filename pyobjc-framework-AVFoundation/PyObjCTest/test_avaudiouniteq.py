@@ -3,11 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitEQ(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioUnitEQFilterType)
-
-    @min_os_level("10.7")
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeParametric, 0)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeLowPass, 1)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeHighPass, 2)

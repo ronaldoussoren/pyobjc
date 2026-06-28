@@ -1,10 +1,9 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTableRowView(TestCase):
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isEmphasized)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setEmphasized_, 0)
         self.assertResultIsBOOL(AppKit.NSTableRowView.isGroupRowStyle)
@@ -18,7 +17,5 @@ class TestNSTableRowView(TestCase):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isNextRowSelected)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setNextRowSelected_, 0)
 
-    @min_os_level("10.10")
-    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isPreviousRowSelected)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setPreviousRowSelected_, 0)

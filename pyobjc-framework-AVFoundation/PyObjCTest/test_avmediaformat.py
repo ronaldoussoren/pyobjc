@@ -8,7 +8,6 @@ class TestAVMediaFormat(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVVideoRange, str)
         self.assertIsTypedEnum(AVFoundation.AVMediaCharacteristic, str)
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeVideo, str)
         self.assertIsInstance(AVFoundation.AVMediaTypeAudio, str)
@@ -31,8 +30,6 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVFileTypeAIFC, str)
         self.assertIsInstance(AVFoundation.AVFileTypeAMR, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeMetadata, str)
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicIsMainProgramContent, str
@@ -53,9 +50,6 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicDescribesVideoForAccessibility, str
         )
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVFileTypeMPEGLayer3, str)
         self.assertIsInstance(AVFoundation.AVFileTypeSunAU, str)
         self.assertIsInstance(AVFoundation.AVFileTypeAC3, str)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc, min_os_level
 
 
 class TestAVAudioApplication(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioApplicationRecordPermission)
         self.assertEqual(
             AVFoundation.AVAudioApplicationRecordPermissionUndetermined, fourcc(b"undt")

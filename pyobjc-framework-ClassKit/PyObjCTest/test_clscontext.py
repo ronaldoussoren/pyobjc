@@ -4,13 +4,8 @@ import ClassKit
 
 
 class TestCLSContext(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(ClassKit.CLSContextTopic, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ClassKit.CLSContextType)
-
-    def test_constants(self):
         self.assertEqual(ClassKit.CLSContextTypeNone, 0)
         self.assertEqual(ClassKit.CLSContextTypeApp, 1)
         self.assertEqual(ClassKit.CLSContextTypeChapter, 2)
@@ -29,6 +24,9 @@ class TestCLSContext(TestCase):
         self.assertEqual(ClassKit.CLSContextTypeVideo, 15)
         self.assertEqual(ClassKit.CLSContextTypeCourse, 16)
         self.assertEqual(ClassKit.CLSContextTypeCustom, 17)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(ClassKit.CLSContextTopic, str)
 
     @min_os_level("11.0")
     def test_constants11_0(self):

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import AVKit
 
 
@@ -8,7 +8,7 @@ class TestAVLegibleMediaOptionsMenuControllerHelper(AVKit.NSObject):
 
 
 class TestAVLegibleMediaOptionsMenuController(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AVKit.AVLegibleMediaOptionsMenuType)
         self.assertEqual(AVKit.AVLegibleMediaOptionsMenuTypeDefault, 0)
         self.assertEqual(AVKit.AVLegibleMediaOptionsMenuTypeCaptionAppearance, 1)
@@ -34,6 +34,10 @@ class TestAVLegibleMediaOptionsMenuController(TestCase):
         v = AVKit.AVLegibleMediaOptionsMenuState()
         self.assertIs(v.enabled, False)
         self.assertEqual(v.reason, 0)
+
+    @min_sdk_level("26.4")
+    def test_protocols(self):
+        self.assertProtocolExists("AVLegibleMediaOptionsMenuControllerDelegate", AVKit)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

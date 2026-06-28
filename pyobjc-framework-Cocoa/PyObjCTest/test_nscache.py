@@ -1,9 +1,8 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSCache(TestCase):
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSCache.evictsObjectsWithDiscardedContent)
         self.assertArgIsBOOL(

@@ -9,22 +9,23 @@ class TestSCNMaterial(TestCase):
 
     def test_enum_types(self):
         self.assertIsEnumType(SceneKit.SCNBlendMode)
+        self.assertEqual(SceneKit.SCNBlendModeAlpha, 0)
+        self.assertEqual(SceneKit.SCNBlendModeAdd, 1)
+        self.assertEqual(SceneKit.SCNBlendModeSubtract, 2)
+        self.assertEqual(SceneKit.SCNBlendModeMultiply, 3)
+        self.assertEqual(SceneKit.SCNBlendModeScreen, 4)
+        self.assertEqual(SceneKit.SCNBlendModeReplace, 5)
+        self.assertEqual(SceneKit.SCNBlendModeMax, 6)
+
         self.assertIsEnumType(SceneKit.SCNCullMode)
-        self.assertIsEnumType(SceneKit.SCNFillMode)
-        self.assertIsEnumType(SceneKit.SCNTransparencyMode)
-
-    def test_constants(self):
-        self.assertIsInstance(SceneKit.SCNLightingModelPhong, str)
-        self.assertIsInstance(SceneKit.SCNLightingModelBlinn, str)
-        self.assertIsInstance(SceneKit.SCNLightingModelLambert, str)
-        self.assertIsInstance(SceneKit.SCNLightingModelConstant, str)
-
-        self.assertEqual(SceneKit.SCNFillModeFill, 0)
-        self.assertEqual(SceneKit.SCNFillModeLines, 1)
-
         self.assertEqual(SceneKit.SCNCullBack, 0)
         self.assertEqual(SceneKit.SCNCullFront, 1)
 
+        self.assertIsEnumType(SceneKit.SCNFillMode)
+        self.assertEqual(SceneKit.SCNFillModeFill, 0)
+        self.assertEqual(SceneKit.SCNFillModeLines, 1)
+
+        self.assertIsEnumType(SceneKit.SCNTransparencyMode)
         self.assertEqual(SceneKit.SCNTransparencyModeAOne, 0)
         self.assertEqual(SceneKit.SCNTransparencyModeRGBZero, 1)
         self.assertEqual(SceneKit.SCNTransparencyModeSingleLayer, 2)
@@ -33,13 +34,11 @@ class TestSCNMaterial(TestCase):
             SceneKit.SCNTransparencyModeDefault, SceneKit.SCNTransparencyModeAOne
         )
 
-        self.assertEqual(SceneKit.SCNBlendModeAlpha, 0)
-        self.assertEqual(SceneKit.SCNBlendModeAdd, 1)
-        self.assertEqual(SceneKit.SCNBlendModeSubtract, 2)
-        self.assertEqual(SceneKit.SCNBlendModeMultiply, 3)
-        self.assertEqual(SceneKit.SCNBlendModeScreen, 4)
-        self.assertEqual(SceneKit.SCNBlendModeReplace, 5)
-        self.assertEqual(SceneKit.SCNBlendModeMax, 6)
+    def test_constants(self):
+        self.assertIsInstance(SceneKit.SCNLightingModelPhong, str)
+        self.assertIsInstance(SceneKit.SCNLightingModelBlinn, str)
+        self.assertIsInstance(SceneKit.SCNLightingModelLambert, str)
+        self.assertIsInstance(SceneKit.SCNLightingModelConstant, str)
 
     @min_os_level("10.12")
     def test_constants10_12(self):
@@ -62,7 +61,5 @@ class TestSCNMaterial(TestCase):
         self.assertResultIsBOOL(SceneKit.SCNMaterial.writesToDepthBuffer)
         self.assertArgIsBOOL(SceneKit.SCNMaterial.setWritesToDepthBuffer_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(SceneKit.SCNMaterial.readsFromDepthBuffer)
         self.assertArgIsBOOL(SceneKit.SCNMaterial.setReadsFromDepthBuffer_, 0)

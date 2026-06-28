@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -7,13 +7,11 @@ class TestSecRandom(TestCase):
     def test_types(self):
         self.assertIsOpaquePointer(Security.SecRandomRef)
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(
             Security.kSecRandomDefault, (type(None), Security.SecRandomRef)
         )
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertResultHasType(Security.SecRandomCopyBytes, objc._C_INT)
         self.assertArgHasType(

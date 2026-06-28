@@ -1,21 +1,19 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SystemConfiguration
 import objc
 
 
 class TestSCNetworkConnection(TestCase):
-    def test_types(self):
-        self.assertIsInstance(
-            SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
-        )
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCNetworkConnectionStatus)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionInvalid, -1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionDisconnected, 0)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionConnecting, 1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionConnected, 2)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionDisconnecting, 3)
 
+        self.assertIsEnumType(SystemConfiguration.SCNetworkConnectionPPPStatus)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPDisconnected, 0)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPInitializing, 1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPConnectingLink, 2)
@@ -39,6 +37,7 @@ class TestSCNetworkConnection(TestCase):
             SystemConfiguration.kSCNetworkConnectionPPPWaitingForRedial, 13
         )
 
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesIn, "BytesIn")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesOut, "BytesOut")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPacketsIn, "PacketsIn")
@@ -55,6 +54,11 @@ class TestSCNetworkConnection(TestCase):
         self.assertEqual(
             SystemConfiguration.kSCNetworkConnectionSelectionOptionOnDemandRetry,
             "OnDemandRetry",
+        )
+
+    def test_types(self):
+        self.assertIsInstance(
+            SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
         )
 
     def test_functions(self):
@@ -116,6 +120,4 @@ class TestSCNetworkConnection(TestCase):
             SystemConfiguration.SCNetworkConnectionUnscheduleFromRunLoop
         )
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCNetworkConnectionSetDispatchQueue)

@@ -37,7 +37,6 @@ class TestNSStackView(TestCase):
         self.assertEqual(AppKit.NSStackViewDistributionEqualSpacing, 3)
         self.assertEqual(AppKit.NSStackViewDistributionEqualCentering, 4)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSStackView.hasEqualSpacing)
         self.assertArgIsBOOL(AppKit.NSStackView.setHasEqualSpacing_, 0)

@@ -4,32 +4,24 @@ import objc
 
 
 class TestNSDocument(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSDocumentChangeType)
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSaveOperationType)
+        self.assertEqual(AppKit.NSSaveOperation, 0)
+        self.assertEqual(AppKit.NSSaveAsOperation, 1)
+        self.assertEqual(AppKit.NSSaveToOperation, 2)
+        self.assertEqual(AppKit.NSAutosaveOperation, 3)
+        self.assertEqual(AppKit.NSAutosaveInPlaceOperation, 4)
+        self.assertEqual(AppKit.NSAutosaveAsOperation, 5)
+        self.assertEqual(AppKit.NSAutosaveElsewhereOperation, 3)
 
-    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSDocumentChangeType)
         self.assertEqual(AppKit.NSChangeDone, 0)
         self.assertEqual(AppKit.NSChangeUndone, 1)
         self.assertEqual(AppKit.NSChangeCleared, 2)
         self.assertEqual(AppKit.NSChangeRedone, 5)
         self.assertEqual(AppKit.NSChangeReadOtherContents, 3)
         self.assertEqual(AppKit.NSChangeAutosaved, 4)
-
-        self.assertEqual(AppKit.NSSaveOperation, 0)
-        self.assertEqual(AppKit.NSSaveAsOperation, 1)
-        self.assertEqual(AppKit.NSSaveToOperation, 2)
-        self.assertEqual(AppKit.NSAutosaveOperation, 3)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSChangeDiscardable, 256)
-        self.assertEqual(AppKit.NSAutosaveInPlaceOperation, 4)
-        self.assertEqual(AppKit.NSAutosaveElsewhereOperation, 3)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertEqual(AppKit.NSAutosaveAsOperation, 5)
 
     def test_methods(self):
         self.assertArgIsOut(AppKit.NSDocument.initWithType_error_, 1)
@@ -213,12 +205,8 @@ class TestNSDocument(TestCase):
             b"^v",
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(AppKit.NSDocument.canConcurrentlyReadDocumentsOfType_)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBOOL(
             AppKit.NSDocument.performActivityWithSynchronousWaiting_usingBlock_, 0
         )
@@ -291,8 +279,6 @@ class TestNSDocument(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSDocument.setDraft_, 0)
         self.assertResultIsBOOL(AppKit.NSDocument.isDraft)
         self.assertResultIsBOOL(AppKit.NSDocument.autosavesDrafts)

@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVSampleBufferGenerator(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestDirection)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionReverse, -1)
+
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestMode)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)
+
     @min_os_level("10.10")
     def test_methods(self):
         self.assertArgIsBlock(
@@ -27,11 +37,3 @@ class TestAVSampleBufferGenerator(TestCase):
             0,
             b"v@",
         )
-
-    def test_constants(self):
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionReverse, -1)
-
-        self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)

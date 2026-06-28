@@ -1,10 +1,20 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestQCPlugIn(TestCase):
-    @min_os_level("10.5")
-    def test_constants10_5(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.QCPlugInExecutionMode)
+        self.assertEqual(Quartz.kQCPlugInExecutionModeProvider, 1)
+        self.assertEqual(Quartz.kQCPlugInExecutionModeProcessor, 2)
+        self.assertEqual(Quartz.kQCPlugInExecutionModeConsumer, 3)
+
+        self.assertIsEnumType(Quartz.QCPlugInTimeMode)
+        self.assertEqual(Quartz.kQCPlugInTimeModeNone, 0)
+        self.assertEqual(Quartz.kQCPlugInTimeModeIdle, 1)
+        self.assertEqual(Quartz.kQCPlugInTimeModeTimeBase, 2)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.QCPlugInAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeDescriptionKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeCopyrightKey, str)
@@ -19,20 +29,9 @@ class TestQCPlugIn(TestCase):
         self.assertIsInstance(Quartz.QCPlugInExecutionArgumentEventKey, str)
         self.assertIsInstance(Quartz.QCPlugInExecutionArgumentMouseLocationKey, str)
 
-        self.assertEqual(Quartz.kQCPlugInExecutionModeProvider, 1)
-        self.assertEqual(Quartz.kQCPlugInExecutionModeProcessor, 2)
-        self.assertEqual(Quartz.kQCPlugInExecutionModeConsumer, 3)
-
-        self.assertEqual(Quartz.kQCPlugInTimeModeNone, 0)
-        self.assertEqual(Quartz.kQCPlugInTimeModeIdle, 1)
-        self.assertEqual(Quartz.kQCPlugInTimeModeTimeBase, 2)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Quartz.QCPlugInAttributeCategoriesKey, str)
         self.assertIsInstance(Quartz.QCPlugInAttributeExamplesKey, str)
 
-    def test_constants(self):
         self.assertIsInstance(Quartz.QCPortAttributeTypeKey, str)
         self.assertIsInstance(Quartz.QCPortAttributeNameKey, str)
         self.assertIsInstance(Quartz.QCPortAttributeMinimumValueKey, str)
@@ -45,7 +44,6 @@ class TestQCPlugIn(TestCase):
         self.assertIsInstance(Quartz.QCPortTypeImage, str)
         self.assertIsInstance(Quartz.QCPortTypeStructure, str)
 
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCPlugIn.startExecution_)
         self.assertResultIsBOOL(Quartz.QCPlugIn.execute_atTime_withArguments_)

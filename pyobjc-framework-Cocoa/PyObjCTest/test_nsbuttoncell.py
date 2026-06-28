@@ -1,14 +1,22 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSButtonCell(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSBezelStyle)
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSButtonType)
-        self.assertIsEnumType(AppKit.NSGradientType)
+        self.assertEqual(AppKit.NSButtonTypeMomentaryLight, 0)
+        self.assertEqual(AppKit.NSButtonTypePushOnPushOff, 1)
+        self.assertEqual(AppKit.NSButtonTypeToggle, 2)
+        self.assertEqual(AppKit.NSButtonTypeSwitch, 3)
+        self.assertEqual(AppKit.NSButtonTypeRadio, 4)
+        self.assertEqual(AppKit.NSButtonTypeMomentaryChange, 5)
+        self.assertEqual(AppKit.NSButtonTypeOnOff, 6)
+        self.assertEqual(AppKit.NSButtonTypeMomentaryPushIn, 7)
+        self.assertEqual(AppKit.NSButtonTypeAccelerator, 8)
+        self.assertEqual(AppKit.NSButtonTypeMultiLevelAccelerator, 9)
 
-    def test_constants(self):
+        # Legacy alias:
         self.assertEqual(AppKit.NSMomentaryLightButton, 0)
         self.assertEqual(AppKit.NSPushOnPushOffButton, 1)
         self.assertEqual(AppKit.NSToggleButton, 2)
@@ -20,9 +28,26 @@ class TestNSButtonCell(TestCase):
         self.assertEqual(AppKit.NSAcceleratorButton, 8)
         self.assertEqual(AppKit.NSMultiLevelAcceleratorButton, 9)
 
+        # Legacy alias:
         self.assertEqual(AppKit.NSMomentaryPushButton, 0)
         self.assertEqual(AppKit.NSMomentaryLight, 7)
 
+        self.assertIsEnumType(AppKit.NSBezelStyle)
+        self.assertEqual(AppKit.NSBezelStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSBezelStylePush, 1)
+        self.assertEqual(AppKit.NSBezelStyleFlexiblePush, 2)
+        self.assertEqual(AppKit.NSBezelStyleDisclosure, 5)
+        self.assertEqual(AppKit.NSBezelStyleCircular, 7)
+        self.assertEqual(AppKit.NSBezelStyleHelpButton, 9)
+        self.assertEqual(AppKit.NSBezelStyleSmallSquare, 10)
+        self.assertEqual(AppKit.NSBezelStyleToolbar, 11)
+        self.assertEqual(AppKit.NSBezelStyleAccessoryBarAction, 12)
+        self.assertEqual(AppKit.NSBezelStyleAccessoryBar, 13)
+        self.assertEqual(AppKit.NSBezelStylePushDisclosure, 14)
+        self.assertEqual(AppKit.NSBezelStyleBadge, 15)
+        self.assertEqual(AppKit.NSBezelStyleGlass, 16)
+
+        # Legacy Alias:
         self.assertEqual(AppKit.NSRoundedBezelStyle, 1)
         self.assertEqual(AppKit.NSRegularSquareBezelStyle, 2)
         self.assertEqual(AppKit.NSThickSquareBezelStyle, 3)
@@ -39,36 +64,12 @@ class TestNSButtonCell(TestCase):
         self.assertEqual(AppKit.NSRoundedDisclosureBezelStyle, 14)
         self.assertEqual(AppKit.NSSmallIconButtonBezelStyle, 2)
 
+        self.assertIsEnumType(AppKit.NSGradientType)
         self.assertEqual(AppKit.NSGradientNone, 0)
         self.assertEqual(AppKit.NSGradientConcaveWeak, 1)
         self.assertEqual(AppKit.NSGradientConcaveStrong, 2)
         self.assertEqual(AppKit.NSGradientConvexWeak, 3)
         self.assertEqual(AppKit.NSGradientConvexStrong, 4)
-
-        self.assertEqual(AppKit.NSButtonTypeMomentaryLight, 0)
-        self.assertEqual(AppKit.NSButtonTypePushOnPushOff, 1)
-        self.assertEqual(AppKit.NSButtonTypeToggle, 2)
-        self.assertEqual(AppKit.NSButtonTypeSwitch, 3)
-        self.assertEqual(AppKit.NSButtonTypeRadio, 4)
-        self.assertEqual(AppKit.NSButtonTypeMomentaryChange, 5)
-        self.assertEqual(AppKit.NSButtonTypeOnOff, 6)
-        self.assertEqual(AppKit.NSButtonTypeMomentaryPushIn, 7)
-        self.assertEqual(AppKit.NSButtonTypeAccelerator, 8)
-        self.assertEqual(AppKit.NSButtonTypeMultiLevelAccelerator, 9)
-
-        self.assertEqual(AppKit.NSBezelStyleAutomatic, 0)
-        self.assertEqual(AppKit.NSBezelStylePush, 1)
-        self.assertEqual(AppKit.NSBezelStyleFlexiblePush, 2)
-        self.assertEqual(AppKit.NSBezelStyleDisclosure, 5)
-        self.assertEqual(AppKit.NSBezelStyleCircular, 7)
-        self.assertEqual(AppKit.NSBezelStyleHelpButton, 9)
-        self.assertEqual(AppKit.NSBezelStyleSmallSquare, 10)
-        self.assertEqual(AppKit.NSBezelStyleToolbar, 11)
-        self.assertEqual(AppKit.NSBezelStyleAccessoryBarAction, 12)
-        self.assertEqual(AppKit.NSBezelStyleAccessoryBar, 13)
-        self.assertEqual(AppKit.NSBezelStylePushDisclosure, 14)
-        self.assertEqual(AppKit.NSBezelStyleBadge, 15)
-        self.assertEqual(AppKit.NSBezelStyleGlass, 16)
 
         self.assertEqual(AppKit.NSBezelStyleRounded, AppKit.NSBezelStylePush)
         self.assertEqual(
@@ -86,8 +87,6 @@ class TestNSButtonCell(TestCase):
         )
         self.assertEqual(AppKit.NSBezelStyleInline, AppKit.NSBezelStyleBadge)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSInlineBezelStyle, 15)
 
     def test_methods(self):

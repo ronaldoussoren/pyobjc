@@ -3,11 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioEnvironmentNode(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioEnvironmentDistanceAttenuationModel)
-        self.assertIsEnumType(AVFoundation.AVAudioEnvironmentOutputType)
-
-    def test_constants(self):
         self.assertEqual(
             AVFoundation.AVAudioEnvironmentDistanceAttenuationModelExponential, 1
         )
@@ -18,6 +15,7 @@ class TestAVAudioEnvironmentNode(TestCase):
             AVFoundation.AVAudioEnvironmentDistanceAttenuationModelLinear, 3
         )
 
+        self.assertIsEnumType(AVFoundation.AVAudioEnvironmentOutputType)
         self.assertEqual(AVFoundation.AVAudioEnvironmentOutputTypeAuto, 0)
         self.assertEqual(AVFoundation.AVAudioEnvironmentOutputTypeHeadphones, 1)
         self.assertEqual(AVFoundation.AVAudioEnvironmentOutputTypeBuiltInSpeakers, 2)

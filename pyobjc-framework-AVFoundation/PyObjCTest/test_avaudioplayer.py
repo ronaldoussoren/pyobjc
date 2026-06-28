@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestAVAudioPlayerHelper(AVFoundation.NSObject):
@@ -8,8 +8,7 @@ class TestAVAudioPlayerHelper(AVFoundation.NSObject):
 
 
 class TestAVAudioPlayer(TestCase):
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAudioPlayer.initWithContentsOfURL_error_, 1)
         self.assertArgIsOut(AVFoundation.AVAudioPlayer.initWithData_error_, 1)
 
@@ -25,20 +24,16 @@ class TestAVAudioPlayer(TestCase):
             TestAVAudioPlayerHelper.audioPlayerDidFinishPlaying_successfully_, 1
         )
 
-    @min_sdk_level("10.13")
-    def test_protocols(self):
-        self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)
-
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayer.enableRate)
         self.assertArgIsBOOL(AVFoundation.AVAudioPlayer.setEnableRate_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(
             AVFoundation.AVAudioPlayer.initWithContentsOfURL_fileTypeHint_error_, 2
         )
         self.assertArgIsOut(
             AVFoundation.AVAudioPlayer.initWithData_fileTypeHint_error_, 2
         )
+
+    @min_sdk_level("10.13")
+    def test_protocols(self):
+        self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSColorWell(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSColorWellStyle)
         self.assertEqual(AppKit.NSColorWellStyleDefault, 0)
         self.assertEqual(AppKit.NSColorWellStyleMinimal, 1)

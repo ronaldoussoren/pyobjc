@@ -5,8 +5,10 @@ import objc
 
 
 class TestNSCoderUsage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDecodingFailurePolicy)
+        self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
+        self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)
 
     def test_usage(self):
         class CoderClass1(Foundation.NSObject):
@@ -137,8 +139,6 @@ class TestPythonCoder(TestCase):
 
         self.assertTrue(hasattr(Foundation, "NXReadNSObjectFromCoder"))
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSCoder.requiresSecureCoding)
 
     @min_os_level("10.11")
@@ -154,8 +154,3 @@ class TestPythonCoder(TestCase):
         self.assertResultSizeInArg(
             Foundation.NSCoder.decodeBytesForKey_minimumLength_, 1
         )
-
-    @min_os_level("10.11")
-    def test_constants(self):
-        self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
-        self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)

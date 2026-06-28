@@ -106,6 +106,10 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLMathFloatingPointFunctionsFast, 0)
         self.assertEqual(Metal.MTLMathFloatingPointFunctionsPrecise, 1)
 
+        self.assertIsEnumType(Metal.MTLFloatingPointConversionRoundingMode)
+        self.assertEqual(Metal.MTLFloatingPointConversionRoundingModeToNearestEven, 0)
+        self.assertEqual(Metal.MTLFloatingPointConversionRoundingModeTowardZero, 1)
+
     @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(Metal.MTLLibraryErrorDomain, str)

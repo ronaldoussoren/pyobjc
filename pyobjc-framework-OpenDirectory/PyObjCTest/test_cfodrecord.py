@@ -75,8 +75,6 @@ class TestCFODRecord(TestCase):
         self.assertResultHasType(CFOpenDirectory.ODRecordContainsMember, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODRecordContainsMember, 2)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyPolicies)
         self.assertArgIsOut(CFOpenDirectory.ODRecordCopyPolicies, 1)
 

@@ -98,8 +98,6 @@ class TestPDFDocument(TestCase):
             TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBOOL(
             Quartz.PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2
         )

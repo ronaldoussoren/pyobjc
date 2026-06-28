@@ -12,8 +12,11 @@ def cmp(a, b):
 
 
 class TestNSArrayInteraction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSBinarySearchingOptions)
+        self.assertEqual(Foundation.NSBinarySearchingFirstEqual, 1 << 8)
+        self.assertEqual(Foundation.NSBinarySearchingLastEqual, 1 << 9)
+        self.assertEqual(Foundation.NSBinarySearchingInsertionIndex, 1 << 10)
 
     def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
@@ -474,8 +477,6 @@ class TestNSArray(TestCase):
         self.assertIsNullTerminated(Foundation.NSArray.arrayWithObjects_)
         self.assertIsNullTerminated(Foundation.NSArray.initWithObjects_)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSArray.enumerateObjectsUsingBlock_,
             0,
@@ -563,9 +564,3 @@ class TestNSArray(TestCase):
             2,
             b"b@@",
         )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(Foundation.NSBinarySearchingFirstEqual, 1 << 8)
-        self.assertEqual(Foundation.NSBinarySearchingLastEqual, 1 << 9)
-        self.assertEqual(Foundation.NSBinarySearchingInsertionIndex, 1 << 10)

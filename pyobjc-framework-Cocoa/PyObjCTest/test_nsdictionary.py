@@ -334,8 +334,6 @@ class TestNSDictionary(TestCase):
             Foundation.NSDictionary.dictionaryWithObjectsAndKeys_
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSDictionary.enumerateKeysAndObjectsUsingBlock_,
             0,

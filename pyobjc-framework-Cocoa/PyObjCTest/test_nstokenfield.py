@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -23,7 +23,6 @@ class TestNSTokenFieldHelper(AppKit.NSObject):
 
 
 class TestNSTokenField(TestCase):
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("NSTokenFieldDelegate", AppKit)
 

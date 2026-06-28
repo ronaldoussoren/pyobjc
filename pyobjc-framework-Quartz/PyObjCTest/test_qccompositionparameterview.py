@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
@@ -10,13 +10,13 @@ class TestQCCompositionParameterViewHelper(Quartz.NSObject):
 
 
 class TestQCCompositionParameterView(TestCase):
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCCompositionParameterView.hasParameters)
 
         self.assertResultIsBOOL(Quartz.QCCompositionParameterView.drawsBackground)
         self.assertArgIsBOOL(Quartz.QCCompositionParameterView.setDrawsBackground_, 0)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestQCCompositionParameterViewHelper.compositionParameterView_shouldDisplayParameterWithKey_attributes_
         )

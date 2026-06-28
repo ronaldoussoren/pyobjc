@@ -1,12 +1,36 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPropertyList(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSPropertyListFormat)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSPropertyListMutabilityOptions)
+        self.assertEqual(
+            Foundation.NSPropertyListImmutable, CoreFoundation.kCFPropertyListImmutable
+        )
+        self.assertEqual(
+            Foundation.NSPropertyListMutableContainers,
+            CoreFoundation.kCFPropertyListMutableContainers,
+        )
+        self.assertEqual(
+            Foundation.NSPropertyListMutableContainersAndLeaves,
+            CoreFoundation.kCFPropertyListMutableContainersAndLeaves,
+        )
+
+        self.assertIsEnumType(Foundation.NSPropertyListFormat)
+        self.assertEqual(
+            Foundation.NSPropertyListOpenStepFormat,
+            CoreFoundation.kCFPropertyListOpenStepFormat,
+        )
+        self.assertEqual(
+            Foundation.NSPropertyListXMLFormat_v1_0,
+            CoreFoundation.kCFPropertyListXMLFormat_v1_0,
+        )
+        self.assertEqual(
+            Foundation.NSPropertyListBinaryFormat_v1_0,
+            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
+        )
 
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -21,8 +45,6 @@ class TestNSPropertyList(TestCase):
             3,
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertArgIsOut(
             Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_,
             3,
@@ -38,31 +60,4 @@ class TestNSPropertyList(TestCase):
         self.assertArgIsOut(
             Foundation.NSPropertyListSerialization.propertyListWithStream_options_format_error_,
             3,
-        )
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(
-            Foundation.NSPropertyListImmutable, CoreFoundation.kCFPropertyListImmutable
-        )
-        self.assertEqual(
-            Foundation.NSPropertyListMutableContainers,
-            CoreFoundation.kCFPropertyListMutableContainers,
-        )
-        self.assertEqual(
-            Foundation.NSPropertyListMutableContainersAndLeaves,
-            CoreFoundation.kCFPropertyListMutableContainersAndLeaves,
-        )
-
-        self.assertEqual(
-            Foundation.NSPropertyListOpenStepFormat,
-            CoreFoundation.kCFPropertyListOpenStepFormat,
-        )
-        self.assertEqual(
-            Foundation.NSPropertyListXMLFormat_v1_0,
-            CoreFoundation.kCFPropertyListXMLFormat_v1_0,
-        )
-        self.assertEqual(
-            Foundation.NSPropertyListBinaryFormat_v1_0,
-            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
         )

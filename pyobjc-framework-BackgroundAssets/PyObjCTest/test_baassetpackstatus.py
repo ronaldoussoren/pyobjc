@@ -3,7 +3,7 @@ import BackgroundAssets
 
 
 class TestBAAssetPackStatus(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BAAssetPackStatus)
         self.assertEqual(BackgroundAssets.BAAssetPackStatusDownloadAvailable, 1 << 0)
         self.assertEqual(BackgroundAssets.BAAssetPackStatusUpdateAvailable, 1 << 1)

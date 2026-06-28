@@ -1,5 +1,5 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPropertyDescription(TestCase):
@@ -10,13 +10,9 @@ class TestNSPropertyDescription(TestCase):
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isTransient)
         self.assertArgIsBOOL(CoreData.NSPropertyDescription.setTransient_, 0)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isIndexed)
         self.assertArgIsBOOL(CoreData.NSPropertyDescription.setIndexed_, 0)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isIndexedBySpotlight)
         self.assertArgIsBOOL(CoreData.NSPropertyDescription.setIndexedBySpotlight_, 0)
         self.assertResultIsBOOL(CoreData.NSPropertyDescription.isStoredInExternalRecord)

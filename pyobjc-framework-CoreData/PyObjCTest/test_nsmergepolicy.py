@@ -4,8 +4,13 @@ import objc
 
 
 class TestNSMergePolicy(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSMergePolicyType)
+        self.assertEqual(CoreData.NSErrorMergePolicyType, 0x00)
+        self.assertEqual(CoreData.NSMergeByPropertyStoreTrumpMergePolicyType, 0x01)
+        self.assertEqual(CoreData.NSMergeByPropertyObjectTrumpMergePolicyType, 0x02)
+        self.assertEqual(CoreData.NSOverwriteMergePolicyType, 0x03)
+        self.assertEqual(CoreData.NSRollbackMergePolicyType, 0x04)
 
     def test_constants(self):
         self.assertIsInstance(CoreData.NSErrorMergePolicy, objc.objc_object)
@@ -18,14 +23,7 @@ class TestNSMergePolicy(TestCase):
         self.assertIsInstance(CoreData.NSOverwriteMergePolicy, objc.objc_object)
         self.assertIsInstance(CoreData.NSRollbackMergePolicy, objc.objc_object)
 
-        self.assertEqual(CoreData.NSErrorMergePolicyType, 0x00)
-        self.assertEqual(CoreData.NSMergeByPropertyStoreTrumpMergePolicyType, 0x01)
-        self.assertEqual(CoreData.NSMergeByPropertyObjectTrumpMergePolicyType, 0x02)
-        self.assertEqual(CoreData.NSOverwriteMergePolicyType, 0x03)
-        self.assertEqual(CoreData.NSRollbackMergePolicyType, 0x04)
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsOut(CoreData.NSMergePolicy.resolveConflicts_error_, 1)
         self.assertResultIsBOOL(CoreData.NSMergePolicy.resolveConflicts_error_)
 

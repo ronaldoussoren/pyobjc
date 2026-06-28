@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
@@ -6,13 +6,9 @@ class TestCAMediaTimingFunction(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAMediaTimingFunctionName, str)
 
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionLinear, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseIn, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseOut, str)
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionEaseInEaseOut, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCAMediaTimingFunctionDefault, str)

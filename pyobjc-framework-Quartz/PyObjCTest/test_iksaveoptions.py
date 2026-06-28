@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import Quartz  # noqa: F401
+from PyObjCTools.TestSupport import TestCase
+import Quartz
 
 
 class TestIKSaveOptionsHelper(Quartz.NSObject):
@@ -8,6 +8,5 @@ class TestIKSaveOptionsHelper(Quartz.NSObject):
 
 
 class TestIKSaveOptions(TestCase):
-    @min_os_level("10.6")
-    def test_protocols10_6(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestIKSaveOptionsHelper.saveOptions_shouldShowUTType_)

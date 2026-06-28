@@ -12,7 +12,7 @@ class TestASCredentialRequestHelper(AuthenticationServices.NSObject):
 
 
 class TestASCredentialRequest(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AuthenticationServices.ASCredentialRequestType)
         self.assertEqual(AuthenticationServices.ASCredentialRequestTypePassword, 0)
         self.assertEqual(

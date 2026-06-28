@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestNSPointerFunctions(TestCase):
@@ -23,8 +23,6 @@ class TestNSPointerFunctions(TestCase):
 
         self.assertEqual(Foundation.NSPointerFunctionsCopyIn, (1 << 16))
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSPointerFunctionsWeakMemory, 5 << 0)
 
     def test_property_type(self):

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 import MapKit
@@ -10,7 +10,6 @@ class TestMKDirectionsRequest(TestCase):
         self.assertEqual(MapKit.MKDirectionsRoutePreferenceAny, 0)
         self.assertEqual(MapKit.MKDirectionsRoutePreferenceAvoid, 1)
 
-    @min_os_level("10.9")
     def test_classes(self):
         self.assertIsInstance(MapKit.MKDirectionsRequest, objc.objc_class)
 

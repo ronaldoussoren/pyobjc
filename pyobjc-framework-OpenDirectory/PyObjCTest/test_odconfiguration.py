@@ -1,24 +1,25 @@
 import OpenDirectory
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestODConfiguration(TestCase):
-    @min_os_level("10.9")
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(OpenDirectory.ODPacketSigningDisabled, 0)
         self.assertEqual(OpenDirectory.ODPacketSigningAllow, 1)
         self.assertEqual(OpenDirectory.ODPacketSigningRequired, 2)
 
+        # Unnamed enum:
         self.assertEqual(OpenDirectory.ODPacketEncryptionDisabled, 0)
         self.assertEqual(OpenDirectory.ODPacketEncryptionAllow, 1)
         self.assertEqual(OpenDirectory.ODPacketEncryptionRequired, 2)
         self.assertEqual(OpenDirectory.ODPacketEncryptionSSL, 3)
 
+    def test_constants(self):
         self.assertIsInstance(OpenDirectory.ODTrustTypeJoined, str)
         self.assertIsInstance(OpenDirectory.ODTrustTypeUsingCredentials, str)
         self.assertIsInstance(OpenDirectory.ODTrustTypeAnonymous, str)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(OpenDirectory.ODConfiguration.hideRegistration)
         self.assertArgIsBOOL(OpenDirectory.ODConfiguration.setHideRegistration_, 0)

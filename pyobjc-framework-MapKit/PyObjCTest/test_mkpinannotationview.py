@@ -1,22 +1,15 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKPinAnnotationView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKPinAnnotationColor)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(MapKit.MKPinAnnotationColorRed, 0)
         self.assertEqual(MapKit.MKPinAnnotationColorGreen, 1)
         self.assertEqual(MapKit.MKPinAnnotationColorPurple, 2)
 
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKPinAnnotationView, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKPinAnnotationView.animatesDrop)
         self.assertArgIsBOOL(MapKit.MKPinAnnotationView.setAnimatesDrop_, 0)

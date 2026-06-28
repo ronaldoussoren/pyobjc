@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import WebKit
 
 
@@ -9,8 +9,6 @@ class TestDOMHTMLSelectElement(TestCase):
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.multiple)
         self.assertArgIsBOOL(WebKit.DOMHTMLSelectElement.setMultiple_, 0)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.willValidate)
         self.assertResultIsBOOL(WebKit.DOMHTMLSelectElement.autofocus)
         self.assertArgIsBOOL(WebKit.DOMHTMLSelectElement.setAutofocus_, 0)

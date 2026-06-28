@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -24,8 +24,7 @@ class TestNSMenu(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSMenuProperties)
 
-    @min_sdk_level("10.6")
-    def test_protocols10_6(self):
+    def test_protocols(self):
         self.assertProtocolExists("NSMenuDelegate", AppKit)
 
     def test_protocol_methods(self):
@@ -67,6 +66,22 @@ class TestNSMenu(TestCase):
             AppKit.NSMenu.locationForSubmenu_, AppKit.NSPoint.__typestr__
         )
 
+        self.assertResultIsBOOL(
+            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
+        )
+        self.assertArgHasType(
+            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_,
+            1,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertResultHasType(AppKit.NSMenu.size, AppKit.NSSize.__typestr__)
+        self.assertResultIsBOOL(AppKit.NSMenu.allowsContextMenuPlugIns)
+        self.assertArgIsBOOL(AppKit.NSMenu.setAllowsContextMenuPlugIns_, 0)
+
+        self.assertResultHasType(
+            TestNSMenuHelper.confinementRectForMenu_onScreen_, AppKit.NSRect.__typestr__
+        )
+
     def test_constants(self):
         self.assertIsInstance(AppKit.NSMenuWillSendActionNotification, str)
         self.assertIsInstance(AppKit.NSMenuDidSendActionNotification, str)
@@ -84,26 +99,6 @@ class TestNSMenu(TestCase):
         self.assertEqual(AppKit.NSMenuSelectionModeSelectOne, 1)
         self.assertEqual(AppKit.NSMenuSelectionModeSelectAny, 2)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
-        self.assertResultIsBOOL(
-            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
-        )
-        self.assertArgHasType(
-            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_,
-            1,
-            AppKit.NSPoint.__typestr__,
-        )
-        self.assertResultHasType(AppKit.NSMenu.size, AppKit.NSSize.__typestr__)
-        self.assertResultIsBOOL(AppKit.NSMenu.allowsContextMenuPlugIns)
-        self.assertArgIsBOOL(AppKit.NSMenu.setAllowsContextMenuPlugIns_, 0)
-
-        self.assertResultHasType(
-            TestNSMenuHelper.confinementRectForMenu_onScreen_, AppKit.NSRect.__typestr__
-        )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(AppKit.NSMenuPropertyItemTitle, 1 << 0)
         self.assertEqual(AppKit.NSMenuPropertyItemAttributedTitle, 1 << 1)
         self.assertEqual(AppKit.NSMenuPropertyItemKeyEquivalent, 1 << 2)

@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSGraphics(TestCase):
@@ -122,6 +122,23 @@ class TestNSGraphics(TestCase):
 
         self.assertEqual(AppKit.NSDisplayGamutSRGB, 1)
         self.assertEqual(AppKit.NSDisplayGamutP3, 2)
+
+        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
+        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
+        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
+        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
+        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
+
+        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
+        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
+        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
+        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
+
+        self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
+        self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
+        self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
+
+        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
 
     def test_functions(self):
         app = AppKit.NSApplication.sharedApplication()  # noqa: F841
@@ -301,25 +318,6 @@ class TestNSGraphics(TestCase):
         except objc.error:
             pass
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
-        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
-        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
-        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
-        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
 
-        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
-        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
-        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
-        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
-        self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
-        self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
-
-        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
-
-    AppKit.NSApplication.sharedApplication()
+# XXX: Why is this here?
+AppKit.NSApplication.sharedApplication()

@@ -1,10 +1,9 @@
 import SystemConfiguration
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCaptiveNework(TestCase):
-    @min_os_level("10.8")
-    def test_functions10_8(self):
+    def test_functions(self):
         self.assertResultIsBOOL(SystemConfiguration.CNSetSupportedSSIDs)
         self.assertResultIsBOOL(SystemConfiguration.CNMarkPortalOnline)
         self.assertResultIsBOOL(SystemConfiguration.CNMarkPortalOffline)

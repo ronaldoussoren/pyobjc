@@ -20,18 +20,11 @@ class TestNSAttributeDescription(TestCase):
         self.assertEqual(CoreData.NSBinaryDataAttributeType, 1000)
         self.assertEqual(CoreData.NSUUIDAttributeType, 1100)
         self.assertEqual(CoreData.NSURIAttributeType, 1200)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertEqual(CoreData.NSTransformableAttributeType, 1800)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(CoreData.NSObjectIDAttributeType, 2000)
         self.assertEqual(CoreData.NSCompositeAttributeType, 2100)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             CoreData.NSAttributeDescription.allowsExternalBinaryDataStorage
         )

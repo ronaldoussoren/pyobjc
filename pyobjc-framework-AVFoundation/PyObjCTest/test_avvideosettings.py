@@ -7,8 +7,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVVideoApertureMode, str)
         self.assertIsTypedEnum(AVFoundation.AVVideoCodecType, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVVideoCodecKey, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecH264, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecJPEG, str)
@@ -50,8 +49,6 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoQualityKey, str)
         self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalKey, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelKey, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline30, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline31, str)
@@ -61,8 +58,6 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main32, str)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main41, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, str
         )

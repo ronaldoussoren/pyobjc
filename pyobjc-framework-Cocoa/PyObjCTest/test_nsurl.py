@@ -5,6 +5,28 @@ import os
 
 
 class TestNSURL(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(Foundation.NSURLBookmarkCreationOptions)
+        self.assertEqual(
+            Foundation.NSURLBookmarkCreationPreferFileIDResolution, (1 << 8)
+        )
+        self.assertEqual(Foundation.NSURLBookmarkCreationMinimalBookmark, (1 << 9))
+        self.assertEqual(
+            Foundation.NSURLBookmarkCreationSuitableForBookmarkFile, (1 << 10)
+        )
+        self.assertEqual(Foundation.NSURLBookmarkCreationWithSecurityScope, (1 << 11))
+        self.assertEqual(
+            Foundation.NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12)
+        )
+        self.assertEqual(
+            Foundation.NSURLBookmarkCreationWithoutImplicitSecurityScope, (1 << 29)
+        )
+
+        self.assertIsEnumType(Foundation.NSURLBookmarkResolutionOptions)
+        self.assertEqual(Foundation.NSURLBookmarkResolutionWithoutUI, (1 << 8))
+        self.assertEqual(Foundation.NSURLBookmarkResolutionWithoutMounting, (1 << 9))
+        self.assertEqual(Foundation.NSURLBookmarkResolutionWithSecurityScope, (1 << 10))
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSURLFileProtectionType, str)
         self.assertIsTypedEnum(Foundation.NSURLFileResourceType, str)
@@ -13,107 +35,8 @@ class TestNSURL(TestCase):
         self.assertIsTypedEnum(Foundation.NSURLUbiquitousSharedItemPermissions, str)
         self.assertIsTypedEnum(Foundation.NSURLUbiquitousSharedItemRole, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSURLBookmarkCreationOptions)
-        self.assertIsEnumType(Foundation.NSURLBookmarkResolutionOptions)
-
-    def test_methods(self):
-        self.assertArgIsBOOL(Foundation.NSURL.initFileURLWithPath_isDirectory_, 1)
-        self.assertArgIsBOOL(Foundation.NSURL.fileURLWithPath_isDirectory_, 1)
-        self.assertResultIsBOOL(Foundation.NSURL.isFileURL)
-
-        self.assertArgIsBOOL(Foundation.NSURL.resourceDataUsingCache_, 0)
-        self.assertArgIsBOOL(
-            Foundation.NSURL.loadResourceDataNotifyingClient_usingCache_, 1
-        )
-        self.assertResultIsBOOL(Foundation.NSURL.setResourceData_)
-        self.assertResultIsBOOL(Foundation.NSURL.setProperty_forKey_)
-        self.assertArgIsBOOL(Foundation.NSURL.URLHandleUsingCache_, 0)
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
-        self.assertResultIsBOOL(Foundation.NSURL.startAccessingSecurityScopedResource)
-
-    @min_os_level("10.9")
-    def test_methods10_9(self):
-        self.assertArgIsIn(
-            Foundation.NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
-            0,
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
-            1,
-        )
-
-        self.assertArgIsIn(
-            Foundation.NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
-            0,
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
-            1,
-        )
-
-        self.assertResultIsBOOL(Foundation.NSURL.getFileSystemRepresentation_maxLength_)
-        self.assertArgIsOut(Foundation.NSURL.getFileSystemRepresentation_maxLength_, 0)
-        self.assertArgSizeInArg(
-            Foundation.NSURL.getFileSystemRepresentation_maxLength_, 0, 1
-        )
-
-        self.assertArgIsBOOL(
-            Foundation.NSURLComponents.initWithURL_resolvingAgainstBaseURL_, 1
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSURLComponents.componentsWithURL_resolvingAgainstBaseURL_, 1
-        )
-
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertArgIsOut(
-            Foundation.NSURL.URLByResolvingAliasFileAtURL_options_error_, 2
-        )
-
-        self.assertResultIsBOOL(
-            Foundation.NSURL.getPromisedItemResourceValue_forKey_error_
-        )
-        self.assertArgIsOut(
-            Foundation.NSURL.getPromisedItemResourceValue_forKey_error_, 2
-        )
-        self.assertArgIsOut(
-            Foundation.NSURL.promisedItemResourceValuesForKeys_error_, 1
-        )
-
-        self.assertResultIsBOOL(
-            Foundation.NSURL.checkPromisedItemIsReachableAndReturnError_
-        )
-        self.assertArgIsOut(
-            Foundation.NSURL.checkPromisedItemIsReachableAndReturnError_, 0
-        )
-
-    @min_os_level("10.11")
-    def test_methods10_11(self):
-        self.assertArgIsBOOL(
-            Foundation.NSURL.initFileURLWithPath_isDirectory_relativeToURL_, 1
-        )
-        self.assertArgIsBOOL(
-            Foundation.NSURL.fileURLWithPath_isDirectory_relativeToURL_, 1
-        )
-        self.assertResultIsBOOL(Foundation.NSURL.hasDirectoryPath)
-
     def test_constants(self):
         self.assertIsInstance(Foundation.NSURLFileScheme, str)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(
-            Foundation.NSURLBookmarkCreationPreferFileIDResolution, (1 << 8)
-        )
-        self.assertEqual(Foundation.NSURLBookmarkCreationMinimalBookmark, (1 << 9))
-        self.assertEqual(
-            Foundation.NSURLBookmarkCreationSuitableForBookmarkFile, (1 << 10)
-        )
-        self.assertEqual(Foundation.NSURLBookmarkResolutionWithoutUI, (1 << 8))
-        self.assertEqual(Foundation.NSURLBookmarkResolutionWithoutMounting, (1 << 9))
 
         self.assertIsInstance(Foundation.NSURLNameKey, str)
         self.assertIsInstance(Foundation.NSURLLocalizedNameKey, str)
@@ -148,8 +71,6 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLVolumeAvailableCapacityKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeResourceCountKey, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6_2(self):
         self.assertIsInstance(Foundation.NSURLVolumeSupportsPersistentIDsKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeSupportsSymbolicLinksKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeSupportsHardLinksKey, str)
@@ -159,17 +80,6 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLVolumeSupportsZeroRunsKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeSupportsCaseSensitiveNamesKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeSupportsCasePreservedNamesKey, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(Foundation.NSURLBookmarkCreationWithSecurityScope, (1 << 11))
-        self.assertEqual(
-            Foundation.NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12)
-        )
-        self.assertEqual(Foundation.NSURLBookmarkResolutionWithSecurityScope, (1 << 10))
-        self.assertEqual(
-            Foundation.NSURLBookmarkCreationWithoutImplicitSecurityScope, (1 << 29)
-        )
 
         self.assertIsInstance(Foundation.NSURLKeysOfUnsetValuesKey, str)
 
@@ -221,13 +131,9 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLUbiquitousItemPercentDownloadedKey, str)
         self.assertIsInstance(Foundation.NSURLUbiquitousItemPercentUploadedKey, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(Foundation.NSURLIsExcludedFromBackupKey, str)
         self.assertIsInstance(Foundation.NSURLPathKey, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSURLTagNamesKey, str)
         self.assertIsInstance(Foundation.NSURLUbiquitousItemDownloadingStatusKey, str)
         self.assertIsInstance(Foundation.NSURLUbiquitousItemDownloadingErrorKey, str)
@@ -334,8 +240,56 @@ class TestNSURL(TestCase):
         )
         self.assertIsInstance(Foundation.NSURLDirectoryEntryCountKey, str)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_enum_types(self):
+        self.assertIsEnumType(Foundation.NSURLBookmarkCreationOptions)
+        self.assertIsEnumType(Foundation.NSURLBookmarkResolutionOptions)
+
+    def test_methods(self):
+        self.assertArgIsBOOL(Foundation.NSURL.initFileURLWithPath_isDirectory_, 1)
+        self.assertArgIsBOOL(Foundation.NSURL.fileURLWithPath_isDirectory_, 1)
+        self.assertResultIsBOOL(Foundation.NSURL.isFileURL)
+
+        self.assertArgIsBOOL(Foundation.NSURL.resourceDataUsingCache_, 0)
+        self.assertArgIsBOOL(
+            Foundation.NSURL.loadResourceDataNotifyingClient_usingCache_, 1
+        )
+        self.assertResultIsBOOL(Foundation.NSURL.setResourceData_)
+        self.assertResultIsBOOL(Foundation.NSURL.setProperty_forKey_)
+        self.assertArgIsBOOL(Foundation.NSURL.URLHandleUsingCache_, 0)
+
+        self.assertResultIsBOOL(Foundation.NSURL.startAccessingSecurityScopedResource)
+
+        self.assertArgIsIn(
+            Foundation.NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
+            0,
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURL.initFileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
+            1,
+        )
+
+        self.assertArgIsIn(
+            Foundation.NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
+            0,
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURL.fileURLWithFileSystemRepresentation_isDirectory_relativeToURL_,
+            1,
+        )
+
+        self.assertResultIsBOOL(Foundation.NSURL.getFileSystemRepresentation_maxLength_)
+        self.assertArgIsOut(Foundation.NSURL.getFileSystemRepresentation_maxLength_, 0)
+        self.assertArgSizeInArg(
+            Foundation.NSURL.getFileSystemRepresentation_maxLength_, 0, 1
+        )
+
+        self.assertArgIsBOOL(
+            Foundation.NSURLComponents.initWithURL_resolvingAgainstBaseURL_, 1
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLComponents.componentsWithURL_resolvingAgainstBaseURL_, 1
+        )
+
         self.assertArgIsBOOL(
             Foundation.NSURL.URLByAppendingPathComponent_isDirectory_, 1
         )
@@ -379,6 +333,39 @@ class TestNSURL(TestCase):
         self.assertResultIsBOOL(Foundation.NSURL.writeBookmarkData_toURL_options_error_)
         self.assertArgIsOut(Foundation.NSURL.writeBookmarkData_toURL_options_error_, 3)
         self.assertArgIsOut(Foundation.NSURL.bookmarkDataWithContentsOfURL_error_, 1)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertArgIsOut(
+            Foundation.NSURL.URLByResolvingAliasFileAtURL_options_error_, 2
+        )
+
+        self.assertResultIsBOOL(
+            Foundation.NSURL.getPromisedItemResourceValue_forKey_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSURL.getPromisedItemResourceValue_forKey_error_, 2
+        )
+        self.assertArgIsOut(
+            Foundation.NSURL.promisedItemResourceValuesForKeys_error_, 1
+        )
+
+        self.assertResultIsBOOL(
+            Foundation.NSURL.checkPromisedItemIsReachableAndReturnError_
+        )
+        self.assertArgIsOut(
+            Foundation.NSURL.checkPromisedItemIsReachableAndReturnError_, 0
+        )
+
+    @min_os_level("10.11")
+    def test_methods10_11(self):
+        self.assertArgIsBOOL(
+            Foundation.NSURL.initFileURLWithPath_isDirectory_relativeToURL_, 1
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURL.fileURLWithPath_isDirectory_relativeToURL_, 1
+        )
+        self.assertResultIsBOOL(Foundation.NSURL.hasDirectoryPath)
 
     @min_os_level("14.0")
     def test_methods14_0(self):

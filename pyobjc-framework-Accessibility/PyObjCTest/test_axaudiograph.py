@@ -4,26 +4,19 @@ import Accessibility
 
 
 class TestAXAudiograph(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Accessibility.AXChartDescriptorContentDirection)
-        self.assertIsEnumType(Accessibility.AXNumericDataAxisDescriptorScale)
-
-    @min_sdk_level("12.0")
-    def test_protocols(self):
-        self.assertProtocolExists("AXChart", Accessibility)
-        self.assertProtocolExists("AXDataAxisDescriptor", Accessibility)
-
-    def test_constants(self):
-        self.assertEqual(Accessibility.AXScaleTypeLinear, 0)
-        self.assertEqual(Accessibility.AXScaleTypeLog10, 1)
-        self.assertEqual(Accessibility.AXScaleTypeLn, 2)
-
         self.assertEqual(Accessibility.AXChartContentDirectionLeftToRight, 0)
         self.assertEqual(Accessibility.AXChartContentDirectionRightToLeft, 1)
         self.assertEqual(Accessibility.AXChartContentDirectionTopToBottom, 2)
         self.assertEqual(Accessibility.AXChartContentDirectionBottomToTop, 3)
         self.assertEqual(Accessibility.AXChartContentDirectionRadialClockwise, 4)
         self.assertEqual(Accessibility.AXChartContentDirectionRadialCounterClockwise, 5)
+
+        self.assertIsEnumType(Accessibility.AXNumericDataAxisDescriptorScale)
+        self.assertEqual(Accessibility.AXScaleTypeLinear, 0)
+        self.assertEqual(Accessibility.AXScaleTypeLog10, 1)
+        self.assertEqual(Accessibility.AXScaleTypeLn, 2)
 
     @min_os_level("12.0")
     def test_classes(self):
@@ -56,3 +49,8 @@ class TestAXAudiograph(TestCase):
             Accessibility.AXDataSeriesDescriptor.initWithAttributedName_isContinuous_dataPoints_,
             1,
         )
+
+    @min_sdk_level("12.0")
+    def test_protocols(self):
+        self.assertProtocolExists("AXChart", Accessibility)
+        self.assertProtocolExists("AXDataAxisDescriptor", Accessibility)

@@ -4,14 +4,32 @@ import GameController
 
 
 class TestGCController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCControllerPlayerIndex)
+        self.assertEqual(GameController.GCControllerPlayerIndexUnset, -1)
 
-    @min_os_level("10.9")
+    def test_constants(self):
+        self.assertIsInstance(GameController.GCControllerDidConnectNotification, str)
+        self.assertIsInstance(GameController.GCControllerDidDisconnectNotification, str)
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(
+            GameController.GCControllerDidBecomeCurrentNotification, str
+        )
+        self.assertIsInstance(
+            GameController.GCControllerDidStopBeingCurrentNotification, str
+        )
+
+    @min_os_level("13.0")
+    def test_constants13_0(self):
+        self.assertIsInstance(
+            GameController.GCControllerUserCustomizationsDidChangeNotification, str
+        )
+
     def test_classes(self):
         self.assertIsInstance(GameController.GCController, objc.objc_class)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBlock(
             GameController.GCController.controllerPausedHandler, b"v@"
@@ -30,7 +48,7 @@ class TestGCController(TestCase):
         )
 
     @min_os_level("10.12")
-    def test_methods10_11(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             GameController.GCEventViewController.controllerUserInteractionEnabled
         )
@@ -53,25 +71,4 @@ class TestGCController(TestCase):
         )
         self.assertArgIsBOOL(
             GameController.GCController.setShouldMonitorBackgroundEvents_, 0
-        )
-
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertIsInstance(GameController.GCControllerDidConnectNotification, str)
-        self.assertIsInstance(GameController.GCControllerDidDisconnectNotification, str)
-        self.assertEqual(GameController.GCControllerPlayerIndexUnset, -1)
-
-    @min_os_level("11.0")
-    def test_constants11_0(self):
-        self.assertIsInstance(
-            GameController.GCControllerDidBecomeCurrentNotification, str
-        )
-        self.assertIsInstance(
-            GameController.GCControllerDidStopBeingCurrentNotification, str
-        )
-
-    @min_os_level("13.0")
-    def test_constants13_0(self):
-        self.assertIsInstance(
-            GameController.GCControllerUserCustomizationsDidChangeNotification, str
         )

@@ -3,13 +3,8 @@ import WebKit
 
 
 class TestWKError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKErrorCode)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(WebKit.WKErrorDomain, str)
-
         self.assertEqual(WebKit.WKErrorUnknown, 1)
         self.assertEqual(WebKit.WKErrorWebContentProcessTerminated, 2)
         self.assertEqual(WebKit.WKErrorWebViewInvalidated, 3)
@@ -27,3 +22,7 @@ class TestWKError(TestCase):
         self.assertEqual(WebKit.WKErrorDuplicateCredential, 15)
         self.assertEqual(WebKit.WKErrorMalformedCredential, 16)
         self.assertEqual(WebKit.WKErrorCredentialNotFound, 17)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(WebKit.WKErrorDomain, str)

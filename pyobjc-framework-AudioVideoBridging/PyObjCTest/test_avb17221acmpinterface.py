@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import AudioVideoBridging
 
 AVB17221ACMPInterfaceCompletion = b"v@@"
@@ -24,8 +24,6 @@ class TestAVB17221ACMPInterface(TestCase):
             TestAVB17221ACMPInterfaceHelper.ACMPDidReceiveResponse_onInterface_
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(
             AudioVideoBridging.AVB17221ACMPInterface.sendACMPResponseMessage_error_
         )
@@ -42,8 +40,6 @@ class TestAVB17221ACMPInterface(TestCase):
             AVB17221ACMPInterfaceCompletion,
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(
             AudioVideoBridging.AVB17221ACMPInterface.setHandler_forEntityID_
         )

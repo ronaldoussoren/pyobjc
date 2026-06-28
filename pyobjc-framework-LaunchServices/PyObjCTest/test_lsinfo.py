@@ -1,7 +1,7 @@
 import os
 import warnings
 
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 with warnings.catch_warnings():
@@ -230,11 +230,7 @@ class TestLSInfo(TestCase):
         default_role = LaunchServices.LSCopyDefaultRoleHandlerForContentType(
             "public.plain-text", LaunchServices.kLSRolesAll
         )
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_role is not None:
-                self.assertIsInstance(default_role, str)
-        else:
-            self.assertIsInstance(default_role, str)
+        self.assertIsInstance(default_role, str)
 
         v = LaunchServices.LSCopyAllRoleHandlersForContentType(
             "public.plain-text", LaunchServices.kLSRolesAll
@@ -256,11 +252,7 @@ class TestLSInfo(TestCase):
 
         self.assertResultIsCFRetained(LaunchServices.LSCopyDefaultHandlerForURLScheme)
         default_handler = LaunchServices.LSCopyDefaultHandlerForURLScheme("http")
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_handler is not None:
-                self.assertIsInstance(default_handler, str)
-        else:
-            self.assertIsInstance(default_handler, str)
+        self.assertIsInstance(default_handler, str)
 
         self.assertResultIsCFRetained(LaunchServices.LSCopyAllHandlersForURLScheme)
         v = LaunchServices.LSCopyAllHandlersForURLScheme("http")

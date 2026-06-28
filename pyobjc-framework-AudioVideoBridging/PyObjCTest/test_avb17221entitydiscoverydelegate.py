@@ -12,10 +12,8 @@ class TestAVB17221EntityDiscoveryDelegateHelper(AudioVideoBridging.NSObject):
 
 
 class TestAVB17221EntityDiscoveryDelegate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AudioVideoBridging.AVB17221EntityPropertyChanged)
-
-    def test_constants(self):
         self.assertEqual(
             AudioVideoBridging.AVB17221EntityPropertyChangedTimeToLive, 0x00000001
         )
@@ -118,7 +116,7 @@ class TestAVB17221EntityDiscoveryDelegate(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AVB17221EntityDiscoveryDelegate", AudioVideoBridging)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestAVB17221EntityDiscoveryDelegateHelper.didUpdateRemoteEntity_changedProperties_on17221EntityDiscovery_,
             1,

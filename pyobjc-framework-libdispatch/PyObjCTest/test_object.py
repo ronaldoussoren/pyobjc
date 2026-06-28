@@ -4,7 +4,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestObjectAPI(TestCase):
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertFalse(hasattr(dispatch, "dispatch_retain"))
         self.assertFalse(hasattr(dispatch, "dispatch_release"))

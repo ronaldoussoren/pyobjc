@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVAsynchronousKeyValueLoadingHelper(AVFoundation.NSObject):
@@ -12,18 +12,14 @@ class TestAVAsynchronousKeyValueLoadingHelper(AVFoundation.NSObject):
 
 
 class TestAVAsynchronousKeyValueLoading(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVKeyValueStatus)
-
-    @min_os_level("10.7")
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVKeyValueStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVKeyValueStatusLoading, 1)
         self.assertEqual(AVFoundation.AVKeyValueStatusLoaded, 2)
         self.assertEqual(AVFoundation.AVKeyValueStatusFailed, 3)
         self.assertEqual(AVFoundation.AVKeyValueStatusCancelled, 4)
 
-    @min_os_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("AVAsynchronousKeyValueLoading", AVFoundation)
 

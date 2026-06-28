@@ -7,18 +7,17 @@ VTCompressionOutputHandler = b"viQ^{opaqueCMSampleBuffer=}"
 
 
 class TestVTCompressionSession(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(VideoToolbox.VTCompressionSessionOptionFlags)
+        self.assertEqual(VideoToolbox.kVTCompressionSessionBeginFinalPass, 1 << 0)
+
+    def test_constants(self):
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_EncoderID, str)
+
     @expectedFailure
     def test_types(self):
         self.assertIsCFType(VideoToolbox.VTCompressionSessionRef)
 
-    def test_constants(self):
-        self.assertEqual(VideoToolbox.kVTCompressionSessionBeginFinalPass, 1 << 0)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_EncoderID, str)
-
-    @min_os_level("10.8")
     def test_functions(self):
         self.assertArgIsFunction(
             VideoToolbox.VTCompressionSessionCreate,
@@ -39,8 +38,6 @@ class TestVTCompressionSession(TestCase):
 
         VideoToolbox.VTCompressionSessionCompleteFrames
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         VideoToolbox.VTCompressionSessionPrepareToEncodeFrames
 
     @min_os_level("10.10")

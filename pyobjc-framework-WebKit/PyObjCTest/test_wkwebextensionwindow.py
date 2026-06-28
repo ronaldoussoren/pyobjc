@@ -26,7 +26,7 @@ class TestWKWebExtensionWindowHelper(WebKit.NSObject):
 
 
 class TestWKWebExtensionWindow(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionWindowType)
         self.assertEqual(WebKit.WKWebExtensionWindowTypeNormal, 0)
         self.assertEqual(WebKit.WKWebExtensionWindowTypePopup, 1)

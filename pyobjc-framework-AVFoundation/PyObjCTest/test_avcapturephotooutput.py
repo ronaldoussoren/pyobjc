@@ -8,7 +8,7 @@ class TestAVCapturePhotoOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCapturePhotoOutput(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCapturePhotoOutputCaptureReadiness)
         self.assertEqual(
             AVFoundation.AVCapturePhotoOutputCaptureReadinessSessionNotRunning, 0

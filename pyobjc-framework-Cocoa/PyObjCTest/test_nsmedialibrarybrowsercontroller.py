@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSMediaLibraryBrowserController(TestCase):
@@ -11,7 +11,6 @@ class TestNSMediaLibraryBrowserController(TestCase):
         self.assertEqual(AppKit.NSMediaLibraryImage, 1 << 1)
         self.assertEqual(AppKit.NSMediaLibraryMovie, 1 << 2)
 
-    @min_os_level("10.9")
     def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSMediaLibraryBrowserController.sharedMediaLibraryBrowserController().isVisible

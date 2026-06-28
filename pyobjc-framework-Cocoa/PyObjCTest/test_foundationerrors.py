@@ -44,8 +44,6 @@ class FoundationErrorsTest(TestCase):
         )
         self.assertEqual(Foundation.NSBundleOnDemandResourceInvalidTagError, 4994)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertEqual(Foundation.NSFileWriteVolumeReadOnlyError, 642)
 
         self.assertEqual(Foundation.NSPropertyListReadCorruptError, 3840)
@@ -55,12 +53,8 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSPropertyListErrorMinimum, 3840)
         self.assertEqual(Foundation.NSPropertyListErrorMaximum, 4095)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(Foundation.NSFileWriteFileExistsError, 516)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSFeatureUnsupportedError, 3328)
         self.assertEqual(Foundation.NSXPCConnectionInterrupted, 4097)
         self.assertEqual(Foundation.NSXPCConnectionInvalid, 4099)
@@ -69,8 +63,6 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSXPCConnectionErrorMinimum, 4096)
         self.assertEqual(Foundation.NSXPCConnectionErrorMaximum, 4224)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertEqual(Foundation.NSUbiquitousFileUnavailableError, 4353)
         self.assertEqual(Foundation.NSUbiquitousFileNotUploadedDueToQuotaError, 4354)
         self.assertEqual(Foundation.NSUbiquitousFileUbiquityServerNotAvailable, 4355)

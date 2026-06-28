@@ -1,12 +1,11 @@
 import JavaScriptCore
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 # import WebKit
 import objc
 
 
 class TestJSExport(TestCase):
-    @min_sdk_level("10.9")
     def test_protocols(self):
         self.assertProtocolExists("JSExport", JavaScriptCore, "JSExportProtocol")
 

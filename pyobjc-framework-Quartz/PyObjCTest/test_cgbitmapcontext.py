@@ -43,8 +43,6 @@ class TestCGBitmapContext(TestCase):
         img = Quartz.CGBitmapContextCreateImage(ctx)
         self.assertIsInstance(img, Quartz.CGImageRef)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         ctx = Quartz.CGBitmapContextCreateWithData(
             bytes_val,

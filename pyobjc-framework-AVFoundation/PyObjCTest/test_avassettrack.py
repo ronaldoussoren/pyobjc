@@ -6,14 +6,36 @@ class TestAVAssetTrack(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVTrackAssociationType, str)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, str)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeChapterList, str)
+        self.assertIsInstance(
+            AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, str
+        )
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeSelectionFollower, str)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeTimecode, str)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeMetadataReferent, str)
+
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetTrackTimeRangeDidChangeNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetTrackSegmentsDidChangeNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetTrackTrackAssociationsDidChangeNotification, str
+        )
+
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.isEnabled)
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.isSelfContained)
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.hasMediaCharacteristic_)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.isPlayable)
 
     @min_os_level("10.10")
@@ -46,30 +68,4 @@ class TestAVAssetTrack(TestCase):
             AVFoundation.AVAssetTrack.loadAssociatedTracksOfType_completionHandler_,
             1,
             b"v@@",
-        )
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, str)
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeChapterList, str)
-        self.assertIsInstance(
-            AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, str
-        )
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeSelectionFollower, str)
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeTimecode, str)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeMetadataReferent, str)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertIsInstance(
-            AVFoundation.AVAssetTrackTimeRangeDidChangeNotification, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetTrackSegmentsDidChangeNotification, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetTrackTrackAssociationsDidChangeNotification, str
         )

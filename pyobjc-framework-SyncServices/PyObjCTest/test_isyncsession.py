@@ -1,15 +1,18 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SyncServices
 
 
 class TestISyncSession(TestCase):
-    @min_os_level("10.5")
-    def test_methods10_5(self):
-        self.assertArgIsSEL(
-            SyncServices.ISyncSession.beginSessionInBackgroundWithClient_entityNames_target_selector_,  # noqa: B950
-            3,
-            b"v@:@@",
-        )
+    def test_constants(self):
+        self.assertIsInstance(SyncServices.ISyncSessionCancelledException, str)
+        self.assertIsInstance(SyncServices.ISyncSessionUnavailableException, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordException, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordIdentifiersKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordReasonsKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordsKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidEntityException, str)
+        self.assertIsInstance(SyncServices.ISyncUnsupportedEntityException, str)
+        self.assertIsInstance(SyncServices.ISyncRecordEntityNameKey, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -39,13 +42,8 @@ class TestISyncSession(TestCase):
         )
         self.assertResultIsBOOL(SyncServices.ISyncSession.isCancelled)
 
-    def test_constants(self):
-        self.assertIsInstance(SyncServices.ISyncSessionCancelledException, str)
-        self.assertIsInstance(SyncServices.ISyncSessionUnavailableException, str)
-        self.assertIsInstance(SyncServices.ISyncInvalidRecordException, str)
-        self.assertIsInstance(SyncServices.ISyncInvalidRecordIdentifiersKey, str)
-        self.assertIsInstance(SyncServices.ISyncInvalidRecordReasonsKey, str)
-        self.assertIsInstance(SyncServices.ISyncInvalidRecordsKey, str)
-        self.assertIsInstance(SyncServices.ISyncInvalidEntityException, str)
-        self.assertIsInstance(SyncServices.ISyncUnsupportedEntityException, str)
-        self.assertIsInstance(SyncServices.ISyncRecordEntityNameKey, str)
+        self.assertArgIsSEL(
+            SyncServices.ISyncSession.beginSessionInBackgroundWithClient_entityNames_target_selector_,  # noqa: B950
+            3,
+            b"v@:@@",
+        )

@@ -1,19 +1,19 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestIKCameraDeviceView(TestCase):
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.IKCameraDeviceViewDisplayMode)
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeNone, -1)
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeTable, 0)
         self.assertEqual(Quartz.IKCameraDeviceViewDisplayModeIcon, 1)
 
+        self.assertIsEnumType(Quartz.IKCameraDeviceViewTransferMode)
         self.assertEqual(Quartz.IKCameraDeviceViewTransferModeFileBased, 0)
         self.assertEqual(Quartz.IKCameraDeviceViewTransferModeMemoryBased, 1)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.IKCameraDeviceView.hasDisplayModeTable)
         self.assertArgIsBOOL(Quartz.IKCameraDeviceView.setHasDisplayModeTable_, 0)
 
@@ -43,6 +43,5 @@ class TestIKCameraDeviceView(TestCase):
             Quartz.IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1
         )
 
-    @min_sdk_level("10.10")
     def test_protocols(self):
         self.assertProtocolExists("IKCameraDeviceViewDelegate", Quartz)

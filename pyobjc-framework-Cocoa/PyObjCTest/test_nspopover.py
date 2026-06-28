@@ -18,8 +18,7 @@ class TestNSPopover(TestCase):
         self.assertIsEnumType(AppKit.NSPopoverAppearance)
         self.assertIsEnumType(AppKit.NSPopoverBehavior)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSPopoverAppearanceMinimal, 0)
         self.assertEqual(AppKit.NSPopoverAppearanceHUD, 1)
 
@@ -35,8 +34,7 @@ class TestNSPopover(TestCase):
         self.assertIsInstance(AppKit.NSPopoverWillCloseNotification, str)
         self.assertIsInstance(AppKit.NSPopoverDidCloseNotification, str)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPopover.animates)
         self.assertArgIsBOOL(AppKit.NSPopover.setAnimates_, 0)
 
@@ -59,8 +57,7 @@ class TestNSPopover(TestCase):
         self.assertResultIsBOOL(AppKit.NSPopover.hasFullSizeContent)
         self.assertArgIsBOOL(AppKit.NSPopover.setHasFullSizeContent_, 0)
 
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
 
     @min_os_level("10.10")

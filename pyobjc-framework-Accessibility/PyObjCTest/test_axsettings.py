@@ -4,7 +4,7 @@ import Accessibility
 
 
 class TestAXSettings(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Accessibility.AXSettingsFeature)
         self.assertEqual(
             Accessibility.AXSettingsFeaturePersonalVoiceAllowAppsToRequestToUse, 1
@@ -49,6 +49,13 @@ class TestAXSettings(TestCase):
             str,
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            Accessibility.AXApplicationAccessibilityEnabledDidChangeNotification,
+            str,
+        )
+
     @min_os_level("14.0")
     def test_functions(self):
         self.assertResultIsBOOL(Accessibility.AXAnimatedImagesEnabled)
@@ -67,3 +74,7 @@ class TestAXSettings(TestCase):
     def test_functions26_4(self):
         self.assertResultIsBOOL(Accessibility.AXOpenSettingsFeatureIsSupported)
         self.assertResultIsBOOL(Accessibility.AXReduceHighlightingEffectsEnabled)
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        self.assertResultIsBOOL(Accessibility.AXApplicationAccessibilityEnabled)

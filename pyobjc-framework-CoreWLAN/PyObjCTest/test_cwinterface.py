@@ -1,26 +1,9 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCWInterface(TestCase):
-    @min_os_level("10.13")
-    def test_methods10_13(self):
-        self.assertArgIsBOOL(
-            CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 1
-        )
-        self.assertArgIsOut(
-            CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 2
-        )
-
-        self.assertArgIsBOOL(
-            CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 1
-        )
-        self.assertArgIsOut(
-            CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 2
-        )
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.powerOn)
         self.assertResultIsBOOL(CoreWLAN.CWInterface.deviceAttached)
         self.assertResultIsBOOL(CoreWLAN.CWInterface.serviceActive)
@@ -67,42 +50,18 @@ class TestCWInterface(TestCase):
             CoreWLAN.CWInterface.commitConfiguration_authorization_error_, 2
         )
 
-    @os_level_between("10.6", "10.8")
-    def test_methods10_6(self):
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWoW)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWEP)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsAES_CCM)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsIBSS)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsTKIP)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsPMGT)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsHostAP)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsMonitorMode)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWPA)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWPA2)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsWME)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsShortGI40MHz)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsShortGI20MHz)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.supportsTSN)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.power)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.powerSave)
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.isEqualToInterface_)
-
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.setChannel_error_)
-        self.assertArgIsOut(CoreWLAN.CWInterface.setChannel_error_, 1)
-
-        self.assertArgIsOut(
-            CoreWLAN.CWInterface.scanForNetworksWithParameters_error_, 1
-        )
-
-        self.assertResultIsBOOL(
-            CoreWLAN.CWInterface.associateToNetwork_parameters_error_
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertArgIsBOOL(
+            CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 1
         )
         self.assertArgIsOut(
-            CoreWLAN.CWInterface.associateToNetwork_parameters_error_, 2
+            CoreWLAN.CWInterface.scanForNetworksWithName_includeHidden_error_, 2
         )
 
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.enableIBSSWithParameters_error_)
-        self.assertArgIsOut(CoreWLAN.CWInterface.enableIBSSWithParameters_error_, 1)
-
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.commitConfiguration_error_)
-        self.assertArgIsOut(CoreWLAN.CWInterface.commitConfiguration_error_, 1)
+        self.assertArgIsBOOL(
+            CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 1
+        )
+        self.assertArgIsOut(
+            CoreWLAN.CWInterface.scanForNetworksWithSSID_includeHidden_error_, 2
+        )

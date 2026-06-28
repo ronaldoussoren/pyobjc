@@ -105,8 +105,6 @@ class TestODRecord(TestCase):
         self.assertResultIsBOOL(OpenDirectory.ODRecord.changePassword_toPassword_error_)
         self.assertArgIsOut(OpenDirectory.ODRecord.changePassword_toPassword_error_, 2)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(OpenDirectory.ODRecord.policiesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODRecord.effectivePoliciesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODRecord.supportedPoliciesAndReturnError_, 0)

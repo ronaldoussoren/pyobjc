@@ -68,8 +68,6 @@ class TestSCNAnimation(TestCase):
         self.assertArgIsBOOL(SceneKit.CAAnimation.setUsesSceneTimeBase_, 0)
         self.assertResultIsBOOL(SceneKit.CAAnimation.usesSceneTimeBase)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             SceneKit.SCNAnimationEvent.animationEventWithKeyTime_block_,
             1,

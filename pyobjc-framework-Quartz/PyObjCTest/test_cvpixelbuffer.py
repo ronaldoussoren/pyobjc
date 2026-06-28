@@ -207,6 +207,53 @@ class TestCVPixelBuffer(TestCase):
             Quartz.kCVPixelFormatType_Lossy_422YpCbCr10PackedBiPlanarVideoRange,
             fourcc(b"-xv2"),
         )
+        self.assertEqual(Quartz.kCVPixelBufferLock_ReadOnly, 1)
+
+        self.assertIsInstance(Quartz.kCVPixelBufferPlaneAlignmentKey, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePropertiesKey, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, str
+        )
+
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferMetalCompatibilityKey, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferOpenGLTextureCacheCompatibilityKey, str
+        )
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
+        )
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_BlackLevel, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteLevel, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceCCT, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceRedFactor, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceBlueFactor, str
+        )
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_ColorMatrix, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_GainFactor, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
 
     def test_types(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)
@@ -342,58 +389,6 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(rv, 0)
         return image
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(Quartz.kCVPixelBufferLock_ReadOnly, 1)
-
-        self.assertIsInstance(Quartz.kCVPixelBufferPlaneAlignmentKey, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePropertiesKey, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, str
-        )
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferMetalCompatibilityKey, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferOpenGLTextureCacheCompatibilityKey, str
-        )
-
-    @min_os_level("11.0")
-    def test_constants11_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
-        )
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_BlackLevel, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteLevel, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceCCT, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceRedFactor, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceBlueFactor, str
-        )
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_ColorMatrix, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_GainFactor, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
-
-    @min_os_level("26.0")
-    def test_constants26_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
-
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         self.assertResultHasType(Quartz.CVPixelBufferGetIOSurface, b"^{__IOSurface=}")
         self.assertArgHasType(Quartz.CVPixelBufferGetIOSurface, 0, b"^{__CVBuffer=}")
         self.assertArgHasType(

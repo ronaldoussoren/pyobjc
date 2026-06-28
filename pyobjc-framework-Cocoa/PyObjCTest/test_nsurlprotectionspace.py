@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLProtectionSpace(TestCase):
@@ -13,16 +13,12 @@ class TestNSURLProtectionSpace(TestCase):
         self.assertIsInstance(Foundation.NSURLAuthenticationMethodHTTPDigest, str)
         self.assertIsInstance(Foundation.NSURLAuthenticationMethodHTMLForm, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTP, str)
         self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTPS, str)
         self.assertIsInstance(Foundation.NSURLProtectionSpaceFTP, str)
         self.assertIsInstance(Foundation.NSURLAuthenticationMethodNTLM, str)
         self.assertIsInstance(Foundation.NSURLAuthenticationMethodNegotiate, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(
             Foundation.NSURLAuthenticationMethodClientCertificate, str
         )

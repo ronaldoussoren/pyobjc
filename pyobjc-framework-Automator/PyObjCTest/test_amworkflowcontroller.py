@@ -1,9 +1,8 @@
 import Automator
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestAMWorkflowController(TestCase):
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsBOOL(Automator.AMWorkflowController.canRun)
         self.assertResultIsBOOL(Automator.AMWorkflowController.isRunning)

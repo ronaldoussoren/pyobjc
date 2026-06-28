@@ -1,9 +1,8 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVAudioSetting(TestCase):
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVFormatIDKey, str)
         self.assertIsInstance(AVFoundation.AVSampleRateKey, str)
@@ -32,8 +31,6 @@ class TestAVAudioSetting(TestCase):
         self.assertEqual(AVFoundation.AVAudioQualityMedium, 0x40)
         self.assertEqual(AVFoundation.AVAudioQualityHigh, 0x60)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVEncoderBitRateStrategyKey, str)
         self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithmKey, str)
 

@@ -1,5 +1,5 @@
 import OpenDirectory
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestODSession(TestCase):
@@ -14,8 +14,6 @@ class TestODSession(TestCase):
         self.assertArgIsOut(OpenDirectory.ODSession.initWithOptions_error_, 1)
         self.assertArgIsOut(OpenDirectory.ODSession.nodeNamesAndReturnError_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBOOL(
             OpenDirectory.ODSession.configurationAuthorizationAllowingUserInteraction_error_,
             0,

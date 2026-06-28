@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -41,8 +41,6 @@ class TestNSURLConnection(TestCase):
             2,
         )
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         self.assertResultIsBOOL(
             TestNSURLConnectionHelper.connection_canAuthenticateAgainstProtectionSpace_
         )
@@ -92,15 +90,12 @@ class TestNSURLConnection(TestCase):
             objc._C_LNG_LNG,
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBlock(
             Foundation.NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
             2,
             b"v@@",
         )
 
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("NSURLConnectionDelegate", Foundation)
 

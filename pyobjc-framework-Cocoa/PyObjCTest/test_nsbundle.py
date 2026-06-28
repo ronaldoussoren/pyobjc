@@ -1,6 +1,6 @@
 import AppKit
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBundle(TestCase):
@@ -12,13 +12,9 @@ class TestNSBundle(TestCase):
         self.assertResultIsBOOL(b.isLoaded)
         self.assertResultIsBOOL(b.unload)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSBundle.loadNibNamed_owner_topLevelObjects_)
         self.assertArgIsOut(AppKit.NSBundle.loadNibNamed_owner_topLevelObjects_, 2)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(AppKit.NSBundle.preflightAndReturnError_)
         self.assertArgIsOut(AppKit.NSBundle.preflightAndReturnError_, 0)
         self.assertResultIsBOOL(AppKit.NSBundle.loadAndReturnError_)

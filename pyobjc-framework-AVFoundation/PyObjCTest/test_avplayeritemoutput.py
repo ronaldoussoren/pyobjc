@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVPlayerOutputHelper(AVFoundation.NSObject):
@@ -20,8 +20,7 @@ class TestAVPlayerOutput(TestCase):
             AVFoundation.AVPlayerItemLegibleOutputTextStylingResolution, str
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
             str,  # noqa: B950
@@ -31,8 +30,7 @@ class TestAVPlayerOutput(TestCase):
             str,
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItemOutput.suppressesPlayerRendering
         )

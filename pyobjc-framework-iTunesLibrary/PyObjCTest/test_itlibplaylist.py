@@ -4,19 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestITLibPlaylist(TestCase):
-    def test_classes(self):
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylist, objc.objc_class)
-
-    def test_methods(self):
-        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isMaster)
-        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isVisible)
-        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isAllItemsPlaylist)
-
-    @min_os_level("12.0")
-    def test_methods12_0(self):
-        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isPrimary)
-
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(iTunesLibrary.ITLibDistinguishedPlaylistKind)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindNone, 0)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindMovies, 1)
         self.assertEqual(iTunesLibrary.ITLibDistinguishedPlaylistKindTVShows, 2)
@@ -45,12 +34,15 @@ class TestITLibPlaylist(TestCase):
         self.assertEqual(
             iTunesLibrary.ITLibDistinguishedPlaylistKindMusicShowsAndMovies, 53
         )
+
+        self.assertIsEnumType(iTunesLibrary.ITLibPlaylistKind)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindRegular, 0)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindSmart, 1)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindGenius, 2)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindFolder, 3)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindGeniusMix, 4)
 
+    def test_constants(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyName, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyAllItemsPlaylist, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyDistinguisedKind, str)
@@ -61,10 +53,20 @@ class TestITLibPlaylist(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyVisible, str)
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyKind, str)
 
     @min_os_level("12.0")
     def test_constants12_0(self):
         self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyPrimary, str)
+
+    def test_classes(self):
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylist, objc.objc_class)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isMaster)
+        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isVisible)
+        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isAllItemsPlaylist)
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(iTunesLibrary.ITLibPlaylist.isPrimary)

@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SystemConfiguration
 
 
-# from SecurityFoundation import SFAuthorization
 class TestSCPreferences(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCPreferencesNotification)
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationCommit, 1 << 0)
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationApply, 1 << 1)
 
@@ -84,11 +84,9 @@ class TestSCPreferences(TestCase):
 
         SystemConfiguration.SCPreferencesSynchronize(ref)
 
+        SystemConfiguration.SCPreferencesSetDispatchQueue
+
     def test_security_integration(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCPreferencesCreateWithAuthorization
         )
-
-    @min_os_level("10.6")
-    def test_functions10_6(self):
-        SystemConfiguration.SCPreferencesSetDispatchQueue

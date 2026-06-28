@@ -22,8 +22,6 @@ class TestNSMetaData(TestCase):
         self.assertIsInstance(Foundation.NSMetadataQueryLocalComputerScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryNetworkScope, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Foundation.NSMetadataQueryLocalDocumentsScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUbiquitousDocumentsScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUbiquitousDataScope, str)
@@ -50,8 +48,6 @@ class TestNSMetaData(TestCase):
             Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateAddedItemsKey, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateChangedItemsKey, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateRemovedItemsKey, str)
@@ -70,8 +66,6 @@ class TestNSMetaData(TestCase):
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.isGathering)
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.isStopped)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             Foundation.NSMetadataQuery.enumerateResultsUsingBlock_,
             0,

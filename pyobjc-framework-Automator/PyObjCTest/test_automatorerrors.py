@@ -3,15 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAutomatorErrors(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Automator.AMErrorCode)
-
-    def test_constants(self):
-        self.assertEqual(Automator.AMAutomatorErrorDomain, "com.apple.Automator")
-        self.assertEqual(Automator.AMActionErrorKey, "AMActionErrorKey")
-        self.assertIsInstance(Automator.AMAutomatorErrorDomain, str)
-        self.assertIsInstance(Automator.AMActionErrorKey, str)
-
         self.assertEqual(Automator.AMWorkflowNewerVersionError, -100)
         self.assertEqual(Automator.AMWorkflowPropertyListInvalidError, -101)
         self.assertEqual(Automator.AMWorkflowNewerActionVersionError, -111)
@@ -46,3 +39,9 @@ class TestAutomatorErrors(TestCase):
         self.assertEqual(Automator.AMConversionNotPossibleError, -300)
         self.assertEqual(Automator.AMConversionNoDataError, -301)
         self.assertEqual(Automator.AMConversionFailedError, -302)
+
+    def test_constants(self):
+        self.assertEqual(Automator.AMAutomatorErrorDomain, "com.apple.Automator")
+        self.assertEqual(Automator.AMActionErrorKey, "AMActionErrorKey")
+        self.assertIsInstance(Automator.AMAutomatorErrorDomain, str)
+        self.assertIsInstance(Automator.AMActionErrorKey, str)

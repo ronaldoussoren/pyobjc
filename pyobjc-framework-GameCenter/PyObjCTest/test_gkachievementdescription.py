@@ -1,14 +1,10 @@
-import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
 
 class TestGCAchievementDescription(TestCase):
-    @min_os_level("10.8")
-    def test_classes10_8(self):
-        self.assertIsInstance(GameCenter.GKAchievementDescription, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgIsBlock(
             GameCenter.GKAchievementDescription.loadAchievementDescriptionsWithCompletionHandler_,
             0,
@@ -21,8 +17,6 @@ class TestGCAchievementDescription(TestCase):
             b"v@@",
         )
 
-    @expectedFailure
-    @min_os_level("10.8")
-    def test_classes10_8_fail(self):
-        self.assertResultIsBOOL(GameCenter.GKAchievementDescription.isHidden)
-        self.assertResultIsBOOL(GameCenter.GKAchievementDescription.isReplayable)
+        obj = GameCenter.GKAchievementDescription()
+        self.assertResultIsBOOL(obj.isHidden)
+        self.assertResultIsBOOL(obj.isReplayable)

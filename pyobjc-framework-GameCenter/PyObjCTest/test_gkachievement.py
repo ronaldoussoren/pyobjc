@@ -1,19 +1,12 @@
-import objc
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
-    os_release,
-    expectedFailureIf,
 )
 
 import GameCenter
 
 
 class TestGCAchievement(TestCase):
-    @min_os_level("10.8")
-    def test_classes10_8(self):
-        self.assertIsInstance(GameCenter.GKAchievement, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgIsBlock(
             GameCenter.GKAchievement.loadAchievementsWithCompletionHandler_, 0, b"v@@"
         )
@@ -29,9 +22,6 @@ class TestGCAchievement(TestCase):
             GameCenter.GKAchievement.reportAchievementWithCompletionHandler_, 0, b"v@"
         )
 
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.8")
-    def test_classes10_8_missing_10_9(self):
         self.assertResultIsBOOL(GameCenter.GKAchievement.showsCompletionBanner)
         self.assertArgIsBOOL(GameCenter.GKAchievement.setShowsCompletionBanner_, 0)
         self.assertResultIsBOOL(GameCenter.GKAchievement.alloc().init().isHidden)

@@ -1,9 +1,41 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCGDisplayConfiguration(TestCase):
-    def test_types(self):
+    def test_constants(self):
+        self.assertEqual(Quartz.kCGConfigureForAppOnly, 0)
+        self.assertEqual(Quartz.kCGConfigureForSession, 1)
+        self.assertEqual(Quartz.kCGConfigurePermanently, 2)
+
+        self.assertEqual(Quartz.kCGDisplayBeginConfigurationFlag, (1 << 0))
+        self.assertEqual(Quartz.kCGDisplayMovedFlag, (1 << 1))
+        self.assertEqual(Quartz.kCGDisplaySetMainFlag, (1 << 2))
+        self.assertEqual(Quartz.kCGDisplaySetModeFlag, (1 << 3))
+        self.assertEqual(Quartz.kCGDisplayAddFlag, (1 << 4))
+        self.assertEqual(Quartz.kCGDisplayRemoveFlag, (1 << 5))
+        self.assertEqual(Quartz.kCGDisplayEnabledFlag, (1 << 8))
+        self.assertEqual(Quartz.kCGDisplayDisabledFlag, (1 << 9))
+        self.assertEqual(Quartz.kCGDisplayMirrorFlag, (1 << 10))
+        self.assertEqual(Quartz.kCGDisplayUnMirrorFlag, (1 << 11))
+        self.assertEqual(Quartz.kCGDisplayDesktopShapeChangedFlag, (1 << 12))
+
+    def test_functions(self):
+        self.assertResultHasType(Quartz.CGConfigureDisplayWithDisplayMode, b"i")
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
+        )
+        self.assertArgHasType(Quartz.CGConfigureDisplayWithDisplayMode, 1, b"I")
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}"
+        )
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}"
+        )
+
+
+class TestCGDisplayConfigurationUsage(TestCase):
+    def test_usage(self):
         self.assertIsOpaquePointer(Quartz.CGDisplayConfigRef)
 
         err, config = Quartz.CGBeginDisplayConfiguration(None)
@@ -132,34 +164,3 @@ class TestCGDisplayConfiguration(TestCase):
 
         v = Quartz.CGDisplayCopyColorSpace(Quartz.CGMainDisplayID())
         self.assertIsInstance(v, Quartz.CGColorSpaceRef)
-
-    def test_constants(self):
-        self.assertEqual(Quartz.kCGConfigureForAppOnly, 0)
-        self.assertEqual(Quartz.kCGConfigureForSession, 1)
-        self.assertEqual(Quartz.kCGConfigurePermanently, 2)
-
-        self.assertEqual(Quartz.kCGDisplayBeginConfigurationFlag, (1 << 0))
-        self.assertEqual(Quartz.kCGDisplayMovedFlag, (1 << 1))
-        self.assertEqual(Quartz.kCGDisplaySetMainFlag, (1 << 2))
-        self.assertEqual(Quartz.kCGDisplaySetModeFlag, (1 << 3))
-        self.assertEqual(Quartz.kCGDisplayAddFlag, (1 << 4))
-        self.assertEqual(Quartz.kCGDisplayRemoveFlag, (1 << 5))
-        self.assertEqual(Quartz.kCGDisplayEnabledFlag, (1 << 8))
-        self.assertEqual(Quartz.kCGDisplayDisabledFlag, (1 << 9))
-        self.assertEqual(Quartz.kCGDisplayMirrorFlag, (1 << 10))
-        self.assertEqual(Quartz.kCGDisplayUnMirrorFlag, (1 << 11))
-        self.assertEqual(Quartz.kCGDisplayDesktopShapeChangedFlag, (1 << 12))
-
-    @min_os_level("10.6")
-    def test_functions10_6(self):
-        self.assertResultHasType(Quartz.CGConfigureDisplayWithDisplayMode, b"i")
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
-        )
-        self.assertArgHasType(Quartz.CGConfigureDisplayWithDisplayMode, 1, b"I")
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}"
-        )
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}"
-        )

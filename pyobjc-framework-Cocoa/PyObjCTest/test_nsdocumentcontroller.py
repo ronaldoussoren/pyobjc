@@ -83,8 +83,6 @@ class TestNSDocumentController(TestCase):
         self.assertArgIsBOOL(AppKit.NSDocumentController.setShouldCreateUI_, 0)
         self.assertResultIsBOOL(AppKit.NSDocumentController.shouldCreateUI)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertArgIsBOOL(
             AppKit.NSDocumentController.openDocumentWithContentsOfURL_display_completionHandler_,  # noqa: B950
             1,
@@ -112,8 +110,6 @@ class TestNSDocumentController(TestCase):
             3,
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertArgIsBlock(
             AppKit.NSDocumentController.beginOpenPanelWithCompletionHandler_, 0, b"v@"
         )

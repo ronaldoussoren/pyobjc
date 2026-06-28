@@ -1,9 +1,8 @@
 import InstantMessage
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestIMControl(TestCase):
-    @min_os_level("10.6")
     def test_methods(self):
         self.assertArgIsSEL(InstantMessage.IMAVControl.setAction_, 0, b"v@:@")
         self.assertResultIsBOOL(InstantMessage.IMAVControl.isEnabled)

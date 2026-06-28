@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestSecCertificateOIDs(TestCase):
@@ -122,9 +122,9 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDX509V3CertificateNumberOfExtensions, str)
         self.assertIsInstance(Security.kSecOIDX509V3SignedCertificate, str)
         self.assertIsInstance(Security.kSecOIDX509V3SignedCertificateCStruct, str)
+        self.assertIsInstance(Security.kSecOIDSRVName, str)
 
     @expectedFailure
-    @min_os_level("10.7")
     def test_constants_missing(self):
         # Missing on 10.11
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER, str)
@@ -132,7 +132,3 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_ITMS_INTERMEDIATE, str)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_AAI_INTERMEDIATE, str)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_APPLEID_INTERMEDIATE, str)
-
-    @min_os_level("10.8")
-    def test_constants_10_8(self):
-        self.assertIsInstance(Security.kSecOIDSRVName, str)

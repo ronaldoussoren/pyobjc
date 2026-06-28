@@ -2,7 +2,6 @@ import ImageCaptureCore
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    min_sdk_level,
 )
 
 
@@ -58,9 +57,6 @@ class TestICCameraDevice(TestCase):
 
     def test_protocols(self):
         self.assertProtocolExists("ICCameraDeviceDelegate", ImageCaptureCore)
-
-    @min_sdk_level("10.7")
-    def test_protocols10_7(self):
         self.assertProtocolExists("ICCameraDeviceDownloadDelegate", ImageCaptureCore)
 
     def test_protocol_methods(self):

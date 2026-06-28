@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestNSHashTable(TestCase):
@@ -60,8 +60,6 @@ class TestNSHashTable(TestCase):
             Foundation.NSPointerFunctionsObjectPointerPersonality,
         )
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(
             Foundation.NSHashTableWeakMemory, Foundation.NSPointerFunctionsWeakMemory
         )

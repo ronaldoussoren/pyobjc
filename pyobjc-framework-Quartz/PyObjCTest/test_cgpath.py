@@ -4,6 +4,30 @@ import objc
 
 
 class TestCGPath(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGLineJoin)
+        self.assertEqual(Quartz.kCGLineJoinMiter, 0)
+        self.assertEqual(Quartz.kCGLineJoinRound, 1)
+        self.assertEqual(Quartz.kCGLineJoinBevel, 2)
+
+        self.assertIsEnumType(Quartz.CGLineCap)
+        self.assertEqual(Quartz.kCGLineCapButt, 0)
+        self.assertEqual(Quartz.kCGLineCapRound, 1)
+        self.assertEqual(Quartz.kCGLineCapSquare, 2)
+
+        self.assertIsEnumType(Quartz.CGPathElementType)
+        self.assertEqual(Quartz.kCGPathElementMoveToPoint, 0)
+        self.assertEqual(Quartz.kCGPathElementAddLineToPoint, 1)
+        self.assertEqual(Quartz.kCGPathElementAddQuadCurveToPoint, 2)
+        self.assertEqual(Quartz.kCGPathElementAddCurveToPoint, 3)
+        self.assertEqual(Quartz.kCGPathElementCloseSubpath, 4)
+
+    def test_structs(self):
+        v = Quartz.CGPathElement()
+        self.assertTrue(hasattr(v, "type"))
+        self.assertTrue(hasattr(v, "points"))
+        self.assertPickleRoundTrips(v)
+
     def test_types(self):
         self.assertIsCFType(Quartz.CGPathRef)
         self.assertFalse(hasattr(Quartz, "CGMutablePathRef"))
@@ -149,8 +173,6 @@ class TestCGPath(TestCase):
         Quartz.CGPathApply(path, info, applier)
         self.assertNotEqual(lst[0], 0)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         path = Quartz.CGPathCreateMutable()
         self.assertIsInstance(path, Quartz.CGPathRef)
 
@@ -161,8 +183,6 @@ class TestCGPath(TestCase):
         r = Quartz.CGPathGetPathBoundingBox(path)
         self.assertIsInstance(r, Quartz.CGRect)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         path = Quartz.CGPathCreateMutable()
         self.assertIsInstance(path, Quartz.CGPathRef)
 
@@ -204,8 +224,6 @@ class TestCGPath(TestCase):
         Quartz.CGPathMoveToPoint(path, transform, 10, 30)
         Quartz.CGPathAddRelativeArc(path, transform, 80, 90, 22.5, 33.0, 5.0)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         path = Quartz.CGPathCreateMutable()
         self.assertIsInstance(path, Quartz.CGPathRef)
 
@@ -235,24 +253,3 @@ class TestCGPath(TestCase):
         self.assertResultIsCFRetained(Quartz.CGPathCreateSeparateComponents)
         self.assertResultIsCFRetained(Quartz.CGPathCreateCopyByFlattening)
         Quartz.CGPathIntersectsPath
-
-    def test_constants(self):
-        self.assertEqual(Quartz.kCGLineJoinMiter, 0)
-        self.assertEqual(Quartz.kCGLineJoinRound, 1)
-        self.assertEqual(Quartz.kCGLineJoinBevel, 2)
-
-        self.assertEqual(Quartz.kCGLineCapButt, 0)
-        self.assertEqual(Quartz.kCGLineCapRound, 1)
-        self.assertEqual(Quartz.kCGLineCapSquare, 2)
-
-        self.assertEqual(Quartz.kCGPathElementMoveToPoint, 0)
-        self.assertEqual(Quartz.kCGPathElementAddLineToPoint, 1)
-        self.assertEqual(Quartz.kCGPathElementAddQuadCurveToPoint, 2)
-        self.assertEqual(Quartz.kCGPathElementAddCurveToPoint, 3)
-        self.assertEqual(Quartz.kCGPathElementCloseSubpath, 4)
-
-    def test_structs(self):
-        v = Quartz.CGPathElement()
-        self.assertTrue(hasattr(v, "type"))
-        self.assertTrue(hasattr(v, "points"))
-        self.assertPickleRoundTrips(v)

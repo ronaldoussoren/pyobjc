@@ -4,15 +4,15 @@ import SceneKit
 
 
 class TestSCNCamera(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNCameraProjectionDirection)
+        self.assertEqual(SceneKit.SCNCameraProjectionDirectionVertical, 0)
+        self.assertEqual(SceneKit.SCNCameraProjectionDirectionHorizontal, 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNCamera.usesOrthographicProjection)
         self.assertArgIsBOOL(SceneKit.SCNCamera.setUsesOrthographicProjection_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertResultIsBOOL(SceneKit.SCNCamera.automaticallyAdjustsZRange)
         self.assertArgIsBOOL(SceneKit.SCNCamera.setAutomaticallyAdjustsZRange_, 0)
 
@@ -33,7 +33,3 @@ class TestSCNCamera(TestCase):
     def test_methods10_15(self):
         self.assertResultIsBOOL(SceneKit.SCNCamera.grainIsColored)
         self.assertArgIsBOOL(SceneKit.SCNCamera.setGrainIsColored_, 0)
-
-    def test_constants(self):
-        self.assertEqual(SceneKit.SCNCameraProjectionDirectionVertical, 0)
-        self.assertEqual(SceneKit.SCNCameraProjectionDirectionHorizontal, 1)

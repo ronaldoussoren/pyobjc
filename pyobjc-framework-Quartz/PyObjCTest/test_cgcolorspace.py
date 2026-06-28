@@ -12,13 +12,15 @@ def buffer(value):
 
 
 class TestCGColorSpace(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGColorRenderingIntent)
         self.assertEqual(Quartz.kCGRenderingIntentDefault, 0)
         self.assertEqual(Quartz.kCGRenderingIntentAbsoluteColorimetric, 1)
         self.assertEqual(Quartz.kCGRenderingIntentRelativeColorimetric, 2)
         self.assertEqual(Quartz.kCGRenderingIntentPerceptual, 3)
         self.assertEqual(Quartz.kCGRenderingIntentSaturation, 4)
 
+        self.assertIsEnumType(Quartz.CGColorSpaceModel)
         self.assertEqual(Quartz.kCGColorSpaceModelUnknown, -1)
         self.assertEqual(Quartz.kCGColorSpaceModelMonochrome, 0)
         self.assertEqual(Quartz.kCGColorSpaceModelRGB, 1)
@@ -29,6 +31,9 @@ class TestCGColorSpace(TestCase):
         self.assertEqual(Quartz.kCGColorSpaceModelPattern, 6)
         self.assertEqual(Quartz.kCGColorSpaceModelXYZ, 7)
 
+        self.assertEqual(Quartz.CG_HDR_BT_2100, 1)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGColorSpaceGenericGray, str)
         self.assertIsInstance(Quartz.kCGColorSpaceGenericRGB, str)
         self.assertIsInstance(Quartz.kCGColorSpaceGenericCMYK, str)
@@ -37,16 +42,10 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceUserRGB, (str, str))
         self.assertIsInstance(Quartz.kCGColorSpaceUserCMYK, (str, str))
 
-        self.assertEqual(Quartz.CG_HDR_BT_2100, 1)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCGColorSpaceGenericRGBLinear, str)
         self.assertIsInstance(Quartz.kCGColorSpaceAdobeRGB1998, str)
         self.assertIsInstance(Quartz.kCGColorSpaceSRGB, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(Quartz.kCGColorSpaceGenericGrayGamma2_2, str)
 
     @min_os_level("10.11")
@@ -183,8 +182,6 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.CGColorSpaceGetTypeID(), int)
         self.assertIsInstance(Quartz.CGColorSpaceGetNumberOfComponents(csp), int)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
         csp = Quartz.CGColorSpaceCreateWithName(Quartz.kCGColorSpaceGenericRGB)
         self.assertIsInstance(Quartz.CGColorSpaceGetModel(csp), int)
 
@@ -247,8 +244,6 @@ class TestCGColorSpace(TestCase):
         v = Quartz.CGColorSpaceCreateWithICCProfile(dta)
         self.assertIsInstance(v, Quartz.CGColorSpaceRef)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         csp = Quartz.CGColorSpaceCreateWithName(Quartz.kCGColorSpaceGenericRGB)
         self.assertIsInstance(csp, Quartz.CGColorSpaceRef)
 

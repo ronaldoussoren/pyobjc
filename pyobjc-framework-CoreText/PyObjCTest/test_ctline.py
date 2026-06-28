@@ -10,10 +10,19 @@ class TestCTLine(TestCase):
     def test_types(self):
         self.assertIsInstance(CoreText.CTLineRef, objc.objc_class)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTLineTruncationType)
         self.assertEqual(CoreText.kCTLineTruncationStart, 0)
         self.assertEqual(CoreText.kCTLineTruncationEnd, 1)
         self.assertEqual(CoreText.kCTLineTruncationMiddle, 2)
+
+        self.assertIsEnumType(CoreText.CTLineBoundsOptions)
+        self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicLeading, 1 << 0)
+        self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicShifts, 1 << 1)
+        self.assertEqual(CoreText.kCTLineBoundsUseHangingPunctuation, 1 << 2)
+        self.assertEqual(CoreText.kCTLineBoundsUseGlyphPathBounds, 1 << 3)
+        self.assertEqual(CoreText.kCTLineBoundsUseOpticalBounds, 1 << 4)
+        self.assertEqual(CoreText.kCTLineBoundsIncludeLanguageExtents, 1 << 5)
 
     def test_functions(self):
         v = CoreText.CTLineGetTypeID()
@@ -92,20 +101,6 @@ class TestCTLine(TestCase):
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicLeading, 1 << 0)
-        self.assertEqual(CoreText.kCTLineBoundsExcludeTypographicShifts, 1 << 1)
-        self.assertEqual(CoreText.kCTLineBoundsUseHangingPunctuation, 1 << 2)
-        self.assertEqual(CoreText.kCTLineBoundsUseGlyphPathBounds, 1 << 3)
-        self.assertEqual(CoreText.kCTLineBoundsUseOpticalBounds, 1 << 4)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertEqual(CoreText.kCTLineBoundsIncludeLanguageExtents, 1 << 5)
-
-    @min_os_level("10.8")
-    def test_functions10_8(self):
         astr = CoreText.CFAttributedStringCreate(None, "-", None)
         self.assertTrue(astr is not None)
 

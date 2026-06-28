@@ -33,18 +33,13 @@ class TestCMSync(TestCase):
             CoreMedia.kCMTimebaseVeryLongCFTimeInterval,
         )
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(
             CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, str
         )
         self.assertIsInstance(CoreMedia.kCMTimebaseNotification_TimeJumped, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(CoreMedia.kCMTimebaseNotificationKey_EventTime, str)
 
-    @min_os_level("10.8")
     def test_functions(self):
         CoreMedia.CMClockGetTypeID
         CoreMedia.CMClockGetHostTimeClock

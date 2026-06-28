@@ -1,12 +1,11 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVAnimation(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVLayerVideoGravity, str)
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)

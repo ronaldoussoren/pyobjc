@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -177,7 +177,4 @@ class TestCharacterSet(TestCase):
         self.assertEqual(CoreFoundation.kCFCharacterSetCapitalizedLetter, 13)
         self.assertEqual(CoreFoundation.kCFCharacterSetSymbol, 14)
         self.assertEqual(CoreFoundation.kCFCharacterSetIllegal, 12)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetNewline, 15)

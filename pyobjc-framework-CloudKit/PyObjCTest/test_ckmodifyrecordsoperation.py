@@ -4,19 +4,16 @@ import objc
 
 
 class TestCKModifyRecordsOperation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKRecordSavePolicy)
+        self.assertEqual(CloudKit.CKRecordSaveIfServerRecordUnchanged, 0)
+        self.assertEqual(CloudKit.CKRecordSaveChangedKeys, 1)
+        self.assertEqual(CloudKit.CKRecordSaveAllKeys, 2)
 
     @min_os_level("10.10")
     def test_classes(self):
         self.assertHasAttr(CloudKit, "CKModifyRecordsOperation")
         self.assertIsInstance(CloudKit.CKModifyRecordsOperation, objc.objc_class)
-
-    @min_os_level("10.10")
-    def test_constants(self):
-        self.assertEqual(CloudKit.CKRecordSaveIfServerRecordUnchanged, 0)
-        self.assertEqual(CloudKit.CKRecordSaveChangedKeys, 1)
-        self.assertEqual(CloudKit.CKRecordSaveAllKeys, 2)
 
     @min_os_level("10.10")
     def test_methods10_10(self):

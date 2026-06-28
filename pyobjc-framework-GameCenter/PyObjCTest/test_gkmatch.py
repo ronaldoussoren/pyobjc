@@ -2,8 +2,6 @@ import objc
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    os_release,
-    expectedFailureIf,
 )
 
 import GameCenter
@@ -24,18 +22,17 @@ class GKMatchDelegateHelper(GameCenter.NSObject):
 
 
 class TestGKError(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(GameCenter.GKMatchSendDataMode)
         self.assertEqual(GameCenter.GKMatchSendDataReliable, 0)
         self.assertEqual(GameCenter.GKMatchSendDataUnreliable, 1)
 
+        self.assertIsEnumType(GameCenter.GKPlayerConnectionState)
         self.assertEqual(GameCenter.GKPlayerStateUnknown, 0)
         self.assertEqual(GameCenter.GKPlayerStateConnected, 1)
         self.assertEqual(GameCenter.GKPlayerStateDisconnected, 2)
 
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_)
         self.assertArgIsOut(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_, 3)
 
@@ -53,9 +50,6 @@ class TestGKError(TestCase):
             GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b"v@@"
         )
 
-    @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsBlock(
             GameCenter.GKMatch.chooseBestHostPlayerWithCompletionHandler_, 0, b"v@"
         )
@@ -71,6 +65,7 @@ class TestGKError(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("GKMatchDelegate", GameCenter)
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             GKMatchDelegateHelper.match_player_didChangeConnectionState_,
             2,

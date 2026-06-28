@@ -1,9 +1,9 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVAudioMix(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioMixInputParametersTrackID)
         self.assertEqual(AVFoundation.AVAudioMixInputParametersTrackMixID, 0)
 
@@ -11,8 +11,7 @@ class TestAVAudioMix(TestCase):
         AVFoundation.AVAudioMix
         AVFoundation.AVMutableAudioMix
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioMixInputParameters.getVolumeRampForTime_startVolume_endVolume_timeRange_  # noqa: B950
         )

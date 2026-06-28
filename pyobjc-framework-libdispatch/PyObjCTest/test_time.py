@@ -1,6 +1,6 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, cast_ulonglong
+from PyObjCTools.TestSupport import TestCase, cast_ulonglong
 
 
 class TestTime(TestCase):
@@ -28,7 +28,6 @@ class TestTime(TestCase):
         self.assertEqual(tv.tv_nsec, 0)
         self.assertPickleRoundTrips(tv)
 
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(dispatch.dispatch_time, objc._C_ULNGLNG)
         self.assertArgHasType(dispatch.dispatch_time, 0, objc._C_ULNGLNG)

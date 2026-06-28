@@ -6,8 +6,6 @@ class TestNSURLCredentialStorage(TestCase):
     def test_constants(self):
         self.assertIsInstance(Foundation.NSURLCredentialStorageChangedNotification, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             Foundation.NSURLCredentialStorageRemoveSynchronizableCredentials, str
         )

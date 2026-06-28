@@ -26,12 +26,7 @@ class TestNSLayoutContraintManual(TestCase):
             KeyError, AppKit.NSDictionaryOfVariableBindings, "var1", "var3"
         )
 
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertIsInstance(AppKit.NSViewNoIntrinsicMetric, float)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSViewNoInstrinsicMetric, float)
 
         self.assertEqual(AppKit.NSLayoutRelationLessThanOrEqual, -1)
@@ -112,8 +107,11 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(AppKit.NSLayoutPriorityDefaultLow, 250)
         self.assertEqual(AppKit.NSLayoutPriorityFittingSizeCompression, 50)
 
-    @min_os_level("10.7")
-    def test_structs10_7(self):
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(AppKit.NSViewNoIntrinsicMetric, float)
+
+    def test_structs(self):
         v = AppKit.NSEdgeInsets()
         self.assertEqual(v.top, 0.0)
         self.assertEqual(v.left, 0.0)
@@ -130,8 +128,7 @@ class TestNSLayoutContraintManual(TestCase):
             + b"}",
         )
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    def test_functions(self):
         v = AppKit.NSEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, AppKit.NSEdgeInsets)
         self.assertEqual(v.top, 1.0)
@@ -139,8 +136,7 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(v.bottom, 3.0)
         self.assertEqual(v.right, 4.0)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSLayoutConstraint.shouldBeArchived)
         self.assertArgIsBOOL(AppKit.NSLayoutConstraint.setShouldBeArchived_, 0)
 

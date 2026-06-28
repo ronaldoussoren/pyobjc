@@ -1,18 +1,14 @@
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestQLPreviewView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.QLPreviewViewStyle)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(Quartz.QLPreviewViewStyleNormal, 0)
         self.assertEqual(Quartz.QLPreviewViewStyleCompact, 1)
 
-    @min_os_level("10.6")
-    def test_methods10_6(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QLPreviewView.shouldCloseWithWindow)
         self.assertResultIsBOOL(Quartz.QLPreviewView.autostarts)
 

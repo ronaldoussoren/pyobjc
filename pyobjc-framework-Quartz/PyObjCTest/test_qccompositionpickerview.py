@@ -1,15 +1,13 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestQCCompositionPickerView(TestCase):
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(
             Quartz.QCCompositionPickerViewDidSelectCompositionNotification, str
         )
 
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCCompositionPickerView.showsCompositionNames)
         self.assertArgIsBOOL(

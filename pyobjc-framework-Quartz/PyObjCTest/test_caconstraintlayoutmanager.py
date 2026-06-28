@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCAConstraintLayoutManager(TestCase):
-    @min_os_level("10.5")
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CAConstraintAttribute)
         self.assertEqual(Quartz.kCAConstraintMinX, 0)
         self.assertEqual(Quartz.kCAConstraintMidX, 1)
         self.assertEqual(Quartz.kCAConstraintMaxX, 2)

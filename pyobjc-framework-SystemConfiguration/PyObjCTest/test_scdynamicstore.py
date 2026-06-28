@@ -1,11 +1,16 @@
 import os
 
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 import SystemConfiguration
 import objc
 
 
 class TestSCDynamicStore(TestCase):
+    def test_constants(self):
+        self.assertTrue(
+            isinstance(SystemConfiguration.kSCDynamicStoreUseSessionKeys, str)
+        )
+
     def test_types(self):
         self.assertTrue(
             isinstance(SystemConfiguration.SCDynamicStoreRef, objc.objc_class)
@@ -115,11 +120,4 @@ class TestSCDynamicStore(TestCase):
         self.assertIsInstance(lst[0][1], SystemConfiguration.CFArrayRef)
         self.assertTrue(lst[0][2] is info)
 
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCDynamicStoreSetDispatchQueue)
-
-    def test_constants(self):
-        self.assertTrue(
-            isinstance(SystemConfiguration.kSCDynamicStoreUseSessionKeys, str)
-        )

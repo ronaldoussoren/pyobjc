@@ -63,7 +63,7 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
 
 
 class TestBEAccessibility(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BrowserEngineKit.BEAccessibilityPressedState)
         self.assertEqual(BrowserEngineKit.BEAccessibilityPressedStateUndefined, 0)
         self.assertEqual(BrowserEngineKit.BEAccessibilityPressedStateFalse, 1)
@@ -96,7 +96,8 @@ class TestBEAccessibility(TestCase):
         self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationVertical, 1)
         self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationHorizontal, 2)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
+        # These are part of an informal protocol
         self.assertResultIsBOOL(
             TestBEAccessibilityHelper.browserAccessibilityIsRequired
         )

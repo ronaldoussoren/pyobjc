@@ -10,7 +10,8 @@ class TestSecTrusted(TestCase):
     def test_types(self):
         self.assertIsCFType(Security.SecTrustRef)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Security.SecTrustResultType)
         self.assertEqual(Security.kSecTrustResultInvalid, 0)
         self.assertEqual(Security.kSecTrustResultProceed, 1)
         self.assertEqual(Security.kSecTrustResultConfirm, 2)
@@ -20,6 +21,7 @@ class TestSecTrusted(TestCase):
         self.assertEqual(Security.kSecTrustResultFatalTrustFailure, 6)
         self.assertEqual(Security.kSecTrustResultOtherError, 7)
 
+        self.assertIsEnumType(Security.SecTrustOptionFlags)
         self.assertEqual(Security.kSecTrustOptionAllowExpired, 0x00000001)
         self.assertEqual(Security.kSecTrustOptionLeafIsCA, 0x00000002)
         self.assertEqual(Security.kSecTrustOptionFetchIssuerFromNet, 0x00000004)
@@ -28,13 +30,10 @@ class TestSecTrusted(TestCase):
         self.assertEqual(Security.kSecTrustOptionUseTrustSettings, 0x00000020)
         self.assertEqual(Security.kSecTrustOptionImplicitAnchors, 0x00000040)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecPropertyTypeTitle, str)
         self.assertIsInstance(Security.kSecPropertyTypeError, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Security.kSecTrustEvaluationDate, str)
         self.assertIsInstance(Security.kSecTrustExtendedValidation, str)
         self.assertIsInstance(Security.kSecTrustOrganizationName, str)
@@ -129,8 +128,6 @@ class TestSecTrusted(TestCase):
         )
         self.assertArgIsCFRetained(Security.SecTrustCopyAnchorCertificates, 0)
 
-    @min_os_level("10.7")
-    def test_functions_10_7(self):
         self.assertResultHasType(Security.SecTrustEvaluate, objc._C_INT)
         self.assertArgHasType(Security.SecTrustEvaluate, 0, objc._C_ID)
         self.assertArgHasType(
@@ -171,8 +168,6 @@ class TestSecTrusted(TestCase):
         self.assertArgHasType(Security.SecTrustSetOptions, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetOptions, 1, objc._C_UINT)
 
-    @min_os_level("10.9")
-    def test_functions_10_9(self):
         self.assertResultHasType(Security.SecTrustSetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 0, objc._C_ID)
         self.assertArgHasType(

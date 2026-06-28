@@ -9,7 +9,8 @@ class TestCTRun(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreText.CTRunRef)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTRunStatus)
         self.assertEqual(CoreText.kCTRunStatusNoStatus, 0)
         self.assertEqual(CoreText.kCTRunStatusRightToLeft, (1 << 0))
         self.assertEqual(CoreText.kCTRunStatusNonMonotonic, (1 << 1))
@@ -92,8 +93,6 @@ class TestCTRun(TestCase):
         v = CoreText.CTRunDraw(run, ctx, CoreText.CFRange(0, 5))
         self.assertTrue(v is None)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
         self.assertArgIsOut(CoreText.CTRunGetAdvances, 2)
         self.assertArgSizeInArg(CoreText.CTRunGetAdvances, 2, 1)
 

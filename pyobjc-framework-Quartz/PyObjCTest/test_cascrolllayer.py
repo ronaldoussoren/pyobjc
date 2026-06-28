@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
@@ -6,7 +6,6 @@ class TestCAScrollLayer(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAScrollLayerScrollMode, str)
 
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(Quartz.kCAScrollNone, str)
         self.assertIsInstance(Quartz.kCAScrollVertically, str)

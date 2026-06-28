@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -13,8 +13,7 @@ class TestNSUserInterfaceItemSearching(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSUserInterfaceItemSearching", AppKit)
 
-    @min_os_level("10.6")
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSUserInterfaceItemSearchingHelper.searchForItemsWithSearchString_resultLimit_matchedItemHandler_,  # noqa: B950
             1,

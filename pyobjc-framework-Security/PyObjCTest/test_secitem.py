@@ -4,8 +4,7 @@ import objc
 
 
 class TestAuthorizationDB(TestCase):
-    @min_os_level("10.7")
-    def test_constants_10_6(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecClass, str)
         self.assertIsInstance(Security.kSecClassInternetPassword, str)
         self.assertIsInstance(Security.kSecAttrCreationDate, str)
@@ -109,8 +108,6 @@ class TestAuthorizationDB(TestCase):
         self.assertIsInstance(Security.kSecUseItemList, str)
         self.assertIsInstance(Security.kSecMatchCaseInsensitive, str)
 
-    @min_os_level("10.7")
-    def test_constants_10_7(self):
         self.assertIsInstance(Security.kSecClassGenericPassword, str)
         self.assertIsInstance(Security.kSecClassCertificate, str)
         self.assertIsInstance(Security.kSecClassKey, str)
@@ -143,8 +140,6 @@ class TestAuthorizationDB(TestCase):
         self.assertIsInstance(Security.kSecMatchWidthInsensitive, str)
         self.assertIsInstance(Security.kSecUseKeychain, str)
 
-    @min_os_level("10.9")
-    def test_constants_10_9(self):
         self.assertIsInstance(Security.kSecAttrAccessible, str)
         self.assertIsInstance(Security.kSecAttrAccessGroup, str)
         self.assertIsInstance(Security.kSecAttrSynchronizable, str)
@@ -199,7 +194,6 @@ class TestAuthorizationDB(TestCase):
     def test_constants_15_0(self):
         self.assertIsInstance(Security.kSecMatchHostOrSubdomainOfHost, str)
 
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultHasType(Security.SecItemCopyMatching, objc._C_INT)
         self.assertArgHasType(Security.SecItemCopyMatching, 0, objc._C_ID)

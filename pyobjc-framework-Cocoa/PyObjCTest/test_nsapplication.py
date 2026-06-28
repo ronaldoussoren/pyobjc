@@ -61,20 +61,89 @@ class TestNSApplicationHelper(AppKit.NSObject):
 
 
 class TestNSApplication(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSApplicationDelegateReply)
+        self.assertEqual(AppKit.NSApplicationDelegateReplySuccess, 0)
+        self.assertEqual(AppKit.NSApplicationDelegateReplyCancel, 1)
+        self.assertEqual(AppKit.NSApplicationDelegateReplyFailure, 2)
+
+        self.assertIsEnumType(AppKit.NSApplicationOcclusionState)
+        self.assertEqual(AppKit.NSApplicationOcclusionStateVisible, 1 << 1)
+
+        self.assertIsEnumType(AppKit.NSApplicationPresentationOptions)
+        self.assertEqual(AppKit.NSApplicationPresentationDefault, 0)
+        self.assertEqual(AppKit.NSApplicationPresentationAutoHideDock, (1 << 0))
+        self.assertEqual(AppKit.NSApplicationPresentationHideDock, (1 << 1))
+        self.assertEqual(AppKit.NSApplicationPresentationAutoHideMenuBar, (1 << 2))
+        self.assertEqual(AppKit.NSApplicationPresentationHideMenuBar, (1 << 3))
+        self.assertEqual(AppKit.NSApplicationPresentationDisableAppleMenu, (1 << 4))
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableProcessSwitching, (1 << 5)
+        )
+        self.assertEqual(AppKit.NSApplicationPresentationDisableForceQuit, (1 << 6))
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableSessionTermination, (1 << 7)
+        )
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableHideApplication, (1 << 8)
+        )
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableMenuBarTransparency, (1 << 9)
+        )
+        self.assertEqual(AppKit.NSApplicationPresentationFullScreen, 1 << 10)
+        self.assertEqual(AppKit.NSApplicationPresentationAutoHideToolbar, 1 << 11)
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12
+        )
+        self.assertEqual(
+            AppKit.NSApplicationPresentationDisableScreenCornerInteractions, 1 << 15
+        )
+
+        self.assertIsEnumType(AppKit.NSApplicationPrintReply)
+        self.assertEqual(AppKit.NSPrintingCancelled, 0)
+        self.assertEqual(AppKit.NSPrintingSuccess, 1)
+        self.assertEqual(AppKit.NSPrintingFailure, 3)
+        self.assertEqual(AppKit.NSPrintingReplyLater, 2)
+        self.assertEqual(AppKit.NSPrintingFailure, 3)
+
+        self.assertIsEnumType(AppKit.NSApplicationTerminateReply)
+        self.assertEqual(AppKit.NSTerminateCancel, 0)
+        self.assertEqual(AppKit.NSTerminateNow, 1)
+        self.assertEqual(AppKit.NSTerminateLater, 2)
+
+        self.assertIsEnumType(AppKit.NSRemoteNotificationType)
+        self.assertEqual(AppKit.NSRemoteNotificationTypeNone, 0)
+        self.assertEqual(AppKit.NSRemoteNotificationTypeBadge, 1)
+        self.assertEqual(AppKit.NSRemoteNotificationTypeSound, 2)
+        self.assertEqual(AppKit.NSRemoteNotificationTypeAlert, 4)
+
+        self.assertIsEnumType(AppKit.NSRequestUserAttentionType)
+        self.assertEqual(AppKit.NSCriticalRequest, 0)
+        self.assertEqual(AppKit.NSInformationalRequest, 10)
+
+        self.assertIsEnumType(AppKit.NSWindowListOptions)
+        self.assertEqual(AppKit.NSWindowListOrderedFrontToBack, 1 << 0)
+
+        self.assertIsEnumType(AppKit.NSModalResponse)
+        self.assertEqual(AppKit.NSModalResponseStop, -1000)
+        self.assertEqual(AppKit.NSModalResponseAbort, -1001)
+        self.assertEqual(AppKit.NSModalResponseContinue, -1002)
+
+        # Legacy alias:
+        self.assertEqual(AppKit.NSRunStoppedResponse, -1000)
+        self.assertEqual(AppKit.NSRunAbortedResponse, -1001)
+        self.assertEqual(AppKit.NSRunContinuesResponse, -1002)
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSUpdateWindowsRunLoopOrdering, 500_000)
+
+        self.assertIsEnumType(AppKit.NSUserInterfaceLayoutDirection)
+        self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionLeftToRight, 0)
+        self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionRightToLeft, 1)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSAboutPanelOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSAppKitVersion, float)
-        self.assertIsTypedEnum(AppKit.NSModalResponse, int)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSApplicationDelegateReply)
-        self.assertIsEnumType(AppKit.NSApplicationOcclusionState)
-        self.assertIsEnumType(AppKit.NSApplicationPresentationOptions)
-        self.assertIsEnumType(AppKit.NSApplicationPrintReply)
-        self.assertIsEnumType(AppKit.NSApplicationTerminateReply)
-        self.assertIsEnumType(AppKit.NSRemoteNotificationType)
-        self.assertIsEnumType(AppKit.NSRequestUserAttentionType)
-        self.assertIsEnumType(AppKit.NSWindowListOptions)
 
     def test_constants(self):
         self.assertIsInstance(AppKit.NSAppKitVersionNumber, float)
@@ -155,32 +224,19 @@ class TestNSApplication(TestCase):
         self.assertEqual(AppKit.NSAppKitVersionNumber13_6, 2299.7)
         self.assertEqual(AppKit.NSAppKitVersionNumber14_0, 2487.0)
         self.assertEqual(AppKit.NSAppKitVersionNumber14_1, 2487.2)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_1, 824.1)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_3, 824.23)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_4, 824.33)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_7, 824.41)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_5, 949)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_2, 949.27)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_3, 949.33)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_3, 949.33)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_7, 1138)
+        self.assertEqual(AppKit.NSAppKitVersionNumber10_7_2, 1138.23)
 
         self.assertIsInstance(AppKit.NSModalPanelRunLoopMode, str)
         self.assertIsInstance(AppKit.NSEventTrackingRunLoopMode, str)
-
-        self.assertEqual(AppKit.NSRunStoppedResponse, -1000)
-        self.assertEqual(AppKit.NSRunAbortedResponse, -1001)
-        self.assertEqual(AppKit.NSRunContinuesResponse, -1002)
-
-        self.assertEqual(AppKit.NSUpdateWindowsRunLoopOrdering, 500_000)
-
-        self.assertEqual(AppKit.NSCriticalRequest, 0)
-        self.assertEqual(AppKit.NSInformationalRequest, 10)
-
-        self.assertEqual(AppKit.NSApplicationDelegateReplySuccess, 0)
-        self.assertEqual(AppKit.NSApplicationDelegateReplyCancel, 1)
-        self.assertEqual(AppKit.NSApplicationDelegateReplyFailure, 2)
-
-        self.assertEqual(AppKit.NSTerminateCancel, 0)
-        self.assertEqual(AppKit.NSTerminateNow, 1)
-        self.assertEqual(AppKit.NSTerminateLater, 2)
-
-        self.assertEqual(AppKit.NSPrintingCancelled, 0)
-        self.assertEqual(AppKit.NSPrintingSuccess, 1)
-        self.assertEqual(AppKit.NSPrintingFailure, 3)
-        self.assertEqual(AppKit.NSPrintingReplyLater, 2)
-        self.assertEqual(AppKit.NSPrintingFailure, 3)
 
         self.assertIsInstance(AppKit.NSApplicationDidBecomeActiveNotification, str)
         self.assertIsInstance(AppKit.NSApplicationDidHideNotification, str)
@@ -199,11 +255,48 @@ class TestNSApplication(TestCase):
             AppKit.NSApplicationDidChangeScreenParametersNotification, str
         )
 
-        self.assertEqual(AppKit.NSWindowListOrderedFrontToBack, 1 << 0)
+        self.assertIsInstance(AppKit.NSApplicationLaunchRemoteNotificationKey, str)
+        self.assertIsInstance(AppKit.NSApplicationLaunchIsDefaultLaunchKey, str)
 
-        self.assertEqual(AppKit.NSModalResponseStop, -1000)
-        self.assertEqual(AppKit.NSModalResponseAbort, -1001)
-        self.assertEqual(AppKit.NSModalResponseContinue, -1002)
+        self.assertIsInstance(AppKit.NSApplicationLaunchUserNotificationKey, str)
+        self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
+        self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
+
+        self.assertIsInstance(
+            AppKit.NSApplicationDidChangeOcclusionStateNotification, str
+        )
+
+    @min_os_level("10.13")
+    def test_constants10_13(self):
+        self.assertIsInstance(AppKit.NSAboutPanelOptionCredits, str)
+        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationName, str)
+        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationIcon, str)
+        self.assertIsInstance(AppKit.NSAboutPanelOptionVersion, str)
+        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationVersion, str)
+
+    @min_os_level("10.14")
+    def test_constants10_14(self):
+        self.assertIsInstance(AppKit.NSAppearanceDocumentAttribute, str)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            AppKit.NSApplicationProtectedDataWillBecomeUnavailableNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSApplicationProtectedDataDidBecomeAvailableNotification, str
+        )
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AppKit.NSApplicationShouldBeginSuppressingHighDynamicRangeContentNotification,
+            str,
+        )
+        self.assertIsInstance(
+            AppKit.NSApplicationShouldEndSuppressingHighDynamicRangeContentNotification,
+            str,
+        )
 
     def test_functions(self):
         # Testing the next function is not doable in this context...
@@ -287,6 +380,8 @@ class TestNSApplication(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSApplication.nextEventMatchingMask_untilDate_inMode_dequeue_, 3
         )
+        self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
+        self.assertResultIsBOOL(AppKit.NSApplication.isFullKeyboardAccessEnabled)
 
     def test_delegate_methods(self):
         self.assertResultIsBOOL(
@@ -334,116 +429,6 @@ class TestNSApplication(TestCase):
         self.assertResultIsBOOL(
             TestNSApplicationHelper.applicationSupportsSecureRestorableState_
         )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_1, 824.1)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_3, 824.23)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_4, 824.33)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_4_7, 824.41)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_5, 949)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_2, 949.27)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_3, 949.33)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_5_3, 949.33)
-
-        self.assertEqual(AppKit.NSApplicationPresentationDefault, 0)
-        self.assertEqual(AppKit.NSApplicationPresentationAutoHideDock, (1 << 0))
-        self.assertEqual(AppKit.NSApplicationPresentationHideDock, (1 << 1))
-        self.assertEqual(AppKit.NSApplicationPresentationAutoHideMenuBar, (1 << 2))
-        self.assertEqual(AppKit.NSApplicationPresentationHideMenuBar, (1 << 3))
-        self.assertEqual(AppKit.NSApplicationPresentationDisableAppleMenu, (1 << 4))
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableProcessSwitching, (1 << 5)
-        )
-        self.assertEqual(AppKit.NSApplicationPresentationDisableForceQuit, (1 << 6))
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableSessionTermination, (1 << 7)
-        )
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableHideApplication, (1 << 8)
-        )
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableMenuBarTransparency, (1 << 9)
-        )
-
-        self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionLeftToRight, 0)
-        self.assertEqual(AppKit.NSUserInterfaceLayoutDirectionRightToLeft, 1)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(AppKit.NSApplicationPresentationFullScreen, 1 << 10)
-        self.assertEqual(AppKit.NSApplicationPresentationAutoHideToolbar, 1 << 11)
-        self.assertEqual(AppKit.NSRemoteNotificationTypeNone, 0)
-        self.assertEqual(AppKit.NSRemoteNotificationTypeBadge, 1)
-
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_7, 1138)
-        self.assertEqual(AppKit.NSAppKitVersionNumber10_7_2, 1138.23)
-
-        self.assertIsInstance(AppKit.NSApplicationLaunchRemoteNotificationKey, str)
-        self.assertIsInstance(AppKit.NSApplicationLaunchIsDefaultLaunchKey, str)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(AppKit.NSApplicationLaunchUserNotificationKey, str)
-        self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
-        self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
-
-        self.assertEqual(AppKit.NSRemoteNotificationTypeSound, 2)
-        self.assertEqual(AppKit.NSRemoteNotificationTypeAlert, 4)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertEqual(AppKit.NSApplicationOcclusionStateVisible, 1 << 1)
-
-        self.assertIsInstance(
-            AppKit.NSApplicationDidChangeOcclusionStateNotification, str
-        )
-
-    @min_os_level("10.11.2")
-    def test_constants10_11_2(self):
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableCursorLocationAssistance, 1 << 12
-        )
-        self.assertEqual(
-            AppKit.NSApplicationPresentationDisableScreenCornerInteractions, 1 << 15
-        )
-
-    @min_os_level("10.13")
-    def test_constants10_13(self):
-        self.assertIsInstance(AppKit.NSAboutPanelOptionCredits, str)
-        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationName, str)
-        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationIcon, str)
-        self.assertIsInstance(AppKit.NSAboutPanelOptionVersion, str)
-        self.assertIsInstance(AppKit.NSAboutPanelOptionApplicationVersion, str)
-
-    @min_os_level("10.14")
-    def test_constants10_14(self):
-        self.assertIsInstance(AppKit.NSAppearanceDocumentAttribute, str)
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(
-            AppKit.NSApplicationProtectedDataWillBecomeUnavailableNotification, str
-        )
-        self.assertIsInstance(
-            AppKit.NSApplicationProtectedDataDidBecomeAvailableNotification, str
-        )
-
-    @min_os_level("26.0")
-    def test_constants26_0(self):
-        self.assertIsInstance(
-            AppKit.NSApplicationShouldBeginSuppressingHighDynamicRangeContentNotification,
-            str,
-        )
-        self.assertIsInstance(
-            AppKit.NSApplicationShouldEndSuppressingHighDynamicRangeContentNotification,
-            str,
-        )
-
-    @min_os_level("10.6")
-    def test_methods10_6(self):
-        self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
-        self.assertResultIsBOOL(AppKit.NSApplication.isFullKeyboardAccessEnabled)
 
     @min_os_level("10.12")
     def test_methods10_12(self):

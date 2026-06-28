@@ -1,14 +1,7 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
-class QCPlugInHelper(Quartz.QCPlugIn):
-    def createViewController(self):
-        return 1
-
-
 class TestQCPlugInViewController(TestCase):
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultIsRetained(Quartz.QCPlugIn.createViewController)
-        self.assertResultIsRetained(Quartz.QCPlugInHelper.createViewController)

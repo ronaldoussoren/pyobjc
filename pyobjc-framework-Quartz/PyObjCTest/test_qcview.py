@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
@@ -16,8 +16,6 @@ class TestQCView(TestCase):
         self.assertResultIsBOOL(Quartz.QCView.startRendering)
         self.assertResultIsBOOL(Quartz.QCView.isRendering)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(Quartz.QCView.loadComposition_)
         self.assertResultIsBOOL(Quartz.QCView.renderAtTime_arguments_)
         self.assertResultIsBOOL(Quartz.QCView.isPausedRendering)

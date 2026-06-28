@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSNib(TestCase):
@@ -13,7 +13,5 @@ class TestNSNib(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSNib.instantiateNibWithExternalNameTable_)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(AppKit.NSNib.instantiateWithOwner_topLevelObjects_)
         self.assertArgIsOut(AppKit.NSNib.instantiateWithOwner_topLevelObjects_, 1)

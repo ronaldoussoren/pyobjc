@@ -1,7 +1,7 @@
 import time
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 NSData = objc.lookUpClass("NSData")
@@ -50,11 +50,7 @@ class TestTimeZone(TestCase):
             self.assertIsInstance(key, str)
             self.assertIsInstance(value, str)
 
-    @min_os_level("10.6")
     def test_abbreviation_dict_setting(self):
-        # Setting the dictionary is technically also possible
-        # on 10.5, but the code below causes a crash, even when
-        # rewritten als plan Objective-C.
         abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
         newmap = abbrevs.mutableCopy()
         newmap["AAA"] = "Europe/Amsterdam"

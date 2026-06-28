@@ -7,8 +7,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsTypedEnum(AVFoundation.AVMetadataFormat, str)
         self.assertIsTypedEnum(AVFoundation.AVMetadataKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceCommon, str)
         self.assertIsInstance(AVFoundation.AVMetadataCommonKeyTitle, str)
         self.assertIsInstance(AVFoundation.AVMetadataCommonKeyCreator, str)
@@ -415,14 +414,10 @@ class TestAVMetadataFormat(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyUserURL, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeUserDataKeyTaggedCharacteristic, str
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(AVFoundation.AVMetadataFormatISOUserData, str)
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceISOUserData, str)
         self.assertIsInstance(AVFoundation.AVMetadata3GPUserDataKeyCollection, str)

@@ -3,17 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestCFHTTPMessage(TestCase):
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNTLM, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate, str)
+
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate2, str)
         self.assertIsInstance(
             CFNetwork.kCFHTTPAuthenticationSchemeXMobileMeAuthToken, str
         )
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNTLM, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_0, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_1, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeBasic, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeDigest, str)
 
     @expectedFailure
     @min_os_level("10.10")
@@ -24,12 +26,6 @@ class TestCFHTTPMessage(TestCase):
     @min_os_level("11.0")
     def test_constants11_0(self):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion3_0, str)
-
-    def test_constants(self):
-        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_0, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_1, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeBasic, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeDigest, str)
 
     def test_types(self):
         self.assertIsCFType(CFNetwork.CFHTTPMessageRef)

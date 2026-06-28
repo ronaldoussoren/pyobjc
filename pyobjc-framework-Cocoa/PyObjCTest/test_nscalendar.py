@@ -4,14 +4,22 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCalendar(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Foundation.NSCalendarIdentifier, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSCalendarOptions)
-        self.assertIsEnumType(Foundation.NSCalendarUnit)
+        self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))
+        self.assertEqual(Foundation.NSCalendarMatchStrictly, (1 << 1))
+        self.assertEqual(Foundation.NSCalendarSearchBackwards, (1 << 2))
+        self.assertEqual(
+            Foundation.NSCalendarMatchPreviousTimePreservingSmallerUnits, (1 << 8)
+        )
+        self.assertEqual(
+            Foundation.NSCalendarMatchNextTimePreservingSmallerUnits, (1 << 9)
+        )
+        self.assertEqual(Foundation.NSCalendarMatchNextTime, (1 << 10))
+        self.assertEqual(Foundation.NSCalendarMatchFirst, (1 << 12))
+        self.assertEqual(Foundation.NSCalendarMatchLast, (1 << 13))
 
-    def test_constants(self):
+        # Legacy names:
         self.assertEqual(
             Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra
         )
@@ -44,14 +52,7 @@ class TestNSCalendar(TestCase):
             CoreFoundation.kCFCalendarUnitWeekdayOrdinal,
         )
 
-        self.assertEqual(
-            Foundation.NSWrapCalendarComponents,
-            CoreFoundation.kCFCalendarComponentsWrap,
-        )
-
-        self.assertEqual(Foundation.NSUndefinedDateComponent, Foundation.NSIntegerMax)
-        self.assertEqual(Foundation.NSDateComponentUndefined, Foundation.NSIntegerMax)
-
+        self.assertIsEnumType(Foundation.NSCalendarUnit)
         self.assertEqual(
             Foundation.NSCalendarUnitEra, CoreFoundation.kCFCalendarUnitEra
         )
@@ -103,21 +104,21 @@ class TestNSCalendar(TestCase):
         self.assertEqual(Foundation.NSCalendarUnitTimeZone, (1 << 21))
         self.assertEqual(Foundation.NSCalendarUnitIsLeapMonth, (1 << 30))
         self.assertEqual(Foundation.NSCalendarUnitIsRepeatedDay, (1 << 31))
-        self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))
-        self.assertEqual(Foundation.NSCalendarMatchStrictly, (1 << 1))
-        self.assertEqual(Foundation.NSCalendarSearchBackwards, (1 << 2))
-        self.assertEqual(
-            Foundation.NSCalendarMatchPreviousTimePreservingSmallerUnits, (1 << 8)
-        )
-        self.assertEqual(
-            Foundation.NSCalendarMatchNextTimePreservingSmallerUnits, (1 << 9)
-        )
-        self.assertEqual(Foundation.NSCalendarMatchNextTime, (1 << 10))
-        self.assertEqual(Foundation.NSCalendarMatchFirst, (1 << 12))
-        self.assertEqual(Foundation.NSCalendarMatchLast, (1 << 13))
+        self.assertEqual(Foundation.NSCalendarCalendarUnit, (1 << 20))
+        self.assertEqual(Foundation.NSTimeZoneCalendarUnit, (1 << 21))
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSCalendarIdentifier, str)
+
+    def test_constants(self):
+        self.assertEqual(
+            Foundation.NSWrapCalendarComponents,
+            CoreFoundation.kCFCalendarComponentsWrap,
+        )
+
+        self.assertEqual(Foundation.NSUndefinedDateComponent, Foundation.NSIntegerMax)
+        self.assertEqual(Foundation.NSDateComponentUndefined, Foundation.NSIntegerMax)
+
         self.assertEqual(
             Foundation.NSQuarterCalendarUnit, CoreFoundation.kCFCalendarUnitQuarter
         )
@@ -137,8 +138,6 @@ class TestNSCalendar(TestCase):
         self.assertIsInstance(Foundation.NSCalendarIdentifierPersian, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierRepublicOfChina, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(
             Foundation.NSWeekOfMonthCalendarUnit,
             CoreFoundation.kCFCalendarUnitWeekOfMonth,
@@ -151,11 +150,7 @@ class TestNSCalendar(TestCase):
             Foundation.NSYearForWeekOfYearCalendarUnit,
             CoreFoundation.kCFCalendarUnitYearForWeekOfYear,
         )
-        self.assertEqual(Foundation.NSCalendarCalendarUnit, (1 << 20))
-        self.assertEqual(Foundation.NSTimeZoneCalendarUnit, (1 << 21))
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Foundation.NSCalendarDayChangedNotification, str)
 
     @min_os_level("10.10")
@@ -177,8 +172,7 @@ class TestNSCalendar(TestCase):
         self.assertIsInstance(Foundation.NSCalendarIdentifierDangi, str)
         self.assertIsInstance(Foundation.NSCalendarIdentifierVietnamese, str)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
+    def test_methods(self):
         Foundation.NSCalendar.currentCalendar()
 
         self.assertResultIsBOOL(
@@ -191,13 +185,9 @@ class TestNSCalendar(TestCase):
             Foundation.NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(Foundation.NSDateComponents.isLeapMonth)
         self.assertArgIsBOOL(Foundation.NSDateComponents.setLeapMonth_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 0)
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 1)
         self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 2)

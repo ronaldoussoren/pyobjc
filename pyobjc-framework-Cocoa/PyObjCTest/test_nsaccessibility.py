@@ -36,96 +36,23 @@ class TestNSAccessibilityHelper(AppKit.NSObject):
 
 
 class TestNSAccessibility(TestCase):
-    def test_informal_protocols(self):
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilityIsAttributeSettable_
-        )
-        self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityHitTest_,
-            0,
-            AppKit.NSPoint.__typestr__,
-        )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_
-        )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
-            objc._C_NSUInteger,
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
-            1,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
-            2,
-            objc._C_NSUInteger,
-        )
-
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldIncreaseContrast
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldReduceTransparency
-        )
-
-    @min_os_level("10.12")
-    def test_methods10_12(self):
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldReduceMotion
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSWorkspace.accessibilityDisplayShouldInvertColors
-        )
-
-    @min_os_level("10.10")
-    def test_functions10_10(self):
-        AppKit.NSAccessibilityFrameInView  # Existence
-        AppKit.NSAccessibilityPointInView  # Existence
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAccessibilityAnnotationPosition)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionFullRange, 0)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionStart, 1)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionEnd, 2)
+
         self.assertIsEnumType(AppKit.NSAccessibilityOrientation)
-        self.assertIsEnumType(AppKit.NSAccessibilityPriorityLevel)
-        self.assertIsEnumType(AppKit.NSAccessibilityRulerMarkerType)
-        self.assertIsEnumType(AppKit.NSAccessibilitySortDirection)
-        self.assertIsEnumType(AppKit.NSAccessibilityUnits)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(
-            AppKit.NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification, str
-        )
-        self.assertIsInstance(AppKit.NSAccessibilityActivationPointAttribute, str)
-
-        self.assertIsInstance(AppKit.NSAccessibilitySharedFocusElementsAttribute, str)
-        self.assertIsInstance(AppKit.NSAccessibilityAlternateUIVisibleAttribute, str)
-
         self.assertEqual(AppKit.NSAccessibilityOrientationUnknown, 0)
         self.assertEqual(AppKit.NSAccessibilityOrientationVertical, 1)
         self.assertEqual(AppKit.NSAccessibilityOrientationHorizontal, 2)
 
+        self.assertIsEnumType(AppKit.NSAccessibilitySortDirection)
         self.assertEqual(AppKit.NSAccessibilitySortDirectionUnknown, 0)
         self.assertEqual(AppKit.NSAccessibilitySortDirectionAscending, 1)
         self.assertEqual(AppKit.NSAccessibilitySortDirectionDescending, 2)
 
+        self.assertIsEnumType(AppKit.NSAccessibilityRulerMarkerType)
         self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeUnknown, 0)
         self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopLeft, 1)
         self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopRight, 2)
@@ -135,6 +62,7 @@ class TestNSAccessibility(TestCase):
         self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeIndentTail, 6)
         self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeIndentFirstLine, 7)
 
+        self.assertIsEnumType(AppKit.NSAccessibilityUnits)
         self.assertEqual(AppKit.NSAccessibilityUnitsUnknown, 0)
         self.assertEqual(AppKit.NSAccessibilityUnitsInches, 1)
         self.assertEqual(AppKit.NSAccessibilityUnitsCentimeters, 2)
@@ -151,58 +79,28 @@ class TestNSAccessibility(TestCase):
             AppKit.NSAccessibilityYearMonthDayDateTimeComponentsFlag, 0x00E0
         )
 
-    @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
-        "Crash on 10.13, 10.14??",
-    )
-    @skipUnless(
-        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
-        "Crash on macOS 15 beta",
-    )
-    def test_functions(self):
-        v = AppKit.NSAccessibilityRoleDescription(
-            AppKit.NSAccessibilityButtonRole, None
-        )
-        self.assertIsInstance(v, str)
+        self.assertIsEnumType(AppKit.NSAccessibilityPriorityLevel)
+        self.assertEqual(AppKit.NSAccessibilityPriorityLow, 10)
+        self.assertEqual(AppKit.NSAccessibilityPriorityMedium, 50)
+        self.assertEqual(AppKit.NSAccessibilityPriorityHigh, 90)
 
-        b = AppKit.NSButton.alloc().init()
-        v = AppKit.NSAccessibilityRoleDescriptionForUIElement(b)
-        self.assertIsInstance(v, str)
-
-        v = AppKit.NSAccessibilityActionDescription(
-            AppKit.NSAccessibilityIncrementAction
-        )
-        self.assertIsInstance(v, str)
-
-        self.assertRaises(
-            objc.error,
-            AppKit.NSAccessibilityRaiseBadArgumentException,
-            b,
-            "attribute",
-            "value",
-        )
-
-        v = AppKit.NSAccessibilityUnignoredAncestor(b)
-        self.assertIs(v, None)
-        v = AppKit.NSAccessibilityUnignoredDescendant(b)
-        self.assertIsInstance(b, AppKit.NSView)
-
-        v = AppKit.NSAccessibilityUnignoredChildren([b])
-        self.assertIsInstance(v, AppKit.NSArray)
-
-        v = AppKit.NSAccessibilityUnignoredChildrenForOnlyChild(b)
-        self.assertIsInstance(v, AppKit.NSArray)
-
-        v = AppKit.NSAccessibilityPostNotification(b, "hello")
-        self.assertIs(v, None)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSAccessibilityActionName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAnnotationAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityFontAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationUserInfoKey, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityOrientationValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityParameterizedAttributeName, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRole, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerMarkerTypeValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerUnitValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySortDirectionValue, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySubrole, str)
+        self.assertIsTypedEnum(AppKit.NSAccessibilitySearchKey, str)
 
     def test_constants(self):
-        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionFullRange, 0)
-        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionStart, 1)
-        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionEnd, 2)
-
         self.assertIsInstance(AppKit.NSAccessibilityErrorCodeExceptionInfo, str)
         self.assertIsInstance(AppKit.NSAccessibilityRoleAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityRoleDescriptionAttribute, str)
@@ -501,8 +399,6 @@ class TestNSAccessibility(TestCase):
 
         self.assertIsInstance(AppKit.NSAccessibilityDateTimeAreaRole, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(AppKit.NSAccessibilityUnknownOrientationValue, str)
         self.assertIsInstance(AppKit.NSAccessibilityWarningValueAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityCriticalValueAttribute, str)
@@ -569,8 +465,6 @@ class TestNSAccessibility(TestCase):
             AppKit.NSAccessibilityDraggingDestinationDragAcceptedNotification, str
         )
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(AppKit.NSAccessibilityAutocorrectedTextAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityFullScreenButtonAttribute, str)
         self.assertIsInstance(AppKit.NSAccessibilityPopoverRole, str)
@@ -581,12 +475,8 @@ class TestNSAccessibility(TestCase):
         )
         self.assertIsInstance(AppKit.NSAccessibilityAnnouncementKey, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(AppKit.NSAccessibilityExtrasMenuBarAttribute, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             AppKit.NSAccessibilityContainsProtectedContentAttribute, str
         )
@@ -601,9 +491,15 @@ class TestNSAccessibility(TestCase):
 
         self.assertIsInstance(AppKit.NSAccessibilityPathAttribute, str)
 
-        self.assertEqual(AppKit.NSAccessibilityPriorityLow, 10)
-        self.assertEqual(AppKit.NSAccessibilityPriorityMedium, 50)
-        self.assertEqual(AppKit.NSAccessibilityPriorityHigh, 90)
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(
+            AppKit.NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityActivationPointAttribute, str)
+
+        self.assertIsInstance(AppKit.NSAccessibilitySharedFocusElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAlternateUIVisibleAttribute, str)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -751,29 +647,120 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(AppKit.NSAccessibilityUnvisitedLinkSearchKey, str)
         self.assertIsInstance(AppKit.NSAccessibilityVisitedLinkSearchKey, str)
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldIncreaseContrast
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldReduceTransparency
+        )
+
+    @min_os_level("10.12")
+    def test_methods10_12(self):
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldReduceMotion
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldInvertColors
+        )
+
+    @min_os_level("10.10")
+    def test_functions10_10(self):
+        AppKit.NSAccessibilityFrameInView  # Existence
+        AppKit.NSAccessibilityPointInView  # Existence
+
+    def test_informal_protocols(self):
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilityIsAttributeSettable_
+        )
+        self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityHitTest_,
+            0,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_
+        )
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+    @skipUnless(
+        not (
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.13, 10.14??",
+    )
+    @skipUnless(
+        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
+        "Crash on macOS 15 beta",
+    )
+    def test_functions(self):
+        v = AppKit.NSAccessibilityRoleDescription(
+            AppKit.NSAccessibilityButtonRole, None
+        )
+        self.assertIsInstance(v, str)
+
+        b = AppKit.NSButton.alloc().init()
+        v = AppKit.NSAccessibilityRoleDescriptionForUIElement(b)
+        self.assertIsInstance(v, str)
+
+        v = AppKit.NSAccessibilityActionDescription(
+            AppKit.NSAccessibilityIncrementAction
+        )
+        self.assertIsInstance(v, str)
+
+        self.assertRaises(
+            objc.error,
+            AppKit.NSAccessibilityRaiseBadArgumentException,
+            b,
+            "attribute",
+            "value",
+        )
+
+        v = AppKit.NSAccessibilityUnignoredAncestor(b)
+        self.assertIs(v, None)
+        v = AppKit.NSAccessibilityUnignoredDescendant(b)
+        self.assertIsInstance(b, AppKit.NSView)
+
+        v = AppKit.NSAccessibilityUnignoredChildren([b])
+        self.assertIsInstance(v, AppKit.NSArray)
+
+        v = AppKit.NSAccessibilityUnignoredChildrenForOnlyChild(b)
+        self.assertIsInstance(v, AppKit.NSArray)
+
+        v = AppKit.NSAccessibilityPostNotification(b, "hello")
+        self.assertIs(v, None)
+
         self.assertIsInstance(
             AppKit.NSAccessibilityPostNotificationWithUserInfo, objc.function
         )
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
         self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
         self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)
-
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSAccessibilityActionName, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityAnnotationAttributeKey, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityAttributeName, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityFontAttributeKey, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationName, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityNotificationUserInfoKey, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityOrientationValue, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityParameterizedAttributeName, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityRole, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerMarkerTypeValue, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilityRulerUnitValue, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilitySortDirectionValue, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilitySubrole, str)
-        self.assertIsTypedEnum(AppKit.NSAccessibilitySearchKey, str)

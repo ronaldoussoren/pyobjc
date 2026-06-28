@@ -11,7 +11,7 @@ class TestWorldTracking(TestCase):
         # self.assertIsSubclass(ARKit.ar_device_anchor_t, objc.objc_object)
         pass
 
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(ARKit.ar_device_anchor_query_status_t)
         self.assertEqual(ARKit.ar_device_anchor_query_status_success, 0)
         self.assertEqual(ARKit.ar_device_anchor_query_status_failure, 1)

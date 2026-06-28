@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKPolyline(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKPolyline, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgSizeInArg(MapKit.MKPolyline.polylineWithPoints_count_, 0, 1)
         self.assertArgIsIn(MapKit.MKPolyline.polylineWithPoints_count_, 0)
 

@@ -1,24 +1,17 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import EventKit
 
 
 class TestEKParticipant(TestCase):
-    @min_os_level("10.8")
-    def test_basic(self):
-        self.assertTrue(hasattr(EventKit, "EKParticipant"))
-
-    @min_os_level("10.9")
-    def test_methods10_9(self):
-        self.assertResultIsBOOL(EventKit.EKParticipant.isCurrentUser)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(EventKit.EKParticipantRole)
         self.assertEqual(EventKit.EKParticipantRoleUnknown, 0)
         self.assertEqual(EventKit.EKParticipantRoleRequired, 1)
         self.assertEqual(EventKit.EKParticipantRoleOptional, 2)
         self.assertEqual(EventKit.EKParticipantRoleChair, 3)
         self.assertEqual(EventKit.EKParticipantRoleNonParticipant, 4)
 
+        self.assertIsEnumType(EventKit.EKParticipantStatus)
         self.assertEqual(EventKit.EKParticipantStatusUnknown, 0)
         self.assertEqual(EventKit.EKParticipantStatusPending, 1)
         self.assertEqual(EventKit.EKParticipantStatusAccepted, 2)
@@ -28,8 +21,12 @@ class TestEKParticipant(TestCase):
         self.assertEqual(EventKit.EKParticipantStatusCompleted, 6)
         self.assertEqual(EventKit.EKParticipantStatusInProcess, 7)
 
+        self.assertIsEnumType(EventKit.EKParticipantType)
         self.assertEqual(EventKit.EKParticipantTypeUnknown, 0)
         self.assertEqual(EventKit.EKParticipantTypePerson, 1)
         self.assertEqual(EventKit.EKParticipantTypeRoom, 2)
         self.assertEqual(EventKit.EKParticipantTypeResource, 3)
         self.assertEqual(EventKit.EKParticipantTypeGroup, 4)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(EventKit.EKParticipant.isCurrentUser)

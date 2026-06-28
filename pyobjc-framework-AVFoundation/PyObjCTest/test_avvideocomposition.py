@@ -40,8 +40,7 @@ class TestAVVideoComposition(TestCase):
             AVFoundation.AVVideoCompositionPerFrameHDRDisplayMetadataPolicyGenerate, str
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVVideoCompositionInstruction.enablePostProcessing
         )
@@ -119,8 +118,6 @@ class TestAVVideoComposition(TestCase):
             TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTrackIDInInstruction_layerInstruction_asset_  # noqa: B950
         )
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(
             AVFoundation.AVVideoComposition.isValidForAsset_timeRange_validationDelegate_  # noqa: B950
         )

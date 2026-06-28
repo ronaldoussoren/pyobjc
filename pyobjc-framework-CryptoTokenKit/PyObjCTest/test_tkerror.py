@@ -21,3 +21,4 @@ class TestTKError(TestCase):
         self.assertEqual(CryptoTokenKit.TKErrorCodeTokenNotFound, -7)
         self.assertEqual(CryptoTokenKit.TKErrorCodeBadParameter, -8)
         self.assertEqual(CryptoTokenKit.TKErrorCodeAuthenticationNeeded, -9)
+        self.assertEqual(CryptoTokenKit.TKErrorCodeInvalidatedDeviceKey, -10)

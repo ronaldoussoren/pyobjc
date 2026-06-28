@@ -9,10 +9,8 @@ SecKeyGeneratePairBlock = b"v@@@"
 
 
 class TestSecKey(TestCase):
-    def test_types(self):
-        self.assertIsCFType(Security.SecKeyRef)
-
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(Security.kSecKeyKeyClass, 0)
         self.assertEqual(Security.kSecKeyPrintName, 1)
         self.assertEqual(Security.kSecKeyAlias, 2)
@@ -41,10 +39,12 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecKeyWrap, 25)
         self.assertEqual(Security.kSecKeyUnwrap, 26)
 
+        self.assertIsEnumType(Security.SecCredentialType)
         self.assertEqual(Security.kSecCredentialTypeDefault, 0)
         self.assertEqual(Security.kSecCredentialTypeWithUI, 1)
         self.assertEqual(Security.kSecCredentialTypeNoUI, 2)
 
+        self.assertIsEnumType(Security.SecPadding)
         self.assertEqual(Security.kSecPaddingNone, 0)
         self.assertEqual(Security.kSecPaddingPKCS1, 1)
         self.assertEqual(Security.kSecPaddingOAEP, 2)
@@ -57,6 +57,10 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecPaddingPKCS1SHA384, 0x8005)
         self.assertEqual(Security.kSecPaddingPKCS1SHA512, 0x8006)
 
+        self.assertIsEnumType(Security.SecPadding)
+        self.assertEqual(Security.kSecPaddingNone, 0)
+
+        self.assertIsEnumType(Security.SecKeySizes)
         self.assertEqual(Security.kSecDefaultKeySize, 0)
         self.assertEqual(Security.kSec3DES192, 192)
         self.assertEqual(Security.kSecAES128, 128)
@@ -69,14 +73,14 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecRSAMin, 1024)
         self.assertEqual(Security.kSecRSAMax, 4096)
 
+        self.assertIsEnumType(Security.SecKeyOperationType)
         self.assertEqual(Security.kSecKeyOperationTypeSign, 0)
         self.assertEqual(Security.kSecKeyOperationTypeVerify, 1)
         self.assertEqual(Security.kSecKeyOperationTypeEncrypt, 2)
         self.assertEqual(Security.kSecKeyOperationTypeDecrypt, 3)
         self.assertEqual(Security.kSecKeyOperationTypeKeyExchange, 4)
 
-    @min_os_level("10.8")
-    def test_constants_10_8(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecPrivateKeyAttrs, str)
         self.assertIsInstance(Security.kSecPublicKeyAttrs, str)
 
@@ -321,16 +325,15 @@ class TestSecKey(TestCase):
             Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA512, str
         )
 
+    def test_types(self):
+        self.assertIsCFType(Security.SecKeyRef)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecKeyGetTypeID(), int)
 
-    @min_os_level("10.6")
-    def test_functions_10_6(self):
         self.assertResultHasType(Security.SecKeyGetBlockSize, objc._C_ULNG)
         self.assertArgHasType(Security.SecKeyGetBlockSize, 0, objc._C_ID)
 
-    @min_os_level("10.7")
-    def test_functions_10_7(self):
         self.assertResultHasType(Security.SecKeyGenerateSymmetric, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyGenerateSymmetric)
         self.assertArgHasType(Security.SecKeyGenerateSymmetric, 0, objc._C_ID)

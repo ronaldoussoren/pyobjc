@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -126,10 +126,6 @@ class TestNSOutlineViewHelper(AppKit.NSObject):
 
 
 class TestNSOutlineView(TestCase):
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(AppKit.NSOutlineViewDisclosureButtonKey, str)
-        self.assertIsInstance(AppKit.NSOutlineViewShowHideButtonKey, str)
 
     def test_constants(self):
         self.assertEqual(AppKit.NSOutlineViewDropOnItemIndex, -1)
@@ -142,6 +138,9 @@ class TestNSOutlineView(TestCase):
         self.assertIsInstance(AppKit.NSOutlineViewItemDidExpandNotification, str)
         self.assertIsInstance(AppKit.NSOutlineViewItemWillCollapseNotification, str)
         self.assertIsInstance(AppKit.NSOutlineViewItemDidCollapseNotification, str)
+
+        self.assertIsInstance(AppKit.NSOutlineViewDisclosureButtonKey, str)
+        self.assertIsInstance(AppKit.NSOutlineViewShowHideButtonKey, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSOutlineView.isExpandable_)
@@ -167,7 +166,6 @@ class TestNSOutlineView(TestCase):
         self.assertResultIsBOOL(AppKit.NSOutlineView.stronglyReferencesItems)
         self.assertArgIsBOOL(AppKit.NSOutlineView.setStronglyReferencesItems_, 0)
 
-    @min_sdk_level("10.6")
     def test_protocols(self):
         self.assertProtocolExists("NSOutlineViewDelegate", AppKit)
         self.assertProtocolExists("NSOutlineViewDataSource", AppKit)
@@ -233,8 +231,6 @@ class TestNSOutlineView(TestCase):
             objc._C_NSInteger,
         )
 
-    @min_os_level("10.5")
-    def test_protocols10_5(self):
         self.assertResultIsBOOL(
             TestNSOutlineViewHelper.outlineView_shouldTypeSelectForEvent_withCurrentSearchString_  # noqa: B950
         )
@@ -246,8 +242,6 @@ class TestNSOutlineView(TestCase):
         )
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isGroupItem_)
 
-    @min_os_level("10.6")
-    def test_protocols10_6(self):
         self.assertResultHasType(
             TestNSOutlineViewHelper.outlineView_sizeToFitWidthOfColumn_, objc._C_CGFloat
         )
@@ -274,8 +268,6 @@ class TestNSOutlineView(TestCase):
             TestNSOutlineViewHelper.outlineView_shouldShowOutlineCellForItem_
         )
 
-    @min_os_level("10.7")
-    def test_protocols10_7(self):
         self.assertArgHasType(
             TestNSOutlineViewHelper.outlineView_draggingSession_willBeginAtPoint_,
             2,

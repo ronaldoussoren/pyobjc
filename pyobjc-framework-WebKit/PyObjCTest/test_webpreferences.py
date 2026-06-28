@@ -3,14 +3,13 @@ import WebKit
 
 
 class TestWebPreferences(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WebCacheModel)
-
-    def test_constants(self):
         self.assertEqual(WebKit.WebCacheModelDocumentViewer, 0)
         self.assertEqual(WebKit.WebCacheModelDocumentBrowser, 1)
         self.assertEqual(WebKit.WebCacheModelPrimaryWebBrowser, 2)
 
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebPreferencesChangedNotification, str)
 
     def test_methods(self):
@@ -57,8 +56,6 @@ class TestWebPreferences(TestCase):
         self.assertResultIsBOOL(WebKit.WebPreferences.usesPageCache)
         self.assertArgIsBOOL(WebKit.WebPreferences.setUsesPageCache_, 0)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertResultIsBOOL(WebKit.WebPreferences.suppressesIncrementalRendering)
         self.assertArgIsBOOL(
             WebKit.WebPreferences.setSuppressesIncrementalRendering_, 0

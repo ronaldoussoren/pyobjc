@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKMapSnapshotOptions(TestCase):
-    @min_os_level("10.9")
-    def test_protocols(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKMapSnapshotOptions.showsPointsOfInterest)
         self.assertArgIsBOOL(MapKit.MKMapSnapshotOptions.setShowsPointsOfInterest_, 0)
 

@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class UserNotificationHelper(Foundation.NSObject):
@@ -8,11 +8,8 @@ class UserNotificationHelper(Foundation.NSObject):
 
 
 class TestNSUserNotification(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSUserNotificationActivationType)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(Foundation.NSUserNotificationActivationTypeNone, 0)
         self.assertEqual(Foundation.NSUserNotificationActivationTypeContentsClicked, 1)
         self.assertEqual(
@@ -23,28 +20,24 @@ class TestNSUserNotification(TestCase):
             Foundation.NSUserNotificationActivationTypeAdditionalActionClicked, 4
         )
 
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSUserNotificationDefaultSoundName, str)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         obj = Foundation.NSUserNotification.alloc().init()
         self.assertResultIsBOOL(obj.isPresented)
         self.assertResultIsBOOL(obj.isRemote)
         self.assertResultIsBOOL(obj.hasActionButton)
         self.assertArgIsBOOL(obj.setHasActionButton_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         obj = Foundation.NSUserNotification.alloc().init()
         self.assertResultIsBOOL(obj.hasReplyButton)
         self.assertArgIsBOOL(obj.setHasReplyButton_, 0)
 
-    @min_os_level("10.8")
-    def test_protocols10_8(self):
+    def test_protocols(self):
+        self.assertProtocolExists("NSUserNotificationCenterDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             UserNotificationHelper.userNotificationCenter_shouldPresentNotification_
         )
-
-    @min_os_level("10.10")
-    def test_protocolsObjects(self):
-        self.assertProtocolExists("NSUserNotificationCenterDelegate", Foundation)

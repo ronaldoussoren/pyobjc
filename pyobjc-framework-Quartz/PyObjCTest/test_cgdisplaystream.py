@@ -1,27 +1,24 @@
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 CGDisplayStreamFrameAvailableHandler = b"vIQ@@"
 
 
 class TestCGDisplayStream(TestCase):
-    @min_os_level("10.8")
-    def test_types10_8(self):
-        self.assertIsCFType(Quartz.CGDisplayStreamRef)
-        self.assertIsCFType(Quartz.CGDisplayStreamUpdateRef)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGDisplayStreamUpdateRectType)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateRefreshedRects, 0)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateMovedRects, 1)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateDirtyRects, 2)
         self.assertEqual(Quartz.kCGDisplayStreamUpdateReducedDirtyRects, 3)
 
+        self.assertIsEnumType(Quartz.CGDisplayStreamFrameStatus)
         self.assertEqual(Quartz.kCGDisplayStreamFrameStatusFrameComplete, 0)
         self.assertEqual(Quartz.kCGDisplayStreamFrameStatusFrameIdle, 1)
         self.assertEqual(Quartz.kCGDisplayStreamFrameStatusFrameBlank, 2)
         self.assertEqual(Quartz.kCGDisplayStreamFrameStatusStopped, 3)
 
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGDisplayStreamSourceRect, str)
         self.assertIsInstance(Quartz.kCGDisplayStreamDestinationRect, str)
         self.assertIsInstance(Quartz.kCGDisplayStreamPreserveAspectRatio, str)
@@ -34,8 +31,11 @@ class TestCGDisplayStream(TestCase):
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_ITU_R_601_4, str)
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_SMPTE_240M_1995, str)
 
-    @min_os_level("10.8")
-    def test_functions10_8(self):
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGDisplayStreamRef)
+        self.assertIsCFType(Quartz.CGDisplayStreamUpdateRef)
+
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGDisplayStreamUpdateGetTypeID(), int)
         self.assertIsInstance(Quartz.CGDisplayStreamGetTypeID(), int)
 

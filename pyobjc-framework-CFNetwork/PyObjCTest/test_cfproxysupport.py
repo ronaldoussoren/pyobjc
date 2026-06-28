@@ -3,8 +3,6 @@ import os
 import CFNetwork
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
-    expectedFailure,
 )
 
 SCRIPT = """
@@ -18,7 +16,53 @@ function FindProxyForURL(url, host) {
 
 
 class TestCFProxySupport(TestCase):
-    @min_os_level("10.5")
+    def test_constants(self):
+        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationJavaScriptKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeAutoConfigurationJavaScript, str)
+
+        self.assertIsInstance(CFNetwork.kCFProxyTypeKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyHostNameKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyPortNumberKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationURLKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyUsernameKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyPasswordKey, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeNone, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeHTTP, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeHTTPS, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeSOCKS, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeFTP, str)
+        self.assertIsInstance(CFNetwork.kCFProxyTypeAutoConfigurationURL, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPProxy, str)
+
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesExceptionsList, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesExcludeSimpleHostnames, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPPassive, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPProxy, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherProxy, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSProxy, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPProxy, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSPort, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSProxy, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigEnable, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigURLString, str)
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoDiscoveryEnable, str)
+
+        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigJavaScript, str)
+
+        self.assertHasAttr(CFNetwork, "kCFProxyAutoConfigurationHTTPResponseKey")
+        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationHTTPResponseKey, str)
+
     def test_functions(self):
         self.assertResultIsCFRetained(CFNetwork.CFNetworkCopyProxiesForURL)
         url = CFNetwork.CFURLCreateWithString(None, "http://www.apple.com/", None)
@@ -43,7 +87,6 @@ class TestCFProxySupport(TestCase):
         v = CFNetwork.CFNetworkCopySystemProxySettings()
         self.assertIsInstance(v, CFNetwork.CFDictionaryRef)
 
-    @min_os_level("10.5")
     def test_manual(self):
         lst = []
         ctx = object()
@@ -100,65 +143,5 @@ class TestCFProxySupport(TestCase):
             self.assertEqual(lst[0][1], None)
             self.assertIsInstance(lst[0][2], CFNetwork.CFErrorRef)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationJavaScriptKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeAutoConfigurationJavaScript, str)
-
-    @expectedFailure
-    @min_os_level("10.7")
-    def test_constants10_7_failure(self):
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigJavaScript, str)
-
-    @min_os_level("10.5")
-    def test_constants10_5(self):
-        self.assertIsInstance(CFNetwork.kCFProxyTypeKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyHostNameKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyPortNumberKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationURLKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyUsernameKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyPasswordKey, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeNone, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeHTTP, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeHTTPS, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeSOCKS, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeFTP, str)
-        self.assertIsInstance(CFNetwork.kCFProxyTypeAutoConfigurationURL, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPProxy, str)
-
-    @expectedFailure
-    @min_os_level("10.5")
-    def test_constants_fail(self):
-        self.assertHasAttr(CFNetwork, "kCFProxyAutoConfigurationHTTPResponseKey")
-        self.assertIsInstance(CFNetwork.kCFProxyAutoConfigurationHTTPResponseKey, str)
-
-    @min_os_level("10.6")
-    def test_functions10_6(self):
         r = CFNetwork.CFNetworkCopySystemProxySettings()
         self.assertIsInstance(r, CFNetwork.CFDictionaryRef)
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesExceptionsList, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesExcludeSimpleHostnames, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPPassive, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesFTPProxy, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesGopherProxy, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesHTTPSProxy, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesRTSPProxy, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSPort, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesSOCKSProxy, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigEnable, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoConfigURLString, str)
-        self.assertIsInstance(CFNetwork.kCFNetworkProxiesProxyAutoDiscoveryEnable, str)

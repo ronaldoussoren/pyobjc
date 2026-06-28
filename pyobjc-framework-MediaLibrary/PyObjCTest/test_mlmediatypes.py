@@ -3,20 +3,18 @@ import MediaLibrary
 
 
 class TestMLMediaTypes(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaLibrary.MLMediaSourceType)
-        self.assertIsEnumType(MediaLibrary.MLMediaType)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(MediaLibrary.MLMediaSourceTypeAudio, 1)
         self.assertEqual(MediaLibrary.MLMediaSourceTypeImage, 2)
         self.assertEqual(MediaLibrary.MLMediaSourceTypeMovie, 4)
 
+        self.assertIsEnumType(MediaLibrary.MLMediaType)
         self.assertEqual(MediaLibrary.MLMediaTypeAudio, 1)
         self.assertEqual(MediaLibrary.MLMediaTypeImage, 2)
         self.assertEqual(MediaLibrary.MLMediaTypeMovie, 4)
 
+    def test_constants(self):
         self.assertIsInstance(MediaLibrary.MLFolderRootGroupTypeIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLFolderGroupTypeIdentifier, str)
 

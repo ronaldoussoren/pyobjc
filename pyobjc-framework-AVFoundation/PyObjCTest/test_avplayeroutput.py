@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerOutput(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.CMTagCollectionVideoOutputPreset)
         self.assertEqual(AVFoundation.kCMTagCollectionVideoOutputPreset_Monoscopic, 0)
         self.assertEqual(AVFoundation.kCMTagCollectionVideoOutputPreset_Stereoscopic, 1)

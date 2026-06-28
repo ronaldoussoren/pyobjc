@@ -4,7 +4,7 @@ import Cinematic
 
 
 class TestCNDetection(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Cinematic.CNDetectionType)
         self.assertEqual(Cinematic.CNDetectionTypeUnknown, 0)
         self.assertEqual(Cinematic.CNDetectionTypeHumanFace, 1)

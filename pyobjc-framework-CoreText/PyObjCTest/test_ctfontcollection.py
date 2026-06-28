@@ -1,41 +1,25 @@
 import CoreText
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestCTFontCollection(TestCase):
-    def test_types(self):
-        self.assertIsInstance(CoreText.CTFontCollectionRef, objc.objc_class)
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTFontCollectionCopyOptions)
+        self.assertEqual(CoreText.kCTFontCollectionCopyDefaultOptions, 0)
+        self.assertEqual(CoreText.kCTFontCollectionCopyUnique, 1 << 0)
+        self.assertEqual(CoreText.kCTFontCollectionCopyStandardSort, 1 << 1)
 
     def test_constants(self):
         self.assertIsInstance(CoreText.kCTFontCollectionRemoveDuplicatesOption, str)
 
-    @min_os_level("10.7")
-    def test_constants10_10(self):
         self.assertIsInstance(CoreText.kCTFontCollectionIncludeDisabledFontsOption, str)
         self.assertIsInstance(
             CoreText.kCTFontCollectionDisallowAutoActivationOption, str
         )
 
-        self.assertEqual(CoreText.kCTFontCollectionCopyDefaultOptions, 0)
-        self.assertEqual(CoreText.kCTFontCollectionCopyUnique, 1 << 0)
-        self.assertEqual(CoreText.kCTFontCollectionCopyStandardSort, 1 << 1)
-
-    @min_os_level("10.7")
-    def test_functions10_7(self):
-        self.assertResultIsCFRetained(CoreText.CTFontCollectionCreateMutableCopy)
-        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyQueryDescriptors)
-        CoreText.CTFontCollectionSetQueryDescriptors
-        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyExclusionDescriptors)
-        CoreText.CTFontCollectionSetExclusionDescriptors
-        self.assertResultIsCFRetained(
-            CoreText.CTFontCollectionCreateMatchingFontDescriptorsWithOptions
-        )
-        self.assertResultIsCFRetained(
-            CoreText.CTFontCollectionCreateMatchingFontDescriptorsForFamily
-        )
-        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttribute)
-        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttributes)
+    def test_types(self):
+        self.assertIsInstance(CoreText.CTFontCollectionRef, objc.objc_class)
 
     def test_functions(self):
         self.assertResultIsCFRetained(
@@ -72,3 +56,17 @@ class TestCTFontCollection(TestCase):
 
         v = CoreText.CTFontCollectionGetTypeID()
         self.assertIsInstance(v, int)
+
+        self.assertResultIsCFRetained(CoreText.CTFontCollectionCreateMutableCopy)
+        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyQueryDescriptors)
+        CoreText.CTFontCollectionSetQueryDescriptors
+        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyExclusionDescriptors)
+        CoreText.CTFontCollectionSetExclusionDescriptors
+        self.assertResultIsCFRetained(
+            CoreText.CTFontCollectionCreateMatchingFontDescriptorsWithOptions
+        )
+        self.assertResultIsCFRetained(
+            CoreText.CTFontCollectionCreateMatchingFontDescriptorsForFamily
+        )
+        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttribute)
+        self.assertResultIsCFRetained(CoreText.CTFontCollectionCopyFontAttributes)

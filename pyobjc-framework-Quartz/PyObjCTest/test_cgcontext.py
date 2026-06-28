@@ -9,21 +9,25 @@ class TestCGContext(TestCase):
     def test_types(self):
         self.assertIsCFType(Quartz.CGContextRef)
 
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGLineJoin)
         self.assertEqual(Quartz.kCGLineJoinMiter, 0)
         self.assertEqual(Quartz.kCGLineJoinRound, 1)
         self.assertEqual(Quartz.kCGLineJoinBevel, 2)
 
+        self.assertIsEnumType(Quartz.CGLineCap)
         self.assertEqual(Quartz.kCGLineCapButt, 0)
         self.assertEqual(Quartz.kCGLineCapRound, 1)
         self.assertEqual(Quartz.kCGLineCapSquare, 2)
 
+        self.assertIsEnumType(Quartz.CGPathDrawingMode)
         self.assertEqual(Quartz.kCGPathFill, 0)
         self.assertEqual(Quartz.kCGPathEOFill, 1)
         self.assertEqual(Quartz.kCGPathStroke, 2)
         self.assertEqual(Quartz.kCGPathFillStroke, 3)
         self.assertEqual(Quartz.kCGPathEOFillStroke, 4)
 
+        self.assertIsEnumType(Quartz.CGTextDrawingMode)
         self.assertEqual(Quartz.kCGTextFill, 0)
         self.assertEqual(Quartz.kCGTextStroke, 1)
         self.assertEqual(Quartz.kCGTextFillStroke, 2)
@@ -33,14 +37,17 @@ class TestCGContext(TestCase):
         self.assertEqual(Quartz.kCGTextFillStrokeClip, 6)
         self.assertEqual(Quartz.kCGTextClip, 7)
 
+        self.assertIsEnumType(Quartz.CGTextEncoding)
         self.assertEqual(Quartz.kCGEncodingFontSpecific, 0)
         self.assertEqual(Quartz.kCGEncodingMacRoman, 1)
 
+        self.assertIsEnumType(Quartz.CGInterpolationQuality)
         self.assertEqual(Quartz.kCGInterpolationDefault, 0)
         self.assertEqual(Quartz.kCGInterpolationNone, 1)
         self.assertEqual(Quartz.kCGInterpolationLow, 2)
         self.assertEqual(Quartz.kCGInterpolationHigh, 3)
 
+        self.assertIsEnumType(Quartz.CGBlendMode)
         self.assertEqual(Quartz.kCGBlendModeNormal, 0)
         self.assertEqual(Quartz.kCGBlendModeMultiply, 1)
         self.assertEqual(Quartz.kCGBlendModeScreen, 2)
@@ -88,8 +95,7 @@ class TestCGContext(TestCase):
         self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeLow, str)
         self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeHigh, str)
 
-    @min_os_level("10.5")
-    def test_functions10_5(self):
+    def test_functions(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -193,7 +199,6 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def test_functions(self):
         self.assertIsInstance(Quartz.CGContextGetTypeID(), int)
 
         url = Quartz.CFURLCreateWithFileSystemPath(
@@ -567,8 +572,7 @@ class TestCGContext(TestCase):
         self.assertArgHasType(Quartz.CGContextDrawPDFDocument, 2, b"^{CGPDFDocument=}")
         self.assertArgHasType(Quartz.CGContextDrawPDFDocument, 3, objc._C_INT)
 
-    @min_os_level("10.5")
-    def test_context_manager10_5(self):
+    def test_context_manager(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -593,10 +597,6 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def test_context_manager(self):
-        """
-        Tests for some additional functionality
-        """
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )

@@ -8,7 +8,6 @@ class TestNSLinguisticTagger(TestCase):
         self.assertIsEnumType(Foundation.NSLinguisticTaggerOptions)
         self.assertIsEnumType(Foundation.NSLinguisticTaggerUnit)
 
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeTokenType, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeLexicalClass, str)
@@ -62,7 +61,6 @@ class TestNSLinguisticTagger(TestCase):
         self.assertEqual(Foundation.NSLinguisticTaggerUnitParagraph, 2)
         self.assertEqual(Foundation.NSLinguisticTaggerUnitDocument, 3)
 
-    @min_os_level("10.7")
     def test_methods(self):
         self.assertArgHasType(
             Foundation.NSLinguisticTagger.orthographyAtIndex_effectiveRange_,

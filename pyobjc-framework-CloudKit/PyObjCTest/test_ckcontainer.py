@@ -4,30 +4,26 @@ import objc
 
 
 class TestCKContainer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKAccountStatus)
-        self.assertIsEnumType(CloudKit.CKApplicationPermissionStatus)
-        self.assertIsEnumType(CloudKit.CKApplicationPermissions)
-
-    @min_os_level("10.10")
-    def test_classes(self):
-        self.assertIsInstance(CloudKit.CKAsset, objc.objc_class)
-        self.assertIsInstance(CloudKit.CKContainer, objc.objc_class)
-
-    @min_os_level("10.10")
-    def test_constants(self):
-        self.assertIsInstance(CloudKit.CKOwnerDefaultName, str)
-
         self.assertEqual(CloudKit.CKAccountStatusCouldNotDetermine, 0)
         self.assertEqual(CloudKit.CKAccountStatusAvailable, 1)
         self.assertEqual(CloudKit.CKAccountStatusRestricted, 2)
         self.assertEqual(CloudKit.CKAccountStatusNoAccount, 3)
         self.assertEqual(CloudKit.CKAccountStatusTemporarilyUnavailable, 4)
-        self.assertEqual(CloudKit.CKApplicationPermissionUserDiscoverability, 1)
-        self.assertEqual(CloudKit.CKApplicationPermissionStatusInitialState, 0)
+
+        self.assertIsEnumType(CloudKit.CKApplicationPermissionStatus)
         self.assertEqual(CloudKit.CKApplicationPermissionStatusCouldNotComplete, 1)
         self.assertEqual(CloudKit.CKApplicationPermissionStatusDenied, 2)
         self.assertEqual(CloudKit.CKApplicationPermissionStatusGranted, 3)
+
+        self.assertIsEnumType(CloudKit.CKApplicationPermissions)
+        self.assertEqual(CloudKit.CKApplicationPermissionUserDiscoverability, 1)
+        self.assertEqual(CloudKit.CKApplicationPermissionStatusInitialState, 0)
+
+    @min_os_level("10.10")
+    def test_constants(self):
+        self.assertIsInstance(CloudKit.CKOwnerDefaultName, str)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -36,6 +32,11 @@ class TestCKContainer(TestCase):
     @min_os_level("10.12")
     def test_constants10_12(self):
         self.assertIsInstance(CloudKit.CKCurrentUserDefaultName, str)
+
+    @min_os_level("10.10")
+    def test_classes(self):
+        self.assertIsInstance(CloudKit.CKAsset, objc.objc_class)
+        self.assertIsInstance(CloudKit.CKContainer, objc.objc_class)
 
     @min_os_level("10.10")
     def test_methods10_10(self):

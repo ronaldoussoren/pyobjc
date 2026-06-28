@@ -52,8 +52,6 @@ class TestCIFilter(TestCase):
         self.assertIsInstance(Quartz.kCIApplyOptionUserInfo, str)
         self.assertIsInstance(Quartz.kCIApplyOptionColorSpace, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(Quartz.kCICategoryReduction, str)
         self.assertIsInstance(Quartz.kCIAttributeDescription, str)
         self.assertIsInstance(Quartz.kCIAttributeReferenceDocumentation, str)
@@ -135,13 +133,9 @@ class TestCIFilter(TestCase):
         self.assertIsNullTerminated(Quartz.CIFilter.apply_)
         self.assertIsNullTerminated(Quartz.CIFilter.filterWithName_keysAndValues_)
 
-    @min_os_level("10.5")
-    def test_methods10_5(self):
         self.assertResultIsBOOL(Quartz.CIFilter.isEnabled)
         self.assertArgIsBOOL(Quartz.CIFilter.setEnabled_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(
             Quartz.CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2
         )

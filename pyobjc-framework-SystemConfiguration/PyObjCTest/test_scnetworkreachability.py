@@ -3,11 +3,48 @@ import socket
 import objc
 
 from PyObjCTest.test_scnetwork import resolver_available
-from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
+from PyObjCTools.TestSupport import TestCase, skipUnless
 import SystemConfiguration
 
 
 class TestSCNetworkReachability(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCNetworkReachabilityFlags)
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection,
+            1 << 0,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsReachable, 1 << 1
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionRequired,
+            1 << 2,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
+            1 << 3,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsInterventionRequired,
+            1 << 4,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnDemand,
+            1 << 5,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsIsLocalAddress, 1 << 16
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsIsDirect, 1 << 17
+        )
+
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionAutomatic,
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
+        )
+
     def test_types(self):
         self.assertIsInstance(
             SystemConfiguration.SCNetworkReachabilityRef, objc.objc_class
@@ -79,44 +116,6 @@ class TestSCNetworkReachability(TestCase):
                 ref, rl, SystemConfiguration.kCFRunLoopCommonModes
             )
 
-        @min_os_level("10.6")
-        def test_functions10_6(self):
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilitySetDispatchQueue
-            )
-
-        def test_constants(self):
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection,
-                1 << 0,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsReachable, 1 << 1
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionRequired,
-                1 << 2,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
-                1 << 3,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsInterventionRequired,
-                1 << 4,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnDemand,
-                1 << 5,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsIsLocalAddress, 1 << 16
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsIsDirect, 1 << 17
-            )
-
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionAutomatic,
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
             )

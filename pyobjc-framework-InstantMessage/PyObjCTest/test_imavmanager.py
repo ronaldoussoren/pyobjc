@@ -1,5 +1,5 @@
 import InstantMessage
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -18,13 +18,8 @@ class TestIMAVManagerHelper(InstantMessage.NSObject):
 
 
 class TestIMAVManager(TestCase):
-    @min_os_level("10.5")
-    def test_constants(self):
-        self.assertIsInstance(InstantMessage.IMAVManagerStateChangedNotification, str)
-        self.assertIsInstance(
-            InstantMessage.IMAVManagerURLToShareChangedNotification, str
-        )
-
+    def test_enums(self):
+        self.assertIsEnumType(InstantMessage.IMAVManagerState)
         self.assertEqual(InstantMessage.IMAVInactive, 0)
         self.assertEqual(InstantMessage.IMAVRequested, 1)
         self.assertEqual(InstantMessage.IMAVShuttingDown, 2)
@@ -32,11 +27,18 @@ class TestIMAVManager(TestCase):
         self.assertEqual(InstantMessage.IMAVPending, 4)
         self.assertEqual(InstantMessage.IMAVRunning, 5)
 
+        self.assertIsEnumType(InstantMessage.IMVideoOptimizationOptions)
         self.assertEqual(InstantMessage.IMVideoOptimizationDefault, 0)
         self.assertEqual(InstantMessage.IMVideoOptimizationStills, 1 << 0)
         self.assertEqual(InstantMessage.IMVideoOptimizationReplacement, 1 << 1)
 
-    def test_informal_protocolsProtocol(self):
+    def test_constants(self):
+        self.assertIsInstance(InstantMessage.IMAVManagerStateChangedNotification, str)
+        self.assertIsInstance(
+            InstantMessage.IMAVManagerURLToShareChangedNotification, str
+        )
+
+    def test_protocol_methods(self):
         # self.assert_( hasattr(protocols, 'IMVideoDataSource') )
         # self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
 

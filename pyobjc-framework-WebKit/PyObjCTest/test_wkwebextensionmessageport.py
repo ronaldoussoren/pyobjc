@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWKWebExtensionMessagePort(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionMessagePortError)
         self.assertEqual(WebKit.WKWebExtensionMessagePortErrorUnknown, 1)
         self.assertEqual(WebKit.WKWebExtensionMessagePortErrorNotConnected, 2)

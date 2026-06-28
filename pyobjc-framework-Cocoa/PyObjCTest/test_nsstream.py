@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -8,36 +8,17 @@ class TestNSStreamHelper(Foundation.NSObject):
         pass
 
 
-class TestNSStreamUsage(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Foundation.NSStreamNetworkServiceTypeValue, str)
-        self.assertIsTypedEnum(Foundation.NSStreamPropertyKey, str)
-        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyConfiguration, str)
-        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyVersion, str)
-        self.assertIsTypedEnum(Foundation.NSStreamSocketSecurityLevel, str)
-
+class TestNSStream(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(Foundation.NSStreamEvent)
+        self.assertEqual(Foundation.NSStreamEventNone, 0)
+        self.assertEqual(Foundation.NSStreamEventOpenCompleted, 1 << 0)
+        self.assertEqual(Foundation.NSStreamEventHasBytesAvailable, 1 << 1)
+        self.assertEqual(Foundation.NSStreamEventHasSpaceAvailable, 1 << 2)
+        self.assertEqual(Foundation.NSStreamEventErrorOccurred, 1 << 3)
+        self.assertEqual(Foundation.NSStreamEventEndEncountered, 1 << 4)
+
         self.assertIsEnumType(Foundation.NSStreamStatus)
-
-    def test_usage(self):
-        # Test the usage of methods that require extra work
-
-        # Try to create a connection to the IPP port on the local host
-        (
-            inputStream,
-            outputStream,
-        ) = Foundation.NSStream.getStreamsToHost_port_inputStream_outputStream_(
-            Foundation.NSHost.hostWithAddress_("127.0.0.1"), 631, None, None  # IPP port
-        )
-
-        self.assertIsInstance(inputStream, Foundation.NSInputStream)
-        self.assertIsInstance(outputStream, Foundation.NSOutputStream)
-
-        inputStream.close()
-        outputStream.close()
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSStreamStatusNotOpen, 0)
         self.assertEqual(Foundation.NSStreamStatusOpening, 1)
         self.assertEqual(Foundation.NSStreamStatusOpen, 2)
@@ -47,13 +28,14 @@ class TestNSStreamUsage(TestCase):
         self.assertEqual(Foundation.NSStreamStatusClosed, 6)
         self.assertEqual(Foundation.NSStreamStatusError, 7)
 
-        self.assertEqual(Foundation.NSStreamEventNone, 0)
-        self.assertEqual(Foundation.NSStreamEventOpenCompleted, 1 << 0)
-        self.assertEqual(Foundation.NSStreamEventHasBytesAvailable, 1 << 1)
-        self.assertEqual(Foundation.NSStreamEventHasSpaceAvailable, 1 << 2)
-        self.assertEqual(Foundation.NSStreamEventErrorOccurred, 1 << 3)
-        self.assertEqual(Foundation.NSStreamEventEndEncountered, 1 << 4)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSStreamNetworkServiceTypeValue, str)
+        self.assertIsTypedEnum(Foundation.NSStreamPropertyKey, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyConfiguration, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSOCKSProxyVersion, str)
+        self.assertIsTypedEnum(Foundation.NSStreamSocketSecurityLevel, str)
 
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelKey, str)
         self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelNone, str)
         self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelSSLv2, str)
@@ -73,8 +55,6 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(Foundation.NSStreamSocketSSLErrorDomain, str)
         self.assertIsInstance(Foundation.NSStreamSOCKSErrorDomain, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(Foundation.NSStreamNetworkServiceType, str)
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVoIP, str)
         self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVideo, str)
@@ -123,13 +103,6 @@ class TestNSStreamUsage(TestCase):
         self.assertArgIsOut(Foundation.NSInputStream.getBuffer_length_, 1)
         self.assertArgSizeInArg(Foundation.NSInputStream.getBuffer_length_, 0, 1)
 
-    def test_delegate_methods(self):
-        self.assertArgHasType(
-            TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger
-        )
-
-    @min_os_level("10.6")
-    def test_methods10_6(self):
         # XXX: See above, this code used to create an uninitialsed NSOutputStream
         #      by calling ``NSOutputStream.alloc()``. This crashed hard.
         b = Foundation.NSOutputStream.outputStreamToMemory()
@@ -156,6 +129,29 @@ class TestNSStreamUsage(TestCase):
             2,
         )
 
-    @min_sdk_level("10.7")
     def test_protocols(self):
         self.assertProtocolExists("NSStreamDelegate", Foundation)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger
+        )
+
+
+class TestNSStreamUsage(TestCase):
+    def test_usage(self):
+        # Test the usage of methods that require extra work
+
+        # Try to create a connection to the IPP port on the local host
+        (
+            inputStream,
+            outputStream,
+        ) = Foundation.NSStream.getStreamsToHost_port_inputStream_outputStream_(
+            Foundation.NSHost.hostWithAddress_("127.0.0.1"), 631, None, None  # IPP port
+        )
+
+        self.assertIsInstance(inputStream, Foundation.NSInputStream)
+        self.assertIsInstance(outputStream, Foundation.NSOutputStream)
+
+        inputStream.close()
+        outputStream.close()

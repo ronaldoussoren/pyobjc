@@ -4,7 +4,7 @@ import Cinematic
 
 
 class TestCNSpatialAudio(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Cinematic.CNSpatialAudioRenderingStyle)
         self.assertEqual(Cinematic.CNSpatialAudioRenderingStyleCinematic, 0)
         self.assertEqual(Cinematic.CNSpatialAudioRenderingStyleStudio, 1)

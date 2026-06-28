@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSFontCollection(TestCase):
@@ -12,8 +12,7 @@ class TestNSFontCollection(TestCase):
     def test_enum_types(self):
         self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFontCollectionVisibilityProcess, 1)
         self.assertEqual(AppKit.NSFontCollectionVisibilityUser, 2)
         self.assertEqual(AppKit.NSFontCollectionVisibilityComputer, 4)
@@ -34,8 +33,7 @@ class TestNSFontCollection(TestCase):
         self.assertIsInstance(AppKit.NSFontCollectionFavorites, str)
         self.assertIsInstance(AppKit.NSFontCollectionRecentlyUsed, str)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSFontCollection.showFontCollection_withName_visibility_error_
         )

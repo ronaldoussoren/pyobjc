@@ -5,6 +5,24 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestRegressions(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSColorSystemEffect)
+        self.assertEqual(AppKit.NSColorSystemEffectNone, 0)
+        self.assertEqual(AppKit.NSColorSystemEffectPressed, 1)
+        self.assertEqual(AppKit.NSColorSystemEffectDeepPressed, 2)
+        self.assertEqual(AppKit.NSColorSystemEffectDisabled, 3)
+        self.assertEqual(AppKit.NSColorSystemEffectRollover, 4)
+
+        self.assertIsEnumType(AppKit.NSColorType)
+        self.assertEqual(AppKit.NSColorTypeComponentBased, 0)
+        self.assertEqual(AppKit.NSColorTypePattern, 1)
+        self.assertEqual(AppKit.NSColorTypeCatalog, 2)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSSystemColorsDidChangeNotification, str)
+
+        self.assertEqual(AppKit.NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
+
     def test_qualifiers_in_signature(self):
         AppKit.NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
 
@@ -55,22 +73,3 @@ class TestRegressions(TestCase):
         v = color.getComponents_(a)
         self.assertIs(v, a)
         self.assertEqual(a[0], 1.0)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSColorSystemEffect)
-        self.assertIsEnumType(AppKit.NSColorType)
-
-    def test_constants(self):
-        self.assertIsInstance(AppKit.NSSystemColorsDidChangeNotification, str)
-
-        self.assertEqual(AppKit.NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
-
-        self.assertEqual(AppKit.NSColorTypeComponentBased, 0)
-        self.assertEqual(AppKit.NSColorTypePattern, 1)
-        self.assertEqual(AppKit.NSColorTypeCatalog, 2)
-
-        self.assertEqual(AppKit.NSColorSystemEffectNone, 0)
-        self.assertEqual(AppKit.NSColorSystemEffectPressed, 1)
-        self.assertEqual(AppKit.NSColorSystemEffectDeepPressed, 2)
-        self.assertEqual(AppKit.NSColorSystemEffectDisabled, 3)
-        self.assertEqual(AppKit.NSColorSystemEffectRollover, 4)

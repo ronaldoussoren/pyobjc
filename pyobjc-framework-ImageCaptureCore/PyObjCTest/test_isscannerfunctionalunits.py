@@ -1,19 +1,10 @@
 import ImageCaptureCore
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestICScannerFunctionalUnits(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(ImageCaptureCore.ICScannerBitDepth)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerColorDataFormatType)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerDocumentType)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerFeatureType)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerFunctionalUnitState)
+    def test_enums(self):
         self.assertIsEnumType(ImageCaptureCore.ICScannerFunctionalUnitType)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerMeasurementUnit)
-        self.assertIsEnumType(ImageCaptureCore.ICScannerPixelDataType)
-
-    def test_constants(self):
         self.assertEqual(ImageCaptureCore.ICScannerFunctionalUnitTypeFlatbed, 0)
         self.assertEqual(
             ImageCaptureCore.ICScannerFunctionalUnitTypePositiveTransparency, 1
@@ -23,6 +14,7 @@ class TestICScannerFunctionalUnits(TestCase):
         )
         self.assertEqual(ImageCaptureCore.ICScannerFunctionalUnitTypeDocumentFeeder, 3)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerMeasurementUnit)
         self.assertEqual(ImageCaptureCore.ICScannerMeasurementUnitInches, 0)
         self.assertEqual(ImageCaptureCore.ICScannerMeasurementUnitCentimeters, 1)
         self.assertEqual(ImageCaptureCore.ICScannerMeasurementUnitPicas, 2)
@@ -30,13 +22,16 @@ class TestICScannerFunctionalUnits(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerMeasurementUnitTwips, 4)
         self.assertEqual(ImageCaptureCore.ICScannerMeasurementUnitPixels, 5)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerBitDepth)
         self.assertEqual(ImageCaptureCore.ICScannerBitDepth1Bit, 1)
         self.assertEqual(ImageCaptureCore.ICScannerBitDepth8Bits, 8)
         self.assertEqual(ImageCaptureCore.ICScannerBitDepth16Bits, 16)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerColorDataFormatType)
         self.assertEqual(ImageCaptureCore.ICScannerColorDataFormatTypeChunky, 0)
         self.assertEqual(ImageCaptureCore.ICScannerColorDataFormatTypePlanar, 1)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerPixelDataType)
         self.assertEqual(ImageCaptureCore.ICScannerPixelDataTypeBW, 0)
         self.assertEqual(ImageCaptureCore.ICScannerPixelDataTypeGray, 1)
         self.assertEqual(ImageCaptureCore.ICScannerPixelDataTypeRGB, 2)
@@ -47,6 +42,7 @@ class TestICScannerFunctionalUnits(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerPixelDataTypeYUVK, 7)
         self.assertEqual(ImageCaptureCore.ICScannerPixelDataTypeCIEXYZ, 8)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerDocumentType)
         self.assertEqual(ImageCaptureCore.ICScannerDocumentTypeDefault, 0)
         self.assertEqual(ImageCaptureCore.ICScannerDocumentTypeA4, 1)
         self.assertEqual(ImageCaptureCore.ICScannerDocumentTypeB5, 2)
@@ -120,6 +116,7 @@ class TestICScannerFunctionalUnits(TestCase):
         self.assertEqual(ImageCaptureCore.ICScannerDocumentTypeMF, 77)
         self.assertEqual(ImageCaptureCore.ICScannerDocumentTypeLF, 78)
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerFunctionalUnitState)
         self.assertEqual(ImageCaptureCore.ICScannerFunctionalUnitStateReady, 1 << 0)
         self.assertEqual(
             ImageCaptureCore.ICScannerFunctionalUnitStateScanInProgress, 1 << 1
@@ -128,6 +125,7 @@ class TestICScannerFunctionalUnits(TestCase):
             ImageCaptureCore.ICScannerFunctionalUnitStateOverviewScanInProgress, 1 << 2
         )
 
+        self.assertIsEnumType(ImageCaptureCore.ICScannerFeatureType)
         self.assertEqual(ImageCaptureCore.ICScannerFeatureTypeEnumeration, 0)
         self.assertEqual(ImageCaptureCore.ICScannerFeatureTypeRange, 1)
         self.assertEqual(ImageCaptureCore.ICScannerFeatureTypeBoolean, 2)
@@ -168,8 +166,6 @@ class TestICScannerFunctionalUnits(TestCase):
             ImageCaptureCore.ICScannerFunctionalUnitDocumentFeeder.documentLoaded
         )
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
         self.assertResultIsBOOL(
             ImageCaptureCore.ICScannerFunctionalUnitDocumentFeeder.reverseFeederPageOrder
         )

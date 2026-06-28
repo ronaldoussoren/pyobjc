@@ -7,6 +7,22 @@ class TesNSScrollView(TestCase):
         self.assertIsEnumType(AppKit.NSScrollElasticity)
         self.assertIsEnumType(AppKit.NSScrollViewFindBarPosition)
 
+    def test_constants(self):
+        self.assertEqual(AppKit.NSScrollElasticityAutomatic, 0)
+        self.assertEqual(AppKit.NSScrollElasticityNone, 1)
+        self.assertEqual(AppKit.NSScrollElasticityAllowed, 2)
+
+        self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveHorizontalRuler, 0)
+        self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveContent, 1)
+        self.assertEqual(AppKit.NSScrollViewFindBarPositionBelowContent, 2)
+
+        self.assertIsInstance(AppKit.NSScrollViewWillStartLiveMagnifyNotification, str)
+        self.assertIsInstance(AppKit.NSScrollViewDidEndLiveMagnifyNotification, str)
+
+        self.assertIsInstance(AppKit.NSScrollViewWillStartLiveScrollNotification, str)
+        self.assertIsInstance(AppKit.NSScrollViewDidLiveScrollNotification, str)
+        self.assertIsInstance(AppKit.NSScrollViewDidEndLiveScrollNotification, str)
+
     def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSScrollView.frameSizeForContentSize_hasHorizontalScroller_hasVerticalScroller_borderType_,  # noqa: B950
@@ -42,10 +58,11 @@ class TesNSScrollView(TestCase):
         self.assertResultIsBOOL(AppKit.NSScrollView.hasVerticalRuler)
         self.assertArgIsBOOL(AppKit.NSScrollView.setHasVerticalRuler_, 0)
 
-    @min_os_level("10.8")
-    def test_methods10_8(self):
         self.assertArgIsBOOL(AppKit.NSScrollView.setAllowsMagnification_, 0)
         self.assertResultIsBOOL(AppKit.NSScrollView.allowsMagnification)
+
+        self.assertResultIsBOOL(AppKit.NSScrollView.usesPredominantAxisScrolling)
+        self.assertArgIsBOOL(AppKit.NSScrollView.setUsesPredominantAxisScrolling_, 0)
 
     @min_os_level("10.10")
     def test_methods10_10(self):
@@ -58,29 +75,3 @@ class TesNSScrollView(TestCase):
     def test_methods27_0(self):
         self.assertResultIsBOOL(AppKit.NSScrollView.isTouchScrollingEnabled)
         self.assertArgIsBOOL(AppKit.NSScrollView.setTouchScrollingEnabled_, 0)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
-        self.assertIsInstance(AppKit.NSScrollViewWillStartLiveScrollNotification, str)
-        self.assertIsInstance(AppKit.NSScrollViewDidLiveScrollNotification, str)
-        self.assertIsInstance(AppKit.NSScrollViewDidEndLiveScrollNotification, str)
-
-    @min_os_level("10.8")
-    def test_constants10_8(self):
-        self.assertIsInstance(AppKit.NSScrollViewWillStartLiveMagnifyNotification, str)
-        self.assertIsInstance(AppKit.NSScrollViewDidEndLiveMagnifyNotification, str)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(AppKit.NSScrollElasticityAutomatic, 0)
-        self.assertEqual(AppKit.NSScrollElasticityNone, 1)
-        self.assertEqual(AppKit.NSScrollElasticityAllowed, 2)
-
-        self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveHorizontalRuler, 0)
-        self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveContent, 1)
-        self.assertEqual(AppKit.NSScrollViewFindBarPositionBelowContent, 2)
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
-        self.assertResultIsBOOL(AppKit.NSScrollView.usesPredominantAxisScrolling)
-        self.assertArgIsBOOL(AppKit.NSScrollView.setUsesPredominantAxisScrolling_, 0)

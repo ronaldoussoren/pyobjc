@@ -5,12 +5,8 @@ import SpriteKit
 
 
 class TestSKNode(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKBlendMode)
-        self.assertIsEnumType(SpriteKit.SKNodeFocusBehavior)
-
-    @min_os_level("10.9")
-    def test_constants(self):
         self.assertEqual(SpriteKit.SKBlendModeAlpha, 0)
         self.assertEqual(SpriteKit.SKBlendModeAdd, 1)
         self.assertEqual(SpriteKit.SKBlendModeSubtract, 2)

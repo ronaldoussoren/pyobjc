@@ -1,15 +1,10 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 import MapKit
 import CoreLocation
 
 
 class TestMKMapCamera(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKMapCamera, objc.objc_class)
-
     def test_methods(self):
         self.assertArgHasType(
             MapKit.MKMapCamera.cameraLookingAtCenterCoordinate_fromEyeCoordinate_eyeAltitude_,

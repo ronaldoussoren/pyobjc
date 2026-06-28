@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTDecompressionProperties(TestCase):
-    @min_os_level("10.8")
-    def test_constants10_8(self):
+    def test_constants(self):
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionPropertyKey_PixelBufferPool, str
         )
@@ -98,8 +97,6 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_PixelTransferProperties, str
         )
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionPropertyKey_OutputPoolRequestedMinimumBufferCount,
             str,

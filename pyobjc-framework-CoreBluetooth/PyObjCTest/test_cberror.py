@@ -1,17 +1,10 @@
 import CoreBluetooth
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBAdvertisementData(TestCase):
     def test_enum_types(self):
-        self.assertIsEnumType(CoreBluetooth.CBATTError)
         self.assertIsEnumType(CoreBluetooth.CBError)
-
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertIsInstance(CoreBluetooth.CBErrorDomain, str)
-        self.assertIsInstance(CoreBluetooth.CBATTErrorDomain, str)
-
         self.assertEqual(CoreBluetooth.CBErrorUnknown, 0)
         self.assertEqual(CoreBluetooth.CBErrorInvalidParameters, 1)
         self.assertEqual(CoreBluetooth.CBErrorInvalidHandle, 2)
@@ -31,6 +24,7 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBErrorEncryptionTimedOut, 15)
         self.assertEqual(CoreBluetooth.CBErrorTooManyLEPairedDevices, 16)
 
+        self.assertIsEnumType(CoreBluetooth.CBATTError)
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)
         self.assertEqual(CoreBluetooth.CBATTErrorReadNotPermitted, 0x02)
@@ -49,3 +43,7 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientEncryption, 0x0F)
         self.assertEqual(CoreBluetooth.CBATTErrorUnsupportedGroupType, 0x10)
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientResources, 0x11)
+
+    def test_constants(self):
+        self.assertIsInstance(CoreBluetooth.CBErrorDomain, str)
+        self.assertIsInstance(CoreBluetooth.CBATTErrorDomain, str)

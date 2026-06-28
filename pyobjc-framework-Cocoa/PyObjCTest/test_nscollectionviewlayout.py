@@ -3,23 +3,22 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCollectionViewLayout(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSCollectionElementCategory)
-        self.assertIsEnumType(AppKit.NSCollectionUpdateAction)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
         self.assertEqual(AppKit.NSCollectionElementCategoryItem, 0)
         self.assertEqual(AppKit.NSCollectionElementCategorySupplementaryView, 1)
         self.assertEqual(AppKit.NSCollectionElementCategoryDecorationView, 2)
         self.assertEqual(AppKit.NSCollectionElementCategoryInterItemGap, 3)
 
+        self.assertIsEnumType(AppKit.NSCollectionUpdateAction)
         self.assertEqual(AppKit.NSCollectionUpdateActionInsert, 0)
         self.assertEqual(AppKit.NSCollectionUpdateActionDelete, 1)
         self.assertEqual(AppKit.NSCollectionUpdateActionReload, 2)
         self.assertEqual(AppKit.NSCollectionUpdateActionMove, 3)
         self.assertEqual(AppKit.NSCollectionUpdateActionNone, 4)
 
+    @min_os_level("10.11")
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSCollectionElementKindInterItemGapIndicator, str)
 
     @min_os_level("10.11")

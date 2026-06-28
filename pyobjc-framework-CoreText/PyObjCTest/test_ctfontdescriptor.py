@@ -4,9 +4,6 @@ import objc
 
 
 class TestCTFontDescriptor(TestCase):
-    def test_types(self):
-        self.assertIsInstance(CoreText.CTFontDescriptorRef, objc.objc_class)
-
     def test_constants(self):
         self.assertIsInstance(CoreText.kCTFontNameAttribute, str)
         self.assertIsInstance(CoreText.kCTFontDisplayNameAttribute, str)
@@ -30,8 +27,6 @@ class TestCTFontDescriptor(TestCase):
         self.assertEqual(CoreText.kCTFontHorizontalOrientation, 1)
         self.assertEqual(CoreText.kCTFontVerticalOrientation, 2)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(CoreText.kCTFontURLAttribute, str)
         self.assertIsInstance(CoreText.kCTFontFormatAttribute, str)
         self.assertIsInstance(CoreText.kCTFontRegistrationScopeAttribute, str)
@@ -53,8 +48,6 @@ class TestCTFontDescriptor(TestCase):
         self.assertEqual(CoreText.kCTFontPriorityDynamic, 50000)
         self.assertEqual(CoreText.kCTFontPriorityProcess, 60000)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(CoreText.kCTFontOrientationDefault, 0)
         self.assertEqual(CoreText.kCTFontOrientationHorizontal, 1)
         self.assertEqual(CoreText.kCTFontOrientationVertical, 2)
@@ -68,8 +61,6 @@ class TestCTFontDescriptor(TestCase):
             CoreText.kCTFontVerticalOrientation, CoreText.kCTFontOrientationVertical
         )
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertEqual(CoreText.kCTFontDescriptorMatchingDidBegin, 0)
         self.assertEqual(CoreText.kCTFontDescriptorMatchingDidFinish, 1)
         self.assertEqual(CoreText.kCTFontDescriptorMatchingWillBeginQuerying, 2)
@@ -92,8 +83,6 @@ class TestCTFontDescriptor(TestCase):
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingTotalAssetSize, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingError, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(CoreText.kCTFontOpticalSizeAttribute, str)
 
     @min_os_level("10.12")
@@ -108,8 +97,10 @@ class TestCTFontDescriptor(TestCase):
     def test_constants26_4(self):
         self.assertIsInstance(CoreText.kCTFontDescriptorLanguageAttribute, str)
 
-    @min_os_level("10.9")
-    def test_functions10_9(self):
+    def test_types(self):
+        self.assertIsInstance(CoreText.CTFontDescriptorRef, objc.objc_class)
+
+    def test_functions(self):
         CoreText.CTFontDescriptorProgressHandler = (
             objc._C_BOOL + objc._C_UINT + objc._C_ID
         )
@@ -128,7 +119,6 @@ class TestCTFontDescriptor(TestCase):
             CoreText.CTFontDescriptorCreateCopyWithSymbolicTraits
         )
 
-    def test_functions(self):
         self.assertResultIsCFRetained(CoreText.CTFontDescriptorCreateWithAttributes)
         v = CoreText.CTFontDescriptorCreateWithAttributes(
             {

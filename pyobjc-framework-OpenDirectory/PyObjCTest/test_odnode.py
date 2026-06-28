@@ -54,8 +54,6 @@ class TestODNode(TestCase):
             OpenDirectory.ODNode.createRecordWithRecordType_name_attributes_error_, 3
         )
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(OpenDirectory.ODNode.policiesAndReturnError_, 0)
         self.assertArgIsOut(OpenDirectory.ODNode.supportedPoliciesAndReturnError_, 0)
         self.assertResultIsBOOL(OpenDirectory.ODNode.setPolicies_error_)

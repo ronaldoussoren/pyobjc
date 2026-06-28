@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 import SceneKit
@@ -8,8 +8,7 @@ SCNBindingBlock = b"v" + objc._C_UINT + objc._C_UINT + b"@@"
 
 
 class TestSCNTransaction(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNTransaction.disableActions)
         self.assertArgIsBOOL(SceneKit.SCNTransaction.setDisableActions_, 0)
 

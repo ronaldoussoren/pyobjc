@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWKWebExtensionContext(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionContextError)
         self.assertEqual(WebKit.WKWebExtensionContextErrorUnknown, 1)
         self.assertEqual(WebKit.WKWebExtensionContextErrorAlreadyLoaded, 2)
@@ -35,6 +35,7 @@ class TestWKWebExtensionContext(TestCase):
             WebKit.WKWebExtensionContextPermissionStatusGrantedExplicitly, 3
         )
 
+    def test_constants(self):
         self.assertIsTypedEnum(WebKit.WKWebExtensionContextNotificationUserInfoKey, str)
 
     @min_os_level("15.4")

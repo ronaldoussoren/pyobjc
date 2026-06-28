@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestBEWebContentFilter(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BrowserEngineKit.BEWebContentFilterPermissionDecision)
         self.assertEqual(BrowserEngineKit.BEWebContentFilterPermissionDecisionError, 0)
         self.assertEqual(

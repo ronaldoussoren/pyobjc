@@ -1,17 +1,14 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 import Social
 
 
 class TestSLTypes(TestCase):
-    @min_os_level("10.8")
     def test_constants(self):
         self.assertIsInstance(Social.SLServiceTypeTwitter, str)
         self.assertIsInstance(Social.SLServiceTypeFacebook, str)
         self.assertIsInstance(Social.SLServiceTypeSinaWeibo, str)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(Social.SLServiceTypeTencentWeibo, str)
         self.assertIsInstance(Social.SLServiceTypeLinkedIn, str)

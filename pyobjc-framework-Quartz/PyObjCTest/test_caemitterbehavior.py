@@ -3,13 +3,7 @@ import Quartz
 
 
 class TestCAEmitterBehavior(TestCase):
-    @min_os_level("10.9")
-    def test_methods(self):
-        self.assertResultIsBOOL(Quartz.CAEmitterBehavior.isEnabled)
-        self.assertArgIsBOOL(Quartz.CAAnimation.setEnabled_, 0)
-
-    @min_os_level("10.9")
-    def test_constants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAEmitterBehaviorWave, str)
         self.assertIsInstance(Quartz.kCAEmitterBehaviorDrag, str)
         self.assertIsInstance(Quartz.kCAEmitterBehaviorAlignToMotion, str)
@@ -21,3 +15,7 @@ class TestCAEmitterBehavior(TestCase):
     @min_os_level("10.12")
     def test_constants10_12(self):
         self.assertIsInstance(Quartz.kCAEmitterBehaviorSimpleAttractor, str)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.CAEmitterBehavior.isEnabled)
+        self.assertArgIsBOOL(Quartz.CAAnimation.setEnabled_, 0)

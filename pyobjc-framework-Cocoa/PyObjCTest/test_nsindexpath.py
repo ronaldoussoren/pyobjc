@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSIndexPath(TestCase):
@@ -15,8 +15,6 @@ class TestNSIndexPath(TestCase):
         self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_, 0)
         self.assertArgIsVariableSize(Foundation.NSIndexPath.getIndexes_, 0)
 
-    @min_os_level("10.9")
-    def test_methods10_9(self):
         self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_range_, 0)
         self.assertArgSizeInArg(Foundation.NSIndexPath.getIndexes_range_, 0, 1)
 

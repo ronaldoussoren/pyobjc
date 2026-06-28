@@ -87,15 +87,14 @@ class TestNSOpenGL(TestCase):
         self.assertEqual(AppKit.NSOpenGLContextParameterStateValidation, 301)
         self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceSurfaceVolatile, 306)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertEqual(AppKit.NSOpenGLPFAAllowOfflineRenderers, 96)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertEqual(AppKit.NSOpenGLPFAOpenGLProfile, 99)
         self.assertEqual(AppKit.NSOpenGLProfileVersionLegacy, 0x1000)
         self.assertEqual(AppKit.NSOpenGLProfileVersion3_2Core, 0x3200)
+
+        self.assertEqual(AppKit.NSOpenGLPFARemotePixelBuffer, 91)
+        self.assertEqual(AppKit.NSOpenGLPFAAcceleratedCompute, 97)
 
     @min_os_level("10.10")
     def test_constants10_10(self):
@@ -159,7 +158,6 @@ class TestNSOpenGL(TestCase):
         )
 
     @expectedFailure
-    @min_os_level("10.6")
     @max_os_level("10.11")
     def test_methods10_6(self):
         self.assertArgHasType(
@@ -173,8 +171,3 @@ class TestNSOpenGL(TestCase):
         self.assertResultHasType(
             AppKit.NSOpenGLPixelFormat.CGLBufferObj_, b"^{_CGLBufferObject=}"
         )
-
-    @min_os_level("10.6")
-    def test_constants10_6(self):
-        self.assertEqual(AppKit.NSOpenGLPFARemotePixelBuffer, 91)
-        self.assertEqual(AppKit.NSOpenGLPFAAcceleratedCompute, 97)

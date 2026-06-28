@@ -3,11 +3,8 @@ import WebKit
 
 
 class TestWKUserScript(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKUserScriptInjectionTime)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(WebKit.WKUserScriptInjectionTimeAtDocumentStart, 0)
         self.assertEqual(WebKit.WKUserScriptInjectionTimeAtDocumentEnd, 1)
 

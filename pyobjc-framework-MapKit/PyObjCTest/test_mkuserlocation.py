@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKUserLocation(TestCase):
-    @min_os_level("10.9")
-    def test_classes(self):
-        self.assertIsInstance(MapKit.MKUserLocation, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKUserLocation.isUpdating)

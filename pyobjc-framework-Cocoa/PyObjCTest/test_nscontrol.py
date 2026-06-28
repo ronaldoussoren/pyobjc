@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -26,76 +26,7 @@ class TestNSControlHelper(AppKit.NSObject):
 
 
 class TestNSControl(TestCase):
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(AppKit.NSControl.usesSingleLineMode)
-        self.assertArgIsBOOL(AppKit.NSControl.setUsesSingleLineMode_, 0)
-
-        self.assertResultIsBOOL(AppKit.NSControl.isHighlighted)
-        self.assertArgIsBOOL(AppKit.NSControl.setHighlighted_, 0)
-
-    @min_os_level("10.8")
-    def test_methods10_8(self):
-        self.assertResultIsBOOL(AppKit.NSControl.allowsExpansionToolTips)
-        self.assertArgIsBOOL(AppKit.NSControl.setAllowsExpansionToolTips_, 0)
-
-    def test_methods(self):
-        self.assertArgIsSEL(AppKit.NSControl.setAction_, 0, b"v@:@")
-        self.assertResultIsBOOL(AppKit.NSControl.ignoresMultiClick)
-        self.assertArgIsBOOL(AppKit.NSControl.setIgnoresMultiClick_, 0)
-        self.assertResultIsBOOL(AppKit.NSControl.isContinuous)
-        self.assertArgIsBOOL(AppKit.NSControl.setContinuous_, 0)
-        self.assertResultIsBOOL(AppKit.NSControl.isEnabled)
-        self.assertArgIsBOOL(AppKit.NSControl.setEnabled_, 0)
-        self.assertArgIsBOOL(AppKit.NSControl.setFloatingPointFormat_left_right_, 0)
-        self.assertResultIsBOOL(AppKit.NSControl.sendAction_to_)
-        self.assertArgIsSEL(AppKit.NSControl.sendAction_to_, 0, b"v@:@")
-        self.assertResultIsBOOL(AppKit.NSControl.abortEditing)
-        self.assertResultIsBOOL(AppKit.NSControl.refusesFirstResponder)
-        self.assertArgIsBOOL(AppKit.NSControl.setRefusesFirstResponder_, 0)
-
-    @min_os_level("27.0")
-    def test_methods27_0(self):
-        # XXX: "The selector may include the sender, the event, or both as parameters, in that order."
-        #      The SEL can have either 1 or 2 arguments, that's not something we can represent ATM
-        self.assertArgIsSEL(
-            AppKit.NSControl.addTarget_action_forControlEvents_, 1, b"v@:@@"
-        )
-        self.assertArgIsSEL(
-            AppKit.NSControl.removeTarget_action_forControlEvents_, 1, b"v@:@@"
-        )
-
-    @min_sdk_level("10.6")
-    def test_protocols(self):
-        self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
-
-    def test_delegate_methods(self):
-        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)
-        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldEndEditing_)
-        self.assertResultIsBOOL(
-            TestNSControlHelper.control_didFailToFormatString_errorDescription_
-        )
-        self.assertResultIsBOOL(TestNSControlHelper.control_isValidObject_)
-        self.assertResultIsBOOL(
-            TestNSControlHelper.control_textView_doCommandBySelector_
-        )
-
-        self.assertArgHasType(
-            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
-            3,
-            AppKit.NSRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
-            4,
-            b"N^" + objc._C_NSInteger,
-        )
-
-    def test_constants(self):
-        self.assertIsInstance(AppKit.NSControlTextDidBeginEditingNotification, str)
-        self.assertIsInstance(AppKit.NSControlTextDidEndEditingNotification, str)
-        self.assertIsInstance(AppKit.NSControlTextDidChangeNotification, str)
-
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSControlBorderShape)
         self.assertEqual(AppKit.NSControlBorderShapeAutomatic, 0)
         self.assertEqual(AppKit.NSControlBorderShapeCapsule, 1)
@@ -119,3 +50,70 @@ class TestNSControl(TestCase):
         self.assertEqual(AppKit.NSControlEventApplicationReserved, 0x0F000000)
         self.assertEqual(AppKit.NSControlEventSystemReserved, 0xF0000000)
         self.assertEqual(AppKit.NSControlEventAllEvents, 0xFFFFFFFF)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSControlTextDidBeginEditingNotification, str)
+        self.assertIsInstance(AppKit.NSControlTextDidEndEditingNotification, str)
+        self.assertIsInstance(AppKit.NSControlTextDidChangeNotification, str)
+
+    def test_methods(self):
+        self.assertArgIsSEL(AppKit.NSControl.setAction_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSControl.ignoresMultiClick)
+        self.assertArgIsBOOL(AppKit.NSControl.setIgnoresMultiClick_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.isContinuous)
+        self.assertArgIsBOOL(AppKit.NSControl.setContinuous_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSControl.setEnabled_, 0)
+        self.assertArgIsBOOL(AppKit.NSControl.setFloatingPointFormat_left_right_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.sendAction_to_)
+        self.assertArgIsSEL(AppKit.NSControl.sendAction_to_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSControl.abortEditing)
+        self.assertResultIsBOOL(AppKit.NSControl.refusesFirstResponder)
+        self.assertArgIsBOOL(AppKit.NSControl.setRefusesFirstResponder_, 0)
+
+        self.assertResultIsBOOL(AppKit.NSControl.allowsExpansionToolTips)
+        self.assertArgIsBOOL(AppKit.NSControl.setAllowsExpansionToolTips_, 0)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(AppKit.NSControl.usesSingleLineMode)
+        self.assertArgIsBOOL(AppKit.NSControl.setUsesSingleLineMode_, 0)
+
+        self.assertResultIsBOOL(AppKit.NSControl.isHighlighted)
+        self.assertArgIsBOOL(AppKit.NSControl.setHighlighted_, 0)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        # XXX: "The selector may include the sender, the event, or both as parameters, in that order."
+        #      The SEL can have either 1 or 2 arguments, that's not something we can represent ATM
+        self.assertArgIsSEL(
+            AppKit.NSControl.addTarget_action_forControlEvents_, 1, b"v@:@@"
+        )
+        self.assertArgIsSEL(
+            AppKit.NSControl.removeTarget_action_forControlEvents_, 1, b"v@:@@"
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSControlTextEditingDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldEndEditing_)
+        self.assertResultIsBOOL(
+            TestNSControlHelper.control_didFailToFormatString_errorDescription_
+        )
+        self.assertResultIsBOOL(TestNSControlHelper.control_isValidObject_)
+        self.assertResultIsBOOL(
+            TestNSControlHelper.control_textView_doCommandBySelector_
+        )
+
+        self.assertArgHasType(
+            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
+            3,
+            AppKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
+            4,
+            b"N^" + objc._C_NSInteger,
+        )

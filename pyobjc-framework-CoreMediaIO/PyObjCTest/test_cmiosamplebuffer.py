@@ -101,8 +101,6 @@ class TestCMIOSampleBuffer(TestCase):
         self.assertEqual(CoreMediaIO.kCMIOSampleBufferNoDataEvent_ProcessingError, 4)
         self.assertEqual(CoreMediaIO.kCMIOSampleBufferNoDataEvent_SleepWakeCycle, 5)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_DiscontinuityFlags, str
         )
@@ -150,8 +148,6 @@ class TestCMIOSampleBuffer(TestCase):
             CoreMediaIO.kCMIOBlockBufferAttachmentKey_CVPixelBufferReference, str
         )
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_ClientSequenceID, str
         )

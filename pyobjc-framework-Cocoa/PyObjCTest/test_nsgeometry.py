@@ -6,28 +6,75 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSGeometry(TestCase):
     def test_enum_types(self):
+
         self.assertIsEnumType(Foundation.NSAlignmentOptions)
+        self.assertEqual(AppKit.NSAlignMinXInward, 1 << 0)
+        self.assertEqual(AppKit.NSAlignMinYInward, 1 << 1)
+        self.assertEqual(AppKit.NSAlignMaxXInward, 1 << 2)
+        self.assertEqual(AppKit.NSAlignMaxYInward, 1 << 3)
+        self.assertEqual(AppKit.NSAlignWidthInward, 1 << 4)
+        self.assertEqual(AppKit.NSAlignHeightInward, 1 << 5)
+        self.assertEqual(AppKit.NSAlignMinXOutward, 1 << 8)
+        self.assertEqual(AppKit.NSAlignMinYOutward, 1 << 9)
+        self.assertEqual(AppKit.NSAlignMaxXOutward, 1 << 10)
+        self.assertEqual(AppKit.NSAlignMaxYOutward, 1 << 11)
+        self.assertEqual(AppKit.NSAlignWidthOutward, 1 << 12)
+        self.assertEqual(AppKit.NSAlignHeightOutward, 1 << 13)
+        self.assertEqual(AppKit.NSAlignMinXNearest, 1 << 16)
+        self.assertEqual(AppKit.NSAlignMinYNearest, 1 << 17)
+        self.assertEqual(AppKit.NSAlignMaxXNearest, 1 << 18)
+        self.assertEqual(AppKit.NSAlignMaxYNearest, 1 << 19)
+        self.assertEqual(AppKit.NSAlignWidthNearest, 1 << 20)
+        self.assertEqual(AppKit.NSAlignHeightNearest, 1 << 21)
+        self.assertEqual(AppKit.NSAlignRectFlipped, 1 << 63)
+        self.assertEqual(
+            AppKit.NSAlignAllEdgesInward,
+            AppKit.NSAlignMinXInward
+            | AppKit.NSAlignMaxXInward
+            | AppKit.NSAlignMinYInward
+            | AppKit.NSAlignMaxYInward,
+        )
+        self.assertEqual(
+            AppKit.NSAlignAllEdgesOutward,
+            AppKit.NSAlignMinXOutward
+            | AppKit.NSAlignMaxXOutward
+            | AppKit.NSAlignMinYOutward
+            | AppKit.NSAlignMaxYOutward,
+        )
+        self.assertEqual(
+            AppKit.NSAlignAllEdgesNearest,
+            AppKit.NSAlignMinXNearest
+            | AppKit.NSAlignMaxXNearest
+            | AppKit.NSAlignMinYNearest
+            | AppKit.NSAlignMaxYNearest,
+        )
+
         self.assertIsEnumType(Foundation.NSRectEdge)
-
-    def test_structs_are_aliases(self):
-        self.assertIs(Foundation.NSPoint, CoreFoundation.CGPoint)
-        self.assertIs(Foundation.NSSize, CoreFoundation.CGSize)
-        self.assertIs(Foundation.NSRect, CoreFoundation.CGRect)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSMinXEdge, 0)
-        self.assertEqual(AppKit.NSMinYEdge, 1)
-        self.assertEqual(AppKit.NSMaxXEdge, 2)
-        self.assertEqual(AppKit.NSMaxYEdge, 3)
-
         self.assertEqual(AppKit.NSRectEdgeMinX, 0)
         self.assertEqual(AppKit.NSRectEdgeMinY, 1)
         self.assertEqual(AppKit.NSRectEdgeMaxX, 2)
         self.assertEqual(AppKit.NSRectEdgeMaxY, 3)
 
+        # Old aliases:
+        self.assertEqual(AppKit.NSMinXEdge, 0)
+        self.assertEqual(AppKit.NSMinYEdge, 1)
+        self.assertEqual(AppKit.NSMaxXEdge, 2)
+        self.assertEqual(AppKit.NSMaxYEdge, 3)
+
+    def test_constants(self):
+
         self.assertEqual(AppKit.NSZeroPoint, AppKit.NSPoint())
         self.assertEqual(AppKit.NSZeroSize, AppKit.NSSize())
         self.assertEqual(AppKit.NSZeroRect, AppKit.NSRect())
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(AppKit.NSEdgeInsetsZero, AppKit.NSEdgeInsets)
+
+    def test_structs_are_aliases(self):
+        self.assertIs(Foundation.NSPoint, CoreFoundation.CGPoint)
+        self.assertIs(Foundation.NSSize, CoreFoundation.CGSize)
+        self.assertIs(Foundation.NSRect, CoreFoundation.CGRect)
 
     def test_functions_inlines(self):
         self.assertEqual(AppKit.NSMakePoint(1, 2), AppKit.NSPoint(1, 2))
@@ -55,8 +102,6 @@ class TestNSGeometry(TestCase):
         self.assertHasAttr(Foundation, "NSSizeFromCGSize")
         self.assertHasAttr(Foundation, "NSSizeToCGSize")
 
-    @min_os_level("10.8")
-    def test_functions_inlines10_8(self):
         v = AppKit.NSEdgeInsetsMake(1, 2, 3, 4)
         self.assertIsInstance(v, AppKit.NSEdgeInsets)
         self.assertEqual(v.top, 1.0)
@@ -122,6 +167,14 @@ class TestNSGeometry(TestCase):
         v = AppKit.NSRectFromString("{   {0,1}  , {  4, 5}}")
         self.assertEqual(v, r1)
 
+        r2 = AppKit.NSRect(AppKit.NSPoint(4.5, 5.5), AppKit.NSSize(7.5, 8.5))
+        r = AppKit.NSIntegralRectWithOptions(r2, AppKit.NSAlignAllEdgesNearest)
+        self.assertIsInstance(r, AppKit.NSRect)
+
+    @min_os_level("10.10")
+    def test_functions10_10(self):
+        self.assertResultIsBOOL(AppKit.NSEdgeInsetsEqual)
+
     def test_value_methods(self):
         v = AppKit.NSValue.valueWithPoint_(AppKit.NSPoint(2, 3))
         w = v.pointValue()
@@ -186,60 +239,3 @@ class TestNSGeometry(TestCase):
         self.assertResultHasType(
             AppKit.NSCoder.decodeRectForKey_, AppKit.NSRect.__typestr__
         )
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertIsInstance(AppKit.NSEdgeInsetsZero, AppKit.NSEdgeInsets)
-
-    @min_os_level("10.7")
-    def test_constants10_7(self):
-        self.assertEqual(AppKit.NSAlignMinXInward, 1 << 0)
-        self.assertEqual(AppKit.NSAlignMinYInward, 1 << 1)
-        self.assertEqual(AppKit.NSAlignMaxXInward, 1 << 2)
-        self.assertEqual(AppKit.NSAlignMaxYInward, 1 << 3)
-        self.assertEqual(AppKit.NSAlignWidthInward, 1 << 4)
-        self.assertEqual(AppKit.NSAlignHeightInward, 1 << 5)
-        self.assertEqual(AppKit.NSAlignMinXOutward, 1 << 8)
-        self.assertEqual(AppKit.NSAlignMinYOutward, 1 << 9)
-        self.assertEqual(AppKit.NSAlignMaxXOutward, 1 << 10)
-        self.assertEqual(AppKit.NSAlignMaxYOutward, 1 << 11)
-        self.assertEqual(AppKit.NSAlignWidthOutward, 1 << 12)
-        self.assertEqual(AppKit.NSAlignHeightOutward, 1 << 13)
-        self.assertEqual(AppKit.NSAlignMinXNearest, 1 << 16)
-        self.assertEqual(AppKit.NSAlignMinYNearest, 1 << 17)
-        self.assertEqual(AppKit.NSAlignMaxXNearest, 1 << 18)
-        self.assertEqual(AppKit.NSAlignMaxYNearest, 1 << 19)
-        self.assertEqual(AppKit.NSAlignWidthNearest, 1 << 20)
-        self.assertEqual(AppKit.NSAlignHeightNearest, 1 << 21)
-        self.assertEqual(AppKit.NSAlignRectFlipped, 1 << 63)
-        self.assertEqual(
-            AppKit.NSAlignAllEdgesInward,
-            AppKit.NSAlignMinXInward
-            | AppKit.NSAlignMaxXInward
-            | AppKit.NSAlignMinYInward
-            | AppKit.NSAlignMaxYInward,
-        )
-        self.assertEqual(
-            AppKit.NSAlignAllEdgesOutward,
-            AppKit.NSAlignMinXOutward
-            | AppKit.NSAlignMaxXOutward
-            | AppKit.NSAlignMinYOutward
-            | AppKit.NSAlignMaxYOutward,
-        )
-        self.assertEqual(
-            AppKit.NSAlignAllEdgesNearest,
-            AppKit.NSAlignMinXNearest
-            | AppKit.NSAlignMaxXNearest
-            | AppKit.NSAlignMinYNearest
-            | AppKit.NSAlignMaxYNearest,
-        )
-
-    @min_os_level("10.7")
-    def test_functions10_7(self):
-        r2 = AppKit.NSRect(AppKit.NSPoint(4.5, 5.5), AppKit.NSSize(7.5, 8.5))
-        r = AppKit.NSIntegralRectWithOptions(r2, AppKit.NSAlignAllEdgesNearest)
-        self.assertIsInstance(r, AppKit.NSRect)
-
-    @min_os_level("10.10")
-    def test_functions10_10(self):
-        self.assertResultIsBOOL(AppKit.NSEdgeInsetsEqual)

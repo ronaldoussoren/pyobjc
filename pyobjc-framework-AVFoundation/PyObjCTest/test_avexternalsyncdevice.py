@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestAVExternalSyncDevice(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVExternalSyncDeviceStatus)
         self.assertEqual(AVFoundation.AVExternalSyncDeviceStatusUnavailable, 0)
         self.assertEqual(AVFoundation.AVExternalSyncDeviceStatusReady, 1)

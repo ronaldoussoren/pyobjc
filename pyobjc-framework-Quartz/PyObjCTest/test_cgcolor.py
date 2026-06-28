@@ -4,47 +4,13 @@ import objc
 
 
 class TestCGColor(TestCase):
+    def test_constants(self):
+        self.assertIsInstance(Quartz.kCGColorWhite, str)
+        self.assertIsInstance(Quartz.kCGColorBlack, str)
+        self.assertIsInstance(Quartz.kCGColorClear, str)
+
     def test_types(self):
         self.assertIsCFType(Quartz.CGColorRef)
-
-    @min_os_level("26.0")
-    def test_functions26_0(self):
-        self.assertResultIsCFRetained(Quartz.CGColorCreateWithContentHeadroom)
-        Quartz.CGColorGetContentHeadroom
-
-    @min_os_level("10.15")
-    def test_functions10_15(self):
-        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGrayGamma2_2)
-        color = Quartz.CGColorCreateGenericGrayGamma2_2(1.5, 0.3)
-        self.assertIsInstance(color, Quartz.CGColorRef)
-
-    @min_os_level("10.11")
-    def test_functions10_11(self):
-        self.assertResultIsCFRetained(Quartz.CGColorCreateCopyByMatchingToColorSpace)
-        color = Quartz.CGColorCreateCopyByMatchingToColorSpace(
-            Quartz.CGColorSpaceCreateDeviceGray(),
-            Quartz.kCGRenderingIntentDefault,
-            Quartz.CGColorCreateGenericGray(0.75, 0.8),
-            None,
-        )
-        self.assertIsInstance(color, Quartz.CGColorRef)
-
-    @min_os_level("10.5")
-    def test_functions10_5(self):
-        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGray)
-        color = Quartz.CGColorCreateGenericGray(0.75, 0.8)
-        self.assertIsInstance(color, Quartz.CGColorRef)
-
-        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericRGB)
-        color = Quartz.CGColorCreateGenericRGB(0.75, 0.8, 1.0, 0.5)
-        self.assertIsInstance(color, Quartz.CGColorRef)
-
-        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericCMYK)
-        color = Quartz.CGColorCreateGenericCMYK(0.75, 0.8, 0.5, 1.0, 0.5)
-        self.assertIsInstance(color, Quartz.CGColorRef)
-
-        color = Quartz.CGColorGetConstantColor(Quartz.kCGColorWhite)
-        self.assertIsInstance(color, Quartz.CGColorRef)
 
     def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGColorCreate)
@@ -86,8 +52,39 @@ class TestCGColor(TestCase):
 
         # Quartz.CGColorCreateWithPattern, Quartz.CGColorGetPattern: tested in test_cgpattern
 
-    @min_os_level("10.5")
-    def test_constants(self):
-        self.assertIsInstance(Quartz.kCGColorWhite, str)
-        self.assertIsInstance(Quartz.kCGColorBlack, str)
-        self.assertIsInstance(Quartz.kCGColorClear, str)
+        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGray)
+        color = Quartz.CGColorCreateGenericGray(0.75, 0.8)
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericRGB)
+        color = Quartz.CGColorCreateGenericRGB(0.75, 0.8, 1.0, 0.5)
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericCMYK)
+        color = Quartz.CGColorCreateGenericCMYK(0.75, 0.8, 0.5, 1.0, 0.5)
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+        color = Quartz.CGColorGetConstantColor(Quartz.kCGColorWhite)
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+    @min_os_level("10.11")
+    def test_functions10_11(self):
+        self.assertResultIsCFRetained(Quartz.CGColorCreateCopyByMatchingToColorSpace)
+        color = Quartz.CGColorCreateCopyByMatchingToColorSpace(
+            Quartz.CGColorSpaceCreateDeviceGray(),
+            Quartz.kCGRenderingIntentDefault,
+            Quartz.CGColorCreateGenericGray(0.75, 0.8),
+            None,
+        )
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+    @min_os_level("10.15")
+    def test_functions10_15(self):
+        self.assertResultIsCFRetained(Quartz.CGColorCreateGenericGrayGamma2_2)
+        color = Quartz.CGColorCreateGenericGrayGamma2_2(1.5, 0.3)
+        self.assertIsInstance(color, Quartz.CGColorRef)
+
+    @min_os_level("26.0")
+    def test_functions26_0(self):
+        self.assertResultIsCFRetained(Quartz.CGColorCreateWithContentHeadroom)
+        Quartz.CGColorGetContentHeadroom

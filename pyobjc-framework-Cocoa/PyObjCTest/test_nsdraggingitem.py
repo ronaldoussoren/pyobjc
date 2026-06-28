@@ -1,18 +1,16 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDraggingItem(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSDraggingImageComponentKey, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSDraggingImageComponentIconKey, str)
         self.assertIsInstance(AppKit.NSDraggingImageComponentLabelKey, str)
 
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AppKit.NSDraggingItem.setImageComponentsProvider_, 0, b"@"
         )

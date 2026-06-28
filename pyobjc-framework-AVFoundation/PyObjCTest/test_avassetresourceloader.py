@@ -24,29 +24,7 @@ class TestAVAssetResourceLoader(TestCase):
             str,
         )
 
-    @min_os_level("10.9")
-    def test_protocols(self):
-        self.assertProtocolExists("AVAssetResourceLoaderDelegate", AVFoundation)
-
-    def test_protocol_methods(self):
-        self.assertResultHasType(
-            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForLoadingOfRequestedResource_,  # noqa: B950
-            objc._C_NSBOOL,
-        )
-
-    @min_os_level("10.10")
-    def test_protocols10_10(self):
-        self.assertResultHasType(
-            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForRenewalOfRequestedResource_,  # noqa: B950
-            objc._C_NSBOOL,
-        )
-        self.assertResultHasType(
-            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForResponseToAuthenticationChallenge_,  # noqa: B950
-            objc._C_NSBOOL,
-        )
-
-    @min_os_level("10.9")
-    def test_methods10_9(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetResourceLoadingRequest.isFinished
         )  # noqa: B950
@@ -112,4 +90,22 @@ class TestAVAssetResourceLoader(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVAssetResourceLoader.setSendsCommonMediaClientDataAsHTTPHeaders_,
             0,
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("AVAssetResourceLoaderDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForLoadingOfRequestedResource_,  # noqa: B950
+            objc._C_NSBOOL,
+        )
+
+        self.assertResultHasType(
+            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForRenewalOfRequestedResource_,  # noqa: B950
+            objc._C_NSBOOL,
+        )
+        self.assertResultHasType(
+            TestAVAssetResourceLoaderHelper.resourceLoader_shouldWaitForResponseToAuthenticationChallenge_,  # noqa: B950
+            objc._C_NSBOOL,
         )

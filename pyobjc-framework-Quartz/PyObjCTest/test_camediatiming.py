@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
@@ -59,14 +59,12 @@ class TestCAMediaTiming(TestCase):
     def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAMediaTimingFillMode, str)
 
-    @min_os_level("10.5")
     def test_constants(self):
         self.assertIsInstance(Quartz.kCAFillModeForwards, str)
         self.assertIsInstance(Quartz.kCAFillModeBackwards, str)
         self.assertIsInstance(Quartz.kCAFillModeBoth, str)
         self.assertIsInstance(Quartz.kCAFillModeRemoved, str)
 
-    @min_os_level("10.5")
     def test_methods(self):
         self.assertResultHasType(TestCAMediaTimingHelper.beginTime, objc._C_DBL)
         self.assertArgHasType(TestCAMediaTimingHelper.setBeginTime_, 0, objc._C_DBL)
@@ -87,6 +85,5 @@ class TestCAMediaTiming(TestCase):
         self.assertResultHasType(TestCAMediaTimingHelper.fillMode, objc._C_ID)
         self.assertArgHasType(TestCAMediaTimingHelper.setFillMode_, 0, objc._C_ID)
 
-    @min_os_level("10.5")
     def test_protocols(self):
         self.assertProtocolExists("CAMediaTiming", Quartz)

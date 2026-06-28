@@ -1,12 +1,11 @@
 import uuid
 
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSUUID(TestCase):
-    @min_os_level("10.8")
-    def test_methods10_8(self):
+    def test_methods(self):
         val = Foundation.NSUUID.UUID()
 
         self.assertArgIsOut(val.getUUIDBytes_, 0)
