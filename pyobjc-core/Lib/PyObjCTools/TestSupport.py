@@ -1199,11 +1199,13 @@ class TestCase(_unittest.TestCase):
             try:
                 v = getattr(mod, modalias)
             except AttributeError:
-                self.fail(f"{mod}.{modalias} does not exist")
+                self.fail(f"{mod.__name__}.{modalias} does not exist")
 
             else:
                 if v is not proto:
-                    self.fail(f"{mod}.{modalias} is not objc.protocolNamed({name!r}")
+                    self.fail(
+                        f"{mod.__name__}.{modalias} is not objc.protocolNamed({name!r}, but {v!r}"
+                    )
 
     def assertPickleRoundTrips(self, value):
         try:
