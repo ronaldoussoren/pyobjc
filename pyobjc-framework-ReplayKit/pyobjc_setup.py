@@ -499,6 +499,8 @@ def Extension(*args, **kwds):
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
                 % (tuple(map(int, version.split(".")[:2])))
             )
+            ldflags.append("-isysroot")
+            ldflags.append(data)
         else:
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
