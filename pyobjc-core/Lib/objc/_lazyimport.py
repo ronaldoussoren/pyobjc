@@ -200,12 +200,15 @@ def createFrameworkDirAndGetattr(
         # Check if the name is a formal protocol
         # from the metadata files
         try:
-            value = formal_protocols.pop(name)
+            real_name = formal_protocols.pop(name)
         except KeyError:
             pass
         else:
             try:
-                return objc.protocolNamed(value)
+                value = objc.protocolNamed(real_name)
+                globals_dict[name] = value
+                return value
+
             except objc.ProtocolError:
                 pass
 
