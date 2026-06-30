@@ -4,10 +4,8 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphScatterNDOps(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphScatterMode)
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphScatterModeAdd, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphScatterModeSub, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphScatterModeMul, 2)

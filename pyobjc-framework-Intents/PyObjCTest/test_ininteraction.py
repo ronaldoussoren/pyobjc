@@ -3,12 +3,8 @@ import Intents
 
 
 class TestINInteraction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INIntentHandlingStatus)
-        self.assertIsEnumType(Intents.INInteractionDirection)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INIntentHandlingStatusUnspecified, 0)
         self.assertEqual(Intents.INIntentHandlingStatusReady, 1)
         self.assertEqual(Intents.INIntentHandlingStatusInProgress, 2)
@@ -17,6 +13,7 @@ class TestINInteraction(TestCase):
         self.assertEqual(Intents.INIntentHandlingStatusDeferredToApplication, 5)
         self.assertEqual(Intents.INIntentHandlingStatusUserConfirmationRequired, 6)
 
+        self.assertIsEnumType(Intents.INInteractionDirection)
         self.assertEqual(Intents.INInteractionDirectionUnspecified, 0)
         self.assertEqual(Intents.INInteractionDirectionOutgoing, 1)
         self.assertEqual(Intents.INInteractionDirectionIncoming, 2)

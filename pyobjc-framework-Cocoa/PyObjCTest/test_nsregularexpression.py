@@ -4,12 +4,22 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRegularExpression(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSMatchingFlags)
-        self.assertIsEnumType(Foundation.NSMatchingOptions)
-        self.assertIsEnumType(Foundation.NSRegularExpressionOptions)
+        self.assertEqual(Foundation.NSMatchingProgress, 1 << 0)
+        self.assertEqual(Foundation.NSMatchingCompleted, 1 << 1)
+        self.assertEqual(Foundation.NSMatchingHitEnd, 1 << 2)
+        self.assertEqual(Foundation.NSMatchingRequiredEnd, 1 << 3)
+        self.assertEqual(Foundation.NSMatchingInternalError, 1 << 4)
 
-    def test_constants(self):
+        self.assertIsEnumType(Foundation.NSMatchingOptions)
+        self.assertEqual(Foundation.NSMatchingReportProgress, 1 << 0)
+        self.assertEqual(Foundation.NSMatchingReportCompletion, 1 << 1)
+        self.assertEqual(Foundation.NSMatchingAnchored, 1 << 2)
+        self.assertEqual(Foundation.NSMatchingWithTransparentBounds, 1 << 3)
+        self.assertEqual(Foundation.NSMatchingWithoutAnchoringBounds, 1 << 4)
+
+        self.assertIsEnumType(Foundation.NSRegularExpressionOptions)
         self.assertEqual(Foundation.NSRegularExpressionCaseInsensitive, 1 << 0)
         self.assertEqual(
             Foundation.NSRegularExpressionAllowCommentsAndWhitespace, 1 << 1
@@ -19,18 +29,6 @@ class TestNSRegularExpression(TestCase):
         self.assertEqual(Foundation.NSRegularExpressionAnchorsMatchLines, 1 << 4)
         self.assertEqual(Foundation.NSRegularExpressionUseUnixLineSeparators, 1 << 5)
         self.assertEqual(Foundation.NSRegularExpressionUseUnicodeWordBoundaries, 1 << 6)
-
-        self.assertEqual(Foundation.NSMatchingReportProgress, 1 << 0)
-        self.assertEqual(Foundation.NSMatchingReportCompletion, 1 << 1)
-        self.assertEqual(Foundation.NSMatchingAnchored, 1 << 2)
-        self.assertEqual(Foundation.NSMatchingWithTransparentBounds, 1 << 3)
-        self.assertEqual(Foundation.NSMatchingWithoutAnchoringBounds, 1 << 4)
-
-        self.assertEqual(Foundation.NSMatchingProgress, 1 << 0)
-        self.assertEqual(Foundation.NSMatchingCompleted, 1 << 1)
-        self.assertEqual(Foundation.NSMatchingHitEnd, 1 << 2)
-        self.assertEqual(Foundation.NSMatchingRequiredEnd, 1 << 3)
-        self.assertEqual(Foundation.NSMatchingInternalError, 1 << 4)
 
     def test_methods(self):
         self.assertArgIsOut(

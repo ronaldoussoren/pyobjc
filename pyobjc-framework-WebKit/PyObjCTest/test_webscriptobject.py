@@ -22,7 +22,8 @@ class TestWebScriptObjectHelper(WebKit.NSObject):
 
 
 class TestWebScriptObject(TestCase):
-    def test_methods(self):
+    def test_protocol_methods(self):
+        # Informal protocol:
         self.assertArgHasType(
             TestWebScriptObjectHelper.webScriptNameForSelector_, 0, objc._C_SEL
         )

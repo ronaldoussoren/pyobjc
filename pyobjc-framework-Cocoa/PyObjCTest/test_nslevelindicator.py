@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLevelIndicator(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSLevelIndicatorPlaceholderVisibility)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSLevelIndicatorPlaceholderVisibilityAutomatic, 0)
         self.assertEqual(AppKit.NSLevelIndicatorPlaceholderVisibilityAlways, 1)
         self.assertEqual(AppKit.NSLevelIndicatorPlaceholderVisibilityWhileEditing, 2)

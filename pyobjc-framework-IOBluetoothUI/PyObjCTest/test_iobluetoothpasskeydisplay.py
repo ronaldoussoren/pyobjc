@@ -4,7 +4,7 @@ import IOBluetoothUI
 
 
 class TestIOBluetoothPasskeyDisplay(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(IOBluetoothUI.BluetoothKeyboardReturnType)
         self.assertEqual(IOBluetoothUI.kBluetoothKeyboardANSIReturn, 0)
         self.assertEqual(IOBluetoothUI.kBluetoothKeyboardISOReturn, 1)

@@ -33,14 +33,14 @@ class TestNSConnection(TestCase):
         self.assertResultIsBOOL(Foundation.NSConnection.registerName_withNameServer_)
         self.assertResultIsBOOL(Foundation.NSConnection.multipleThreadsEnabled)
 
-    def test_protocols(self):
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSConnectionDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSConnectionHelper.makeNewConnection_sender_)
         self.assertResultIsBOOL(
             TestNSConnectionHelper.connection_shouldMakeNewConnection_
         )
         self.assertResultIsBOOL(TestNSConnectionHelper.authenticateComponents_withData_)
         self.assertResultIsBOOL(TestNSConnectionHelper.connection_handleRequest_)
-
-    @min_sdk_level("10.10")
-    def test_protocols10_10(self):
-        self.assertProtocolExists("NSConnectionDelegate", Foundation)

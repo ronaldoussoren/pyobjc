@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLLocationUpdater(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreLocation.CLLiveUpdateConfiguration)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationDefault, 0)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationAutomotiveNavigation, 1)

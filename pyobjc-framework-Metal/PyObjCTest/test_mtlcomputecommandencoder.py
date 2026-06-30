@@ -134,7 +134,7 @@ class TestMTLComputeCommandEncoder(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLComputeCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLComputeCommandEncoderHelper.dispatchType, objc._C_NSUInteger
         )

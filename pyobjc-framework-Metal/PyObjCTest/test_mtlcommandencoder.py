@@ -8,15 +8,13 @@ class TestMTLCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLCommandEncoder(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLBarrierScope)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLResourceUsage)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLResourceUsageRead, 1 << 0)
         self.assertEqual(Metal.MTLResourceUsageWrite, 1 << 1)
         self.assertEqual(Metal.MTLResourceUsageSample, 1 << 2)
 
+        self.assertIsEnumType(Metal.MTLBarrierScope)
         self.assertEqual(Metal.MTLBarrierScopeBuffers, 1 << 0)
         self.assertEqual(Metal.MTLBarrierScopeTextures, 1 << 1)
         self.assertEqual(Metal.MTLBarrierScopeRenderTargets, 1 << 2)

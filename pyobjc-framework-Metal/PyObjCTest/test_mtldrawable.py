@@ -27,7 +27,7 @@ class TestMTLDrawable(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLDrawable", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(TestMTLDrawableHelper.presentAtTime_, 0, objc._C_DBL)
 
         self.assertArgHasType(

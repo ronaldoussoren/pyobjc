@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestIMService(TestCase):
     def test_enums(self):
-        self.assertIsTypedEnum(InstantMessage.IMPersonStatus)
+        self.assertIsEnumType(InstantMessage.IMPersonStatus)
         self.assertEqual(InstantMessage.IMPersonStatusUnknown, 0)
         self.assertEqual(InstantMessage.IMPersonStatusOffline, 1)
         self.assertEqual(InstantMessage.IMPersonStatusIdle, 2)
@@ -12,7 +12,7 @@ class TestIMService(TestCase):
         self.assertEqual(InstantMessage.IMPersonStatusAvailable, 4)
         self.assertEqual(InstantMessage.IMPersonStatusNoStatus, 5)
 
-        self.assertIsTypedEnum(InstantMessage.IMServiceStatus)
+        self.assertIsEnumType(InstantMessage.IMServiceStatus)
         self.assertEqual(InstantMessage.IMServiceStatusLoggedOut, 0)
         self.assertEqual(InstantMessage.IMServiceStatusDisconnected, 1)
         self.assertEqual(InstantMessage.IMServiceStatusLoggingOut, 2)

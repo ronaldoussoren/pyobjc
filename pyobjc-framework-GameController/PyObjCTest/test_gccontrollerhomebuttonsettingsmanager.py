@@ -7,7 +7,7 @@ import GameController
 
 
 class TestGCControllerHomeButtonSettingsManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCControllerHomeButtonSettingsAction)
         self.assertEqual(
             GameController.GCControllerHomeButtonSettingsActionUnavailable, 0

@@ -15,11 +15,8 @@ class TestNCWidgetProvidingHelper(NotificationCenter.NSObject):
 
 
 class TestNCWidgetProviding(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NotificationCenter.NCUpdateResult)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(NotificationCenter.NCUpdateResultNewData, 0)
         self.assertEqual(NotificationCenter.NCUpdateResultNoData, 1)
         self.assertEqual(NotificationCenter.NCUpdateResultFailed, 2)

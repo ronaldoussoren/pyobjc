@@ -299,44 +299,42 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLRenderCommandEncoder(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLCullMode)
-        self.assertIsEnumType(Metal.MTLDepthClipMode)
-        self.assertIsEnumType(Metal.MTLPrimitiveType)
-        self.assertIsEnumType(Metal.MTLRenderStages)
-        self.assertIsEnumType(Metal.MTLTriangleFillMode)
-        self.assertIsEnumType(Metal.MTLVisibilityResultMode)
-        self.assertIsEnumType(Metal.MTLWinding)
+        self.assertEqual(Metal.MTLCullModeNone, 0)
+        self.assertEqual(Metal.MTLCullModeFront, 1)
+        self.assertEqual(Metal.MTLCullModeBack, 2)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLDepthClipMode)
+        self.assertEqual(Metal.MTLDepthClipModeClip, 0)
+        self.assertEqual(Metal.MTLDepthClipModeClamp, 1)
+
+        self.assertIsEnumType(Metal.MTLPrimitiveType)
         self.assertEqual(Metal.MTLPrimitiveTypePoint, 0)
         self.assertEqual(Metal.MTLPrimitiveTypeLine, 1)
         self.assertEqual(Metal.MTLPrimitiveTypeLineStrip, 2)
         self.assertEqual(Metal.MTLPrimitiveTypeTriangle, 3)
         self.assertEqual(Metal.MTLPrimitiveTypeTriangleStrip, 4)
 
-        self.assertEqual(Metal.MTLVisibilityResultModeDisabled, 0)
-        self.assertEqual(Metal.MTLVisibilityResultModeBoolean, 1)
-        self.assertEqual(Metal.MTLVisibilityResultModeCounting, 2)
-
-        self.assertEqual(Metal.MTLCullModeNone, 0)
-        self.assertEqual(Metal.MTLCullModeFront, 1)
-        self.assertEqual(Metal.MTLCullModeBack, 2)
-
-        self.assertEqual(Metal.MTLWindingClockwise, 0)
-        self.assertEqual(Metal.MTLWindingCounterClockwise, 1)
-
-        self.assertEqual(Metal.MTLDepthClipModeClip, 0)
-        self.assertEqual(Metal.MTLDepthClipModeClamp, 1)
-
-        self.assertEqual(Metal.MTLTriangleFillModeFill, 0)
-        self.assertEqual(Metal.MTLTriangleFillModeLines, 1)
-
+        self.assertIsEnumType(Metal.MTLRenderStages)
         self.assertEqual(Metal.MTLRenderStageVertex, 1 << 0)
         self.assertEqual(Metal.MTLRenderStageFragment, 1 << 1)
         self.assertEqual(Metal.MTLRenderStageTile, 1 << 2)
         self.assertEqual(Metal.MTLRenderStageObject, 1 << 3)
         self.assertEqual(Metal.MTLRenderStageMesh, 1 << 4)
+
+        self.assertIsEnumType(Metal.MTLTriangleFillMode)
+        self.assertEqual(Metal.MTLTriangleFillModeFill, 0)
+        self.assertEqual(Metal.MTLTriangleFillModeLines, 1)
+
+        self.assertIsEnumType(Metal.MTLVisibilityResultMode)
+        self.assertEqual(Metal.MTLVisibilityResultModeDisabled, 0)
+        self.assertEqual(Metal.MTLVisibilityResultModeBoolean, 1)
+        self.assertEqual(Metal.MTLVisibilityResultModeCounting, 2)
+
+        self.assertIsEnumType(Metal.MTLWinding)
+        self.assertEqual(Metal.MTLWindingClockwise, 0)
+        self.assertEqual(Metal.MTLWindingCounterClockwise, 1)
 
     def test_structs(self):
         v = Metal.MTLScissorRect()
@@ -1606,7 +1604,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLRenderCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setVertexBytes_length_atIndex_, 0, b"n^v"
         )

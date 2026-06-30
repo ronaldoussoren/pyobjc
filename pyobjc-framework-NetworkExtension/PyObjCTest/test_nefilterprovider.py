@@ -3,10 +3,25 @@ import NetworkExtension
 
 
 class TestNEFilterProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEFilterAction)
+        self.assertEqual(NetworkExtension.NEFilterActionInvalid, 0)
+        self.assertEqual(NetworkExtension.NEFilterActionAllow, 1)
+        self.assertEqual(NetworkExtension.NEFilterActionDrop, 2)
+        self.assertEqual(NetworkExtension.NEFilterActionRemediate, 3)
+        self.assertEqual(NetworkExtension.NEFilterActionFilterData, 4)
+
         self.assertIsEnumType(NetworkExtension.NEFilterReportEvent)
+        self.assertEqual(NetworkExtension.NEFilterReportEventNewFlow, 1)
+        self.assertEqual(NetworkExtension.NEFilterReportEventDataDecision, 2)
+        self.assertEqual(NetworkExtension.NEFilterReportEventFlowClosed, 3)
+        self.assertEqual(NetworkExtension.NEFilterReportEventStatistics, 4)
+
         self.assertIsEnumType(NetworkExtension.NEFilterReportFrequency)
+        self.assertEqual(NetworkExtension.NEFilterReportFrequencyNone, 0)
+        self.assertEqual(NetworkExtension.NEFilterReportFrequencyLow, 1)
+        self.assertEqual(NetworkExtension.NEFilterReportFrequencyMedium, 2)
+        self.assertEqual(NetworkExtension.NEFilterReportFrequencyHigh, 3)
 
     @min_os_level("10.15")
     def test_methods10_15(self):
@@ -32,20 +47,3 @@ class TestNEFilterProvider(TestCase):
 
         self.assertResultIsBOOL(NetworkExtension.NEFilterVerdict.shouldReport)
         self.assertArgIsBOOL(NetworkExtension.NEFilterVerdict.setShouldReport_, 0)
-
-    def test_constants(self):
-        self.assertEqual(NetworkExtension.NEFilterActionInvalid, 0)
-        self.assertEqual(NetworkExtension.NEFilterActionAllow, 1)
-        self.assertEqual(NetworkExtension.NEFilterActionDrop, 2)
-        self.assertEqual(NetworkExtension.NEFilterActionRemediate, 3)
-        self.assertEqual(NetworkExtension.NEFilterActionFilterData, 4)
-
-        self.assertEqual(NetworkExtension.NEFilterReportEventNewFlow, 1)
-        self.assertEqual(NetworkExtension.NEFilterReportEventDataDecision, 2)
-        self.assertEqual(NetworkExtension.NEFilterReportEventFlowClosed, 3)
-        self.assertEqual(NetworkExtension.NEFilterReportEventStatistics, 4)
-
-        self.assertEqual(NetworkExtension.NEFilterReportFrequencyNone, 0)
-        self.assertEqual(NetworkExtension.NEFilterReportFrequencyLow, 1)
-        self.assertEqual(NetworkExtension.NEFilterReportFrequencyMedium, 2)
-        self.assertEqual(NetworkExtension.NEFilterReportFrequencyHigh, 3)

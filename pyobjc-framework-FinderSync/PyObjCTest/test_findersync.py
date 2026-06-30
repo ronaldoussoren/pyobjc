@@ -12,8 +12,12 @@ class TestFinderSyncHelper(FinderSync.NSObject):
 
 
 class TestFinderSync(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(FinderSync.FIMenuKind)
+        self.assertEqual(FinderSync.FIMenuKindContextualMenuForItems, 0)
+        self.assertEqual(FinderSync.FIMenuKindContextualMenuForContainer, 1)
+        self.assertEqual(FinderSync.FIMenuKindContextualMenuForSidebar, 2)
+        self.assertEqual(FinderSync.FIMenuKindToolbarItemMenu, 3)
 
     @min_os_level("10.10")
     def test_classes(self):
@@ -35,13 +39,6 @@ class TestFinderSync(TestCase):
             TestFinderSyncHelper.makeListenerEndpointForServiceName_itemURL_andReturnError_,
             2,
         )
-
-    @min_os_level("10.10")
-    def test_constants(self):
-        self.assertEqual(FinderSync.FIMenuKindContextualMenuForItems, 0)
-        self.assertEqual(FinderSync.FIMenuKindContextualMenuForContainer, 1)
-        self.assertEqual(FinderSync.FIMenuKindContextualMenuForSidebar, 2)
-        self.assertEqual(FinderSync.FIMenuKindToolbarItemMenu, 3)
 
     @min_os_level("10.13")
     def test_methods(self):

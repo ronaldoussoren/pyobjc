@@ -4,15 +4,55 @@ import PassKit
 
 
 class TestPKConstants(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(PassKit.PKPaymentAuthorizationStatus)
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusSuccess, 0)
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusFailure, 1)
+        self.assertEqual(
+            PassKit.PKPaymentAuthorizationStatusInvalidBillingPostalAddress, 2
+        )
+        self.assertEqual(
+            PassKit.PKPaymentAuthorizationStatusInvalidShippingPostalAddress, 3
+        )
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusInvalidShippingContact, 4)
+
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINRequired, 5)
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINIncorrect, 6)
+        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINLockout, 7)
+
+        self.assertIsEnumType(PassKit.PKPaymentButtonStyle)
+        self.assertEqual(PassKit.PKPaymentButtonStyleWhite, 0)
+        self.assertEqual(PassKit.PKPaymentButtonStyleWhiteOutline, 1)
+        self.assertEqual(PassKit.PKPaymentButtonStyleBlack, 2)
+        self.assertEqual(PassKit.PKPaymentButtonStyleAutomatic, 3)
+
+        self.assertIsEnumType(PassKit.PKPaymentButtonType)
+        self.assertEqual(PassKit.PKPaymentButtonTypePlain, 0)
+        self.assertEqual(PassKit.PKPaymentButtonTypeBuy, 1)
+        self.assertEqual(PassKit.PKPaymentButtonTypeSetUp, 2)
+        self.assertEqual(PassKit.PKPaymentButtonTypeInStore, 3)
+        self.assertEqual(PassKit.PKPaymentButtonTypeDonate, 4)
+        self.assertEqual(PassKit.PKPaymentButtonTypeCheckout, 5)
+        self.assertEqual(PassKit.PKPaymentButtonTypeBook, 6)
+        self.assertEqual(PassKit.PKPaymentButtonTypeSubscribe, 7)
+        self.assertEqual(PassKit.PKPaymentButtonTypeReload, 8)
+        self.assertEqual(PassKit.PKPaymentButtonTypeAddMoney, 9)
+        self.assertEqual(PassKit.PKPaymentButtonTypeTopUp, 10)
+        self.assertEqual(PassKit.PKPaymentButtonTypeOrder, 11)
+        self.assertEqual(PassKit.PKPaymentButtonTypeRent, 12)
+        self.assertEqual(PassKit.PKPaymentButtonTypeSupport, 13)
+        self.assertEqual(PassKit.PKPaymentButtonTypeContribute, 14)
+        self.assertEqual(PassKit.PKPaymentButtonTypeTip, 15)
+        self.assertEqual(PassKit.PKPaymentButtonTypeContinue, 16)
+
+        self.assertIsEnumType(PassKit.PKRadioTechnology)
+        self.assertEqual(PassKit.PKRadioTechnologyNone, 0)
+        self.assertEqual(PassKit.PKRadioTechnologyNFC, 1 << 0)
+        self.assertEqual(PassKit.PKRadioTechnologyBluetooth, 1 << 1)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(PassKit.PKContactField, str)
         self.assertIsTypedEnum(PassKit.PKEncryptionScheme, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(PassKit.PKPaymentAuthorizationStatus)
-        self.assertIsEnumType(PassKit.PKPaymentButtonStyle)
-        self.assertIsEnumType(PassKit.PKPaymentButtonType)
-        self.assertIsEnumType(PassKit.PKRadioTechnology)
 
     def test_constants(self):
         self.assertIsInstance(PassKit.PKEncryptionSchemeECC_V2, str)
@@ -46,44 +86,6 @@ class TestPKConstants(TestCase):
         self.assertIsInstance(PassKit.PKContactFieldPhoneNumber, str)
         self.assertIsInstance(PassKit.PKContactFieldName, str)
         self.assertIsInstance(PassKit.PKContactFieldPhoneticName, str)
-
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusSuccess, 0)
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusFailure, 1)
-
-        self.assertEqual(
-            PassKit.PKPaymentAuthorizationStatusInvalidBillingPostalAddress, 2
-        )
-        self.assertEqual(
-            PassKit.PKPaymentAuthorizationStatusInvalidShippingPostalAddress, 3
-        )
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusInvalidShippingContact, 4)
-
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINRequired, 5)
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINIncorrect, 6)
-        self.assertEqual(PassKit.PKPaymentAuthorizationStatusPINLockout, 7)
-
-        self.assertEqual(PassKit.PKPaymentButtonStyleWhite, 0)
-        self.assertEqual(PassKit.PKPaymentButtonStyleWhiteOutline, 1)
-        self.assertEqual(PassKit.PKPaymentButtonStyleBlack, 2)
-        self.assertEqual(PassKit.PKPaymentButtonStyleAutomatic, 3)
-
-        self.assertEqual(PassKit.PKPaymentButtonTypePlain, 0)
-        self.assertEqual(PassKit.PKPaymentButtonTypeBuy, 1)
-        self.assertEqual(PassKit.PKPaymentButtonTypeSetUp, 2)
-        self.assertEqual(PassKit.PKPaymentButtonTypeInStore, 3)
-        self.assertEqual(PassKit.PKPaymentButtonTypeDonate, 4)
-        self.assertEqual(PassKit.PKPaymentButtonTypeCheckout, 5)
-        self.assertEqual(PassKit.PKPaymentButtonTypeBook, 6)
-        self.assertEqual(PassKit.PKPaymentButtonTypeSubscribe, 7)
-        self.assertEqual(PassKit.PKPaymentButtonTypeReload, 8)
-        self.assertEqual(PassKit.PKPaymentButtonTypeAddMoney, 9)
-        self.assertEqual(PassKit.PKPaymentButtonTypeTopUp, 10)
-        self.assertEqual(PassKit.PKPaymentButtonTypeOrder, 11)
-        self.assertEqual(PassKit.PKPaymentButtonTypeRent, 12)
-        self.assertEqual(PassKit.PKPaymentButtonTypeSupport, 13)
-        self.assertEqual(PassKit.PKPaymentButtonTypeContribute, 14)
-        self.assertEqual(PassKit.PKPaymentButtonTypeTip, 15)
-        self.assertEqual(PassKit.PKPaymentButtonTypeContinue, 16)
 
     @min_os_level("11.5")
     def test_constants11_5(self):

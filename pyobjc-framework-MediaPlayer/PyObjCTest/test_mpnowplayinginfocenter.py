@@ -9,21 +9,21 @@ import MediaPlayer
 
 
 class TestMPNowPlayingInfoCenter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPNowPlayingInfoMediaType)
-        self.assertIsEnumType(MediaPlayer.MPNowPlayingPlaybackState)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeNone, 0)
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeAudio, 1)
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeVideo, 2)
+
+        self.assertIsEnumType(MediaPlayer.MPNowPlayingPlaybackState)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateUnknown, 0)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStatePlaying, 1)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStatePaused, 2)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateStopped, 3)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateInterrupted, 4)
 
+    @min_os_level("10.12")
+    def test_constants(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime, str
         )

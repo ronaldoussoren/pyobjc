@@ -1,25 +1,22 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEEvaluateConnectionRuleAction)
-        self.assertIsEnumType(NetworkExtension.NEOnDemandRuleAction)
-        self.assertIsEnumType(NetworkExtension.NEOnDemandRuleInterfaceType)
+        self.assertEqual(
+            NetworkExtension.NEEvaluateConnectionRuleActionConnectIfNeeded, 1
+        )
+        self.assertEqual(NetworkExtension.NEEvaluateConnectionRuleActionNeverConnect, 2)
 
-    @min_os_level("10.11")
-    def test_constants(self):
+        self.assertIsEnumType(NetworkExtension.NEOnDemandRuleAction)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionConnect, 1)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionDisconnect, 2)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionEvaluateConnection, 3)
         self.assertEqual(NetworkExtension.NEOnDemandRuleActionIgnore, 4)
 
+        self.assertIsEnumType(NetworkExtension.NEOnDemandRuleInterfaceType)
         self.assertEqual(NetworkExtension.NEOnDemandRuleInterfaceTypeAny, 0)
         self.assertEqual(NetworkExtension.NEOnDemandRuleInterfaceTypeEthernet, 1)
         self.assertEqual(NetworkExtension.NEOnDemandRuleInterfaceTypeWiFi, 2)
-
-        self.assertEqual(
-            NetworkExtension.NEEvaluateConnectionRuleActionConnectIfNeeded, 1
-        )
-        self.assertEqual(NetworkExtension.NEEvaluateConnectionRuleActionNeverConnect, 2)

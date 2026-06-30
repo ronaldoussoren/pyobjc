@@ -315,5 +315,7 @@ use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSTextViewportRenderingSurfaceKey));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextSelectionManagerDelegate));
+    Py_XDECREF(p);
 #endif
 }

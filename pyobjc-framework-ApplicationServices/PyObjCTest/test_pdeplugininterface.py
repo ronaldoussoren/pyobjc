@@ -35,7 +35,7 @@ class TestPDEPluginInterface(TestCase):
         self.assertProtocolExists("PDEPanel", PrintCore)
         self.assertProtocolExists("PDEPlugInCallbackProtocol", PrintCore)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldHide)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_)
         self.assertArgIsOut(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_, 0)

@@ -3,10 +3,8 @@ import IntentsUI
 
 
 class TestINUIAddVoiceShortcutButton(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(IntentsUI.INUIAddVoiceShortcutButtonStyle)
-
-    def test_constants(self):
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleWhite, 0)
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleWhiteOutline, 1)
         self.assertEqual(IntentsUI.INUIAddVoiceShortcutButtonStyleBlack, 2)

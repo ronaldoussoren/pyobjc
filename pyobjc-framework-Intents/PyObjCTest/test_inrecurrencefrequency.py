@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINRecurrenceFrequency(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INRecurrenceFrequency)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INRecurrenceFrequencyUnknown, 0)
         self.assertEqual(Intents.INRecurrenceFrequencyMinute, 1)
         self.assertEqual(Intents.INRecurrenceFrequencyHourly, 2)

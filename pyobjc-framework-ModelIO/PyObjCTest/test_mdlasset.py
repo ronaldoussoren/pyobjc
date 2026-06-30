@@ -41,6 +41,27 @@ class TestMDLAsset(TestCase):
 
         self.assertResultIsBOOL(ModelIO.MDLAsset.canExportFileExtension_)
 
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertArgIsBOOL(
+            ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 2
+        )
+        self.assertArgIsOut(
+            ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 3
+        )
+
+        self.assertResultHasType(
+            ModelIO.MDLAsset.upAxis, simd.vector_float3.__typestr__
+        )
+        self.assertArgHasType(
+            ModelIO.MDLAsset.setUpAxis_, 0, simd.vector_float3.__typestr__
+        )
+
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("MDLLightProbeIrradianceDataSource", ModelIO)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMDLAssetHelper.boundingBox,
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,
@@ -62,23 +83,3 @@ class TestMDLAsset(TestCase):
         self.assertArgHasType(
             TestMDLAssetHelper.setSphericalHarmonicsLevel_, 0, objc._C_NSUInteger
         )
-
-    @min_os_level("10.13")
-    def test_methods10_13(self):
-        self.assertArgIsBOOL(
-            ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 2
-        )
-        self.assertArgIsOut(
-            ModelIO.MDLAsset.initWithURL_bufferAllocator_preserveIndexing_error_, 3
-        )
-
-        self.assertResultHasType(
-            ModelIO.MDLAsset.upAxis, simd.vector_float3.__typestr__
-        )
-        self.assertArgHasType(
-            ModelIO.MDLAsset.setUpAxis_, 0, simd.vector_float3.__typestr__
-        )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("MDLLightProbeIrradianceDataSource", ModelIO)

@@ -4,7 +4,7 @@ import PencilKit
 
 
 class TestPKContentVersion(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PencilKit.PKContentVersion)
         self.assertEqual(PencilKit.PKContentVersion1, 1)
         self.assertEqual(PencilKit.PKContentVersion2, 2)

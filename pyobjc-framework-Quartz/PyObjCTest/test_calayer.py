@@ -99,10 +99,6 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplayOnBoundsChange)
         self.assertArgIsBOOL(Quartz.CALayer.setNeedsDisplayOnBoundsChange_, 0)
 
-        self.assertResultHasType(
-            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
-        )
-
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(Quartz.CALayer.isGeometryFlipped)
         self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
@@ -147,3 +143,8 @@ class TestCALayer(TestCase):
     def test_protocols10_12(self):
         self.assertProtocolExists("CALayerDelegate", Quartz)
         self.assertProtocolExists("CALayoutManager", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
+        )

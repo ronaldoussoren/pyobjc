@@ -3,10 +3,8 @@ import Intents
 
 
 class TestINMessage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INMessageType)
-
-    def test_constants(self):
         self.assertEqual(Intents.INMessageTypeUnspecified, 0)
         self.assertEqual(Intents.INMessageTypeText, 1)
         self.assertEqual(Intents.INMessageTypeAudio, 2)
@@ -26,7 +24,6 @@ class TestINMessage(TestCase):
         self.assertEqual(Intents.INMessageTypeMediaVideo, 16)
         self.assertEqual(Intents.INMessageTypeMediaPass, 17)
         self.assertEqual(Intents.INMessageTypeMediaAudio, 18)
-
         self.assertEqual(Intents.INMessageTypePaymentSent, 19)
         self.assertEqual(Intents.INMessageTypePaymentRequest, 20)
         self.assertEqual(Intents.INMessageTypePaymentNote, 21)

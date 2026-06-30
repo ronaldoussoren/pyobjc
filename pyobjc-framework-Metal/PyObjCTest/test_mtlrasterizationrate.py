@@ -30,7 +30,57 @@ class TestMTLRasterizationRateHelper(Metal.NSObject):
 
 
 class TestMTLRasterizationRate(TestCase):
-    def test_methods(self):
+    @min_os_level("10.15.4")
+    def test_methods10_15_4(self):
+        self.assertArgIsIn(
+            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
+            1,
+        )
+
+        self.assertArgSizeInArg(
+            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
+            1,
+            0,
+        )
+
+        self.assertArgIsIn(
+            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
+            2,
+        )
+
+        self.assertArgSizeInArg(
+            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
+            2,
+            0,
+        )
+
+        # XXX: Mutable buffer
+        self.assertResultIsVariableSize(
+            Metal.MTLRasterizationRateLayerDescriptor.alloc()
+            .initWithSampleCount_((5, 5, 5))
+            .horizontalSampleStorage
+        )
+        self.assertResultIsVariableSize(
+            Metal.MTLRasterizationRateLayerDescriptor.alloc()
+            .initWithSampleCount_((5, 5, 5))
+            .verticalSampleStorage
+        )
+
+        self.assertArgIsIn(
+            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
+            2,
+        )
+        self.assertArgSizeInArg(
+            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
+            2,
+            1,
+        )
+
+    @min_os_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists("MTLRasterizationRateMap", Metal)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLRasterizationRateHelper.screenSize, Metal.MTLSize.__typestr__
         )
@@ -88,53 +138,3 @@ class TestMTLRasterizationRate(TestCase):
             1,
             objc._C_NSUInteger,
         )
-
-    @min_os_level("10.15.4")
-    def test_methods10_15_4(self):
-        self.assertArgIsIn(
-            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
-            1,
-        )
-
-        self.assertArgSizeInArg(
-            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
-            1,
-            0,
-        )
-
-        self.assertArgIsIn(
-            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
-            2,
-        )
-
-        self.assertArgSizeInArg(
-            Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_,
-            2,
-            0,
-        )
-
-        # XXX: Mutable buffer
-        self.assertResultIsVariableSize(
-            Metal.MTLRasterizationRateLayerDescriptor.alloc()
-            .initWithSampleCount_((5, 5, 5))
-            .horizontalSampleStorage
-        )
-        self.assertResultIsVariableSize(
-            Metal.MTLRasterizationRateLayerDescriptor.alloc()
-            .initWithSampleCount_((5, 5, 5))
-            .verticalSampleStorage
-        )
-
-        self.assertArgIsIn(
-            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
-            2,
-        )
-        self.assertArgSizeInArg(
-            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
-            2,
-            1,
-        )
-
-    @min_os_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists("MTLRasterizationRateMap", Metal)

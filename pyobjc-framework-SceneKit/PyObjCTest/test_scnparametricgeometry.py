@@ -5,10 +5,8 @@ import SceneKit
 
 
 class TestSCNParametricGeometry(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNChamferMode)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNChamferModeBoth, 0)
         self.assertEqual(SceneKit.SCNChamferModeFront, 1)
         self.assertEqual(SceneKit.SCNChamferModeBack, 2)

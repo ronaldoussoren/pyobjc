@@ -4,10 +4,8 @@ import PassKit
 
 
 class TestPKPaymentPass(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(PassKit.PKPaymentPassActivationState)
-
-    def test_constants(self):
         self.assertEqual(PassKit.PKPaymentPassActivationStateActivated, 0)
         self.assertEqual(PassKit.PKPaymentPassActivationStateRequiresActivation, 1)
         self.assertEqual(PassKit.PKPaymentPassActivationStateActivating, 2)

@@ -43,4 +43,6 @@ class TestSFCertificatePanel(TestCase):
         self.assertArgIsBOOL(SecurityInterface.SFCertificatePanel.setShowsHelp_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFCertificatePanel.showsHelp)
 
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(TestSFCertificatePanelHelper.certificatePanelShowHelp_)

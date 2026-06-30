@@ -30,21 +30,8 @@ class TestNSTextSelectionNavigationHelper(AppKit.NSObject):
 
 
 class TestNSTextSelectionNavigation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextSelectionNavigationDestination)
-        self.assertIsEnumType(AppKit.NSTextSelectionNavigationDirection)
-        self.assertIsEnumType(AppKit.NSTextSelectionNavigationLayoutOrientation)
-        self.assertIsEnumType(AppKit.NSTextSelectionNavigationModifier)
-        self.assertIsEnumType(AppKit.NSTextSelectionNavigationWritingDirection)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionForward, 0)
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionBackward, 1)
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionRight, 2)
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionLeft, 3)
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionUp, 4)
-        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionDown, 5)
-
         self.assertEqual(AppKit.NSTextSelectionNavigationDestinationCharacter, 0)
         self.assertEqual(AppKit.NSTextSelectionNavigationDestinationWord, 1)
         self.assertEqual(AppKit.NSTextSelectionNavigationDestinationLine, 2)
@@ -53,21 +40,66 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertEqual(AppKit.NSTextSelectionNavigationDestinationContainer, 5)
         self.assertEqual(AppKit.NSTextSelectionNavigationDestinationDocument, 6)
 
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationDirection)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionForward, 0)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionBackward, 1)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionRight, 2)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionLeft, 3)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionUp, 4)
+        self.assertEqual(AppKit.NSTextSelectionNavigationDirectionDown, 5)
+
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationLayoutOrientation)
+        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationHorizontal, 0)
+        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationVertical, 1)
+
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationModifier)
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierExtend, 1 << 0)
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierVisual, 1 << 1)
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierMultiple, 1 << 2)
 
+        self.assertIsEnumType(AppKit.NSTextSelectionNavigationWritingDirection)
         self.assertEqual(AppKit.NSTextSelectionNavigationWritingDirectionLeftToRight, 0)
         self.assertEqual(AppKit.NSTextSelectionNavigationWritingDirectionRightToLeft, 1)
 
-        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationHorizontal, 0)
-        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationVertical, 1)
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSTextSelectionNavigation.allowsNonContiguousRanges
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.setAllowsNonContiguousRanges_, 0
+        )
+
+        self.assertResultIsBOOL(
+            AppKit.NSTextSelectionNavigation.rotatesCoordinateSystemForLayoutOrientation
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.setRotatesCoordinateSystemForLayoutOrientation_,
+            0,
+        )
+
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
+            4,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.textSelectionsInteractingAtPoint_inContainerAtLocation_anchors_modifiers_selecting_bounds_,  # noqa: B950
+            4,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.deletionRangesForTextSelection_direction_destination_allowsDecomposition_,
+            3,
+        )
 
     @min_sdk_level("12.0")
     def test_protocols(self):
         self.assertProtocolExists("NSTextSelectionDataSource", AppKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTextSelectionNavigationHelper.locationFromLocation_withOffset_,
             1,
@@ -123,38 +155,4 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertResultHasType(
             TestNSTextSelectionNavigationHelper.textLayoutOrientationAtLocation_,
             objc._C_NSInteger,
-        )
-
-    @min_os_level("12.0")
-    def test_methods12_0(self):
-        self.assertResultIsBOOL(
-            AppKit.NSTextSelectionNavigation.allowsNonContiguousRanges
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.setAllowsNonContiguousRanges_, 0
-        )
-
-        self.assertResultIsBOOL(
-            AppKit.NSTextSelectionNavigation.rotatesCoordinateSystemForLayoutOrientation
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.setRotatesCoordinateSystemForLayoutOrientation_,
-            0,
-        )
-
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
-            3,
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
-            4,
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.textSelectionsInteractingAtPoint_inContainerAtLocation_anchors_modifiers_selecting_bounds_,  # noqa: B950
-            4,
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.deletionRangesForTextSelection_direction_destination_allowsDecomposition_,
-            3,
         )

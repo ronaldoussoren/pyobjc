@@ -4,6 +4,6 @@ import PHASE
 
 
 class TestPHASEMedium(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PHASE.PHASEMediumPreset)
         self.assertEqual(PHASE.PHASEMediumPresetAir, fourcc(b"mdAr"))

@@ -8,10 +8,8 @@ class TestNSStatusItemHelper(AppKit.NSObject):
 
 
 class TestNSStatusItem(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSStatusItemBehavior)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSStatusItemBehaviorRemovalAllowed, 1 << 1)
         self.assertEqual(AppKit.NSStatusItemBehaviorTerminationOnRemoval, 1 << 2)
 

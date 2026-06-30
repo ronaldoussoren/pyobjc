@@ -33,10 +33,8 @@ class TestMDLMeshBufferHelper(ModelIO.NSObject):
 
 
 class TestMDLMeshBuffer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLMeshBufferType)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLMeshBufferTypeVertex, 1)
         self.assertEqual(ModelIO.MDLMeshBufferTypeIndex, 2)
         self.assertEqual(ModelIO.MDLMeshBufferTypeCustom, 3)
@@ -51,6 +49,12 @@ class TestMDLMeshBuffer(TestCase):
 
         self.assertResultIsVariableSize(ModelIO.MDLMeshBufferMap.bytes)
 
+    def test_protocols(self):
+        self.assertProtocolExists("MDLMeshBuffer", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferZone", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferAllocator", ModelIO)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMDLMeshBufferHelper.fillData_offset_, 1, objc._C_NSUInteger
         )
@@ -80,8 +84,3 @@ class TestMDLMeshBuffer(TestCase):
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferFromZone_data_type_, 2, objc._C_NSUInteger
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("MDLMeshBuffer", ModelIO)
-        self.assertProtocolExists("MDLMeshBufferZone", ModelIO)
-        self.assertProtocolExists("MDLMeshBufferAllocator", ModelIO)

@@ -13,17 +13,7 @@ class TestAVB17221AECPInterfaceHelper(AudioVideoBridging.NSObject):
 
 
 class TestAVB17221AECPInterface(TestCase):
-    def test_protocols(self):
-        self.assertProtocolExists("AVB17221AECPClient", AudioVideoBridging)
-
     def test_methods(self):
-        self.assertResultIsBOOL(
-            TestAVB17221AECPInterfaceHelper.AECPDidReceiveCommand_onInterface_
-        )
-        self.assertResultIsBOOL(
-            TestAVB17221AECPInterfaceHelper.AECPDidReceiveResponse_onInterface_
-        )
-
         self.assertResultIsBOOL(
             AudioVideoBridging.AVB17221AECPInterface.sendCommand_toMACAddress_completionHandler_
         )
@@ -61,4 +51,15 @@ class TestAVB17221AECPInterface(TestCase):
             AudioVideoBridging.AVB17221AECPInterface.sendVendorUniqueCommand_toMACAddress_expectResponseWithinTimeout_completionHandler_,
             3,
             AVB17221AECPInterfaceCompletion,
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("AVB17221AECPClient", AudioVideoBridging)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestAVB17221AECPInterfaceHelper.AECPDidReceiveCommand_onInterface_
+        )
+        self.assertResultIsBOOL(
+            TestAVB17221AECPInterfaceHelper.AECPDidReceiveResponse_onInterface_
         )

@@ -7,10 +7,8 @@ GKChallengeComposeHandler = b"v@Z@"
 
 
 class TestGKChallenge(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKChallengeState)
-
-    def test_constants(self):
         self.assertEqual(GameKit.GKChallengeStateInvalid, 0)
         self.assertEqual(GameKit.GKChallengeStatePending, 1)
         self.assertEqual(GameKit.GKChallengeStateCompleted, 2)

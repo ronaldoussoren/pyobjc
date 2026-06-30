@@ -43,6 +43,8 @@ class TestNSInputServerHelper(AppKit.NSObject):
 class TestNSInputServer(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSInputServiceProvider", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsSEL(
             TestNSInputServerHelper.doCommandBySelector_client_, 0, b"v@:@"
         )

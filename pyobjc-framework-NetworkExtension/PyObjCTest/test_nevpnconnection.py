@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNEVPNConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEVPNStatus)
-        self.assertIsEnumType(NetworkExtension.NEVPNConnectionError)
-
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEVPNStatusInvalid, 0)
         self.assertEqual(NetworkExtension.NEVPNStatusDisconnected, 1)
         self.assertEqual(NetworkExtension.NEVPNStatusConnecting, 2)
@@ -15,6 +12,7 @@ class TestNEVPNConnection(TestCase):
         self.assertEqual(NetworkExtension.NEVPNStatusReasserting, 4)
         self.assertEqual(NetworkExtension.NEVPNStatusDisconnecting, 5)
 
+        self.assertIsEnumType(NetworkExtension.NEVPNConnectionError)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorOverslept, 1)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorNoNetworkAvailable, 2)
         self.assertEqual(

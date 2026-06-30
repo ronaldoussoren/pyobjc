@@ -5,7 +5,7 @@ VTMotionEstimationOutputHandler = b"viq@@"
 
 
 class TestVTMotionEstimationSession(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(VideoToolbox.VTMotionEstimationFrameFlags)
         self.assertEqual(
             VideoToolbox.kVTMotionEstimationFrameFlags_CurrentBufferWillBeNextReferenceBuffer,

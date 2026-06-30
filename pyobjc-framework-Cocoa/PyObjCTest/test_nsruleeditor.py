@@ -20,22 +20,21 @@ class TestNSRuleEditorHelper(AppKit.NSObject):
 
 
 class TestNSRuleEditor(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSRuleEditorPredicatePartKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSRuleEditorNestingMode)
-        self.assertIsEnumType(AppKit.NSRuleEditorRowType)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSRuleEditorNestingModeSingle, 0)
         self.assertEqual(AppKit.NSRuleEditorNestingModeList, 1)
         self.assertEqual(AppKit.NSRuleEditorNestingModeCompound, 2)
         self.assertEqual(AppKit.NSRuleEditorNestingModeSimple, 3)
 
+        self.assertIsEnumType(AppKit.NSRuleEditorRowType)
         self.assertEqual(AppKit.NSRuleEditorRowTypeSimple, 0)
         self.assertEqual(AppKit.NSRuleEditorRowTypeCompound, 1)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSRuleEditorPredicatePartKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSRuleEditorPredicateLeftExpression, str)
         self.assertIsInstance(AppKit.NSRuleEditorPredicateRightExpression, str)
         self.assertIsInstance(AppKit.NSRuleEditorPredicateComparisonModifier, str)

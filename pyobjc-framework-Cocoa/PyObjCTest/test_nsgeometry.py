@@ -5,8 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGeometry(TestCase):
-    def test_enum_types(self):
-
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSAlignmentOptions)
         self.assertEqual(AppKit.NSAlignMinXInward, 1 << 0)
         self.assertEqual(AppKit.NSAlignMinYInward, 1 << 1)
@@ -62,7 +61,6 @@ class TestNSGeometry(TestCase):
         self.assertEqual(AppKit.NSMaxYEdge, 3)
 
     def test_constants(self):
-
         self.assertEqual(AppKit.NSZeroPoint, AppKit.NSPoint())
         self.assertEqual(AppKit.NSZeroSize, AppKit.NSSize())
         self.assertEqual(AppKit.NSZeroRect, AppKit.NSRect())

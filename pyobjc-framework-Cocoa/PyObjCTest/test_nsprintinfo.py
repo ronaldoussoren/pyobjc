@@ -3,26 +3,30 @@ from PyObjCTools.TestSupport import TestCase, max_os_level
 
 
 class TestNSPrintInfo(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSPrintInfoAttributeKey, str)
-        self.assertIsTypedEnum(AppKit.NSPrintJobDispositionValue, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPaperOrientation)
-        self.assertIsEnumType(AppKit.NSPrintingOrientation)
-        self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSPortraitOrientation, 0)
-        self.assertEqual(AppKit.NSLandscapeOrientation, 1)
-
         self.assertEqual(AppKit.NSPaperOrientationPortrait, 0)
         self.assertEqual(AppKit.NSPaperOrientationLandscape, 1)
 
+        self.assertIsEnumType(AppKit.NSPrintingOrientation)
+        self.assertEqual(AppKit.NSPortraitOrientation, 0)
+        self.assertEqual(AppKit.NSLandscapeOrientation, 1)
+
+        self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
+        self.assertEqual(AppKit.NSPrintingPaginationModeAutomatic, 0)
+        self.assertEqual(AppKit.NSPrintingPaginationModeFit, 1)
+        self.assertEqual(AppKit.NSPrintingPaginationModeClip, 2)
+
+        # Legacy aliases:
         self.assertEqual(AppKit.NSAutoPagination, 0)
         self.assertEqual(AppKit.NSFitPagination, 1)
         self.assertEqual(AppKit.NSClipPagination, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPrintInfoAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSPrintJobDispositionValue, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPrintSpoolJob, str)
         self.assertIsInstance(AppKit.NSPrintPreviewJob, str)
         self.assertIsInstance(AppKit.NSPrintSaveJob, str)
@@ -65,10 +69,6 @@ class TestNSPrintInfo(TestCase):
         self.assertIsInstance(AppKit.NSPrintManualFeed, str)
         self.assertIsInstance(AppKit.NSPrintPagesPerSheet, str)
         self.assertIsInstance(AppKit.NSPrintPaperFeed, str)
-
-        self.assertEqual(AppKit.NSPrintingPaginationModeAutomatic, 0)
-        self.assertEqual(AppKit.NSPrintingPaginationModeFit, 1)
-        self.assertEqual(AppKit.NSPrintingPaginationModeClip, 2)
 
         self.assertIsInstance(AppKit.NSPrintSelectionOnly, str)
         self.assertIsInstance(AppKit.NSPrintJobSavingURL, str)

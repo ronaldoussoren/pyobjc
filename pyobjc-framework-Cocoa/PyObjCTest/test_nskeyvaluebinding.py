@@ -151,7 +151,12 @@ class TestNSKeyValueBinding(TestCase):
         self.assertIs(AppKit.NSIsControllerMarker(o), False)
         self.assertIs(AppKit.NSIsControllerMarker(AppKit.NSMultipleValuesMarker), True)
 
-    def test_methods(self):
+    @min_sdk_level("10.14")
+    def test_protocols(self):
+        self.assertProtocolExists("NSEditor", AppKit)
+        self.assertProtocolExists("NSEditorRegistration", AppKit)
+
+    def test_protocol_methods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
         self.assertEqual(m["arguments"][3]["sel_of_type"], b"v@:@Z^v")
@@ -162,8 +167,3 @@ class TestNSKeyValueBinding(TestCase):
             TestNSKeyValueBindingHelper.commitEditingAndReturnError_
         )
         self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
-
-    @min_sdk_level("10.14")
-    def test_protocols(self):
-        self.assertProtocolExists("NSEditor", AppKit)
-        self.assertProtocolExists("NSEditorRegistration", AppKit)

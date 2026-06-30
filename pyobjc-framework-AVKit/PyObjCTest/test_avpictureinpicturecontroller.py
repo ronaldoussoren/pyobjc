@@ -10,10 +10,6 @@ class TestAVPictureInPictureControllerHelper(AVKit.NSObject):
 
 
 class TestAVPictureInPictureController(TestCase):
-    @min_sdk_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists("AVPictureInPictureControllerDelegate", AVKit)
-
     @min_os_level("10.15")
     def test_methods(self):
         self.assertResultIsBOOL(
@@ -27,12 +23,6 @@ class TestAVPictureInPictureController(TestCase):
         )
         self.assertResultIsBOOL(
             AVKit.AVPictureInPictureController.isPictureInPictureSuspended
-        )
-
-        self.assertArgIsBlock(
-            TestAVPictureInPictureControllerHelper.pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,  # noqa: B950
-            1,
-            b"vZ",
         )
 
     @min_os_level("11.0")
@@ -56,4 +46,15 @@ class TestAVPictureInPictureController(TestCase):
         self.assertArgIsBOOL(
             AVKit.AVPictureInPictureController.setCanStartPictureInPictureAutomaticallyFromInline_,
             0,
+        )
+
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists("AVPictureInPictureControllerDelegate", AVKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBlock(
+            TestAVPictureInPictureControllerHelper.pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,  # noqa: B950
+            1,
+            b"vZ",
         )

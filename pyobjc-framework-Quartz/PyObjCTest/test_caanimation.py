@@ -34,16 +34,10 @@ class TestCAAnimation(TestCase):
         self.assertIsInstance(Quartz.kCAAnimationCubic, str)
         self.assertIsInstance(Quartz.kCAAnimationCubicPaced, str)
 
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("CAAnimationDelegate", Quartz)
-
     def test_methods(self):
         self.assertResultIsBOOL(Quartz.CAAnimation.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(Quartz.CAAnimation.isRemovedOnCompletion)
         self.assertArgIsBOOL(Quartz.CAAnimation.setRemovedOnCompletion_, 0)
-
-        self.assertArgIsBOOL(TestCAAnimationHelper.animationDidStop_finished_, 1)
 
         self.assertResultIsBOOL(Quartz.CAPropertyAnimation.isAdditive)
         self.assertArgIsBOOL(Quartz.CAPropertyAnimation.setAdditive_, 0)
@@ -55,3 +49,10 @@ class TestCAAnimation(TestCase):
     def test_methods14_0(self):
         self.assertResultIsBOOL(Quartz.CASpringAnimation.allowsOverdamping)
         self.assertArgIsBOOL(Quartz.CASpringAnimation.setAllowsOverdamping_, 0)
+
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("CAAnimationDelegate", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(TestCAAnimationHelper.animationDidStop_finished_, 1)

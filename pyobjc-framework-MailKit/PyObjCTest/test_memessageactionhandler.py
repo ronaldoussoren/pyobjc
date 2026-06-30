@@ -11,7 +11,7 @@ class TestMEMessageActionHandler(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MEMessageActionHandler", MailKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestMEMessageActionHandlerHelper.decideActionForMessage_completionHandler_,
             1,

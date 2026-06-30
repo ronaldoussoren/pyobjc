@@ -3,7 +3,7 @@ import GameKit
 
 
 class TestGKReleaseState(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKReleaseState)
         self.assertEqual(GameKit.GKReleaseStateUnknown, 0)
         self.assertEqual(GameKit.GKReleaseStateReleased, 1)

@@ -12,9 +12,23 @@ import SceneKit
 
 
 class TestSceneKitTypes(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
+        # Unnamed enum:
+        self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
+
         self.assertIsEnumType(SceneKit.SCNActionTimingMode)
+        self.assertEqual(SceneKit.SCNActionTimingModeLinear, 0)
+        self.assertEqual(SceneKit.SCNActionTimingModeEaseIn, 1)
+        self.assertEqual(SceneKit.SCNActionTimingModeEaseOut, 2)
+        self.assertEqual(SceneKit.SCNActionTimingModeEaseInEaseOut, 3)
+
         self.assertIsEnumType(SceneKit.SCNColorMask)
+        self.assertEqual(SceneKit.SCNColorMaskNone, 0)
+        self.assertEqual(SceneKit.SCNColorMaskRed, 0x1 << 3)
+        self.assertEqual(SceneKit.SCNColorMaskGreen, 0x1 << 2)
+        self.assertEqual(SceneKit.SCNColorMaskBlue, 0x1 << 1)
+        self.assertEqual(SceneKit.SCNColorMaskAlpha, 0x1 << 0)
+        self.assertEqual(SceneKit.SCNColorMaskAll, 0xF)
 
     def test_structs(self):
         v = SceneKit.SCNVector3()
@@ -32,21 +46,6 @@ class TestSceneKitTypes(TestCase):
 
         self.assertTrue(SceneKit.SCNQuaternion is SceneKit.SCNVector4)
         self.assertTrue(SceneKit.SCNMatrix4 is SceneKit.CATransform3D)
-
-    def test_constants(self):
-        self.assertEqual(SceneKit.SCNProgramCompilationError, 1)
-
-        self.assertEqual(SceneKit.SCNActionTimingModeLinear, 0)
-        self.assertEqual(SceneKit.SCNActionTimingModeEaseIn, 1)
-        self.assertEqual(SceneKit.SCNActionTimingModeEaseOut, 2)
-        self.assertEqual(SceneKit.SCNActionTimingModeEaseInEaseOut, 3)
-
-        self.assertEqual(SceneKit.SCNColorMaskNone, 0)
-        self.assertEqual(SceneKit.SCNColorMaskRed, 0x1 << 3)
-        self.assertEqual(SceneKit.SCNColorMaskGreen, 0x1 << 2)
-        self.assertEqual(SceneKit.SCNColorMaskBlue, 0x1 << 1)
-        self.assertEqual(SceneKit.SCNColorMaskAlpha, 0x1 << 0)
-        self.assertEqual(SceneKit.SCNColorMaskAll, 0xF)
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
     @min_os_level("10.10")

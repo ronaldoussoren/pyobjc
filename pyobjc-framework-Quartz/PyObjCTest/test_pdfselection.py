@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFSelection(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFSelectionGranularity)
         self.assertEqual(Quartz.PDFSelectionGranularityCharacter, 0)
         self.assertEqual(Quartz.PDFSelectionGranularityWord, 1)

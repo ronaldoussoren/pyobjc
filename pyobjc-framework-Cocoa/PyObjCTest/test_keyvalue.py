@@ -325,11 +325,11 @@ class PyKeyValueCoding(TestCase):
             3, o, None, {"key3": b"drie", "key4": b"vier", "key5": b"V", "key9": b"IX"}
         )
 
-        self.assertEqual(o.key3, "drie")
-        self.assertEqual(o._key4, "viervierviervier")
-        self.assertEqual(o.key5, "VVVVV")
+        self.assertEqual(o.key3, b"drie")
+        self.assertEqual(o._key4, b"viervierviervier")
+        self.assertEqual(o.key5, b"VVVVV")
         self.assertHasAttr(o, "key9")
-        self.assertEqual(o.key9, "IX")
+        self.assertEqual(o.key9, b"IX")
 
     def test_take_values_from_dict2(self):
         o = KeyValueClass4.alloc().init()

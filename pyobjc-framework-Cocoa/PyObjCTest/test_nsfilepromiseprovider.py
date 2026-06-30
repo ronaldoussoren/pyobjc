@@ -12,7 +12,7 @@ class TestNSFilePromiseProvider(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSFilePromiseProviderDelegate", AppKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestNSFilePromiseProviderHelper.filePromiseProvider_writePromiseToURL_completionHandler_,  # noqa: B950
             2,

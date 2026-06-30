@@ -1,21 +1,20 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import MediaPlayer
 
 
 class TestMPRemoteControlTypes(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPChangeLanguageOptionSetting)
-        self.assertIsEnumType(MediaPlayer.MPRepeatType)
-        self.assertIsEnumType(MediaPlayer.MPShuffleType)
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertEqual(MediaPlayer.MPShuffleTypeOff, 0)
-        self.assertEqual(MediaPlayer.MPShuffleTypeItems, 1)
-        self.assertEqual(MediaPlayer.MPShuffleTypeCollections, 2)
-        self.assertEqual(MediaPlayer.MPRepeatTypeOff, 0)
-        self.assertEqual(MediaPlayer.MPRepeatTypeOne, 1)
-        self.assertEqual(MediaPlayer.MPRepeatTypeAll, 2)
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingNone, 0)
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingNowPlayingItemOnly, 1)
         self.assertEqual(MediaPlayer.MPChangeLanguageOptionSettingPermanent, 2)
+
+        self.assertIsEnumType(MediaPlayer.MPRepeatType)
+        self.assertEqual(MediaPlayer.MPRepeatTypeOff, 0)
+        self.assertEqual(MediaPlayer.MPRepeatTypeOne, 1)
+        self.assertEqual(MediaPlayer.MPRepeatTypeAll, 2)
+
+        self.assertIsEnumType(MediaPlayer.MPShuffleType)
+        self.assertEqual(MediaPlayer.MPShuffleTypeOff, 0)
+        self.assertEqual(MediaPlayer.MPShuffleTypeItems, 1)
+        self.assertEqual(MediaPlayer.MPShuffleTypeCollections, 2)

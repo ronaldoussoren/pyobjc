@@ -4,17 +4,19 @@ from PyObjCTools.TestSupport import (
     os_release,
     expectedFailureIf,
 )
-import objc
 import GameController
 
 
 class TestGCMicroGamepadSnapshot(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCMicroGamepadSnapshotDataVersion)
+        self.assertEqual(GameController.GCMicroGamepadSnapshotDataVersion1, 0x0100)
 
-    @min_os_level("10.12")
-    def test_classes(self):
-        self.assertIsInstance(GameController.GCMicroGamepadSnapshot, objc.objc_class)
+    @min_os_level("10.14.4")
+    def test_constants10_14_4(self):
+        self.assertIsInstance(
+            GameController.GCCurrentMicroGamepadSnapshotDataVersion, int
+        )
 
     @min_os_level("10.11")
     def test_structs(self):
@@ -54,12 +56,3 @@ class TestGCMicroGamepadSnapshot(TestCase):
         self.assertResultIsBOOL(GameController.GCMicroGamepadSnapshotDataFromNSData)
         self.assertArgIsOut(GameController.GCMicroGamepadSnapshotDataFromNSData, 0)
         self.assertArgIsIn(GameController.NSDataFromGCMicroGamepadSnapshotData, 0)
-
-    def test_constants(self):
-        self.assertEqual(GameController.GCMicroGamepadSnapshotDataVersion1, 0x0100)
-
-    @min_os_level("10.14.4")
-    def test_constants10_14_4(self):
-        self.assertIsInstance(
-            GameController.GCCurrentMicroGamepadSnapshotDataVersion, int
-        )

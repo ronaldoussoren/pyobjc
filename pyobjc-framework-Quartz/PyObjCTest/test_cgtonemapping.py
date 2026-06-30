@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGToneMapping(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.CGToneMapping)
         self.assertEqual(Quartz.kCGToneMappingDefault, 0)
         self.assertEqual(Quartz.kCGToneMappingImageSpecificLumaScaling, 1)

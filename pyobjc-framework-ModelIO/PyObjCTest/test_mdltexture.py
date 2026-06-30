@@ -4,10 +4,8 @@ from objc import simd
 
 
 class TestMDLTexture(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLTextureChannelEncoding)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt8, 1)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUint8, 1)
         self.assertEqual(ModelIO.MDLTextureChannelEncodingUInt16, 2)

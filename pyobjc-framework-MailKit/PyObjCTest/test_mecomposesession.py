@@ -11,18 +11,19 @@ class TestMEComposeSessionHelper(MailKit.NSObject):
 
 
 class TestMEComposeSession(TestCase):
-    def test_classes(self):
-        MailKit.MEComposeSession
-
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(MailKit.MEComposeSessionErrorCode)
         self.assertEqual(MailKit.MEComposeSessionErrorCodeInvalidRecipients, 0)
         self.assertEqual(MailKit.MEComposeSessionErrorCodeInvalidHeaders, 1)
         self.assertEqual(MailKit.MEComposeSessionErrorCodeInvalidBody, 2)
 
+    def test_classes(self):
+        MailKit.MEComposeSession
+
     def test_protocols(self):
         self.assertProtocolExists("MEComposeSessionHandler", MailKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestMEComposeSessionHelper.session_annotateAddressesWithCompletionHandler_,
             1,

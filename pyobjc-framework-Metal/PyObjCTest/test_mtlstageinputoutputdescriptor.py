@@ -3,12 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class MTLStageInputOutputDescriptor(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLAttributeFormat)
-        self.assertIsEnumType(Metal.MTLIndexType)
-        self.assertIsEnumType(Metal.MTLStepFunction)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLAttributeFormatInvalid, 0)
         self.assertEqual(Metal.MTLAttributeFormatUChar2, 1)
         self.assertEqual(Metal.MTLAttributeFormatUChar3, 2)
@@ -64,9 +60,11 @@ class MTLStageInputOutputDescriptor(TestCase):
         self.assertEqual(Metal.MTLAttributeFormatFloatRG11B10, 54)
         self.assertEqual(Metal.MTLAttributeFormatFloatRGB9E5, 55)
 
+        self.assertIsEnumType(Metal.MTLIndexType)
         self.assertEqual(Metal.MTLIndexTypeUInt16, 0)
         self.assertEqual(Metal.MTLIndexTypeUInt32, 1)
 
+        self.assertIsEnumType(Metal.MTLStepFunction)
         self.assertEqual(Metal.MTLStepFunctionConstant, 0)
         self.assertEqual(Metal.MTLStepFunctionPerVertex, 1)
         self.assertEqual(Metal.MTLStepFunctionPerInstance, 2)

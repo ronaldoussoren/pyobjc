@@ -5,12 +5,7 @@ import CoreSpotlight
 
 
 class TestCSSearchableItem(TestCase):
-    def test_constants(self):
-        self.assertIsInstance(CoreSpotlight.CSSearchableItemActionType, str)
-        self.assertIsInstance(CoreSpotlight.CSSearchableItemActivityIdentifier, str)
-        self.assertIsInstance(CoreSpotlight.CSQueryContinuationActionType, str)
-        self.assertIsInstance(CoreSpotlight.CSSearchQueryString, str)
-
+    def test_enums(self):
         self.assertIsEnumType(CoreSpotlight.CSSearchableItemUpdateListenerOptions)
         self.assertEqual(CoreSpotlight.CSSearchableItemUpdateListenerOptionDefault, 0)
         self.assertEqual(
@@ -19,6 +14,12 @@ class TestCSSearchableItem(TestCase):
         self.assertEqual(
             CoreSpotlight.CSSearchableItemUpdateListenerOptionPriority, 1 << 2
         )
+
+    def test_constants(self):
+        self.assertIsInstance(CoreSpotlight.CSSearchableItemActionType, str)
+        self.assertIsInstance(CoreSpotlight.CSSearchableItemActivityIdentifier, str)
+        self.assertIsInstance(CoreSpotlight.CSQueryContinuationActionType, str)
+        self.assertIsInstance(CoreSpotlight.CSSearchQueryString, str)
 
     @min_os_level("15.0")
     def test_methods15_0(self):

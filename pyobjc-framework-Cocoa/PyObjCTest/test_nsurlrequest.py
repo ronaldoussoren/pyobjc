@@ -7,12 +7,12 @@ from PyObjCTools.TestSupport import (
 
 
 class TestNSURLRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLRequestAttribution)
-        self.assertIsEnumType(Foundation.NSURLRequestCachePolicy)
-        self.assertIsEnumType(Foundation.NSURLRequestNetworkServiceType)
+        self.assertEqual(Foundation.NSURLRequestAttributionDeveloper, 0)
+        self.assertEqual(Foundation.NSURLRequestAttributionUser, 1)
 
-    def test_constants(self):
+        self.assertIsEnumType(Foundation.NSURLRequestCachePolicy)
         self.assertEqual(Foundation.NSURLRequestUseProtocolCachePolicy, 0)
         self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalCacheData, 1)
         self.assertEqual(
@@ -26,6 +26,7 @@ class TestNSURLRequest(TestCase):
         self.assertEqual(Foundation.NSURLRequestReturnCacheDataDontLoad, 3)
         self.assertEqual(Foundation.NSURLRequestReloadRevalidatingCacheData, 5)
 
+        self.assertIsEnumType(Foundation.NSURLRequestNetworkServiceType)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeDefault, 0)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeVoIP, 1)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeVideo, 2)
@@ -35,9 +36,6 @@ class TestNSURLRequest(TestCase):
         self.assertEqual(Foundation.NSURLNetworkServiceTypeAVStreaming, 8)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeResponsiveAV, 9)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeCallSignaling, 11)
-
-        self.assertEqual(Foundation.NSURLRequestAttributionDeveloper, 0)
-        self.assertEqual(Foundation.NSURLRequestAttributionUser, 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldHandleCookies)

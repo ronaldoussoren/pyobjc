@@ -3,8 +3,10 @@ import MediaPlayer
 
 
 class TestMPNowPlayingInfoLanguageOption(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPNowPlayingInfoLanguageOptionType)
+        self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeAudible, 0)
+        self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeLegible, 1)
 
     @min_os_level("10.12")
     def test_constants(self):
@@ -36,9 +38,6 @@ class TestMPNowPlayingInfoLanguageOption(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPLanguageOptionCharacteristicVoiceOverTranslation, str
         )
-
-        self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeAudible, 0)
-        self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeLegible, 1)
 
     @min_os_level("10.12")
     def test_methods(self):

@@ -71,24 +71,22 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderReplicatedExtension(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(FileProvider.NSFileProviderCreateItemOptions)
-        self.assertIsEnumType(FileProvider.NSFileProviderDeleteItemOptions)
-        self.assertIsEnumType(FileProvider.NSFileProviderFetchContentsOptions)
-        self.assertIsEnumType(FileProvider.NSFileProviderItemFields)
-        self.assertIsEnumType(FileProvider.NSFileProviderMaterializationFlags)
-        self.assertIsEnumType(FileProvider.NSFileProviderModifyItemOptions)
-
-    def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderCreateItemMayAlreadyExist, 1 << 0)
         self.assertEqual(
             FileProvider.NSFileProviderCreateItemDeletionConflicted, 1 << 1
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderDeleteItemOptions)
         self.assertEqual(FileProvider.NSFileProviderDeleteItemRecursive, 1 << 0)
 
-        self.assertEqual(FileProvider.NSFileProviderModifyItemMayAlreadyExist, 1 << 0)
+        self.assertIsEnumType(FileProvider.NSFileProviderFetchContentsOptions)
+        self.assertEqual(
+            FileProvider.NSFileProviderFetchContentsOptionsStrictVersioning, 1 << 0
+        )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderItemFields)
         self.assertEqual(FileProvider.NSFileProviderItemContents, 1 << 0)
         self.assertEqual(FileProvider.NSFileProviderItemFilename, 1 << 1)
         self.assertEqual(FileProvider.NSFileProviderItemParentItemIdentifier, 1 << 2)
@@ -101,12 +99,13 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         self.assertEqual(FileProvider.NSFileProviderItemExtendedAttributes, 1 << 9)
         self.assertEqual(FileProvider.NSFileProviderItemTypeAndCreator, 1 << 10)
 
+        self.assertIsEnumType(FileProvider.NSFileProviderMaterializationFlags)
         self.assertEqual(
             FileProvider.NSFileProviderMaterializationFlagsKnownSparseRanges, 1 << 0
         )
-        self.assertEqual(
-            FileProvider.NSFileProviderFetchContentsOptionsStrictVersioning, 1 << 0
-        )
+
+        self.assertIsEnumType(FileProvider.NSFileProviderModifyItemOptions)
+        self.assertEqual(FileProvider.NSFileProviderModifyItemMayAlreadyExist, 1 << 0)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
@@ -133,7 +132,7 @@ class TestNSFileProviderReplicatedExtension(TestCase):
     def test_protocols12_3(self):
         self.assertProtocolExists("NSFileProviderPartialContentFetching", FileProvider)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestNSFileProviderReplicatedExtensionHelper.setInteractionSuppressed_forIdentifier_,
             0,

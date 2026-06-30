@@ -20,21 +20,19 @@ class TestCMIOExtensionStreamHelper(CoreMediaIO.NSObject):
 
 
 class TestCMIOExtensionStream(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMediaIO.CMIOExtensionStreamDirection)
-        self.assertIsEnumType(CoreMediaIO.CMIOExtensionStreamClockType)
-        self.assertIsEnumType(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlags)
-
-    def test_constants(self):
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamDirectionSource, 0)
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamDirectionSink, 1)
 
+        self.assertIsEnumType(CoreMediaIO.CMIOExtensionStreamClockType)
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamClockTypeHostTime, 0)
         self.assertEqual(
             CoreMediaIO.CMIOExtensionStreamClockTypeLinkedCoreAudioDeviceUID, 1
         )
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamClockTypeCustom, 2)
 
+        self.assertIsEnumType(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlags)
         self.assertEqual(CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagNone, 0)
         self.assertEqual(
             CoreMediaIO.CMIOExtensionStreamDiscontinuityFlagUnknown, 1 << 0
@@ -48,7 +46,7 @@ class TestCMIOExtensionStream(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("CMIOExtensionStreamSource", CoreMediaIO)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCMIOExtensionStreamHelper.streamPropertiesForProperties_error_,
             1,

@@ -4,7 +4,7 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphNonMaximumSuppressionOps(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             MetalPerformanceShadersGraph.MPSGraphNonMaximumSuppressionCoordinateMode
         )

@@ -4,7 +4,7 @@ import CompositorServices
 
 
 class TestRendererCapabilities(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(CompositorServices.cp_supported_color_formats_options)
         self.assertEqual(CompositorServices.cp_supported_color_formats_options_none, 0)
         self.assertEqual(

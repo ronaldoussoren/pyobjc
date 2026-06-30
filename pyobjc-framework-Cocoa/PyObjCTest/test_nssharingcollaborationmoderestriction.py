@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSharingCollaborationModeRestriction(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSharingCollaborationMode)
         self.assertEqual(AppKit.NSSharingCollaborationModeSendCopy, 0)
         self.assertEqual(AppKit.NSSharingCollaborationModeCollaborate, 1)

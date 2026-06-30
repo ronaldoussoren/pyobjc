@@ -9,16 +9,12 @@ CHHapticEngineResetHandler = b"v"
 
 
 class TestCHHapticEngine(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreHaptics.CHHapticEngineFinishedAction)
-        self.assertIsEnumType(CoreHaptics.CHHapticEngineStoppedReason)
-
-    def test_constants(self):
-        self.assertEqual(CoreHaptics.CHHapticTimeImmediate, 0.0)
-
         self.assertEqual(CoreHaptics.CHHapticEngineFinishedActionStopEngine, 1)
         self.assertEqual(CoreHaptics.CHHapticEngineFinishedActionLeaveEngineRunning, 2)
 
+        self.assertIsEnumType(CoreHaptics.CHHapticEngineStoppedReason)
         self.assertEqual(
             CoreHaptics.CHHapticEngineStoppedReasonAudioSessionInterrupt, 1
         )
@@ -29,8 +25,10 @@ class TestCHHapticEngine(TestCase):
         self.assertEqual(
             CoreHaptics.CHHapticEngineStoppedReasonGameControllerDisconnect, 6
         )
-
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonSystemError, -1)
+
+        # Unnamed type:
+        self.assertEqual(CoreHaptics.CHHapticTimeImmediate, 0.0)
 
     @min_sdk_level("12.0")
     def test_constants12_0(self):

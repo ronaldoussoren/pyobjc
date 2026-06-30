@@ -5,11 +5,8 @@ from objc import simd
 
 
 class TestSKAction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKUniformType)
-
-    @min_os_level("10.10")
-    def test_constants(self):
         self.assertEqual(SpriteKit.SKUniformTypeNone, 0)
         self.assertEqual(SpriteKit.SKUniformTypeFloat, 1)
         self.assertEqual(SpriteKit.SKUniformTypeFloatVector2, 2)

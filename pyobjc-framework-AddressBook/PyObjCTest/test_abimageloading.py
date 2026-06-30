@@ -9,11 +9,11 @@ class TestABImageClientHelper(AddressBook.NSObject):
 
 
 class TestABImageLoading(TestCase):
-    def test_methods(self):
+    def test_protocols(self):
+        self.assertProtocolExists("ABImageClient", AddressBook)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(AddressBook.ABPerson.setImageData_)
         self.assertArgHasType(
             TestABImageClientHelper.consumeImageData_forTag_, 1, objc._C_NSInteger
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("ABImageClient", AddressBook)

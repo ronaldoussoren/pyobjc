@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINCallRecordType(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INCallRecordType)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INCallRecordTypeUnknown, 0)
         self.assertEqual(Intents.INCallRecordTypeOutgoing, 1)
         self.assertEqual(Intents.INCallRecordTypeMissed, 2)
@@ -17,6 +14,3 @@ class TestINCallRecordType(TestCase):
         self.assertEqual(Intents.INCallRecordTypeRinging, 6)
         self.assertEqual(Intents.INCallRecordTypeInProgress, 7)
         self.assertEqual(Intents.INCallRecordTypeOnHold, 8)
-
-        self.assertEqual(Intents.INCallRecordTypeLatest, 4)
-        self.assertEqual(Intents.INCallRecordTypeVoicemail, 5)

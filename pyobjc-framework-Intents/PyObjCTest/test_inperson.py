@@ -3,11 +3,8 @@ import Intents
 
 
 class TestINPerson(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INPersonSuggestionType)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INPersonSuggestionTypeNone, 0)
         self.assertEqual(Intents.INPersonSuggestionTypeSocialProfile, 1)
         self.assertEqual(Intents.INPersonSuggestionTypeInstantMessageAddress, 2)

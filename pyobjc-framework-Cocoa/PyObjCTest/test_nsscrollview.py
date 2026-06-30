@@ -3,19 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TesNSScrollView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSScrollElasticity)
-        self.assertIsEnumType(AppKit.NSScrollViewFindBarPosition)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSScrollElasticityAutomatic, 0)
         self.assertEqual(AppKit.NSScrollElasticityNone, 1)
         self.assertEqual(AppKit.NSScrollElasticityAllowed, 2)
 
+        self.assertIsEnumType(AppKit.NSScrollViewFindBarPosition)
         self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveHorizontalRuler, 0)
         self.assertEqual(AppKit.NSScrollViewFindBarPositionAboveContent, 1)
         self.assertEqual(AppKit.NSScrollViewFindBarPositionBelowContent, 2)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSScrollViewWillStartLiveMagnifyNotification, str)
         self.assertIsInstance(AppKit.NSScrollViewDidEndLiveMagnifyNotification, str)
 

@@ -9,7 +9,7 @@ class TestMTLLogStateHelper(Metal.NSObject):
 
 
 class TestMTLLogState(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLLogLevel)
         self.assertEqual(Metal.MTLLogLevelUndefined, 0)
         self.assertEqual(Metal.MTLLogLevelDebug, 1)

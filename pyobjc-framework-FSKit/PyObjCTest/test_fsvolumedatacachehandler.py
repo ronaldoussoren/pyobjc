@@ -20,7 +20,7 @@ class TestFSVolumeDataCacheHandlerHelper(FSKit.NSObject):
 
 
 class TestFSVolumeDataCacheHandler(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSDataCacheMode)
         self.assertEqual(FSKit.FSDataCacheModeNone, 0)
         self.assertEqual(FSKit.FSDataCacheModeReadWithCache, 1)

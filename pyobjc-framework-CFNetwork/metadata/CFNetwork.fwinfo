@@ -333,11 +333,14 @@
    "CFHTTPReadStreamSetProxy": {
     "args": {
      "0": {
-      "type_override": "^{__CFReadStream=}"
+      "type_override": "^{__CFAllocator=}"
      },
      "1": {
       "type_override": "@"
      }
+    },
+    "retval": {
+      "type_override": "^{__CFReadStream=}"
     }
    },
    "CFHTTPReadStreamSetRedirectsAutomatically": {

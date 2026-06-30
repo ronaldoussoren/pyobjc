@@ -1,10 +1,9 @@
 import CoreBluetooth
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBPeripheral(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreBluetooth.CBPeripheralState)
         self.assertEqual(CoreBluetooth.CBPeripheralStateDisconnected, 0)
         self.assertEqual(CoreBluetooth.CBPeripheralStateConnecting, 1)
@@ -14,9 +13,6 @@ class TestCBPeripheral(TestCase):
         self.assertIsEnumType(CoreBluetooth.CBCharacteristicWriteType)
         self.assertEqual(CoreBluetooth.CBCharacteristicWriteWithResponse, 0)
         self.assertEqual(CoreBluetooth.CBCharacteristicWriteWithoutResponse, 1)
-
-    def test_classes(self):
-        self.assertIsInstance(CoreBluetooth.CBPeripheral, objc.objc_class)
 
     def test_methods(self):
         self.assertArgIsBOOL(

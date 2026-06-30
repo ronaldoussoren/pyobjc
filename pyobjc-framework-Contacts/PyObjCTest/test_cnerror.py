@@ -3,13 +3,8 @@ import Contacts
 
 
 class TestCNError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Contacts.CNErrorCode)
-
-    @min_os_level("10.11")
-    def test_constants(self):
-        self.assertIsInstance(Contacts.CNErrorDomain, str)
-
         self.assertEqual(Contacts.CNErrorCodeCommunicationError, 1)
         self.assertEqual(Contacts.CNErrorCodeDataAccessError, 2)
         self.assertEqual(Contacts.CNErrorCodeAuthorizationDenied, 100)
@@ -36,10 +31,12 @@ class TestCNError(TestCase):
         self.assertEqual(Contacts.CNErrorCodeChangeHistoryExpired, 603)
         self.assertEqual(Contacts.CNErrorCodeChangeHistoryInvalidAnchor, 604)
         self.assertEqual(Contacts.CNErrorCodeChangeHistoryInvalidFetchRequest, 605)
-
         self.assertEqual(Contacts.CNErrorCodeVCardMalformed, 700)
         self.assertEqual(Contacts.CNErrorCodeVCardSummarizationError, 701)
 
+    @min_os_level("10.11")
+    def test_constants(self):
+        self.assertIsInstance(Contacts.CNErrorDomain, str)
         self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordsKey, str)
         self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordIdentifiersKey, str)
         self.assertIsInstance(Contacts.CNErrorUserInfoValidationErrorsKey, str)

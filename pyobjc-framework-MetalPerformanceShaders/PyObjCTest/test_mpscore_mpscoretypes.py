@@ -3,45 +3,30 @@ import MetalPerformanceShaders
 
 
 class TestMPSCore_MPSCoreTypes(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSAliasingStrategy)
+        self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyDefault, 0)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAliasingStrategyDontCare,
+            MetalPerformanceShaders.MPSAliasingStrategyDefault,
+        )
+        self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyShallAlias, 1 << 0)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias, 1 << 1
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAliasingStrategyAliasingReserved,
+            MetalPerformanceShaders.MPSAliasingStrategyShallAlias
+            | MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAliasingStrategyPreferTemporaryMemory, 1 << 2
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAliasingStrategyPreferNonTemporaryMemory, 1 << 3
+        )
+
         self.assertIsEnumType(MetalPerformanceShaders.MPSDataType)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSImageEdgeMode)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSImageFeatureChannelFormat)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSKernelOptions)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSKernelOptionsNone, 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSKernelOptionsSkipAPIValidation, 1 << 0
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSKernelOptionsAllowReducedPrecision, 1 << 1
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSKernelOptionsDisableInternalTiling, 1 << 2
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSKernelOptionsInsertDebugGroups, 1 << 3
-        )
-        self.assertEqual(MetalPerformanceShaders.MPSKernelOptionsVerbose, 1 << 4)
-
-        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeZero, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeClamp, 1)
-        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirror, 2)
-        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirrorWithEdge, 3)
-        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeConstant, 4)
-
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatUnorm8, 1)
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatUnorm16, 2)
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatFloat16, 3)
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatFloat32, 4)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSImageFeatureChannelFormat_reserved0, 5
-        )
-        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatCount, 6)
-
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeInvalid, 0)
         self.assertEqual(MetalPerformanceShaders.MPSDataTypeFloatBit, 0x10000000)
         self.assertEqual(
@@ -128,28 +113,6 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSDataTypeUnorm8,
             MetalPerformanceShaders.MPSDataTypeNormalizedBit | 8,
         )
-
-        self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyDefault, 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyDontCare,
-            MetalPerformanceShaders.MPSAliasingStrategyDefault,
-        )
-        self.assertEqual(MetalPerformanceShaders.MPSAliasingStrategyShallAlias, 1 << 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias, 1 << 1
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyAliasingReserved,
-            MetalPerformanceShaders.MPSAliasingStrategyShallAlias
-            | MetalPerformanceShaders.MPSAliasingStrategyShallNotAlias,
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyPreferTemporaryMemory, 1 << 2
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAliasingStrategyPreferNonTemporaryMemory, 1 << 3
-        )
-
         self.assertEqual(
             MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit, 0x80000000
         )
@@ -170,6 +133,40 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             | MetalPerformanceShaders.MPSDataTypeComplexBit
             | 32,
         )
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSImageEdgeMode)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeZero, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeClamp, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirror, 2)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirrorWithEdge, 3)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeConstant, 4)
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSImageFeatureChannelFormat)
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatUnorm8, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatUnorm16, 2)
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatFloat16, 3)
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatFloat32, 4)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSImageFeatureChannelFormat_reserved0, 5
+        )
+        self.assertEqual(MetalPerformanceShaders.MPSImageFeatureChannelFormatCount, 6)
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSKernelOptions)
+        self.assertEqual(MetalPerformanceShaders.MPSKernelOptionsNone, 0)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSKernelOptionsSkipAPIValidation, 1 << 0
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSKernelOptionsAllowReducedPrecision, 1 << 1
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSKernelOptionsDisableInternalTiling, 1 << 2
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSKernelOptionsInsertDebugGroups, 1 << 3
+        )
+        self.assertEqual(MetalPerformanceShaders.MPSKernelOptionsVerbose, 1 << 4)
 
         self.assertIsEnumType(MetalPerformanceShaders.MPSFloatDataTypeBit)
         self.assertEqual(MetalPerformanceShaders.MPSFloatDataTypeSignBit, 0x00800000)

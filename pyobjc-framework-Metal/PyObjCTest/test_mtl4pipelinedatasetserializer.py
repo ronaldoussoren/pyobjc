@@ -11,7 +11,7 @@ class TestMTL4PipelineDataSetSerializerHelper(Metal.NSObject):
 
 
 class TestMTL4PipelineDataSetSerializer(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4PipelineDataSetSerializerConfiguration)
         self.assertEqual(
             Metal.MTL4PipelineDataSetSerializerConfigurationCaptureDescriptors, 1 << 0

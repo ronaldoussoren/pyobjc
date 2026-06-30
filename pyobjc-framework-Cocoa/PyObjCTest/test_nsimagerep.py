@@ -3,11 +3,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSImageRep(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSImageLayoutDirection)
+        self.assertEqual(AppKit.NSImageLayoutDirectionUnspecified, -1)
+        self.assertEqual(AppKit.NSImageLayoutDirectionLeftToRight, 2)
+        self.assertEqual(AppKit.NSImageLayoutDirectionRightToLeft, 3)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSImageHintKey, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSImageLayoutDirection)
 
     def test_constants(self):
         self.assertEqual(AppKit.NSImageRepMatchesDevice, 0)
@@ -17,10 +20,6 @@ class TestNSImageRep(TestCase):
             AppKit.NSImageRepRegistryDidChangeNotification,
         )
         self.assertIsInstance(AppKit.NSImageRepRegistryDidChangeNotification, str)
-
-        self.assertEqual(AppKit.NSImageLayoutDirectionUnspecified, -1)
-        self.assertEqual(AppKit.NSImageLayoutDirectionLeftToRight, 2)
-        self.assertEqual(AppKit.NSImageLayoutDirectionRightToLeft, 3)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSImageRep.draw)

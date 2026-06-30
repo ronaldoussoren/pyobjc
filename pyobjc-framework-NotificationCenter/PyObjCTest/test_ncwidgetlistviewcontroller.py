@@ -57,6 +57,7 @@ class TestNCWidgetListViewController(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NCWidgetListViewDelegate", NotificationCenter)
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNCWidgetListViewDelegateHelper.widgetList_viewControllerForRow_,
             1,

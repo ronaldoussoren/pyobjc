@@ -47,14 +47,8 @@ class TestMTLCommandBufferHelper(Metal.NSObject):
 
 
 class TestMTLCommandBuffer(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLCommandBufferError)
-        self.assertIsEnumType(Metal.MTLCommandBufferErrorOption)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLCommandBufferStatus)
-        self.assertIsEnumType(Metal.MTLCommandEncoderErrorState)
-        self.assertIsEnumType(Metal.MTLDispatchType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLCommandBufferStatusNotEnqueued, 0)
         self.assertEqual(Metal.MTLCommandBufferStatusEnqueued, 1)
         self.assertEqual(Metal.MTLCommandBufferStatusCommitted, 2)
@@ -62,6 +56,7 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLCommandBufferStatusCompleted, 4)
         self.assertEqual(Metal.MTLCommandBufferStatusError, 5)
 
+        self.assertIsEnumType(Metal.MTLCommandBufferError)
         self.assertEqual(Metal.MTLCommandBufferErrorNone, 0)
         self.assertEqual(Metal.MTLCommandBufferErrorInternal, 1)
         self.assertEqual(Metal.MTLCommandBufferErrorTimeout, 2)
@@ -75,14 +70,17 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLCommandBufferErrorDeviceRemoved, 11)
         self.assertEqual(Metal.MTLCommandBufferErrorStackOverflow, 12)
 
+        self.assertIsEnumType(Metal.MTLDispatchType)
         self.assertEqual(Metal.MTLDispatchTypeSerial, 0)
         self.assertEqual(Metal.MTLDispatchTypeConcurrent, 1)
 
+        self.assertIsEnumType(Metal.MTLCommandBufferErrorOption)
         self.assertEqual(Metal.MTLCommandBufferErrorOptionNone, 0)
         self.assertEqual(
             Metal.MTLCommandBufferErrorOptionEncoderExecutionStatus, 1 << 0
         )
 
+        self.assertIsEnumType(Metal.MTLCommandEncoderErrorState)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateUnknown, 0)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateCompleted, 1)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateAffected, 2)
@@ -101,7 +99,7 @@ class TestMTLCommandBuffer(TestCase):
     def test_constants10_11(self):
         self.assertIsInstance(Metal.MTLCommandBufferErrorDomain, str)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestMTLCommandBufferHelper.retainedReferences)
 
         self.assertResultHasType(

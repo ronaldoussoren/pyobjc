@@ -73,24 +73,6 @@ class TestSCNView(TestCase):
         )
 
     def test_methods(self):
-        self.assertResultIsBOOL(TestSCNViewHelper.autoSwitchToFreeCamera)
-        self.assertResultIsBOOL(TestSCNViewHelper.allowsTranslation)
-        self.assertResultHasType(TestSCNViewHelper.flyModeVelocity, objc._C_CGFloat)
-        self.assertResultHasType(TestSCNViewHelper.panSensitivity, objc._C_CGFloat)
-        self.assertResultHasType(TestSCNViewHelper.truckSensitivity, objc._C_CGFloat)
-        self.assertResultHasType(TestSCNViewHelper.rotationSensitivity, objc._C_CGFloat)
-
-        self.assertArgIsBOOL(TestSCNViewHelper.setAutoSwitchToFreeCamera_, 0)
-        self.assertArgIsBOOL(TestSCNViewHelper.setAllowsTranslation_, 0)
-        self.assertArgHasType(TestSCNViewHelper.setFlyModeVelocity_, 0, objc._C_CGFloat)
-        self.assertArgHasType(TestSCNViewHelper.setPanSensitivity_, 0, objc._C_CGFloat)
-        self.assertArgHasType(
-            TestSCNViewHelper.setTruckSensitivity_, 0, objc._C_CGFloat
-        )
-        self.assertArgHasType(
-            TestSCNViewHelper.setRotationSensitivity_, 0, objc._C_CGFloat
-        )
-
         self.assertArgIsBOOL(SceneKit.SCNView.setAllowsCameraControl_, 0)
         self.assertResultIsBOOL(SceneKit.SCNView.allowsCameraControl)
 
@@ -109,3 +91,22 @@ class TestSCNView(TestCase):
     @min_sdk_level("10.13")
     def test_protocols(self):
         self.assertProtocolExists("SCNCameraControlConfiguration", SceneKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestSCNViewHelper.autoSwitchToFreeCamera)
+        self.assertResultIsBOOL(TestSCNViewHelper.allowsTranslation)
+        self.assertResultHasType(TestSCNViewHelper.flyModeVelocity, objc._C_CGFloat)
+        self.assertResultHasType(TestSCNViewHelper.panSensitivity, objc._C_CGFloat)
+        self.assertResultHasType(TestSCNViewHelper.truckSensitivity, objc._C_CGFloat)
+        self.assertResultHasType(TestSCNViewHelper.rotationSensitivity, objc._C_CGFloat)
+
+        self.assertArgIsBOOL(TestSCNViewHelper.setAutoSwitchToFreeCamera_, 0)
+        self.assertArgIsBOOL(TestSCNViewHelper.setAllowsTranslation_, 0)
+        self.assertArgHasType(TestSCNViewHelper.setFlyModeVelocity_, 0, objc._C_CGFloat)
+        self.assertArgHasType(TestSCNViewHelper.setPanSensitivity_, 0, objc._C_CGFloat)
+        self.assertArgHasType(
+            TestSCNViewHelper.setTruckSensitivity_, 0, objc._C_CGFloat
+        )
+        self.assertArgHasType(
+            TestSCNViewHelper.setRotationSensitivity_, 0, objc._C_CGFloat
+        )

@@ -3,10 +3,8 @@ import Intents
 
 
 class TestINHangUpCallIntentResponse(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INHangUpCallIntentResponseCode)
-
-    def test_constants(self):
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INHangUpCallIntentResponseCodeInProgress, 2)

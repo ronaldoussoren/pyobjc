@@ -17,43 +17,8 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypesHelper(
 
 
 class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBatchNormalizationFlags)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionFlags)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionType)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionFlags)
-        self.assertIsEnumType(
-            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOption
-        )
-        self.assertIsEnumType(MetalPerformanceShaders.MPSNNPaddingMethod)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSNNTrainingStyle)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionFlagsNone, 0)
-
-        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionFlagsNone, 0)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSCNNBinaryConvolutionFlagsUseBetaScaling, 1 << 0
-        )
-
-        self.assertEqual(
-            MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeBinaryWeights, 0
-        )
-        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeXNOR, 1)
-        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeAND, 2)
-
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOptionHalf, 0
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOptionFloat,
-            1 << 0,
-        )
-
-        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceCPU, 1)
-        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceGPU, 2)
-
         self.assertEqual(
             MetalPerformanceShaders.MPSCNNBatchNormalizationFlagsDefault, 0
         )
@@ -74,6 +39,34 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
             3,
         )
 
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionFlags)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionFlagsNone, 0)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSCNNBinaryConvolutionFlagsUseBetaScaling, 1 << 0
+        )
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNBinaryConvolutionType)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeBinaryWeights, 0
+        )
+        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeXNOR, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNBinaryConvolutionTypeAND, 2)
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionFlags)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionFlagsNone, 0)
+
+        self.assertIsEnumType(
+            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOption
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOptionHalf, 0
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSNNConvolutionAccumulatorPrecisionOptionFloat,
+            1 << 0,
+        )
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSNNPaddingMethod)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodAlignCentered, 0)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodAlignTopLeft, 1)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodAlignBottomRight, 2)
@@ -118,11 +111,16 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
             MetalPerformanceShaders.MPSNNPaddingMethodExcludeEdges, 1 << 15
         )
 
+        self.assertIsEnumType(MetalPerformanceShaders.MPSNNTrainingStyle)
+        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceCPU, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSNNTrainingStyleUpdateDeviceGPU, 2)
+
     def test_protocols(self):
         self.assertProtocolExists("MPSNNPadding", MetalPerformanceShaders)
         self.assertProtocolExists("MPSImageSizeEncodingState", MetalPerformanceShaders)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSNeuralNetworkTypesHelper.paddingMethod,
             objc._C_NSUInteger,

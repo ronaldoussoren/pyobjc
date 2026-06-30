@@ -3,23 +3,13 @@ import Vision
 
 
 class TestVNTypes(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Vision.VNBarcodeSymbology, str)
-        self.assertIsTypedEnum(Vision.VNVideoProcessingOption, str)
-        self.assertIsTypedEnum(Vision.VNComputeStage, str)
-        self.assertIsTypedEnum(Vision.VNRecognizedPointKey, str)
-        self.assertIsTypedEnum(Vision.VNRecognizedPointGroupKey, str)
-        self.assertIsTypedEnum(Vision.VNAnimalBodyPoseObservationJointName, str)
-        self.assertIsTypedEnum(Vision.VNAnimalBodyPoseObservationJointsGroupName, str)
-        self.assertIsTypedEnum(Vision.VNHumanBodyPose3DObservationJointName, str)
-        self.assertIsTypedEnum(Vision.VNHumanBodyPose3DObservationJointsGroupName, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNElementType)
-        self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
-        self.assertIsEnumType(Vision.VNPointsClassification)
+        self.assertEqual(Vision.VNElementTypeUnknown, 0)
+        self.assertEqual(Vision.VNElementTypeFloat, 1)
+        self.assertEqual(Vision.VNElementTypeDouble, 2)
 
-    def test_constants(self):
+        self.assertIsEnumType(Vision.VNImageCropAndScaleOption)
         self.assertEqual(Vision.VNImageCropAndScaleOptionCenterCrop, 0)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFit, 1)
         self.assertEqual(Vision.VNImageCropAndScaleOptionScaleFill, 2)
@@ -32,14 +22,7 @@ class TestVNTypes(TestCase):
             0x100 + Vision.VNImageCropAndScaleOptionScaleFill,
         )
 
-        self.assertEqual(Vision.VNElementTypeUnknown, 0)
-        self.assertEqual(Vision.VNElementTypeFloat, 1)
-        self.assertEqual(Vision.VNElementTypeDouble, 2)
-
-        self.assertEqual(Vision.VNChiralityUnknown, 0)
-        self.assertEqual(Vision.VNChiralityLeft, -1)
-        self.assertEqual(Vision.VNChiralityRight, 1)
-
+        self.assertIsEnumType(Vision.VNPointsClassification)
         self.assertEqual(Vision.VNPointsClassificationDisconnected, 0)
         self.assertEqual(Vision.VNPointsClassificationOpenPath, 1)
         self.assertEqual(Vision.VNPointsClassificationClosedPath, 2)
@@ -50,6 +33,22 @@ class TestVNTypes(TestCase):
         self.assertEqual(Vision.VNBarcodeCompositeTypeGS1TypeA, 2)
         self.assertEqual(Vision.VNBarcodeCompositeTypeGS1TypeB, 3)
         self.assertEqual(Vision.VNBarcodeCompositeTypeGS1TypeC, 4)
+
+        self.assertIsEnumType(Vision.VNChirality)
+        self.assertEqual(Vision.VNChiralityUnknown, 0)
+        self.assertEqual(Vision.VNChiralityLeft, -1)
+        self.assertEqual(Vision.VNChiralityRight, 1)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Vision.VNBarcodeSymbology, str)
+        self.assertIsTypedEnum(Vision.VNVideoProcessingOption, str)
+        self.assertIsTypedEnum(Vision.VNComputeStage, str)
+        self.assertIsTypedEnum(Vision.VNRecognizedPointKey, str)
+        self.assertIsTypedEnum(Vision.VNRecognizedPointGroupKey, str)
+        self.assertIsTypedEnum(Vision.VNAnimalBodyPoseObservationJointName, str)
+        self.assertIsTypedEnum(Vision.VNAnimalBodyPoseObservationJointsGroupName, str)
+        self.assertIsTypedEnum(Vision.VNHumanBodyPose3DObservationJointName, str)
+        self.assertIsTypedEnum(Vision.VNHumanBodyPose3DObservationJointsGroupName, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

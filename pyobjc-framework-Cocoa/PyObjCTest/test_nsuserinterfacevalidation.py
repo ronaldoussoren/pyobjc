@@ -17,6 +17,9 @@ class TestNSUserInterfaceValidationHelper(AppKit.NSObject):
 class TestNSUserInterfaceValidation(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSValidatedUserInterfaceItem", AppKit)
+        self.assertProtocolExists("NSUserInterfaceValidations", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSUserInterfaceValidationHelper.action, objc._C_SEL
         )
@@ -24,7 +27,6 @@ class TestNSUserInterfaceValidation(TestCase):
             TestNSUserInterfaceValidationHelper.tag, objc._C_NSInteger
         )
 
-        self.assertProtocolExists("NSUserInterfaceValidations", AppKit)
         self.assertResultIsBOOL(
             TestNSUserInterfaceValidationHelper.validateUserInterfaceItem_
         )

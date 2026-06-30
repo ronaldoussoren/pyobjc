@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKStateOfMind(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKStateOfMindValenceClassification)
         self.assertEqual(HealthKit.HKStateOfMindValenceClassificationVeryUnpleasant, 1)
         self.assertEqual(HealthKit.HKStateOfMindValenceClassificationUnpleasant, 2)

@@ -3,7 +3,8 @@ from PyObjCTools.TestSupport import TestCase, cast_uint
 
 
 class TestCTFontTraits(TestCase):
-    def test_enum(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(CoreText.kCTFontClassMaskShift, 28)
 
         self.assertIsEnumType(CoreText.CTFontSymbolicTraits)

@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKActivitySummary(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKWorkoutActivityType)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeAmericanFootball, 1)
         self.assertEqual(HealthKit.HKWorkoutActivityTypeArchery, 2)

@@ -16,7 +16,7 @@ class TestMTLFunctionHandle(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("MTLFunctionHandle", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLFunctionHandleHelper.functionType, objc._C_NSUInteger
         )

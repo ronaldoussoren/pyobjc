@@ -4,18 +4,8 @@ import ExternalAccessory
 
 
 class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ExternalAccessory.EAWiFiUnconfiguredAccessoryBrowserState)
-        self.assertIsEnumType(
-            ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatus
-        )
-
-    def test_protocols(self):
-        self.assertProtocolExists(
-            "EAWiFiUnconfiguredAccessoryBrowserDelegate", ExternalAccessory
-        )
-
-    def test_constants(self):
         self.assertEqual(
             ExternalAccessory.EAWiFiUnconfiguredAccessoryBrowserStateWiFiUnavailable, 0
         )
@@ -29,6 +19,9 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
             ExternalAccessory.EAWiFiUnconfiguredAccessoryBrowserStateConfiguring, 3
         )
 
+        self.assertIsEnumType(
+            ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatus
+        )
         self.assertEqual(
             ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusSuccess, 0
         )
@@ -40,7 +33,7 @@ class TestEAWiFiUnconfiguredAccessoryBrowser(TestCase):
             ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusFailed, 2
         )
 
-    def test_methods(self):
-        # Not on macOS:
-        # self.assertArgIsBlock(ExternalAccessory.EAAccessoryManager.showBluetoothAccessoryPickerWithNameFilter_completion_, 1, b'v@')   # noqa: B950
-        pass
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "EAWiFiUnconfiguredAccessoryBrowserDelegate", ExternalAccessory
+        )

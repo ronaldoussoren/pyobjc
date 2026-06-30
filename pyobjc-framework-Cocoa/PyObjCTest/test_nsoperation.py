@@ -3,22 +3,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOperation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSOperationQueuePriority)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSOperationQueuePriorityVeryLow, -8)
         self.assertEqual(Foundation.NSOperationQueuePriorityLow, -4)
         self.assertEqual(Foundation.NSOperationQueuePriorityNormal, 0)
         self.assertEqual(Foundation.NSOperationQueuePriorityHigh, 4)
         self.assertEqual(Foundation.NSOperationQueuePriorityVeryHigh, 8)
 
-        self.assertIsInstance(Foundation.NSInvocationOperationVoidResultException, str)
-        self.assertIsInstance(Foundation.NSInvocationOperationCancelledException, str)
         self.assertEqual(
             Foundation.NSOperationQueueDefaultMaxConcurrentOperationCount, -1
         )
 
+        self.assertIs(
+            Foundation.NSOperationQualityOfService, Foundation.NSQualityOfService
+        )
         self.assertEqual(
             Foundation.NSOperationQualityOfServiceUserInteractive,
             Foundation.NSQualityOfServiceUserInteractive,
@@ -35,6 +34,10 @@ class TestNSOperation(TestCase):
             Foundation.NSOperationQualityOfServiceBackground,
             Foundation.NSQualityOfServiceBackground,
         )
+
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSInvocationOperationVoidResultException, str)
+        self.assertIsInstance(Foundation.NSInvocationOperationCancelledException, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSOperation.isCancelled)

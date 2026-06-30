@@ -4,10 +4,8 @@ import SceneKit
 
 
 class TestSCNCameraController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNInteractionMode)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNInteractionModeFly, 0)
         self.assertEqual(SceneKit.SCNInteractionModeOrbitTurntable, 1)
         self.assertEqual(SceneKit.SCNInteractionModeOrbitAngleMapping, 2)

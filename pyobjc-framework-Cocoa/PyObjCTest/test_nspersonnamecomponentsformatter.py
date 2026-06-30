@@ -3,19 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPersonNameComponentsFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSPersonNameComponentsFormatterStyle)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleDefault, 0)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleShort, 1)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleMedium, 2)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleLong, 3)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleAbbreviated, 4)
 
+        self.assertIsEnumType(Foundation.NSPersonNameComponentsFormatterOptions)
         self.assertEqual(Foundation.NSPersonNameComponentsFormatterPhonetic, 1 << 1)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSPersonNameComponentKey, str)
         self.assertIsInstance(Foundation.NSPersonNameComponentGivenName, str)
         self.assertIsInstance(Foundation.NSPersonNameComponentFamilyName, str)

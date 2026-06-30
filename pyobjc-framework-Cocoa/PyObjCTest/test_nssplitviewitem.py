@@ -3,16 +3,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSplitViewItem(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSplitViewItemBehavior)
-        self.assertIsEnumType(AppKit.NSSplitViewItemCollapseBehavior)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSSplitViewItemBehaviorDefault, 0)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorSidebar, 1)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorContentList, 2)
         self.assertEqual(AppKit.NSSplitViewItemBehaviorInspector, 3)
 
+        self.assertIsEnumType(AppKit.NSSplitViewItemCollapseBehavior)
         self.assertEqual(AppKit.NSSplitViewItemCollapseBehaviorDefault, 0)
         self.assertEqual(
             AppKit.NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings,

@@ -8,14 +8,15 @@ class TestMEMessageSecurityHandlerHelper(MailKit.NSObject):
 
 
 class TestMEMessageSecurityHandler(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(MailKit.MEMessageSecurityErrorCode)
         self.assertEqual(MailKit.MEMessageSecurityEncodingError, 0)
         self.assertEqual(MailKit.MEMessageSecurityDecodingError, 1)
 
     def test_protocols(self):
         self.assertProtocolExists("MEMessageSecurityHandler", MailKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestMEMessageSecurityHandlerHelper.primaryActionClickedForMessageContext_completionHandler_,
             1,

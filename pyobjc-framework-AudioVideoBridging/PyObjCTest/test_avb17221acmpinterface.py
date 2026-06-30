@@ -16,7 +16,7 @@ class TestAVB17221ACMPInterface(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AVB17221ACMPClient", AudioVideoBridging)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestAVB17221ACMPInterfaceHelper.ACMPDidReceiveCommand_onInterface_
         )

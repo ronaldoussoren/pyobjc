@@ -11,7 +11,7 @@ class TestVZVirtioSocketListener(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("VZVirtioSocketListenerDelegate", Virtualization)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestVZVirtioSocketListenerHelper.listener_shouldAcceptNewConnection_fromSocketDevice_
         )

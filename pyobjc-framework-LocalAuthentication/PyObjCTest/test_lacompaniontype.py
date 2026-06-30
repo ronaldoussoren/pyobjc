@@ -3,7 +3,7 @@ import LocalAuthentication
 
 
 class TestLACompanionType(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(LocalAuthentication.LACompanionType)
         self.assertEqual(
             LocalAuthentication.LACompanionTypeWatch,

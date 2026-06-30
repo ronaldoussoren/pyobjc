@@ -14,7 +14,7 @@ class TestNSTextSelectionManagerHelper(AppKit.NSObject):
 
 
 class TestNSTextSelectionManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextSelectionMode)
         self.assertEqual(AppKit.NSTextSelectionModeEditable, 0)
         self.assertEqual(AppKit.NSTextSelectionModeSelectable, 1)

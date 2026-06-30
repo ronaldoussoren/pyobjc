@@ -1366,7 +1366,7 @@ class TestCIFilterBuiltins(TestCase):
         setter = "set" + name[0].upper() + name[1:] + "_"
         self.assertArgHasType(getattr(cls, setter), 0, typestr)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         with self.subTest("CIGaussianGradient"):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__

@@ -4,26 +4,8 @@ from objc import simd
 
 
 class TestMDLVertexDescriptor(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLVertexFormat)
-
-    def test_constants(self):
-        self.assertIsInstance(ModelIO.MDLVertexAttributeAnisotropy, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeBinormal, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeBitangent, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeColor, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeEdgeCrease, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeJointIndices, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeJointWeights, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeNormal, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeOcclusionValue, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributePosition, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeShadingBasisU, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeShadingBasisV, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeSubdivisionStencil, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeTangent, str)
-        self.assertIsInstance(ModelIO.MDLVertexAttributeTextureCoordinate, str)
-
         self.assertEqual(ModelIO.MDLVertexFormatInvalid, 0)
         self.assertEqual(ModelIO.MDLVertexFormatPackedBit, 0x1000)
         self.assertEqual(ModelIO.MDLVertexFormatUCharBits, 0x10000)
@@ -204,6 +186,23 @@ class TestMDLVertexDescriptor(TestCase):
             ModelIO.MDLVertexFormatUInt1010102Normalized,
             ModelIO.MDLVertexFormatUIntBits | ModelIO.MDLVertexFormatPackedBit | 4,
         )
+
+    def test_constants(self):
+        self.assertIsInstance(ModelIO.MDLVertexAttributeAnisotropy, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeBinormal, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeBitangent, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeColor, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeEdgeCrease, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeJointIndices, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeJointWeights, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeNormal, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeOcclusionValue, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributePosition, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeShadingBasisU, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeShadingBasisV, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeSubdivisionStencil, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeTangent, str)
+        self.assertIsInstance(ModelIO.MDLVertexAttributeTextureCoordinate, str)
 
     def test_methods(self):
         self.assertResultHasType(

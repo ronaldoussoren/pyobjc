@@ -6,7 +6,7 @@ import GameController
 
 
 class TestGCDevicePhysicalInputStateDiff(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCDevicePhysicalInputElementChange)
         self.assertEqual(GameController.GCDevicePhysicalInputElementUnknownChange, -1)
         self.assertEqual(GameController.GCDevicePhysicalInputElementNoChange, 0)

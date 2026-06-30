@@ -4,7 +4,7 @@ import GameSave
 
 
 class TestGSSyncedDirectory(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(GameSave.GSSyncState)
         self.assertEqual(GameSave.GSSyncStateReady, 0)
         self.assertEqual(GameSave.GSSyncStateOffline, 1)

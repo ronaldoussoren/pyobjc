@@ -5,7 +5,7 @@ import PHASE
 
 
 class TestPHASESoundEventNodes(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PHASE.PHASEPushStreamBufferOptions)
         self.assertEqual(PHASE.PHASEPushStreamBufferDefault, 1 << 0)
         self.assertEqual(PHASE.PHASEPushStreamBufferLoops, 1 << 1)

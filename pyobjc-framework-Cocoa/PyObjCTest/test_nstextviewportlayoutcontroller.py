@@ -12,7 +12,7 @@ class TestNSTextViewportLayoutController(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSTextViewportLayoutControllerDelegate", AppKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSTextViewportLayoutControllerHelper.viewportBoundsForTextViewportLayoutController_,
             AppKit.NSRect.__typestr__,

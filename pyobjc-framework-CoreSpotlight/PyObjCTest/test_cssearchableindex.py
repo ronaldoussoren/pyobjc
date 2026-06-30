@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 import CoreSpotlight
@@ -33,10 +33,8 @@ class TestCSSearchableIndexHelper(CoreSpotlight.NSObject):
 
 
 class TestCSSearchableIndex(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreSpotlight.CSIndexErrorCode)
-
-    def test_constants(self):
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeUnknownError, -1)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexUnavailableError, -1000)
         self.assertEqual(CoreSpotlight.CSIndexErrorCodeInvalidItemError, -1001)
@@ -80,6 +78,27 @@ class TestCSSearchableIndex(TestCase):
             b"v@@",
         )
 
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertArgIsBlock(
+            CoreSpotlight.CSSearchableIndex.fetchDataForBundleIdentifier_itemIdentifier_contentType_completionHandler_,
+            3,
+            b"v@@",
+        )
+
+    @min_os_level("15.0")
+    def test_methods15_0(self):
+        self.assertArgIsBlock(
+            CoreSpotlight.CSSearchableIndex.endIndexBatchWithExpectedClientState_newClientState_completionHandler_,
+            2,
+            b"v@",
+        )
+
+    @min_sdk_level("10.13")
+    def test_protocols(self):
+        self.assertProtocolExists("CSSearchableIndexDelegate", CoreSpotlight)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestCSSearchableIndexHelper.searchableIndex_reindexAllSearchableItemsWithAcknowledgementHandler_,
             1,
@@ -111,22 +130,6 @@ class TestCSSearchableIndex(TestCase):
 
         self.assertArgIsBlock(
             TestCSSearchableIndexHelper.searchableItemsForIdentifiers_protectionClass_searchableItemsHandler_,
-            2,
-            b"v@",
-        )
-
-    @min_os_level("13.0")
-    def test_methods13_0(self):
-        self.assertArgIsBlock(
-            CoreSpotlight.CSSearchableIndex.fetchDataForBundleIdentifier_itemIdentifier_contentType_completionHandler_,
-            3,
-            b"v@@",
-        )
-
-    @min_os_level("15.0")
-    def test_methods15_0(self):
-        self.assertArgIsBlock(
-            CoreSpotlight.CSSearchableIndex.endIndexBatchWithExpectedClientState_newClientState_completionHandler_,
             2,
             b"v@",
         )

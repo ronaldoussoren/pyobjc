@@ -3,17 +3,15 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSRunningApplication(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSApplicationActivationOptions)
-        self.assertIsEnumType(AppKit.NSApplicationActivationPolicy)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSApplicationActivateAllWindows, 1 << 0)
-        self.assertEqual(AppKit.NSApplicationActivateIgnoringOtherApps, 1 << 1)
-
         self.assertEqual(AppKit.NSApplicationActivationPolicyRegular, 0)
         self.assertEqual(AppKit.NSApplicationActivationPolicyAccessory, 1)
         self.assertEqual(AppKit.NSApplicationActivationPolicyProhibited, 2)
+
+        self.assertIsEnumType(AppKit.NSApplicationActivationPolicy)
+        self.assertEqual(AppKit.NSApplicationActivateAllWindows, 1 << 0)
+        self.assertEqual(AppKit.NSApplicationActivateIgnoringOtherApps, 1 << 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRunningApplication.isTerminated)

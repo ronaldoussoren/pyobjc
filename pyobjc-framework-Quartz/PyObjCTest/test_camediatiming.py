@@ -65,7 +65,10 @@ class TestCAMediaTiming(TestCase):
         self.assertIsInstance(Quartz.kCAFillModeBoth, str)
         self.assertIsInstance(Quartz.kCAFillModeRemoved, str)
 
-    def test_methods(self):
+    def test_protocols(self):
+        self.assertProtocolExists("CAMediaTiming", Quartz)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(TestCAMediaTimingHelper.beginTime, objc._C_DBL)
         self.assertArgHasType(TestCAMediaTimingHelper.setBeginTime_, 0, objc._C_DBL)
         self.assertResultHasType(TestCAMediaTimingHelper.duration, objc._C_DBL)
@@ -84,6 +87,3 @@ class TestCAMediaTiming(TestCase):
         self.assertArgIsBOOL(TestCAMediaTimingHelper.setAutoreverses_, 0)
         self.assertResultHasType(TestCAMediaTimingHelper.fillMode, objc._C_ID)
         self.assertArgHasType(TestCAMediaTimingHelper.setFillMode_, 0, objc._C_ID)
-
-    def test_protocols(self):
-        self.assertProtocolExists("CAMediaTiming", Quartz)

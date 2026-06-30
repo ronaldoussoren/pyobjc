@@ -40,7 +40,7 @@ class TestMTLTensorHelper(Metal.NSObject):
 
 
 class TestMTLTensor(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLTensorDataType)
         self.assertEqual(Metal.MTLTensorDataTypeNone, Metal.MTLDataTypeNone)
         self.assertEqual(Metal.MTLTensorDataTypeFloat32, Metal.MTLDataTypeFloat)

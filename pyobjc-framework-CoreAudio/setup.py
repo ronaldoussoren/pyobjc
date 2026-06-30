@@ -7,10 +7,6 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-#
-# Distutils doesn't understand '.mm' as an extension
-#
-import distutils.unixccompiler
 import os
 import sys
 
@@ -22,8 +18,6 @@ from pyobjc_setup import Extension, setup  # noqa: E402
 VERSION = "13.0a0"
 
 
-distutils.unixccompiler.UnixCCompiler.src_extensions.append(".mm")
-
 setup(
     name="pyobjc-framework-CoreAudio",
     description="Wrappers for the framework CoreAudio on macOS",
@@ -31,7 +25,7 @@ setup(
     ext_modules=[
         Extension(
             "CoreAudio._inlines",
-            ["Modules/_CoreAudio_inlines.mm"],
+            ["Modules/_CoreAudio_inlines.m"],
             extra_link_args=["-framework", "CoreAudio"],
         ),
         Extension(

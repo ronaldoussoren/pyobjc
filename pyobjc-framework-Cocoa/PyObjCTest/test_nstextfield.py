@@ -50,25 +50,6 @@ class TestNSTextField(TestCase):
             AppKit.NSTextField.setAllowsCharacterPickerTouchBarItem_, 0
         )
 
-        self.assertArgHasType(
-            TestNSTextFieldHelper.textField_textView_candidatesForSelectedRange_,
-            2,
-            AppKit.NSRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestNSTextFieldHelper.textField_textView_candidates_forSelectedRange_,
-            3,
-            AppKit.NSRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_,
-            2,
-            objc._C_NSUInteger,
-        )
-        self.assertResultIsBOOL(
-            TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_
-        )
-
     @min_os_level("15.2")
     def test_methods15_2(self):
         self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingTools)
@@ -90,3 +71,23 @@ class TestNSTextField(TestCase):
 
     def test_protocols(self):
         self.assertProtocolExists("NSTextFieldDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestNSTextFieldHelper.textField_textView_candidatesForSelectedRange_,
+            2,
+            AppKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextFieldHelper.textField_textView_candidates_forSelectedRange_,
+            3,
+            AppKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_
+        )

@@ -12,10 +12,11 @@ class TestQCRenderer(TestCase):
         self.assertIsInstance(Quartz.QCRendererEventKey, str)
         self.assertIsInstance(Quartz.QCRendererMouseLocationKey, str)
 
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.QCRenderer.renderAtTime_arguments_)
+
     def test_protocols(self):
         self.assertProtocolExists("QCCompositionRenderer", Quartz)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)
-
-        self.assertResultIsBOOL(Quartz.QCRenderer.renderAtTime_arguments_)

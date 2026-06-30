@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKElectrocardiogram(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKElectrocardiogramLead)
         self.assertEqual(HealthKit.HKElectrocardiogramLeadAppleWatchSimilarToLeadI, 1)
 
@@ -32,6 +32,7 @@ class TestHKElectrocardiogram(TestCase):
         self.assertEqual(HealthKit.HKElectrocardiogramSymptomsStatusNone, 1)
         self.assertEqual(HealthKit.HKElectrocardiogramSymptomsStatusPresent, 2)
 
+    def test_constants(self):
         self.assertIsInstance(HealthKit.HKPredicateKeyPathAverageHeartRate, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathECGClassification, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathECGSymptomsStatus, str)

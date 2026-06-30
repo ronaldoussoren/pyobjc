@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKGAD7Assessment(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKGAD7AssessmentRisk)
         self.assertEqual(HealthKit.HKGAD7AssessmentRiskNoneToMinimal, 1)
         self.assertEqual(HealthKit.HKGAD7AssessmentRiskMild, 2)

@@ -1,5 +1,5 @@
 import CFNetwork
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCFHTTPMessage(TestCase):
@@ -17,7 +17,6 @@ class TestCFHTTPMessage(TestCase):
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeBasic, str)
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeDigest, str)
 
-    @expectedFailure
     @min_os_level("10.10")
     def test_constants10_10(self):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)

@@ -9,7 +9,7 @@ class TestNSStreamHelper(Foundation.NSObject):
 
 
 class TestNSStream(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSStreamEvent)
         self.assertEqual(Foundation.NSStreamEventNone, 0)
         self.assertEqual(Foundation.NSStreamEventOpenCompleted, 1 << 0)

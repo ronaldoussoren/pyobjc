@@ -5,10 +5,8 @@ from objc import simd
 
 
 class TestGKMeshGraph(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameplayKit.GKMeshGraphTriangulationMode)
-
-    def test_constants(self):
         self.assertEqual(GameplayKit.GKMeshGraphTriangulationModeVertices, 1 << 0)
         self.assertEqual(GameplayKit.GKMeshGraphTriangulationModeCenters, 1 << 1)
         self.assertEqual(GameplayKit.GKMeshGraphTriangulationModeEdgeMidpoints, 1 << 2)

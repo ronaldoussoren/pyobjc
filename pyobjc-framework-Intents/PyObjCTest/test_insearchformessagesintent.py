@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
 
 
@@ -48,8 +48,12 @@ class TestINSearchForMessagesIntentHelper(Intents.NSObject):
 
 
 class TestINSearchForMessagesIntent(TestCase):
-    @min_os_level("10.12")
-    def test_methods(self):
+
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("INSearchForMessagesIntentHandling", Intents)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINSearchForMessagesIntentHelper.handleSearchForMessages_completion_,
             1,
@@ -94,7 +98,3 @@ class TestINSearchForMessagesIntent(TestCase):
             1,
             b"v@",
         )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("INSearchForMessagesIntentHandling", Intents)

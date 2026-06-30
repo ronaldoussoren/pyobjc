@@ -9,23 +9,12 @@ class TestSFSpeechRecognizerHelper(Speech.NSObject):
 
 
 class TestSFSpeechRecognizer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Speech.SFSpeechRecognizerAuthorizationStatus)
-
-    def test_constants(self):
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusNotDetermined, 0)
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusDenied, 1)
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusRestricted, 2)
         self.assertEqual(Speech.SFSpeechRecognizerAuthorizationStatusAuthorized, 3)
-
-    @min_sdk_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists("SFSpeechRecognizerDelegate", Speech)
-
-    def test_methods(self):
-        self.assertArgIsBOOL(
-            TestSFSpeechRecognizerHelper.speechRecognizer_availabilityDidChange_, 1
-        )
 
     @min_os_level("10.15")
     def test_methods10_15(self):
@@ -39,4 +28,13 @@ class TestSFSpeechRecognizer(TestCase):
             Speech.SFSpeechRecognizer.recognitionTaskWithRequest_resultHandler_,
             1,
             b"v@@",
+        )
+
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists("SFSpeechRecognizerDelegate", Speech)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestSFSpeechRecognizerHelper.speechRecognizer_availabilityDidChange_, 1
         )

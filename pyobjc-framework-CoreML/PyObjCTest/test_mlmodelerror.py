@@ -3,10 +3,8 @@ import CoreML
 
 
 class TestMLFeatureDescription(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreML.MLModelError)
-
-    def test_constants(self):
         self.assertEqual(CoreML.MLModelErrorGeneric, 0)
         self.assertEqual(CoreML.MLModelErrorFeatureType, 1)
         self.assertEqual(CoreML.MLModelErrorIO, 3)

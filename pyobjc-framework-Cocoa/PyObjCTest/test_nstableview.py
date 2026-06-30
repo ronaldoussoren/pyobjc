@@ -104,61 +104,12 @@ class TestNSTableViewHelper(AppKit.NSObject):
 
 
 class TestNSTableView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTableRowActionEdge)
+        self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
+        self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
+
         self.assertIsEnumType(AppKit.NSTableViewAnimationOptions)
-        self.assertIsEnumType(AppKit.NSTableViewColumnAutoresizingStyle)
-        self.assertIsEnumType(AppKit.NSTableViewDraggingDestinationFeedbackStyle)
-        self.assertIsEnumType(AppKit.NSTableViewDropOperation)
-        self.assertIsEnumType(AppKit.NSTableViewGridLineStyle)
-        self.assertIsEnumType(AppKit.NSTableViewRowSizeStyle)
-        self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
-        self.assertIsEnumType(AppKit.NSTableViewStyle)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTableViewDropOn, 0)
-        self.assertEqual(AppKit.NSTableViewDropAbove, 1)
-
-        self.assertEqual(AppKit.NSTableViewNoColumnAutoresizing, 0)
-        self.assertEqual(AppKit.NSTableViewUniformColumnAutoresizingStyle, 1)
-        self.assertEqual(AppKit.NSTableViewSequentialColumnAutoresizingStyle, 2)
-        self.assertEqual(AppKit.NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
-        self.assertEqual(AppKit.NSTableViewLastColumnOnlyAutoresizingStyle, 4)
-        self.assertEqual(AppKit.NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
-
-        self.assertEqual(AppKit.NSTableViewGridNone, 0)
-        self.assertEqual(AppKit.NSTableViewSolidVerticalGridLineMask, 1 << 0)
-        self.assertEqual(AppKit.NSTableViewSolidHorizontalGridLineMask, 1 << 1)
-
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleRegular, 0)
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleSourceList, 1)
-
-        self.assertIsInstance(AppKit.NSTableViewSelectionDidChangeNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewColumnDidMoveNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
-
-        self.assertEqual(AppKit.NSTableViewStyleAutomatic, 0)
-        self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
-        self.assertEqual(AppKit.NSTableViewStyleInset, 2)
-        self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
-        self.assertEqual(AppKit.NSTableViewStylePlain, 4)
-
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
-        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
-        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
-        self.assertEqual(
-            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
-        )
-
-        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
-
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleCustom, 0)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleSmall, 1)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleMedium, 2)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleLarge, 3)
-
         self.assertEqual(AppKit.NSTableViewAnimationEffectNone, 0)
         self.assertEqual(AppKit.NSTableViewAnimationEffectFade, 1)
         self.assertEqual(AppKit.NSTableViewAnimationEffectGap, 2)
@@ -167,16 +118,58 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewAnimationSlideLeft, 0x30)
         self.assertEqual(AppKit.NSTableViewAnimationSlideRight, 0x40)
 
-        self.assertIsInstance(AppKit.NSTableViewRowViewKey, str)
+        self.assertIsEnumType(AppKit.NSTableViewColumnAutoresizingStyle)
+        self.assertEqual(AppKit.NSTableViewNoColumnAutoresizing, 0)
+        self.assertEqual(AppKit.NSTableViewUniformColumnAutoresizingStyle, 1)
+        self.assertEqual(AppKit.NSTableViewSequentialColumnAutoresizingStyle, 2)
+        self.assertEqual(AppKit.NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
+        self.assertEqual(AppKit.NSTableViewLastColumnOnlyAutoresizingStyle, 4)
+        self.assertEqual(AppKit.NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
 
-        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
-
+        self.assertIsEnumType(AppKit.NSTableViewDraggingDestinationFeedbackStyle)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
+        self.assertEqual(
+            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
+        )
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleGap, 2)
 
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
-        self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
+        self.assertIsEnumType(AppKit.NSTableViewDropOperation)
+        self.assertEqual(AppKit.NSTableViewDropOn, 0)
+        self.assertEqual(AppKit.NSTableViewDropAbove, 1)
+
+        self.assertIsEnumType(AppKit.NSTableViewGridLineStyle)
+        self.assertEqual(AppKit.NSTableViewGridNone, 0)
+        self.assertEqual(AppKit.NSTableViewSolidVerticalGridLineMask, 1 << 0)
+        self.assertEqual(AppKit.NSTableViewSolidHorizontalGridLineMask, 1 << 1)
+        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
+
+        self.assertIsEnumType(AppKit.NSTableViewRowSizeStyle)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleCustom, 0)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleSmall, 1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleMedium, 2)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleLarge, 3)
+
+        self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleRegular, 0)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleSourceList, 1)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
+
+        self.assertIsEnumType(AppKit.NSTableViewStyle)
+        self.assertEqual(AppKit.NSTableViewStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
+        self.assertEqual(AppKit.NSTableViewStyleInset, 2)
+        self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
+        self.assertEqual(AppKit.NSTableViewStylePlain, 4)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSTableViewSelectionDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidMoveNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
+
+        self.assertIsInstance(AppKit.NSTableViewRowViewKey, str)
 
     def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnReordering_, 0)

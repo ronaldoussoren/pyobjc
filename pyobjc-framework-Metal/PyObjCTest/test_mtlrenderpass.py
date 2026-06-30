@@ -3,21 +3,22 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLRenderPass(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLLoadAction)
-        self.assertIsEnumType(Metal.MTLMultisampleDepthResolveFilter)
-        self.assertIsEnumType(Metal.MTLMultisampleStencilResolveFilter)
-        self.assertIsEnumType(Metal.MTLStoreAction)
-        self.assertIsEnumType(Metal.MTLStoreActionOptions)
-
-    def test_constants(self):
-        self.assertEqual(Metal.MTLCounterDontSample, 0xFFFFFFFFFFFFFFFF)
-        self.assertEqual(Metal.MTLMaxRenderPassSampleBuffers, 4)
-
         self.assertEqual(Metal.MTLLoadActionDontCare, 0)
         self.assertEqual(Metal.MTLLoadActionLoad, 1)
         self.assertEqual(Metal.MTLLoadActionClear, 2)
 
+        self.assertIsEnumType(Metal.MTLMultisampleDepthResolveFilter)
+        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterSample0, 0)
+        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterMin, 1)
+        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterMax, 2)
+
+        self.assertIsEnumType(Metal.MTLMultisampleStencilResolveFilter)
+        self.assertEqual(Metal.MTLMultisampleStencilResolveFilterSample0, 0)
+        self.assertEqual(Metal.MTLMultisampleStencilResolveFilterDepthResolvedSample, 1)
+
+        self.assertIsEnumType(Metal.MTLStoreAction)
         self.assertEqual(Metal.MTLStoreActionDontCare, 0)
         self.assertEqual(Metal.MTLStoreActionStore, 1)
         self.assertEqual(Metal.MTLStoreActionMultisampleResolve, 2)
@@ -25,19 +26,17 @@ class TestMTLRenderPass(TestCase):
         self.assertEqual(Metal.MTLStoreActionUnknown, 4)
         self.assertEqual(Metal.MTLStoreActionCustomSampleDepthStore, 5)
 
+        self.assertIsEnumType(Metal.MTLStoreActionOptions)
         self.assertEqual(Metal.MTLStoreActionOptionNone, 0)
         self.assertEqual(Metal.MTLStoreActionOptionCustomSamplePositions, 1 << 0)
-
-        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterSample0, 0)
-        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterMin, 1)
-        self.assertEqual(Metal.MTLMultisampleDepthResolveFilterMax, 2)
-
-        self.assertEqual(Metal.MTLMultisampleStencilResolveFilterSample0, 0)
-        self.assertEqual(Metal.MTLMultisampleStencilResolveFilterDepthResolvedSample, 1)
 
         self.assertIsEnumType(Metal.MTLVisibilityResultType)
         self.assertEqual(Metal.MTLVisibilityResultTypeReset, 0)
         self.assertEqual(Metal.MTLVisibilityResultTypeAccumulate, 1)
+
+        # Unnamed enums:
+        self.assertEqual(Metal.MTLCounterDontSample, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(Metal.MTLMaxRenderPassSampleBuffers, 4)
 
     def test_structs(self):
         v = Metal.MTLClearColor()

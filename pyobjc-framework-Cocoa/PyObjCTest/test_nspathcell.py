@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSPathCell(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPathStyle)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSPathStyleStandard, 0)
         self.assertEqual(AppKit.NSPathStyleNavigationBar, 1)
         self.assertEqual(AppKit.NSPathStylePopUp, 2)

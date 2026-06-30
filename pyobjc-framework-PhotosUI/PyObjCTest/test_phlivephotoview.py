@@ -15,15 +15,13 @@ class TestPHLivePhotoViewHelper(PhotosUI.NSObject):
 
 
 class TestPHLivePhotoView(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
+    def test_enums(self):
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewPlaybackStyle)
-
-    def test_constants(self):
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleUndefined, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleFull, 1)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleHint, 2)
 
+        self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFit, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFill, 1)
 

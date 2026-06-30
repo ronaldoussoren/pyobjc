@@ -13,7 +13,7 @@ class TestMPSCore_MPSCommandBuffer(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MPSHeapProvider", MetalPerformanceShaders)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMPSCore_MPSCommandBufferHelper.retireHeap_cacheDelay_, 1, objc._C_DBL
         )

@@ -41,6 +41,15 @@ class TestNSURLConnection(TestCase):
             2,
         )
 
+    def test_protocols(self):
+        self.assertProtocolExists("NSURLConnectionDelegate", Foundation)
+
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSURLConnectionDataDelegate", Foundation)
+        self.assertProtocolExists("NSURLConnectionDownloadDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSURLConnectionHelper.connection_canAuthenticateAgainstProtectionSpace_
         )
@@ -95,11 +104,3 @@ class TestNSURLConnection(TestCase):
             2,
             b"v@@",
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("NSURLConnectionDelegate", Foundation)
-
-    @min_sdk_level("10.10")
-    def test_protocols10_10(self):
-        self.assertProtocolExists("NSURLConnectionDataDelegate", Foundation)
-        self.assertProtocolExists("NSURLConnectionDownloadDelegate", Foundation)

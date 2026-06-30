@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSPageLayout(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPageLayoutResult)
         self.assertEqual(AppKit.NSPageLayoutResultCancelled, 0)
         self.assertEqual(AppKit.NSPageLayoutResultChanged, 1)

@@ -7,30 +7,35 @@ PHAssetVideoProgressHandler = b"vd@o^Z@"
 
 
 class TestPHImageManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Photos.PHImageRequestOptionsDeliveryMode)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
+
         self.assertIsEnumType(Photos.PHImageRequestOptionsResizeMode)
-        self.assertIsEnumType(Photos.PHImageRequestOptionsVersion)
-        self.assertIsEnumType(Photos.PHVideoRequestOptionsDeliveryMode)
-        self.assertIsEnumType(Photos.PHVideoRequestOptionsVersion)
-        self.assertIsEnumType(Photos.UIImageOrientation)
-
-    @min_os_level("10.13")
-    def test_constants(self):
-        self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)
-        self.assertEqual(Photos.PHImageRequestOptionsVersionUnadjusted, 1)
-        self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
-
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeOpportunistic, 0)
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1)
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeFastFormat, 2)
-
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeNone, 0)
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeFast, 1)
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeExact, 2)
 
+        self.assertIsEnumType(Photos.PHImageRequestOptionsVersion)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionUnadjusted, 1)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
+
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsDeliveryMode)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeOpportunistic, 0)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeFastFormat, 2)
+
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsVersion)
+        self.assertIsEnumType(Photos.UIImageOrientation)
+
         self.assertEqual(Photos.PHInvalidImageRequestID, 0)
 
+    @min_os_level("10.13")
+    def test_constants(self):
         self.assertIsInstance(Photos.PHImageManagerMaximumSize, Quartz.CGSize)
 
         self.assertIsInstance(Photos.PHImageResultIsInCloudKey, str)
@@ -38,11 +43,6 @@ class TestPHImageManager(TestCase):
         self.assertIsInstance(Photos.PHImageResultRequestIDKey, str)
         self.assertIsInstance(Photos.PHImageCancelledKey, str)
         self.assertIsInstance(Photos.PHImageErrorKey, str)
-
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
 
     @min_os_level("10.13")
     def test_methods10_13(self):

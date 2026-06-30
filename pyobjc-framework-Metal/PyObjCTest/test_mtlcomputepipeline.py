@@ -59,7 +59,7 @@ class TestMTLComputePipeline(TestCase):
             .supportIndirectCommandBuffers
         )
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLComputePipelineHelper.maxTotalThreadsPerThreadgroup,
             objc._C_NSUInteger,

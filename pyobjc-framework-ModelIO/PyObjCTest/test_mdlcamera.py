@@ -4,10 +4,8 @@ from objc import simd
 
 
 class TestMDLCamera(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLCameraProjection)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLCameraProjectionPerspective, 0)
         self.assertEqual(ModelIO.MDLCameraProjectionOrthographic, 1)
 

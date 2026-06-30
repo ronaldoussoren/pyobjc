@@ -18,7 +18,7 @@ class TestMLBatchProvider(TestCase):
         self.assertProtocolExists("MLBatchProvider", CoreML)
         self.assertProtocolExists("MLFeatureProvider", CoreML)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMLBatchProviderHelper.count, objc._C_NSInteger)
         self.assertArgHasType(
             TestMLBatchProviderHelper.featuresAtIndex_, 0, objc._C_NSInteger

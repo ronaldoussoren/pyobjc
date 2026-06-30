@@ -383,7 +383,33 @@ class TestNSApplication(TestCase):
         self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
         self.assertResultIsBOOL(AppKit.NSApplication.isFullKeyboardAccessEnabled)
 
-    def test_delegate_methods(self):
+    @min_os_level("10.12")
+    def test_methods10_12(self):
+        self.assertArgIsBlock(
+            AppKit.NSApplication.enumerateWindowsWithOptions_usingBlock_, 1, b"v@o^Z"
+        )
+
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertResultIsBOOL(AppKit.NSApplication.isRegisteredForRemoteNotifications)
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSApplication.applicationShouldSuppressHighDynamicRangeContent
+        )
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("NSApplicationDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSApplicationHelper.applicationShouldAutomaticallyLocalizeKeyEquivalents_
         )
@@ -429,29 +455,3 @@ class TestNSApplication(TestCase):
         self.assertResultIsBOOL(
             TestNSApplicationHelper.applicationSupportsSecureRestorableState_
         )
-
-    @min_os_level("10.12")
-    def test_methods10_12(self):
-        self.assertArgIsBlock(
-            AppKit.NSApplication.enumerateWindowsWithOptions_usingBlock_, 1, b"v@o^Z"
-        )
-
-    @min_os_level("10.14")
-    def test_methods10_14(self):
-        self.assertResultIsBOOL(AppKit.NSApplication.isRegisteredForRemoteNotifications)
-
-    @min_os_level("12.0")
-    def test_methods12_0(self):
-        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
-        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
-
-    @min_os_level("26.0")
-    def test_methods26_0(self):
-        self.assertResultIsBOOL(
-            AppKit.NSApplication.applicationShouldSuppressHighDynamicRangeContent
-        )
-        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
-
-    @min_sdk_level("10.10")
-    def test_protocols(self):
-        self.assertProtocolExists("NSApplicationDelegate", AppKit)

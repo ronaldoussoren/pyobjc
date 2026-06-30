@@ -3,16 +3,15 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSHTTPCookieStorage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSHTTPCookieAcceptPolicy)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyAlways, 0)
         self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyNever, 1)
         self.assertEqual(
             Foundation.NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2
         )
 
+    def test_constants(self):
         self.assertIsInstance(
             Foundation.NSHTTPCookieManagerAcceptPolicyChangedNotification, str
         )

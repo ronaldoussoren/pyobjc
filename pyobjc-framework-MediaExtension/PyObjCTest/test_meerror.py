@@ -4,7 +4,7 @@ import MediaExtension
 
 
 class TestMEError(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaExtension.MEError)
         self.assertEqual(MediaExtension.MEErrorUnsupportedFeature, -19320)
         self.assertEqual(MediaExtension.MEErrorAllocationFailure, -19321)

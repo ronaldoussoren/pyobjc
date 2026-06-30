@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTimeZone(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSTimeZoneNameStyle)
         self.assertEqual(Foundation.NSTimeZoneNameStyleStandard, 0)
         self.assertEqual(Foundation.NSTimeZoneNameStyleShortStandard, 1)

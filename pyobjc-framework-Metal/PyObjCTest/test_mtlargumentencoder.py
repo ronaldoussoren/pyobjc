@@ -88,7 +88,7 @@ class TestMTLArgumentEncoder(TestCase):
     def test_protocols10_13(self):
         self.assertProtocolExists("MTLArgumentEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLArgumentEncoderHelper.encodedLength, objc._C_NSUInteger
         )

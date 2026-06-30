@@ -23,7 +23,7 @@ class TestWebDocument(TestCase):
         self.assertProtocolExists("WebDocumentText", WebKit)
         self.assertProtocolExists("WebDocumentRepresentation", WebKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)
 
         self.assertResultIsBOOL(

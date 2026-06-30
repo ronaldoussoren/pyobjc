@@ -15,10 +15,8 @@ class TestMTLFunctionLogHelper(Metal.NSObject):
 
 
 class TestMTLFunctionLog(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLFunctionLogType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLFunctionLogTypeValidation, 0)
 
     @min_sdk_level("11.0")
@@ -27,7 +25,7 @@ class TestMTLFunctionLog(TestCase):
         self.assertProtocolExists("MTLFunctionLogDebugLocation", Metal)
         self.assertProtocolExists("MTLFunctionLog", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLFunctionLogHelper.line, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLFunctionLogHelper.column, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLFunctionLogHelper.type, objc._C_NSInteger)

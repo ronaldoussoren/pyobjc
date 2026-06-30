@@ -4,20 +4,19 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPrintOperation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPrintRenderingQuality)
-        self.assertIsEnumType(AppKit.NSPrintingPageOrder)
+        self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
+        self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
 
-    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSPrintingPageOrder)
         self.assertEqual(AppKit.NSDescendingPageOrder, -1)
         self.assertEqual(AppKit.NSSpecialPageOrder, 0)
         self.assertEqual(AppKit.NSAscendingPageOrder, 1)
         self.assertEqual(AppKit.NSUnknownPageOrder, 2)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPrintOperationExistsException, str)
-
-        self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
-        self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrintOperation.isCopyingOperation)

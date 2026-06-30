@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFetchIndexElementDescription(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSFetchIndexElementType)
-
-    def test_constants(self):
         self.assertEqual(CoreData.NSFetchIndexElementTypeBinary, 0)
         self.assertEqual(CoreData.NSFetchIndexElementTypeRTree, 1)
 

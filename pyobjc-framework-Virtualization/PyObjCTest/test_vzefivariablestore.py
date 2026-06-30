@@ -4,7 +4,7 @@ import Virtualization
 
 
 class TestVZEFIVariableStore(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Virtualization.VZEFIVariableStoreInitializationOptions)
         self.assertEqual(
             Virtualization.VZEFIVariableStoreInitializationOptionAllowOverwrite, 1 << 0

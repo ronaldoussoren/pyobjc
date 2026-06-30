@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKWorkoutConfiguration(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKWorkoutSessionLocationType)
         self.assertEqual(HealthKit.HKWorkoutSessionLocationTypeUnknown, 1)
         self.assertEqual(HealthKit.HKWorkoutSessionLocationTypeIndoor, 2)

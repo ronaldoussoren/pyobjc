@@ -20,7 +20,7 @@ VERSION = "13.0a0"
 setup(
     name="pyobjc-framework-AccessoryAccess",
     description="Wrappers for the framework AccessoryAccess on macOS",
-    min_os_level="11.0",
+    min_os_level="27.0",
     packages=["AccessoryAccess"],
     ext_modules=[
         Extension(

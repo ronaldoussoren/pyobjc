@@ -3,11 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScreen(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSScreenTouchCapabilities)
         self.assertEqual(AppKit.NSScreenTouchCapabilitiesNone, 0)
         self.assertEqual(AppKit.NSScreenTouchCapabilitiesMultiTouch, 1 << 0)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSScreenColorSpaceDidChangeNotification, str)
 
     def test_methods(self):

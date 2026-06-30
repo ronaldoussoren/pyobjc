@@ -3,8 +3,18 @@ import VideoSubscriberAccount
 
 
 class TestVideoSubscriberAccountErrors(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(VideoSubscriberAccount.VSErrorCode)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeAccessNotGranted, 0)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupportedProvider, 1)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUserCancelled, 2)
+        self.assertEqual(
+            VideoSubscriberAccount.VSErrorCodeServiceTemporarilyUnavailable, 3
+        )
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeProviderRejected, 4)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeInvalidVerificationToken, 5)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeRejected, 6)
+        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupported, 7)
 
     def test_constants(self):
         self.assertIsInstance(VideoSubscriberAccount.VSErrorDomain, str)
@@ -18,14 +28,3 @@ class TestVideoSubscriberAccountErrors(TestCase):
         self.assertIsInstance(
             VideoSubscriberAccount.VSErrorInfoKeyUnsupportedProviderIdentifier, str
         )
-
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeAccessNotGranted, 0)
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupportedProvider, 1)
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUserCancelled, 2)
-        self.assertEqual(
-            VideoSubscriberAccount.VSErrorCodeServiceTemporarilyUnavailable, 3
-        )
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeProviderRejected, 4)
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeInvalidVerificationToken, 5)
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeRejected, 6)
-        self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupported, 7)

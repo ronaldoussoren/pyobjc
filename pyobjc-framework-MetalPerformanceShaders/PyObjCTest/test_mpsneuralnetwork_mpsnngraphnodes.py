@@ -14,23 +14,6 @@ class TestMPSNNGraphNodesHelper(MetalPerformanceShaders.NSObject):
 
 
 class TestMPSNNGraphNodes(TestCase):
-    def test_protocols(self):
-        self.assertProtocolExists("MPSHandle", MetalPerformanceShaders)
-        self.assertProtocolExists("MPSNNTrainableNode", MetalPerformanceShaders)
-
-    @min_sdk_level("10.15")
-    def test_protocols10_15(self):
-        self.assertProtocolExists("MPSNNGramMatrixCallback", MetalPerformanceShaders)
-        self.assertProtocolExists("MPSNNLossCallback", MetalPerformanceShaders)
-
-    def test_methods(self):
-        self.assertResultHasType(
-            TestMPSNNGraphNodesHelper.trainingStyle, objc._C_NSUInteger
-        )
-        self.assertArgHasType(
-            TestMPSNNGraphNodesHelper.setTrainingStyle_, 0, objc._C_NSUInteger
-        )
-
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSNNImageNode.exportFromGraph)
@@ -283,4 +266,21 @@ class TestMPSNNGraphNodes(TestCase):
         )
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSNNLossGradientNode.reduceAcrossBatch
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("MPSHandle", MetalPerformanceShaders)
+        self.assertProtocolExists("MPSNNTrainableNode", MetalPerformanceShaders)
+
+    @min_sdk_level("10.15")
+    def test_protocols10_15(self):
+        self.assertProtocolExists("MPSNNGramMatrixCallback", MetalPerformanceShaders)
+        self.assertProtocolExists("MPSNNLossCallback", MetalPerformanceShaders)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestMPSNNGraphNodesHelper.trainingStyle, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMPSNNGraphNodesHelper.setTrainingStyle_, 0, objc._C_NSUInteger
         )

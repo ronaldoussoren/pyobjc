@@ -4,9 +4,8 @@ import MapKit
 
 
 class TestMKLookAroundViewController(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKLookAroundBadgePosition)
-
         self.assertEqual(MapKit.MKLookAroundBadgePositionTopLeading, 0)
         self.assertEqual(MapKit.MKLookAroundBadgePositionTopTrailing, 1)
         self.assertEqual(MapKit.MKLookAroundBadgePositionBottomTrailing, 2)

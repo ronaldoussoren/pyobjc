@@ -33,46 +33,36 @@ class TestMTLResourceHelper(Metal.NSObject):
 
 
 class TestMTLResource(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLCPUCacheMode)
-        self.assertIsEnumType(Metal.MTLHazardTrackingMode)
-        self.assertIsEnumType(Metal.MTLPurgeableState)
-        self.assertIsEnumType(Metal.MTLResourceOptions)
-        self.assertIsEnumType(Metal.MTLStorageMode)
+        self.assertEqual(Metal.MTLCPUCacheModeDefaultCache, 0)
+        self.assertEqual(Metal.MTLCPUCacheModeWriteCombined, 1)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLHazardTrackingMode)
+        self.assertEqual(Metal.MTLHazardTrackingModeDefault, 0)
+        self.assertEqual(Metal.MTLHazardTrackingModeUntracked, 1)
+        self.assertEqual(Metal.MTLHazardTrackingModeTracked, 2)
+
+        self.assertIsEnumType(Metal.MTLPurgeableState)
         self.assertEqual(Metal.MTLPurgeableStateKeepCurrent, 1)
         self.assertEqual(Metal.MTLPurgeableStateNonVolatile, 2)
         self.assertEqual(Metal.MTLPurgeableStateVolatile, 3)
         self.assertEqual(Metal.MTLPurgeableStateEmpty, 4)
 
-        self.assertEqual(Metal.MTLCPUCacheModeDefaultCache, 0)
-        self.assertEqual(Metal.MTLCPUCacheModeWriteCombined, 1)
-
-        self.assertEqual(Metal.MTLStorageModeShared, 0)
-        self.assertEqual(Metal.MTLStorageModeManaged, 1)
-        self.assertEqual(Metal.MTLStorageModePrivate, 2)
-
-        self.assertEqual(Metal.MTLHazardTrackingModeDefault, 0)
-        self.assertEqual(Metal.MTLHazardTrackingModeUntracked, 1)
-        self.assertEqual(Metal.MTLHazardTrackingModeTracked, 2)
-
+        self.assertIsEnumType(Metal.MTLResourceOptions)
         self.assertEqual(Metal.MTLResourceCPUCacheModeShift, 0)
         self.assertEqual(
             Metal.MTLResourceCPUCacheModeMask, 0xF << Metal.MTLResourceCPUCacheModeShift
         )
-
         self.assertEqual(Metal.MTLResourceStorageModeShift, 4)
         self.assertEqual(
             Metal.MTLResourceStorageModeMask, 0xF << Metal.MTLResourceStorageModeShift
         )
-
         self.assertEqual(Metal.MTLResourceHazardTrackingModeShift, 8)
         self.assertEqual(
             Metal.MTLResourceHazardTrackingModeMask,
             0x3 << Metal.MTLResourceHazardTrackingModeShift,
         )
-
         self.assertEqual(
             Metal.MTLResourceCPUCacheModeDefaultCache,
             Metal.MTLCPUCacheModeDefaultCache << Metal.MTLResourceCPUCacheModeShift,
@@ -81,7 +71,6 @@ class TestMTLResource(TestCase):
             Metal.MTLResourceCPUCacheModeWriteCombined,
             Metal.MTLCPUCacheModeWriteCombined << Metal.MTLResourceCPUCacheModeShift,
         )
-
         self.assertEqual(
             Metal.MTLResourceStorageModeShared,
             Metal.MTLStorageModeShared << Metal.MTLResourceStorageModeShift,
@@ -98,7 +87,6 @@ class TestMTLResource(TestCase):
             Metal.MTLResourceStorageModeMemoryless,
             Metal.MTLStorageModeMemoryless << Metal.MTLResourceStorageModeShift,
         )
-
         self.assertEqual(
             Metal.MTLResourceHazardTrackingModeDefault,
             Metal.MTLHazardTrackingModeDefault
@@ -114,7 +102,6 @@ class TestMTLResource(TestCase):
             Metal.MTLHazardTrackingModeTracked
             << Metal.MTLResourceHazardTrackingModeShift,
         )
-
         self.assertEqual(
             Metal.MTLResourceOptionCPUCacheModeDefault,
             Metal.MTLResourceCPUCacheModeDefaultCache,
@@ -123,6 +110,10 @@ class TestMTLResource(TestCase):
             Metal.MTLResourceOptionCPUCacheModeWriteCombined,
             Metal.MTLResourceCPUCacheModeWriteCombined,
         )
+        self.assertIsEnumType(Metal.MTLStorageMode)
+        self.assertEqual(Metal.MTLStorageModeShared, 0)
+        self.assertEqual(Metal.MTLStorageModeManaged, 1)
+        self.assertEqual(Metal.MTLStorageModePrivate, 2)
 
         self.assertIsEnumType(Metal.MTLSparsePageSize)
         self.assertEqual(Metal.MTLSparsePageSize16, 101)
@@ -142,7 +133,7 @@ class TestMTLResource(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLResource", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             Metal.TestMTLResourceHelper.cpuCacheMode, objc._C_NSUInteger
         )

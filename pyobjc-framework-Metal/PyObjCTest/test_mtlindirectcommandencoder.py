@@ -95,7 +95,7 @@ class TestMTLIndirectCommandEncoder(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("MTLIndirectComputeCommand", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_atIndex_,
             1,

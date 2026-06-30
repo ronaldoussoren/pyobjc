@@ -32,7 +32,7 @@ class TestDOMNodeFilter(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
         self.assertResultIsBOOL(WebKit.DOMNodeIterator.expandEntityReferences)
 

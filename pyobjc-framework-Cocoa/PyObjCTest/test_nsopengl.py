@@ -1,24 +1,55 @@
 import AppKit
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     max_os_level,
     expectedFailure,
 )
 
 
 class TestNSOpenGL(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSOpenGLContextParameter)
-        self.assertIsEnumType(AppKit.NSOpenGLGlobalOption)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSwapInterval, 222)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceOrder, 235)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceOpacity, 236)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceBackingSize, 304)
+        self.assertEqual(AppKit.NSOpenGLContextParameterReclaimResources, 308)
+        self.assertEqual(AppKit.NSOpenGLContextParameterCurrentRendererID, 309)
+        self.assertEqual(AppKit.NSOpenGLContextParameterGPUVertexProcessing, 310)
+        self.assertEqual(AppKit.NSOpenGLContextParameterGPUFragmentProcessing, 311)
+        self.assertEqual(AppKit.NSOpenGLContextParameterHasDrawable, 314)
+        self.assertEqual(AppKit.NSOpenGLContextParameterMPSwapsInFlight, 315)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSwapRectangle, 200)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSwapRectangleEnable, 201)
+        self.assertEqual(AppKit.NSOpenGLContextParameterRasterizationEnable, 221)
+        self.assertEqual(AppKit.NSOpenGLContextParameterStateValidation, 301)
+        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceSurfaceVolatile, 306)
 
-    def test_constants(self):
+        # Legacy names:
+        self.assertEqual(AppKit.NSOpenGLCPSwapRectangle, 200)
+        self.assertEqual(AppKit.NSOpenGLCPSwapRectangleEnable, 201)
+        self.assertEqual(AppKit.NSOpenGLCPRasterizationEnable, 221)
+        self.assertEqual(AppKit.NSOpenGLCPSwapInterval, 222)
+        self.assertEqual(AppKit.NSOpenGLCPSurfaceOrder, 235)
+        self.assertEqual(AppKit.NSOpenGLCPSurfaceOpacity, 236)
+        self.assertEqual(AppKit.NSOpenGLCPStateValidation, 301)
+        self.assertEqual(AppKit.NSOpenGLCPSurfaceBackingSize, 304)
+        self.assertEqual(AppKit.NSOpenGLCPReclaimResources, 308)
+        self.assertEqual(AppKit.NSOpenGLCPCurrentRendererID, 309)
+        self.assertEqual(AppKit.NSOpenGLCPGPUVertexProcessing, 310)
+        self.assertEqual(AppKit.NSOpenGLCPGPUFragmentProcessing, 311)
+        self.assertEqual(AppKit.NSOpenGLCPHasDrawable, 314)
+        self.assertEqual(AppKit.NSOpenGLCPMPSwapsInFlight, 315)
+        self.assertEqual(AppKit.NSOpenGLCPSurfaceSurfaceVolatile, 306)
+
+        self.assertIsEnumType(AppKit.NSOpenGLGlobalOption)
         self.assertEqual(AppKit.NSOpenGLGOFormatCacheSize, 501)
         self.assertEqual(AppKit.NSOpenGLGOClearFormatCache, 502)
         self.assertEqual(AppKit.NSOpenGLGORetainRenderers, 503)
         self.assertEqual(AppKit.NSOpenGLGOResetLibrary, 504)
         self.assertEqual(AppKit.NSOpenGLGOUseBuildCache, 506)
 
+        self.assertIsEnumType(AppKit.NSOpenGLPixelFormatAttribute)
         self.assertEqual(AppKit.NSOpenGLPFAAllRenderers, 1)
         self.assertEqual(AppKit.NSOpenGLPFATripleBuffer, 3)
         self.assertEqual(AppKit.NSOpenGLPFADoubleBuffer, 5)
@@ -53,52 +84,16 @@ class TestNSOpenGL(TestCase):
         self.assertEqual(AppKit.NSOpenGLPFACompliant, 83)
         self.assertEqual(AppKit.NSOpenGLPFAScreenMask, 84)
         self.assertEqual(AppKit.NSOpenGLPFAPixelBuffer, 90)
+        self.assertEqual(AppKit.NSOpenGLPFARemotePixelBuffer, 91)
+        self.assertEqual(AppKit.NSOpenGLPFAAllowOfflineRenderers, 96)
+        self.assertEqual(AppKit.NSOpenGLPFAAcceleratedCompute, 97)
+        self.assertEqual(AppKit.NSOpenGLPFAOpenGLProfile, 99)
         self.assertEqual(AppKit.NSOpenGLPFAVirtualScreenCount, 128)
 
-        self.assertEqual(AppKit.NSOpenGLCPSwapRectangle, 200)
-        self.assertEqual(AppKit.NSOpenGLCPSwapRectangleEnable, 201)
-        self.assertEqual(AppKit.NSOpenGLCPRasterizationEnable, 221)
-        self.assertEqual(AppKit.NSOpenGLCPSwapInterval, 222)
-        self.assertEqual(AppKit.NSOpenGLCPSurfaceOrder, 235)
-        self.assertEqual(AppKit.NSOpenGLCPSurfaceOpacity, 236)
-        self.assertEqual(AppKit.NSOpenGLCPStateValidation, 301)
-        self.assertEqual(AppKit.NSOpenGLCPSurfaceBackingSize, 304)
-        self.assertEqual(AppKit.NSOpenGLCPReclaimResources, 308)
-        self.assertEqual(AppKit.NSOpenGLCPCurrentRendererID, 309)
-        self.assertEqual(AppKit.NSOpenGLCPGPUVertexProcessing, 310)
-        self.assertEqual(AppKit.NSOpenGLCPGPUFragmentProcessing, 311)
-        self.assertEqual(AppKit.NSOpenGLCPHasDrawable, 314)
-        self.assertEqual(AppKit.NSOpenGLCPMPSwapsInFlight, 315)
-        self.assertEqual(AppKit.NSOpenGLCPSurfaceSurfaceVolatile, 306)
-
-        self.assertEqual(AppKit.NSOpenGLContextParameterSwapInterval, 222)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceOrder, 235)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceOpacity, 236)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceBackingSize, 304)
-        self.assertEqual(AppKit.NSOpenGLContextParameterReclaimResources, 308)
-        self.assertEqual(AppKit.NSOpenGLContextParameterCurrentRendererID, 309)
-        self.assertEqual(AppKit.NSOpenGLContextParameterGPUVertexProcessing, 310)
-        self.assertEqual(AppKit.NSOpenGLContextParameterGPUFragmentProcessing, 311)
-        self.assertEqual(AppKit.NSOpenGLContextParameterHasDrawable, 314)
-        self.assertEqual(AppKit.NSOpenGLContextParameterMPSwapsInFlight, 315)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSwapRectangle, 200)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSwapRectangleEnable, 201)
-        self.assertEqual(AppKit.NSOpenGLContextParameterRasterizationEnable, 221)
-        self.assertEqual(AppKit.NSOpenGLContextParameterStateValidation, 301)
-        self.assertEqual(AppKit.NSOpenGLContextParameterSurfaceSurfaceVolatile, 306)
-
-        self.assertEqual(AppKit.NSOpenGLPFAAllowOfflineRenderers, 96)
-
-        self.assertEqual(AppKit.NSOpenGLPFAOpenGLProfile, 99)
+        # Unnamed enum:
         self.assertEqual(AppKit.NSOpenGLProfileVersionLegacy, 0x1000)
-        self.assertEqual(AppKit.NSOpenGLProfileVersion3_2Core, 0x3200)
-
-        self.assertEqual(AppKit.NSOpenGLPFARemotePixelBuffer, 91)
-        self.assertEqual(AppKit.NSOpenGLPFAAcceleratedCompute, 97)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(AppKit.NSOpenGLProfileVersion4_1Core, 0x4100)
+        self.assertEqual(AppKit.NSOpenGLProfileVersion3_2Core, 0x3200)
 
     def test_functions(self):
         major, minor = AppKit.NSOpenGLGetVersion(None, None)

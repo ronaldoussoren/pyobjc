@@ -367,22 +367,13 @@ class TestMTLDeviceHelper(Metal.NSObject):
 
 
 class TestMTLDevice(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
-        self.assertIsEnumType(Metal.MTLCounterSamplingPoint)
-        self.assertIsEnumType(Metal.MTLDeviceLocation)
-        self.assertIsEnumType(Metal.MTLFeatureSet)
-        self.assertIsEnumType(Metal.MTLGPUFamily)
-        self.assertIsEnumType(Metal.MTLPipelineOption)
-        self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
-        self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
-        self.assertIsEnumType(Metal.MTLIOCompressionMethod)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLSparsePageSize)
+        self.assertEqual(Metal.MTLSparsePageSize16, 101)
+        self.assertEqual(Metal.MTLSparsePageSize64, 102)
+        self.assertEqual(Metal.MTLSparsePageSize256, 103)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLFeatureSet)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v1, 0)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily2_v1, 1)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v2, 2)
@@ -426,6 +417,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLFeatureSet_tvOS_GPUFamily1_v3, 30002)
         self.assertEqual(Metal.MTLFeatureSet_tvOS_GPUFamily1_v4, 30004)
 
+        self.assertIsEnumType(Metal.MTLGPUFamily)
         self.assertEqual(Metal.MTLGPUFamilyApple1, 1001)
         self.assertEqual(Metal.MTLGPUFamilyApple2, 1002)
         self.assertEqual(Metal.MTLGPUFamilyApple3, 1003)
@@ -436,60 +428,62 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple8, 1008)
         self.assertEqual(Metal.MTLGPUFamilyApple9, 1009)
         self.assertEqual(Metal.MTLGPUFamilyApple10, 1010)
-
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
-
         self.assertEqual(Metal.MTLGPUFamilyCommon1, 3001)
         self.assertEqual(Metal.MTLGPUFamilyCommon2, 3002)
         self.assertEqual(Metal.MTLGPUFamilyCommon3, 3003)
-
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst1, 4001)
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst2, 4002)
-
         self.assertEqual(Metal.MTLGPUFamilyMetal3, 5001)
         self.assertEqual(Metal.MTLGPUFamilyMetal4, 5002)
 
+        self.assertIsEnumType(Metal.MTLDeviceLocation)
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)
         self.assertEqual(Metal.MTLDeviceLocationExternal, 2)
         self.assertEqual(Metal.MTLDeviceLocationUnspecified, 0xFFFFFFFFFFFFFFFF)
 
+        self.assertIsEnumType(Metal.MTLPipelineOption)
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBindingInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBufferTypeInfo, 1 << 1)
         self.assertEqual(Metal.MTLPipelineOptionFailOnBinaryArchiveMiss, 1 << 2)
 
+        self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
         self.assertEqual(Metal.MTLReadWriteTextureTierNone, 0)
         self.assertEqual(Metal.MTLReadWriteTextureTier1, 1)
         self.assertEqual(Metal.MTLReadWriteTextureTier2, 2)
 
+        self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
         self.assertEqual(Metal.MTLArgumentBuffersTier1, 0)
         self.assertEqual(Metal.MTLArgumentBuffersTier2, 1)
 
+        self.assertIsEnumType(Metal.MTLCounterSamplingPoint)
         self.assertEqual(Metal.MTLCounterSamplingPointAtStageBoundary, 0)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDrawBoundary, 1)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDispatchBoundary, 2)
         self.assertEqual(Metal.MTLCounterSamplingPointAtTileDispatchBoundary, 3)
         self.assertEqual(Metal.MTLCounterSamplingPointAtBlitBoundary, 4)
 
+        self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeOutward, 0)
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeInward, 1)
 
+        self.assertIsEnumType(Metal.MTLIOCompressionMethod)
         self.assertEqual(Metal.MTLIOCompressionMethodZlib, 0)
         self.assertEqual(Metal.MTLIOCompressionMethodLZFSE, 1)
         self.assertEqual(Metal.MTLIOCompressionMethodLZ4, 2)
         self.assertEqual(Metal.MTLIOCompressionMethodLZMA, 3)
         self.assertEqual(Metal.MTLIOCompressionMethodLZBitmap, 4)
 
-        self.assertEqual(Metal.MTLSparsePageSize16, 101)
-        self.assertEqual(Metal.MTLSparsePageSize64, 102)
-        self.assertEqual(Metal.MTLSparsePageSize256, 103)
-
         self.assertIsEnumType(Metal.MTLDeviceError)
         self.assertEqual(Metal.MTLDeviceErrorNone, 0)
         self.assertEqual(Metal.MTLDeviceErrorNotSupported, 1)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -532,7 +526,7 @@ class TestMTLDevice(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLDevice", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLDeviceHelper.registryID, objc._C_ULNGLNG)
         self.assertResultHasType(
             TestMTLDeviceHelper.maxThreadsPerThreadgroup, Metal.MTLSize.__typestr__

@@ -1,5 +1,18 @@
 {
  "definitions": {
+  "typed_enum": {
+   "SecAccessOwnerType": { "type": "I" },
+   "SecCredentialType": { "type": "I" },
+   "SecKeyOperationType": { "type": "I" },
+   "SecPadding": { "type": "I" },
+   "SecKeySizes": { "type": "I" },
+   "SSLAuthenticate": { "type": "i" },
+   "SSLClientCertificateState": { "type": "i" },
+   "SSLProtocolSide": { "type": "i" },
+   "SSLConnectionType": { "type": "i" },
+   "SSLSessionState": { "type": "i" },
+   "SSLSessionOption": { "type": "i" }
+  },
   "cftypes": {
    "SecKeychainSearchRef": { "ignore": true },
    "SecTransformImplementationRef": {

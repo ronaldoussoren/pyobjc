@@ -24,6 +24,8 @@ class TestDRBurnProgressPanel(TestCase):
             DiscRecordingUI.DRBurnProgressPanel.verboseProgressStatus
         )
 
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(
             TestDRBurnProgressPanelHelper.burnProgressPanel_burnDidFinish_
         )

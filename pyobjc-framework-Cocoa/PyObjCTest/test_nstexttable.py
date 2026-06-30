@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSTextTable(TestCase):
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextBlockValueType)
         self.assertEqual(AppKit.NSTextBlockValueTypeAbsolute, 0)
         self.assertEqual(AppKit.NSTextBlockValueTypePercentage, 1)

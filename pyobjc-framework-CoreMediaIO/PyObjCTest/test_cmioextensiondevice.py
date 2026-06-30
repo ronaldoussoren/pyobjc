@@ -11,11 +11,19 @@ class TestCMIOExtensionDeviceHelper(CoreMediaIO.NSObject):
 
 
 class TestCMIOExtensionDevice(TestCase):
+    @min_os_level("12.3")
+    def test_methods12_3(self):
+        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionDevice.addStream_error_)
+        self.assertArgIsOut(CoreMediaIO.CMIOExtensionDevice.addStream_error_, 1)
+
+        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionDevice.removeStream_error_)
+        self.assertArgIsOut(CoreMediaIO.CMIOExtensionDevice.removeStream_error_, 1)
+
     @min_sdk_level("12.3")
     def test_protocols(self):
         self.assertProtocolExists("CMIOExtensionDeviceSource", CoreMediaIO)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCMIOExtensionDeviceHelper.devicePropertiesForProperties_error_,
             1,
@@ -28,11 +36,3 @@ class TestCMIOExtensionDevice(TestCase):
         self.assertArgHasType(
             TestCMIOExtensionDeviceHelper.setDeviceProperties_error_, 1, b"o^@"
         )
-
-    @min_os_level("12.3")
-    def test_methods12_3(self):
-        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionDevice.addStream_error_)
-        self.assertArgIsOut(CoreMediaIO.CMIOExtensionDevice.addStream_error_, 1)
-
-        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionDevice.removeStream_error_)
-        self.assertArgIsOut(CoreMediaIO.CMIOExtensionDevice.removeStream_error_, 1)

@@ -12,20 +12,40 @@ otherBytes.frombytes(b"12345678901234567890" * 5)
 
 
 class TestNSData(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDataBase64DecodingOptions)
-        self.assertIsEnumType(Foundation.NSDataBase64EncodingOptions)
-        self.assertIsEnumType(Foundation.NSDataCompressionAlgorithm)
-        self.assertIsEnumType(Foundation.NSDataReadingOptions)
-        self.assertIsEnumType(Foundation.NSDataSearchOptions)
-        self.assertIsEnumType(Foundation.NSDataWritingOptions)
+        self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
 
-    def test_constants(self):
+        self.assertIsEnumType(Foundation.NSDataBase64EncodingOptions)
+        self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
+        self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
+        self.assertEqual(
+            Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4
+        )
+        self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
+
+        self.assertIsEnumType(Foundation.NSDataCompressionAlgorithm)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZFSE, 0)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZ4, 1)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZMA, 2)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmZlib, 3)
+
+        self.assertIsEnumType(Foundation.NSDataReadingOptions)
+        self.assertEqual(Foundation.NSDataReadingMappedIfSafe, 1 << 0)
+        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
+        self.assertEqual(Foundation.NSDataReadingMappedAlways, 1 << 3)
+
+        # Legacy aliases:
+        self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)
+        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
         self.assertEqual(Foundation.NSMappedRead, 1)
         self.assertEqual(Foundation.NSUncachedRead, 2)
 
-        self.assertEqual(Foundation.NSAtomicWrite, 1)
+        self.assertIsEnumType(Foundation.NSDataSearchOptions)
+        self.assertEqual(Foundation.NSDataSearchBackwards, 1 << 0)
+        self.assertEqual(Foundation.NSDataSearchAnchored, 1 << 1)
 
+        self.assertIsEnumType(Foundation.NSDataWritingOptions)
         self.assertEqual(Foundation.NSDataWritingFileProtectionNone, 0x10000000)
         self.assertEqual(Foundation.NSDataWritingFileProtectionComplete, 0x20000000)
         self.assertEqual(
@@ -41,32 +61,11 @@ class TestNSData(TestCase):
         )
         self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
 
-        self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)
-        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
         self.assertEqual(Foundation.NSDataWritingAtomic, 1 << 0)
-        self.assertEqual(Foundation.NSDataSearchBackwards, 1 << 0)
-        self.assertEqual(Foundation.NSDataSearchAnchored, 1 << 1)
-
-        self.assertEqual(Foundation.NSDataReadingMappedAlways, 1 << 3)
-
-        self.assertEqual(Foundation.NSDataReadingMappedIfSafe, 1 << 0)
-        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
-
         self.assertEqual(Foundation.NSDataWritingWithoutOverwriting, 1 << 1)
 
-        self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
-        self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
-        self.assertEqual(
-            Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4
-        )
-        self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
-
-        self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
-
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZFSE, 0)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZ4, 1)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZMA, 2)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmZlib, 3)
+        # Old aliases:
+        self.assertEqual(Foundation.NSAtomicWrite, 1)
 
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSData.isEqualToData_)

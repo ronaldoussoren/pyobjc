@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEPacketTunnelNetworkSettings(TestCase):
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEPacketTunnelNetworkSettingsIPFamily)
         self.assertEqual(NetworkExtension.NEPacketTunnelNetworkSettingsIPFamilyNone, 0)
         self.assertEqual(NetworkExtension.NEPacketTunnelNetworkSettingsIPFamilyAny, 1)

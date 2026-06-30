@@ -6,7 +6,7 @@ CMTagCollectionApplierFunction = b"v" + CoreMedia.CMTag.__typestr__ + b"^v"
 
 
 class TestCMTagCollection(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMedia.CMTagCollectionError)
         self.assertEqual(CoreMedia.kCMTagCollectionError_ParamErr, -15740)
         self.assertEqual(CoreMedia.kCMTagCollectionError_AllocationFailed, -15741)

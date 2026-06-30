@@ -28,6 +28,8 @@ class TestSFAuthorizationView(TestCase):
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.authorize_)
         self.assertResultIsBOOL(SecurityInterface.SFAuthorizationView.deauthorize_)
 
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(
             TestSFAuthorizationViewHelper.authorizationViewShouldDeauthorize_
         )

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextInsertionIndicator(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextInsertionIndicatorDisplayMode)
         self.assertEqual(AppKit.NSTextInsertionIndicatorDisplayModeAutomatic, 0)
         self.assertEqual(AppKit.NSTextInsertionIndicatorDisplayModeHidden, 1)

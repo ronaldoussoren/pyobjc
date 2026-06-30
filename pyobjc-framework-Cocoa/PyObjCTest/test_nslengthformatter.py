@@ -3,11 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLengthFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSLengthFormatterUnit)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(Foundation.NSLengthFormatterUnitMillimeter, 8)
         self.assertEqual(Foundation.NSLengthFormatterUnitCentimeter, 9)
         self.assertEqual(Foundation.NSLengthFormatterUnitMeter, 11)

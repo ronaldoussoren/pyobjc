@@ -4,7 +4,7 @@ import ScreenCaptureKit
 
 
 class TestSCContentSharingPicker(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCContentSharingPickerMode)
         self.assertEqual(
             ScreenCaptureKit.SCContentSharingPickerModeSingleWindow, 1 << 0

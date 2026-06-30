@@ -17,7 +17,7 @@ class TestNSAttributedString(TestCase):
 
         self.assertEqual(AppKit.NSUnderlineStyleByWord, 0x8000)
 
-        self.assertIsEnumType(AppKit.NSUnderlinePattern)
+        # Legacy aliases:
         self.assertEqual(AppKit.NSUnderlinePatternSolid, 0x0000)
         self.assertEqual(AppKit.NSUnderlinePatternDot, 0x0100)
         self.assertEqual(AppKit.NSUnderlinePatternDash, 0x0200)

@@ -4,10 +4,8 @@ import objc
 
 
 class TestMLMultiArray(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreML.MLMultiArrayDataType)
-
-    def test_constants(self):
         self.assertEqual(CoreML.MLMultiArrayDataTypeDouble, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat64, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat32, 0x10000 | 32)

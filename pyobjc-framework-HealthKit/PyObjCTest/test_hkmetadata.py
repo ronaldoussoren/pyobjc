@@ -3,10 +3,7 @@ import HealthKit
 
 
 class TestHKMetadata(TestCase):
-    def test_constants(self):
-        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceSerialNumber, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyBodyTemperatureSensorLocation, str)
-
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKBodyTemperatureSensorLocation)
         self.assertEqual(HealthKit.HKBodyTemperatureSensorLocationOther, 0)
         self.assertEqual(HealthKit.HKBodyTemperatureSensorLocationArmpit, 1)
@@ -21,8 +18,6 @@ class TestHKMetadata(TestCase):
         self.assertEqual(HealthKit.HKBodyTemperatureSensorLocationTemporalArtery, 10)
         self.assertEqual(HealthKit.HKBodyTemperatureSensorLocationForehead, 11)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateSensorLocation, str)
-
         self.assertIsEnumType(HealthKit.HKHeartRateSensorLocation)
         self.assertEqual(HealthKit.HKHeartRateSensorLocationOther, 0)
         self.assertEqual(HealthKit.HKHeartRateSensorLocationChest, 1)
@@ -32,21 +27,15 @@ class TestHKMetadata(TestCase):
         self.assertEqual(HealthKit.HKHeartRateSensorLocationEarLobe, 5)
         self.assertEqual(HealthKit.HKHeartRateSensorLocationFoot, 6)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateMotionContext, str)
-
         self.assertIsEnumType(HealthKit.HKHeartRateMotionContext)
         self.assertEqual(HealthKit.HKHeartRateMotionContextNotSet, 0)
         self.assertEqual(HealthKit.HKHeartRateMotionContextSedentary, 1)
         self.assertEqual(HealthKit.HKHeartRateMotionContextActive, 2)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyUserMotionContext, str)
-
         self.assertIsEnumType(HealthKit.HKUserMotionContext)
         self.assertEqual(HealthKit.HKUserMotionContextNotSet, 0)
         self.assertEqual(HealthKit.HKUserMotionContextStationary, 1)
         self.assertEqual(HealthKit.HKUserMotionContextActive, 2)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeySessionEstimate, str)
 
         self.assertIsEnumType(HealthKit.HKHeartRateRecoveryTestType)
         self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypeMaxExercise, 1)
@@ -54,33 +43,6 @@ class TestHKMetadata(TestCase):
             HealthKit.HKHeartRateRecoveryTestTypePredictionSubMaxExercise, 2
         )
         self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypePredictionNonExercise, 3)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateRecoveryTestType, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateRecoveryActivityType, str)
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyHeartRateRecoveryActivityDuration, str
-        )
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyHeartRateRecoveryMaxObservedRecoveryHeartRate, str
-        )
-        self.assertIsInstance(HealthKit.HKMetadataKeyFoodType, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyUDIDeviceIdentifier, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyUDIProductionIdentifier, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyDigitalSignature, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyExternalUUID, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeySyncIdentifier, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeySyncVersion, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyTimeZone, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceName, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceManufacturerName, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyWasTakenInLab, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyReferenceRangeLowerLimit, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyReferenceRangeUpperLimit, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyWasUserEntered, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyWorkoutBrandName, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyGroupFitness, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyIndoorWorkout, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyCoachedWorkout, str)
 
         self.assertIsEnumType(HealthKit.HKWeatherCondition)
         self.assertEqual(HealthKit.HKWeatherConditionNone, 0)
@@ -112,19 +74,10 @@ class TestHKMetadata(TestCase):
         self.assertEqual(HealthKit.HKWeatherConditionHurricane, 26)
         self.assertEqual(HealthKit.HKWeatherConditionTornado, 27)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherCondition, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherTemperature, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherHumidity, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeySexualActivityProtectionUsed, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyMenstrualCycleStart, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyLapLength, str)
-
         self.assertIsEnumType(HealthKit.HKWorkoutSwimmingLocationType)
         self.assertEqual(HealthKit.HKWorkoutSwimmingLocationTypeUnknown, 0)
         self.assertEqual(HealthKit.HKWorkoutSwimmingLocationTypePool, 1)
         self.assertEqual(HealthKit.HKWorkoutSwimmingLocationTypeOpenWater, 2)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeySwimmingLocationType, str)
 
         self.assertIsEnumType(HealthKit.HKSwimmingStrokeStyle)
         self.assertEqual(HealthKit.HKSwimmingStrokeStyleUnknown, 0)
@@ -135,68 +88,28 @@ class TestHKMetadata(TestCase):
         self.assertEqual(HealthKit.HKSwimmingStrokeStyleButterfly, 5)
         self.assertEqual(HealthKit.HKSwimmingStrokeStyleKickboard, 6)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeySwimmingStrokeStyle, str)
-
         self.assertIsEnumType(HealthKit.HKInsulinDeliveryReason)
         self.assertEqual(HealthKit.HKInsulinDeliveryReasonBasal, 1)
         self.assertEqual(HealthKit.HKInsulinDeliveryReasonBolus, 2)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyInsulinDeliveryReason, str)
-
         self.assertIsEnumType(HealthKit.HKBloodGlucoseMealTime)
         self.assertEqual(HealthKit.HKBloodGlucoseMealTimePreprandial, 1)
         self.assertEqual(HealthKit.HKBloodGlucoseMealTimePostprandial, 2)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeyBloodGlucoseMealTime, str)
 
         self.assertIsEnumType(HealthKit.HKVO2MaxTestType)
         self.assertEqual(HealthKit.HKVO2MaxTestTypeMaxExercise, 1)
         self.assertEqual(HealthKit.HKVO2MaxTestTypePredictionSubMaxExercise, 2)
         self.assertEqual(HealthKit.HKVO2MaxTestTypePredictionNonExercise, 3)
 
-        self.assertIsInstance(HealthKit.HKMetadataKeyVO2MaxTestType, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAverageSpeed, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyMaximumSpeed, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAlpineSlopeGrade, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyElevationAscended, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyElevationDescended, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyFitnessMachineDuration, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyIndoorBikeDistance, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyCrossTrainerDistance, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateEventThreshold, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAverageMETs, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAudioExposureLevel, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAudioExposureDuration, str)
-
         self.assertIsEnumType(HealthKit.HKAppleECGAlgorithmVersion)
         self.assertEqual(HealthKit.HKAppleECGAlgorithmVersion1, 1)
         self.assertEqual(HealthKit.HKAppleECGAlgorithmVersion2, 2)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeyAppleECGAlgorithmVersion, str)
 
         self.assertIsEnumType(HealthKit.HKDevicePlacementSide)
         self.assertEqual(HealthKit.HKDevicePlacementSideUnknown, 0)
         self.assertEqual(HealthKit.HKDevicePlacementSideLeft, 1)
         self.assertEqual(HealthKit.HKDevicePlacementSideRight, 2)
         self.assertEqual(HealthKit.HKDevicePlacementSideCentral, 3)
-
-        self.assertIsInstance(HealthKit.HKMetadataKeyDevicePlacementSide, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyBarometricPressure, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyAppleDeviceCalibrated, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyVO2MaxValue, str)
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyLowCardioFitnessEventThreshold, str
-        )
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyDateOfEarliestDataUsedForEstimate, str
-        )
-        self.assertIsInstance(HealthKit.HKMetadataKeyAlgorithmVersion, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeySWOLFScore, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToLowerBound, str)
-        self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToUpperBound, str)
-        self.assertIsInstance(
-            HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
-        )
 
         self.assertIsEnumType(HealthKit.HKWaterSalinity)
         self.assertEqual(HealthKit.HKWaterSalinityFreshWater, 1)
@@ -217,6 +130,94 @@ class TestHKMetadata(TestCase):
         self.assertIsEnumType(HealthKit.HKPhysicalEffortEstimationType)
         self.assertEqual(HealthKit.HKPhysicalEffortEstimationTypeActivityLookup, 1)
         self.assertEqual(HealthKit.HKPhysicalEffortEstimationTypeDeviceSensed, 2)
+
+    def test_constants(self):
+        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceSerialNumber, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyBodyTemperatureSensorLocation, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateSensorLocation, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateMotionContext, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyUserMotionContext, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeySessionEstimate, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateRecoveryTestType, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateRecoveryActivityType, str)
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyHeartRateRecoveryActivityDuration, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyHeartRateRecoveryMaxObservedRecoveryHeartRate, str
+        )
+        self.assertIsInstance(HealthKit.HKMetadataKeyFoodType, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyUDIDeviceIdentifier, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyUDIProductionIdentifier, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyDigitalSignature, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyExternalUUID, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeySyncIdentifier, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeySyncVersion, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyTimeZone, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceName, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyDeviceManufacturerName, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWasTakenInLab, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyReferenceRangeLowerLimit, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyReferenceRangeUpperLimit, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWasUserEntered, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWorkoutBrandName, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyGroupFitness, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyIndoorWorkout, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyCoachedWorkout, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherCondition, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherTemperature, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyWeatherHumidity, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeySexualActivityProtectionUsed, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyMenstrualCycleStart, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyLapLength, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeySwimmingLocationType, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeySwimmingStrokeStyle, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyInsulinDeliveryReason, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyBloodGlucoseMealTime, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyVO2MaxTestType, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAverageSpeed, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyMaximumSpeed, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAlpineSlopeGrade, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyElevationAscended, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyElevationDescended, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyFitnessMachineDuration, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyIndoorBikeDistance, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyCrossTrainerDistance, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyHeartRateEventThreshold, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAverageMETs, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAudioExposureLevel, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAudioExposureDuration, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyAppleECGAlgorithmVersion, str)
+
+        self.assertIsInstance(HealthKit.HKMetadataKeyDevicePlacementSide, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyBarometricPressure, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyAppleDeviceCalibrated, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyVO2MaxValue, str)
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyLowCardioFitnessEventThreshold, str
+        )
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyDateOfEarliestDataUsedForEstimate, str
+        )
+        self.assertIsInstance(HealthKit.HKMetadataKeyAlgorithmVersion, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeySWOLFScore, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToLowerBound, str)
+        self.assertIsInstance(HealthKit.HKMetadataKeyQuantityClampedToUpperBound, str)
+        self.assertIsInstance(
+            HealthKit.HKMetadataKeyGlassesPrescriptionDescription, str
+        )
 
     @min_os_level("13.3")
     def test_constants13_3(self):

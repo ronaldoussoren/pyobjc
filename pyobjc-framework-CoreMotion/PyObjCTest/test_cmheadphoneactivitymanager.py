@@ -6,7 +6,7 @@ CMHeadphoneActivityHandler = b"v@@"
 
 
 class TestCMHeadphoneActivityManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMotion.CMHeadphoneActivityStatus)
         self.assertEqual(CoreMotion.CMHeadphoneActivityStatusDisconnected, 0)
         self.assertEqual(CoreMotion.CMHeadphoneActivityStatusConnected, 1)

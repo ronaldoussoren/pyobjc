@@ -10,14 +10,14 @@ from PyObjCTools.TestSupport import (
 
 class TestCFOpenDirectoryConstants(TestCase):
     def test_enums(self):
-        self.assertIsEnum(CFOpenDirectory.ODNodeType)
+        self.assertIsEnumType(CFOpenDirectory.ODNodeType)
         self.assertEqual(CFOpenDirectory.kODNodeTypeAuthentication, 0x2201)
         self.assertEqual(CFOpenDirectory.kODNodeTypeContacts, 0x2204)
         self.assertEqual(CFOpenDirectory.kODNodeTypeNetwork, 0x2205)
         self.assertEqual(CFOpenDirectory.kODNodeTypeLocalNodes, 0x2200)
         self.assertEqual(CFOpenDirectory.kODNodeTypeConfigure, 0x2202)
 
-        self.assertIsEnum(CFOpenDirectory.ODMatchType)
+        self.assertIsEnumType(CFOpenDirectory.ODMatchType)
         self.assertEqual(CFOpenDirectory.kODMatchAny, 0x0001)
         self.assertEqual(CFOpenDirectory.kODMatchEqualTo, 0x2001)
         self.assertEqual(CFOpenDirectory.kODMatchBeginsWith, 0x2002)
@@ -30,7 +30,7 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertEqual(CFOpenDirectory.kODMatchGreaterThan, 0x2006)
         self.assertEqual(CFOpenDirectory.kODMatchLessThan, 0x2007)
 
-        self.assertIsEnum(CFOpenDirectory.ODFrameworkErrors)
+        self.assertIsEnumType(CFOpenDirectory.ODFrameworkErrors)
         self.assertEqual(CFOpenDirectory.kODErrorSuccess, 0)
         self.assertEqual(CFOpenDirectory.kODErrorSessionLocalOnlyDaemonInUse, 1000)
         self.assertEqual(CFOpenDirectory.kODErrorSessionNormalDaemonInUse, 1001)

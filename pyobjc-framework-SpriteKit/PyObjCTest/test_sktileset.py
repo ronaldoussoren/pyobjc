@@ -1,38 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SpriteKit
 
 
 class TestSKTileSet(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SpriteKit.SKTileAdjacencyMask)
-        self.assertIsEnumType(SpriteKit.SKTileSetType)
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertEqual(SpriteKit.SKTileSetTypeGrid, 0)
-        self.assertEqual(SpriteKit.SKTileSetTypeIsometric, 1)
-        self.assertEqual(SpriteKit.SKTileSetTypeHexagonalFlat, 2)
-        self.assertEqual(SpriteKit.SKTileSetTypeHexagonalPointy, 3)
-        self.assertEqual(SpriteKit.SKTileAdjacencyUp, 1 << 0)
-        self.assertEqual(SpriteKit.SKTileAdjacencyUpperRight, 1 << 1)
-        self.assertEqual(SpriteKit.SKTileAdjacencyRight, 1 << 2)
-        self.assertEqual(SpriteKit.SKTileAdjacencyLowerRight, 1 << 3)
-        self.assertEqual(SpriteKit.SKTileAdjacencyDown, 1 << 4)
-        self.assertEqual(SpriteKit.SKTileAdjacencyLowerLeft, 1 << 5)
-        self.assertEqual(SpriteKit.SKTileAdjacencyLeft, 1 << 6)
-        self.assertEqual(SpriteKit.SKTileAdjacencyUpperLeft, 1 << 7)
-        self.assertEqual(
-            SpriteKit.SKTileAdjacencyAll,
-            SpriteKit.SKTileAdjacencyUp
-            | SpriteKit.SKTileAdjacencyUpperRight
-            | SpriteKit.SKTileAdjacencyRight
-            | SpriteKit.SKTileAdjacencyLowerRight
-            | SpriteKit.SKTileAdjacencyDown
-            | SpriteKit.SKTileAdjacencyLowerLeft
-            | SpriteKit.SKTileAdjacencyLeft
-            | SpriteKit.SKTileAdjacencyUpperLeft,
-        )
         self.assertEqual(SpriteKit.SKTileHexFlatAdjacencyUp, 1 << 0)
         self.assertEqual(SpriteKit.SKTileHexFlatAdjacencyUpperRight, 1 << 1)
         self.assertEqual(SpriteKit.SKTileHexFlatAdjacencyLowerRight, 1 << 2)
@@ -154,6 +127,31 @@ class TestSKTileSet(TestCase):
             SpriteKit.SKTileAdjacencyUp
             | SpriteKit.SKTileAdjacencyUpperRight
             | SpriteKit.SKTileAdjacencyRight
+            | SpriteKit.SKTileAdjacencyDown
+            | SpriteKit.SKTileAdjacencyLowerLeft
+            | SpriteKit.SKTileAdjacencyLeft
+            | SpriteKit.SKTileAdjacencyUpperLeft,
+        )
+
+        self.assertIsEnumType(SpriteKit.SKTileSetType)
+        self.assertEqual(SpriteKit.SKTileSetTypeGrid, 0)
+        self.assertEqual(SpriteKit.SKTileSetTypeIsometric, 1)
+        self.assertEqual(SpriteKit.SKTileSetTypeHexagonalFlat, 2)
+        self.assertEqual(SpriteKit.SKTileSetTypeHexagonalPointy, 3)
+        self.assertEqual(SpriteKit.SKTileAdjacencyUp, 1 << 0)
+        self.assertEqual(SpriteKit.SKTileAdjacencyUpperRight, 1 << 1)
+        self.assertEqual(SpriteKit.SKTileAdjacencyRight, 1 << 2)
+        self.assertEqual(SpriteKit.SKTileAdjacencyLowerRight, 1 << 3)
+        self.assertEqual(SpriteKit.SKTileAdjacencyDown, 1 << 4)
+        self.assertEqual(SpriteKit.SKTileAdjacencyLowerLeft, 1 << 5)
+        self.assertEqual(SpriteKit.SKTileAdjacencyLeft, 1 << 6)
+        self.assertEqual(SpriteKit.SKTileAdjacencyUpperLeft, 1 << 7)
+        self.assertEqual(
+            SpriteKit.SKTileAdjacencyAll,
+            SpriteKit.SKTileAdjacencyUp
+            | SpriteKit.SKTileAdjacencyUpperRight
+            | SpriteKit.SKTileAdjacencyRight
+            | SpriteKit.SKTileAdjacencyLowerRight
             | SpriteKit.SKTileAdjacencyDown
             | SpriteKit.SKTileAdjacencyLowerLeft
             | SpriteKit.SKTileAdjacencyLeft

@@ -115,7 +115,7 @@ class TestMEFormatReaderHelper(MediaExtension.NSObject):
 
 
 class TestMEFormatReader(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaExtension.MEFileInfoFragmentsStatus)
         self.assertEqual(MediaExtension.MEFileInfoCouldNotContainFragments, 0)
         self.assertEqual(MediaExtension.MEFileInfoContainsFragments, 1)

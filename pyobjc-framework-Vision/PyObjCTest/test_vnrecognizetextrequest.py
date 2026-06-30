@@ -3,10 +3,8 @@ import Vision
 
 
 class TestVNRecognizeTextRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNRequestTextRecognitionLevel)
-
-    def test_constants(self):
         self.assertEqual(Vision.VNRequestTextRecognitionLevelAccurate, 0)
         self.assertEqual(Vision.VNRequestTextRecognitionLevelFast, 1)
 

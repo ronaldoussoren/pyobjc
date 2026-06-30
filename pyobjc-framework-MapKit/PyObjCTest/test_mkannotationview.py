@@ -5,11 +5,7 @@ import MapKit
 
 
 class TestMKAnnotationView(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(MapKit.MKAnnotationViewZPriority, float)
-        self.assertIsTypedEnum(MapKit.MKFeatureDisplayPriority, float)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKAnnotationViewCollisionMode)
         self.assertEqual(MapKit.MKAnnotationViewCollisionModeRectangle, 0)
         self.assertEqual(MapKit.MKAnnotationViewCollisionModeCircle, 1)
@@ -21,6 +17,10 @@ class TestMKAnnotationView(TestCase):
         self.assertEqual(MapKit.MKAnnotationViewDragStateDragging, 2)
         self.assertEqual(MapKit.MKAnnotationViewDragStateCanceling, 3)
         self.assertEqual(MapKit.MKAnnotationViewDragStateEnding, 4)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(MapKit.MKAnnotationViewZPriority, float)
+        self.assertIsTypedEnum(MapKit.MKFeatureDisplayPriority, float)
 
     def test_constants(self):
         self.assertIsInstance(MapKit.MKAnnotationCalloutInfoDidChangeNotification, str)

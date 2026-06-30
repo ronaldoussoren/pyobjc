@@ -4,28 +4,8 @@ import MLCompute
 
 
 class MLCTypes(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(MLCompute.MLCActivationType)
-        self.assertIsEnumType(MLCompute.MLCArithmeticOperation)
-        self.assertIsEnumType(MLCompute.MLCComparisonOperation)
-        self.assertIsEnumType(MLCompute.MLCConvolutionType)
+    def test_enums(self):
         self.assertIsEnumType(MLCompute.MLCDataType)
-        self.assertIsEnumType(MLCompute.MLCDeviceType)
-        self.assertIsEnumType(MLCompute.MLCExecutionOptions)
-        self.assertIsEnumType(MLCompute.MLCGradientClippingType)
-        self.assertIsEnumType(MLCompute.MLCGraphCompilationOptions)
-        self.assertIsEnumType(MLCompute.MLCLSTMResultMode)
-        self.assertIsEnumType(MLCompute.MLCLossType)
-        self.assertIsEnumType(MLCompute.MLCPaddingPolicy)
-        self.assertIsEnumType(MLCompute.MLCPaddingType)
-        self.assertIsEnumType(MLCompute.MLCPoolingType)
-        self.assertIsEnumType(MLCompute.MLCRandomInitializerType)
-        self.assertIsEnumType(MLCompute.MLCReductionType)
-        self.assertIsEnumType(MLCompute.MLCRegularizationType)
-        self.assertIsEnumType(MLCompute.MLCSampleMode)
-        self.assertIsEnumType(MLCompute.MLCSoftmaxOperation)
-
-    def test_constants(self):
         self.assertEqual(MLCompute.MLCDataTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCDataTypeFloat32, 1)
         self.assertEqual(MLCompute.MLCDataTypeFloat16, 3)
@@ -35,24 +15,28 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCDataTypeInt8, 8)
         self.assertNotHasAttr(MLCompute, "MLCDataTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCRandomInitializerType)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeUniform, 1)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeGlorotUniform, 2)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeXavier, 3)
         self.assertNotHasAttr(MLCompute, "MLCRandomInitializerTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCDeviceType)
         self.assertEqual(MLCompute.MLCDeviceTypeCPU, 0)
         self.assertEqual(MLCompute.MLCDeviceTypeGPU, 1)
         self.assertEqual(MLCompute.MLCDeviceTypeAny, 2)
         self.assertEqual(MLCompute.MLCDeviceTypeANE, 3)
         self.assertNotHasAttr(MLCompute, "MLCDeviceTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCGraphCompilationOptions)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsNone, 0x00)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsDebugLayers, 0x01)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsDisableLayerFusion, 0x02)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsLinkGraphs, 0x04)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsComputeAllGradients, 0x08)
 
+        self.assertIsEnumType(MLCompute.MLCExecutionOptions)
         self.assertEqual(MLCompute.MLCExecutionOptionsNone, 0x00)
         self.assertEqual(
             MLCompute.MLCExecutionOptionsSkipWritingInputDataToDevice, 0x01
@@ -62,10 +46,12 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCExecutionOptionsForwardForInference, 0x08)
         self.assertEqual(MLCompute.MLCExecutionOptionsPerLayerProfiling, 0x10)
 
+        self.assertIsEnumType(MLCompute.MLCGradientClippingType)
         self.assertEqual(MLCompute.MLCGradientClippingTypeByValue, 0)
         self.assertEqual(MLCompute.MLCGradientClippingTypeByNorm, 1)
         self.assertEqual(MLCompute.MLCGradientClippingTypeByGlobalNorm, 2)
 
+        self.assertIsEnumType(MLCompute.MLCArithmeticOperation)
         self.assertEqual(MLCompute.MLCArithmeticOperationAdd, 0)
         self.assertEqual(MLCompute.MLCArithmeticOperationSubtract, 1)
         self.assertEqual(MLCompute.MLCArithmeticOperationMultiply, 2)
@@ -99,6 +85,7 @@ class MLCTypes(TestCase):
 
         self.assertNotHasAttr(MLCompute, "MLCArithmeticOperationCount")
 
+        self.assertIsEnumType(MLCompute.MLCLossType)
         self.assertEqual(MLCompute.MLCLossTypeMeanAbsoluteError, 0)
         self.assertEqual(MLCompute.MLCLossTypeMeanSquaredError, 1)
         self.assertEqual(MLCompute.MLCLossTypeSoftmaxCrossEntropy, 2)
@@ -110,6 +97,7 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCLossTypeLog, 8)
         self.assertNotHasAttr(MLCompute, "MLCLossTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCActivationType)
         self.assertEqual(MLCompute.MLCActivationTypeNone, 0)
         self.assertEqual(MLCompute.MLCActivationTypeReLU, 1)
         self.assertEqual(MLCompute.MLCActivationTypeLinear, 2)
@@ -131,27 +119,31 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCActivationTypeGELU, 18)
         self.assertEqual(MLCompute.MLCActivationTypeHardSwish, 19)
         self.assertEqual(MLCompute.MLCActivationTypeClamp, 20)
-
         self.assertNotHasAttr(MLCompute, "MLCActivationTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCConvolutionType)
         self.assertEqual(MLCompute.MLCConvolutionTypeStandard, 0)
         self.assertEqual(MLCompute.MLCConvolutionTypeTransposed, 1)
         self.assertEqual(MLCompute.MLCConvolutionTypeDepthwise, 2)
 
+        self.assertIsEnumType(MLCompute.MLCPaddingPolicy)
         self.assertEqual(MLCompute.MLCPaddingPolicySame, 0)
         self.assertEqual(MLCompute.MLCPaddingPolicyValid, 1)
         self.assertEqual(MLCompute.MLCPaddingPolicyUsePaddingSize, 2)
 
+        self.assertIsEnumType(MLCompute.MLCPaddingType)
         self.assertEqual(MLCompute.MLCPaddingTypeZero, 0)
         self.assertEqual(MLCompute.MLCPaddingTypeReflect, 1)
         self.assertEqual(MLCompute.MLCPaddingTypeSymmetric, 2)
         self.assertEqual(MLCompute.MLCPaddingTypeConstant, 3)
 
+        self.assertIsEnumType(MLCompute.MLCPoolingType)
         self.assertEqual(MLCompute.MLCPoolingTypeMax, 1)
         self.assertEqual(MLCompute.MLCPoolingTypeAverage, 2)
         self.assertEqual(MLCompute.MLCPoolingTypeL2Norm, 3)
         self.assertNotHasAttr(MLCompute, "MLCPoolingTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCReductionType)
         self.assertEqual(MLCompute.MLCReductionTypeNone, 0)
         self.assertEqual(MLCompute.MLCReductionTypeSum, 1)
         self.assertEqual(MLCompute.MLCReductionTypeMean, 2)
@@ -162,22 +154,26 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCReductionTypeL1Norm, 7)
         self.assertEqual(MLCompute.MLCReductionTypeAny, 8)
         self.assertEqual(MLCompute.MLCReductionTypeAll, 9)
-
         self.assertNotHasAttr(MLCompute, "MLCReductionTypeCount")
 
+        self.assertIsEnumType(MLCompute.MLCRegularizationType)
         self.assertEqual(MLCompute.MLCRegularizationTypeNone, 0)
         self.assertEqual(MLCompute.MLCRegularizationTypeL1, 1)
         self.assertEqual(MLCompute.MLCRegularizationTypeL2, 2)
 
+        self.assertIsEnumType(MLCompute.MLCSampleMode)
         self.assertEqual(MLCompute.MLCSampleModeNearest, 0)
         self.assertEqual(MLCompute.MLCSampleModeLinear, 1)
 
+        self.assertIsEnumType(MLCompute.MLCSoftmaxOperation)
         self.assertEqual(MLCompute.MLCSoftmaxOperationSoftmax, 0)
         self.assertEqual(MLCompute.MLCSoftmaxOperationLogSoftmax, 1)
 
+        self.assertIsEnumType(MLCompute.MLCLSTMResultMode)
         self.assertEqual(MLCompute.MLCLSTMResultModeOutput, 0x00)
         self.assertEqual(MLCompute.MLCLSTMResultModeOutputAndStates, 0x01)
 
+        self.assertIsEnumType(MLCompute.MLCComparisonOperation)
         self.assertEqual(MLCompute.MLCComparisonOperationEqual, 0)
         self.assertEqual(MLCompute.MLCComparisonOperationNotEqual, 1)
         self.assertEqual(MLCompute.MLCComparisonOperationLess, 2)
@@ -190,7 +186,6 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCComparisonOperationLogicalNAND, 9)
         self.assertEqual(MLCompute.MLCComparisonOperationLogicalNOR, 10)
         self.assertEqual(MLCompute.MLCComparisonOperationLogicalXOR, 11)
-
         self.assertNotHasAttr(MLCompute, "MLCComparisonOperationCount")
 
     def test_functions(self):

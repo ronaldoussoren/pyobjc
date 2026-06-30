@@ -12,7 +12,7 @@ class TestCLSActivity(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("CLSContextProvider", ClassKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestCLSActivityHelper.updateDescendantsOfContext_completion_, 1, b"v@"
         )

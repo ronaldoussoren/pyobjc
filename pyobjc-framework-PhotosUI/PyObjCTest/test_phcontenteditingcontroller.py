@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import PhotosUI
 
 
@@ -18,8 +18,7 @@ class TestPHContentEditingController(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("PHContentEditingController", PhotosUI)
 
-    @min_os_level("10.11")
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestPHContentEditingControllerHelper.canHandleAdjustmentData_
         )

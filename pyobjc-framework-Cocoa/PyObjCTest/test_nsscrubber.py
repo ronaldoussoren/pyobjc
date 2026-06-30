@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -21,22 +21,23 @@ class TestNSScrubberHelper(AppKit.NSObject):
 
 
 class TestNSScrubber(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSScrubberAlignment)
-        self.assertIsEnumType(AppKit.NSScrubberMode)
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertEqual(AppKit.NSScrubberModeFixed, 0)
-        self.assertEqual(AppKit.NSScrubberModeFree, 1)
-
         self.assertEqual(AppKit.NSScrubberAlignmentNone, 0)
         self.assertEqual(AppKit.NSScrubberAlignmentLeading, 1)
         self.assertEqual(AppKit.NSScrubberAlignmentTrailing, 2)
         self.assertEqual(AppKit.NSScrubberAlignmentCenter, 3)
 
-    @min_os_level("10.12")
-    def test_methods(self):
+        self.assertIsEnumType(AppKit.NSScrubberMode)
+        self.assertEqual(AppKit.NSScrubberModeFixed, 0)
+        self.assertEqual(AppKit.NSScrubberModeFree, 1)
+
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("NSScrubberDataSource", AppKit)
+        self.assertProtocolExists("NSScrubberDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSScrubberHelper.numberOfItemsForScrubber_, objc._C_NSInteger
         )
@@ -68,8 +69,3 @@ class TestNSScrubber(TestCase):
         self.assertArgIsBOOL(AppKit.NSScrubber.setShowsAdditionalContentIndicators_, 0)
 
         self.assertArgIsBlock(AppKit.NSScrubber.performSequentialBatchUpdates_, 0, b"v")
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("NSScrubberDataSource", AppKit)
-        self.assertProtocolExists("NSScrubberDelegate", AppKit)

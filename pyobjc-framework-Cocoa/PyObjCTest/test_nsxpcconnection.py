@@ -11,7 +11,7 @@ class XPCHelper(Foundation.NSObject):
 
 
 class TestNSXPCConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSXPCConnectionOptions)
         self.assertEqual(Foundation.NSXPCConnectionPrivileged, 1 << 12)
 

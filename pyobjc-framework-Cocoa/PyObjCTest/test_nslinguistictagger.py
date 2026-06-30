@@ -4,9 +4,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLinguisticTagger(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSLinguisticTaggerOptions)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSLinguisticTaggerUnit)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitWords, 1 << 0)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitPunctuation, 1 << 1)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitWhitespace, 1 << 2)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitOther, 1 << 3)
+        self.assertEqual(Foundation.NSLinguisticTaggerJoinNames, 1 << 4)
+
+        self.assertIsEnumType(Foundation.NSLinguisticTaggerOptions)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitWord, 0)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitSentence, 1)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitParagraph, 2)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitDocument, 3)
 
     def test_constants(self):
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeTokenType, str)
@@ -49,17 +59,6 @@ class TestNSLinguisticTagger(TestCase):
         self.assertIsInstance(Foundation.NSLinguisticTagPersonalName, str)
         self.assertIsInstance(Foundation.NSLinguisticTagPlaceName, str)
         self.assertIsInstance(Foundation.NSLinguisticTagOrganizationName, str)
-
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitWords, 1 << 0)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitPunctuation, 1 << 1)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitWhitespace, 1 << 2)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitOther, 1 << 3)
-        self.assertEqual(Foundation.NSLinguisticTaggerJoinNames, 1 << 4)
-
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitWord, 0)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitSentence, 1)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitParagraph, 2)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitDocument, 3)
 
     def test_methods(self):
         self.assertArgHasType(

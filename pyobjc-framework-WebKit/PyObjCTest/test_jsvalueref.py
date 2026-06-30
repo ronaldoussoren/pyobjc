@@ -4,7 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSValueRef(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(JavaScriptCore.JSType)
         self.assertEqual(JavaScriptCore.kJSTypeUndefined, 0)
         self.assertEqual(JavaScriptCore.kJSTypeNull, 1)
         self.assertEqual(JavaScriptCore.kJSTypeBoolean, 2)
@@ -14,6 +15,7 @@ class TestJSValueRef(TestCase):
         self.assertEqual(JavaScriptCore.kJSTypeSymbol, 6)
         self.assertEqual(JavaScriptCore.kJSTypeBigInt, 7)
 
+        self.assertIsEnumType(JavaScriptCore.JSTypedArrayType)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt8Array, 0)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt16Array, 1)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeInt32Array, 2)

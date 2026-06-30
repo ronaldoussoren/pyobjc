@@ -6,9 +6,7 @@ MPSAccelerationStructureCompletionHandler = b"v@"
 
 
 class TestMPSRayIntersector_MPSPolygonAccelerationStructure(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSPolygonType)
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSPolygonTypeTriangle, 0)
         self.assertEqual(MetalPerformanceShaders.MPSPolygonTypeQuadrilateral, 1)

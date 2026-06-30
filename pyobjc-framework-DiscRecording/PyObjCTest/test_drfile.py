@@ -18,7 +18,20 @@ class TestDRFileHelper(DiscRecording.NSObject):
 
 
 class TestDRFile(TestCase):
-    def test_methods(self):
+    def test_enums(self):
+        # Unnamed enum:
+        self.assertEqual(DiscRecording.DRFileForkData, 0)
+        self.assertEqual(DiscRecording.DRFileForkResource, 1)
+
+    def test_constants(self):
+        self.assertIsInstance(DiscRecording.DRLinkTypeHardLink, str)
+        self.assertIsInstance(DiscRecording.DRLinkTypeSymbolicLink, str)
+        self.assertIsInstance(DiscRecording.DRLinkTypeFinderAlias, str)
+
+    def test_protocols(self):
+        self.assertProtocolExists("DRFileDataProduction", DiscRecording)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestDRFileHelper.calculateSizeOfFile_fork_estimating_, objc._C_ULNG_LNG
         )
@@ -65,14 +78,3 @@ class TestDRFile(TestCase):
         )
 
         self.assertResultIsBOOL(TestDRFileHelper.prepareFileForVerification_)
-
-    def test_protocols(self):
-        self.assertProtocolExists("DRFileDataProduction", DiscRecording)
-
-    def test_constants(self):
-        self.assertIsInstance(DiscRecording.DRLinkTypeHardLink, str)
-        self.assertIsInstance(DiscRecording.DRLinkTypeSymbolicLink, str)
-        self.assertIsInstance(DiscRecording.DRLinkTypeFinderAlias, str)
-
-        self.assertEqual(DiscRecording.DRFileForkData, 0)
-        self.assertEqual(DiscRecording.DRFileForkResource, 1)

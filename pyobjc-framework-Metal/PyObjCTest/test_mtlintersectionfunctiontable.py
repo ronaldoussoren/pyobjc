@@ -24,10 +24,8 @@ class TestMTLIntersectionFunctionTableHelper(Metal.NSObject):
 
 
 class TestMTLIntersectionFunctionTable(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIntersectionFunctionSignature)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureNone, 0)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureInstancing, 1 << 0)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureTriangleData, 1 << 1)
@@ -52,7 +50,7 @@ class TestMTLIntersectionFunctionTable(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("MTLIntersectionFunctionTable", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLIntersectionFunctionTableHelper.setBuffer_offset_atIndex_,
             1,

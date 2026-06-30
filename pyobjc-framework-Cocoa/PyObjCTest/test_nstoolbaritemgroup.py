@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSToolbarItemGroup(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSToolbarItemGroupSelectionMode)
         self.assertEqual(AppKit.NSToolbarItemGroupSelectionModeSelectOne, 0)
         self.assertEqual(AppKit.NSToolbarItemGroupSelectionModeSelectAny, 1)

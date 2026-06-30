@@ -8,5 +8,8 @@ class TestCIPluginInterfaceHelper(Quartz.NSObject):
 
 
 class TestCIPlugInInterface(TestCase):
-    def no_test_protocols(self):
+    def test_protocols(self):
         self.assertProtocolExists("CIPlugInRegistration", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestCIPluginInterfaceHelper.load_)

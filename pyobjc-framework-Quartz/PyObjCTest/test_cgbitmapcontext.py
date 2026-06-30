@@ -6,6 +6,42 @@ import Quartz
 
 
 class TestCGBitmapContext(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGColorModel)
+        self.assertEqual(Quartz.kCGColorModelNoColorant, 0 << 0)
+        self.assertEqual(Quartz.kCGColorModelGray, 1 << 0)
+        self.assertEqual(Quartz.kCGColorModelRGB, 1 << 1)
+        self.assertEqual(Quartz.kCGColorModelCMYK, 1 << 2)
+        self.assertEqual(Quartz.kCGColorModelLab, 1 << 3)
+        self.assertEqual(Quartz.kCGColorModelDeviceN, 1 << 4)
+
+        self.assertIsEnumType(Quartz.CGComponent)
+        self.assertEqual(Quartz.kCGComponentUnknown, 0)
+        self.assertEqual(Quartz.kCGComponentInteger8Bit, 1)
+        self.assertEqual(Quartz.kCGComponentInteger10Bit, 6)
+        self.assertEqual(Quartz.kCGComponentInteger16Bit, 2)
+        self.assertEqual(Quartz.kCGComponentInteger32Bit, 3)
+        self.assertEqual(Quartz.kCGComponentFloat16Bit, 5)
+        self.assertEqual(Quartz.kCGComponentFloat32Bit, 4)
+
+        self.assertIsEnumType(Quartz.CGBitmapLayout)
+        self.assertEqual(Quartz.kCGBitmapLayoutAlphaOnly, 0)
+        self.assertEqual(Quartz.kCGBitmapLayoutGray, 1)
+        self.assertEqual(Quartz.kCGBitmapLayoutGrayAlpha, 2)
+        self.assertEqual(Quartz.kCGBitmapLayoutRGBA, 3)
+        self.assertEqual(Quartz.kCGBitmapLayoutARGB, 4)
+        self.assertEqual(Quartz.kCGBitmapLayoutRGBX, 5)
+        self.assertEqual(Quartz.kCGBitmapLayoutXRGB, 6)
+        self.assertEqual(Quartz.kCGBitmapLayoutBGRA, 7)
+        self.assertEqual(Quartz.kCGBitmapLayoutBGRX, 8)
+        self.assertEqual(Quartz.kCGBitmapLayoutABGR, 9)
+        self.assertEqual(Quartz.kCGBitmapLayoutXBGR, 10)
+        self.assertEqual(Quartz.kCGBitmapLayoutCMYK, 11)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.kCGAdaptiveMaximumBitDepth, str)
+
     def test_functions(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         self.assertIsInstance(bytes_val, array.array)
@@ -81,42 +117,6 @@ class TestCGBitmapContext(TestCase):
         self.assertEqual(len(a_list), 1)
         self.assertIs(a_list[0][0], release_info)
         self.assertIs(a_list[0][1], bytes_val)
-
-    def test_constants(self):
-        self.assertIsEnumType(Quartz.CGColorModel)
-        self.assertEqual(Quartz.kCGColorModelNoColorant, 0 << 0)
-        self.assertEqual(Quartz.kCGColorModelGray, 1 << 0)
-        self.assertEqual(Quartz.kCGColorModelRGB, 1 << 1)
-        self.assertEqual(Quartz.kCGColorModelCMYK, 1 << 2)
-        self.assertEqual(Quartz.kCGColorModelLab, 1 << 3)
-        self.assertEqual(Quartz.kCGColorModelDeviceN, 1 << 4)
-
-        self.assertIsEnumType(Quartz.CGComponent)
-        self.assertEqual(Quartz.kCGComponentUnknown, 0)
-        self.assertEqual(Quartz.kCGComponentInteger8Bit, 1)
-        self.assertEqual(Quartz.kCGComponentInteger10Bit, 6)
-        self.assertEqual(Quartz.kCGComponentInteger16Bit, 2)
-        self.assertEqual(Quartz.kCGComponentInteger32Bit, 3)
-        self.assertEqual(Quartz.kCGComponentFloat16Bit, 5)
-        self.assertEqual(Quartz.kCGComponentFloat32Bit, 4)
-
-        self.assertIsEnumType(Quartz.CGBitmapLayout)
-        self.assertEqual(Quartz.kCGBitmapLayoutAlphaOnly, 0)
-        self.assertEqual(Quartz.kCGBitmapLayoutGray, 1)
-        self.assertEqual(Quartz.kCGBitmapLayoutGrayAlpha, 2)
-        self.assertEqual(Quartz.kCGBitmapLayoutRGBA, 3)
-        self.assertEqual(Quartz.kCGBitmapLayoutARGB, 4)
-        self.assertEqual(Quartz.kCGBitmapLayoutRGBX, 5)
-        self.assertEqual(Quartz.kCGBitmapLayoutXRGB, 6)
-        self.assertEqual(Quartz.kCGBitmapLayoutBGRA, 7)
-        self.assertEqual(Quartz.kCGBitmapLayoutBGRX, 8)
-        self.assertEqual(Quartz.kCGBitmapLayoutABGR, 9)
-        self.assertEqual(Quartz.kCGBitmapLayoutXBGR, 10)
-        self.assertEqual(Quartz.kCGBitmapLayoutCMYK, 11)
-
-    @min_os_level("26.0")
-    def test_constants26_0(self):
-        self.assertIsInstance(Quartz.kCGAdaptiveMaximumBitDepth, str)
 
     def test_structs(self):
         v = Quartz.CGContentInfo()

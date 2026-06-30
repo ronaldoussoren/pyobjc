@@ -4,6 +4,11 @@ import IOBluetooth
 
 
 class TestOBEXFileTransferServices(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(IOBluetooth.FTSFileType)
+        self.assertEqual(IOBluetooth.kFTSFileTypeFolder, 1)
+        self.assertEqual(IOBluetooth.kFTSFileTypeFile, 2)
+
     def test_constants(self):
         self.assertIsInstance(IOBluetooth.kFTSProgressBytesTransferredKey, str)
         self.assertIsInstance(IOBluetooth.kFTSProgressBytesTotalKey, str)
@@ -15,10 +20,6 @@ class TestOBEXFileTransferServices(TestCase):
         self.assertIsInstance(IOBluetooth.kFTSListingNameKey, str)
         self.assertIsInstance(IOBluetooth.kFTSListingTypeKey, str)
         self.assertIsInstance(IOBluetooth.kFTSListingSizeKey, str)
-
-        self.assertIsEnumType(IOBluetooth.FTSFileType)
-        self.assertEqual(IOBluetooth.kFTSFileTypeFolder, 1)
-        self.assertEqual(IOBluetooth.kFTSFileTypeFile, 2)
 
     def test_methods(self):
         self.assertResultIsBOOL(IOBluetooth.OBEXFileTransferServices.isBusy)

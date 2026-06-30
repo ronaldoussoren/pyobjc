@@ -5,7 +5,7 @@ import Quartz
 
 class TestPDFPage(TestCase):
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFDisplayBox)
         self.assertEqual(Quartz.kPDFDisplayBoxMediaBox, 0)
         self.assertEqual(Quartz.kPDFDisplayBoxCropBox, 1)

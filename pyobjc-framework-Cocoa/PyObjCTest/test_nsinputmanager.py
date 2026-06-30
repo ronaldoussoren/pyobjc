@@ -30,8 +30,18 @@ class TestNSInputManagerHelper(AppKit.NSObject):
 
 
 class TestNSInputManager(TestCase):
+    def test_methods(self):
+        self.assertResultIsBOOL(AppKit.NSInputManager.wantsToInterpretAllKeystrokes)
+        self.assertResultIsBOOL(AppKit.NSInputManager.wantsToHandleMouseEvents)
+        self.assertResultIsBOOL(AppKit.NSInputManager.handleMouseEvent_)
+        self.assertResultIsBOOL(
+            AppKit.NSInputManager.wantsToDelayTextChangeNotifications
+        )
+
     def test_protocols(self):
         self.assertProtocolExists("NSTextInput", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, b"v@:@")
         self.assertArgHasType(
             TestNSInputManagerHelper.setMarkedText_selectedRange_,
@@ -61,12 +71,4 @@ class TestNSInputManager(TestCase):
             TestNSInputManagerHelper.characterIndexForPoint_,
             0,
             AppKit.NSPoint.__typestr__,
-        )
-
-    def test_methods(self):
-        self.assertResultIsBOOL(AppKit.NSInputManager.wantsToInterpretAllKeystrokes)
-        self.assertResultIsBOOL(AppKit.NSInputManager.wantsToHandleMouseEvents)
-        self.assertResultIsBOOL(AppKit.NSInputManager.handleMouseEvent_)
-        self.assertResultIsBOOL(
-            AppKit.NSInputManager.wantsToDelayTextChangeNotifications
         )

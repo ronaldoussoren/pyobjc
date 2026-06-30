@@ -69,7 +69,7 @@ class TestCHHapticPatternPlayer(TestCase):
         self.assertProtocolExists("CHHapticPatternPlayer", CoreHaptics)
         self.assertProtocolExists("CHHapticAdvancedPatternPlayer", CoreHaptics)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         # CHHapticPatternPlayer
         self.assertResultIsBOOL(TestCHHapticPatternPlayerHelper.startAtTime_error_)
         self.assertArgIsOut(TestCHHapticPatternPlayerHelper.startAtTime_error_, 1)

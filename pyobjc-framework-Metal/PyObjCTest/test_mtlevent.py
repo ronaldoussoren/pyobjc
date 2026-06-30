@@ -22,7 +22,7 @@ class TestMTLEvent(TestCase):
         self.assertProtocolExists("MTLEvent", Metal)
         self.assertProtocolExists("MTLSharedEvent", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLEventHelper.notifyListener_atValue_block_, 1, objc._C_ULNGLNG
         )

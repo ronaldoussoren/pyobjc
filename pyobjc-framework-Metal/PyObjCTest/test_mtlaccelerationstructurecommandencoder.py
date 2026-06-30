@@ -41,7 +41,7 @@ class TestMTLAccelerationStructureCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLAccelerationStructureCommandEncoder(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLAccelerationStructureRefitOptions)
         self.assertEqual(Metal.MTLAccelerationStructureRefitOptionVertexData, 1 << 0)
         self.assertEqual(
@@ -52,7 +52,7 @@ class TestMTLAccelerationStructureCommandEncoder(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("MTLAccelerationStructureCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLAccelerationStructureCommandEncoderHelper.buildAccelerationStructure_descriptor_scratchBuffer_scratchBufferOffset_,  # noqa: B950
             3,

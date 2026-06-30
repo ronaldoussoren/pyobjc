@@ -3,24 +3,19 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScroller(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSScrollArrowPosition)
-        self.assertIsEnumType(AppKit.NSScrollerArrow)
-        self.assertIsEnumType(AppKit.NSScrollerKnobStyle)
-        self.assertIsEnumType(AppKit.NSScrollerPart)
-        self.assertIsEnumType(AppKit.NSScrollerStyle)
-        self.assertIsEnumType(AppKit.NSUsableScrollerParts)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSScrollerArrowsMaxEnd, 0)
         self.assertEqual(AppKit.NSScrollerArrowsMinEnd, 1)
         self.assertEqual(AppKit.NSScrollerArrowsDefaultSetting, 0)
         self.assertEqual(AppKit.NSScrollerArrowsNone, 2)
 
+        self.assertIsEnumType(AppKit.NSScrollerArrow)
         self.assertEqual(AppKit.NSNoScrollerParts, 0)
         self.assertEqual(AppKit.NSOnlyScrollerArrows, 1)
         self.assertEqual(AppKit.NSAllScrollerParts, 2)
 
+        self.assertIsEnumType(AppKit.NSScrollerKnobStyle)
         self.assertEqual(AppKit.NSScrollerNoPart, 0)
         self.assertEqual(AppKit.NSScrollerDecrementPage, 1)
         self.assertEqual(AppKit.NSScrollerKnob, 2)
@@ -29,16 +24,20 @@ class TestNSScroller(TestCase):
         self.assertEqual(AppKit.NSScrollerIncrementLine, 5)
         self.assertEqual(AppKit.NSScrollerKnobSlot, 6)
 
+        self.assertIsEnumType(AppKit.NSScrollerPart)
         self.assertEqual(AppKit.NSScrollerIncrementArrow, 0)
         self.assertEqual(AppKit.NSScrollerDecrementArrow, 1)
 
+        self.assertIsEnumType(AppKit.NSScrollerStyle)
         self.assertEqual(AppKit.NSScrollerStyleLegacy, 0)
         self.assertEqual(AppKit.NSScrollerStyleOverlay, 1)
 
+        self.assertIsEnumType(AppKit.NSUsableScrollerParts)
         self.assertEqual(AppKit.NSScrollerKnobStyleDefault, 0)
         self.assertEqual(AppKit.NSScrollerKnobStyleDark, 1)
         self.assertEqual(AppKit.NSScrollerKnobStyleLight, 2)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPreferredScrollerStyleDidChangeNotification, str)
 
     def test_methods(self):

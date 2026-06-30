@@ -51,10 +51,8 @@ class TestMTLHeapHelper(Metal.NSObject):
 
 
 class TestMTLHeap(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLHeapType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLHeapTypeAutomatic, 0)
         self.assertEqual(Metal.MTLHeapTypePlacement, 1)
         self.assertEqual(Metal.MTLHeapTypeSparse, 2)
@@ -63,7 +61,7 @@ class TestMTLHeap(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLHeap", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLHeapHelper.storageMode, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.cpuCacheMode, objc._C_NSUInteger)
         self.assertResultHasType(

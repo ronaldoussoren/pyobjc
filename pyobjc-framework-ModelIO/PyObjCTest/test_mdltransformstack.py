@@ -12,10 +12,8 @@ class TestMDLTransformStackHelper(ModelIO.NSObject):
 
 
 class TestMDLTransformStack(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLTransformOpRotationOrder)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXYZ, 1)
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXZY, 2)
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderYXZ, 3)

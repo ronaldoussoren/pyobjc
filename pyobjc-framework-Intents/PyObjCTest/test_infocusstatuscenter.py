@@ -4,10 +4,8 @@ import objc
 
 
 class TestINFocusStatusCenter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INFocusStatusAuthorizationStatus)
-
-    def test_constants(self):
         self.assertEqual(Intents.INFocusStatusAuthorizationStatusNotDetermined, 0)
         self.assertEqual(Intents.INFocusStatusAuthorizationStatusRestricted, 1)
         self.assertEqual(Intents.INFocusStatusAuthorizationStatusDenied, 2)

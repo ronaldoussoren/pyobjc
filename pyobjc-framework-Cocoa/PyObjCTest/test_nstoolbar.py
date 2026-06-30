@@ -12,24 +12,24 @@ class TestNSToolbarHelper(AppKit.NSObject):
 
 
 class TestNSToolbar(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
-        self.assertIsTypedEnum(AppKit.NSToolbarUserInfoKey, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSToolbarDisplayMode)
-        self.assertIsEnumType(AppKit.NSToolbarSizeMode)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSToolbarDisplayModeDefault, 0)
         self.assertEqual(AppKit.NSToolbarDisplayModeIconAndLabel, 1)
         self.assertEqual(AppKit.NSToolbarDisplayModeIconOnly, 2)
         self.assertEqual(AppKit.NSToolbarDisplayModeLabelOnly, 3)
 
+        self.assertIsEnumType(AppKit.NSToolbarSizeMode)
         self.assertEqual(AppKit.NSToolbarSizeModeDefault, 0)
         self.assertEqual(AppKit.NSToolbarSizeModeRegular, 1)
         self.assertEqual(AppKit.NSToolbarSizeModeSmall, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
+        self.assertIsTypedEnum(AppKit.NSToolbarUserInfoKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSToolbarWillAddItemNotification, str)
         self.assertIsInstance(AppKit.NSToolbarDidRemoveItemNotification, str)
 

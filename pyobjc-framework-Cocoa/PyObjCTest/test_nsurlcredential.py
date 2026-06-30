@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLCredential(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLCredentialPersistence)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSURLCredentialPersistenceNone, 0)
         self.assertEqual(Foundation.NSURLCredentialPersistenceForSession, 1)
         self.assertEqual(Foundation.NSURLCredentialPersistencePermanent, 2)

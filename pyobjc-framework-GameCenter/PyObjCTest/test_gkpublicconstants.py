@@ -4,7 +4,7 @@ import GameCenter
 
 
 class TestGKError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameCenter.GKSendDataMode)
         self.assertEqual(GameCenter.GKSendDataReliable, 0)
         self.assertEqual(GameCenter.GKSendDataUnreliable, 1)

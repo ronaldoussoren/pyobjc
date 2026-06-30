@@ -24,6 +24,11 @@ class TestNSScrubberLayout(TestCase):
             AppKit.NSScrubberLayout.automaticallyMirrorsInRightToLeftLayout
         )
 
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("NSScrubberFlowLayoutDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSScrubberLayoutHelper.scrubber_layout_sizeForItemAtIndex_,
             AppKit.NSSize.__typestr__,
@@ -33,7 +38,3 @@ class TestNSScrubberLayout(TestCase):
             2,
             objc._C_NSInteger,
         )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("NSScrubberFlowLayoutDelegate", AppKit)

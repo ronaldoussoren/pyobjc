@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNWPath(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NWPathStatus)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NWPathStatusInvalid, 0)
         self.assertEqual(NetworkExtension.NWPathStatusSatisfied, 1)
         self.assertEqual(NetworkExtension.NWPathStatusUnsatisfied, 2)

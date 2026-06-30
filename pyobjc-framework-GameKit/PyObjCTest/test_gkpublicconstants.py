@@ -3,20 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKPublicConstants(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKPeerConnectionState)
-        self.assertIsEnumType(GameKit.GKSendDataMode)
-        self.assertIsEnumType(GameKit.GKSessionMode)
-        self.assertIsEnumType(GameKit.GKVoiceChatServiceError)
-
-    def test_constants(self):
-        self.assertEqual(GameKit.GKSendDataReliable, 0)
-        self.assertEqual(GameKit.GKSendDataUnreliable, 1)
-
-        self.assertEqual(GameKit.GKSessionModeServer, 0)
-        self.assertEqual(GameKit.GKSessionModeClient, 1)
-        self.assertEqual(GameKit.GKSessionModePeer, 2)
-
         self.assertEqual(GameKit.GKPeerStateAvailable, 0)
         self.assertEqual(GameKit.GKPeerStateUnavailable, 1)
         self.assertEqual(GameKit.GKPeerStateConnected, 2)
@@ -24,4 +12,14 @@ class TestGKPublicConstants(TestCase):
         self.assertEqual(GameKit.GKPeerStateConnecting, 4)
         self.assertEqual(GameKit.GKPeerStateConnectedRelay, 5)
 
+        self.assertIsEnumType(GameKit.GKSendDataMode)
+        self.assertEqual(GameKit.GKSendDataReliable, 0)
+        self.assertEqual(GameKit.GKSendDataUnreliable, 1)
+
+        self.assertIsEnumType(GameKit.GKSessionMode)
+        self.assertEqual(GameKit.GKSessionModeServer, 0)
+        self.assertEqual(GameKit.GKSessionModeClient, 1)
+        self.assertEqual(GameKit.GKSessionModePeer, 2)
+
+    def test_constants(self):
         self.assertIsInstance(GameKit.GKVoiceChatServiceErrorDomain, str)

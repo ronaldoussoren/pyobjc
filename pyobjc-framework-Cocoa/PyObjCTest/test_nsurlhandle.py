@@ -3,8 +3,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLHandle(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLHandleStatus)
+        self.assertEqual(Foundation.NSURLHandleNotLoaded, 0)
+        self.assertEqual(Foundation.NSURLHandleLoadSucceeded, 1)
+        self.assertEqual(Foundation.NSURLHandleLoadInProgress, 2)
+        self.assertEqual(Foundation.NSURLHandleLoadFailed, 3)
 
     def test_constants(self):
         self.assertIsInstance(Foundation.NSHTTPPropertyStatusCodeKey, str)
@@ -18,11 +22,6 @@ class TestNSURLHandle(TestCase):
         self.assertIsInstance(Foundation.NSFTPPropertyActiveTransferModeKey, str)
         self.assertIsInstance(Foundation.NSFTPPropertyFileOffsetKey, str)
         self.assertIsInstance(Foundation.NSFTPPropertyFTPProxy, str)
-
-        self.assertEqual(Foundation.NSURLHandleNotLoaded, 0)
-        self.assertEqual(Foundation.NSURLHandleLoadSucceeded, 1)
-        self.assertEqual(Foundation.NSURLHandleLoadInProgress, 2)
-        self.assertEqual(Foundation.NSURLHandleLoadFailed, 3)
 
     def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSURLHandle.didLoadBytes_loadComplete_, 1)

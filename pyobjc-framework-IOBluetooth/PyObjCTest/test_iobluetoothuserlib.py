@@ -9,6 +9,27 @@ IOBluetoothUserNotificationCallback = (
 
 
 class TestIOBluetoothUserLib(TestCase):
+    def test_enums(self):
+        self.assertEqual(IOBluetooth.kIOBluetoothObjectIDNULL, 0)
+
+        self.assertIsEnumType(IOBluetooth.IOBluetoothDeviceSearchOptionsBits)
+        self.assertEqual(IOBluetooth.kSearchOptionsNone, 0)
+        self.assertEqual(IOBluetooth.kSearchOptionsAlwaysStartInquiry, 1 << 0)
+        self.assertEqual(IOBluetooth.kSearchOptionsDiscardCachedResults, 1 << 1)
+
+        self.assertIsEnumType(IOBluetooth.IOBluetoothDeviceSearchTypesBits)
+        self.assertEqual(IOBluetooth.kIOBluetoothDeviceSearchClassic, 1)
+        self.assertEqual(IOBluetooth.kIOBluetoothDeviceSearchLE, 2)
+
+        self.assertIsEnumType(IOBluetooth.IOBluetoothUserNotificationChannelDirection)
+        self.assertEqual(IOBluetooth.kIOBluetoothUserNotificationChannelDirectionAny, 0)
+        self.assertEqual(
+            IOBluetooth.kIOBluetoothUserNotificationChannelDirectionIncoming, 1
+        )
+        self.assertEqual(
+            IOBluetooth.kIOBluetoothUserNotificationChannelDirectionOutgoing, 2
+        )
+
     def test_types(self):
         self.assertIsOpaquePointer(IOBluetooth.IOBluetoothObjectRef)
         self.assertIs(
@@ -31,27 +52,6 @@ class TestIOBluetoothUserLib(TestCase):
         )
         self.assertIs(
             IOBluetooth.IOBluetoothUserNotificationRef, IOBluetooth.IOBluetoothObjectRef
-        )
-
-    def test_constants(self):
-        self.assertEqual(IOBluetooth.kIOBluetoothObjectIDNULL, 0)
-
-        self.assertIsEnumType(IOBluetooth.IOBluetoothDeviceSearchOptionsBits)
-        self.assertEqual(IOBluetooth.kSearchOptionsNone, 0)
-        self.assertEqual(IOBluetooth.kSearchOptionsAlwaysStartInquiry, 1 << 0)
-        self.assertEqual(IOBluetooth.kSearchOptionsDiscardCachedResults, 1 << 1)
-
-        self.assertIsEnumType(IOBluetooth.IOBluetoothDeviceSearchTypesBits)
-        self.assertEqual(IOBluetooth.kIOBluetoothDeviceSearchClassic, 1)
-        self.assertEqual(IOBluetooth.kIOBluetoothDeviceSearchLE, 2)
-
-        self.assertIsEnumType(IOBluetooth.IOBluetoothUserNotificationChannelDirection)
-        self.assertEqual(IOBluetooth.kIOBluetoothUserNotificationChannelDirectionAny, 0)
-        self.assertEqual(
-            IOBluetooth.kIOBluetoothUserNotificationChannelDirectionIncoming, 1
-        )
-        self.assertEqual(
-            IOBluetooth.kIOBluetoothUserNotificationChannelDirectionOutgoing, 2
         )
 
     def test_structs(self):

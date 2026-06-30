@@ -4,6 +4,16 @@ import Carbon
 
 
 class TestHIToolbox_CarbonEvents(TestCase):
+    def test_enums(self):
+        # Unnamed enum:
+        self.assertEqual(Carbon.kEventHotKeyNoOptions, 0)
+        self.assertEqual(Carbon.kEventHotKeyExclusive, 1 << 0)
+
+        # Unnamed enum:
+        self.assertEqual(Carbon.kHIHotKeyModeAllEnabled, 0)
+        self.assertEqual(Carbon.kHIHotKeyModeAllDisabled, 1 << 0)
+        self.assertEqual(Carbon.kHIHotKeyModeAllDisabledExceptUniversalAccess, 1 << 1)
+
     def test_structs(self):
         v = Carbon.EventHotKeyID()
         self.assertIsInstance(v.signature, int)
@@ -11,14 +21,6 @@ class TestHIToolbox_CarbonEvents(TestCase):
 
     def test_types(self):
         self.assertIsOpaquePointer(Carbon.EventHotKeyRef)
-
-    def test_enum(self):
-        self.assertEqual(Carbon.kEventHotKeyNoOptions, 0)
-        self.assertEqual(Carbon.kEventHotKeyExclusive, 1 << 0)
-
-        self.assertEqual(Carbon.kHIHotKeyModeAllEnabled, 0)
-        self.assertEqual(Carbon.kHIHotKeyModeAllDisabled, 1 << 0)
-        self.assertEqual(Carbon.kHIHotKeyModeAllDisabledExceptUniversalAccess, 1 << 1)
 
     def test_constants(self):
         self.assertEqual(Carbon.kHISymbolicHotKeyCode, "kHISymbolicHotKeyCode")

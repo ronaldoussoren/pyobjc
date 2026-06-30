@@ -46,7 +46,7 @@ class TestMTLFXSpatialScalerHelper(MetalFX.NSObject):
 
 
 class TestMTLFXSpatialScaler(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalFX.MTLFXSpatialScalerColorProcessingMode)
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModePerceptual, 0)
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeLinear, 1)

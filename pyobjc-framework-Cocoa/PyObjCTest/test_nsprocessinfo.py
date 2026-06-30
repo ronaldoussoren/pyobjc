@@ -3,34 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSProcessInfo(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSActivityOptions)
-        self.assertIsEnumType(Foundation.NSProcessInfoThermalState)
-
-    def test_convenience(self):
-        # This doesn't actually test anything...
-        with Foundation.NSDisabledSuddenTermination():
-            pass
-
-        with Foundation.NSDisabledAutomaticTermination("something"):
-            pass
-
-    def test_structs(self):
-        v = Foundation.NSOperatingSystemVersion()
-        self.assertIsInstance(v.majorVersion, int)
-        self.assertIsInstance(v.minorVersion, int)
-        self.assertIsInstance(v.patchVersion, int)
-        self.assertPickleRoundTrips(v)
-
-    def test_constants(self):
-        self.assertEqual(Foundation.NSWindowsNTOperatingSystem, 1)
-        self.assertEqual(Foundation.NSWindows95OperatingSystem, 2)
-        self.assertEqual(Foundation.NSSolarisOperatingSystem, 3)
-        self.assertEqual(Foundation.NSHPUXOperatingSystem, 4)
-        self.assertEqual(Foundation.NSMACHOperatingSystem, 5)
-        self.assertEqual(Foundation.NSSunOSOperatingSystem, 6)
-        self.assertEqual(Foundation.NSOSF1OperatingSystem, 7)
-
         self.assertEqual(Foundation.NSActivityIdleDisplaySleepDisabled, 1 << 40)
         self.assertEqual(Foundation.NSActivityIdleSystemSleepDisabled, 1 << 20)
         self.assertEqual(Foundation.NSActivitySuddenTerminationDisabled, 1 << 14)
@@ -53,13 +27,23 @@ class TestNSProcessInfo(TestCase):
             Foundation.NSActivityUserInitiated | Foundation.NSActivityLatencyCritical,
         )
 
-    @min_os_level("10.10")
-    def test_constants10_10(self):
+        self.assertIsEnumType(Foundation.NSProcessInfoThermalState)
         self.assertEqual(Foundation.NSProcessInfoThermalStateNominal, 0)
         self.assertEqual(Foundation.NSProcessInfoThermalStateFair, 1)
         self.assertEqual(Foundation.NSProcessInfoThermalStateSerious, 2)
         self.assertEqual(Foundation.NSProcessInfoThermalStateCritical, 3)
 
+        # Unnamed enum:
+        self.assertEqual(Foundation.NSWindowsNTOperatingSystem, 1)
+        self.assertEqual(Foundation.NSWindows95OperatingSystem, 2)
+        self.assertEqual(Foundation.NSSolarisOperatingSystem, 3)
+        self.assertEqual(Foundation.NSHPUXOperatingSystem, 4)
+        self.assertEqual(Foundation.NSMACHOperatingSystem, 5)
+        self.assertEqual(Foundation.NSSunOSOperatingSystem, 6)
+        self.assertEqual(Foundation.NSOSF1OperatingSystem, 7)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
         self.assertIsInstance(
             Foundation.NSProcessInfoThermalStateDidChangeNotification, str
         )
@@ -69,6 +53,21 @@ class TestNSProcessInfo(TestCase):
         self.assertIsInstance(
             Foundation.NSProcessInfoPowerStateDidChangeNotification, str
         )
+
+    def test_structs(self):
+        v = Foundation.NSOperatingSystemVersion()
+        self.assertIsInstance(v.majorVersion, int)
+        self.assertIsInstance(v.minorVersion, int)
+        self.assertIsInstance(v.patchVersion, int)
+        self.assertPickleRoundTrips(v)
+
+    def test_convenience(self):
+        # This doesn't actually test anything...
+        with Foundation.NSDisabledSuddenTermination():
+            pass
+
+        with Foundation.NSDisabledAutomaticTermination("something"):
+            pass
 
     def test_nsdisabled_sudden_termination(self):
         # annoyingly we cannot easily test if this has an effect, but

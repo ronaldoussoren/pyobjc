@@ -3,10 +3,8 @@ import MailKit
 
 
 class TestMEComposeContext(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MailKit.MEComposeUserAction)
-
-    def test_constants(self):
         self.assertEqual(MailKit.MEComposeUserActionNewMessage, 1)
         self.assertEqual(MailKit.MEComposeUserActionReply, 2)
         self.assertEqual(MailKit.MEComposeUserActionReplyAll, 3)

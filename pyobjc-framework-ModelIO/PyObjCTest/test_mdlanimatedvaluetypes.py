@@ -4,10 +4,8 @@ from objc import simd
 
 
 class TestMDLAnimatedValue(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLAnimatedValueInterpolation)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationConstant, 0)
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationLinear, 1)
 

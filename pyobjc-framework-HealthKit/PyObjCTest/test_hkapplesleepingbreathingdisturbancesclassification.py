@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKAppleSleepingBreathingDisturbancesClassification(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             HealthKit.HKAppleSleepingBreathingDisturbancesClassification
         )

@@ -15,10 +15,8 @@ class TestEntryHelper(OSLog.NSObject):
 
 
 class TestEntry(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(OSLog.OSLogEntryStoreCategory)
-
-    def test_constants(self):
         self.assertEqual(OSLog.OSLogEntryStoreCategoryUndefined, 0)
         self.assertEqual(OSLog.OSLogEntryStoreCategoryMetadata, 1)
         self.assertEqual(OSLog.OSLogEntryStoreCategoryShortTerm, 2)
@@ -29,12 +27,12 @@ class TestEntry(TestCase):
         self.assertEqual(OSLog.OSLogEntryStoreCategoryLongTerm14, 7)
         self.assertEqual(OSLog.OSLogEntryStoreCategoryLongTerm30, 8)
 
-    def test_methods(self):
-        self.assertResultHasType(TestEntryHelper.activityIdentifier, objc._C_NSUInteger)
-        self.assertResultHasType(TestEntryHelper.processIdentifier, objc._C_INT)
-        self.assertResultHasType(TestEntryHelper.threadIdentifier, objc._C_ULNGLNG)
-
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("OSLogEntryFromProcess", OSLog)
         self.assertProtocolExists("OSLogEntryWithPayload", OSLog)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(TestEntryHelper.activityIdentifier, objc._C_NSUInteger)
+        self.assertResultHasType(TestEntryHelper.processIdentifier, objc._C_INT)
+        self.assertResultHasType(TestEntryHelper.threadIdentifier, objc._C_ULNGLNG)

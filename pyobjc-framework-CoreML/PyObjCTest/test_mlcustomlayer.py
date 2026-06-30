@@ -24,7 +24,7 @@ class TestMLCustomLayer(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MLCustomLayer", CoreML)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMLCustomLayerHelper.initWithParameterDictionary_error_, 1, b"o^@"
         )

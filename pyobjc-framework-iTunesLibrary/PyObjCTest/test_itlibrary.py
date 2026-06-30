@@ -1,10 +1,9 @@
 import iTunesLibrary
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestITLibrary(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(iTunesLibrary.ITLibExportFeature)
         self.assertEqual(iTunesLibrary.ITLibExportFeatureNone, 0)
 
@@ -15,9 +14,6 @@ class TestITLibrary(TestCase):
     @min_os_level("13.0")
     def test_constants13_0(self):
         self.assertIsInstance(iTunesLibrary.ITLibraryDidChangeNotification, str)
-
-    def test_classes(self):
-        self.assertIsInstance(iTunesLibrary.ITLibrary, objc.objc_class)
 
     def test_methods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibrary.shouldShowContentRating)

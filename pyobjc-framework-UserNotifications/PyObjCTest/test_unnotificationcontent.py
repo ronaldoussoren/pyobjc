@@ -3,10 +3,8 @@ import UserNotifications
 
 
 class TestUNNotificationContent(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(UserNotifications.UNNotificationInterruptionLevel)
-
-    def test_constants(self):
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelPassive, 0)
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelActive, 1)
         self.assertEqual(

@@ -19,11 +19,19 @@ class TestCMIOExtensionProvider(TestCase):
         self.assertIsInstance(CoreMediaIO.CMIOExtensionInfoDictionaryKey, str)
         self.assertIsInstance(CoreMediaIO.CMIOExtensionMachServiceNameKey, str)
 
+    @min_os_level("12.3")
+    def test_methods12_3(self):
+        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionProvider.addDevice_error_)
+        self.assertArgIsOut(CoreMediaIO.CMIOExtensionProvider.addDevice_error_, 1)
+
+        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionProvider.removeDevice_error_)
+        self.assertArgIsOut(CoreMediaIO.CMIOExtensionProvider.removeDevice_error_, 1)
+
     @min_sdk_level("12.3")
     def test_protocols(self):
         self.assertProtocolExists("CMIOExtensionProviderSource", CoreMediaIO)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestCMIOExtensionProviderHelper.connectClient_error_)
         self.assertArgHasType(
             TestCMIOExtensionProviderHelper.connectClient_error_, 1, b"o^@"
@@ -41,11 +49,3 @@ class TestCMIOExtensionProvider(TestCase):
         self.assertArgHasType(
             TestCMIOExtensionProviderHelper.setProviderProperties_error_, 1, b"o^@"
         )
-
-    @min_os_level("12.3")
-    def test_methods12_3(self):
-        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionProvider.addDevice_error_)
-        self.assertArgIsOut(CoreMediaIO.CMIOExtensionProvider.addDevice_error_, 1)
-
-        self.assertResultIsBOOL(CoreMediaIO.CMIOExtensionProvider.removeDevice_error_)
-        self.assertArgIsOut(CoreMediaIO.CMIOExtensionProvider.removeDevice_error_, 1)

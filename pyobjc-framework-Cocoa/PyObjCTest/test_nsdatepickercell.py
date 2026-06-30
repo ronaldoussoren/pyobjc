@@ -8,19 +8,16 @@ class TestNSDatePickerHelper(AppKit.NSObject):
 
 
 class TestNSDatePickerCell(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSDatePickerElementFlags)
-        self.assertIsEnumType(AppKit.NSDatePickerMode)
-        self.assertIsEnumType(AppKit.NSDatePickerStyle)
+        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinute, 0x000C)
+        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinuteSecond, 0x000E)
+        self.assertEqual(AppKit.NSDatePickerElementFlagTimeZone, 0x0010)
+        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonth, 0x00C0)
+        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonthDay, 0x00E0)
+        self.assertEqual(AppKit.NSDatePickerElementFlagEra, 0x0100)
 
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTextFieldAndStepperDatePickerStyle, 0)
-        self.assertEqual(AppKit.NSClockAndCalendarDatePickerStyle, 1)
-        self.assertEqual(AppKit.NSTextFieldDatePickerStyle, 2)
-
-        self.assertEqual(AppKit.NSSingleDateMode, 0)
-        self.assertEqual(AppKit.NSRangeDateMode, 1)
-
+        # Legacy aliases:
         self.assertEqual(AppKit.NSHourMinuteDatePickerElementFlag, 0x000C)
         self.assertEqual(AppKit.NSHourMinuteSecondDatePickerElementFlag, 0x000E)
         self.assertEqual(AppKit.NSTimeZoneDatePickerElementFlag, 0x0010)
@@ -28,22 +25,29 @@ class TestNSDatePickerCell(TestCase):
         self.assertEqual(AppKit.NSYearMonthDayDatePickerElementFlag, 0x00E0)
         self.assertEqual(AppKit.NSEraDatePickerElementFlag, 0x0100)
 
+        self.assertIsEnumType(AppKit.NSDatePickerMode)
+        self.assertEqual(AppKit.NSDatePickerModeSingle, 0)
+        self.assertEqual(AppKit.NSDatePickerModeRange, 1)
+
+        # Legacy aliases:
+        self.assertEqual(AppKit.NSSingleDateMode, 0)
+        self.assertEqual(AppKit.NSRangeDateMode, 1)
+
+        self.assertIsEnumType(AppKit.NSDatePickerStyle)
         self.assertEqual(AppKit.NSDatePickerStyleTextFieldAndStepper, 0)
         self.assertEqual(AppKit.NSDatePickerStyleClockAndCalendar, 1)
         self.assertEqual(AppKit.NSDatePickerStyleTextField, 2)
 
-        self.assertEqual(AppKit.NSDatePickerModeSingle, 0)
-        self.assertEqual(AppKit.NSDatePickerModeRange, 1)
+        # Legacy aliases:
+        self.assertEqual(AppKit.NSTextFieldAndStepperDatePickerStyle, 0)
+        self.assertEqual(AppKit.NSClockAndCalendarDatePickerStyle, 1)
+        self.assertEqual(AppKit.NSTextFieldDatePickerStyle, 2)
 
-        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinute, 0x000C)
-        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinuteSecond, 0x000E)
-        self.assertEqual(AppKit.NSDatePickerElementFlagTimeZone, 0x0010)
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)
 
-        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonth, 0x00C0)
-        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonthDay, 0x00E0)
-        self.assertEqual(AppKit.NSDatePickerElementFlagEra, 0x0100)
-
-    def test_methods(self):
+    def test_protocol_methods(self):
         o = TestNSDatePickerHelper.alloc().init()
         m = o.datePickerCell_validateProposedDateValue_timeInterval_.__metadata__()
         self.assertEqual(m["arguments"][3]["type"], b"N^@")
@@ -51,7 +55,3 @@ class TestNSDatePickerCell(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSDatePickerCell.drawsBackground)
         self.assertArgIsBOOL(AppKit.NSDatePickerCell.setDrawsBackground_, 0)
-
-    @min_sdk_level("10.10")
-    def test_protocols(self):
-        self.assertProtocolExists("NSDatePickerCellDelegate", AppKit)

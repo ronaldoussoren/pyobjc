@@ -4,11 +4,8 @@ import objc
 
 
 class TestGKMatchMaker(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKInviteRecipientResponse)
-        self.assertIsEnumType(GameKit.GKMatchType)
-
-    def test_constants(self):
         self.assertEqual(GameKit.GKInviteRecipientResponseAccepted, 0)
         self.assertEqual(GameKit.GKInviteRecipientResponseDeclined, 1)
         self.assertEqual(GameKit.GKInviteRecipientResponseFailed, 2)
@@ -16,6 +13,12 @@ class TestGKMatchMaker(TestCase):
         self.assertEqual(GameKit.GKInviteRecipientResponseUnableToConnect, 4)
         self.assertEqual(GameKit.GKInviteRecipientResponseNoAnswer, 5)
 
+        self.assertIsEnumType(GameKit.GKMatchType)
+        self.assertEqual(GameKit.GKMatchTypePeerToPeer, 0)
+        self.assertEqual(GameKit.GKMatchTypeHosted, 1)
+        self.assertEqual(GameKit.GKMatchTypeTurnBased, 2)
+
+        # Old aliases:
         self.assertEqual(
             GameKit.GKInviteeResponseAccepted, GameKit.GKInviteRecipientResponseAccepted
         )
@@ -36,10 +39,6 @@ class TestGKMatchMaker(TestCase):
         self.assertEqual(
             GameKit.GKInviteeResponseNoAnswer, GameKit.GKInviteRecipientResponseNoAnswer
         )
-
-        self.assertEqual(GameKit.GKMatchTypePeerToPeer, 0)
-        self.assertEqual(GameKit.GKMatchTypeHosted, 1)
-        self.assertEqual(GameKit.GKMatchTypeTurnBased, 2)
 
     @min_os_level("10.10")
     def test_methods(self):

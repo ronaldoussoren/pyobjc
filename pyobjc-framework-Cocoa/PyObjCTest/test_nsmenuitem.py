@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMenuItem(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSMenuItemImageVisibility)
         self.assertEqual(AppKit.NSMenuItemImageVisibilityAutomatic, 0)
         self.assertEqual(AppKit.NSMenuItemImageVisibilityVisible, 1)

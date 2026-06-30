@@ -3,7 +3,7 @@ import LocalAuthentication
 
 
 class TestLARight(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(LocalAuthentication.LARightState)
         self.assertEqual(LocalAuthentication.LARightStateUnknown, 0)
         self.assertEqual(LocalAuthentication.LARightStateAuthorizing, 1)

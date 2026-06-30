@@ -9,8 +9,22 @@ class TestGKLocalPlayerHelper(GameKit.GKLocalPlayer):
 
 
 class TestGKLocalPlayer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKFriendsAuthorizationStatus)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusRestricted, 1)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusDenied, 2)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusAuthorized, 3)
+
+        # Unnamed enum, not in macOS 27 SDK:
+        self.assertEqual(GameKit.GKAuthenticatingWithoutUI, 0)
+        self.assertEqual(GameKit.GKAuthenticatingWithGreenBuddyUI, 1)
+        self.assertEqual(GameKit.GKAuthenticatingWithAuthKitInvocation, 2)
+
+    def test_constants(self):
+        self.assertIsInstance(
+            GameKit.GKPlayerAuthenticationDidChangeNotificationName, str
+        )
 
     @min_os_level("10.10")
     def test_methods(self):
@@ -112,17 +126,3 @@ class TestGKLocalPlayer(TestCase):
 
     def test_protocols(self):
         self.assertProtocolExists("GKLocalPlayerListener", GameKit)
-
-    def test_constants(self):
-        self.assertIsInstance(
-            GameKit.GKPlayerAuthenticationDidChangeNotificationName, str
-        )
-
-        self.assertEqual(GameKit.GKAuthenticatingWithoutUI, 0)
-        self.assertEqual(GameKit.GKAuthenticatingWithGreenBuddyUI, 1)
-        self.assertEqual(GameKit.GKAuthenticatingWithAuthKitInvocation, 2)
-
-        self.assertEqual(GameKit.GKFriendsAuthorizationStatusNotDetermined, 0)
-        self.assertEqual(GameKit.GKFriendsAuthorizationStatusRestricted, 1)
-        self.assertEqual(GameKit.GKFriendsAuthorizationStatusDenied, 2)
-        self.assertEqual(GameKit.GKFriendsAuthorizationStatusAuthorized, 3)

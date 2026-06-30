@@ -13,7 +13,7 @@ class TestWebResourceLoadDelegate(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("WebResourceLoadDelegate", WebKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestWebResourceLoadDelegateHelper.webView_resource_didReceiveContentLength_fromDataSource_,  # noqa: B950
             2,

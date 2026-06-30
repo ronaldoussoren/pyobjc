@@ -9,21 +9,22 @@ from PyObjCTools.TestSupport import (
 
 
 class TestNSFont(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSFontRenderingMode)
-        self.assertIsEnumType(AppKit.NSMultibyteGlyphPacking)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSFontIdentityMatrix, None)
-
-        self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
-        self.assertEqual(AppKit.NSNullGlyph, 0)
-        self.assertEqual(AppKit.NSNativeShortGlyphPacking, 5)
-
         self.assertEqual(AppKit.NSFontDefaultRenderingMode, 0)
         self.assertEqual(AppKit.NSFontAntialiasedRenderingMode, 1)
         self.assertEqual(AppKit.NSFontIntegerAdvancementsRenderingMode, 2)
         self.assertEqual(AppKit.NSFontAntialiasedIntegerAdvancementsRenderingMode, 3)
+
+        self.assertIsEnumType(AppKit.NSMultibyteGlyphPacking)
+        self.assertEqual(AppKit.NSNativeShortGlyphPacking, 5)
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
+        self.assertEqual(AppKit.NSNullGlyph, 0)
+
+    def test_constants(self):
+        self.assertEqual(AppKit.NSFontIdentityMatrix, None)
 
         self.assertIsInstance(AppKit.NSAntialiasThresholdChangedNotification, str)
         self.assertIsInstance(AppKit.NSFontSetChangedNotification, str)

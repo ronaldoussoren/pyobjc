@@ -132,7 +132,7 @@ class TestMTL4RenderCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTL4RenderCommandEncoder(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4RenderEncoderOptions)
         self.assertEqual(Metal.MTL4RenderEncoderOptionNone, 0)
         self.assertEqual(Metal.MTL4RenderEncoderOptionSuspending, 1 << 0)

@@ -3,13 +3,8 @@ import MediaPlayer
 
 
 class TestMPError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPErrorCode)
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertIsInstance(MediaPlayer.MPErrorDomain, str)
-
         self.assertEqual(MediaPlayer.MPErrorUnknown, 0)
         self.assertEqual(MediaPlayer.MPErrorPermissionDenied, 1)
         self.assertEqual(MediaPlayer.MPErrorCloudServiceCapabilityMissing, 2)
@@ -18,3 +13,7 @@ class TestMPError(TestCase):
         self.assertEqual(MediaPlayer.MPErrorNotSupported, 5)
         self.assertEqual(MediaPlayer.MPErrorCancelled, 6)
         self.assertEqual(MediaPlayer.MPErrorRequestTimedOut, 7)
+
+    @min_os_level("10.12")
+    def test_constants(self):
+        self.assertIsInstance(MediaPlayer.MPErrorDomain, str)

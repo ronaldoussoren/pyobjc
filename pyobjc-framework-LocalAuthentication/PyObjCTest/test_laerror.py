@@ -3,11 +3,8 @@ import LocalAuthentication
 
 
 class TestLAContext(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(LocalAuthentication.LAError)
-
-    @min_os_level("10.10")
-    def test_constants(self):
         self.assertEqual(
             LocalAuthentication.LAErrorAuthenticationFailed,
             LocalAuthentication.kLAErrorAuthenticationFailed,
@@ -51,7 +48,6 @@ class TestLAContext(TestCase):
             LocalAuthentication.LAErrorNotInteractive,
             LocalAuthentication.kLAErrorNotInteractive,
         )
-
         self.assertEqual(
             LocalAuthentication.LAErrorBiometryNotAvailable,
             LocalAuthentication.kLAErrorBiometryNotAvailable,

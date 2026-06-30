@@ -8,7 +8,8 @@ import objc
 
 
 class TestCGImage(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGImagePixelFormatInfo)
         self.assertEqual(Quartz.kCGImagePixelFormatMask, 0xF0000)
         self.assertEqual(Quartz.kCGImagePixelFormatPacked, 0 << 16)
         self.assertEqual(Quartz.kCGImagePixelFormatRGB555, 1 << 16)
@@ -16,6 +17,7 @@ class TestCGImage(TestCase):
         self.assertEqual(Quartz.kCGImagePixelFormatRGB101010, 3 << 16)
         self.assertEqual(Quartz.kCGImagePixelFormatRGBCIF10, 4 << 16)
 
+        self.assertIsEnumType(Quartz.CGImageAlphaInfo)
         self.assertEqual(Quartz.kCGImageAlphaNone, 0)
         self.assertEqual(Quartz.kCGImageAlphaPremultipliedLast, 1)
         self.assertEqual(Quartz.kCGImageAlphaPremultipliedFirst, 2)
@@ -25,6 +27,7 @@ class TestCGImage(TestCase):
         self.assertEqual(Quartz.kCGImageAlphaNoneSkipFirst, 6)
         self.assertEqual(Quartz.kCGImageAlphaOnly, 7)
 
+        self.assertIsEnumType(Quartz.CGBitmapInfo)
         self.assertEqual(Quartz.kCGBitmapAlphaInfoMask, 0x1F)
         self.assertEqual(Quartz.kCGBitmapFloatComponents, (1 << 8))
         self.assertEqual(Quartz.kCGBitmapByteOrderMask, 0x7000)

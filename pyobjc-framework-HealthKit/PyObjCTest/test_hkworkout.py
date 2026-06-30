@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKWorkout(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKWorkoutEventType)
         self.assertEqual(HealthKit.HKWorkoutEventTypePause, 1)
         self.assertEqual(HealthKit.HKWorkoutEventTypeResume, 2)
@@ -14,6 +14,7 @@ class TestHKWorkout(TestCase):
         self.assertEqual(HealthKit.HKWorkoutEventTypeSegment, 7)
         self.assertEqual(HealthKit.HKWorkoutEventTypePauseOrResumeRequest, 8)
 
+    def test_constants(self):
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutDuration, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutTotalDistance, str)
         self.assertIsInstance(HealthKit.HKPredicateKeyPathWorkoutTotalEnergyBurned, str)

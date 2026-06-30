@@ -8,12 +8,17 @@ except ImportError:
 
 
 class TestNSGraphicsContext(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSImageInterpolation)
+        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
+        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
+        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
+        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
+        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSGraphicsContextAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSGraphicsContextRepresentationFormatName, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSImageInterpolation)
 
     def test_constants(self):
         self.assertIsInstance(AppKit.NSGraphicsContextDestinationAttributeName, str)
@@ -22,18 +27,6 @@ class TestNSGraphicsContext(TestCase):
         )
         self.assertIsInstance(AppKit.NSGraphicsContextPSFormat, str)
         self.assertIsInstance(AppKit.NSGraphicsContextPDFFormat, str)
-
-        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
-        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
-        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
-        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
-        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
-
-        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
-        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
-        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
-        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
-        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
 
     def test_methods(self):
         self.assertArgIsBOOL(

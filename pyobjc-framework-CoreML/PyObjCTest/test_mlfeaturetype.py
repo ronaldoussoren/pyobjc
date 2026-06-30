@@ -3,10 +3,8 @@ import CoreML
 
 
 class TestMLFeatureType(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreML.MLFeatureType)
-
-    def test_constants(self):
         self.assertEqual(CoreML.MLFeatureTypeInvalid, 0)
         self.assertEqual(CoreML.MLFeatureTypeInt64, 1)
         self.assertEqual(CoreML.MLFeatureTypeDouble, 2)

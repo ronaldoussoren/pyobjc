@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTFrameProcessorErrors(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(VideoToolbox.VTFrameProcessorError)
         self.assertEqual(VideoToolbox.VTFrameProcessorUnknownError, -19730)
         self.assertEqual(VideoToolbox.VTFrameProcessorUnsupportedResolution, -19731)

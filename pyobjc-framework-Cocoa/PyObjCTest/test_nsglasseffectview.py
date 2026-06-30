@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGlassEffectView(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSGlassEffectViewStyle)
         self.assertEqual(AppKit.NSGlassEffectViewStyleRegular, 0)
         self.assertEqual(AppKit.NSGlassEffectViewStyleClear, 1)

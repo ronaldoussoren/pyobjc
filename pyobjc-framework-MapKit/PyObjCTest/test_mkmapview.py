@@ -20,7 +20,7 @@ class TestMKMapViewHelper(MapKit.NSObject):
 
 
 class TestMKMapView(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKUserTrackingMode)
         self.assertEqual(MapKit.MKUserTrackingModeNone, 0)
         self.assertEqual(MapKit.MKUserTrackingModeFollow, 1)

@@ -1,13 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSMeasurementFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSMeasurementFormatterUnitOptions)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(
             Foundation.NSMeasurementFormatterUnitOptionsProvidedUnit, 1 << 0
         )

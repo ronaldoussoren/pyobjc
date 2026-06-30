@@ -6,7 +6,7 @@ class TestMXMetricManager(TestCase):
     def test_classes(self):
         MetricKit.MXMetricManager
 
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsTypedEnum(MetricKit.MXLaunchTaskID, str)
 
     @min_sdk_level("12.0")

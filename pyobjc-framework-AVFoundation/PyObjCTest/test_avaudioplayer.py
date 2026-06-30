@@ -20,6 +20,11 @@ class TestAVAudioPlayer(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioPlayer.isMeteringEnabled)
         self.assertArgIsBOOL(AVFoundation.AVAudioPlayer.setMeteringEnabled_, 0)
 
+    @min_sdk_level("10.13")
+    def test_protocols(self):
+        self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestAVAudioPlayerHelper.audioPlayerDidFinishPlaying_successfully_, 1
         )
@@ -33,7 +38,3 @@ class TestAVAudioPlayer(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVAudioPlayer.initWithData_fileTypeHint_error_, 2
         )
-
-    @min_sdk_level("10.13")
-    def test_protocols(self):
-        self.assertProtocolExists("AVAudioPlayerDelegate", AVFoundation)

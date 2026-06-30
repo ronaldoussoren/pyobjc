@@ -125,68 +125,6 @@ class TestNSCollectionView(TestCase):
             b"N^" + AppKit.NSPoint.__typestr__,
         )
 
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexes_withEvent_
-        )
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_writeItemsAtIndexes_toPasteboard_
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingImageForItemsAtIndexes_withEvent_offset_,  # noqa: B950
-            3,
-            b"N^" + AppKit.NSPoint.__typestr__,
-        )
-
-        self.assertResultHasType(
-            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
-            2,
-            b"N^" + objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
-            3,
-            b"N^" + objc._C_NSInteger,
-        )
-
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
-            2,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
-            3,
-            objc._C_NSInteger,
-        )
-
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_,
-            1,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_,  # noqa: B950
-            2,
-            AppKit.NSPoint.__typestr__,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,  # noqa: B950
-            2,
-            AppKit.NSPoint.__typestr__,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,  # noqa: B950
-            3,
-            objc._C_NSInteger,
-        )
-
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSCollectionView.allowsEmptySelection)
@@ -296,3 +234,66 @@ class TestNSCollectionView(TestCase):
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
         self.assertProtocolExists("NSCollectionViewPrefetching", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexes_withEvent_
+        )
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_writeItemsAtIndexes_toPasteboard_
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingImageForItemsAtIndexes_withEvent_offset_,  # noqa: B950
+            3,
+            b"N^" + AppKit.NSPoint.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
+            2,
+            b"N^" + objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
+            3,
+            b"N^" + objc._C_NSInteger,
+        )
+
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
+            3,
+            objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_,  # noqa: B950
+            2,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,  # noqa: B950
+            2,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,  # noqa: B950
+            3,
+            objc._C_NSInteger,
+        )

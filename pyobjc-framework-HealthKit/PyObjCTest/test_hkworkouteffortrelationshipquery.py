@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKWorkoutEffortRelationshipQuery(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKWorkoutEffortRelationshipQueryOptions)
         self.assertEqual(HealthKit.HKWorkoutEffortRelationshipQueryOptionsDefault, 0)
         self.assertEqual(

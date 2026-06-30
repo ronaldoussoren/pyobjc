@@ -45,6 +45,7 @@ class TestNSKeyValueCoding(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSObject.accessInstanceVariablesDirectly)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKey_error_, 2)
         self.assertResultIsBOOL(

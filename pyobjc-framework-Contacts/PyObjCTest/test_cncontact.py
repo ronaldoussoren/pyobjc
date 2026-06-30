@@ -3,9 +3,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCNContact(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Contacts.CNContactSortOrder)
+        self.assertEqual(Contacts.CNContactSortOrderNone, 0)
+        self.assertEqual(Contacts.CNContactSortOrderUserDefault, 1)
+        self.assertEqual(Contacts.CNContactSortOrderGivenName, 2)
+        self.assertEqual(Contacts.CNContactSortOrderFamilyName, 3)
+
         self.assertIsEnumType(Contacts.CNContactType)
+        self.assertEqual(Contacts.CNContactTypePerson, 0)
+        self.assertEqual(Contacts.CNContactTypeOrganization, 1)
 
     @min_os_level("10.12")
     def test_constants10_12(self):
@@ -14,14 +21,6 @@ class TestCNContact(TestCase):
 
     @min_os_level("10.11")
     def test_constants(self):
-        self.assertEqual(Contacts.CNContactTypePerson, 0)
-        self.assertEqual(Contacts.CNContactTypeOrganization, 1)
-
-        self.assertEqual(Contacts.CNContactSortOrderNone, 0)
-        self.assertEqual(Contacts.CNContactSortOrderUserDefault, 1)
-        self.assertEqual(Contacts.CNContactSortOrderGivenName, 2)
-        self.assertEqual(Contacts.CNContactSortOrderFamilyName, 3)
-
         self.assertIsInstance(Contacts.CNContactPropertyNotFetchedExceptionName, str)
         self.assertIsInstance(Contacts.CNContactIdentifierKey, str)
         self.assertIsInstance(Contacts.CNContactNamePrefixKey, str)

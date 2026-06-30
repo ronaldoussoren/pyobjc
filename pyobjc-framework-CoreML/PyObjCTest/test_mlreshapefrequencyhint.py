@@ -3,7 +3,7 @@ import CoreML
 
 
 class TestMLReshapeFrequencyHint(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreML.MLReshapeFrequencyHint)
         self.assertEqual(CoreML.MLReshapeFrequencyHintFrequent, 0)
         self.assertEqual(CoreML.MLReshapeFrequencyHintInfrequent, 1)

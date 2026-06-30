@@ -3,7 +3,7 @@ import LocalAuthentication
 
 
 class TestLABiometryType(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(LocalAuthentication.LABiometryType)
         self.assertEqual(
             LocalAuthentication.LABiometryTypeNone,

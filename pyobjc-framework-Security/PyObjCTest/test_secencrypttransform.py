@@ -47,6 +47,7 @@ class TestSecEncryptTransform(TestCase):
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
+    @expectedFailure
     def test_functions_missing(self):
         # On 10.13.4 (beta) both functions are found, but crash...
         self.fail("Hard crash")

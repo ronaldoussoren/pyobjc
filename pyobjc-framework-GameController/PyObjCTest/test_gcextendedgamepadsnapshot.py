@@ -4,10 +4,8 @@ import GameController
 
 
 class TestGCExtendedGamepadSnapshot(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCExtendedGamepadSnapshotDataVersion)
-
-    def test_constants(self):
         self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion1, 0x0100)
         self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion2, 0x0101)
 

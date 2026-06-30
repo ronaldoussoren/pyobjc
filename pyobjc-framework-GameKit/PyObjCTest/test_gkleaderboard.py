@@ -4,18 +4,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestGKLeaderboard(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKLeaderboardPlayerScope)
-        self.assertIsEnumType(GameKit.GKLeaderboardTimeScope)
-        self.assertIsEnumType(GameKit.GKLeaderboardType)
+        self.assertEqual(GameKit.GKLeaderboardPlayerScopeGlobal, 0)
+        self.assertEqual(GameKit.GKLeaderboardPlayerScopeFriendsOnly, 1)
 
-    def test_constants(self):
+        self.assertIsEnumType(GameKit.GKLeaderboardTimeScope)
         self.assertEqual(GameKit.GKLeaderboardTimeScopeToday, 0)
         self.assertEqual(GameKit.GKLeaderboardTimeScopeWeek, 1)
         self.assertEqual(GameKit.GKLeaderboardTimeScopeAllTime, 2)
 
-        self.assertEqual(GameKit.GKLeaderboardPlayerScopeGlobal, 0)
-        self.assertEqual(GameKit.GKLeaderboardPlayerScopeFriendsOnly, 1)
+        self.assertIsEnumType(GameKit.GKLeaderboardType)
+        self.assertEqual(GameKit.GKLeaderboardTypeClassic, 0)
+        self.assertEqual(GameKit.GKLeaderboardTypeRecurring, 1)
 
     def test_methods(self):
         self.assertArgIsBlock(

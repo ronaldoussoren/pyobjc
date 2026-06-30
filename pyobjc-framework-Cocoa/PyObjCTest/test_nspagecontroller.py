@@ -8,10 +8,8 @@ class TestNSPageControllerHelper(AppKit.NSObject):
 
 
 class TestNSPageController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPageControllerTransitionStyle)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSPageControllerTransitionStyleStackHistory, 0)
         self.assertEqual(AppKit.NSPageControllerTransitionStyleStackBook, 1)
         self.assertEqual(AppKit.NSPageControllerTransitionStyleHorizontalStrip, 2)

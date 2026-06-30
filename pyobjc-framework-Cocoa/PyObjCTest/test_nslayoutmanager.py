@@ -65,25 +65,33 @@ class TestNSLayoutManagerHelper(AppKit.NSObject):
 
 
 class TestNSLayoutManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSControlCharacterAction)
+        self.assertEqual(AppKit.NSControlCharacterActionZeroAdvancement, 1 << 0)
+        self.assertEqual(AppKit.NSControlCharacterActionWhitespace, 1 << 1)
+        self.assertEqual(AppKit.NSControlCharacterActionHorizontalTab, 1 << 2)
+        self.assertEqual(AppKit.NSControlCharacterActionLineBreak, 1 << 3)
+        self.assertEqual(AppKit.NSControlCharacterActionParagraphBreak, 1 << 4)
+        self.assertEqual(AppKit.NSControlCharacterActionContainerBreak, 1 << 5)
+
         self.assertIsEnumType(AppKit.NSGlyphInscription)
-        self.assertIsEnumType(AppKit.NSGlyphProperty)
-        self.assertIsEnumType(AppKit.NSTextLayoutOrientation)
-        self.assertIsEnumType(AppKit.NSTypesetterBehavior)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSGlyphAttributeSoft, 0)
-        self.assertEqual(AppKit.NSGlyphAttributeElastic, 1)
-        self.assertEqual(AppKit.NSGlyphAttributeBidiLevel, 2)
-        self.assertEqual(AppKit.NSGlyphAttributeInscribe, 5)
-
         self.assertEqual(AppKit.NSGlyphInscribeBase, 0)
         self.assertEqual(AppKit.NSGlyphInscribeBelow, 1)
         self.assertEqual(AppKit.NSGlyphInscribeAbove, 2)
         self.assertEqual(AppKit.NSGlyphInscribeOverstrike, 3)
         self.assertEqual(AppKit.NSGlyphInscribeOverBelow, 4)
 
+        self.assertIsEnumType(AppKit.NSGlyphProperty)
+        self.assertEqual(AppKit.NSGlyphPropertyNull, 1 << 0)
+        self.assertEqual(AppKit.NSGlyphPropertyControlCharacter, 1 << 1)
+        self.assertEqual(AppKit.NSGlyphPropertyElastic, 1 << 2)
+        self.assertEqual(AppKit.NSGlyphPropertyNonBaseCharacter, 1 << 3)
+
+        self.assertIsEnumType(AppKit.NSTextLayoutOrientation)
+        self.assertEqual(AppKit.NSTextLayoutOrientationHorizontal, 0)
+        self.assertEqual(AppKit.NSTextLayoutOrientationVertical, 1)
+
+        self.assertIsEnumType(AppKit.NSTypesetterBehavior)
         self.assertEqual(AppKit.NSTypesetterLatestBehavior, -1)
         self.assertEqual(AppKit.NSTypesetterOriginalBehavior, 0)
         self.assertEqual(AppKit.NSTypesetterBehavior_10_2_WithCompatibility, 1)
@@ -91,21 +99,11 @@ class TestNSLayoutManager(TestCase):
         self.assertEqual(AppKit.NSTypesetterBehavior_10_3, 3)
         self.assertEqual(AppKit.NSTypesetterBehavior_10_4, 4)
 
-        self.assertEqual(AppKit.NSTextLayoutOrientationHorizontal, 0)
-        self.assertEqual(AppKit.NSTextLayoutOrientationVertical, 1)
-
-        # OSX 10.11:
-        self.assertEqual(AppKit.NSGlyphPropertyNull, 1 << 0)
-        self.assertEqual(AppKit.NSGlyphPropertyControlCharacter, 1 << 1)
-        self.assertEqual(AppKit.NSGlyphPropertyElastic, 1 << 2)
-        self.assertEqual(AppKit.NSGlyphPropertyNonBaseCharacter, 1 << 3)
-
-        self.assertEqual(AppKit.NSControlCharacterActionZeroAdvancement, 1 << 0)
-        self.assertEqual(AppKit.NSControlCharacterActionWhitespace, 1 << 1)
-        self.assertEqual(AppKit.NSControlCharacterActionHorizontalTab, 1 << 2)
-        self.assertEqual(AppKit.NSControlCharacterActionLineBreak, 1 << 3)
-        self.assertEqual(AppKit.NSControlCharacterActionParagraphBreak, 1 << 4)
-        self.assertEqual(AppKit.NSControlCharacterActionContainerBreak, 1 << 5)
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSGlyphAttributeSoft, 0)
+        self.assertEqual(AppKit.NSGlyphAttributeElastic, 1)
+        self.assertEqual(AppKit.NSGlyphAttributeBidiLevel, 2)
+        self.assertEqual(AppKit.NSGlyphAttributeInscribe, 5)
 
     def test_protocols(self):
         self.assertProtocolExists("NSTextLayoutOrientationProvider", AppKit)

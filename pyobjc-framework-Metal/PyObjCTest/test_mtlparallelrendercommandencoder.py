@@ -28,7 +28,7 @@ class TestMTLParallelRenderCommandEncoder(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MTLParallelRenderCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLParallelRenderCommandEncoderHelper.setColorStoreAction_atIndex_,
             1,

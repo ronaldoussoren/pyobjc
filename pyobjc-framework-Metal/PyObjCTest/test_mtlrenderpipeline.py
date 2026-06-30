@@ -68,12 +68,25 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
 
 
 class TestMTLRenderPipeline(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLArgumentAccess)
-        self.assertIsEnumType(Metal.MTLArgumentType)
-        self.assertIsEnumType(Metal.MTLDataType)
+        self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
+        self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
+        self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLArgumentType)
+        self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
+        self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
+        self.assertEqual(Metal.MTLArgumentTypeTexture, 2)
+        self.assertEqual(Metal.MTLArgumentTypeSampler, 3)
+        self.assertEqual(Metal.MTLArgumentTypeImageblockData, 16)
+        self.assertEqual(Metal.MTLArgumentTypeImageblock, 17)
+        self.assertEqual(Metal.MTLArgumentTypeVisibleFunctionTable, 24)
+        self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
+        self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
+        self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
+
+        self.assertIsEnumType(Metal.MTLDataType)
         self.assertEqual(Metal.MTLDataTypeNone, 0)
         self.assertEqual(Metal.MTLDataTypeStruct, 1)
         self.assertEqual(Metal.MTLDataTypeArray, 2)
@@ -161,26 +174,10 @@ class TestMTLRenderPipeline(TestCase):
         self.assertEqual(Metal.MTLDataTypeULong2, 86)
         self.assertEqual(Metal.MTLDataTypeULong3, 87)
         self.assertEqual(Metal.MTLDataTypeULong4, 88)
-
         self.assertEqual(Metal.MTLDataTypeVisibleFunctionTable, 115)
         self.assertEqual(Metal.MTLDataTypeIntersectionFunctionTable, 116)
         self.assertEqual(Metal.MTLDataTypePrimitiveAccelerationStructure, 117)
         self.assertEqual(Metal.MTLDataTypeInstanceAccelerationStructure, 118)
-
-        self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
-        self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
-        self.assertEqual(Metal.MTLArgumentTypeTexture, 2)
-        self.assertEqual(Metal.MTLArgumentTypeSampler, 3)
-        self.assertEqual(Metal.MTLArgumentTypeImageblockData, 16)
-        self.assertEqual(Metal.MTLArgumentTypeImageblock, 17)
-        self.assertEqual(Metal.MTLArgumentTypeVisibleFunctionTable, 24)
-        self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
-        self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
-        self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
-
-        self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
-        self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
-        self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
         self.assertIsEnumType(Metal.MTLBlendFactor)
         self.assertEqual(Metal.MTLBlendFactorZero, 0)

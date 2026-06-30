@@ -4,7 +4,7 @@ import MapKit
 
 
 class TestMKSelectionAccessory(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKMapItemDetailSelectionAccessoryCalloutStyle)
         self.assertEqual(
             MapKit.MKMapItemDetailSelectionAccessoryCalloutStyleAutomatic, 0

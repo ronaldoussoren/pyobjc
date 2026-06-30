@@ -60,23 +60,75 @@ class TestNSFileManagerHelper(Foundation.NSObject):
 
 
 class TestNSFileManager(TestCase):
+    def test_enums(self):
+        self.assertEqual(
+            Foundation.NSFoundationVersionWithFileManagerResourceForkSupport, 412
+        )
+
+        self.assertIsEnumType(Foundation.NSDirectoryEnumerationOptions)
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1 << 0
+        )
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1
+        )
+        self.assertEqual(Foundation.NSDirectoryEnumerationSkipsHiddenFiles, 1 << 2)
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3
+        )
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4
+        )
+
+        self.assertIsEnumType(Foundation.NSFileManagerItemReplacementOptions)
+        self.assertEqual(
+            Foundation.NSFileManagerItemReplacementUsingNewMetadataOnly, 1 << 0
+        )
+        self.assertEqual(
+            Foundation.NSFileManagerItemReplacementWithoutDeletingBackupItem, 1 << 1
+        )
+
+        self.assertIsEnumType(Foundation.NSFileManagerUnmountOptions)
+        self.assertEqual(
+            Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0
+        )
+        self.assertEqual(Foundation.NSFileManagerUnmountWithoutUI, 1 << 1)
+
+        self.assertIsEnumType(Foundation.NSURLRelationship)
+        self.assertEqual(Foundation.NSURLRelationshipContains, 0)
+        self.assertEqual(Foundation.NSURLRelationshipSame, 1)
+        self.assertEqual(Foundation.NSURLRelationshipOther, 2)
+
+        self.assertIsEnumType(Foundation.NSVolumeEnumerationOptions)
+        self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
+        self.assertEqual(Foundation.NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
+
+        self.assertIsEnumType(Foundation.NSFileManagerSupportedSyncControls)
+        self.assertEqual(Foundation.NSFileManagerSupportedSyncControlsPauseSync, 1 << 0)
+        self.assertEqual(
+            Foundation.NSFileManagerSupportedSyncControlsFailUploadOnConflict, 1 << 1
+        )
+
+        self.assertIsEnumType(Foundation.NSFileManagerResumeSyncBehavior)
+        self.assertEqual(
+            Foundation.NSFileManagerResumeSyncBehaviorPreserveLocalChanges, 0
+        )
+        self.assertEqual(
+            Foundation.NSFileManagerResumeSyncBehaviorAfterUploadWithFailOnConflict, 1
+        )
+        self.assertEqual(Foundation.NSFileManagerResumeSyncBehaviorDropLocalChanges, 2)
+
+        self.assertIsEnumType(Foundation.NSFileManagerUploadLocalVersionConflictPolicy)
+        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyDefault, 0)
+        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSFileAttributeKey, str)
         self.assertIsTypedEnum(Foundation.NSFileAttributeType, str)
         self.assertIsTypedEnum(Foundation.NSFileProtectionType, str)
         self.assertIsTypedEnum(Foundation.NSFileProviderServiceName, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSDirectoryEnumerationOptions)
-        self.assertIsEnumType(Foundation.NSFileManagerItemReplacementOptions)
-        self.assertIsEnumType(Foundation.NSFileManagerUnmountOptions)
-        self.assertIsEnumType(Foundation.NSURLRelationship)
-        self.assertIsEnumType(Foundation.NSVolumeEnumerationOptions)
-
     def test_constants(self):
-        self.assertEqual(
-            Foundation.NSFoundationVersionWithFileManagerResourceForkSupport, 412
-        )
 
         self.assertIsInstance(Foundation.NSFileType, str)
         self.assertIsInstance(Foundation.NSFileTypeDirectory, str)
@@ -109,79 +161,22 @@ class TestNSFileManager(TestCase):
         self.assertIsInstance(Foundation.NSFileSystemNodes, str)
         self.assertIsInstance(Foundation.NSFileSystemFreeNodes, str)
 
-        self.assertIsEnumType(Foundation.NSFileManagerSupportedSyncControls)
-        self.assertEqual(Foundation.NSFileManagerSupportedSyncControlsPauseSync, 1 << 0)
-        self.assertEqual(
-            Foundation.NSFileManagerSupportedSyncControlsFailUploadOnConflict, 1 << 1
-        )
-
-        self.assertIsEnumType(Foundation.NSFileManagerResumeSyncBehavior)
-        self.assertEqual(
-            Foundation.NSFileManagerResumeSyncBehaviorPreserveLocalChanges, 0
-        )
-        self.assertEqual(
-            Foundation.NSFileManagerResumeSyncBehaviorAfterUploadWithFailOnConflict, 1
-        )
-        self.assertEqual(Foundation.NSFileManagerResumeSyncBehaviorDropLocalChanges, 2)
-
-        self.assertIsEnumType(Foundation.NSFileManagerUploadLocalVersionConflictPolicy)
-        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyDefault, 0)
-        self.assertEqual(Foundation.NSFileManagerUploadConflictPolicyFailOnConflict, 1)
-
-        self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
-        self.assertEqual(Foundation.NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
-
-        self.assertEqual(
-            Foundation.NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1 << 0
-        )
-        self.assertEqual(
-            Foundation.NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1
-        )
-        self.assertEqual(Foundation.NSDirectoryEnumerationSkipsHiddenFiles, 1 << 2)
-
-        self.assertEqual(
-            Foundation.NSFileManagerItemReplacementUsingNewMetadataOnly, 1 << 0
-        )
-        self.assertEqual(
-            Foundation.NSFileManagerItemReplacementWithoutDeletingBackupItem, 1 << 1
-        )
-
         self.assertIsInstance(Foundation.NSUbiquityIdentityDidChangeNotification, str)
 
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(
+            Foundation.NSFileManagerUnmountDissentingProcessIdentifierErrorKey, str
+        )
+
     @min_os_level("10.14")
-    def test_constants_missing10_9(self):
+    def test_constants10_14(self):
         self.assertIsInstance(Foundation.NSFileProtectionKey, str)
         self.assertIsInstance(Foundation.NSFileProtectionNone, str)
         self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
         self.assertIsInstance(Foundation.NSFileProtectionCompleteUnlessOpen, str)
         self.assertIsInstance(
             Foundation.NSFileProtectionCompleteUntilFirstUserAuthentication, str
-        )
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
-        self.assertEqual(Foundation.NSURLRelationshipContains, 0)
-        self.assertEqual(Foundation.NSURLRelationshipSame, 1)
-        self.assertEqual(Foundation.NSURLRelationshipOther, 2)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertEqual(
-            Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0
-        )
-        self.assertEqual(Foundation.NSFileManagerUnmountWithoutUI, 1 << 1)
-
-        self.assertIsInstance(
-            Foundation.NSFileManagerUnmountDissentingProcessIdentifierErrorKey, str
-        )
-
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertEqual(
-            Foundation.NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3
-        )
-        self.assertEqual(
-            Foundation.NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4
         )
 
     @min_os_level("11.0")

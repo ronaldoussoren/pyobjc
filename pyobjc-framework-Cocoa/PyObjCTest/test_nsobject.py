@@ -145,6 +145,16 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(o.conformsToProtocol_)
         self.assertResultIsBOOL(o.respondsToSelector_)
 
+    def test_protocols(self):
+        self.assertProtocolExists("NSCopying", Foundation)
+        self.assertProtocolExists("NSMutableCopying", Foundation)
+        self.assertProtocolExists("NSCoding", Foundation)
+
+        self.assertProtocolExists("NSDiscardableContent", Foundation)
+
+        self.assertProtocolExists("NSSecureCoding", Foundation)
+
+    def test_protocol_methods(self):
         a = TestNSObjectHelper.alloc().init()
         self.assertArgHasType(a.copyWithZone_, 0, b"^{_NSZone=}")
         self.assertArgHasType(a.mutableCopyWithZone_, 0, b"^{_NSZone=}")
@@ -156,12 +166,3 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(TestNSObjectHelper.retainWeakReference)
 
         self.assertResultIsBOOL(TestNSObjectHelper.supportsSecureCoding)
-
-    def test_protocols(self):
-        self.assertProtocolExists("NSCopying", Foundation)
-        self.assertProtocolExists("NSMutableCopying", Foundation)
-        self.assertProtocolExists("NSCoding", Foundation)
-
-        self.assertProtocolExists("NSDiscardableContent", Foundation)
-
-        self.assertProtocolExists("NSSecureCoding", Foundation)

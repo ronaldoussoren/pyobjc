@@ -4,17 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPrintPanel(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSPrintPanelAccessorySummaryKey, str)
-        self.assertIsTypedEnum(AppKit.NSPrintPanelJobStyleHint, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPrintPanelOptions)
-
-    def test_protocols(self):
-        self.assertProtocolExists("NSPrintPanelAccessorizing", AppKit)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSPrintPanelShowsCopies, 0x01)
         self.assertEqual(AppKit.NSPrintPanelShowsPageRange, 0x02)
         self.assertEqual(AppKit.NSPrintPanelShowsPaperSize, 0x04)
@@ -22,19 +13,23 @@ class TestNSPrintPanel(TestCase):
         self.assertEqual(AppKit.NSPrintPanelShowsScaling, 0x10)
         self.assertEqual(AppKit.NSPrintPanelShowsPageSetupAccessory, 0x100)
         self.assertEqual(AppKit.NSPrintPanelShowsPreview, 0x20000)
-
-        self.assertIsInstance(AppKit.NSPrintPhotoJobStyleHint, str)
+        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
 
         self.assertIsEnumType(AppKit.NSPrintPanelResult)
         self.assertEqual(AppKit.NSPrintPanelResultCancelled, 0)
         self.assertEqual(AppKit.NSPrintPanelResultPrinted, 1)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPrintPanelAccessorySummaryKey, str)
+        self.assertIsTypedEnum(AppKit.NSPrintPanelJobStyleHint, str)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSPrintPhotoJobStyleHint, str)
+
         self.assertIsInstance(AppKit.NSPrintPanelAccessorySummaryItemNameKey, str)
         self.assertIsInstance(
             AppKit.NSPrintPanelAccessorySummaryItemDescriptionKey, str
         )
-
-        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
 
         self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)
         self.assertIsInstance(AppKit.NSPrintNoPresetsJobStyleHint, str)
@@ -58,3 +53,6 @@ class TestNSPrintPanel(TestCase):
             2,
             b"vq",
         )
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSPrintPanelAccessorizing", AppKit)

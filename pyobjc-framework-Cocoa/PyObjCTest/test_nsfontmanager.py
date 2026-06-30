@@ -8,12 +8,21 @@ class TestNSFontManagerHelper(AppKit.NSObject):
 
 
 class TestNSFontManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSFontAction)
-        self.assertIsEnumType(AppKit.NSFontCollectionOptions)
-        self.assertIsEnumType(AppKit.NSFontTraitMask)
+        self.assertEqual(AppKit.NSNoFontChangeAction, 0)
+        self.assertEqual(AppKit.NSViaPanelFontAction, 1)
+        self.assertEqual(AppKit.NSAddTraitFontAction, 2)
+        self.assertEqual(AppKit.NSSizeUpFontAction, 3)
+        self.assertEqual(AppKit.NSSizeDownFontAction, 4)
+        self.assertEqual(AppKit.NSHeavierFontAction, 5)
+        self.assertEqual(AppKit.NSLighterFontAction, 6)
+        self.assertEqual(AppKit.NSRemoveTraitFontAction, 7)
 
-    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSFontCollectionOptions)
+        self.assertEqual(AppKit.NSFontCollectionApplicationOnlyMask, 1 << 0)
+
+        self.assertIsEnumType(AppKit.NSFontTraitMask)
         self.assertEqual(AppKit.NSItalicFontMask, 0x00000001)
         self.assertEqual(AppKit.NSBoldFontMask, 0x00000002)
         self.assertEqual(AppKit.NSUnboldFontMask, 0x00000004)
@@ -26,17 +35,6 @@ class TestNSFontManager(TestCase):
         self.assertEqual(AppKit.NSCompressedFontMask, 0x00000200)
         self.assertEqual(AppKit.NSFixedPitchFontMask, 0x00000400)
         self.assertEqual(AppKit.NSUnitalicFontMask, 0x01000000)
-
-        self.assertEqual(AppKit.NSFontCollectionApplicationOnlyMask, 1 << 0)
-
-        self.assertEqual(AppKit.NSNoFontChangeAction, 0)
-        self.assertEqual(AppKit.NSViaPanelFontAction, 1)
-        self.assertEqual(AppKit.NSAddTraitFontAction, 2)
-        self.assertEqual(AppKit.NSSizeUpFontAction, 3)
-        self.assertEqual(AppKit.NSSizeDownFontAction, 4)
-        self.assertEqual(AppKit.NSHeavierFontAction, 5)
-        self.assertEqual(AppKit.NSLighterFontAction, 6)
-        self.assertEqual(AppKit.NSRemoveTraitFontAction, 7)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSFontManager.isMultiple)
@@ -53,5 +51,6 @@ class TestNSFontManager(TestCase):
 
         self.assertArgIsBOOL(AppKit.NSFontManager.convertWeight_ofFont_, 0)
 
-    def test_protocols(self):
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(TestNSFontManagerHelper.fontManager_willIncludeFont_)

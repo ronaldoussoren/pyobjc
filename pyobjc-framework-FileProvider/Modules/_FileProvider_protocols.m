@@ -12,6 +12,10 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSFileProviderItem));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1100
+    p = PyObjC_IdToPython(@protocol(NSFileProviderServiceSource));
+    Py_XDECREF(p);
+#endif
 #if PyObjC_BUILD_RELEASE >= 1103
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingOperation));
     Py_XDECREF(p);

@@ -3,21 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextContainer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSLineMovementDirection)
-        self.assertIsEnumType(AppKit.NSLineSweepDirection)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSLineSweepLeft, 0)
-        self.assertEqual(AppKit.NSLineSweepRight, 1)
-        self.assertEqual(AppKit.NSLineSweepDown, 2)
-        self.assertEqual(AppKit.NSLineSweepUp, 3)
-
         self.assertEqual(AppKit.NSLineDoesntMove, 0)
         self.assertEqual(AppKit.NSLineMovesLeft, 1)
         self.assertEqual(AppKit.NSLineMovesRight, 2)
         self.assertEqual(AppKit.NSLineMovesDown, 3)
         self.assertEqual(AppKit.NSLineMovesUp, 4)
+
+        self.assertIsEnumType(AppKit.NSLineSweepDirection)
+        self.assertEqual(AppKit.NSLineSweepLeft, 0)
+        self.assertEqual(AppKit.NSLineSweepRight, 1)
+        self.assertEqual(AppKit.NSLineSweepDown, 2)
+        self.assertEqual(AppKit.NSLineSweepUp, 3)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextContainer.widthTracksTextView)

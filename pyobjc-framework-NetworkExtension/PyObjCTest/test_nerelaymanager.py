@@ -3,7 +3,7 @@ import NetworkExtension
 
 
 class TestNERelayManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NERelayManagerError)
         self.assertEqual(NetworkExtension.NERelayManagerErrorConfigurationInvalid, 1)
         self.assertEqual(NetworkExtension.NERelayManagerErrorConfigurationDisabled, 2)

@@ -27,7 +27,7 @@ class TestNSTextContentManagerHelper(AppKit.NSObject):
 
 
 class TestNSTextContentManager(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextContentManagerEnumerationOptions)
         self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsNone, 0)
         self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsReverse, 1 << 0)

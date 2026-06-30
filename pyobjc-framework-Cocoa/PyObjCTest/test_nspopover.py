@@ -11,21 +11,21 @@ class PopoverHelper(AppKit.NSObject):
 
 
 class TestNSPopover(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSPopoverCloseReasonValue, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPopoverAppearance)
-        self.assertIsEnumType(AppKit.NSPopoverBehavior)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSPopoverAppearanceMinimal, 0)
         self.assertEqual(AppKit.NSPopoverAppearanceHUD, 1)
 
+        self.assertIsEnumType(AppKit.NSPopoverBehavior)
         self.assertEqual(AppKit.NSPopoverBehaviorApplicationDefined, 0)
         self.assertEqual(AppKit.NSPopoverBehaviorTransient, 1)
         self.assertEqual(AppKit.NSPopoverBehaviorSemitransient, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPopoverCloseReasonValue, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPopoverCloseReasonKey, str)
         self.assertIsInstance(AppKit.NSPopoverCloseReasonStandard, str)
         self.assertIsInstance(AppKit.NSPopoverCloseReasonDetachToWindow, str)
@@ -57,10 +57,10 @@ class TestNSPopover(TestCase):
         self.assertResultIsBOOL(AppKit.NSPopover.hasFullSizeContent)
         self.assertArgIsBOOL(AppKit.NSPopover.setHasFullSizeContent_, 0)
 
-    def test_protocols(self):
-        self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
-
     @min_os_level("10.10")
     def test_protocols10_10(self):
         self.assertProtocolExists("NSPopoverDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)

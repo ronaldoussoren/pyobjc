@@ -12,10 +12,8 @@ class TestMTLIndirectCommandBufferHelper(Metal.NSObject):
 
 
 class TestMTLIndirectCommandBuffer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIndirectCommandType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLIndirectCommandTypeDraw, 1 << 0)
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawIndexed, 1 << 1)
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawPatches, 1 << 2)
@@ -36,22 +34,6 @@ class TestMTLIndirectCommandBuffer(TestCase):
         v = Metal.MTLIndirectCommandBufferExecutionRangeMake(1, 2)
         self.assertIsInstance(v, Metal.MTLIndirectCommandBufferExecutionRange)
         self.assertEqual(v, Metal.MTLIndirectCommandBufferExecutionRange(1, 2))
-
-    @min_sdk_level("10.14")
-    def test_protocols(self):
-        self.assertProtocolExists("MTLIndirectCommandBuffer", Metal)
-
-    def test_methods(self):
-        self.assertArgHasType(
-            TestMTLIndirectCommandBufferHelper.resetWithRange_,
-            0,
-            Metal.NSRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestMTLIndirectCommandBufferHelper.indirectRenderCommandAtIndex_,
-            0,
-            objc._C_NSUInteger,
-        )
 
     @min_os_level("10.14")
     def test_methods10_14(self):
@@ -175,4 +157,20 @@ class TestMTLIndirectCommandBuffer(TestCase):
             .init()
             .setInheritTriangleFillMode_,
             0,
+        )
+
+    @min_sdk_level("10.14")
+    def test_protocols(self):
+        self.assertProtocolExists("MTLIndirectCommandBuffer", Metal)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestMTLIndirectCommandBufferHelper.resetWithRange_,
+            0,
+            Metal.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLIndirectCommandBufferHelper.indirectRenderCommandAtIndex_,
+            0,
+            objc._C_NSUInteger,
         )

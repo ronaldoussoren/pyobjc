@@ -3,7 +3,7 @@ import PhotosUI
 
 
 class TestPHSharedAlbumCreationViewController(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PhotosUI.PHSharedAlbumCreationSharingPolicy)
         self.assertEqual(PhotosUI.PHSharedAlbumCreationSharingPolicyPrivate, 0)
         self.assertEqual(PhotosUI.PHSharedAlbumCreationSharingPolicyPublic, 1)

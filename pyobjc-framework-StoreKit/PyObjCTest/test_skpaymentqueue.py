@@ -14,6 +14,14 @@ class TestSKPaymentQueue(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(StoreKit.SKPaymentQueue.canMakePayments)
 
+    def test_protocols(self):
+        self.assertProtocolExists("SKPaymentTransactionObserver", StoreKit)
+
+    @min_sdk_level("10.15")
+    def test_protocols10_15(self):
+        self.assertProtocolExists("SKPaymentQueueDelegate", StoreKit)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestSKPaymentQueueHelper.paymentQueue_shouldContinueTransaction_inStorefront_
         )
@@ -21,10 +29,3 @@ class TestSKPaymentQueue(TestCase):
         self.assertResultIsBOOL(
             TestSKPaymentQueueHelper.paymentQueue_shouldAddStorePayment_forProduct_
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("SKPaymentTransactionObserver", StoreKit)
-
-    @min_sdk_level("10.15")
-    def test_protocols10_15(self):
-        self.assertProtocolExists("SKPaymentQueueDelegate", StoreKit)

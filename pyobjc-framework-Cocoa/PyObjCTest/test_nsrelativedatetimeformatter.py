@@ -3,14 +3,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRelativeDateTimeFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSRelativeDateTimeFormatterStyle)
-        self.assertIsEnumType(Foundation.NSRelativeDateTimeFormatterUnitsStyle)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSRelativeDateTimeFormatterStyleNumeric, 0)
         self.assertEqual(Foundation.NSRelativeDateTimeFormatterStyleNamed, 1)
 
+        self.assertIsEnumType(Foundation.NSRelativeDateTimeFormatterUnitsStyle)
         self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleFull, 0)
         self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleSpellOut, 1)
         self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleShort, 2)

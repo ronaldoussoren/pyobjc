@@ -9,9 +9,6 @@ class TestNSTextRangeHelper(AppKit.NSObject):
 
 
 class TestNSTextRange(TestCase):
-    def test_methods(self):
-        self.assertResultHasType(TestNSTextRangeHelper.compare_, objc._C_NSInteger)
-
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSTextRange.isEmpty)
@@ -23,3 +20,6 @@ class TestNSTextRange(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertResultIsBOOL(AppKit.NSTextRange.isEqual_)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(TestNSTextRangeHelper.compare_, objc._C_NSInteger)

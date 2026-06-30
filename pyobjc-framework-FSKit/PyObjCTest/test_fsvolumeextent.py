@@ -46,7 +46,7 @@ class TestFSVolumeExtentHelper(FSKit.NSObject):
 
 
 class TestFSVolumeExtent(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSBlockmapFlags)
         self.assertEqual(FSKit.FSBlockmapFlagsRead, 0x000100)
         self.assertEqual(FSKit.FSBlockmapFlagsWrite, 0x000200)

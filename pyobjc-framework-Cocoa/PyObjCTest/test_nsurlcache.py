@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLCache(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLCacheStoragePolicy)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSURLCacheStorageAllowed, 0)
         self.assertEqual(Foundation.NSURLCacheStorageAllowedInMemoryOnly, 1)
         self.assertEqual(Foundation.NSURLCacheStorageNotAllowed, 2)

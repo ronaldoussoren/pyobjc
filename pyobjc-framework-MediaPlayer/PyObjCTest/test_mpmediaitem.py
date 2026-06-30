@@ -4,11 +4,8 @@ import Quartz
 
 
 class TestMPMediaItem(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPMediaType)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(MediaPlayer.MPMediaTypeMusic, 1 << 0)
         self.assertEqual(MediaPlayer.MPMediaTypePodcast, 1 << 1)
         self.assertEqual(MediaPlayer.MPMediaTypeAudioBook, 1 << 2)
@@ -24,6 +21,8 @@ class TestMPMediaItem(TestCase):
 
         self.assertEqual(MediaPlayer.MPMediaTypeAny, 0xFFFFFFFFFFFFFFFF)
 
+    @min_os_level("10.12")
+    def test_constants(self):
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPersistentID, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyMediaType, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyTitle, str)

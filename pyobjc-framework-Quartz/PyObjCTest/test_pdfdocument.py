@@ -15,20 +15,28 @@ class TestPDFDocumentHelper(Quartz.NSObject):
 
 
 class TestPDFDocument(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFAccessPermissions)
+        self.assertEqual(Quartz.PDFAllowsLowQualityPrinting, 1 << 0)
+        self.assertEqual(Quartz.PDFAllowsHighQualityPrinting, 1 << 1)
+        self.assertEqual(Quartz.PDFAllowsDocumentChanges, 1 << 2)
+        self.assertEqual(Quartz.PDFAllowsDocumentAssembly, 1 << 3)
+        self.assertEqual(Quartz.PDFAllowsContentCopying, 1 << 4)
+        self.assertEqual(Quartz.PDFAllowsContentAccessibility, 1 << 5)
+        self.assertEqual(Quartz.PDFAllowsCommenting, 1 << 6)
+        self.assertEqual(Quartz.PDFAllowsFormFieldEntry, 1 << 7)
+
         self.assertIsEnumType(Quartz.PDFDocumentPermissions)
-        self.assertIsEnumType(Quartz.PDFPrintScalingMode)
-
-    def test_constants(self):
-        self.assertEqual(Quartz.kPDFPrintPageScaleNone, 0)
-        self.assertEqual(Quartz.kPDFPrintPageScaleToFit, 1)
-        self.assertEqual(Quartz.kPDFPrintPageScaleDownToFit, 2)
-
         self.assertEqual(Quartz.kPDFDocumentPermissionsNone, 0)
         self.assertEqual(Quartz.kPDFDocumentPermissionsUser, 1)
         self.assertEqual(Quartz.kPDFDocumentPermissionsOwner, 2)
 
+        self.assertIsEnumType(Quartz.PDFPrintScalingMode)
+        self.assertEqual(Quartz.kPDFPrintPageScaleNone, 0)
+        self.assertEqual(Quartz.kPDFPrintPageScaleToFit, 1)
+        self.assertEqual(Quartz.kPDFPrintPageScaleDownToFit, 2)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.PDFDocumentDidUnlockNotification, str)
         self.assertIsInstance(Quartz.PDFDocumentDidBeginFindNotification, str)
         self.assertIsInstance(Quartz.PDFDocumentDidEndFindNotification, str)
@@ -47,15 +55,6 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentCreationDateAttribute, str)
         self.assertIsInstance(Quartz.PDFDocumentModificationDateAttribute, str)
         self.assertIsInstance(Quartz.PDFDocumentKeywordsAttribute, str)
-
-        self.assertEqual(Quartz.PDFAllowsLowQualityPrinting, 1 << 0)
-        self.assertEqual(Quartz.PDFAllowsHighQualityPrinting, 1 << 1)
-        self.assertEqual(Quartz.PDFAllowsDocumentChanges, 1 << 2)
-        self.assertEqual(Quartz.PDFAllowsDocumentAssembly, 1 << 3)
-        self.assertEqual(Quartz.PDFAllowsContentCopying, 1 << 4)
-        self.assertEqual(Quartz.PDFAllowsContentAccessibility, 1 << 5)
-        self.assertEqual(Quartz.PDFAllowsCommenting, 1 << 6)
-        self.assertEqual(Quartz.PDFAllowsFormFieldEntry, 1 << 7)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -90,14 +89,6 @@ class TestPDFDocument(TestCase):
         self.assertResultIsBOOL(Quartz.PDFDocument.writeToURL_withOptions_)
         self.assertResultIsBOOL(Quartz.PDFDocument.isFinding)
 
-        self.assertResultHasType(TestPDFDocumentHelper.classForPage, objc._C_CLASS)
-        self.assertResultHasType(
-            TestPDFDocumentHelper.classForAnnotationType_, objc._C_CLASS
-        )
-        self.assertResultHasType(
-            TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS
-        )
-
         self.assertArgIsBOOL(
             Quartz.PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2
         )
@@ -113,3 +104,12 @@ class TestPDFDocument(TestCase):
     @min_sdk_level("10.13")
     def test_protocols(self):
         self.assertProtocolExists("PDFDocumentDelegate", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(TestPDFDocumentHelper.classForPage, objc._C_CLASS)
+        self.assertResultHasType(
+            TestPDFDocumentHelper.classForAnnotationType_, objc._C_CLASS
+        )
+        self.assertResultHasType(
+            TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS
+        )

@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSEntityMapping(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSEntityMappingType)
-
-    def test_constants(self):
         self.assertEqual(CoreData.NSUndefinedEntityMappingType, 0x00)
         self.assertEqual(CoreData.NSCustomEntityMappingType, 0x01)
         self.assertEqual(CoreData.NSAddEntityMappingType, 0x02)

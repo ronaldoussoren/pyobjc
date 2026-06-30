@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINStartVideoCallIntentResponse(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INStartVideoCallIntentResponseCode)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INStartVideoCallIntentResponseCodeContinueInApp, 2)

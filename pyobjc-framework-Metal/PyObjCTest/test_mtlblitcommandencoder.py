@@ -73,10 +73,8 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLBlitCommandEncoder(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLBlitOption)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLBlitOptionNone, 0)
         self.assertEqual(Metal.MTLBlitOptionDepthFromDepthStencil, 1 << 0)
         self.assertEqual(Metal.MTLBlitOptionStencilFromDepthStencil, 1 << 1)
@@ -86,7 +84,7 @@ class TestMTLBlitCommandEncoder(TestCase):
     def test_protocols10_11(self):
         self.assertProtocolExists("MTLBlitCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.synchronizeTexture_slice_level_,
             1,

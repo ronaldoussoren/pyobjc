@@ -4,13 +4,12 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraph(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimization)
-        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptions)
-        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimizationProfile)
-        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphExecutionStage)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptimizationLevel0, 0)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptimizationLevel1, 1)
 
-    def test_constants(self):
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptions)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptionsNone, 0)
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphOptionsSynchronizeResults, 1
@@ -21,9 +20,7 @@ class TestMPSGraph(TestCase):
             MetalPerformanceShadersGraph.MPSGraphOptionsSynchronizeResults,
         )
 
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptimizationLevel0, 0)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphOptimizationLevel1, 1)
-
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphOptimizationProfile)
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphOptimizationProfilePerformance, 0
         )
@@ -31,6 +28,7 @@ class TestMPSGraph(TestCase):
             MetalPerformanceShadersGraph.MPSGraphOptimizationProfilePowerEfficiency, 1
         )
 
+        self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphExecutionStage)
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphExecutionStageCompleted, 0
         )

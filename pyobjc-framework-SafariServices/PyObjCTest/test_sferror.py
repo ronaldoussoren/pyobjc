@@ -1,14 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SafariServices
 
 
 class TestSFError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SafariServices.SFErrorCode)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(SafariServices.SFErrorNoExtensionFound, 1)
         self.assertEqual(SafariServices.SFErrorNoAttachmentFound, 2)
         self.assertEqual(SafariServices.SFErrorLoadingInterrupted, 3)

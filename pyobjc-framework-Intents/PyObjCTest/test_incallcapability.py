@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINCallCapability(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INCallCapability)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INCallCapabilityUnknown, 0)
         self.assertEqual(Intents.INCallCapabilityAudioCall, 1)
         self.assertEqual(Intents.INCallCapabilityVideoCall, 2)

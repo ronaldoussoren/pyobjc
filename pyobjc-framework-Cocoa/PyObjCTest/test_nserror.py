@@ -77,7 +77,15 @@ class TestNSError(TestCase):
     def test_constants11_3(self):
         self.assertIsInstance(AppKit.NSMultipleUnderlyingErrorsKey, str)
 
-    def test_attempt_recovery(self):
+    @min_os_level("10.11")
+    def test_methods10_11(self):
+        self.assertArgIsBlock(
+            AppKit.NSError.setUserInfoValueProviderForDomain_provider_, 1, b"@@@"
+        )
+        self.assertResultIsBlock(AppKit.NSError.userInfoValueProviderForDomain_, b"@@@")
+
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertArgHasType(
             TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,  # noqa: B950
             1,
@@ -100,10 +108,3 @@ class TestNSError(TestCase):
             1,
             objc._C_NSUInteger,
         )
-
-    @min_os_level("10.11")
-    def test_methods10_11(self):
-        self.assertArgIsBlock(
-            AppKit.NSError.setUserInfoValueProviderForDomain_provider_, 1, b"@@@"
-        )
-        self.assertResultIsBlock(AppKit.NSError.userInfoValueProviderForDomain_, b"@@@")

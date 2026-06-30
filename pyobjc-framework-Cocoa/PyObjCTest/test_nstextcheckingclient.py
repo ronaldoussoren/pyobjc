@@ -88,7 +88,7 @@ class TestNSTextCheckingClientHelper(AppKit.NSObject):
 
 class TestNSTextCheckingClient(TestCase):
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextInputTraitType)
         self.assertEqual(AppKit.NSTextInputTraitTypeDefault, 0)
         self.assertEqual(AppKit.NSTextInputTraitTypeNo, 1)
@@ -108,7 +108,12 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSWritingToolsResultTable, 1 << 3)
         self.assertEqual(AppKit.NSWritingToolsResultPresentationIntent, 1 << 4)
 
-    def test_methods(self):
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists("NSTextInputTraits", AppKit)
+        self.assertProtocolExists("NSTextCheckingClient", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSTextCheckingClientHelper.autocorrectionType, objc._C_NSInteger
         )
@@ -223,8 +228,3 @@ class TestNSTextCheckingClient(TestCase):
             2,
             b"o^" + AppKit.NSRange.__typestr__,
         )
-
-    @min_sdk_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists("NSTextInputTraits", AppKit)
-        self.assertProtocolExists("NSTextCheckingClient", AppKit)

@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKCategoryValues(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKCategoryValue)
         self.assertEqual(HealthKit.HKCategoryValueNotApplicable, 0)
 

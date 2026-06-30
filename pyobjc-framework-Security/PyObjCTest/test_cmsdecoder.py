@@ -4,7 +4,7 @@ import objc
 
 
 class TestCMSDecoder(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Security.CMSSignerStatus)
         self.assertEqual(Security.kCMSSignerUnsigned, 0)
         self.assertEqual(Security.kCMSSignerValid, 1)

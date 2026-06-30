@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPersistentStoreRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSPersistentStoreRequestType)
-
-    def test_constants(self):
         self.assertEqual(CoreData.NSFetchRequestType, 1)
         self.assertEqual(CoreData.NSSaveRequestType, 2)
         self.assertEqual(CoreData.NSBatchInsertRequestType, 5)

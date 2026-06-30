@@ -4,10 +4,8 @@ import objc
 
 
 class TestNSMatrix(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSMatrixMode)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSRadioModeMatrix, 0)
         self.assertEqual(AppKit.NSHighlightModeMatrix, 1)
         self.assertEqual(AppKit.NSListModeMatrix, 2)

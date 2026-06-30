@@ -3,20 +3,8 @@ import Quartz
 
 
 class TestPDFAnnotationUtilities(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Quartz.PDFAnnotationHighlightingMode, str)
-        self.assertIsTypedEnum(Quartz.PDFAnnotationLineEndingStyle, str)
-        self.assertIsTypedEnum(Quartz.PDFAnnotationTextIconType, str)
-        self.assertIsTypedEnum(Quartz.PDFAnnotationWidgetSubtype, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFLineStyle)
-        self.assertIsEnumType(Quartz.PDFMarkupType)
-        self.assertIsEnumType(Quartz.PDFTextAnnotationIconType)
-        self.assertIsEnumType(Quartz.PDFWidgetCellState)
-        self.assertIsEnumType(Quartz.PDFWidgetControlType)
-
-    def test_constants(self):
         self.assertEqual(Quartz.kPDFLineStyleNone, 0)
         self.assertEqual(Quartz.kPDFLineStyleSquare, 1)
         self.assertEqual(Quartz.kPDFLineStyleCircle, 2)
@@ -24,6 +12,13 @@ class TestPDFAnnotationUtilities(TestCase):
         self.assertEqual(Quartz.kPDFLineStyleOpenArrow, 4)
         self.assertEqual(Quartz.kPDFLineStyleClosedArrow, 5)
 
+        self.assertIsEnumType(Quartz.PDFMarkupType)
+        self.assertEqual(Quartz.kPDFMarkupTypeHighlight, 0)
+        self.assertEqual(Quartz.kPDFMarkupTypeStrikeOut, 1)
+        self.assertEqual(Quartz.kPDFMarkupTypeUnderline, 2)
+        self.assertEqual(Quartz.kPDFMarkupTypeRedact, 3)
+
+        self.assertIsEnumType(Quartz.PDFTextAnnotationIconType)
         self.assertEqual(Quartz.kPDFTextAnnotationIconComment, 0)
         self.assertEqual(Quartz.kPDFTextAnnotationIconKey, 1)
         self.assertEqual(Quartz.kPDFTextAnnotationIconNote, 2)
@@ -32,19 +27,22 @@ class TestPDFAnnotationUtilities(TestCase):
         self.assertEqual(Quartz.kPDFTextAnnotationIconParagraph, 5)
         self.assertEqual(Quartz.kPDFTextAnnotationIconInsert, 6)
 
-        self.assertEqual(Quartz.kPDFMarkupTypeHighlight, 0)
-        self.assertEqual(Quartz.kPDFMarkupTypeStrikeOut, 1)
-        self.assertEqual(Quartz.kPDFMarkupTypeUnderline, 2)
-        self.assertEqual(Quartz.kPDFMarkupTypeRedact, 3)
+        self.assertIsEnumType(Quartz.PDFWidgetCellState)
+        self.assertEqual(Quartz.kPDFWidgetMixedState, -1)
+        self.assertEqual(Quartz.kPDFWidgetOffState, 0)
+        self.assertEqual(Quartz.kPDFWidgetOnState, 1)
 
+        self.assertIsEnumType(Quartz.PDFWidgetControlType)
         self.assertEqual(Quartz.kPDFWidgetUnknownControl, -1)
         self.assertEqual(Quartz.kPDFWidgetPushButtonControl, 0)
         self.assertEqual(Quartz.kPDFWidgetRadioButtonControl, 1)
         self.assertEqual(Quartz.kPDFWidgetCheckBoxControl, 2)
 
-        self.assertEqual(Quartz.kPDFWidgetMixedState, -1)
-        self.assertEqual(Quartz.kPDFWidgetOffState, 0)
-        self.assertEqual(Quartz.kPDFWidgetOnState, 1)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Quartz.PDFAnnotationHighlightingMode, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationLineEndingStyle, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationTextIconType, str)
+        self.assertIsTypedEnum(Quartz.PDFAnnotationWidgetSubtype, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

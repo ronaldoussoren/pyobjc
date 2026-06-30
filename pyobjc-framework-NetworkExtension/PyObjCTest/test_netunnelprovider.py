@@ -3,12 +3,8 @@ import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NETunnelProviderError)
-        self.assertIsEnumType(NetworkExtension.NETunnelProviderRoutingMethod)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(
             NetworkExtension.NETunnelProviderErrorNetworkSettingsInvalid, 1
         )
@@ -17,12 +13,15 @@ class TestNEAppProxyFlow(TestCase):
         )
         self.assertEqual(NetworkExtension.NETunnelProviderErrorNetworkSettingsFailed, 3)
 
+        self.assertIsEnumType(NetworkExtension.NETunnelProviderRoutingMethod)
         self.assertEqual(NetworkExtension.NETunnelProviderRoutingMethodDestinationIP, 1)
         self.assertEqual(
             NetworkExtension.NETunnelProviderRoutingMethodSourceApplication, 2
         )
         self.assertEqual(NetworkExtension.NETunnelProviderRoutingMethodNetworkRule, 3)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(NetworkExtension.NETunnelProviderErrorDomain, str)
 
     @min_os_level("10.11")

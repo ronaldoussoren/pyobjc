@@ -8,7 +8,8 @@ class TestABActionHelper(AddressBook.NSObject):
 
 
 class TestABActions(TestCase):
-    def test_methods(self):
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(
             TestABActionHelper.shouldEnableActionForPerson_identifier_
         )

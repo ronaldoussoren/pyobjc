@@ -3,12 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOrderedCollectionDifference(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(
             Foundation.NSOrderedCollectionDifferenceCalculationOptions
         )
-
-    def test_constants(self):
         self.assertEqual(
             Foundation.NSOrderedCollectionDifferenceCalculationOmitInsertedObjects,
             1 << 0,

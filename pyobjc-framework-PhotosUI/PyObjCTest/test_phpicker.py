@@ -3,7 +3,7 @@ import PhotosUI
 
 
 class TestPHPicker(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PhotosUI.PHPickerConfigurationAssetRepresentationMode)
         self.assertEqual(
             PhotosUI.PHPickerConfigurationAssetRepresentationModeAutomatic, 0

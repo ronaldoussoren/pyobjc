@@ -12,7 +12,7 @@ class TestMDLAssetResolver(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MDLAssetResolver", ModelIO)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             ModelIO.TestMDLAssetResolverHelper.canResolveAssetNamed_
         )

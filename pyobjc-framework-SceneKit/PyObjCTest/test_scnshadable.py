@@ -31,24 +31,35 @@ class TestSCNShadableHelper(SceneKit.NSObject):
 
 
 class TestSCNShadable(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(SceneKit.SCNShaderModifierEntryPoint, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNBufferFrequency)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNBufferFrequencyPerFrame, 0)
         self.assertEqual(SceneKit.SCNBufferFrequencyPerNode, 1)
         self.assertEqual(SceneKit.SCNBufferFrequencyPerShadable, 2)
 
         self.assertIsInstance(SceneKit.SCNProgramMappingChannelKey, str)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(SceneKit.SCNShaderModifierEntryPoint, str)
+
     def test_constants10_9(self):
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointGeometry, str)
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointSurface, str)
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointLightingModel, str)
         self.assertIsInstance(SceneKit.SCNShaderModifierEntryPointFragment, str)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(SceneKit.SCNProgram.isOpaque)
+        self.assertArgIsBOOL(SceneKit.SCNProgram.setOpaque_, 0)
+
+    @min_os_level("10.11")
+    def test_methods10_11(self):
+        self.assertArgIsBlock(
+            SceneKit.SCNProgram.handleBindingOfBufferNamed_frequency_usingBlock_,
+            2,
+            SCNBufferBindingBlock,
+        )
 
     def test_protocols(self):
         self.assertProtocolExists("SCNShadable", SceneKit)
@@ -61,7 +72,7 @@ class TestSCNShadable(TestCase):
     def test_protocols10_11(self):
         self.assertProtocolExists("SCNBufferStream", SceneKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(TestSCNShadableHelper.writeBytes_length_, 0, b"n^v")
         self.assertArgHasType(
             TestSCNShadableHelper.writeBytes_length_, 1, objc._C_NSUInteger
@@ -106,16 +117,3 @@ class TestSCNShadable(TestCase):
         )
 
         self.assertResultIsBOOL(TestSCNShadableHelper.programIsOpaque_)
-
-    @min_os_level("10.10")
-    def test_methods10_10(self):
-        self.assertResultIsBOOL(SceneKit.SCNProgram.isOpaque)
-        self.assertArgIsBOOL(SceneKit.SCNProgram.setOpaque_, 0)
-
-    @min_os_level("10.11")
-    def test_methods10_11(self):
-        self.assertArgIsBlock(
-            SceneKit.SCNProgram.handleBindingOfBufferNamed_frequency_usingBlock_,
-            2,
-            SCNBufferBindingBlock,
-        )

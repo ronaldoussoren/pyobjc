@@ -33,20 +33,8 @@ class TestMPSNeuralNetwork_MPSCNNConvolutionHelper(MetalPerformanceShaders.NSObj
 
 
 class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionGradientOption)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayout)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNWeightsQuantizationType)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayoutOHWI, 0)
-
-        self.assertEqual(MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeLinear, 1)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeLookupTable, 2
-        )
-
         self.assertEqual(
             MetalPerformanceShaders.MPSCNNConvolutionGradientOptionGradientWithData, 1
         )
@@ -59,13 +47,22 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
             MetalPerformanceShaders.MPSCNNConvolutionGradientOptionGradientWithData
             | MetalPerformanceShaders.MPSCNNConvolutionGradientOptionGradientWithWeightsAndBias,
         )
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayout)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNConvolutionWeightsLayoutOHWI, 0)
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSCNNWeightsQuantizationType)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeLinear, 1)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSCNNWeightsQuantizationTypeLookupTable, 2
+        )
 
     def test_protocols(self):
         self.assertProtocolExists(
             "MPSCNNConvolutionDataSource", MetalPerformanceShaders
         )
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.dataType, b"I"
         )

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
 
 
@@ -19,8 +19,11 @@ class TestINStartAudioCallIntentHelper(Intents.NSObject):
 
 
 class TestINStartAudioCallIntent(TestCase):
-    @min_os_level("10.12")
-    def test_methods(self):
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("INStartAudioCallIntentHandling", Intents)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINStartAudioCallIntentHelper.handleStartAudioCall_completion_, 1, b"v@"
         )
@@ -37,7 +40,3 @@ class TestINStartAudioCallIntent(TestCase):
             1,
             b"v@",
         )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("INStartAudioCallIntentHandling", Intents)

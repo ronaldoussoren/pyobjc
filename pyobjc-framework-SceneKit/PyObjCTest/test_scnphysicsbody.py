@@ -7,15 +7,13 @@ import SceneKit
 
 
 class TestSCNPhysicsBody(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNPhysicsBodyType)
-        self.assertIsEnumType(SceneKit.SCNPhysicsCollisionCategory)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNPhysicsBodyTypeStatic, 0)
         self.assertEqual(SceneKit.SCNPhysicsBodyTypeDynamic, 1)
         self.assertEqual(SceneKit.SCNPhysicsBodyTypeKinematic, 2)
 
+        self.assertIsEnumType(SceneKit.SCNPhysicsCollisionCategory)
         self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryDefault, 1 << 0)
         self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryStatic, 1 << 1)
         self.assertEqual(SceneKit.SCNPhysicsCollisionCategoryAll, (sys.maxsize * 2) + 1)

@@ -23,6 +23,7 @@ class TestNSStoryboardSegue(TestCase):
     def test_protocols10_10(self):
         self.assertProtocolExists("NSSeguePerforming", AppKit)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSStoryboardSegueHelper.shouldPerformSegueWithIdentifier_sender_
         )

@@ -12,18 +12,31 @@ class TestNSPasteboardHelper(AppKit.NSObject):
 
 
 class TestNSPasteboard(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSPasteboardContentsOptions)
+        self.assertEqual(AppKit.NSPasteboardContentsCurrentHostOnly, 1 << 0)
+
+        self.assertIsEnumType(AppKit.NSPasteboardReadingOptions)
+        self.assertEqual(AppKit.NSPasteboardReadingAsData, 0)
+        self.assertEqual(AppKit.NSPasteboardReadingAsString, 1 << 0)
+        self.assertEqual(AppKit.NSPasteboardReadingAsPropertyList, 1 << 1)
+        self.assertEqual(AppKit.NSPasteboardReadingAsKeyedArchive, 1 << 2)
+
+        self.assertIsEnumType(AppKit.NSPasteboardWritingOptions)
+        self.assertEqual(AppKit.NSPasteboardWritingPromised, 1 << 9)
+
+        self.assertIsEnumType(AppKit.NSPasteboardAccessBehavior)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAsk, 1)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysAllow, 2)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysDeny, 3)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPasteboardName, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardReadingOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardType, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardDetectionPattern, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardMetadataType, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSPasteboardContentsOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardReadingOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardWritingOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardAccessBehavior)
 
     def test_constants(self):
         self.assertIsInstance(AppKit.NSStringPboardType, str)
@@ -49,11 +62,6 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSRulerPboard, str)
         self.assertIsInstance(AppKit.NSFindPboard, str)
         self.assertIsInstance(AppKit.NSDragPboard, str)
-
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorDefault, 0)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAsk, 1)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysAllow, 2)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysDeny, 3)
 
         self.assertIsInstance(AppKit.NSMultipleTextSelectionPboardType, str)
 
@@ -95,17 +103,6 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(
             AppKit.NSPasteboardURLReadingContentsConformToTypesKey, str
         )
-
-        self.assertEqual(AppKit.NSPasteboardWritingPromised, 1 << 9)
-
-        self.assertEqual(AppKit.NSPasteboardReadingAsData, 0)
-        self.assertEqual(AppKit.NSPasteboardReadingAsString, 1 << 0)
-        self.assertEqual(AppKit.NSPasteboardReadingAsPropertyList, 1 << 1)
-        self.assertEqual(AppKit.NSPasteboardReadingAsKeyedArchive, 1 << 2)
-
-    @min_os_level("10.12")
-    def test_constants10_12(self):
-        self.assertEqual(AppKit.NSPasteboardContentsCurrentHostOnly, 1 << 0)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

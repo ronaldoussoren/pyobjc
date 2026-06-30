@@ -12,7 +12,7 @@ class TestFSResourceHelper(FSKit.NSObject):
 
 
 class TestFSResource(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSMatchResult)
         self.assertEqual(FSKit.FSMatchResultNotRecognized, 0)
         self.assertEqual(FSKit.FSMatchResultRecognized, 1)

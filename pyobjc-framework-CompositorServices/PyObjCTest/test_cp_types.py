@@ -4,7 +4,7 @@ import CompositorServices
 
 
 class TestCPTypes(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(CompositorServices.cp_axis_direction_convention)
         self.assertEqual(
             CompositorServices.cp_axis_direction_convention_right_up_back, 0

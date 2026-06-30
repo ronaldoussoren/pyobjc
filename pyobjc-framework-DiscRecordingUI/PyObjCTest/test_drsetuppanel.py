@@ -22,7 +22,7 @@ class TestDRSetupPanel(TestCase):
         )
         self.assertIsInstance(DiscRecordingUI.DRSetupPanelSelectedDeviceKey, str)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestDRSetupPanelHelper.setupPanel_deviceCouldBeTarget_)
         self.assertResultIsBOOL(
             TestDRSetupPanelHelper.setupPanelShouldHandleMediaReservations_

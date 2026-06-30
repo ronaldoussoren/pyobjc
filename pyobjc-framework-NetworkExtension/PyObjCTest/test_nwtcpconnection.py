@@ -20,11 +20,8 @@ class TestNWTCPConnectionHelper(NetworkExtension.NSObject):
 
 
 class TestNWTCPConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NWTCPConnectionState)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NWTCPConnectionStateInvalid, 0)
         self.assertEqual(NetworkExtension.NWTCPConnectionStateConnecting, 1)
         self.assertEqual(NetworkExtension.NWTCPConnectionStateWaiting, 2)
@@ -49,6 +46,13 @@ class TestNWTCPConnection(TestCase):
             NetworkExtension.NWTCPConnection.write_completionHandler_, 1, b"v@"
         )
 
+    @min_sdk_level("10.11")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "NWTCPConnectionAuthenticationDelegate", NetworkExtension
+        )
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNWTCPConnectionHelper.shouldProvideIdentityForConnection_
         )
@@ -64,10 +68,4 @@ class TestNWTCPConnection(TestCase):
             TestNWTCPConnectionHelper.evaluateTrustForConnection_peerCertificateChain_completionHandler_,
             2,
             b"v@",
-        )
-
-    @min_sdk_level("10.11")
-    def test_protocols(self):
-        self.assertProtocolExists(
-            "NWTCPConnectionAuthenticationDelegate", NetworkExtension
         )

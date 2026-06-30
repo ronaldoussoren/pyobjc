@@ -9,14 +9,8 @@ class TestSCStreamHelper(ScreenCaptureKit.NSObject):
 
 
 class TestSCStream(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCFrameStatus)
-        self.assertIsEnumType(ScreenCaptureKit.SCStreamOutputType)
-
-    def test_constants(self):
         self.assertEqual(ScreenCaptureKit.SCFrameStatusComplete, 0)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusIdle, 1)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusBlank, 2)
@@ -24,10 +18,15 @@ class TestSCStream(TestCase):
         self.assertEqual(ScreenCaptureKit.SCFrameStatusStarted, 4)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusStopped, 5)
 
+        self.assertIsEnumType(ScreenCaptureKit.SCStreamOutputType)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeScreen, 0)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeAudio, 1)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeMicrophone, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
+
+    def test_constants(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoStatus, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoDisplayTime, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoScaleFactor, str)

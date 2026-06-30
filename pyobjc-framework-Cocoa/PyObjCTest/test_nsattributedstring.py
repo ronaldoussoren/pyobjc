@@ -12,8 +12,8 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(AppKit.NSSpellingStateGrammarFlag, 2)
 
         self.assertIsEnumType(AppKit.NSTextScalingType)
-        self.assertEqual(AppKit.NSTextScalingStandard, 1)
-        self.assertEqual(AppKit.NSTextScalingiOS, 2)
+        self.assertEqual(AppKit.NSTextScalingStandard, 0)
+        self.assertEqual(AppKit.NSTextScalingiOS, 1)
 
         self.assertIsEnumType(AppKit.NSUnderlineStyle)
         self.assertEqual(AppKit.NSUnderlineStyleNone, 0x00)

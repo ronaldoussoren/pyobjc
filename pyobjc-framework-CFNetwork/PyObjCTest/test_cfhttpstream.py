@@ -61,7 +61,5 @@ class TestCFHTTPStream(TestCase):
                 )
                 CFNetwork.CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-            CFNetwork.CFHTTPReadStreamSetProxy(v, "localhost", 8080)
-
         finally:
             os.dup2(fd_2, 2)

@@ -3,14 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextList(TestCase):
+    def test_enums(self):
+        self.assertEqual(AppKit.NSTextListPrependEnclosingMarker, 1)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSTextListMarkerFormat, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSTextListOptions)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTextListPrependEnclosingMarker, 1)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

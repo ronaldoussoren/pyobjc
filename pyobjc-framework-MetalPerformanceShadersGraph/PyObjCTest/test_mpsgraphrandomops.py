@@ -4,13 +4,8 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphRandomOps(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphRandomDistribution)
-        self.assertIsEnumType(
-            MetalPerformanceShadersGraph.MPSGraphRandomNormalSamplingMethod
-        )
-
-    def test_constants(self):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphRandomDistributionUniform, 0
         )
@@ -21,6 +16,9 @@ class TestMPSGraphRandomOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraphRandomDistributionTruncatedNormal, 2
         )
 
+        self.assertIsEnumType(
+            MetalPerformanceShadersGraph.MPSGraphRandomNormalSamplingMethod
+        )
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphRandomNormalSamplingInvCDF, 0
         )

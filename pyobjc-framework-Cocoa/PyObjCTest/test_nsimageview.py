@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSImage(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSImageDynamicRange)
         self.assertEqual(AppKit.NSImageDynamicRangeUnspecified, -1)
         self.assertEqual(AppKit.NSImageDynamicRangeStandard, 0)

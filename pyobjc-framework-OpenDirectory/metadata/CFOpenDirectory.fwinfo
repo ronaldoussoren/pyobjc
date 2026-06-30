@@ -8,6 +8,10 @@
    "kODPolicyKeyPolicySatisfied": { "typestr": "@" },
    "kODAuthenticationTypeClearTextReadOnly": { "typestr": "@" }
   },
+  "typed_enum": {
+   "ODMatchType": { "type": "I" },
+   "ODNodeType": { "type": "I" }
+  },
   "classes": {},
   "formal_protocols": {},
   "cftypes": {

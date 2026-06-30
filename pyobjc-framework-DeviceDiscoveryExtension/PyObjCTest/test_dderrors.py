@@ -4,7 +4,7 @@ import DeviceDiscoveryExtension
 
 
 class TestDDErrors(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(DeviceDiscoveryExtension.DDErrorCode)
         self.assertEqual(DeviceDiscoveryExtension.DDErrorCodeSuccess, 0)
         self.assertEqual(DeviceDiscoveryExtension.DDErrorCodeUnknown, 350000)

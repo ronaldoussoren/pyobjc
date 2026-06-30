@@ -8,5 +8,5 @@ class TestWebPluginHelper(WebKit.NSObject):
 
 
 class TestWebPlugin(TestCase):
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(TestWebPluginHelper.webPlugInSetIsSelected_, 0)

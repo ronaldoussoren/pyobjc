@@ -4,7 +4,7 @@ import FSKit
 
 
 class TestFSItem(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSItemAttribute)
         self.assertEqual(FSKit.FSItemAttributeType, 1 << 0)
         self.assertEqual(FSKit.FSItemAttributeMode, 1 << 1)

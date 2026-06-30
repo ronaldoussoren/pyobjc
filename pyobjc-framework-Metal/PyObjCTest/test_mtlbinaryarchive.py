@@ -26,10 +26,8 @@ class TestMTLBinaryArchiveHelper(Metal.NSObject):
 
 
 class TestMTLBinaryArchive(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLBinaryArchiveError)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLBinaryArchiveErrorNone, 0)
         self.assertEqual(Metal.MTLBinaryArchiveErrorInvalidFile, 1)
         self.assertEqual(Metal.MTLBinaryArchiveErrorUnexpectedElement, 2)
@@ -40,7 +38,7 @@ class TestMTLBinaryArchive(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("MTLBinaryArchive", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestMTLBinaryArchiveHelper.addComputePipelineFunctionsWithDescriptor_error_
         )

@@ -5,9 +5,15 @@ from objc import simd
 
 
 class TestSCNMaterialProperty(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNMovabilityHint)
+        self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
+        self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
+
         self.assertIsEnumType(SceneKit.SCNNodeFocusBehavior)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorNone, 0)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorOccluding, 1)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorFocusable, 2)
 
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNModelTransform, str)
@@ -16,13 +22,6 @@ class TestSCNMaterialProperty(TestCase):
         self.assertIsInstance(SceneKit.SCNNormalTransform, str)
         self.assertIsInstance(SceneKit.SCNModelViewTransform, str)
         self.assertIsInstance(SceneKit.SCNModelViewProjectionTransform, str)
-
-        self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
-        self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
-
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorNone, 0)
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorOccluding, 1)
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorFocusable, 2)
 
     def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNNode.isHidden)

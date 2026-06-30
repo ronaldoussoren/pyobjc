@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBAdvertisementData(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreBluetooth.CBError)
         self.assertEqual(CoreBluetooth.CBErrorUnknown, 0)
         self.assertEqual(CoreBluetooth.CBErrorInvalidParameters, 1)

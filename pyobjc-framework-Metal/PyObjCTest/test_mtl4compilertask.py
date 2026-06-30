@@ -8,7 +8,7 @@ class TestlMTL4CompilerTaskHelper(Metal.NSObject):
 
 
 class TestlMTL4CompilerTask(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4CompilerTaskStatus)
         self.assertEqual(Metal.MTL4CompilerTaskStatusNone, 0)
         self.assertEqual(Metal.MTL4CompilerTaskStatusScheduled, 1)

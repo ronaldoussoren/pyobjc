@@ -4,9 +4,42 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPathUtilities(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSSearchPathDirectory)
+        self.assertEqual(Foundation.NSApplicationDirectory, 1)
+        self.assertEqual(Foundation.NSDemoApplicationDirectory, 2)
+        self.assertEqual(Foundation.NSDeveloperApplicationDirectory, 3)
+        self.assertEqual(Foundation.NSAdminApplicationDirectory, 4)
+        self.assertEqual(Foundation.NSLibraryDirectory, 5)
+        self.assertEqual(Foundation.NSDeveloperDirectory, 6)
+        self.assertEqual(Foundation.NSUserDirectory, 7)
+        self.assertEqual(Foundation.NSDocumentationDirectory, 8)
+        self.assertEqual(Foundation.NSDocumentDirectory, 9)
+        self.assertEqual(Foundation.NSCoreServiceDirectory, 10)
+        self.assertEqual(Foundation.NSAutosavedInformationDirectory, 11)
+        self.assertEqual(Foundation.NSDesktopDirectory, 12)
+        self.assertEqual(Foundation.NSCachesDirectory, 13)
+        self.assertEqual(Foundation.NSApplicationSupportDirectory, 14)
+        self.assertEqual(Foundation.NSDownloadsDirectory, 15)
+        self.assertEqual(Foundation.NSInputMethodsDirectory, 16)
+        self.assertEqual(Foundation.NSMoviesDirectory, 17)
+        self.assertEqual(Foundation.NSMusicDirectory, 18)
+        self.assertEqual(Foundation.NSPicturesDirectory, 19)
+        self.assertEqual(Foundation.NSPrinterDescriptionDirectory, 20)
+        self.assertEqual(Foundation.NSSharedPublicDirectory, 21)
+        self.assertEqual(Foundation.NSPreferencePanesDirectory, 22)
+        self.assertEqual(Foundation.NSApplicationScriptsDirectory, 23)
+        self.assertEqual(Foundation.NSItemReplacementDirectory, 99)
+        self.assertEqual(Foundation.NSAllApplicationsDirectory, 100)
+        self.assertEqual(Foundation.NSAllLibrariesDirectory, 101)
+        self.assertEqual(Foundation.NSTrashDirectory, 102)
+
         self.assertIsEnumType(Foundation.NSSearchPathDomainMask)
+        self.assertEqual(Foundation.NSUserDomainMask, 1)
+        self.assertEqual(Foundation.NSLocalDomainMask, 2)
+        self.assertEqual(Foundation.NSNetworkDomainMask, 4)
+        self.assertEqual(Foundation.NSSystemDomainMask, 8)
+        self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
 
     def test_search_paths(self):
         self.assertTrue(
@@ -51,44 +84,6 @@ class TestNSPathUtilities(TestCase):
         self.assertIsInstance(s, str)
         s = Foundation.NSOpenStepRootDirectory()
         self.assertIsInstance(s, str)
-
-    def test_constants(self):
-        self.assertEqual(Foundation.NSApplicationDirectory, 1)
-        self.assertEqual(Foundation.NSDemoApplicationDirectory, 2)
-        self.assertEqual(Foundation.NSDeveloperApplicationDirectory, 3)
-        self.assertEqual(Foundation.NSAdminApplicationDirectory, 4)
-        self.assertEqual(Foundation.NSLibraryDirectory, 5)
-        self.assertEqual(Foundation.NSDeveloperDirectory, 6)
-        self.assertEqual(Foundation.NSUserDirectory, 7)
-        self.assertEqual(Foundation.NSDocumentationDirectory, 8)
-        self.assertEqual(Foundation.NSDocumentDirectory, 9)
-        self.assertEqual(Foundation.NSCoreServiceDirectory, 10)
-        self.assertEqual(Foundation.NSDesktopDirectory, 12)
-        self.assertEqual(Foundation.NSCachesDirectory, 13)
-        self.assertEqual(Foundation.NSApplicationSupportDirectory, 14)
-        self.assertEqual(Foundation.NSDownloadsDirectory, 15)
-        self.assertEqual(Foundation.NSAllApplicationsDirectory, 100)
-        self.assertEqual(Foundation.NSAllLibrariesDirectory, 101)
-
-        self.assertEqual(Foundation.NSUserDomainMask, 1)
-        self.assertEqual(Foundation.NSLocalDomainMask, 2)
-        self.assertEqual(Foundation.NSNetworkDomainMask, 4)
-        self.assertEqual(Foundation.NSSystemDomainMask, 8)
-        self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
-
-        self.assertEqual(Foundation.NSAutosavedInformationDirectory, 11)
-
-        self.assertEqual(Foundation.NSInputMethodsDirectory, 16)
-        self.assertEqual(Foundation.NSMoviesDirectory, 17)
-        self.assertEqual(Foundation.NSMusicDirectory, 18)
-        self.assertEqual(Foundation.NSPicturesDirectory, 19)
-        self.assertEqual(Foundation.NSPrinterDescriptionDirectory, 20)
-        self.assertEqual(Foundation.NSSharedPublicDirectory, 21)
-        self.assertEqual(Foundation.NSPreferencePanesDirectory, 22)
-        self.assertEqual(Foundation.NSItemReplacementDirectory, 99)
-
-        self.assertEqual(Foundation.NSApplicationScriptsDirectory, 23)
-        self.assertEqual(Foundation.NSTrashDirectory, 102)
 
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSString.isAbsolutePath)

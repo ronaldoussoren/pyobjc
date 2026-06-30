@@ -17,7 +17,7 @@ class TestICDeviceBrowser(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("ICDeviceBrowserDelegate", ImageCaptureCore)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestICDeviceBrowserHelper.deviceBrowser_didAddDevice_moreComing_, 2
         )

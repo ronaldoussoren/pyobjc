@@ -3,10 +3,8 @@ import Intents
 
 
 class TestINAddMediaIntentResponse(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INAddMediaIntentResponseCode)
-
-    def test_constants(self):
         self.assertEqual(Intents.INAddMediaIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INAddMediaIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INAddMediaIntentResponseCodeInProgress, 2)

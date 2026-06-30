@@ -4,7 +4,7 @@ import IOBluetooth
 
 
 class TestIOBluetoothHandsFree(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(IOBluetooth.IOBluetoothHandsFreeDeviceFeatures)
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreeDeviceFeatureNone, 0)
         self.assertEqual(
@@ -84,23 +84,6 @@ class TestIOBluetoothHandsFree(TestCase):
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreeCodecIDmSBC, 0x02)
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreeCodecIDAACELD, 0x80)
 
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorService, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCall, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCallSetup, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCallHeld, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorSignal, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorRoam, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorBattChg, str)
-
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallIndex, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallDirection, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallStatus, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallMode, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallMultiparty, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallNumber, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallType, str)
-        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallName, str)
-
         self.assertIsEnumType(IOBluetooth.IOBluetoothSMSMode)
         self.assertEqual(IOBluetooth.IOBluetoothSMSModePDU, 0)
         self.assertEqual(IOBluetooth.IOBluetoothSMSModeText, 1)
@@ -118,6 +101,24 @@ class TestIOBluetoothHandsFree(TestCase):
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreePDUStatusStoUnsent, 2)
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreePDUStatusStoSent, 3)
         self.assertEqual(IOBluetooth.IOBluetoothHandsFreePDUStatusAll, 4)
+
+    def test_constants(self):
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorService, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCall, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCallSetup, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorCallHeld, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorSignal, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorRoam, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeIndicatorBattChg, str)
+
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallIndex, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallDirection, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallStatus, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallMode, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallMultiparty, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallNumber, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallType, str)
+        self.assertIsInstance(IOBluetooth.IOBluetoothHandsFreeCallName, str)
 
         self.assertIsInstance(IOBluetooth.IOBluetoothPDUServicCenterAddress, str)
         self.assertIsInstance(IOBluetooth.IOBluetoothPDUServiceCenterAddressType, str)

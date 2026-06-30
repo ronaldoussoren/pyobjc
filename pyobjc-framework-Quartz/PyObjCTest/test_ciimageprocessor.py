@@ -74,7 +74,11 @@ class TestCIImageProcessor(TestCase):
         self.assertProtocolExists(
             "CIImageProcessorInput", Quartz, "CIImageProcessorInputProtocol"
         )
+        self.assertProtocolExists(
+            "CIImageProcessorOutput", Quartz, "CIImageProcessorOutputProtocol"
+        )
 
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestCIImageProcessorHelper.region, Quartz.CGRect.__typestr__
         )
@@ -82,9 +86,6 @@ class TestCIImageProcessor(TestCase):
         self.assertResultHasType(TestCIImageProcessorHelper.format, objc._C_NSInteger)
         self.assertResultHasType(TestCIImageProcessorHelper.baseAddress, b"^v")
 
-        self.assertProtocolExists(
-            "CIImageProcessorOutput", Quartz, "CIImageProcessorOutputProtocol"
-        )
         self.assertArgHasType(
             TestCIImageProcessorHelper.temporarySurfaceWithIdentifier_format_width_height_,
             1,

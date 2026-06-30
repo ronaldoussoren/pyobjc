@@ -8,12 +8,25 @@ SCNSceneSourceStatusHandler = b"vf" + objc._C_NSInteger + b"@o^Z"
 
 
 class TestSCNSceneSource(TestCase):
+    def test_enums(self):
+        # Unnamed enum:
+        self.assertEqual(SceneKit.SCNConsistencyInvalidURIError, 1000)
+        self.assertEqual(SceneKit.SCNConsistencyInvalidCountError, 1001)
+        self.assertEqual(SceneKit.SCNConsistencyInvalidArgumentError, 1002)
+        self.assertEqual(SceneKit.SCNConsistencyMissingElementError, 1003)
+        self.assertEqual(SceneKit.SCNConsistencyMissingAttributeError, 1004)
+        self.assertEqual(SceneKit.SCNConsistencyXMLSchemaValidationError, 1005)
+
+        self.assertIsEnumType(SceneKit.SCNSceneSourceStatus)
+        self.assertEqual(SceneKit.SCNSceneSourceStatusError, -1)
+        self.assertEqual(SceneKit.SCNSceneSourceStatusParsing, 4)
+        self.assertEqual(SceneKit.SCNSceneSourceStatusValidating, 8)
+        self.assertEqual(SceneKit.SCNSceneSourceStatusProcessing, 12)
+        self.assertEqual(SceneKit.SCNSceneSourceStatusComplete, 16)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(SceneKit.SCNSceneSourceAnimationImportPolicy, str)
         self.assertIsTypedEnum(SceneKit.SCNSceneSourceLoadingOption, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(SceneKit.SCNSceneSourceStatus)
 
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNSceneSourceAssetContributorsKey, str)
@@ -36,19 +49,6 @@ class TestSCNSceneSource(TestCase):
         self.assertIsInstance(SceneKit.SCNConsistencyElementIDErrorKey, str)
         self.assertIsInstance(SceneKit.SCNConsistencyElementTypeErrorKey, str)
         self.assertIsInstance(SceneKit.SCNConsistencyLineNumberErrorKey, str)
-
-        self.assertEqual(SceneKit.SCNConsistencyInvalidURIError, 1000)
-        self.assertEqual(SceneKit.SCNConsistencyInvalidCountError, 1001)
-        self.assertEqual(SceneKit.SCNConsistencyInvalidArgumentError, 1002)
-        self.assertEqual(SceneKit.SCNConsistencyMissingElementError, 1003)
-        self.assertEqual(SceneKit.SCNConsistencyMissingAttributeError, 1004)
-        self.assertEqual(SceneKit.SCNConsistencyXMLSchemaValidationError, 1005)
-
-        self.assertEqual(SceneKit.SCNSceneSourceStatusError, -1)
-        self.assertEqual(SceneKit.SCNSceneSourceStatusParsing, 4)
-        self.assertEqual(SceneKit.SCNSceneSourceStatusValidating, 8)
-        self.assertEqual(SceneKit.SCNSceneSourceStatusProcessing, 12)
-        self.assertEqual(SceneKit.SCNSceneSourceStatusComplete, 16)
 
         self.assertIs(
             SceneKit.SCNSceneSourceLoadingOptionCreateNormalsIfAbsent,

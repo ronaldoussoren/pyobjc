@@ -4,7 +4,7 @@ import Virtualization
 
 
 class TestVZLinuxRosettaDirectoryShare(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Virtualization.VZLinuxRosettaAvailability)
         self.assertEqual(Virtualization.VZLinuxRosettaAvailabilityNotSupported, 0)
         self.assertEqual(Virtualization.VZLinuxRosettaAvailabilityNotInstalled, 1)

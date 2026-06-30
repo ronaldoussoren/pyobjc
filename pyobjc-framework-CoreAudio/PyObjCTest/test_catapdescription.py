@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCATapDescription(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreAudio.CATapMuteBehavior)
         self.assertEqual(CoreAudio.CATapUnmuted, 0)
         self.assertEqual(CoreAudio.CATapMuted, 1)

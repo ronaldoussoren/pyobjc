@@ -4,23 +4,26 @@ import objc
 
 
 class TestNSStackView(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSStackViewVisibilityPriority, float)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSStackViewDistribution)
+        self.assertEqual(AppKit.NSStackViewDistributionGravityAreas, -1)
+        self.assertEqual(AppKit.NSStackViewDistributionFill, 0)
+        self.assertEqual(AppKit.NSStackViewDistributionFillEqually, 1)
+        self.assertEqual(AppKit.NSStackViewDistributionFillProportionally, 2)
+        self.assertEqual(AppKit.NSStackViewDistributionEqualSpacing, 3)
+        self.assertEqual(AppKit.NSStackViewDistributionEqualCentering, 4)
+
         self.assertIsEnumType(AppKit.NSStackViewGravity)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationHorizontal, 0)
-        self.assertEqual(AppKit.NSUserInterfaceLayoutOrientationVertical, 1)
-
         self.assertEqual(AppKit.NSStackViewGravityTop, 1)
         self.assertEqual(AppKit.NSStackViewGravityLeading, 1)
         self.assertEqual(AppKit.NSStackViewGravityCenter, 2)
         self.assertEqual(AppKit.NSStackViewGravityBottom, 3)
         self.assertEqual(AppKit.NSStackViewGravityTrailing, 3)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSStackViewVisibilityPriority, float)
+
+    def test_constants(self):
         self.assertEqual(AppKit.NSStackViewVisibilityPriorityMustHold, 1000.0)
         self.assertEqual(
             AppKit.NSStackViewVisibilityPriorityDetachOnlyIfNecessary, 900.0
@@ -29,13 +32,6 @@ class TestNSStackView(TestCase):
 
         self.assertIsInstance(AppKit.NSStackViewSpacingUseDefault, float)
         self.assertEqual(AppKit.NSStackViewSpacingUseDefault, objc._FLT_MAX)
-
-        self.assertEqual(AppKit.NSStackViewDistributionGravityAreas, -1)
-        self.assertEqual(AppKit.NSStackViewDistributionFill, 0)
-        self.assertEqual(AppKit.NSStackViewDistributionFillEqually, 1)
-        self.assertEqual(AppKit.NSStackViewDistributionFillProportionally, 2)
-        self.assertEqual(AppKit.NSStackViewDistributionEqualSpacing, 3)
-        self.assertEqual(AppKit.NSStackViewDistributionEqualCentering, 4)
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSStackView.hasEqualSpacing)

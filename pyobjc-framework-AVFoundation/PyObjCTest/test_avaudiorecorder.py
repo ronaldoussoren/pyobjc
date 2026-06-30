@@ -19,10 +19,6 @@ class TestAVAudioRecorder(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.isMeteringEnabled)
         self.assertArgIsBOOL(AVFoundation.AVAudioRecorder.setMeteringEnabled_, 0)
 
-        self.assertArgIsBOOL(
-            TestAVAudioRecorderHelper.audioRecorderDidFinishRecording_successfully_, 1
-        )
-
         self.assertResultIsBOOL(AVFoundation.AVAudioRecorder.recordAtTime_)
 
     @min_os_level("10.12")
@@ -49,3 +45,8 @@ class TestAVAudioRecorder(TestCase):
 
     def test_protocols(self):
         self.assertProtocolExists("AVAudioRecorderDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestAVAudioRecorderHelper.audioRecorderDidFinishRecording_successfully_, 1
+        )

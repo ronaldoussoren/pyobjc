@@ -62,7 +62,7 @@ class TestISyncSessionDriverHelper(SyncServices.NSObject):
 
 
 class TestISyncSessionDriver(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SyncServices.ISyncSessionDriverMode)
         self.assertEqual(SyncServices.ISyncSessionDriverModeFast, 1)
         self.assertEqual(SyncServices.ISyncSessionDriverModeSlow, 2)

@@ -17,7 +17,7 @@ class TestCIImageProvider(TestCase):
         self.assertIsInstance(Quartz.kCIImageProviderUserInfo, str)
         self.assertIsInstance(Quartz.kCIOutputNativeSizeKey, str)
 
-    def test_protoocol_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCIImageProviderHelper.provideImageData_bytesPerRow_origin__size__userInfo_,
             0,

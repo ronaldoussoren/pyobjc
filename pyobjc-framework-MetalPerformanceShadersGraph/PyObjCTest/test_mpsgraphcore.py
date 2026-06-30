@@ -4,20 +4,43 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphCore(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphPaddingMode)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeConstant, 0)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeReflect, 1)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeSymmetric, 2)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeClampToEdge, 3)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeZero, 4)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModePeriodic, 5)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingModeAntiPeriodic, 6
+        )
+
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphPaddingStyle)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicit, 0)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_VALID, 1)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_SAME, 2)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicitOffset, 3
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingStyleONNX_SAME_LOWER, 4
+        )
+
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphReductionMode)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMin, 0)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMax, 1)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeSum, 2)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeProduct, 3)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMin, 4
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMax, 5
+        )
         self.assertIsEnumType(
             MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayout
         )
-
-    def test_methods(self):
-        self.assertResultIsBOOL(
-            MetalPerformanceShadersGraph.MPSGraphShapedType.isEqualTo_
-        )
-
-    def test_constants(self):
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutNCHW, 0
         )
@@ -52,33 +75,7 @@ class TestMPSGraphCore(TestCase):
             MetalPerformanceShadersGraph.MPSGraphTensorNamedDataLayoutDHWIO, 10
         )
 
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicit, 0)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_VALID, 1)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_SAME, 2)
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicitOffset, 3
-        )
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphPaddingStyleONNX_SAME_LOWER, 4
-        )
-
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeConstant, 0)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeReflect, 1)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeSymmetric, 2)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeClampToEdge, 3)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeZero, 4)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModePeriodic, 5)
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphPaddingModeAntiPeriodic, 6
-        )
-
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMin, 0)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMax, 1)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeSum, 2)
-        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeProduct, 3)
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMin, 4
-        )
-        self.assertEqual(
-            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMax, 5
+    def test_methods(self):
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphShapedType.isEqualTo_
         )

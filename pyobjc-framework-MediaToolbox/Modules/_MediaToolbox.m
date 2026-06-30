@@ -363,6 +363,9 @@ m_MTAudioProcessingTapCreate(PyObject* self __attribute__((__unused__)), PyObjec
 }
 
 #if PyObjC_BUILD_RELEASE >= 2700
+#pragma clang diagnostic ignored "-Wunknown-pragmas"
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
 static PyObject*
 m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* self
                                                 __attribute__((__unused__)),
@@ -479,6 +482,8 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* self
 
     return Py_BuildValue("iN", rv, py_tapOut);
 }
+
+#pragma clang diagnostic pop
 #endif
 
 static PyObject*

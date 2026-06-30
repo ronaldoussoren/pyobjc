@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSGlyphInfo(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSCharacterCollection)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSIdentityMappingCharacterCollection, 0)
         self.assertEqual(AppKit.NSAdobeCNS1CharacterCollection, 1)
         self.assertEqual(AppKit.NSAdobeGB1CharacterCollection, 2)

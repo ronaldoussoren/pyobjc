@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
 
 
 class TestCMTag(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMedia.CMTagError)
         self.assertEqual(CoreMedia.kCMTagError_ParamErr, -15730)
         self.assertEqual(CoreMedia.kCMTagError_AllocationFailed, -15731)

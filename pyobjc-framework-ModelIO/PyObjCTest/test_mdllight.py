@@ -4,10 +4,8 @@ from objc import simd
 
 
 class TestMDLCamera(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLLightType)
-
-    def test_constants(self):
         self.assertEqual(ModelIO.MDLLightTypeUnknown, 0)
         self.assertEqual(ModelIO.MDLLightTypeAmbient, 1)
         self.assertEqual(ModelIO.MDLLightTypeDirectional, 2)

@@ -4,7 +4,7 @@ import CoreSpotlight
 
 
 class TestCSUserQuery(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreSpotlight.CSUserInteraction)
         self.assertEqual(CoreSpotlight.CSUserInteractionSelect, 0)
         self.assertEqual(

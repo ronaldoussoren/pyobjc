@@ -12,31 +12,8 @@ class TestNSExceptionHandlerHelper(ExceptionHandling.NSObject):
 
 
 class TestNSExceptionHandler(TestCase):
-    def test_protocols(self):
-        # self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
-
-        self.assertResultIsBOOL(
-            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_
-        )
-        self.assertArgHasType(
-            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_,
-            2,
-            objc._C_NSUInteger,
-        )
-        self.assertResultIsBOOL(
-            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_
-        )
-        self.assertArgHasType(
-            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_,
-            2,
-            objc._C_NSUInteger,
-        )
-
-    def test_constants(self):
-        self.assertIsInstance(ExceptionHandling.NSUncaughtSystemExceptionException, str)
-        self.assertIsInstance(ExceptionHandling.NSUncaughtRuntimeErrorException, str)
-        self.assertIsInstance(ExceptionHandling.NSStackTraceKey, str)
-
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(ExceptionHandling.NSLogUncaughtExceptionMask, 1 << 0)
         self.assertEqual(ExceptionHandling.NSHandleUncaughtExceptionMask, 1 << 1)
         self.assertEqual(ExceptionHandling.NSLogUncaughtSystemExceptionMask, 1 << 2)
@@ -64,6 +41,7 @@ class TestNSExceptionHandler(TestCase):
             ),
         )
 
+        # Unnamed enum:
         self.assertEqual(ExceptionHandling.NSHangOnUncaughtExceptionMask, 1 << 0)
         self.assertEqual(ExceptionHandling.NSHangOnUncaughtSystemExceptionMask, 1 << 1)
         self.assertEqual(ExceptionHandling.NSHangOnUncaughtRuntimeErrorMask, 1 << 2)
@@ -81,5 +59,30 @@ class TestNSExceptionHandler(TestCase):
             ),
         )
 
+    def test_constants(self):
+        self.assertIsInstance(ExceptionHandling.NSUncaughtSystemExceptionException, str)
+        self.assertIsInstance(ExceptionHandling.NSUncaughtRuntimeErrorException, str)
+        self.assertIsInstance(ExceptionHandling.NSStackTraceKey, str)
+
     def test_functions(self):
         ExceptionHandling.NSExceptionHandlerResume
+
+    def test_protocol_methods(self):
+        # self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
+
+        self.assertResultIsBOOL(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_
+        )
+        self.assertArgHasType(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_
+        )
+        self.assertArgHasType(
+            TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_,
+            2,
+            objc._C_NSUInteger,
+        )

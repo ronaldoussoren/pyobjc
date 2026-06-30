@@ -673,44 +673,6 @@ class TestNSAccessibility(TestCase):
         AppKit.NSAccessibilityFrameInView  # Existence
         AppKit.NSAccessibilityPointInView  # Existence
 
-    def test_informal_protocols(self):
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilityIsAttributeSettable_
-        )
-        self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityHitTest_,
-            0,
-            AppKit.NSPoint.__typestr__,
-        )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_
-        )
-        self.assertResultIsBOOL(
-            TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
-            objc._C_NSUInteger,
-        )
-        self.assertResultHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
-            1,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
-            2,
-            objc._C_NSUInteger,
-        )
-
     @skipUnless(
         not (
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
@@ -764,3 +726,41 @@ class TestNSAccessibility(TestCase):
 
         self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
         self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilityIsAttributeSettable_
+        )
+        self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityHitTest_,
+            0,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_
+        )
+        self.assertResultIsBOOL(
+            TestNSAccessibilityHelper.accessibilityNotifiesWhenDestroyed
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityIndexOfChild_, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeCount_,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSAccessibilityHelper.accessibilityArrayAttributeValues_index_maxCount_,
+            2,
+            objc._C_NSUInteger,
+        )

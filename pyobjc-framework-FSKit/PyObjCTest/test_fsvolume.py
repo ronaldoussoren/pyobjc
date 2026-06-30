@@ -295,7 +295,7 @@ class TestFSVolumeHelper(FSKit.NSObject):
 
 
 class TestFSVolume(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsInstance(FSKit.FSDirectoryCookieInitial, int)
         self.assertIsInstance(FSKit.FSDirectoryVerifierInitial, int)
 

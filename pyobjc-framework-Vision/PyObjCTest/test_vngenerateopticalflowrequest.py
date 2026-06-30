@@ -3,10 +3,8 @@ import Vision
 
 
 class TestVNGenerateOpticalFlowRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNGenerateOpticalFlowRequestComputationAccuracy)
-
-    def test_constants(self):
         self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyLow, 0)
         self.assertEqual(
             Vision.VNGenerateOpticalFlowRequestComputationAccuracyMedium, 1

@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEAppProxyFlowError)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorNotConnected, 1)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorPeerReset, 2)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorHostUnreachable, 3)
@@ -19,6 +16,8 @@ class TestNEAppProxyFlow(TestCase):
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorDatagramTooLarge, 9)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorReadAlreadyPending, 10)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(NetworkExtension.NEAppProxyErrorDomain, str)
 
     @min_os_level("10.11")

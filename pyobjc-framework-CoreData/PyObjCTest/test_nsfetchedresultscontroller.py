@@ -14,8 +14,12 @@ class TestNSFetchedResultsControllerHelper(CoreData.NSObject):
 
 
 class TestNSFetchedResultsController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSFetchedResultsChangeType)
+        self.assertEqual(CoreData.NSFetchedResultsChangeInsert, 1)
+        self.assertEqual(CoreData.NSFetchedResultsChangeDelete, 2)
+        self.assertEqual(CoreData.NSFetchedResultsChangeMove, 3)
+        self.assertEqual(CoreData.NSFetchedResultsChangeUpdate, 4)
 
     @min_os_level("10.12")
     def test_methods(self):
@@ -42,10 +46,3 @@ class TestNSFetchedResultsController(TestCase):
             3,
             objc._C_NSUInteger,
         )
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertEqual(CoreData.NSFetchedResultsChangeInsert, 1)
-        self.assertEqual(CoreData.NSFetchedResultsChangeDelete, 2)
-        self.assertEqual(CoreData.NSFetchedResultsChangeMove, 3)
-        self.assertEqual(CoreData.NSFetchedResultsChangeUpdate, 4)

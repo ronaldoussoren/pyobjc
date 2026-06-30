@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributeDescription(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSAttributeType)
-
-    def test_constants(self):
         self.assertEqual(CoreData.NSUndefinedAttributeType, 0)
         self.assertEqual(CoreData.NSInteger16AttributeType, 100)
         self.assertEqual(CoreData.NSInteger32AttributeType, 200)

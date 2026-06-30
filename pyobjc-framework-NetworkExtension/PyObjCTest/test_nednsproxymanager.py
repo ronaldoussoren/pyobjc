@@ -3,8 +3,16 @@ import NetworkExtension
 
 
 class TestNEDNSProxyManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEDNSProxyManagerError)
+        self.assertEqual(NetworkExtension.NEDNSProxyManagerErrorConfigurationInvalid, 1)
+        self.assertEqual(
+            NetworkExtension.NEDNSProxyManagerErrorConfigurationDisabled, 2
+        )
+        self.assertEqual(NetworkExtension.NEDNSProxyManagerErrorConfigurationStale, 3)
+        self.assertEqual(
+            NetworkExtension.NEDNSProxyManagerErrorConfigurationCannotBeRemoved, 4
+        )
 
     @min_os_level("10.15")
     def test_constants10_15(self):

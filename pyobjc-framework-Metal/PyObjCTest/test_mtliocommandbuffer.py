@@ -34,7 +34,7 @@ class TestMTLIOCommandBufferHelper(Metal.NSObject):
 
 
 class TestMTLIOCommandBuffer(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIOStatus)
         self.assertEqual(Metal.MTLIOStatusPending, 0)
         self.assertEqual(Metal.MTLIOStatusCancelled, 1)

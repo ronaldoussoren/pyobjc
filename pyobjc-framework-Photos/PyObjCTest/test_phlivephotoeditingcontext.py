@@ -15,12 +15,22 @@ class TestPHLivePhotoEditingContextHelper(Photos.NSObject):
 
 
 class TestPHLivePhotoEditingContext(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(Photos.PHLivePhotoEditingErrorCode)
+        self.assertEqual(Photos.PHLivePhotoEditingErrorCodeUnknown, 0)
+        self.assertEqual(Photos.PHLivePhotoEditingErrorCodeAborted, 1)
+
+        self.assertIsEnumType(Photos.PHLivePhotoFrameType)
+        self.assertEqual(Photos.PHLivePhotoFrameTypePhoto, 0)
+        self.assertEqual(Photos.PHLivePhotoFrameTypeVideo, 1)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(Photos.PHLivePhotoEditingOption, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(Photos.PHLivePhotoEditingErrorCode)
-        self.assertIsEnumType(Photos.PHLivePhotoFrameType)
+    @min_os_level("10.12")
+    def test_constants(self):
+        self.assertIsInstance(Photos.PHLivePhotoEditingErrorDomain, str)
+        self.assertIsInstance(Photos.PHLivePhotoShouldRenderAtPlaybackTime, str)
 
     @min_os_level("10.12")
     def test_methods(self):
@@ -54,27 +64,17 @@ class TestPHLivePhotoEditingContext(TestCase):
             Photos.PHLivePhotoEditingContext.photoTime, b"{CMTime=qiIq}"
         )
 
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("PHLivePhotoFrame", Photos)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestPHLivePhotoEditingContextHelper.time, b"{CMTime=qiIq}"
-        )  # Photos.CMTime.__typestr__
+        )
         self.assertResultHasType(
             TestPHLivePhotoEditingContextHelper.type, objc._C_NSInteger
         )
         self.assertResultHasType(
             TestPHLivePhotoEditingContextHelper.renderScale, objc._C_CGFloat
         )
-
-    @min_os_level("10.12")
-    def test_constants(self):
-        self.assertEqual(Photos.PHLivePhotoFrameTypePhoto, 0)
-        self.assertEqual(Photos.PHLivePhotoFrameTypeVideo, 1)
-
-        self.assertIsInstance(Photos.PHLivePhotoEditingErrorDomain, str)
-        self.assertIsInstance(Photos.PHLivePhotoShouldRenderAtPlaybackTime, str)
-
-        self.assertEqual(Photos.PHLivePhotoEditingErrorCodeUnknown, 0)
-        self.assertEqual(Photos.PHLivePhotoEditingErrorCodeAborted, 1)
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("PHLivePhotoFrame", Photos)

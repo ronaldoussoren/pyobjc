@@ -4,16 +4,14 @@ import Photos
 
 
 class TestPHPhotoLibrary(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Photos.PHAccessLevel)
+    def test_enums(self):
         self.assertIsEnumType(Photos.PHAuthorizationStatus)
-
-    def test_constants(self):
         self.assertEqual(Photos.PHAuthorizationStatusNotDetermined, 0)
         self.assertEqual(Photos.PHAuthorizationStatusRestricted, 1)
         self.assertEqual(Photos.PHAuthorizationStatusDenied, 2)
         self.assertEqual(Photos.PHAuthorizationStatusAuthorized, 3)
 
+        self.assertIsEnumType(Photos.PHAccessLevel)
         self.assertEqual(Photos.PHAccessLevelAddOnly, 1)
         self.assertEqual(Photos.PHAccessLevelReadWrite, 2)
 

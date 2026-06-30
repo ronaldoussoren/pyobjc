@@ -1,5 +1,5 @@
 import FileProvider
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSFileProviderServiceHelper(FileProvider.NSObject):
@@ -11,14 +11,6 @@ class TestNSFileProviderServiceHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderService(TestCase):
-    def test_methods(self):
-        self.assertArgHasType(
-            TestNSFileProviderServiceHelper.makeListenerEndpointAndReturnError_,
-            0,
-            b"o^@",
-        )
-        self.assertResultIsBOOL(TestNSFileProviderServiceHelper.isRestricted)
-
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertArgIsOut(
@@ -33,3 +25,15 @@ class TestNSFileProviderService(TestCase):
             2,
             b"v@@",
         )
+
+    @min_sdk_level("11.0")
+    def test_protocols(self):
+        self.assertProtocolExists("NSFileProviderServiceSource", FileProvider)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestNSFileProviderServiceHelper.makeListenerEndpointAndReturnError_,
+            0,
+            b"o^@",
+        )
+        self.assertResultIsBOOL(TestNSFileProviderServiceHelper.isRestricted)

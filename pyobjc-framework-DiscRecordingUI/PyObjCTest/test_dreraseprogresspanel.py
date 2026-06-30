@@ -16,7 +16,7 @@ class TestDREraseProgressPanel(TestCase):
             DiscRecordingUI.DREraseProgressPanelDidFinishNotification, str
         )
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestDREraseProgressPanelHelper.eraseProgressPanel_eraseDidFinish_
         )

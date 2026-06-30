@@ -41,14 +41,15 @@ class TestMEVideoDecoderHelper(MediaExtension.NSObject):
 
 
 class TestMEVideoDecoder(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(MediaExtension.MEDecodeFrameStatus)
+        self.assertEqual(MediaExtension.MEDecodeFrameNoStatus, 0)
+        self.assertEqual(MediaExtension.MEDecodeFrameFrameDropped, 1 << 0)
+
     def test_constants(self):
         self.assertIsInstance(
             MediaExtension.MEVideoDecoderReadyForMoreMediaDataDidChangeNotification, str
         )
-
-        self.assertIsEnumType(MediaExtension.MEDecodeFrameStatus)
-        self.assertEqual(MediaExtension.MEDecodeFrameNoStatus, 0)
-        self.assertEqual(MediaExtension.MEDecodeFrameFrameDropped, 1 << 0)
 
     def test_protocols(self):
         self.assertProtocolExists("MEVideoDecoderExtension", MediaExtension)

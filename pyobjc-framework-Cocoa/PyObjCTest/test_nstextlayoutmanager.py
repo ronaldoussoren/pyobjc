@@ -8,15 +8,8 @@ class TestNSTextLayoutManagerHelper(AppKit.NSObject):
 
 
 class TestNSTextLayoutManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextLayoutManagerSegmentOptions)
-        self.assertIsEnumType(AppKit.NSTextLayoutManagerSegmentType)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeStandard, 0)
-        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeSelection, 1)
-        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeHighlight, 2)
-
         self.assertEqual(AppKit.NSTextLayoutManagerSegmentOptionsNone, 0)
         self.assertEqual(
             AppKit.NSTextLayoutManagerSegmentOptionsRangeNotRequired, 1 << 0
@@ -34,18 +27,10 @@ class TestNSTextLayoutManager(TestCase):
             AppKit.NSTextLayoutManagerSegmentOptionsUpstreamAffinity, 1 << 4
         )
 
-    @min_sdk_level("12.0")
-    def test_protocols(self):
-        self.assertProtocolExists("NSTextLayoutManagerDelegate", AppKit)
-
-    def test_methods(self):
-        self.assertResultIsBOOL(
-            TestNSTextLayoutManagerHelper.textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_
-        )
-        self.assertArgIsBOOL(
-            TestNSTextLayoutManagerHelper.textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_,
-            2,
-        )
+        self.assertIsEnumType(AppKit.NSTextLayoutManagerSegmentType)
+        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeStandard, 0)
+        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeSelection, 1)
+        self.assertEqual(AppKit.NSTextLayoutManagerSegmentTypeHighlight, 2)
 
     @min_os_level("12.0")
     def test_methods12_0(self):
@@ -92,4 +77,17 @@ class TestNSTextLayoutManager(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSTextLayoutManager.setResolvesNaturalAlignmentWithBaseWritingDirection_,
             0,
+        )
+
+    @min_sdk_level("12.0")
+    def test_protocols(self):
+        self.assertProtocolExists("NSTextLayoutManagerDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestNSTextLayoutManagerHelper.textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_
+        )
+        self.assertArgIsBOOL(
+            TestNSTextLayoutManagerHelper.textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_,
+            2,
         )

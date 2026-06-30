@@ -6,24 +6,36 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestNSString(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSStringCompareOptions)
-        self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
-        self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
-
-    def test_constants(self):
-        self.assertIsInstance(Foundation.NSParseErrorException, str)
-        self.assertIsInstance(Foundation.NSCharacterConversionException, str)
-
         self.assertEqual(Foundation.NSCaseInsensitiveSearch, 1)
         self.assertEqual(Foundation.NSLiteralSearch, 2)
         self.assertEqual(Foundation.NSBackwardsSearch, 4)
         self.assertEqual(Foundation.NSAnchoredSearch, 8)
         self.assertEqual(Foundation.NSNumericSearch, 64)
+        self.assertEqual(Foundation.NSDiacriticInsensitiveSearch, 128)
+        self.assertEqual(Foundation.NSWidthInsensitiveSearch, 256)
+        self.assertEqual(Foundation.NSForcedOrderingSearch, 512)
 
+        self.assertEqual(Foundation.NSRegularExpressionSearch, 1024)
+
+        self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
+        self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)
+        self.assertEqual(Foundation.NSStringEncodingConversionExternalRepresentation, 2)
+
+        self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
+        self.assertEqual(Foundation.NSStringEnumerationByLines, 0)
+        self.assertEqual(Foundation.NSStringEnumerationByParagraphs, 1)
+        self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
+        self.assertEqual(Foundation.NSStringEnumerationByWords, 3)
+        self.assertEqual(Foundation.NSStringEnumerationBySentences, 4)
+        self.assertEqual(Foundation.NSStringEnumerationByCaretPositions, 5)
+        self.assertEqual(Foundation.NSStringEnumerationByDeletionClusters, 6)
+        self.assertEqual(Foundation.NSStringEnumerationReverse, 1 << 8)
+        self.assertEqual(Foundation.NSStringEnumerationSubstringNotRequired, 1 << 9)
+        self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
+
+        self.assertIsEnumType(Foundation.NSStringEncoding)
         self.assertEqual(Foundation.NSASCIIStringEncoding, 1)
         self.assertEqual(Foundation.NSNEXTSTEPStringEncoding, 2)
         self.assertEqual(Foundation.NSJapaneseEUCStringEncoding, 3)
@@ -57,29 +69,16 @@ class TestNSString(TestCase):
         self.assertEqual(
             Foundation.NSUTF32LittleEndianStringEncoding, cast_uint(0x9C000100)
         )
-
-        self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)
-        self.assertEqual(Foundation.NSStringEncodingConversionExternalRepresentation, 2)
-
-        self.assertEqual(Foundation.NSMaximumStringLength, sys.maxsize)
-        self.assertEqual(Foundation.NSDiacriticInsensitiveSearch, 128)
-        self.assertEqual(Foundation.NSWidthInsensitiveSearch, 256)
-        self.assertEqual(Foundation.NSForcedOrderingSearch, 512)
-
         self.assertEqual(Foundation.NSProprietaryStringEncoding, 65536)
 
-        self.assertEqual(Foundation.NSRegularExpressionSearch, 1024)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
 
-        self.assertEqual(Foundation.NSStringEnumerationByLines, 0)
-        self.assertEqual(Foundation.NSStringEnumerationByParagraphs, 1)
-        self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
-        self.assertEqual(Foundation.NSStringEnumerationByWords, 3)
-        self.assertEqual(Foundation.NSStringEnumerationBySentences, 4)
-        self.assertEqual(Foundation.NSStringEnumerationByCaretPositions, 5)
-        self.assertEqual(Foundation.NSStringEnumerationByDeletionClusters, 6)
-        self.assertEqual(Foundation.NSStringEnumerationReverse, 1 << 8)
-        self.assertEqual(Foundation.NSStringEnumerationSubstringNotRequired, 1 << 9)
-        self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSParseErrorException, str)
+        self.assertIsInstance(Foundation.NSCharacterConversionException, str)
+
+        self.assertEqual(Foundation.NSMaximumStringLength, sys.maxsize)
 
     @min_os_level("10.11")
     def test_constants10_11(self):

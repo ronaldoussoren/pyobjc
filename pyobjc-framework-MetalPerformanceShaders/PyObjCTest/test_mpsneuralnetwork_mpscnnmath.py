@@ -4,10 +4,8 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCNNMath(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSNNComparisonType)
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSNNComparisonTypeEqual, 0)
         self.assertEqual(MetalPerformanceShaders.MPSNNComparisonTypeNotEqual, 1)
         self.assertEqual(MetalPerformanceShaders.MPSNNComparisonTypeLess, 2)

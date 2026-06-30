@@ -3,18 +3,16 @@ import Quartz
 
 
 class TestPDFBorder(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(Quartz.PDFBorderKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.PDFBorderStyle)
-
-    def test_constants(self):
         self.assertEqual(Quartz.kPDFBorderStyleSolid, 0)
         self.assertEqual(Quartz.kPDFBorderStyleDashed, 1)
         self.assertEqual(Quartz.kPDFBorderStyleBeveled, 2)
         self.assertEqual(Quartz.kPDFBorderStyleInset, 3)
         self.assertEqual(Quartz.kPDFBorderStyleUnderline, 4)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Quartz.PDFBorderKey, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

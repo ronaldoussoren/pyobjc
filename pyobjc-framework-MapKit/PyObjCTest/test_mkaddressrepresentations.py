@@ -4,7 +4,7 @@ import MapKit
 
 
 class TestMKAddressRepresentations(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKAddressRepresentationsContextStyle)
         self.assertEqual(MapKit.MKAddressRepresentationsContextStyleAutomatic, 0)
         self.assertEqual(MapKit.MKAddressRepresentationsContextStyleShort, 1)

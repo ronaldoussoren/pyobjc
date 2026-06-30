@@ -3,13 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKGameCenterViewController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKGameCenterViewControllerState)
-
-    def test_protocols(self):
-        self.assertProtocolExists("GKGameCenterControllerDelegate", GameKit)
-
-    def test_constants(self):
         self.assertEqual(GameKit.GKGameCenterViewControllerStateDefault, -1)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateLeaderboards, 0)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateAchievements, 1)
@@ -19,3 +14,6 @@ class TestGKGameCenterViewController(TestCase):
         self.assertEqual(
             GameKit.GKGameCenterViewControllerStateLocalPlayerFriendsList, 5
         )
+
+    def test_protocols(self):
+        self.assertProtocolExists("GKGameCenterControllerDelegate", GameKit)

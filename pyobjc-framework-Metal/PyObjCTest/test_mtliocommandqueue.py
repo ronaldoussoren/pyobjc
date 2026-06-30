@@ -9,7 +9,7 @@ class TestMTLIOCommandQueueHelper(Metal.NSObject):
 
 
 class TestMTLIOCommandQueue(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIOPriority)
         self.assertEqual(Metal.MTLIOPriorityHigh, 0)
         self.assertEqual(Metal.MTLIOPriorityNormal, 1)

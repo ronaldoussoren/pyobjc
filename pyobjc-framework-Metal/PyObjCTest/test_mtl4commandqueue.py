@@ -35,7 +35,7 @@ class TestMTL4CommandQueueHelper(Metal.NSObject):
 
 
 class TestMTL4CommandQueue(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4CommandQueueError)
         self.assertEqual(Metal.MTL4CommandQueueErrorNone, 0)
         self.assertEqual(Metal.MTL4CommandQueueErrorTimeout, 1)

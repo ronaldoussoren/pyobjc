@@ -15,7 +15,7 @@ class TestINShareFocusStatusIntent(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("INShareFocusStatusIntentHandling", Intents)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINShareFocusStatusIntentHelper.handleShareFocusStatus_completion_,
             1,

@@ -2,6 +2,7 @@
  "definitions": {
   "typed_enum": {
    "NSFontWidth": { "type": "d" },
+   "NSOpenGLPixelFormatAttribute": { "type": "I" },
    "NSPasteboardAccessBehavior": { "type": "q" },
    "NSAccessibilityDateTimeComponentsFlags": { "type": "q" },
    "NSAccessibilitySearchKey": { "type": "@", "type_name": "NSString" },

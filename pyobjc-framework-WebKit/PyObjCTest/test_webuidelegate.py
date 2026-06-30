@@ -82,11 +82,23 @@ class TestWebUIDelegateHelper(WebKit.NSObject):
 
 
 class TestWebUIDelegate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WebDragDestinationAction)
-        self.assertIsEnumType(WebKit.WebDragSourceAction)
+        self.assertEqual(WebKit.WebDragDestinationActionNone, 0)
+        self.assertEqual(WebKit.WebDragDestinationActionDHTML, 1)
+        self.assertEqual(WebKit.WebDragDestinationActionEdit, 2)
+        self.assertEqual(WebKit.WebDragDestinationActionLoad, 4)
+        self.assertEqual(WebKit.WebDragDestinationActionAny, UINT_MAX)
 
-    def test_constants(self):
+        self.assertIsEnumType(WebKit.WebDragSourceAction)
+        self.assertEqual(WebKit.WebDragSourceActionNone, 0)
+        self.assertEqual(WebKit.WebDragSourceActionDHTML, 1)
+        self.assertEqual(WebKit.WebDragSourceActionImage, 2)
+        self.assertEqual(WebKit.WebDragSourceActionLink, 4)
+        self.assertEqual(WebKit.WebDragSourceActionSelection, 8)
+        self.assertEqual(WebKit.WebDragSourceActionAny, UINT_MAX)
+
+        # Unnamed enum:
         self.assertEqual(WebKit.WebMenuItemTagOpenLinkInNewWindow, 1)
         self.assertEqual(WebKit.WebMenuItemTagDownloadLinkToDisk, 2)
         self.assertEqual(WebKit.WebMenuItemTagCopyLinkToClipboard, 3)
@@ -120,19 +132,6 @@ class TestWebUIDelegate(TestCase):
         self.assertEqual(WebKit.WebMenuItemPDFNextPage, 31)
         self.assertEqual(WebKit.WebMenuItemPDFPreviousPage, 32)
 
-        self.assertEqual(WebKit.WebDragDestinationActionNone, 0)
-        self.assertEqual(WebKit.WebDragDestinationActionDHTML, 1)
-        self.assertEqual(WebKit.WebDragDestinationActionEdit, 2)
-        self.assertEqual(WebKit.WebDragDestinationActionLoad, 4)
-        self.assertEqual(WebKit.WebDragDestinationActionAny, UINT_MAX)
-
-        self.assertEqual(WebKit.WebDragSourceActionNone, 0)
-        self.assertEqual(WebKit.WebDragSourceActionDHTML, 1)
-        self.assertEqual(WebKit.WebDragSourceActionImage, 2)
-        self.assertEqual(WebKit.WebDragSourceActionLink, 4)
-        self.assertEqual(WebKit.WebDragSourceActionSelection, 8)
-        self.assertEqual(WebKit.WebDragSourceActionAny, UINT_MAX)
-
     def test_protocols(self):
         self.assertProtocolExists(
             "WebOpenPanelResultListener", WebKit, "WebOpenPanelResultListenerProtocol"
@@ -142,7 +141,7 @@ class TestWebUIDelegate(TestCase):
     def test_protocols10_11(self):
         self.assertProtocolExists("WebUIDelegate", WebKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewAreToolbarsVisible_)
         self.assertArgIsBOOL(TestWebUIDelegateHelper.webView_setToolbarsVisible_, 1)
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewIsStatusBarVisible_)

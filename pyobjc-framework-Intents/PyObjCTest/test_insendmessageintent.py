@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Intents
 
 
@@ -34,8 +34,11 @@ class TestINSendMessageIntentHelper(Intents.NSObject):
 
 
 class TestINSendMessageIntent(TestCase):
-    @min_os_level("10.12")
-    def test_methods(self):
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("INSendMessageIntentHandling", Intents)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINSendMessageIntentHelper.handleSendMessage_completion_, 1, b"v@"
         )
@@ -70,14 +73,8 @@ class TestINSendMessageIntent(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.13")
-    def test_methods10_13(self):
         self.assertArgIsBlock(
             TestINSendMessageIntentHelper.resolveRecipientsForSendMessage_completion_,
             1,
             b"v@",
         )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("INSendMessageIntentHandling", Intents)

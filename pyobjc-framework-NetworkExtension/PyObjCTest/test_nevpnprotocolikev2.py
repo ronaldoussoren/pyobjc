@@ -3,37 +3,22 @@ import NetworkExtension
 
 
 class TestNEVPNProtocolIKEv2(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEVPNIKEv2CertificateType)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeRSA, 1)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA256, 2)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA384, 3)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA521, 4)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeEd25519, 5)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeRSAPSS, 6)
+
         self.assertIsEnumType(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRate)
-        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup)
-        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2EncryptionAlgorithm)
-        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2IntegrityAlgorithm)
-        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2TLSVersion)
-
-    @min_os_level("10.11")
-    def test_constants(self):
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmDES, 1)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithm3DES, 2)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128, 3)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256, 4)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128GCM, 5)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256GCM, 6)
-        self.assertEqual(
-            NetworkExtension.NEVPNIKEv2EncryptionAlgorithmChaCha20Poly1305, 7
-        )
-
-        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA96, 1)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA160, 2)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA256, 3)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA384, 4)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA512, 5)
-
         self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateNone, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateLow, 1)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateMedium, 2)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateHigh, 3)
 
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup0, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroupInvalid, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup1, 1)
@@ -50,13 +35,25 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup31, 31)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup32, 32)
 
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeRSA, 1)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA256, 2)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA384, 3)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeECDSA521, 4)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeEd25519, 5)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2CertificateTypeRSAPSS, 6)
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2EncryptionAlgorithm)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmDES, 1)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithm3DES, 2)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128, 3)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256, 4)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES128GCM, 5)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2EncryptionAlgorithmAES256GCM, 6)
+        self.assertEqual(
+            NetworkExtension.NEVPNIKEv2EncryptionAlgorithmChaCha20Poly1305, 7
+        )
 
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2IntegrityAlgorithm)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA96, 1)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA160, 2)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA256, 3)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA384, 4)
+        self.assertEqual(NetworkExtension.NEVPNIKEv2IntegrityAlgorithmSHA512, 5)
+
+        self.assertIsEnumType(NetworkExtension.NEVPNIKEv2TLSVersion)
         self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersionDefault, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_0, 1)
         self.assertEqual(NetworkExtension.NEVPNIKEv2TLSVersion1_1, 2)

@@ -17,10 +17,6 @@ class TestMIDICapabilityInquiryHelper(CoreMIDI.NSObject):
 
 
 class TestMIDICapabilityInquiry(TestCase):
-    @min_sdk_level("11.0")
-    def test_protocols11_0(self):
-        self.assertProtocolExists("MIDICIProfileResponderDelegate", CoreMIDI)
-
     def test_structs(self):
         # XXX: Not sure if bridge is capable enough
         v = CoreMIDI.MIDICIDeviceIdentification()
@@ -30,14 +26,6 @@ class TestMIDICapabilityInquiry(TestCase):
         self.assertIs(v.revisionLevel, None)
         self.assertIs(v.reserved, None)
         self.assertPickleRoundTrips(v)
-
-    def test_methods(self):
-        self.assertResultIsBOOL(
-            TestMIDICapabilityInquiryHelper.connectInitiator_withDeviceInfo_
-        )
-        self.assertArgIsBOOL(
-            TestMIDICapabilityInquiryHelper.willSetProfile_onChannel_enabled_, 2
-        )
 
     @min_os_level("10.14")
     def test_methods10_14(self):
@@ -108,4 +96,16 @@ class TestMIDICapabilityInquiry(TestCase):
             CoreMIDI.MIDICISession.setProfileSpecificDataHandler_,
             0,
             MIDICIProfileSpecificDataBlock,
+        )
+
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
+        self.assertProtocolExists("MIDICIProfileResponderDelegate", CoreMIDI)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestMIDICapabilityInquiryHelper.connectInitiator_withDeviceInfo_
+        )
+        self.assertArgIsBOOL(
+            TestMIDICapabilityInquiryHelper.willSetProfile_onChannel_enabled_, 2
         )

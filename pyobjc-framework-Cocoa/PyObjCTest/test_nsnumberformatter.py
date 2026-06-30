@@ -1,45 +1,16 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSNumberFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSNumberFormatterBehavior)
-        self.assertIsEnumType(Foundation.NSNumberFormatterPadPosition)
-        self.assertIsEnumType(Foundation.NSNumberFormatterRoundingMode)
-        self.assertIsEnumType(Foundation.NSNumberFormatterStyle)
-
-    def test_constants(self):
-        self.assertEqual(
-            Foundation.NSNumberFormatterNoStyle,
-            CoreFoundation.kCFNumberFormatterNoStyle,
-        )
-        self.assertEqual(
-            Foundation.NSNumberFormatterDecimalStyle,
-            CoreFoundation.kCFNumberFormatterDecimalStyle,
-        )
-        self.assertEqual(
-            Foundation.NSNumberFormatterCurrencyStyle,
-            CoreFoundation.kCFNumberFormatterCurrencyStyle,
-        )
-        self.assertEqual(
-            Foundation.NSNumberFormatterPercentStyle,
-            CoreFoundation.kCFNumberFormatterPercentStyle,
-        )
-        self.assertEqual(
-            Foundation.NSNumberFormatterScientificStyle,
-            CoreFoundation.kCFNumberFormatterScientificStyle,
-        )
-        self.assertEqual(
-            Foundation.NSNumberFormatterSpellOutStyle,
-            CoreFoundation.kCFNumberFormatterSpellOutStyle,
-        )
-
         self.assertEqual(Foundation.NSNumberFormatterBehaviorDefault, 0)
         self.assertEqual(Foundation.NSNumberFormatterBehavior10_0, 1000)
         self.assertEqual(Foundation.NSNumberFormatterBehavior10_4, 1040)
 
+        self.assertIsEnumType(Foundation.NSNumberFormatterPadPosition)
         self.assertEqual(
             Foundation.NSNumberFormatterPadBeforePrefix,
             CoreFoundation.kCFNumberFormatterPadBeforePrefix,
@@ -57,6 +28,7 @@ class TestNSNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterPadAfterSuffix,
         )
 
+        self.assertIsEnumType(Foundation.NSNumberFormatterRoundingMode)
         self.assertEqual(
             Foundation.NSNumberFormatterRoundCeiling,
             CoreFoundation.kCFNumberFormatterRoundCeiling,
@@ -86,8 +58,31 @@ class TestNSNumberFormatter(TestCase):
             CoreFoundation.kCFNumberFormatterRoundHalfUp,
         )
 
-    @min_os_level("10.11")
-    def test_constants10_11(self):
+        self.assertIsEnumType(Foundation.NSNumberFormatterStyle)
+        self.assertEqual(
+            Foundation.NSNumberFormatterNoStyle,
+            CoreFoundation.kCFNumberFormatterNoStyle,
+        )
+        self.assertEqual(
+            Foundation.NSNumberFormatterDecimalStyle,
+            CoreFoundation.kCFNumberFormatterDecimalStyle,
+        )
+        self.assertEqual(
+            Foundation.NSNumberFormatterCurrencyStyle,
+            CoreFoundation.kCFNumberFormatterCurrencyStyle,
+        )
+        self.assertEqual(
+            Foundation.NSNumberFormatterPercentStyle,
+            CoreFoundation.kCFNumberFormatterPercentStyle,
+        )
+        self.assertEqual(
+            Foundation.NSNumberFormatterScientificStyle,
+            CoreFoundation.kCFNumberFormatterScientificStyle,
+        )
+        self.assertEqual(
+            Foundation.NSNumberFormatterSpellOutStyle,
+            CoreFoundation.kCFNumberFormatterSpellOutStyle,
+        )
         self.assertEqual(
             Foundation.NSNumberFormatterOrdinalStyle,
             CoreFoundation.kCFNumberFormatterOrdinalStyle,

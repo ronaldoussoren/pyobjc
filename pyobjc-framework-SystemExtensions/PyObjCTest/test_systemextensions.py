@@ -3,22 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestSystemExtensions(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SystemExtensions.OSSystemExtensionReplacementAction)
+        self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionCancel, 0)
+        self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionReplace, 1)
+
         self.assertIsEnumType(SystemExtensions.OSSystemExtensionRequestResult)
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(SystemExtensions.OSRelatedKernelExtensionKey, str)
-
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertIsInstance(SystemExtensions.OSSystemExtensionErrorDomain, str)
-        self.assertIsInstance(SystemExtensions.OSBundleUsageDescriptionKey, str)
-        self.assertIsInstance(
-            SystemExtensions.NSSystemExtensionUsageDescriptionKey, str
+        self.assertEqual(SystemExtensions.OSSystemExtensionRequestCompleted, 0)
+        self.assertEqual(
+            SystemExtensions.OSSystemExtensionRequestWillCompleteAfterReboot, 1
         )
 
+        self.assertIsEnumType(SystemExtensions.OSSystemExtensionErrorCode)
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorUnknown, 1)
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorMissingEntitlement, 2)
         self.assertEqual(
@@ -45,12 +41,16 @@ class TestSystemExtensions(TestCase):
             SystemExtensions.OSSystemExtensionErrorAuthorizationRequired, 13
         )
 
-        self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionCancel, 0)
-        self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionReplace, 1)
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(SystemExtensions.OSRelatedKernelExtensionKey, str)
 
-        self.assertEqual(SystemExtensions.OSSystemExtensionRequestCompleted, 0)
-        self.assertEqual(
-            SystemExtensions.OSSystemExtensionRequestWillCompleteAfterReboot, 1
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(SystemExtensions.OSSystemExtensionErrorDomain, str)
+        self.assertIsInstance(SystemExtensions.OSBundleUsageDescriptionKey, str)
+        self.assertIsInstance(
+            SystemExtensions.NSSystemExtensionUsageDescriptionKey, str
         )
 
     @min_sdk_level("10.15")

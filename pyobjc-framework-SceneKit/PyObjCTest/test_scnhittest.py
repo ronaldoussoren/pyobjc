@@ -5,16 +5,15 @@ from objc import simd
 
 
 class TestSCNHitTest(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNHitTestSearchMode)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNHitTestSearchModeClosest, 0)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAll, 1)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAny, 2)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

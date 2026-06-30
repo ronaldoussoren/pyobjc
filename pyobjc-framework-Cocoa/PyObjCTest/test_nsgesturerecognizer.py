@@ -25,10 +25,8 @@ class TestNSGestureRecognizerHelper(AppKit.NSObject):
 
 
 class TestNSGestureRecognizer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSGestureRecognizerState)
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSGestureRecognizerStatePossible, 0)
         self.assertEqual(AppKit.NSGestureRecognizerStateBegan, 1)
         self.assertEqual(AppKit.NSGestureRecognizerStateChanged, 2)
@@ -96,18 +94,6 @@ class TestNSGestureRecognizer(TestCase):
     @min_sdk_level("10.10")
     def test_protocols(self):
         self.assertProtocolExists("NSGestureRecognizerDelegate", AppKit)
-        self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizerShouldBegin_
-        )
-        self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_  # noqa: B950
-        )
-        self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRequireFailureOfGestureRecognizer_  # noqa: B950
-        )
-        self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_  # noqa: B950
-        )
 
     @min_sdk_level("10.11")
     def test_protocols10_11(self):
@@ -119,4 +105,18 @@ class TestNSGestureRecognizer(TestCase):
     def test_protocols10_12(self):
         self.assertResultIsBOOL(
             TestNSGestureRecognizerHelper.gestureRecognizer_shouldReceiveTouch_
+        )
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestNSGestureRecognizerHelper.gestureRecognizerShouldBegin_
+        )
+        self.assertResultIsBOOL(
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_  # noqa: B950
+        )
+        self.assertResultIsBOOL(
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRequireFailureOfGestureRecognizer_  # noqa: B950
+        )
+        self.assertResultIsBOOL(
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_  # noqa: B950
         )

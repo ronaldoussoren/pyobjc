@@ -6,7 +6,7 @@ import GameCenter
 
 
 class TestGKLeaderboard(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameCenter.GKLeaderboardTimeScope)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeToday, 0)
         self.assertEqual(GameCenter.GKLeaderboardTimeScopeWeek, 1)

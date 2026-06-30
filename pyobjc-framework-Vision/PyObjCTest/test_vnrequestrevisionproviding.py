@@ -10,11 +10,11 @@ class TestVNRequestRevisionProviderHelper(Vision.NSObject):
 
 
 class TestVNRequestRevisionProvider(TestCase):
-    def test_methods(self):
-        self.assertResultHasType(
-            TestVNRequestRevisionProviderHelper.requestRevision, objc._C_NSUInteger
-        )
-
     @min_sdk_level("10.14")
     def test_protocols(self):
         self.assertProtocolExists("VNRequestRevisionProviding", Vision)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestVNRequestRevisionProviderHelper.requestRevision, objc._C_NSUInteger
+        )

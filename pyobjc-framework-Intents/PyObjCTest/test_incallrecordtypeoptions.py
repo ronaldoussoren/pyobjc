@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINCallRecordTypeOptions(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INCallRecordTypeOptions)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INCallRecordTypeOptionOutgoing, 1 << 0)
         self.assertEqual(Intents.INCallRecordTypeOptionMissed, 1 << 1)
         self.assertEqual(Intents.INCallRecordTypeOptionReceived, 1 << 2)

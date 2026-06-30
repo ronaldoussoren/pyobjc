@@ -28,7 +28,7 @@ class TestMTLBuffer(TestCase):
     def test_protocols10_13(self):
         self.assertProtocolExists("MTLBuffer", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLBufferHelper.length, objc._C_NSUInteger)
 
         self.assertResultHasType(

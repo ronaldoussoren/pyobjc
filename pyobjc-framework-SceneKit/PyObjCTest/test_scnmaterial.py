@@ -4,10 +4,7 @@ import SceneKit
 
 
 class TestSCNMaterial(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(SceneKit.SCNLightingModel, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNBlendMode)
         self.assertEqual(SceneKit.SCNBlendModeAlpha, 0)
         self.assertEqual(SceneKit.SCNBlendModeAdd, 1)
@@ -33,6 +30,9 @@ class TestSCNMaterial(TestCase):
         self.assertEqual(
             SceneKit.SCNTransparencyModeDefault, SceneKit.SCNTransparencyModeAOne
         )
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(SceneKit.SCNLightingModel, str)
 
     def test_constants(self):
         self.assertIsInstance(SceneKit.SCNLightingModelPhong, str)

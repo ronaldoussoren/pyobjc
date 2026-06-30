@@ -24,7 +24,7 @@ class TestQLPreviewPanel(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("QLPreviewPanelDataSource", Quartz)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestPLPreviewPanelHelper.previewPanel_handleEvent_)
 
         self.assertResultHasType(

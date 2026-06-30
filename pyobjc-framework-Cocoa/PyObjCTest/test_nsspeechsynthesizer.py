@@ -18,6 +18,12 @@ class TestNSSpeechSynthesizerHelper(AppKit.NSObject):
 
 
 class TestNSSpeechSynthesizer(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSSpeechBoundary)
+        self.assertEqual(AppKit.NSSpeechImmediateBoundary, 0)
+        self.assertEqual(AppKit.NSSpeechWordBoundary, 1)
+        self.assertEqual(AppKit.NSSpeechSentenceBoundary, 2)
+
     def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSSpeechCommandDelimiterKey, str)
         self.assertIsTypedEnum(AppKit.NSSpeechDictionaryKey, str)
@@ -31,9 +37,6 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsTypedEnum(AppKit.NSVoiceAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSVoiceGenderName, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSSpeechBoundary)
-
     def test_constants(self):
         self.assertIsInstance(AppKit.NSVoiceName, str)
         self.assertIsInstance(AppKit.NSVoiceIdentifier, str)
@@ -45,10 +48,6 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSVoiceGenderMale, str)
         self.assertIsInstance(AppKit.NSVoiceGenderFemale, str)
         self.assertIsInstance(AppKit.NSVoiceLanguage, str)
-
-        self.assertEqual(AppKit.NSSpeechImmediateBoundary, 0)
-        self.assertEqual(AppKit.NSSpeechWordBoundary, 1)
-        self.assertEqual(AppKit.NSSpeechSentenceBoundary, 2)
 
         self.assertIsInstance(AppKit.NSVoiceLocaleIdentifier, str)
         self.assertIsInstance(AppKit.NSVoiceSupportedCharacters, str)

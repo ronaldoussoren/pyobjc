@@ -3,7 +3,7 @@ import Vision
 
 
 class TestVNTrackOpticalFlowRequest(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertEqual(Vision.VNTrackOpticalFlowRequestRevision1, 1)
 
         self.assertIsEnumType(Vision.VNTrackOpticalFlowRequestComputationAccuracy)

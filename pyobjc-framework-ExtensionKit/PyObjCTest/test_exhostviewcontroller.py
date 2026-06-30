@@ -9,10 +9,10 @@ class TestEXHostViewControllerHelper(ExtensionKit.NSObject):
 
 
 class TestEXHostViewController(TestCase):
-    def test_methods(self):
+    def test_protocols(self):
+        self.assertProtocolExists("EXHostViewControllerDelegate", ExtensionKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsOut(
             ExtensionKit.EXHostViewController.makeXPCConnectionWithError_, 0
         )
-
-    def test_protocols(self):
-        self.assertProtocolExists("EXHostViewControllerDelegate", ExtensionKit)

@@ -1,8 +1,8 @@
-import AppKit
-from PyObjCTools.TestSupport import TestCase
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
-class TestNSItemProviderReadingWritingHelper(AppKit.NSObject):
+class TestNSItemProviderReadingWritingHelper(Foundation.NSObject):
     def loadDataWithTypeIdentifier_forItemProviderCompletionHandler_(self, ti, ch):
         pass
 
@@ -15,7 +15,12 @@ class TestNSItemProviderReadingWritingHelper(AppKit.NSObject):
 
 
 class TestNSItemProviderReadingWriting(TestCase):
-    def test_methods(self):
+    @min_sdk_level("10.13")
+    def test_protocols(self):
+        self.assertProtocolExists("NSItemProviderReading", Foundation)
+        self.assertProtocolExists("NSItemProviderWriting", Foundation)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestNSItemProviderReadingWritingHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
             1,

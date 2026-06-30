@@ -4,18 +4,16 @@ import Virtualization
 
 
 class TestVZDiskImageStorageDeviceAttachment(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Virtualization.VZDiskImageCachingMode)
-        self.assertIsEnumType(Virtualization.VZDiskImageSynchronizationMode)
-
-    def test_constants(self):
-        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFull, 1)
-        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFsync, 2)
-        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeNone, 3)
-
         self.assertEqual(Virtualization.VZDiskImageCachingModeAutomatic, 0)
         self.assertEqual(Virtualization.VZDiskImageCachingModeUncached, 1)
         self.assertEqual(Virtualization.VZDiskImageCachingModeCached, 2)
+
+        self.assertIsEnumType(Virtualization.VZDiskImageSynchronizationMode)
+        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFull, 1)
+        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeFsync, 2)
+        self.assertEqual(Virtualization.VZDiskImageSynchronizationModeNone, 3)
 
     def test_methods(self):
         self.assertArgIsBOOL(

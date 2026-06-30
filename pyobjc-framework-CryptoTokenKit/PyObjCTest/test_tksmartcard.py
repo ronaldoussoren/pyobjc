@@ -5,13 +5,37 @@ import CryptoTokenKit
 
 
 class TestTKSmartCard(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINCharset)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetNumeric, 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetAlphanumeric, 1)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCharsetUpperAlphanumeric, 2)
+
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINCompletion)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionMaxLength, 1 << 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionKey, 1 << 1)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINCompletionTimeout, 1 << 2)
+
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINConfirmation)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationNone, 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationNew, 1 << 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINConfirmationCurrent, 1 << 1)
+
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINEncoding)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingBinary, 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingASCII, 1)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINEncodingBCD, 2)
+
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardPINJustification)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINJustificationLeft, 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardPINJustificationRight, 1)
+
         self.assertIsEnumType(CryptoTokenKit.TKSmartCardSlotState)
+        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateMissing, 0)
+        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateEmpty, 1)
+        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateProbing, 2)
+        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateMuteCard, 3)
+        self.assertEqual(CryptoTokenKit.TKSmartCardSlotStateValidCard, 4)
 
     @min_os_level("10.10")
     def test_classes(self):

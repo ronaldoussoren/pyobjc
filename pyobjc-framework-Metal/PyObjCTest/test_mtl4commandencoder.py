@@ -23,7 +23,7 @@ class TestMTL4CommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTL4CommandEncoder(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4VisibilityOptions)
         self.assertEqual(Metal.MTL4VisibilityOptionNone, 0)
         self.assertEqual(Metal.MTL4VisibilityOptionDevice, 1 << 0)

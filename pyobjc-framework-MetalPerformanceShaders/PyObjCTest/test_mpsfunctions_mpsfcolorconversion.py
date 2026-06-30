@@ -5,7 +5,7 @@ import MetalPerformanceShaders
 
 
 class TestMPSFunctions_MPSFColorConversion(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSFColorConversionOptions)
         self.assertEqual(
             MetalPerformanceShaders.MPSFConverisonOptionsPrecisionSnorm8, 7

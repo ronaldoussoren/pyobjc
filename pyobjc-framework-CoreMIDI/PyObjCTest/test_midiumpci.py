@@ -4,7 +4,7 @@ import CoreMIDI
 
 
 class TestMIDIUMPCI(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMIDI.MIDICICategoryOptions)
         self.assertEqual(CoreMIDI.kMIDICICategoryOptionsProtocolNegotiation, 1 << 1)
         self.assertEqual(

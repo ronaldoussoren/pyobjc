@@ -3,12 +3,8 @@ import CryptoTokenKit
 
 
 class TestTKError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CryptoTokenKit.TKErrorCode)
-
-    def test_constants(self):
-        self.assertIsInstance(CryptoTokenKit.TKErrorDomain, str)
-
         self.assertEqual(CryptoTokenKit.TKErrorCodeNotImplemented, -1)
         self.assertEqual(CryptoTokenKit.TKErrorCodeCommunicationError, -2)
         self.assertEqual(CryptoTokenKit.TKErrorCodeCorruptedData, -3)
@@ -22,3 +18,6 @@ class TestTKError(TestCase):
         self.assertEqual(CryptoTokenKit.TKErrorCodeBadParameter, -8)
         self.assertEqual(CryptoTokenKit.TKErrorCodeAuthenticationNeeded, -9)
         self.assertEqual(CryptoTokenKit.TKErrorCodeInvalidatedDeviceKey, -10)
+
+    def test_constants(self):
+        self.assertIsInstance(CryptoTokenKit.TKErrorDomain, str)

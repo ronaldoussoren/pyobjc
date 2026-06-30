@@ -22,7 +22,7 @@ class TestAXBrailleMap(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("AXBrailleMapRenderer", Accessibility)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestAXBrailleMapHelper.accessibilityBrailleMapRenderRegion,
             Accessibility.CGRect.__typestr__,

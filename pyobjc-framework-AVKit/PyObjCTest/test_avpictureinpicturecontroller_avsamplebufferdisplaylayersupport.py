@@ -31,7 +31,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
             "AVPictureInPictureSampleBufferPlaybackDelegate", AVKit
         )
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_setPlaying_,
             1,

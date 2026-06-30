@@ -3,10 +3,8 @@ import NetworkExtension
 
 
 class TestNEDNSSettings(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEDNSProtocol)
-
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEDNSProtocolCleartext, 1)
         self.assertEqual(NetworkExtension.NEDNSProtocolTLS, 2)
         self.assertEqual(NetworkExtension.NEDNSProtocolHTTPS, 3)

@@ -25,14 +25,6 @@ class TestVNRequest(TestCase):
         self.assertArgIsBOOL(Vision.VNRequest.setUsesCPUOnly_, 0)
         self.assertResultIsBlock(Vision.VNRequest.completionHandler, b"v@@")
 
-        self.assertResultIsBlock(
-            TestVNRequestHelper.progressHandler, VNRequestProgressHandler
-        )
-        self.assertArgIsBlock(
-            TestVNRequestHelper.setProgressHandler_, 0, VNRequestProgressHandler
-        )
-        self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)
-
     @min_os_level("14.0")
     def test_methods14_0(self):
         self.assertArgIsOut(
@@ -45,3 +37,12 @@ class TestVNRequest(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("VNRequestProgressProviding", Vision)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBlock(
+            TestVNRequestHelper.progressHandler, VNRequestProgressHandler
+        )
+        self.assertArgIsBlock(
+            TestVNRequestHelper.setProgressHandler_, 0, VNRequestProgressHandler
+        )
+        self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)

@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLDTDNode(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSXMLDTDNodeKind)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSXMLEntityGeneralKind, 1)
         self.assertEqual(Foundation.NSXMLEntityParsedKind, 2)
         self.assertEqual(Foundation.NSXMLEntityUnparsedKind, 3)

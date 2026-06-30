@@ -28,8 +28,24 @@ class TestINSearchCallHistoryIntentHelper(Intents.NSObject):
 
 
 class TestINSearchCallHistoryIntent(TestCase):
-    @min_os_level("10.12")
-    def test_methods(self):
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertArgIsBlock(
+            TestINSearchCallHistoryIntentHelper.resolveCallTypesForSearchCallHistory_withCompletion_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            TestINSearchCallHistoryIntentHelper.resolveUnseenForSearchCallHistory_withCompletion_,
+            1,
+            b"v@",
+        )
+
+    @min_sdk_level("10.12")
+    def test_protocols(self):
+        self.assertProtocolExists("INSearchCallHistoryIntentHandling", Intents)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINSearchCallHistoryIntentHelper.handleSearchCallHistory_completion_,
             1,
@@ -50,22 +66,3 @@ class TestINSearchCallHistoryIntent(TestCase):
             1,
             b"v@",
         )
-        # Removed in Xcode 8.1
-        # self.assertArgIsBlock(TestINSearchCallHistoryIntentHelper.resolveCallCapabilitiesForSearchCallHistory_withCompletion_, 1, b'v@')   # noqa: B950
-
-    @min_os_level("10.13")
-    def test_methods10_13(self):
-        self.assertArgIsBlock(
-            TestINSearchCallHistoryIntentHelper.resolveCallTypesForSearchCallHistory_withCompletion_,
-            1,
-            b"v@",
-        )
-        self.assertArgIsBlock(
-            TestINSearchCallHistoryIntentHelper.resolveUnseenForSearchCallHistory_withCompletion_,
-            1,
-            b"v@",
-        )
-
-    @min_sdk_level("10.12")
-    def test_protocols(self):
-        self.assertProtocolExists("INSearchCallHistoryIntentHandling", Intents)

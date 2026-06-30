@@ -1,14 +1,11 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSISO8601DateFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSISO8601DateFormatOptions)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(
             Foundation.NSISO8601DateFormatWithYear,
             CoreFoundation.kCFISO8601DateFormatWithYear,
@@ -61,9 +58,6 @@ class TestNSISO8601DateFormatter(TestCase):
             Foundation.NSISO8601DateFormatWithInternetDateTime,
             CoreFoundation.kCFISO8601DateFormatWithInternetDateTime,
         )
-
-    @min_os_level("10.13")
-    def test_constants10_13(self):
         self.assertEqual(
             Foundation.NSISO8601DateFormatWithFractionalSeconds,
             CoreFoundation.kCFISO8601DateFormatWithFractionalSeconds,

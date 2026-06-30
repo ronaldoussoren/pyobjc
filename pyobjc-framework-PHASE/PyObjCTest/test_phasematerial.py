@@ -4,7 +4,7 @@ import PHASE
 
 
 class TestPHASEMaterial(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PHASE.PHASEMaterialPreset)
         self.assertEqual(PHASE.PHASEMaterialPresetCardboard, fourcc(b"mCrd"))
         self.assertEqual(PHASE.PHASEMaterialPresetGlass, fourcc(b"mGls"))

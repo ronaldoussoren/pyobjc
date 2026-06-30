@@ -4,13 +4,7 @@ import DeviceDiscoveryExtension
 
 
 class TestDDDevice(TestCase):
-    def test_constants(self):
-        self.assertIsTypedEnum(DeviceDiscoveryExtension.DDDeviceProtocolString, str)
-        self.assertIsInstance(
-            DeviceDiscoveryExtension.DDDeviceProtocolStringInvalid, str
-        )
-        self.assertIsInstance(DeviceDiscoveryExtension.DDDeviceProtocolStringDIAL, str)
-
+    def test_enums(self):
         self.assertIsEnumType(DeviceDiscoveryExtension.DDDeviceProtocol)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceProtocolInvalid, 0)
         self.assertEqual(DeviceDiscoveryExtension.DDDeviceProtocolDIAL, 1)
@@ -56,6 +50,15 @@ class TestDDDevice(TestCase):
         self.assertEqual(
             DeviceDiscoveryExtension.DDDeviceWiFiAwareServiceRolePublisher, 20
         )
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(DeviceDiscoveryExtension.DDDeviceProtocolString, str)
+
+    def test_constants(self):
+        self.assertIsInstance(
+            DeviceDiscoveryExtension.DDDeviceProtocolStringInvalid, str
+        )
+        self.assertIsInstance(DeviceDiscoveryExtension.DDDeviceProtocolStringDIAL, str)
 
     def test_functions(self):
         DeviceDiscoveryExtension.DDDeviceProtocolToString

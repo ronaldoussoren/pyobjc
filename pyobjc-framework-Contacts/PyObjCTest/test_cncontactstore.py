@@ -3,7 +3,7 @@ import Contacts
 
 
 class TestCNContactStore(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Contacts.CNEntityType)
         self.assertEqual(Contacts.CNEntityTypeContacts, 0)
 

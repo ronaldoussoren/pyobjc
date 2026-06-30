@@ -87,23 +87,8 @@ class TestNSTextViewHelper(AppKit.NSObject):
 
 
 class TestNSTextView(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSPasteboardTypeFindPanelSearchOptionKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSFindPanelAction)
-        self.assertIsEnumType(AppKit.NSFindPanelSubstringMatchType)
-        self.assertIsEnumType(AppKit.NSSelectionAffinity)
-        self.assertIsEnumType(AppKit.NSSelectionGranularity)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSSelectByCharacter, 0)
-        self.assertEqual(AppKit.NSSelectByWord, 1)
-        self.assertEqual(AppKit.NSSelectByParagraph, 2)
-
-        self.assertEqual(AppKit.NSSelectionAffinityUpstream, 0)
-        self.assertEqual(AppKit.NSSelectionAffinityDownstream, 1)
-
         self.assertEqual(AppKit.NSFindPanelActionShowFindPanel, 1)
         self.assertEqual(AppKit.NSFindPanelActionNext, 2)
         self.assertEqual(AppKit.NSFindPanelActionPrevious, 3)
@@ -115,15 +100,29 @@ class TestNSTextView(TestCase):
         self.assertEqual(AppKit.NSFindPanelActionSelectAll, 9)
         self.assertEqual(AppKit.NSFindPanelActionSelectAllInSelection, 10)
 
-        self.assertIsInstance(AppKit.NSFindPanelSearchOptionsPboardType, str)
-
-        self.assertIsInstance(AppKit.NSFindPanelCaseInsensitiveSearch, str)
-        self.assertIsInstance(AppKit.NSFindPanelSubstringMatch, str)
-
+        self.assertIsEnumType(AppKit.NSFindPanelSubstringMatchType)
         self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeContains, 0)
         self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeStartsWith, 1)
         self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeFullWord, 2)
         self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeEndsWith, 3)
+
+        self.assertIsEnumType(AppKit.NSSelectionAffinity)
+        self.assertEqual(AppKit.NSSelectionAffinityUpstream, 0)
+        self.assertEqual(AppKit.NSSelectionAffinityDownstream, 1)
+
+        self.assertIsEnumType(AppKit.NSSelectionGranularity)
+        self.assertEqual(AppKit.NSSelectByCharacter, 0)
+        self.assertEqual(AppKit.NSSelectByWord, 1)
+        self.assertEqual(AppKit.NSSelectByParagraph, 2)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPasteboardTypeFindPanelSearchOptionKey, str)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSFindPanelSearchOptionsPboardType, str)
+
+        self.assertIsInstance(AppKit.NSFindPanelCaseInsensitiveSearch, str)
+        self.assertIsInstance(AppKit.NSFindPanelSubstringMatch, str)
 
         self.assertIsInstance(AppKit.NSAllRomanInputSourcesLocaleIdentifier, str)
 

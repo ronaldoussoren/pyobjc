@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKVisionPrism(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKPrismBase)
         self.assertEqual(HealthKit.HKPrismBaseNone, 0)
         self.assertEqual(HealthKit.HKPrismBaseUp, 1)

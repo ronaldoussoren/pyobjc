@@ -156,6 +156,43 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutAnchor.isAbsoluteOffset)
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutAnchor.isFractionalOffset)
 
+        self.assertArgIsBlock(
+            AppKit.NSCollectionViewDiffableDataSource.initWithCollectionView_itemProvider_,
+            1,
+            NSCollectionViewDiffableDataSourceItemProvider,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSCollectionViewDiffableDataSource.applySnapshot_animatingDifferences_,
+            1,
+        )
+
+        self.assertResultIsBlock(
+            AppKit.NSCollectionViewDiffableDataSource.supplementaryViewProvider,
+            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+        )
+        self.assertArgIsBlock(
+            AppKit.NSCollectionViewDiffableDataSource.setSupplementaryViewProvider_,
+            0,
+            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+        )
+
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "NSCollectionLayoutContainer", AppKit, "NSCollectionLayoutContainerProtocol"
+        )
+        self.assertProtocolExists(
+            "NSCollectionLayoutEnvironment",
+            AppKit,
+            "NSCollectionLayoutEnvironmentProtocol",
+        )
+        self.assertProtocolExists(
+            "NSCollectionLayoutVisibleItem",
+            AppKit,
+            "NSCollectionLayoutVisibleItemProtocol",
+        )
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSCollectionViewCompositionalLayoutHelper.contentSize,
             AppKit.NSSize.__typestr__,
@@ -192,40 +229,4 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertResultHasType(
             TestNSCollectionViewCompositionalLayoutHelper.representedElementCategory,
             objc._C_NSInteger,
-        )
-
-        self.assertArgIsBlock(
-            AppKit.NSCollectionViewDiffableDataSource.initWithCollectionView_itemProvider_,
-            1,
-            NSCollectionViewDiffableDataSourceItemProvider,
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSCollectionViewDiffableDataSource.applySnapshot_animatingDifferences_,
-            1,
-        )
-
-        self.assertResultIsBlock(
-            AppKit.NSCollectionViewDiffableDataSource.supplementaryViewProvider,
-            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
-        )
-        self.assertArgIsBlock(
-            AppKit.NSCollectionViewDiffableDataSource.setSupplementaryViewProvider_,
-            0,
-            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
-        )
-
-    @min_sdk_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists(
-            "NSCollectionLayoutContainer", AppKit, "NSCollectionLayoutContainerProtocol"
-        )
-        self.assertProtocolExists(
-            "NSCollectionLayoutEnvironment",
-            AppKit,
-            "NSCollectionLayoutEnvironmentProtocol",
-        )
-        self.assertProtocolExists(
-            "NSCollectionLayoutVisibleItem",
-            AppKit,
-            "NSCollectionLayoutVisibleItemProtocol",
         )

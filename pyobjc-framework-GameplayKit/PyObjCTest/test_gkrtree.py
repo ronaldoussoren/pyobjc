@@ -5,10 +5,8 @@ from objc import simd
 
 
 class TestGKAgent(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameplayKit.GKRTreeSplitStrategy)
-
-    def test_constants(self):
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyHalve, 0)
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyLinear, 1)
         self.assertEqual(GameplayKit.GKRTreeSplitStrategyQuadratic, 2)

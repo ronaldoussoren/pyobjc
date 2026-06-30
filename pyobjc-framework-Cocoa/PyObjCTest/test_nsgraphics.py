@@ -4,52 +4,24 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSGraphics(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSColorSpaceName, str)
-        self.assertIsTypedEnum(AppKit.NSDeviceDescriptionKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAnimationEffect)
+        self.assertEqual(AppKit.NSAnimationEffectDisappearingItemDefault, 0)
+        self.assertEqual(AppKit.NSAnimationEffectPoof, 10)
+
         self.assertIsEnumType(AppKit.NSBackingStoreType)
+        self.assertEqual(AppKit.NSBackingStoreRetained, 0)
+        self.assertEqual(AppKit.NSBackingStoreNonretained, 1)
+        self.assertEqual(AppKit.NSBackingStoreBuffered, 2)
+
         self.assertIsEnumType(AppKit.NSColorRenderingIntent)
+        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
+        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
+        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
+        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
+        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
+
         self.assertIsEnumType(AppKit.NSCompositingOperation)
-        self.assertIsEnumType(AppKit.NSDisplayGamut)
-        self.assertIsEnumType(AppKit.NSFocusRingPlacement)
-        self.assertIsEnumType(AppKit.NSFocusRingType)
-        self.assertIsEnumType(AppKit.NSWindowDepth)
-        self.assertIsEnumType(AppKit.NSWindowOrderingMode)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSCompositeClear, 0)
-        self.assertEqual(AppKit.NSCompositeCopy, 1)
-        self.assertEqual(AppKit.NSCompositeSourceOver, 2)
-        self.assertEqual(AppKit.NSCompositeSourceIn, 3)
-        self.assertEqual(AppKit.NSCompositeSourceOut, 4)
-        self.assertEqual(AppKit.NSCompositeSourceAtop, 5)
-        self.assertEqual(AppKit.NSCompositeDestinationOver, 6)
-        self.assertEqual(AppKit.NSCompositeDestinationIn, 7)
-        self.assertEqual(AppKit.NSCompositeDestinationOut, 8)
-        self.assertEqual(AppKit.NSCompositeDestinationAtop, 9)
-        self.assertEqual(AppKit.NSCompositeXOR, 10)
-        self.assertEqual(AppKit.NSCompositePlusDarker, 11)
-        self.assertEqual(AppKit.NSCompositeHighlight, 12)
-        self.assertEqual(AppKit.NSCompositePlusLighter, 13)
-        self.assertEqual(AppKit.NSCompositeMultiply, 14)
-        self.assertEqual(AppKit.NSCompositeScreen, 15)
-        self.assertEqual(AppKit.NSCompositeOverlay, 16)
-        self.assertEqual(AppKit.NSCompositeDarken, 17)
-        self.assertEqual(AppKit.NSCompositeLighten, 18)
-        self.assertEqual(AppKit.NSCompositeColorDodge, 19)
-        self.assertEqual(AppKit.NSCompositeColorBurn, 20)
-        self.assertEqual(AppKit.NSCompositeSoftLight, 21)
-        self.assertEqual(AppKit.NSCompositeHardLight, 22)
-        self.assertEqual(AppKit.NSCompositeDifference, 23)
-        self.assertEqual(AppKit.NSCompositeExclusion, 24)
-        self.assertEqual(AppKit.NSCompositeHue, 25)
-        self.assertEqual(AppKit.NSCompositeSaturation, 26)
-        self.assertEqual(AppKit.NSCompositeColor, 27)
-        self.assertEqual(AppKit.NSCompositeLuminosity, 28)
-
         self.assertEqual(AppKit.NSCompositingOperationClear, 0)
         self.assertEqual(AppKit.NSCompositingOperationCopy, 1)
         self.assertEqual(AppKit.NSCompositingOperationSourceOver, 2)
@@ -80,22 +52,66 @@ class TestNSGraphics(TestCase):
         self.assertEqual(AppKit.NSCompositingOperationColor, 27)
         self.assertEqual(AppKit.NSCompositingOperationLuminosity, 28)
 
-        self.assertEqual(AppKit.NSBackingStoreRetained, 0)
-        self.assertEqual(AppKit.NSBackingStoreNonretained, 1)
-        self.assertEqual(AppKit.NSBackingStoreBuffered, 2)
+        # Legacy aliases:
+        self.assertEqual(AppKit.NSCompositeClear, 0)
+        self.assertEqual(AppKit.NSCompositeCopy, 1)
+        self.assertEqual(AppKit.NSCompositeSourceOver, 2)
+        self.assertEqual(AppKit.NSCompositeSourceIn, 3)
+        self.assertEqual(AppKit.NSCompositeSourceOut, 4)
+        self.assertEqual(AppKit.NSCompositeSourceAtop, 5)
+        self.assertEqual(AppKit.NSCompositeDestinationOver, 6)
+        self.assertEqual(AppKit.NSCompositeDestinationIn, 7)
+        self.assertEqual(AppKit.NSCompositeDestinationOut, 8)
+        self.assertEqual(AppKit.NSCompositeDestinationAtop, 9)
+        self.assertEqual(AppKit.NSCompositeXOR, 10)
+        self.assertEqual(AppKit.NSCompositePlusDarker, 11)
+        self.assertEqual(AppKit.NSCompositeHighlight, 12)
+        self.assertEqual(AppKit.NSCompositePlusLighter, 13)
+        self.assertEqual(AppKit.NSCompositeMultiply, 14)
+        self.assertEqual(AppKit.NSCompositeScreen, 15)
+        self.assertEqual(AppKit.NSCompositeOverlay, 16)
+        self.assertEqual(AppKit.NSCompositeDarken, 17)
+        self.assertEqual(AppKit.NSCompositeLighten, 18)
+        self.assertEqual(AppKit.NSCompositeColorDodge, 19)
+        self.assertEqual(AppKit.NSCompositeColorBurn, 20)
+        self.assertEqual(AppKit.NSCompositeSoftLight, 21)
+        self.assertEqual(AppKit.NSCompositeHardLight, 22)
+        self.assertEqual(AppKit.NSCompositeDifference, 23)
+        self.assertEqual(AppKit.NSCompositeExclusion, 24)
+        self.assertEqual(AppKit.NSCompositeHue, 25)
+        self.assertEqual(AppKit.NSCompositeSaturation, 26)
+        self.assertEqual(AppKit.NSCompositeColor, 27)
+        self.assertEqual(AppKit.NSCompositeLuminosity, 28)
 
-        self.assertEqual(AppKit.NSWindowAbove, 1)
-        self.assertEqual(AppKit.NSWindowBelow, -1)
-        self.assertEqual(AppKit.NSWindowOut, 0)
+        self.assertIsEnumType(AppKit.NSDisplayGamut)
+        self.assertEqual(AppKit.NSDisplayGamutSRGB, 1)
+        self.assertEqual(AppKit.NSDisplayGamutP3, 2)
 
+        self.assertIsEnumType(AppKit.NSFocusRingPlacement)
         self.assertEqual(AppKit.NSFocusRingOnly, 0)
         self.assertEqual(AppKit.NSFocusRingBelow, 1)
         self.assertEqual(AppKit.NSFocusRingAbove, 2)
 
+        self.assertIsEnumType(AppKit.NSFocusRingType)
         self.assertEqual(AppKit.NSFocusRingTypeDefault, 0)
         self.assertEqual(AppKit.NSFocusRingTypeNone, 1)
         self.assertEqual(AppKit.NSFocusRingTypeExterior, 2)
 
+        self.assertIsEnumType(AppKit.NSWindowDepth)
+        self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
+        self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
+        self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
+
+        self.assertIsEnumType(AppKit.NSWindowOrderingMode)
+        self.assertEqual(AppKit.NSWindowAbove, 1)
+        self.assertEqual(AppKit.NSWindowBelow, -1)
+        self.assertEqual(AppKit.NSWindowOut, 0)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSColorSpaceName, str)
+        self.assertIsTypedEnum(AppKit.NSDeviceDescriptionKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSCalibratedWhiteColorSpace, str)
         self.assertIsInstance(AppKit.NSCalibratedBlackColorSpace, str)
         self.assertIsInstance(AppKit.NSCalibratedRGBColorSpace, str)
@@ -117,28 +133,6 @@ class TestNSGraphics(TestCase):
         self.assertIsInstance(AppKit.NSDeviceIsScreen, str)
         self.assertIsInstance(AppKit.NSDeviceIsPrinter, str)
         self.assertIsInstance(AppKit.NSDeviceSize, str)
-        self.assertEqual(AppKit.NSAnimationEffectDisappearingItemDefault, 0)
-        self.assertEqual(AppKit.NSAnimationEffectPoof, 10)
-
-        self.assertEqual(AppKit.NSDisplayGamutSRGB, 1)
-        self.assertEqual(AppKit.NSDisplayGamutP3, 2)
-
-        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
-        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
-        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
-        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
-        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
-
-        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
-        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
-        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
-        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
-
-        self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
-        self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
-        self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
-
-        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
 
     def test_functions(self):
         app = AppKit.NSApplication.sharedApplication()  # noqa: F841

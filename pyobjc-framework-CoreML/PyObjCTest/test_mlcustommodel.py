@@ -18,7 +18,7 @@ class TestMLCustomModel(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("MLCustomModel", CoreML)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMLCustomModelHelper.initWithModelDescription_parameterDictionary_error_,
             2,

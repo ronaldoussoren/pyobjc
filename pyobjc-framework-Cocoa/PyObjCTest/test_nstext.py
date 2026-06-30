@@ -12,23 +12,8 @@ class TestNSTextHelper(AppKit.NSObject):
 
 
 class TestNSText(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextAlignment)
-        self.assertIsEnumType(AppKit.NSTextMovement)
-        self.assertIsEnumType(AppKit.NSWritingDirection)
-
-    def test_constants(self):
-        self.assertEqual(AppKit.NSEnterCharacter, chr(0x0003))
-        self.assertEqual(AppKit.NSBackspaceCharacter, chr(0x0008))
-        self.assertEqual(AppKit.NSTabCharacter, chr(0x0009))
-        self.assertEqual(AppKit.NSNewlineCharacter, chr(0x000A))
-        self.assertEqual(AppKit.NSFormFeedCharacter, chr(0x000C))
-        self.assertEqual(AppKit.NSCarriageReturnCharacter, chr(0x000D))
-        self.assertEqual(AppKit.NSBackTabCharacter, chr(0x0019))
-        self.assertEqual(AppKit.NSDeleteCharacter, chr(0x007F))
-        self.assertEqual(AppKit.NSLineSeparatorCharacter, chr(0x2028))
-        self.assertEqual(AppKit.NSParagraphSeparatorCharacter, chr(0x2029))
-
         self.assertEqual(AppKit.NSLeftTextAlignment, 0)
         self.assertEqual(AppKit.NSJustifiedTextAlignment, 3)
         self.assertEqual(AppKit.NSNaturalTextAlignment, 4)
@@ -40,17 +25,23 @@ class TestNSText(TestCase):
         else:
             self.assertEqual(AppKit.NSTextAlignmentCenter, 1)
             self.assertEqual(AppKit.NSTextAlignmentRight, 2)
-
+        self.assertEqual(AppKit.NSTextAlignmentJustified, 3)
+        self.assertEqual(AppKit.NSTextAlignmentNatural, 4)
         self.assertEqual(AppKit.NSRightTextAlignment, AppKit.NSTextAlignmentRight)
         self.assertEqual(AppKit.NSCenterTextAlignment, AppKit.NSTextAlignmentCenter)
 
-        self.assertEqual(AppKit.NSTextAlignmentJustified, 3)
-        self.assertEqual(AppKit.NSTextAlignmentNatural, 4)
+        self.assertIsEnumType(AppKit.NSTextMovement)
+        self.assertEqual(AppKit.NSTextMovementReturn, 0x10)
+        self.assertEqual(AppKit.NSTextMovementTab, 0x11)
+        self.assertEqual(AppKit.NSTextMovementBacktab, 0x12)
+        self.assertEqual(AppKit.NSTextMovementLeft, 0x13)
+        self.assertEqual(AppKit.NSTextMovementRight, 0x14)
+        self.assertEqual(AppKit.NSTextMovementUp, 0x15)
+        self.assertEqual(AppKit.NSTextMovementDown, 0x16)
+        self.assertEqual(AppKit.NSTextMovementCancel, 0x17)
+        self.assertEqual(AppKit.NSTextMovementOther, 0)
 
-        self.assertEqual(AppKit.NSWritingDirectionNatural, -1)
-        self.assertEqual(AppKit.NSWritingDirectionLeftToRight, 0)
-        self.assertEqual(AppKit.NSWritingDirectionRightToLeft, 1)
-
+        # Older aliases:
         self.assertEqual(AppKit.NSIllegalTextMovement, 0)
         self.assertEqual(AppKit.NSReturnTextMovement, 0x10)
         self.assertEqual(AppKit.NSTabTextMovement, 0x11)
@@ -62,22 +53,30 @@ class TestNSText(TestCase):
         self.assertEqual(AppKit.NSCancelTextMovement, 0x17)
         self.assertEqual(AppKit.NSOtherTextMovement, 0)
 
+        self.assertIsEnumType(AppKit.NSWritingDirection)
+        self.assertEqual(AppKit.NSWritingDirectionNatural, -1)
+        self.assertEqual(AppKit.NSWritingDirectionLeftToRight, 0)
+        self.assertEqual(AppKit.NSWritingDirectionRightToLeft, 1)
+        self.assertEqual(AppKit.NSTextWritingDirectionEmbedding, 0 << 1)
+        self.assertEqual(AppKit.NSTextWritingDirectionOverride, 1 << 1)
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSEnterCharacter, chr(0x0003))
+        self.assertEqual(AppKit.NSBackspaceCharacter, chr(0x0008))
+        self.assertEqual(AppKit.NSTabCharacter, chr(0x0009))
+        self.assertEqual(AppKit.NSNewlineCharacter, chr(0x000A))
+        self.assertEqual(AppKit.NSFormFeedCharacter, chr(0x000C))
+        self.assertEqual(AppKit.NSCarriageReturnCharacter, chr(0x000D))
+        self.assertEqual(AppKit.NSBackTabCharacter, chr(0x0019))
+        self.assertEqual(AppKit.NSDeleteCharacter, chr(0x007F))
+        self.assertEqual(AppKit.NSLineSeparatorCharacter, chr(0x2028))
+        self.assertEqual(AppKit.NSParagraphSeparatorCharacter, chr(0x2029))
+
+    def test_constants(self):
+
         self.assertIsInstance(AppKit.NSTextDidBeginEditingNotification, str)
         self.assertIsInstance(AppKit.NSTextDidEndEditingNotification, str)
         self.assertIsInstance(AppKit.NSTextDidChangeNotification, str)
-
-        self.assertEqual(AppKit.NSTextMovementReturn, 0x10)
-        self.assertEqual(AppKit.NSTextMovementTab, 0x11)
-        self.assertEqual(AppKit.NSTextMovementBacktab, 0x12)
-        self.assertEqual(AppKit.NSTextMovementLeft, 0x13)
-        self.assertEqual(AppKit.NSTextMovementRight, 0x14)
-        self.assertEqual(AppKit.NSTextMovementUp, 0x15)
-        self.assertEqual(AppKit.NSTextMovementDown, 0x16)
-        self.assertEqual(AppKit.NSTextMovementCancel, 0x17)
-        self.assertEqual(AppKit.NSTextMovementOther, 0)
-
-        self.assertEqual(AppKit.NSTextWritingDirectionEmbedding, 0 << 1)
-        self.assertEqual(AppKit.NSTextWritingDirectionOverride, 1 << 1)
 
     @min_os_level("10.13")
     def test_constants10_13(self):

@@ -3,7 +3,7 @@ import MetalPerformanceShaders
 
 
 class TestMPSCore_MPSNDArrayQuantization(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSNDArrayQuantizationScheme)
         self.assertEqual(MetalPerformanceShaders.MPSNDArrayQuantizationTypeNone, 0)
         self.assertEqual(MetalPerformanceShaders.MPSNDArrayQuantizationTypeAffine, 1)

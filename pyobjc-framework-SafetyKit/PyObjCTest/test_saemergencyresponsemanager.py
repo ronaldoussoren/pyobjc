@@ -10,10 +10,7 @@ class TestSAEmergencyResponseManagerHelper(SafetyKit.NSObject):
 
 
 class TestSAEmergencyResponseManager(TestCase):
-    def test_protocols(self):
-        self.assertProtocolExists("SAEmergencyResponseDelegate", SafetyKit)
-
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SafetyKit.SAEmergencyResponseManagerVoiceCallStatus)
         self.assertEqual(SafetyKit.SAEmergencyResponseManagerVoiceCallStatusDialing, 0)
         self.assertEqual(SafetyKit.SAEmergencyResponseManagerVoiceCallStatusActive, 1)
@@ -28,6 +25,9 @@ class TestSAEmergencyResponseManager(TestCase):
             1,
             b"vZ@",
         )
+
+    def test_protocols(self):
+        self.assertProtocolExists("SAEmergencyResponseDelegate", SafetyKit)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

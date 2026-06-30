@@ -3,36 +3,9 @@ import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSLayoutContraintManual(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSLayoutPriority, float)
-
-    def test_enum_types(self):
+class TestNSLayoutContraint(TestCase):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSLayoutAttribute)
-        self.assertIsEnumType(AppKit.NSLayoutConstraintOrientation)
-        self.assertIsEnumType(AppKit.NSLayoutFormatOptions)
-        self.assertIsEnumType(AppKit.NSLayoutRelation)
-
-    def test_nsdictionary_of_variable_bindings(self):
-        var1 = "foo"  # noqa: F841
-        var2 = "bar"  # noqa: F841
-
-        self.assertEqual(
-            AppKit.NSDictionaryOfVariableBindings("var1", "var2"),
-            {"var1": "foo", "var2": "bar"},
-        )
-
-        self.assertRaises(
-            KeyError, AppKit.NSDictionaryOfVariableBindings, "var1", "var3"
-        )
-
-    def test_constants(self):
-        self.assertIsInstance(AppKit.NSViewNoInstrinsicMetric, float)
-
-        self.assertEqual(AppKit.NSLayoutRelationLessThanOrEqual, -1)
-        self.assertEqual(AppKit.NSLayoutRelationEqual, 0)
-        self.assertEqual(AppKit.NSLayoutRelationGreaterThanOrEqual, 1)
-
         self.assertEqual(AppKit.NSLayoutAttributeLeft, 1)
         self.assertEqual(AppKit.NSLayoutAttributeRight, 2)
         self.assertEqual(AppKit.NSLayoutAttributeTop, 3)
@@ -50,6 +23,11 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(AppKit.NSLayoutAttributeFirstBaseline, 12)
         self.assertEqual(AppKit.NSLayoutAttributeNotAnAttribute, 0)
 
+        self.assertIsEnumType(AppKit.NSLayoutConstraintOrientation)
+        self.assertEqual(AppKit.NSLayoutConstraintOrientationHorizontal, 0)
+        self.assertEqual(AppKit.NSLayoutConstraintOrientationVertical, 1)
+
+        self.assertIsEnumType(AppKit.NSLayoutFormatOptions)
         self.assertEqual(
             AppKit.NSLayoutFormatAlignAllLeft, (1 << AppKit.NSLayoutAttributeLeft)
         )
@@ -87,25 +65,31 @@ class TestNSLayoutContraintManual(TestCase):
             AppKit.NSLayoutFormatAlignAllFirstBaseline,
             (1 << AppKit.NSLayoutAttributeFirstBaseline),
         )
-
         self.assertEqual(AppKit.NSLayoutFormatAlignmentMask, 0xFFFF)
-
         self.assertEqual(AppKit.NSLayoutFormatDirectionLeadingToTrailing, 0 << 16)
         self.assertEqual(AppKit.NSLayoutFormatDirectionLeftToRight, 1 << 16)
         self.assertEqual(AppKit.NSLayoutFormatDirectionRightToLeft, 2 << 16)
-
         self.assertEqual(AppKit.NSLayoutFormatDirectionMask, 0x3 << 16)
 
-        self.assertEqual(AppKit.NSLayoutConstraintOrientationHorizontal, 0)
-        self.assertEqual(AppKit.NSLayoutConstraintOrientationVertical, 1)
+        self.assertIsEnumType(AppKit.NSLayoutRelation)
+        self.assertEqual(AppKit.NSLayoutRelationLessThanOrEqual, -1)
+        self.assertEqual(AppKit.NSLayoutRelationEqual, 0)
+        self.assertEqual(AppKit.NSLayoutRelationGreaterThanOrEqual, 1)
 
-        self.assertEqual(AppKit.NSLayoutPriorityRequired, 1000)
-        self.assertEqual(AppKit.NSLayoutPriorityDefaultHigh, 750)
-        self.assertEqual(AppKit.NSLayoutPriorityDragThatCanResizeWindow, 510)
-        self.assertEqual(AppKit.NSLayoutPriorityWindowSizeStayPut, 500)
-        self.assertEqual(AppKit.NSLayoutPriorityDragThatCannotResizeWindow, 490)
-        self.assertEqual(AppKit.NSLayoutPriorityDefaultLow, 250)
-        self.assertEqual(AppKit.NSLayoutPriorityFittingSizeCompression, 50)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSLayoutPriority, float)
+
+    def test_constants(self):
+        # Extensible enum (NSLayoutPriority)
+        self.assertEqual(AppKit.NSLayoutPriorityRequired, 1000.0)
+        self.assertEqual(AppKit.NSLayoutPriorityDefaultHigh, 750.0)
+        self.assertEqual(AppKit.NSLayoutPriorityDragThatCanResizeWindow, 510.0)
+        self.assertEqual(AppKit.NSLayoutPriorityWindowSizeStayPut, 500.0)
+        self.assertEqual(AppKit.NSLayoutPriorityDragThatCannotResizeWindow, 490.0)
+        self.assertEqual(AppKit.NSLayoutPriorityDefaultLow, 250.0)
+        self.assertEqual(AppKit.NSLayoutPriorityFittingSizeCompression, 50.0)
+
+        self.assertIsInstance(AppKit.NSViewNoInstrinsicMetric, float)
 
     @min_os_level("10.11")
     def test_constants10_11(self):
@@ -166,3 +150,18 @@ class TestNSLayoutContraintManual(TestCase):
 
         self.assertResultIsBOOL(AppKit.NSView.isVerticalContentSizeConstraintActive)
         self.assertArgIsBOOL(AppKit.NSView.setVerticalContentSizeConstraintActive_, 0)
+
+
+class TestNSLayoutContraintUsage(TestCase):
+    def test_nsdictionary_of_variable_bindings(self):
+        var1 = "foo"  # noqa: F841
+        var2 = "bar"  # noqa: F841
+
+        self.assertEqual(
+            AppKit.NSDictionaryOfVariableBindings("var1", "var2"),
+            {"var1": "foo", "var2": "bar"},
+        )
+
+        self.assertRaises(
+            KeyError, AppKit.NSDictionaryOfVariableBindings, "var1", "var3"
+        )

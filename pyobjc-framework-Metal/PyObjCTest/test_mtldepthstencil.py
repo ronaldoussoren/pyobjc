@@ -3,11 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestMTLDepthStencil(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLCompareFunction)
-        self.assertIsEnumType(Metal.MTLStencilOperation)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLCompareFunctionNever, 0)
         self.assertEqual(Metal.MTLCompareFunctionLess, 1)
         self.assertEqual(Metal.MTLCompareFunctionEqual, 2)
@@ -17,6 +14,7 @@ class TestMTLDepthStencil(TestCase):
         self.assertEqual(Metal.MTLCompareFunctionGreaterEqual, 6)
         self.assertEqual(Metal.MTLCompareFunctionAlways, 7)
 
+        self.assertIsEnumType(Metal.MTLStencilOperation)
         self.assertEqual(Metal.MTLStencilOperationKeep, 0)
         self.assertEqual(Metal.MTLStencilOperationZero, 1)
         self.assertEqual(Metal.MTLStencilOperationReplace, 2)

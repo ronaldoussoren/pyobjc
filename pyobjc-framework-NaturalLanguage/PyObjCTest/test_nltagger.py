@@ -4,21 +4,19 @@ import NaturalLanguage
 
 
 class TestNLTagger(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NaturalLanguage.NLTaggerAssetsResult)
-        self.assertIsEnumType(NaturalLanguage.NLTaggerOptions)
+        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultAvailable, 0)
+        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultNotAvailable, 1)
+        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultError, 2)
 
-    def test_constants(self):
+        self.assertIsEnumType(NaturalLanguage.NLTaggerOptions)
         self.assertEqual(NaturalLanguage.NLTaggerOmitWords, 1 << 0)
         self.assertEqual(NaturalLanguage.NLTaggerOmitPunctuation, 1 << 1)
         self.assertEqual(NaturalLanguage.NLTaggerOmitWhitespace, 1 << 2)
         self.assertEqual(NaturalLanguage.NLTaggerOmitOther, 1 << 3)
         self.assertEqual(NaturalLanguage.NLTaggerJoinNames, 1 << 4)
         self.assertEqual(NaturalLanguage.NLTaggerJoinContractions, 1 << 5)
-
-        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultAvailable, 0)
-        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultNotAvailable, 1)
-        self.assertEqual(NaturalLanguage.NLTaggerAssetsResultError, 2)
 
     def test_methods(self):
         self.assertArgIsBlock(

@@ -3,10 +3,8 @@ import Vision
 
 
 class TestVNError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNErrorCode)
-
-    def test_constants(self):
         self.assertEqual(Vision.VNErrorOK, 0)
         self.assertEqual(Vision.VNErrorRequestCancelled, 1)
         self.assertEqual(Vision.VNErrorInvalidFormat, 2)

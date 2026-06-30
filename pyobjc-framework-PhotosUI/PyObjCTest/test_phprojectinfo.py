@@ -3,12 +3,8 @@ import PhotosUI
 
 
 class TestPHProjectInfo(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(PhotosUI.PHProjectCreationSource)
-        self.assertIsEnumType(PhotosUI.PHProjectSectionType)
-        self.assertIsEnumType(PhotosUI.PHProjectTextElementType)
-
-    def test_constants(self):
         self.assertEqual(PhotosUI.PHProjectCreationSourceUndefined, 0)
         self.assertEqual(PhotosUI.PHProjectCreationSourceUserSelection, 1)
         self.assertEqual(PhotosUI.PHProjectCreationSourceAlbum, 2)
@@ -22,11 +18,13 @@ class TestPHProjectInfo(TestCase):
         self.assertEqual(PhotosUI.PHProjectCreationSourceProjectSlideshow, 25)
         self.assertEqual(PhotosUI.PHProjectCreationSourceProjectExtension, 26)
 
+        self.assertIsEnumType(PhotosUI.PHProjectSectionType)
         self.assertEqual(PhotosUI.PHProjectSectionTypeUndefined, 0)
         self.assertEqual(PhotosUI.PHProjectSectionTypeCover, 1)
         self.assertEqual(PhotosUI.PHProjectSectionTypeContent, 2)
         self.assertEqual(PhotosUI.PHProjectSectionTypeAuxiliary, 3)
 
+        self.assertIsEnumType(PhotosUI.PHProjectTextElementType)
         self.assertEqual(PhotosUI.PHProjectTextElementTypeBody, 0)
         self.assertEqual(PhotosUI.PHProjectTextElementTypeTitle, 1)
         self.assertEqual(PhotosUI.PHProjectTextElementTypeSubtitle, 2)

@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKMetadataEnums(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKAppleECGAlgorithmVersion)
         self.assertEqual(HealthKit.HKAppleECGAlgorithmVersion1, 1)
         self.assertEqual(HealthKit.HKAppleECGAlgorithmVersion2, 2)

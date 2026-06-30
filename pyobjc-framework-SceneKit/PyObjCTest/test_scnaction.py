@@ -26,10 +26,6 @@ class TestSCNAction(TestCase):
         self.assertEqual(SceneKit.SCNActionTimingModeEaseInEaseOut, 3)
 
     @min_os_level("10.10")
-    def test_protocols(self):
-        self.assertProtocolExists("SCNActionable", SceneKit)
-
-    @min_os_level("10.10")
     def test_methods(self):
         self.assertResultIsBlock(
             SceneKit.SCNAction.timingFunction, SCNActionTimingFunction
@@ -48,12 +44,17 @@ class TestSCNAction(TestCase):
             b"v@" + objc._C_CGFloat,
         )
 
+    @min_os_level("10.11")
+    def test_methods10_11(self):
+        self.assertArgIsBOOL(SceneKit.SCNAction.playAudioSource_waitForCompletion_, 1)
+
+    @min_os_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("SCNActionable", SceneKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(TestSCNActionHelper.runAction_completionHandler_, 1, b"v")
         self.assertArgIsBlock(
             TestSCNActionHelper.runAction_forKey_completionHandler_, 2, b"v"
         )
         self.assertResultIsBOOL(TestSCNActionHelper.hasActions)
-
-    @min_os_level("10.11")
-    def test_methods10_11(self):
-        self.assertArgIsBOOL(SceneKit.SCNAction.playAudioSource_waitForCompletion_, 1)

@@ -4,7 +4,7 @@ import GameController
 
 
 class TestGCPhysicalInputSource(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCPhysicalInputSourceDirection)
         self.assertEqual(GameController.GCPhysicalInputSourceDirectionNotApplicable, 0)
         self.assertEqual(GameController.GCPhysicalInputSourceDirectionUp, 1 << 0)

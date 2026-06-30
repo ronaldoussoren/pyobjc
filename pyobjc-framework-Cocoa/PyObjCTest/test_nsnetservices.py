@@ -17,7 +17,7 @@ class TestNSNetServicesHelper(Foundation.NSObject):
 
 
 class TestNSNetservices(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSNetServicesError)
         self.assertEqual(Foundation.NSNetServicesUnknownError, -72000)
         self.assertEqual(Foundation.NSNetServicesCollisionError, -72001)
@@ -55,19 +55,6 @@ class TestNSNetservices(TestCase):
         self.assertArgIsOut(Foundation.NSNetService.getInputStream_outputStream_, 1)
         self.assertResultIsBOOL(Foundation.NSNetService.setTXTRecordData_)
 
-        self.assertArgIsBOOL(
-            TestNSNetServicesHelper.netServiceBrowser_didFindDomain_moreComing_, 2
-        )
-        self.assertArgIsBOOL(
-            TestNSNetServicesHelper.netServiceBrowser_didFindService_moreComing_, 2
-        )
-        self.assertArgIsBOOL(
-            TestNSNetServicesHelper.netServiceBrowser_didRemoveDomain_moreComing_, 2
-        )
-        self.assertArgIsBOOL(
-            TestNSNetServicesHelper.netServiceBrowser_didRemoveService_moreComing_, 2
-        )
-
     @min_os_level("10.10")
     def test_methods10_10(self):
         self.assertResultIsBOOL(Foundation.NSNetService.includesPeerToPeer)
@@ -80,3 +67,17 @@ class TestNSNetservices(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("NSNetServiceDelegate", Foundation)
         self.assertProtocolExists("NSNetServiceBrowserDelegate", Foundation)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestNSNetServicesHelper.netServiceBrowser_didFindDomain_moreComing_, 2
+        )
+        self.assertArgIsBOOL(
+            TestNSNetServicesHelper.netServiceBrowser_didFindService_moreComing_, 2
+        )
+        self.assertArgIsBOOL(
+            TestNSNetServicesHelper.netServiceBrowser_didRemoveDomain_moreComing_, 2
+        )
+        self.assertArgIsBOOL(
+            TestNSNetServicesHelper.netServiceBrowser_didRemoveService_moreComing_, 2
+        )

@@ -1,14 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SafariServices
 
 
 class TestSFContentBlockerManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SafariServices.SFSafariServicesVersion)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(SafariServices.SFSafariServicesVersion10_0, 0)
         self.assertEqual(SafariServices.SFSafariServicesVersion10_1, 1)
         self.assertEqual(SafariServices.SFSafariServicesVersion11_0, 2)

@@ -41,32 +41,32 @@ class TestAVAssetDownloadTask(TestCase):
             AVFoundation.AVAssetDownloadTaskPrefersLosslessAudioKey, str
         )
 
-    def test_methods(self):
-        self.assertArgHasType(
-            TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950
-            2,
-            AVFoundation.CMTimeRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950
-            4,
-            AVFoundation.CMTimeRange.__typestr__,
-        )
-
-        self.assertArgHasType(
-            TestAVAssetDownloadTaskHelper.URLSession_aggregateAssetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_forMediaSelection_,  # noqa: B950
-            2,
-            AVFoundation.CMTimeRange.__typestr__,
-        )
-        self.assertArgHasType(
-            TestAVAssetDownloadTaskHelper.URLSession_aggregateAssetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_forMediaSelection_,  # noqa: B950
-            4,
-            AVFoundation.CMTimeRange.__typestr__,
-        )
-
     @min_os_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("AVAssetDownloadDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950
+            2,
+            AVFoundation.CMTimeRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950
+            4,
+            AVFoundation.CMTimeRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestAVAssetDownloadTaskHelper.URLSession_aggregateAssetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_forMediaSelection_,  # noqa: B950
+            2,
+            AVFoundation.CMTimeRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestAVAssetDownloadTaskHelper.URLSession_aggregateAssetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_forMediaSelection_,  # noqa: B950
+            4,
+            AVFoundation.CMTimeRange.__typestr__,
+        )
 
     @min_os_level("12.0")
     def test_methods12_0(self):

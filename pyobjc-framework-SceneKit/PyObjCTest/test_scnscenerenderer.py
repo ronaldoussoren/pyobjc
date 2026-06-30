@@ -200,7 +200,7 @@ class TestSCNSceneRenderer(TestCase):
     def test_protocols10_10(self):
         self.assertProtocolExists("SCNSceneRendererDelegate", SceneKit)
 
-    def test_protoocol_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestSCNSceneRendererHelper.presentScene_withTransition_incomingPointOfView_completionHandler_,
             3,

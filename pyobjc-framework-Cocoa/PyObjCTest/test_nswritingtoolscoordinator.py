@@ -64,7 +64,7 @@ class TestNSWritingToolsCoordinatorHelper(AppKit.NSObject):
 
 
 class TestNSWritingToolsCoordinator(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSWritingToolsCoordinatorTextUpdateReason)
         self.assertEqual(AppKit.NSWritingToolsCoordinatorTextUpdateReasonTyping, 0)
         self.assertEqual(AppKit.NSWritingToolsCoordinatorTextUpdateReasonUndoRedo, 1)

@@ -9,15 +9,13 @@ class TestNSFileProviderManagerHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderManager(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(FileProvider.NSFileProviderDomainRemovalMode)
+    def test_enums(self):
         self.assertIsEnumType(FileProvider.NSFileProviderManagerDisconnectionOptions)
-
-    def test_constants(self):
         self.assertEqual(
             FileProvider.NSFileProviderManagerDisconnectionOptionsTemporary, 1 << 0
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderDomainRemovalMode)
         self.assertEqual(FileProvider.NSFileProviderDomainRemovalModeRemoveAll, 0)
         self.assertEqual(
             FileProvider.NSFileProviderDomainRemovalModePreserveDirtyUserData, 1
@@ -139,10 +137,6 @@ class TestNSFileProviderManager(TestCase):
             b"v@",
         )
 
-        self.assertResultHasType(
-            TestNSFileProviderManagerHelper.refreshInterval, objc._C_DBL
-        )
-
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertArgIsBlock(
@@ -184,3 +178,8 @@ class TestNSFileProviderManager(TestCase):
     @min_sdk_level("11.3")
     def test_protocols(self):
         self.assertProtocolExists("NSFileProviderPendingSetEnumerator", FileProvider)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestNSFileProviderManagerHelper.refreshInterval, objc._C_DBL
+        )

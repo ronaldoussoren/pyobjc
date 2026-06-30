@@ -3,22 +3,23 @@ import Quartz
 
 
 class TestCGColorConversion(TestCase):
-    @min_os_level("10.12")
-    def test_types(self):
-        self.assertIsCFType(Quartz.CGColorConversionInfoRef)
-
-    @min_os_level("10.12")
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.CGColorConversionInfoTransformType)
         self.assertEqual(Quartz.kCGColorConversionTransformFromSpace, 0)
         self.assertEqual(Quartz.kCGColorConversionTransformToSpace, 1)
         self.assertEqual(Quartz.kCGColorConversionTransformApplySpace, 2)
 
+    @min_os_level("10.12")
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGColorConversionBlackPointCompensation, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(Quartz.kCGColorConversionTRCSize, str)
+
+    @min_os_level("10.12")
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGColorConversionInfoRef)
 
     @min_os_level("10.12")
     def test_functions(self):

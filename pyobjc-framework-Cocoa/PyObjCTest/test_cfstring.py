@@ -203,7 +203,7 @@ class TestString(TestCase):
 
         v = CoreFoundation.CFStringGetSmallestEncoding(s)
         self.assertIsInstance(v, int)
-        v = CoreFoundation.CFStringGetFastest_encoding(s)
+        v = CoreFoundation.CFStringGetFastestEncoding(s)
         self.assertIsInstance(v, int)
         v = CoreFoundation.CFStringGetSystemEncoding()
         self.assertIsInstance(v, int)

@@ -12,7 +12,7 @@ class TestWKScriptMessageHandlerWithReply(TestCase):
     def test_protocols11_0(self):
         self.assertProtocolExists("WKScriptMessageHandlerWithReply", WebKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestWKScriptMessageHandlerWithReplyHelper.userContentController_didReceiveScriptMessage_replyHandler_,
             2,

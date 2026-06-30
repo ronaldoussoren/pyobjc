@@ -81,7 +81,13 @@ class TestAkAudioMixing(TestCase):
         self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeMono, 0)
         self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeBypass, 1)
 
-    def test_methods(self):
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("AVAudioMixing", AVFoundation)
+        self.assertProtocolExists("AVAudioStereoMixing", AVFoundation)
+        self.assertProtocolExists("AVAudio3DMixing", AVFoundation)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestAVAudioMixingHelper.destinationForMixer_bus_, 1, objc._C_NSUInteger
         )
@@ -119,9 +125,3 @@ class TestAkAudioMixing(TestCase):
         self.assertResultHasType(
             TestAVAudioMixingHelper.position, AVFoundation.AVAudio3DPoint.__typestr__
         )
-
-    @min_sdk_level("10.10")
-    def test_protocols(self):
-        self.assertProtocolExists("AVAudioMixing", AVFoundation)
-        self.assertProtocolExists("AVAudioStereoMixing", AVFoundation)
-        self.assertProtocolExists("AVAudio3DMixing", AVFoundation)

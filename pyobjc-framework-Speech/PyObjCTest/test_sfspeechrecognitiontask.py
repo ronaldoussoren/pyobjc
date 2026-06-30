@@ -13,7 +13,7 @@ class TestSFSpeechRecognitionTaskHelper(Speech.NSObject):
 
 class TestSFSpeechRecognitionTask(TestCase):
 
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Speech.SFSpeechRecognitionTaskState)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateStarting, 0)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateRunning, 1)
@@ -21,11 +21,17 @@ class TestSFSpeechRecognitionTask(TestCase):
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateCanceling, 3)
         self.assertEqual(Speech.SFSpeechRecognitionTaskStateCompleted, 4)
 
+    @min_os_level("10.15")
+    def test_methods10_15(self):
+        self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isFinishing)
+
+        self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isCancelled)
+
     @min_sdk_level("10.15")
     def test_protocols(self):
         self.assertProtocolExists("SFSpeechRecognitionTaskDelegate", Speech)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestSFSpeechRecognitionTaskHelper.speechRecognitionTask_didFinishSuccessfully_,
             1,
@@ -36,9 +42,3 @@ class TestSFSpeechRecognitionTask(TestCase):
             1,
             objc._C_DBL,
         )
-
-    @min_os_level("10.15")
-    def test_methods10_15(self):
-        self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isFinishing)
-
-        self.assertResultIsBOOL(Speech.SFSpeechRecognitionTask.isCancelled)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestLSConstants(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         # self.assertIsEnumType(CoreServices.OSStatus)
         self.assertEqual(CoreServices.kLSNo32BitEnvironmentErr, -10386)
         self.assertEqual(CoreServices.kLSMalformedLocErr, -10400)

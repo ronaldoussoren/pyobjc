@@ -1,13 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Intents
 
 
 class TestINSearchCallHistoryIntentResponse(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INSearchCallHistoryIntentResponseCode)
-
-    @min_os_level("10.12")
-    def test_constants(self):
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeReady, 1)
         self.assertEqual(Intents.INSearchCallHistoryIntentResponseCodeContinueInApp, 2)

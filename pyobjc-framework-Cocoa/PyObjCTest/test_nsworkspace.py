@@ -4,27 +4,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSWorkspace(TestCase):
-    def test_typed_enums(self):
-        self.assertIsTypedEnum(AppKit.NSWorkspaceDesktopImageOptionKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSWorkspaceAuthorizationType)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeCreateSymbolicLink, 0)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeSetAttributes, 1)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeReplaceFile, 2)
+
         self.assertIsEnumType(AppKit.NSWorkspaceIconCreationOptions)
+        self.assertEqual(AppKit.NSExcludeQuickDrawElementsIconCreationOption, 1 << 1)
+        self.assertEqual(AppKit.NSExclude10_4ElementsIconCreationOption, 1 << 2)
+
         self.assertIsEnumType(AppKit.NSWorkspaceLaunchOptions)
-
-    def test_info_for_file(self):
-        ws = AppKit.NSWorkspace.sharedWorkspace()
-
-        # A method with 2 output parameters, this means the result
-        # is a tuple with 3 elements (return value, param1, param2)
-        res = ws.getInfoForFile_application_type_("/", None, None)
-        self.assertIsInstance(res, tuple)
-        self.assertEqual(len(res), 3)
-        self.assertEqual(res[0], 1)
-        self.assertEqual(res[1], "/System/Library/CoreServices/Finder.app")
-        self.assertEqual(res[2], "")
-
-    def test_constants(self):
         self.assertEqual(AppKit.NSWorkspaceLaunchAndPrint, 0x00000002)
         self.assertEqual(AppKit.NSWorkspaceLaunchWithErrorPresentation, 0x00000040)
         self.assertEqual(AppKit.NSWorkspaceLaunchInhibitingBackgroundOnly, 0x00000080)
@@ -38,9 +28,10 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(AppKit.NSWorkspaceLaunchAndHideOthers, 0x00200000)
         self.assertEqual(AppKit.NSWorkspaceLaunchDefault, AppKit.NSWorkspaceLaunchAsync)
 
-        self.assertEqual(AppKit.NSExcludeQuickDrawElementsIconCreationOption, 1 << 1)
-        self.assertEqual(AppKit.NSExclude10_4ElementsIconCreationOption, 1 << 2)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSWorkspaceDesktopImageOptionKey, str)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSWorkspaceDidLaunchApplicationNotification, str)
         self.assertIsInstance(AppKit.NSWorkspaceDidMountNotification, str)
         self.assertIsInstance(
@@ -73,10 +64,6 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(AppKit.NSWorkspaceRecycleOperation, str)
         self.assertIsInstance(AppKit.NSWorkspaceDuplicateOperation, str)
 
-        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeCreateSymbolicLink, 0)
-        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeSetAttributes, 1)
-        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeReplaceFile, 2)
-
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageScalingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageAllowClippingKey, str)
         self.assertIsInstance(AppKit.NSWorkspaceDesktopImageFillColorKey, str)
@@ -100,6 +87,18 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationArguments, str)
         self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationEnvironment, str)
         self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationArchitecture, str)
+
+    def test_info_for_file(self):
+        ws = AppKit.NSWorkspace.sharedWorkspace()
+
+        # A method with 2 output parameters, this means the result
+        # is a tuple with 3 elements (return value, param1, param2)
+        res = ws.getInfoForFile_application_type_("/", None, None)
+        self.assertIsInstance(res, tuple)
+        self.assertEqual(len(res), 3)
+        self.assertEqual(res[0], 1)
+        self.assertEqual(res[1], "/System/Library/CoreServices/Finder.app")
+        self.assertEqual(res[2], "")
 
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_)

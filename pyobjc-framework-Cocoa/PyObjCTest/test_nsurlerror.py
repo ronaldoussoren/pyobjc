@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLError(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSURLErrorDomain)
+    def test_enums(self):
         self.assertEqual(Foundation.NSURLErrorUnknown, -1)
         self.assertEqual(Foundation.NSURLErrorCancelled, -999)
         self.assertEqual(Foundation.NSURLErrorBadURL, -1000)

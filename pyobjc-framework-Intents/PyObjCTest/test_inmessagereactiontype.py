@@ -3,8 +3,7 @@ import Intents
 
 
 class TestINMessageReactionType(TestCase):
-
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INMessageReactionType)
         self.assertEqual(Intents.INMessageReactionTypeUnknown, 0)
         self.assertEqual(Intents.INMessageReactionTypeEmoji, 1)

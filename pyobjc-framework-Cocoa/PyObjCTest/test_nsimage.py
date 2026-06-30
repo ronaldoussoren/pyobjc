@@ -12,24 +12,21 @@ class TestNSImageHelper(AppKit.NSObject):
 
 
 class TestNSImage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSImageCacheMode)
-        self.assertIsEnumType(AppKit.NSImageLoadStatus)
-        self.assertIsEnumType(AppKit.NSImageResizingMode)
-        self.assertIsEnumType(AppKit.NSImageSymbolScale)
+        self.assertEqual(AppKit.NSImageCacheDefault, 0)
+        self.assertEqual(AppKit.NSImageCacheAlways, 1)
+        self.assertEqual(AppKit.NSImageCacheBySize, 2)
+        self.assertEqual(AppKit.NSImageCacheNever, 3)
 
-    def test_constants(self):
+        self.assertIsEnumType(AppKit.NSImageLoadStatus)
         self.assertEqual(AppKit.NSImageLoadStatusCompleted, 0)
         self.assertEqual(AppKit.NSImageLoadStatusCancelled, 1)
         self.assertEqual(AppKit.NSImageLoadStatusInvalidData, 2)
         self.assertEqual(AppKit.NSImageLoadStatusUnexpectedEOF, 3)
         self.assertEqual(AppKit.NSImageLoadStatusReadError, 4)
 
-        self.assertEqual(AppKit.NSImageCacheDefault, 0)
-        self.assertEqual(AppKit.NSImageCacheAlways, 1)
-        self.assertEqual(AppKit.NSImageCacheBySize, 2)
-        self.assertEqual(AppKit.NSImageCacheNever, 3)
-
+        self.assertIsEnumType(AppKit.NSImageResizingMode)
         if objc.arch == "x86_64":
             self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
             self.assertEqual(AppKit.NSImageResizingModeTile, 1)
@@ -37,6 +34,7 @@ class TestNSImage(TestCase):
             self.assertEqual(AppKit.NSImageResizingModeTile, 0)
             self.assertEqual(AppKit.NSImageResizingModeStretch, 1)
 
+        self.assertIsEnumType(AppKit.NSImageSymbolScale)
         self.assertEqual(AppKit.NSImageSymbolScaleSmall, 1)
         self.assertEqual(AppKit.NSImageSymbolScaleMedium, 2)
         self.assertEqual(AppKit.NSImageSymbolScaleLarge, 3)
@@ -51,6 +49,7 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageSymbolColorRenderingModeFlat, 1)
         self.assertEqual(AppKit.NSImageSymbolColorRenderingModeGradient, 2)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameBluetoothTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameIChatTheaterTemplate, str)
@@ -283,7 +282,11 @@ class TestNSImage(TestCase):
             objc._C_NSBOOL + AppKit.NSRect.__typestr__,
         )
 
-    def test_protocols(self):
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSImageDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
             2,
@@ -294,10 +297,6 @@ class TestNSImage(TestCase):
             2,
             objc._C_NSUInteger,
         )
-
-    @min_sdk_level("10.10")
-    def test_protocols10_10(self):
-        self.assertProtocolExists("NSImageDelegate", AppKit)
 
 
 class TestNSImageUsage(TestCase):

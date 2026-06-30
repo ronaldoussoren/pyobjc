@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class NEProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEProviderStopReason)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEProviderStopReasonNone, 0)
         self.assertEqual(NetworkExtension.NEProviderStopReasonUserInitiated, 1)
         self.assertEqual(NetworkExtension.NEProviderStopReasonProviderFailed, 2)

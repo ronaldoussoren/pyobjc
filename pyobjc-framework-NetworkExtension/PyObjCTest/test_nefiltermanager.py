@@ -3,12 +3,8 @@ import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEFilterManagerError)
-        self.assertIsEnumType(NetworkExtension.NEFilterManagerGrade)
-
-    @min_os_level("10.11")
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationInvalid, 1)
         self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationDisabled, 2)
         self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationStale, 3)
@@ -22,9 +18,12 @@ class TestNEAppProxyFlow(TestCase):
             NetworkExtension.NEFilterManagerErrorConfigurationInternalError, 6
         )
 
+        self.assertIsEnumType(NetworkExtension.NEFilterManagerGrade)
         self.assertEqual(NetworkExtension.NEFilterManagerGradeFirewall, 1)
         self.assertEqual(NetworkExtension.NEFilterManagerGradeInspector, 2)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(NetworkExtension.NEFilterErrorDomain, str)
         self.assertIsInstance(
             NetworkExtension.NEFilterConfigurationDidChangeNotification, str

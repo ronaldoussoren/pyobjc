@@ -14,5 +14,6 @@ class TestNSProxy(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSProxy.respondsToSelector_)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSProxyHelper.allowsWeakReference)
         self.assertResultIsBOOL(TestNSProxyHelper.retainWeakReference)

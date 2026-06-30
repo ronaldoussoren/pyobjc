@@ -23,16 +23,20 @@ NSItemProviderLoadHandler = b"v@?#@"
 
 
 class TestNSItemProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSItemProviderErrorCode)
-        self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
-        self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
+        self.assertEqual(AppKit.NSItemProviderUnknownError, -1)
+        self.assertEqual(AppKit.NSItemProviderItemUnavailableError, -1000)
+        self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
+        self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
 
-    def test_constants(self):
+        self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
+        self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
+
+        self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityAll, 0)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityGroup, 2)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityOwnProcess, 3)
-        self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
 
     @min_os_level("10.10")
     def test_constants10_10(self):
@@ -44,35 +48,6 @@ class TestNSItemProvider(TestCase):
         self.assertIsInstance(AppKit.NSItemProviderPreferredImageSizeKey, str)
         self.assertIsInstance(AppKit.NSExtensionJavaScriptPreprocessingResultsKey, str)
         self.assertIsInstance(AppKit.NSItemProviderErrorDomain, str)
-
-        self.assertEqual(AppKit.NSItemProviderUnknownError, -1)
-        self.assertEqual(AppKit.NSItemProviderItemUnavailableError, -1000)
-        self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
-
-    @min_os_level("10.11")
-    def test_constants10_11(self):
-        self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
-
-    def test_methods(self):
-        self.assertResultHasType(
-            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
-            objc._C_NSInteger,
-        )
-        self.assertResultHasType(
-            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
-            objc._C_NSInteger,
-        )
-        self.assertArgIsBlock(
-            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
-            1,
-            b"v@@",
-        )
-        self.assertArgIsOut(
-            TestNSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2
-        )
-        self.assertArgIsOut(
-            TestNSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2
-        )
 
     @min_os_level("10.10")
     def test_methods10_10(self):
@@ -164,3 +139,24 @@ class TestNSItemProvider(TestCase):
     def test_protocols10_13(self):
         self.assertProtocolExists("NSItemProviderWriting", AppKit)
         self.assertProtocolExists("NSItemProviderReading", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+            objc._C_NSInteger,
+        )
+        self.assertArgIsBlock(
+            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
+            1,
+            b"v@@",
+        )
+        self.assertArgIsOut(
+            TestNSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2
+        )
+        self.assertArgIsOut(
+            TestNSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2
+        )

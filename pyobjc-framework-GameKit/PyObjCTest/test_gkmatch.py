@@ -18,14 +18,12 @@ class TestGKMatchHelper(GameKit.NSObject):
 
 
 class TestGKMatch(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKMatchSendDataMode)
-        self.assertIsEnumType(GameKit.GKPlayerConnectionState)
-
-    def test_constants(self):
         self.assertEqual(GameKit.GKMatchSendDataReliable, 0)
         self.assertEqual(GameKit.GKMatchSendDataUnreliable, 1)
 
+        self.assertIsEnumType(GameKit.GKPlayerConnectionState)
         self.assertEqual(GameKit.GKPlayerStateUnknown, 0)
         self.assertEqual(GameKit.GKPlayerStateConnected, 1)
         self.assertEqual(GameKit.GKPlayerStateDisconnected, 2)

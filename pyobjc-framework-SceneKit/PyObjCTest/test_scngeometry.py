@@ -4,25 +4,24 @@ import SceneKit
 
 
 class TestSCNGeometry(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNGeometryPrimitiveType)
-        self.assertIsEnumType(SceneKit.SCNTessellationSmoothingMode)
-
-    def test_constants(self):
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangles, 0)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangleStrip, 1)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeLine, 2)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePoint, 3)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePolygon, 4)
 
+        self.assertIsEnumType(SceneKit.SCNTessellationSmoothingMode)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModeNone, 0)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModePNTriangles, 1)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModePhong, 2)
+
+    def test_constants(self):
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertex, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticNormal, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticColor, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticTexcoord, str)
-
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModeNone, 0)
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModePNTriangles, 1)
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModePhong, 2)
 
     @min_os_level("10.10")
     def test_constants10_10(self):

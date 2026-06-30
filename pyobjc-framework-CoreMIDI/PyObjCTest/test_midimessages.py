@@ -3,29 +3,8 @@ import CoreMIDI
 
 
 class TestMIDIMessages(TestCase):
-    def test_structs(self):
-        v = CoreMIDI.MIDIMessage_64()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
-        self.assertPickleRoundTrips(v)
-
-        v = CoreMIDI.MIDIMessage_96()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
-        self.assertIsInstance(v.word2, int)
-        self.assertPickleRoundTrips(v)
-
-        v = CoreMIDI.MIDIMessage_128()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
-        self.assertIsInstance(v.word2, int)
-        self.assertIsInstance(v.word3, int)
-        self.assertPickleRoundTrips(v)
-
-        # XXX: Contains a union
-        self.assertNotHasAttr(CoreMIDI, "MIDIUniversalMessage")
-
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreMIDI.MIDIMessageType)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeUtility, 0x0)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeSystem, 0x1)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeChannelVoice1, 0x2)
@@ -37,6 +16,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDIMessageTypeStream, 0xF)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeInvalid, 0xFF)
 
+        self.assertIsEnumType(CoreMIDI.MIDICVStatus)
         self.assertEqual(CoreMIDI.kMIDICVStatusNoteOff, 0x8)
         self.assertEqual(CoreMIDI.kMIDICVStatusNoteOn, 0x9)
         self.assertEqual(CoreMIDI.kMIDICVStatusPolyPressure, 0xA)
@@ -53,6 +33,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDICVStatusPerNotePitchBend, 0x6)
         self.assertEqual(CoreMIDI.kMIDICVStatusPerNoteMgmt, 0xF)
 
+        self.assertIsEnumType(CoreMIDI.MIDISystemStatus)
         self.assertEqual(CoreMIDI.kMIDIStatusStartOfExclusive, 0xF0)
         self.assertEqual(CoreMIDI.kMIDIStatusEndOfExclusive, 0xF7)
         self.assertEqual(CoreMIDI.kMIDIStatusMTC, 0xF1)
@@ -67,6 +48,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDIStatusActiveSensing, 0xFE)
         self.assertEqual(CoreMIDI.kMIDIStatusSystemReset, 0xFF)
 
+        self.assertIsEnumType(CoreMIDI.MIDISysExStatus)
         self.assertEqual(CoreMIDI.kMIDISysExStatusComplete, 0x0)
         self.assertEqual(CoreMIDI.kMIDISysExStatusStart, 0x1)
         self.assertEqual(CoreMIDI.kMIDISysExStatusContinue, 0x2)
@@ -74,6 +56,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetHeader, 0x8)
         self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetPayload, 0x9)
 
+        self.assertIsEnumType(CoreMIDI.MIDIUtilityStatus)
         self.assertEqual(CoreMIDI.kMIDIUtilityStatusNOOP, 0x0)
         self.assertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionClock, 0x1)
         self.assertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionTimestamp, 0x2)
@@ -133,25 +116,53 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kUMPStreamMessageFormatContinuing, 0x02)
         self.assertEqual(CoreMIDI.kUMPStreamMessageFormatEnd, 0x03)
 
+        # Unnamed enum:
         self.assertEqual(CoreMIDI.kMIDIUInteger2Max, 0x3)
         self.assertEqual(CoreMIDI.kMIDIUInteger4Max, 0xF)
         self.assertEqual(CoreMIDI.kMIDIUInteger7Max, 0x7F)
         self.assertEqual(CoreMIDI.kMIDIUInteger14Max, 0x3FFF)
         self.assertEqual(CoreMIDI.kMIDIUInteger28Max, 0xFFFFFFF)
 
+        # Unnamed enum:
         self.assertEqual(CoreMIDI.kMIDIDeviceIDUMPGroup, 0x7E)
 
+        # Unnamed enum:
         self.assertEqual(CoreMIDI.kMIDIDeviceIDFunctionBlock, 0x7F)
 
+        self.assertIsEnumType(CoreMIDI.MIDINoteAttribute)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeNone, 0x0)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeManufacturerSpecific, 0x1)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeProfileSpecific, 0x2)
         self.assertEqual(CoreMIDI.kMIDINoteAttributePitch, 0x3)
 
+        self.assertIsEnumType(CoreMIDI.MIDIProgramChangeOptions)
         self.assertEqual(CoreMIDI.kMIDIProgramChangeBankValid, 0x1)
 
+        self.assertIsEnumType(CoreMIDI.MIDIPerNoteManagementOptions)
         self.assertEqual(CoreMIDI.kMIDIPerNoteManagementReset, 0x1)
         self.assertEqual(CoreMIDI.kMIDIPerNoteManagementDetach, 0x2)
+
+    def test_structs(self):
+        v = CoreMIDI.MIDIMessage_64()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+        self.assertPickleRoundTrips(v)
+
+        v = CoreMIDI.MIDIMessage_96()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+        self.assertIsInstance(v.word2, int)
+        self.assertPickleRoundTrips(v)
+
+        v = CoreMIDI.MIDIMessage_128()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+        self.assertIsInstance(v.word2, int)
+        self.assertIsInstance(v.word3, int)
+        self.assertPickleRoundTrips(v)
+
+        # XXX: Contains a union
+        self.assertNotHasAttr(CoreMIDI, "MIDIUniversalMessage")
 
     # @expectedFailure  # XXX: Inline functions
     @min_sdk_level("11.0")

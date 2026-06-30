@@ -1,14 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSFormattingContext)
-        self.assertIsEnumType(Foundation.NSFormattingUnitStyle)
-
-    @min_os_level("10.10")
-    def test_constants10_10(self):
         self.assertEqual(Foundation.NSFormattingContextUnknown, 0)
         self.assertEqual(Foundation.NSFormattingContextDynamic, 1)
         self.assertEqual(Foundation.NSFormattingContextStandalone, 2)
@@ -16,6 +12,7 @@ class TestNSFormatter(TestCase):
         self.assertEqual(Foundation.NSFormattingContextBeginningOfSentence, 4)
         self.assertEqual(Foundation.NSFormattingContextMiddleOfSentence, 5)
 
+        self.assertIsEnumType(Foundation.NSFormattingUnitStyle)
         self.assertEqual(Foundation.NSFormattingUnitStyleShort, 1)
         self.assertEqual(Foundation.NSFormattingUnitStyleMedium, 2)
         self.assertEqual(Foundation.NSFormattingUnitStyleLong, 3)

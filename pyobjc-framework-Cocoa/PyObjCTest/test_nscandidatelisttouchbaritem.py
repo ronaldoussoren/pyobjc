@@ -62,6 +62,7 @@ class TestNSCandidateListTouchBarItem(TestCase):
             b"@@" + objc._C_NSInteger,
         )
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSCandidateListTouchBarItemHelper.candidateListTouchBarItem_beginSelectingCandidateAtIndex_,  # noqa: B950
             1,
