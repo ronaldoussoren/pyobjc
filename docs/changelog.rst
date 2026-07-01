@@ -11,7 +11,7 @@ Version 13.0a0
 * The attribute :data:`objc.platform` is deprecated and will be removed
   in PyObjC 14. Its value is always ``"MACOSX"``.
 
-* Framework bindings updated for macOS 27 SDK (beta 1)
+* Framework bindings updated for macOS 27 SDK (beta 2)
 
 * Add support for the following frameworks (all new in macOS 27):
 
@@ -24,6 +24,10 @@ Version 13.0a0
   * :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
 
   * :doc:`AVRouting </apinotes/AVRouting>`
+
+* The ``DVDPlayback`` framework is not available on macOS 27.
+
+  .. note:: to be removed, headers are no longer available
 
 * All formal protocols (``@protocol ...`` in Objective-C) are exposed
   as attributes on module that implements the binding for the framework
@@ -444,6 +448,8 @@ Version 13.0a0
 
   * ``Metal.MTLCaptureScopeProtocol`` for ``@protocol(MTLCaptureScope)``
 
+  * ``GameCenter.GKViewControllerObject`` for ``@protocol(GKViewController)``
+
 * ``objc.formal_protocol`` can now be used as an additional base class
   to indicate that a class implements a protocol.
 
@@ -467,9 +473,12 @@ Version 13.0a0
   Mixing the two definition styles is supported as well, although
   this will lead to less understandable code.
 
-* The ``DVDPlayback`` framework is not available on macOS 27.
+* The test suite for the framework wrappers has been reworked with
+  more consistent test naming. Tests now assume macOS 10.9 or later.
 
-  .. note:: to be removed, headers are no longer available
+* The CoreAudio bindings no longer contain a C++ extension because
+  Xcode 27 can no longer target macOS 10.15 or earlier when using
+  C++.
 
 Version 12.2.1
 --------------
