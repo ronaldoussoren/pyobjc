@@ -43,7 +43,7 @@ means that wheels for Python 3.10 and 3.11 support macOS 10.9, while wheels for 
 versions support macOS 10.13 (or later).
 
 Binary wheels will include support for x86_64 as long as it is possible to do so using the
-latest Apple SDK, or as long as I have access to hardware where I can test such support.  I've
+latest Apple SDK, and as long as I have access to hardware where I can test such support.  I've
 not yet determined if there will be a separate set of x86_64 wheels
 once Xcode drops support for building for x86_64.
 
