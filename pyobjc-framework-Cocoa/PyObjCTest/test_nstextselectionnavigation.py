@@ -28,6 +28,9 @@ class TestNSTextSelectionNavigationHelper(AppKit.NSObject):
     def textLayoutOrientationAtLocation_(self, a):
         return 1
 
+    def convertInteractionPoint_toContainerAtLocation_(self, a, b):
+        return 1
+
 
 class TestNSTextSelectionNavigation(TestCase):
     def test_enums(self):
@@ -155,4 +158,19 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertResultHasType(
             TestNSTextSelectionNavigationHelper.textLayoutOrientationAtLocation_,
             objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestNSTextSelectionNavigationHelper.convertInteractionPoint_toContainerAtLocation_,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextSelectionNavigationHelper.convertInteractionPoint_toContainerAtLocation_,
+            0,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextSelectionNavigationHelper.convertInteractionPoint_toContainerAtLocation_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )

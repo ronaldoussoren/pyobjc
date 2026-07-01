@@ -66,6 +66,18 @@ class TestNSSpellChecker(TestCase):
         )
         self.assertIsInstance(AppKit.NSTextCheckingGenerateInlinePredictionsKey, str)
 
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(
+            AppKit.NSTextCheckingAutomaticCapitalizationEnabledKey, str
+        )
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            AppKit.NSTextCheckingWaitForAllGrammarCheckingResultsKey, str
+        )
+
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSpellChecker.sharedSpellCheckerExists)
         self.assertArgIsBOOL(

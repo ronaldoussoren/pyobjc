@@ -9,12 +9,6 @@ from PyObjCTools.TestSupport import (
 
 class TestAVCaptureSession(TestCase):
     def test_enums(self):
-        self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
-
         self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
         self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
         self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)

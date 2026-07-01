@@ -13,6 +13,12 @@ class TestAVCaptureDevice(TestCase):
         self.assertEqual(AVFoundation.AVCaptureDevicePositionBack, 1)
         self.assertEqual(AVFoundation.AVCaptureDevicePositionFront, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
+
         self.assertIsEnumType(AVFoundation.AVCaptureFlashMode)
         self.assertEqual(AVFoundation.AVCaptureFlashModeOff, 0)
         self.assertEqual(AVFoundation.AVCaptureFlashModeOn, 1)
@@ -449,3 +455,12 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightActive)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isEdgeLightSupported)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isAdjustingSignalCompensationDelayWhileRunningSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isAdjustingSignalCompensationDelayWhileRunningSupported
+        )
