@@ -1,5 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSecCertificateOIDs(TestCase):
@@ -124,7 +124,6 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDX509V3SignedCertificateCStruct, str)
         self.assertIsInstance(Security.kSecOIDSRVName, str)
 
-    @expectedFailure
     def test_constants_missing(self):
         # Missing on 10.11
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER, str)

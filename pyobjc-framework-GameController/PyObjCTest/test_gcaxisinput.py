@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import (
     TestCase,
     min_sdk_level,
-    expectedFailure,
 )
 import GameController
 
@@ -34,7 +33,6 @@ class TestGCAxisInput(TestCase):
     def test_protocols(self):
         self.assertProtocolExists("GCAxisInput", GameController)
 
-    @expectedFailure  # 'value' method is requires explicit protocol definition.
     def test_protocol_methods(self):
         self.assertResultIsBlock(TestGCAxisInputHelper.valueDidChangeHandler, b"v@@f")
 

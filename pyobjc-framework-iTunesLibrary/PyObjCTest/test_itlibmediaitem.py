@@ -3,7 +3,6 @@ import objc
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    expectedFailure,
 )
 
 
@@ -126,7 +125,6 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocation, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyArtwork, str)
 
-    # @max_os_level("13.99")
     def test_constants_removed_in_14_0(self):
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str
@@ -140,6 +138,5 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementNumber, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, str)
 
-    @expectedFailure
     def test_constants_missing(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyFileType, str)

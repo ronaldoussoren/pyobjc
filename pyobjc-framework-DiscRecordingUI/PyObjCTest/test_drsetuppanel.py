@@ -1,5 +1,5 @@
 import DiscRecordingUI
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRSetupPanelHelper(DiscRecordingUI.NSObject):
@@ -14,7 +14,6 @@ class TestDRSetupPanelHelper(DiscRecordingUI.NSObject):
 
 
 class TestDRSetupPanel(TestCase):
-    @expectedFailure
     def test_constants(self):
         # Documented, but not actually available...
         self.assertIsInstance(

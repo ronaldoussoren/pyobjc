@@ -22,7 +22,6 @@ class TestSecEncryptTransform(TestCase):
 
         self.assertIsInstance(Security.kSecOAEPEncodingParametersAttributeName, str)
 
-    @expectedFailure
     def test_constants10_8_missing(self):
         # Fails on 10.11
         self.assertIsInstance(Security.kSecOAEPMessageLengthAttributeName, str)

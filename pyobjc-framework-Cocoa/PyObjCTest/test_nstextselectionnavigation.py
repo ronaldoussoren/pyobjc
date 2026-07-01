@@ -172,5 +172,5 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertArgHasType(
             TestNSTextSelectionNavigationHelper.convertInteractionPoint_toContainerAtLocation_,
             1,
-            AppKit.NSPoint.__typestr__,
+            objc._C_ID,
         )

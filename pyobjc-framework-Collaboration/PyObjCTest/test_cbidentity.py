@@ -1,9 +1,8 @@
 import Collaboration
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBIdentity(TestCase):
-    @expectedFailure
     def test_methods(self):
         with self.subTest("isHidden"):
             self.assertResultIsBOOL(Collaboration.CBIdentity.isHidden)
