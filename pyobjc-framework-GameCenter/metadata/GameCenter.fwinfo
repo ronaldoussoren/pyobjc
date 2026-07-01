@@ -13,6 +13,27 @@
    "GKExchangeTimeoutNone": { "typestr": "d" },
    "GKPlayerDidChangeNotificationName": { "typestr": "@" }
   },
+  "typed_enum": {
+   "GKChallengeState": { "type": "q" },
+   "GKMatchSendDataMode": { "type": "q" },
+   "GKMatchType": { "type": "q" },
+   "GKSessionMode": { "type": "q" },
+   "GKLeaderboardTimeScope": { "type": "q" },
+   "GKVoiceChatPlayerState": { "type": "q" },
+   "GKSendDataMode": { "type": "i" },
+   "GKSessionError": { "type": "i" },
+   "GKError": { "type": "i" },
+   "GKGameCenterViewControllerState": { "type": "q" },
+   "GKInviteRecipientResponse": { "type": "q" },
+   "GKPeerConnectionState": { "type": "q" },
+   "GKPlayerConnectionState": { "type": "q" },
+   "GKTurnBasedParticipantStatus": { "type": "q" },
+   "GKLeaderboardPlayerScope": { "type": "q" },
+   "GKTurnBasedMatchOutcome": { "type": "q" },
+   "GKVoiceChatServiceError": { "type": "q" },
+   "GKTurnBasedExchangeStatus": { "type": "q" },
+   "GKTurnBasedMatchStatus": { "type": "q" }
+  },
   "enum": {
    "GKPhotoSizeSmall": { "value": 0 },
    "GKPhotoSizeNormal": { "value": 1 },
@@ -155,6 +176,27 @@
    "GKLeaderboardTimeScopeAllTime": { "value": 2 },
    "GKLeaderboardPlayerScopeGlobal": { "value": 0 },
    "GKLeaderboardPlayerScopeFriendsOnly": { "value": 1 }
+  },
+  "formal_protocols": {
+   "GKVoiceChatClient": { "rename": "GKVoiceChatClient" },
+   "GKViewController": { "rename": "GKViewControllerObject" },
+   "GKAchievementViewControllerDelegate": { "rename": "GKAchievementViewControllerDelegate" },
+   "GKChallengeEventHandlerDelegate": { "rename": "GKChallengeEventHandlerDelegate" },
+   "GKChallengeListener": { "rename": "GKChallengeListener" },
+   "GKChallengesViewControllerDelegate": { "rename": "GKChallengesViewControllerDelegate" },
+   "GKFriendRequestComposeViewControllerDelegate": { "rename": "GKFriendRequestComposeViewControllerDelegate" },
+   "GKGameCenterControllerDelegat": { "rename": "GKGameCenterControllerDelegat" },
+   "GKInviteEventListener": { "rename": "GKInviteEventListener" },
+   "GKLeaderboardViewControllerDelegate": { "rename": "GKLeaderboardViewControllerDelegate" },
+   "GKLocalPlayerListener": { "rename": "GKLocalPlayerListener" },
+   "GKMatchDelegate": { "rename": "GKMatchDelegate" },
+   "GKMatchmakerViewControllerDelegate": { "rename": "GKMatchmakerViewControllerDelegate" },
+   "GKSavedGameListener": { "rename": "GKSavedGameListener" },
+   "GKSessionDelegate": { "rename": "GKSessionDelegate" },
+   "GKTurnBasedEventHandlerDelegate": { "rename": "GKTurnBasedEventHandlerDelegate" },
+   "GKTurnBasedEventListener": { "rename": "GKTurnBasedEventListener" },
+   "GKTurnBasedMatchmakerViewControllerDelegate": { "rename": "GKTurnBasedMatchmakerViewControllerDelegate" },
+   "GKGameCenterControllerDelegate": { "rename": "GKGameCenterControllerDelegate" }
   },
   "classes": {
    "NSObject": {

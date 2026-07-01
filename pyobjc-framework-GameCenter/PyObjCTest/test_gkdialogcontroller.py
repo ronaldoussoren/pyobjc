@@ -8,4 +8,6 @@ class TestGKDialogController(TestCase):
         self.assertResultIsBOOL(GameCenter.GKDialogController.presentViewController_)
 
     def test_protocols(self):
-        self.assertProtocolExists("GKViewController", GameCenter)
+        self.assertProtocolExists(
+            "GKViewController", GameCenter, "GKViewControllerObject"
+        )

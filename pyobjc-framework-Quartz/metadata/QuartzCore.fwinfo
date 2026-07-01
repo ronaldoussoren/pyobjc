@@ -3389,6 +3389,11 @@
       "args": {
        "0": { "type_override": "f" }
       }
+     },
+     {
+      "selector": "load:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
      }
     ]
    },
@@ -3413,7 +3418,8 @@
   },
   "formal_protocols": {
    "CAMetalDrawable": { "rename": "CAMetalDrawableProtocol" },
-   "CIImageProcessorInput": { "rename": "CIImageProcessorInputProtocol" }
+   "CIImageProcessorInput": { "rename": "CIImageProcessorInputProtocol" },
+   "CIPlugInRegistration": { "rename": "CIPlugInRegistration" }
   },
   "functions": {},
   "informal_protocols": {

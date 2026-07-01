@@ -245,10 +245,10 @@ class TestCGImage(TestCase):
         self.assertIsInstance(v, Quartz.CGDataProviderRef)
 
         v = Quartz.CGImageGetDecode(image)
-        self.assertIs(v, None)
+        self.assertIs(v, objc.NULL)
 
         v = Quartz.CGImageGetDecode(image2)
-        if v is not None:
+        if v is not objc.NULL:
             self.assertIsInstance(v, objc.varlist)
             self.assertEqual(v[0], 0.0)
             self.assertEqual(v[1], 1.0)

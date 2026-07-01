@@ -86,5 +86,5 @@ class TestAdvertiseDescriptor(TestCase):
         )
         self.assertEqual(
             Network.nw_advertise_descriptor_get_application_service_name(value),
-            None,
+            objc.NULL,
         )
