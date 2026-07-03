@@ -69,8 +69,8 @@ class TestBAAssetPackManager(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertArgIsBlock(
-            BackgroundAssets.BAAssetPackManager.getManifestWithCompletionHandler_completionHandler_,
-            1,
+            BackgroundAssets.BAAssetPackManager.getManifestWithCompletionHandler_,
+            0,
             b"v@@",
         )
         self.assertArgIsBlock(

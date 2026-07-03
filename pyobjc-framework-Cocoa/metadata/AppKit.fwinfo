@@ -4986,21 +4986,21 @@
      },
      {
       "args": {
-       "0": {
+       "1": {
         "sel_of_type": "v@:@@"
        }
       },
       "class_method": false,
-      "selector": "addTarget:action:forControlEvent:"
+      "selector": "addTarget:action:forControlEvents:"
      },
      {
       "args": {
-       "0": {
+       "1": {
         "sel_of_type": "v@:@@"
        }
       },
       "class_method": false,
-      "selector": "removeTarget:action:forControlEvent:"
+      "selector": "removeTarget:action:forControlEvents:"
      },
      {
       "args": {

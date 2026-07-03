@@ -41,18 +41,13 @@ class TestSCContentSharingPicker(TestCase):
 
     @min_os_level("27.0")
     def test_methods27_0(self):
-        self.assertResultIsBOOL(
-            ScreenCaptureKit.SCContentSharingPickerConfiguration.showsMicrophoneControl
-        )
-        self.assertArgIsBOOL(
-            ScreenCaptureKit.SCContentSharingPicker.setShowsMicrophoneControl_, 0
-        )
+        # Some tests fail when testing through the class.
+        obj = ScreenCaptureKit.SCContentSharingPickerConfiguration()
 
-        self.assertResultIsBOOL(
-            ScreenCaptureKit.SCContentSharingPickerConfiguration.showsCameraControl
-        )
-        self.assertArgIsBOOL(
-            ScreenCaptureKit.SCContentSharingPicker.setShowsCameraControl_, 0
-        )
+        self.assertResultIsBOOL(obj.showsMicrophoneControl)
+        self.assertArgIsBOOL(obj.setShowsMicrophoneControl_, 0)
+
+        self.assertResultIsBOOL(obj.showsCameraControl)
+        self.assertArgIsBOOL(obj.setShowsCameraControl_, 0)
 
         self.assertResultIsBOOL(ScreenCaptureKit.SCContentSharingPicker.isAvailable)

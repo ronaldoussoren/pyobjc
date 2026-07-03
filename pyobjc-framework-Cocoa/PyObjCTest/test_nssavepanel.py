@@ -113,5 +113,7 @@ class TestNSSavePanel(TestCase):
     )
     @min_os_level("10.15")
     def test_issue282(self):
+        app = AppKit.NSApplication.sharedApplication()  # noqa: F841
+
         panel = AppKit.NSSavePanel.savePanel()
         self.assertIsInstance(panel, AppKit.NSSavePanel)

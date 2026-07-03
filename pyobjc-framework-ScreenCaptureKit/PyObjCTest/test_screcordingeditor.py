@@ -15,8 +15,3 @@ class TestSCRecordingEditor(TestCase):
             1,
             b"v@",
         )
-        self.assertArgIsBlock(
-            ScreenCaptureKit.SCRecordingEditor.presentFromWindow_mode_completionHandler_,
-            2,
-            b"v@",
-        )

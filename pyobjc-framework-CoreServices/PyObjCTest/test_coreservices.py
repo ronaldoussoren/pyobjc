@@ -28,5 +28,9 @@ class TestCallableMetadata(TestCase):
                 "MDQuerySetCreateValueFunction",
                 "CULogHandle",
                 "IMLogging",
+                "TKLoginHelper",
+                "LACIOKitHelper",
+                "DSSandboxingURLWrapper",
+                "CBTDSAdvertisingData",
             ),
         )

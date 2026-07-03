@@ -7,5 +7,5 @@ class TestNSRefreshController(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRefreshController.isRefreshing)
 
-        self.assertResultIsSEL(AppKit.NSRefreshController.action_, b"v@:@")
+        self.assertResultIsSEL(AppKit.NSRefreshController.action, b"v@:@")
         self.assertArgIsSEL(AppKit.NSRefreshController.setAction_, 0, b"v@:@")

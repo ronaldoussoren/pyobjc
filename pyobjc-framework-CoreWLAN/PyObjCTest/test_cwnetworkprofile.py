@@ -10,6 +10,11 @@ class TestCWNetworkProfile(TestCase):
         c1 = CoreWLAN.CWNetworkProfile.alloc().init()
         c2 = CoreWLAN.CWNetworkProfile.alloc().init()
 
+        # Set ssidData because test can fail when the property
+        # is not set (such as on macOS 27)
+        c1.setSsidData_(b"hello")
+        c2.setSsidData_(b"hello")
+
         self.assertTrue(c1 == c2)
         self.assertFalse(c1 != c2)
 

@@ -1,4 +1,5 @@
 import CoreFoundation
+import Foundation
 from PyObjCTools.TestSupport import TestCase
 import objc
 
@@ -94,7 +95,7 @@ class TestCharacterSet(TestCase):
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(letters, "9"))
 
         data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, charset)
-        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        self.assertIsInstance(data, Foundation.NSData)
 
     def test_inspect_long_unicode(self):
         letters = CoreFoundation.CFCharacterSetGetPredefined(

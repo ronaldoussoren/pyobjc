@@ -54,9 +54,11 @@ class TestPHPhotoLibrary(TestCase):
         self.assertResultIsBOOL(Photos.PHPhotoLibrary.isUploadJobExtensionEnabled)
 
         self.assertResultIsBOOL(
-            Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_
+            Photos.PHPhotoLibrary.setUploadJobExtensionEnabled_error_
         )
         self.assertArgIsBOOL(
-            Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_, 0
+            Photos.PHPhotoLibrary.setUploadJobExtensionEnabled_error_, 0
         )
-        self.assertArgIsOut(Photos.PHPhotoLibrary.isUploadJobExtensionEnabled_error_, 1)
+        self.assertArgIsOut(
+            Photos.PHPhotoLibrary.setUploadJobExtensionEnabled_error_, 1
+        )

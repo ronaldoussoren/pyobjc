@@ -219,3 +219,17 @@ class TestAVPlayer(TestCase):
     def test_methods26_4(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsCaptureOfClearKeyVideo)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setAllowsCaptureOfClearKeyVideo_, 0)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayer.disconnectedFromSystemAudio)
+
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayer.setDisconnectedFromSystemAudio_completionHandler_,
+            0,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVPlayer.setDisconnectedFromSystemAudio_completionHandler_,
+            1,
+            b"v",
+        )

@@ -3,6 +3,28 @@
 {
  "definitions": {
   "classes": {
+   "AVAudioNode": {
+    "methods": [
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "installTapOnBus:bufferSize:format:error:block:",
+      "class_method": false
+     }
+    ]
+   },
+   "AVAudioInputNode": {
+    "methods": [
+     {
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "selector": "installTapOnBus:bufferSize:format:error:block:",
+      "class_method": false
+     }
+    ]
+   },
    "AVAudioApplication": {
     "methods": [
      {

@@ -3640,6 +3640,22 @@ try:
     )
     r(
         b"WKWebView",
+        b"dismissImmersiveEnvironmentWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"WKWebView",
         b"evaluateJavaScript:completionHandler:",
         {
             "arguments": {

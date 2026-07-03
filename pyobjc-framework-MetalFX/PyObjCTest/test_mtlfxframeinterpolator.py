@@ -234,14 +234,16 @@ class TestMTLFXFrameInterpolator(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertResultIsBOOL(
-            MetalFX.MTLFXFrameInterpolator.isDistortionTextureEnabled
+            MetalFX.MTLFXFrameInterpolatorDescriptor.isDistortionTextureEnabled
         )
         self.assertArgIsBOOL(
-            MetalFX.MTLFXFrameInterpolator.setDistortionTextureEnabled_, 0
+            MetalFX.MTLFXFrameInterpolatorDescriptor.setDistortionTextureEnabled_, 0
         )
-        self.assertResultIsBOOL(MetalFX.MTLFXFrameInterpolator.requiresPrevColorTexture)
+        self.assertResultIsBOOL(
+            MetalFX.MTLFXFrameInterpolatorDescriptor.requiresPrevColorTexture
+        )
         self.assertArgIsBOOL(
-            MetalFX.MTLFXFrameInterpolator.setRequiresPrevColorTexture_, 0
+            MetalFX.MTLFXFrameInterpolatorDescriptor.setRequiresPrevColorTexture_, 0
         )
 
     @min_sdk_level("26.0")

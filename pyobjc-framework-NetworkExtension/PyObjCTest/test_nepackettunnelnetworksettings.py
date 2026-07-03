@@ -20,20 +20,22 @@ class TestNEPacketTunnelNetworkSettings(TestCase):
             NetworkExtension.NEPacketTunnelNetworkSettings.setExcludeCellularServices_,
             0,
         )
-        self.assertArgIsBOOL(NetworkExtension.NEPacketTunnelNetworkSettings.excludeAPNs)
         self.assertResultIsBOOL(
-            NetworkExtension.NEPacketTunnelNetworkSettings.setExcludeAPNs_, 0
+            NetworkExtension.NEPacketTunnelNetworkSettings.excludeAPNs
         )
         self.assertArgIsBOOL(
-            NetworkExtension.NEPacketTunnelNetworkSettings.excludeDeviceCommunication
+            NetworkExtension.NEPacketTunnelNetworkSettings.setExcludeAPNs_, 0
         )
         self.assertResultIsBOOL(
+            NetworkExtension.NEPacketTunnelNetworkSettings.excludeDeviceCommunication
+        )
+        self.assertArgIsBOOL(
             NetworkExtension.NEPacketTunnelNetworkSettings.setExcludeDeviceCommunication_,
             0,
         )
-        self.assertArgIsBOOL(
+        self.assertResultIsBOOL(
             NetworkExtension.NEPacketTunnelNetworkSettings.enforceRoutes
         )
-        self.assertResultIsBOOL(
+        self.assertArgIsBOOL(
             NetworkExtension.NEPacketTunnelNetworkSettings.setEnforceRoutes_, 0
         )

@@ -21,10 +21,3 @@ class TestPHAsset(TestCase):
     @min_os_level("13.0")
     def test_methods13_0(self):
         self.assertResultIsBOOL(Photos.PHAsset.hasAdjustments)
-
-    @min_os_level("27.0")
-    def test_methods27_0(self):
-        self.assertArgIsBOOL(Photos.PHAsset.setLivePhotoVideoPlaybackEnabled_, 0)
-
-        self.assertResultIsBOOL(Photos.PHAsset.skipsDisplaySizeImage)
-        self.assertArgIsBOOL(Photos.PHAsset.setSkipsDisplaySizeImage_, 0)

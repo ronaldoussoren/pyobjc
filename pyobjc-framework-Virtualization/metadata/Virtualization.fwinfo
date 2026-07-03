@@ -7,10 +7,22 @@
    "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
   },
   "classes": {
+   "VZEFIVariableStore": {
+    "methods": [
+     {
+      "selector": "getSecureBootEnabled:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o"},
+       "1": { "type_modifier": "o"}
+      }
+     }
+    ]
+   },
    "VZVirtioQueueElement": {
     "methods": [
      {
-      "selector": "readBytesIntoBuffer:exactLength:error",
+      "selector": "readBytesIntoBuffer:exactLength:error:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
@@ -18,7 +30,7 @@
       }
      },
      {
-      "selector": "writeBuffer:exactLength:error",
+      "selector": "writeBuffer:exactLength:error:",
       "class_method": false,
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },

@@ -16,7 +16,7 @@ view:
 _build/venv: requirements.txt
 	mkdir -p _build
 	rm -rf _build/venv
-	python3.11 -m venv _build/venv
+	python3.14 -m venv _build/venv
 	_build/venv/bin/python -m pip install -r requirements.txt
 
 .PHONY: html view linkcheck

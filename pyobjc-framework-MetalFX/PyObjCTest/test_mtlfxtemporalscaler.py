@@ -407,14 +407,15 @@ class TestMTLFXTemporalScaler(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertResultIsBOOL(
-            MetalFX.MTLFXTemporalScaler.isOutputResolutionMotionVectorsEnabled
+            MetalFX.MTLFXTemporalScalerDescriptor.isOutputResolutionMotionVectorsEnabled
         )
         self.assertArgIsBOOL(
-            MetalFX.MTLFXTemporalScaler.setOutputResolutionMotionVectorsEnabled_, 0
+            MetalFX.MTLFXTemporalScalerDescriptor.setOutputResolutionMotionVectorsEnabled_,
+            0,
         )
         self.assertResultIsBOOL(
-            MetalFX.MTLFXTemporalScaler.isJitteredMotionVectorsEnabled
+            MetalFX.MTLFXTemporalScalerDescriptor.isJitteredMotionVectorsEnabled
         )
         self.assertArgIsBOOL(
-            MetalFX.MTLFXTemporalScaler.setJitteredMotionVectorsEnabled_, 0
+            MetalFX.MTLFXTemporalScalerDescriptor.setJitteredMotionVectorsEnabled_, 0
         )

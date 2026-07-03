@@ -142,7 +142,7 @@ class TestAVContentKeySession(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertArgIsBlock(
-            AVFoundation.AVContentKeySession.makeOptionalStreamingContentKeyRequestDataForApp_contentIdentifier_options_completionHandler_,  # noqa: B950
+            AVFoundation.AVContentKeyRequest.makeOptionalStreamingContentKeyRequestDataForApp_contentIdentifier_options_completionHandler_,  # noqa: B950
             3,
             b"v@@",
         )

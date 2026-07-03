@@ -22,6 +22,7 @@ class TestOpenPanel(TestCase):
     )
     def test_openpanel_signature(self):
         o = AppKit.NSOpenPanel.openPanel()
+        self.assertIsNot(o, None)
         sig = (
             o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature  # noqa: B950
         )
@@ -79,4 +80,5 @@ class TestOpenPanel(TestCase):
     )
     def test_issue272(self):
         panel = AppKit.NSOpenPanel.openPanel()
+        self.assertIsNot(panel, None)
         panel.setAllowedFileTypes_([".html", ".txt"])

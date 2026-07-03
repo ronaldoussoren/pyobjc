@@ -112,14 +112,14 @@ class TestAEAssessmentConfiguration(TestCase):
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsEmojiKeyboard
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsEmojiKeyboard,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsEmojiKeyboard_,
             0,
         )
         self.assertResultIsBOOL(
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsUserScriptExecution
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsUserScriptExecution,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsUserScriptExecution_,
             0,
         )
         self.assertResultIsBOOL(

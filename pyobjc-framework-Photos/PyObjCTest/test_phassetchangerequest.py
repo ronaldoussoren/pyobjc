@@ -37,3 +37,16 @@ class TestPHAssetChangeRequest(TestCase):
         self.assertIsInstance(Photos.PHContentEditingInputResultIsInCloudKey, str)
         self.assertIsInstance(Photos.PHContentEditingInputCancelledKey, str)
         self.assertIsInstance(Photos.PHContentEditingInputErrorKey, str)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBOOL(
+            Photos.PHAssetChangeRequest.setLivePhotoVideoPlaybackEnabled_, 0
+        )
+
+        self.assertResultIsBOOL(
+            Photos.PHContentEditingInputRequestOptions.skipsDisplaySizeImage
+        )
+        self.assertArgIsBOOL(
+            Photos.PHContentEditingInputRequestOptions.setSkipsDisplaySizeImage_, 0
+        )

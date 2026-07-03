@@ -9,7 +9,7 @@ AUMIDIOutputEventBlock = b"iqC" + objc._C_NSInteger + b"n^v"
 
 # XXX: This won't work automaticly
 AUMIDIEventListBlock = (
-    b"iQ" + objc._C_CHAR_AS_INT + b"^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"
+    b"iq" + objc._C_CHAR_AS_INT + b"^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"
 )
 
 

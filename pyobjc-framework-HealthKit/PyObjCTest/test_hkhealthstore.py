@@ -135,6 +135,6 @@ class TestHKHealthStore(TestCase):
         with self.subTest("getEarliestAuthorizedSampleDateForTypes"):
             self.assertArgIsBlock(
                 HealthKit.HKHealthStore.getEarliestAuthorizedSampleDateForTypes_completion_,
-                2,
-                b"v@@@",
+                1,
+                b"v@@",
             )

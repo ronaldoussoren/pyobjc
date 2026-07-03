@@ -2550,6 +2550,24 @@
      },
      {
       "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "dismissImmersiveEnvironmentWithCompletionHandler:"
+     },
+     {
+      "args": {
        "1": {
         "callable": {
          "arguments": {

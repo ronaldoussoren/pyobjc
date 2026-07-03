@@ -58,6 +58,37 @@
    "AVFrameRateRange": "AVFrameRateRange_Tundra"
   },
   "classes": {
+   "AVPlannedVideoSegmentWritingRequest": {
+    "methods": [
+     {
+      "selector": "resumableAssetWriterInputWithMediaType:outputSettings:sourceFormatHint:returningError:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "createResumableCompressionSessionWithAllocator:width:height:codecType:encoderSpecification:sourceImageBufferAttributes:compressedDataAllocator:outputCallback:outputCallbackRefCon:returningError:",
+      "class_method": false,
+      "args": {
+       "7": {
+        "callable_retained": true,
+        "callable": {
+         "retval": { "type": "v" },
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "^v" },
+          "2": { "type": "i" },
+          "3": { "type": "I" },
+          "4": { "type": "^{opaqueCMSampleBuffer=}" }
+         }
+        }
+       },
+       "9": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVAsset": {
     "methods": [
      {
@@ -1127,6 +1158,28 @@
        }
       },
       "class_method": false,
+      "selector": "setRealtimeSafeManualRenderingInputPCMFormat:inputBlock:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "I"
+          }
+         },
+         "retval": {
+          "type": "^{AudioBufferList=L[1{AudioBuffer=LL^v}]}"
+         }
+        }
+       }
+      },
+      "class_method": false,
       "selector": "setManualRenderingInputPCMFormat:inputBlock:"
      }
     ]
@@ -1456,6 +1509,24 @@
      },
      {
       "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "playAtTime:error:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "playAndReturnError:"
+     },
+     {
+      "args": {
        "2": {
         "type_modifier": "o"
        }
@@ -1653,12 +1724,99 @@
        }
       },
       "class_method": false,
+      "selector": "initWithRealtimeSafeReceiverBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+          },
+          "2": {
+           "type": "I"
+          },
+          "3": {
+           "type": "n^^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+          }
+         },
+         "retval": {
+          "type": "i"
+         }
+        }
+       }
+      },
+      "class_method": false,
       "selector": "initWithReceiverBlock:"
      }
     ]
    },
    "AVAudioSourceNode": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "o^Z"
+          },
+          "2": {
+           "type": "n^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+          },
+          "3": {
+           "type": "I"
+          },
+          "4": {
+           "type": "o^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+          }
+         },
+         "retval": {
+          "type": "i"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "initWithFormat:realtimeSafeRenderBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "o^Z"
+          },
+          "2": {
+           "type": "n^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}"
+          },
+          "3": {
+           "type": "I"
+          },
+          "4": {
+           "type": "o^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+          }
+         },
+         "retval": {
+          "type": "i"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "initWithRealtimeSafeRenderBlock:"
+     },
      {
       "args": {
        "0": {

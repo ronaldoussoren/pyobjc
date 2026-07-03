@@ -13,5 +13,5 @@ class TestAAUSBAccessoryManager(TestCase):
         self.assertArgIsBlock(
             AccessoryAccess.AAUSBAccessoryManager.unregisterListener_completionHandler_,
             1,
-            b"v@",
+            b"v",
         )
