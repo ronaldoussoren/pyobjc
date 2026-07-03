@@ -5,10 +5,10 @@ all:
 	@echo "  make linkcheck     # check links"
 
 html: _build/venv
-	_build/venv/bin/sphinx-build -b html -d _build/doctrees . _build/html
+	_build/venv/bin/sphinx-build -j auto -b html -d _build/doctrees . _build/html
 
 linkcheck: _build/venv
-	_build/venv/bin/sphinx-build -b linkcheck -d _build/doctrees . _build/linkcheck
+	_build/venv/bin/sphinx-build -j auto -b linkcheck -d _build/doctrees . _build/linkcheck
 
 view:
 	open _build/html/index.html
