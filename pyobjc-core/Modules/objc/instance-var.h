@@ -14,7 +14,7 @@ typedef struct {
 
 extern PyObject* PyObjCInstanceVariable_Type;
 #define PyObjCInstanceVariable_Check(obj)                                                \
-    PyObject_TypeCheck((obj), (PyTypeObject*)PyObjCInstanceVariable_Type)
+    Py_IS_TYPE((obj), (PyTypeObject*)PyObjCInstanceVariable_Type)
 
 extern PyObject* _Nullable PyObjCInstanceVariable_New(const char* name);
 extern int PyObjCInstanceVariable_Setup(PyObject* module);

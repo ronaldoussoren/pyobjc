@@ -13,8 +13,7 @@ extern int PyObjC_encode_fsref(PyObject*, void*);
 extern PyObject* _Nullable PyObjC_decode_fsref(const void*);
 
 extern PyObject* PyObjCFSRef_Type;
-#define PyObjCFSRef_Check(value)                                                         \
-    PyObject_TypeCheck(value, (PyTypeObject*)PyObjCFSRef_Type)
+#define PyObjCFSRef_Check(value) Py_IS_TYPE((value), (PyTypeObject*)PyObjCFSRef_Type)
 
 extern int PyObjCFSRef_Setup(PyObject*);
 
