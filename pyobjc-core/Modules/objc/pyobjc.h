@@ -115,8 +115,9 @@
 
 #import "method-signature.h"
 
-#import "bound-selector.h"
 #import "selector.h"
+
+#import "bound-selector.h"
 
 #import "libffi_extra.h"
 #import "libffi_support.h"
