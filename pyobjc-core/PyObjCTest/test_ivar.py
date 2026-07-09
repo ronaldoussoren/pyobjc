@@ -3,7 +3,6 @@ from PyObjCTest.instanceVariables import ClassWithVariables
 from PyObjCTools.TestSupport import TestCase
 from .test_metadata import NoObjCClass
 
-
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 NSArray = objc.lookUpClass("NSArray")
@@ -134,6 +133,14 @@ class TestInstanceVariables(TestCase):
             class WithSameName(NSObject):
                 a = objc.ivar("a")
                 b = objc.ivar("a")
+
+    def test_no_subclass(self):
+        with self.assertRaisesRegex(
+            TypeError, "type 'objc.ivar' is not an acceptable base type"
+        ):
+
+            class subivar(objc.ivar):
+                pass
 
     def test_repr(self):
         self.assertEqual(repr(TestClass.idVar), "<instance-variable idVar>")

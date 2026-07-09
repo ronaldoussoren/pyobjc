@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCMethodSignature_Type)
+    Py_IS_TYPE((obj), (PyTypeObject*)PyObjCMethodSignature_Type)
 
 enum _PyObjC_PointerType
 #if __has_feature(objc_fixed_enum)

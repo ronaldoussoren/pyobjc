@@ -553,7 +553,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 - (Class)classForCoder
 {
 #if PY_VERSION_HEX >= 0x030f00a7
-    if (unlikely(value && PyFrozenDict_CheckExact(value))) {
+    if (unlikely(value && PyFrozenDict_CheckExact(value))) { // LCOV_BR_EXCL_LINE
         return [NSDictionary class];
     }
 #endif

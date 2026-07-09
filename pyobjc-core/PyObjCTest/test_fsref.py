@@ -107,3 +107,11 @@ class TestFSRef(TestCase):
         self.assertIsInstance(ref.data, bytes)
 
         # XXX: there's not really much we can do here...
+
+    def test_no_subclass(self):
+        with self.assertRaisesRegex(
+            TypeError, "type 'objc.FSRef' is not an acceptable base type"
+        ):
+
+            class subref(objc.FSRef):
+                pass

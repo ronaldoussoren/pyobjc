@@ -48,16 +48,22 @@ class PyOCTestTypeStr(TestCase):
 
         with self.assertRaisesRegex(
             AttributeError,
-            "attribute 'native_signature' of 'objc.selector' objects is not writable",
+            "attribute 'native_signature' of 'objc.python_selector' objects is not writable",
         ):
             s.native_signature = b"v@:ii"
 
         s = objc.lookUpClass("NSObject").description
         with self.assertRaisesRegex(
             AttributeError,
-            "attribute 'native_signature' of 'objc.selector' objects is not writable",
+            "attribute 'native_signature' of 'objc.bound_selector' objects is not writable",
         ):
             s.native_signature = b"v@:ii"
+
+        with self.assertRaisesRegex(
+            AttributeError,
+            "attribute 'native_signature' of 'objc.native_selector' objects is not writable",
+        ):
+            s.__func__.native_signature = b"v@:ii"
 
         # We know that the description signature isn't changed by default
         signature = b"".join(objc.splitSignature(s.native_signature))
@@ -65,15 +71,21 @@ class PyOCTestTypeStr(TestCase):
 
         # Check that changing s.signature doesn't affect s.native_signature
         try:
-            x = s.native_signature
-            s.signature = b"v@:ii"
-            self.assertEqual(s.native_signature, x)
-            self.assertEqual(s.signature, b"v@:ii")
+            x = s.__func__.native_signature
+            s.__func__.signature = b"v@:ii"
+            self.assertEqual(s.__func__.native_signature, x)
+            self.assertEqual(s.__func__.signature, b"v@:ii")
 
             with self.assertRaisesRegex(TypeError, "signature must be byte string"):
-                s.signature = None
+                s.__func__.signature = None
+
+            with self.assertRaisesRegex(
+                AttributeError,
+                "signature' of 'objc.bound_selector' objects is not writable",
+            ):
+                del s.signature
 
             with self.assertRaisesRegex(TypeError, "Cannot delete 'signature'"):
-                del s.signature
+                del s.__func__.signature
         finally:
-            s.signature = x
+            s.__func__.signature = x

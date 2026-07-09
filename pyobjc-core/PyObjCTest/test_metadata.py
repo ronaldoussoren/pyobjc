@@ -4199,7 +4199,7 @@ class TestMisc(TestCase):
 
         fn.pyobjc_closure = "hello"
         with self.assertRaisesRegex(TypeError, "Invalid pyobjc_closure attribute"):
-            print(o.callFunction4_(fn))
+            o.callFunction4_(fn)
 
     def test_function_result(self):
         o = OC_MetaDataTest.alloc().init()
@@ -4246,6 +4246,8 @@ class TestMisc(TestCase):
     def test_cfretained(self):
         o = OC_MetaDataTest.alloc().init()
         self.assertResultIsCFRetained(o.cfretainedValue)
+        v = o.cfretainedValue()
+        self.assertIsInstance(v, objc.lookUpClass("NSError"))
         v = o.cfretainedValue()
         self.assertIsInstance(v, objc.lookUpClass("NSError"))
 

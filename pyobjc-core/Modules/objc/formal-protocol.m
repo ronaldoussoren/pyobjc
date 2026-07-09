@@ -121,20 +121,20 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
             /* Support for JSExportAs requires adding a tuple of two items
              * to the list of selectors.
              */
-            if (!PyObjCSelector_Check(PyTuple_GET_ITEM(sel, 0))) {
+            if (!PyObjCPythonSelector_Check(PyTuple_GET_ITEM(sel, 0))) {
                 PyErr_SetString(PyExc_TypeError,
                                 "Selectors is not a list of objc.selector instances");
                 Py_DECREF(supers);
                 return NULL;
             }
-            if (!PyObjCSelector_Check(PyTuple_GET_ITEM(sel, 1))) {
+            if (!PyObjCPythonSelector_Check(PyTuple_GET_ITEM(sel, 1))) {
                 PyErr_SetString(PyExc_TypeError,
                                 "Selectors is not a list of objc.selector instances");
                 Py_DECREF(supers);
                 return NULL;
             }
 
-        } else if (!PyObjCSelector_Check(sel)) {
+        } else if (!PyObjCPythonSelector_Check(sel)) {
             PyErr_SetString(PyExc_TypeError,
                             "Selectors is not a list of objc.selector instances");
             Py_DECREF(supers);
@@ -171,6 +171,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
 
         if (PyTuple_Check(sel)) {
             for (i = 0; i < PyTuple_GET_SIZE(sel); i++) {
+                assert(PyObjCSelector_Check(PyTuple_GET_ITEM(sel, i)));
                 SEL         theSel = PyObjCSelector_GetSelector(PyTuple_GET_ITEM(sel, i));
                 const char* theSignature =
                     PyObjCSelector_GetNativeSignature(PyTuple_GET_ITEM(sel, i));
@@ -187,6 +188,7 @@ static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused_
             } // LCOV_BR_EXCL_LINE
 
         } else {
+            assert(PyObjCPythonSelector_Check(sel));
             SEL         theSel       = PyObjCSelector_GetSelector(sel);
             const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
 
@@ -426,12 +428,12 @@ static PyMethodDef proto_methods[] = {
      .ml_meth  = (PyCFunction)descriptionForInstanceMethod_,
      .ml_flags = METH_O,
      .ml_doc   = "descriptionForInstanceMethod_(selector)\n" CLINIC_SEP
-               "\nDescription for an instance method in the protocol"},
+                 "\nDescription for an instance method in the protocol"},
     {.ml_name  = "descriptionForClassMethod_",
      .ml_meth  = (PyCFunction)descriptionForClassMethod_,
      .ml_flags = METH_O,
      .ml_doc   = "descriptionForClassMethod_(selector)\n" CLINIC_SEP
-               "\nDescription for a class method in the protocol"},
+                 "\nDescription for a class method in the protocol"},
     {.ml_name  = "instanceMethods",
      .ml_meth  = (PyCFunction)instanceMethods,
      .ml_flags = METH_NOARGS,

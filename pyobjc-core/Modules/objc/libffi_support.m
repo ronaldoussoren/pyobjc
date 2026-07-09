@@ -1342,12 +1342,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     /* Avoid calling a PyObjCPythonSelector directly, it does
      * additional work that we don't need.
      */
-    if (PyObjCPythonSelector_Check(callable)) {
-        if (((PyObjCSelector*)callable)->sel_self != NULL) {
-            insertArg = ((PyObjCSelector*)callable)->sel_self;
-            Py_INCREF(insertArg);
-        }
-        callable = ((PyObjCPythonSelector*)callable)->callable;
+    if (PyObjCBoundPythonSelector_Check(callable)) {
+        insertArg = PyObjCBoundSelector_SELF(callable);
+        Py_INCREF(insertArg);
+        callable =
+            ((PyObjCPythonSelector*)PyObjCBoundSelector_SELECTOR(callable))->callable;
     }
 
     if (userdata->closureType == PyObjC_Method) {
@@ -2463,13 +2462,14 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
             return argcount;
         }
 
+    } else if (PyObjCBoundSelector_Check(callable)) {
+        return _argcount(PyObjCBoundSelector_SELECTOR(callable), haveVarArgs, haveVarKwds,
+                         haveKwOnly, defaultCount)
+               - 1;
+
     } else if (PyObjCPythonSelector_Check(callable)) {
-        Py_ssize_t result = _argcount(((PyObjCPythonSelector*)callable)->callable,
-                                      haveVarArgs, haveVarKwds, haveKwOnly, defaultCount);
-        if (((PyObjCSelector*)callable)->sel_self != NULL) {
-            result -= 1;
-        }
-        return result;
+        return _argcount(((PyObjCPythonSelector*)callable)->callable, haveVarArgs,
+                         haveVarKwds, haveKwOnly, defaultCount);
 
     } else if (PyObjCNativeSelector_Check(callable)) {
         PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
@@ -2483,9 +2483,6 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         *defaultCount     = 0;
 
         Py_DECREF(sig);
-        if (((PyObjCSelector*)callable)->sel_self != NULL) {
-            result -= 1;
-        }
         return result;
 
     } else {
@@ -4978,7 +4975,8 @@ PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
                 // LCOV_EXCL_STOP
             }
         } else {
-            PyObjCSelector_SET_CIF(aMeth, cif); // LCOV_EXCL_LINE
+            assert(!PyObjCBoundSelector_Check(aMeth)); // LCOV_EXCL_LINE
+            PyObjCSelector_SET_CIF(aMeth, cif);        // LCOV_EXCL_LINE
         }
     }
 
@@ -5179,6 +5177,7 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             }
             // LCOV_EXCL_STOP
         } else { // LCOV_EXCL_LINE
+            assert(!PyObjCBoundSelector_Check(aMeth));
             PyObjCSelector_SET_CIF(aMeth, cif);
         }
     }
@@ -5206,6 +5205,8 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
             self_obj = object_getClass(self_obj);
             // LCOV_EXCL_STOP
 
+#if 0
+            /*  XXX: Caller already performs this validation */
         } else if (PyType_Check(self)
                    && PyType_IsSubtype((PyTypeObject*)self, &PyObjCMetaClass_Type)) {
             PyObject* c = PyObjCClass_ClassForMetaClass(self);
@@ -5222,7 +5223,8 @@ PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
                 "Need objective-C object or class as self, not an instance of '%s'",
                 Py_TYPE(self)->tp_name);
             goto error_cleanup;
-        }
+#endif
+        } // LCOV_EXCL_LINE
 
     } else {
         int err;

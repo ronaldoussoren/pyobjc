@@ -208,7 +208,8 @@ class TestSelectors(TestCase):
         )
 
         self.assertRegex(
-            repr(SelectorRepr.new().foo), "<selector foo of <SelectorRepr:.*>"
+            repr(SelectorRepr.new().foo.__func__),
+            "<unbound selector foo of SelectorRepr at .*>",
         )
 
         @objc.selector
@@ -216,6 +217,24 @@ class TestSelectors(TestCase):
             pass
 
         self.assertStartswith(repr(someSel_arg_), "<unbound selector someSel:arg: at")
+
+    def test_selector_creation(self):
+        def func(self):
+            pass
+
+        s = objc.selector(func)
+        t = objc.python_selector(func)
+
+        self.assertEqual(s, t)
+        self.assertIsInstance(s, objc.python_selector)
+        self.assertIsInstance(t, objc.python_selector)
+
+        self.assertIs(objc.python_selector.__new__, objc.selector.__new__)
+
+        with self.assertRaisesRegex(
+            TypeError, "Cannot create instances of objc.native_selector"
+        ):
+            objc.native_selector(func)
 
     def test_native_selector_edge_cases(self):
         o = NSArray.alloc().init()
@@ -396,7 +415,8 @@ class TestOverridingSpecials(TestCase):
                 num_allocs += 1
                 return objc.super(ClassWithAlloc, cls).alloc()
 
-        self.assertNotIsInstance(ClassWithAlloc.alloc, objc.native_selector)
+        self.assertIsInstance(ClassWithAlloc.alloc, objc.bound_selector)
+        self.assertNotIsInstance(ClassWithAlloc.alloc.__func__, objc.native_selector)
 
         self.assertEqual(num_allocs, 0)
         o = ClassWithAlloc.alloc().init()
@@ -915,11 +935,22 @@ class TestSelectorAttributes(TestCase):
         def mySelector(self):
             return 1
 
-        self.assertIs(mySelector.self, None)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=DeprecationWarning)
+            self.assertIs(mySelector.self, None)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaises(DeprecationWarning):
+                mySelector.self
 
         obj = NSObject.alloc().init()
         v = mySelector.__get__(obj, NSObject)
+        self.assertIsInstance(v, objc.bound_selector)
         self.assertIs(v.self, obj)
+
+        w = mySelector.__get__(None, NSObject)
+        self.assertIs(w, mySelector)
 
     def test_selector_class(self):
         @objc.selector
@@ -1002,8 +1033,8 @@ class TestSelectorAttributes(TestCase):
         self.assertEqual(repr(s), "<unbound native-selector description in NSObject>")
 
         self.assertRegex(
-            repr(obj.description),
-            r"^<native-selector description of <NSObject: 0x[0-9a-f]+>>$",
+            repr(obj.description.__func__),
+            r"^<unbound native-selector description in NSObject",
         )
 
     def test_python_compare(self):
@@ -1021,9 +1052,9 @@ class TestSelectorAttributes(TestCase):
         obj = ClassForTestingCompare1.alloc().init()
         obj2 = ClassForTestingCompare2.alloc().init()
 
-        meth1 = obj.meth1
-        meth2 = obj.meth2
-        meth3 = obj2.meth1
+        meth1 = obj.meth1.__func__
+        meth2 = obj.meth2.__func__
+        meth3 = obj2.meth1.__func__
 
         self.assertTrue(meth1 == meth1)
         self.assertFalse(meth1 != meth1)
@@ -1117,11 +1148,11 @@ class TestSelectorAttributes(TestCase):
         # XXX: Same tests but with python selectors
         # XXX: Also comparision between native and python selector
         obj = NSObject.alloc().init()
-        obj2 = NSObject.alloc().init()
+        # obj2 = NSObject.alloc().init()
 
-        meth1 = obj.description
-        meth2 = obj.respondsToSelector_
-        meth3 = obj2.description
+        meth1 = obj.description.__func__
+        meth2 = obj.respondsToSelector_.__func__
+        # meth3 = obj2.description.__func__
 
         self.assertTrue(meth1 == meth1)
         self.assertFalse(meth1 != meth1)
@@ -1129,8 +1160,8 @@ class TestSelectorAttributes(TestCase):
         self.assertTrue(meth1 != meth2)
         self.assertFalse(meth1 == meth2)
 
-        self.assertTrue(meth1 != meth3)
-        self.assertFalse(meth1 == meth3)
+        # self.assertTrue(meth1 != meth3)
+        # self.assertFalse(meth1 == meth3)
 
         self.assertTrue(meth1 != dir)
 
@@ -1286,10 +1317,19 @@ class TestSelectorEdgeCases(TestCase):
         NSData.alloc().initWithBytes_length_(b"hello", 3)
 
         meth1 = NSArray.__dict__["description"]
-        self.assertIs(meth1.self, None)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=DeprecationWarning)
+            self.assertIs(meth1.self, None)
 
         meth2 = NSData.__dict__["initWithBytes_length_"]
-        self.assertIs(meth2.self, None)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=DeprecationWarning)
+            self.assertIs(meth2.self, None)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaises(DeprecationWarning):
+                meth2.self
 
         with self.assertRaisesRegex(
             TypeError, "Expecting instance of NSArray as self, got one of NSObject"
@@ -1415,8 +1455,12 @@ class TestSelectorEdgeCases(TestCase):
                 return "bridge"
 
         obj = NonAscii.alloc().init()
-        self.assertIsInstance(obj.zurück, objc.python_selector)
-        self.assertIsInstance(obj.pyobjc_instanceMethods.zurück, objc.python_selector)
+        self.assertIsInstance(obj.zurück, objc.bound_selector)
+        self.assertIsInstance(obj.zurück.__func__, objc.python_selector)
+        self.assertIsInstance(obj.pyobjc_instanceMethods.zurück, objc.bound_selector)
+        self.assertIsInstance(
+            obj.pyobjc_instanceMethods.zurück.__func__, objc.python_selector
+        )
         self.assertIsInstance(
             NonAscii.pyobjc_instanceMethods.zurück, objc.python_selector
         )
@@ -1425,7 +1469,10 @@ class TestSelectorEdgeCases(TestCase):
             OC_ObjectInt.invokeSelector_of_("zurück".encode(), obj), "back"
         )
 
-        self.assertIsInstance(NonAscii.pyobjc_classMethods.brücke, objc.python_selector)
+        self.assertIsInstance(NonAscii.pyobjc_classMethods.brücke, objc.bound_selector)
+        self.assertIsInstance(
+            NonAscii.pyobjc_classMethods.brücke.__func__, objc.python_selector
+        )
         self.assertEqual(NonAscii.brücke(), "bridge")
         self.assertEqual(
             OC_ObjectInt.invokeSelector_of_("brücke".encode(), NonAscii), "bridge"

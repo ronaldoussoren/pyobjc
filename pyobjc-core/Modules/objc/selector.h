@@ -29,10 +29,21 @@ typedef PyObject* _Nullable (*PyObjC_CallFunc)(PyObject* meth, PyObject* self,
 
 typedef struct {
     PyObject_HEAD
-    const char* sel_python_signature;
+} PyObjCBaseSelector;
+
+typedef struct {
+    PyObjCBaseSelector sel_base;
+
+    PyObject*      sel_self;
+    PyObject*      sel_selector;
+    vectorcallfunc sel_vectorcall;
+} PyObjCBoundSelector;
+
+typedef struct {
+    PyObjCBaseSelector sel_base;
+    const char*        sel_python_signature;
     const char* _Nullable sel_native_signature; /* XXX: Make _Nonnull */
     SEL sel_selector;
-    PyObject* _Nullable sel_self;
     Class _Nullable sel_class;
     int sel_flags;
     PyObjCMethodSignature* _Nullable sel_methinfo;
@@ -56,32 +67,28 @@ extern PyObject* PyObjCSelector_Type;
 extern PyObject* PyObjCNativeSelector_Type;
 extern PyObject* PyObjCPythonSelector_Type;
 #define PyObjCSelector_Check(obj)                                                        \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCSelector_Type)
+    PyObject_TypeCheck((obj), (PyTypeObject*)PyObjCSelector_Type)
 #define PyObjCNativeSelector_Check(obj)                                                  \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCNativeSelector_Type)
+    Py_IS_TYPE((obj), (PyTypeObject*)PyObjCNativeSelector_Type)
 #define PyObjCPythonSelector_Check(obj)                                                  \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCPythonSelector_Type)
+    Py_IS_TYPE((obj), (PyTypeObject*)PyObjCPythonSelector_Type)
 
 extern const char* PyObjCSelector_Signature(PyObject* obj);
-#define PyObjCSelector_GetNativeSignature(obj)                                           \
-    (((PyObjCSelector*)obj)->sel_native_signature)
-extern SEL   PyObjCSelector_GetSelector(PyObject* obj);
-extern int   PyObjCSelector_GetFlags(PyObject* obj);
-extern Class PyObjCSelector_GetClass(PyObject* obj);
-extern int   PyObjCSelector_Required(PyObject* obj);
-extern int   PyObjCSelector_IsClassMethod(PyObject* obj);
-extern int   PyObjCSelector_IsHidden(PyObject* obj);
+extern const char* PyObjCSelector_GetNativeSignature(PyObject* obj);
+extern SEL         PyObjCSelector_GetSelector(PyObject* obj);
+extern int         PyObjCSelector_GetFlags(PyObject* obj);
+extern Class       PyObjCSelector_GetClass(PyObject* obj);
+extern int         PyObjCSelector_Required(PyObject* obj);
+extern int         PyObjCSelector_IsClassMethod(PyObject* obj);
+extern int         PyObjCSelector_IsHidden(PyObject* obj);
 extern PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self);
 extern PyObject* _Nullable PyObjCSelector_NewNative(Class class, SEL selector,
                                                     const char* signature,
                                                     int         class_method);
 extern PyObject* _Nullable PyObjCSelector_FindNative(PyObject* self, const char* name);
 
-#define PyObjCSelector_GET_CLASS(obj) (((PyObjCSelector*)(obj))->sel_class)
-#define PyObjCSelector_GET_SELECTOR(obj) (((PyObjCSelector*)(obj))->sel_selector)
 #define PyObjCSelector_GET_CIF(obj) (((PyObjCNativeSelector*)(obj))->sel_cif)
 #define PyObjCSelector_SET_CIF(obj, cif) (((PyObjCNativeSelector*)(obj))->sel_cif = (cif))
-#define PyObjCSelector_GET_SELF(obj) (((PyObjCSelector*)(obj))->sel_self)
 
 extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
                                               const char* _Nullable signature,
@@ -89,6 +96,7 @@ extern PyObject* _Nullable PyObjCSelector_New(PyObject* callable, SEL selector,
 extern SEL PyObjCSelector_DefaultSelector(const char* methname);
 
 extern int PyObjCSelector_Setup(PyObject* module);
+extern int PyObjCSelector_PostSetup(PyObject* module);
 
 extern PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(
     PyObjCNativeSelector* obj, PyObjCMethodSignature* methinfo);

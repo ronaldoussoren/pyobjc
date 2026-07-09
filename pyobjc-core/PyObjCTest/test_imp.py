@@ -5,7 +5,6 @@ from PyObjCTools.TestSupport import TestCase
 from PyObjCTest.test_metadata import OC_MetaDataTest
 from .test_metadata import NoObjCClass
 
-
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSArray = objc.lookUpClass("NSArray")
@@ -25,6 +24,14 @@ class TestBasicIMP(TestCase):
     #
     def testIMPType(self):
         self.assertHasAttr(objc, "IMP")
+
+    def test_no_subclass(self):
+        with self.assertRaisesRegex(
+            TypeError, "type 'objc.IMP' is not an acceptable base type"
+        ):
+
+            class subimp(objc.IMP):
+                pass
 
     def testAlloc(self):
         cls = NSObject

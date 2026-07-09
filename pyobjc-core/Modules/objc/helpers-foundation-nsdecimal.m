@@ -798,6 +798,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
     NSDecimal*        aDecimal;
     id                res;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
@@ -815,7 +817,7 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
             super.super_class = (Class _Nonnull)object_getClass( // LCOV_BR_EXCL_LINE
                 PyObjCSelector_GetClass(method));                // LCOV_BR_EXCL_LINE
             super.receiver    = (id _Nonnull)object_getClass(    // LCOV_BR_EXCL_LINE
-                PyObjCClass_GetClass(self));                  // LCOV_BR_EXCL_LINE
+                PyObjCClass_GetClass(self));                     // LCOV_BR_EXCL_LINE
 
             res = ((id (*)(struct objc_super*, SEL,         // LCOV_BR_EXCL_LINE
                            NSDecimal))objc_msgSendSuper)(   // LCOV_BR_EXCL_LINE
@@ -848,6 +850,8 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
     struct objc_super super;
     NSDecimal*        aDecimal;
     id                res;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
@@ -894,6 +898,8 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalValue(PyObject*        me
 {
     struct objc_super super;
     NSDecimal         aDecimal;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;

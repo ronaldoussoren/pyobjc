@@ -296,6 +296,12 @@ def transformAttribute(name, value, class_object, protocols):
         return value
     elif isinstance(value, (objc.native_selector, staticmethod, type)):
         return value
+    elif isinstance(value, objc.bound_selector) and isinstance(
+        value.__func__, objc.native_selector
+    ):
+        return value
+    elif isinstance(value, objc.bound_selector):
+        return value.__func__
     elif isinstance(value, objc.selector):
         if value.callable is None:
             raise ValueError(f"{name!r}: selector object without callable")

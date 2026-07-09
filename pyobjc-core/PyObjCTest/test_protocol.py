@@ -776,6 +776,12 @@ class TestFormalProtocols2(TestCase):
         self.assertResultHasType(ImplementingProto4A.proto4Method, b"I")
         self.assertResultHasType(ImplementingProto4B.proto4Method, b"I")
 
+    def test_protocols_invalid(self):
+        with self.assertRaisesRegex(TypeError, "__orig_bases__ is not a tuple"):
+
+            class ImplementingProto5(NSObject):
+                __orig_bases__ = []
+
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()
 

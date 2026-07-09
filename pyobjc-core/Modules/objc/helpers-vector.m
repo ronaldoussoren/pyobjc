@@ -40,6 +40,8 @@ extract_method_info(PyObject* method, PyObject* self, bool* isIMP, id _Nonnull* 
                     Class _Nonnull* super_class, int* flags,
                     PyObjCMethodSignature** methinfo)
 {
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     *isIMP = !!PyObjCIMP_Check(method);
 
     if (*isIMP) {

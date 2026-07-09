@@ -554,7 +554,10 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.kCFAllocatorDefault, mod.CFAllocatorRef)
         self.assertIsInstance(repr(mod.kCFAllocatorDefault), str)
         self.assertIn("magic instance", repr(mod.kCFAllocatorDefault))
-        self.assertIsInstance(mod.kCFAllocatorDefault.retain, objc.native_selector)
+        self.assertIsInstance(mod.kCFAllocatorDefault.retain, objc.bound_selector)
+        self.assertIsInstance(
+            mod.kCFAllocatorDefault.retain.__func__, objc.native_selector
+        )
         self.assertIsInstance(dir(mod.kCFAllocatorDefault), list)
 
         # XXX: These need to be in a different test file
@@ -857,3 +860,35 @@ class TestLazyImport(TestCase):
         )
 
         self.assertEqual(mod.foo, "foo")
+
+    def test_formal_protocols(self):
+        metadict = {
+            "formal_protocols": {
+                "NSObjectProtocol": "NSObject",
+                "NSCoding": "NSCoding",
+                "InvalidProtocol": "InvalidProtocol",
+                "InvalidProtocol2": "InvalidProtocol2",
+                "NSLocking": "NSLocking",
+            }
+        }
+
+        initial_dict = {"__doc__": "AppKit test module"}
+
+        mod = objc.ObjCLazyModule(
+            "AppKit",
+            None,
+            "/System/Library/Frameworks/AppKit.framework",
+            metadict,
+            None,
+            initial_dict,
+            (),
+        )
+        self.assertIsInstance(mod, objc.ObjCLazyModule)
+
+        self.assertIs(mod.NSObjectProtocol, objc.protocolNamed("NSObject"))
+        self.assertIs(mod.NSCoding, objc.protocolNamed("NSCoding"))
+        with self.assertRaisesRegex(AttributeError, "InvalidProtocol"):
+            mod.InvalidProtocol
+
+        self.assertIn("NSLocking", dir(mod))
+        self.assertNotIn("InvalidProtocol2", dir(mod))

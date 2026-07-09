@@ -12,6 +12,8 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
     void*              buf;
     Py_ssize_t         sz;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
         return NULL;
     }

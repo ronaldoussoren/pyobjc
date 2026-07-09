@@ -29,7 +29,6 @@ weaker coupling between the view and model layers.
 import collections.abc
 import types
 
-
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 
 
@@ -228,7 +227,7 @@ def getKey(obj, key):
             # Can't access the bound self of methods of builtin classes :-(
             return m()
 
-        elif isinstance(m, objc.selector) and m.self is obj:
+        elif isinstance(m, objc.bound_selector) and m.self is obj:
             return m()
 
         else:

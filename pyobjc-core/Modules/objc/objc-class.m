@@ -2244,12 +2244,6 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
 
     if (result != NULL) {
         int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
-        PyObjCNativeSelector* x = (PyObjCNativeSelector*)result;
-
-        if (x->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            x->base.sel_self = self;
-            Py_INCREF(x->base.sel_self);
-        }
         if (unlikely(res < 0)) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
             if (PyObjC_Verbose) {
@@ -2260,6 +2254,18 @@ static PyObject* _Nullable class_getattro(PyObject* self, PyObject* name)
             PyErr_Clear();
             // LCOV_EXCL_STOP
         } // LCOV_EXCL_LINE
+
+        if (PyObjCSelector_IsClassMethod(result)) {
+            PyObject* tmp = PyObjCBoundSelector_New(self, (PyObjCSelector*)result);
+            if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                Py_CLEAR(result);
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+            result = tmp;
+        }
+
     } // LCOV_BR_EXCL_LINE
 done:
     Py_CLEAR(descr);
@@ -2308,7 +2314,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
             return -1;
         }
 
-        if (PyObjCNativeSelector_Check(value)) {
+        if (PyObjCNativeSelector_Check(value) || PyObjCBoundNativeSelector_Check(value)) {
             /* XXX:
              *   The test for old_value is not ideal and is present
              *   to make it possible to use ``python_method(sel)`` to
@@ -2340,7 +2346,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* _Nullable value)
              *      when setting a selector?
              */
 
-        } else if (PyObjCSelector_Check(value)) {
+        } else if (PyObjCPythonSelector_Check(value)) {
             /*
              * Assignment of a function: create a new method in the ObjC
              * runtime.
@@ -2896,7 +2902,7 @@ static PyMethodDef class_methods[] = {
      .ml_meth  = class_get_hidden,
      .ml_flags = METH_O,
      .ml_doc   = "pyobjc_hiddenSelectors(classMethod)" CLINIC_SEP
-               "Return copy of hidden selectors"},
+                 "Return copy of hidden selectors"},
     {.ml_name = "__class_getitem__",
      .ml_meth = (PyCFunction)Py_GenericAlias,
      // This is not a METH_CLASS due the the parallel class tree
@@ -3589,16 +3595,10 @@ PyObject* _Nullable PyObjCClass_FindSelector(PyObject* cls, SEL selector,
         while (PyDict_Next(dict, &pos, NULL, &value)) {
             if (!PyObjCSelector_Check(value))
                 continue;
-
-            if (PyObjCSelector_GET_SELF(value) != NULL) {
+            if (PyObjCBoundSelector_Check(value)) {
                 /* Bound selector, not what this function tries to find */
                 continue;
             }
-#if 0
-            if (!!PyObjCSelector_IsClassMethod(value) != !!class_method) {
-                continue;
-            }
-#endif
 
             if (sel_isEqual(PyObjCSelector_GetSelector(value), selector)) {
                 PyObject* py_name = PyUnicode_FromString((char*)sel_getName(selector));
@@ -3783,7 +3783,8 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         PyObject*             name;
         struct PyObjC_method* objcMethod;
 
-        if (PyObjCNativeSelector_Check(aMethod)) {
+        if (PyObjCNativeSelector_Check(aMethod)
+            || PyObjCBoundNativeSelector_Check(aMethod)) {
             PyErr_SetString(PyExc_TypeError, "Cannot add a native selector to other "
                                              "classes");
             goto cleanup_and_return_error;
@@ -3801,9 +3802,10 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
             goto cleanup_and_return_error;
         }
 
-        if (!PyObjCPythonSelector_Check(aMethod)) {
-            PyErr_Format(PyObjCExc_InternalError, "%R not converted to a selector",
-                         methods[methodIndex]);
+        if (!PyObjCPythonSelector_Check(aMethod)
+            && !PyObjCBoundPythonSelector_Check(aMethod)) {
+            PyErr_Format(PyObjCExc_InternalError, "%R not converted to a selector (%R)",
+                         methods[methodIndex], aMethod);
             Py_CLEAR(aMethod);
             goto cleanup_and_return_error;
         }

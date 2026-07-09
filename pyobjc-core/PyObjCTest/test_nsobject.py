@@ -34,7 +34,7 @@ class Py_RefCountRaises(NSObject):
         self.scenario = 0
         return self
 
-    # XXX: For some reason super() doens't work
+    # XXX: For some reason super() doesn't work
     #      to resolve these methods, to be fixed...
     def alloc(cls):
         return super().alloc()
@@ -119,7 +119,7 @@ class TestNSObjectSupport(TestCase):
 
     def test_invalid_cls(self):
         with self.assertRaisesRegex(
-            TypeError, "Expecting instance of NSObject as self, got one of int"
+            TypeError, "Expecting subclass of NSObject as self, got 42"
         ):
             type(NSObject).__dict__["alloc"](42)
 

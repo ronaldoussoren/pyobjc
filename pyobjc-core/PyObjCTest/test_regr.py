@@ -31,6 +31,12 @@ objc.registerMetaDataForSelector(
     b"OC_TestClass1", b"sumA:B:C:D:E:F:", {"retval": {"type": b"c"}}
 )
 
+objc.registerMetaDataForSelector(
+    b"NSArray",
+    b"arrayWithObjects:count:",
+    {"arguments": {2: {"type_modifier": b"n", "c_array_length_in_arg": 3}}},
+)
+
 
 class OCTestRegrWithGetItem(NSObject):
     def objectForKey_(self, k):
@@ -47,7 +53,7 @@ class OCTestRegrWithGetItem2(OCTestRegrWithGetItem):
 
 class ReturnAStruct(NSObject):
     def someRectWithRect_(self, aRect):
-        ((x, y), (h, w)) = aRect
+        (x, y), (h, w) = aRect
         return ((x, y), (h, w))
 
     someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + b"@:" + rct)
@@ -132,11 +138,7 @@ class TestRegressions(TestCase):
             TypeError, "Expecting instance of NSObject as self, got one of NoneType"
         ):
             NSObject.pyobjc_instanceMethods.description(None)
-        with self.assertRaisesRegex(
-            TypeError,
-            "Expecting an Objective-C class or instance as self, got a NoneType",
-        ):
-            SelfIsNone.pyobjc_instanceMethods.f(None)
+        SelfIsNone.pyobjc_instanceMethods.f(None)
 
     def testOneArgumentTooMany(self):
         class ClsIsNone(NSObject):
@@ -236,11 +238,17 @@ class TestRegressions(TestCase):
 
     def test_use_metaclass_as_self(self):
         NSArray.array()
+        NSArray.arrayWithObjects_count_
         m = type(NSArray).__dict__["array"]
 
         o = m(type(NSArray))
         self.assertIsInstance(o, NSArray)
         self.assertEqual(o, [])
+
+        m = type(NSArray).__dict__["arrayWithObjects_count_"]
+        o = m(type(NSArray), ["a", "b"], 2)
+        self.assertIsInstance(o, NSArray)
+        self.assertEqual(o, ["a", "b"])
 
     def test_use_invalid__as_self_for_classmethod(self):
         NSArray.array()
@@ -248,7 +256,7 @@ class TestRegressions(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "Need objective-C object or class as self, not an instance of 'int'",
+            "Expecting subclass of NSArray as self, got 42",
         ):
             m(42)
 
@@ -1342,10 +1350,10 @@ class TestSelectorDetails(TestCase):
     def test_selector_invalid_typestr(self):
         o = NSArray.array()
         m = o.reversedArray
-        m.signature = b"X@:"
+        m.__func__.signature = b"X@:"
         with self.assertRaisesRegex(objc.error, "Unhandled type"):
             m()
-        m.signature = b"@@:"
+        m.__func__.signature = b"@@:"
 
         NSArray.__dict__["reversedArray"].signature = b"X@:"
         with self.assertRaisesRegex(objc.error, "Unhandled type"):

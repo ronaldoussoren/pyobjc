@@ -9,6 +9,14 @@ NSString = objc.lookUpClass("NSString")
 
 
 class TestUnicodeProxy(TestCase):
+    def test_no_subclass(self):
+        with self.assertRaisesRegex(
+            TypeError, "type 'objc.pyobjc_unicode' is not an acceptable base type"
+        ):
+
+            class substring(objc.pyobjc_unicode):
+                pass
+
     def test_regr1(self):
         o = NSString.stringWithString_("hello")
         self.assertIsInstance(o.stringByAppendingFormat_, objc.selector)

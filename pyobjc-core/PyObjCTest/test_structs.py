@@ -890,13 +890,11 @@ class TestStructs(TestCase):
         # statement because it is invalid before Python 3.10
         ns = locals().copy()
         exec(
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
              match o:
                  case PointStruct(x=_ as x, y=_ as y):
                      pass
-        """
-            ),
+        """),
             ns,
             ns,
         )
@@ -906,13 +904,11 @@ class TestStructs(TestCase):
 
         ns = locals().copy()
         exec(
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
              match o:
                  case PointStruct(_ as x, _ as y):
                      pass
-        """
-            ),
+        """),
             ns,
             ns,
         )
@@ -1288,3 +1284,11 @@ class TestInternals(TestCase):
 
         with self.assertRaisesRegex(AttributeError, "Cannot delete option '_deepcopy'"):
             del objc.options._deepcopy
+
+    def test_no_subclass(self):
+        with self.assertRaisesRegex(
+            TypeError, f"type '{__name__}.GlobalType' is not an acceptable base type"
+        ):
+
+            class subglobal(GlobalType):
+                pass

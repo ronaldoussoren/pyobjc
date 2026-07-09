@@ -15,6 +15,47 @@ static char* _Nullable pysel_default_signature(SEL selector, PyObject* callable)
 static PyObject* _Nullable pysel_new(PyTypeObject* type, PyObject* _Nullable args,
                                      PyObject* _Nullable kwds);
 
+static int
+sel_validate_self(PyObjCSelector* sel, PyObject* self)
+{
+    assert(sel->sel_class != Nil);
+    PyObject* myClass = PyObjCClass_New(sel->sel_class);
+    if (unlikely(myClass == NULL)) { // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    }
+
+    assert(PyType_Check(myClass));
+
+    if (unlikely(sel->sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+        /* Class method */
+        if (!PyType_Check(self)
+            || (!PyType_IsSubtype((PyTypeObject*)self, (PyTypeObject*)myClass)
+                && !PyObject_IsInstance(myClass, self))) {
+            PyErr_Format(PyExc_TypeError, "Expecting subclass of %s as self, got %R",
+                         class_getName(sel->sel_class), self);
+            Py_CLEAR(myClass);
+            return -1;
+        }
+
+    } else {
+        /* Instance method */
+
+        if (!(PyObject_IsInstance(self, myClass)
+              || (PyUnicode_Check(self)
+                  && PyObjC_class_isSubclassOf(sel->sel_class, [NSString class])))) {
+
+            PyErr_Format(PyExc_TypeError,
+                         "Expecting instance of %s as self, got one "
+                         "of %s",
+                         class_getName(sel->sel_class), Py_TYPE(self)->tp_name);
+            Py_DECREF(myClass);
+            return -1;
+        }
+    }
+    Py_CLEAR(myClass);
+    return 0;
+}
+
 /*
  * Base type for objective-C selectors
  *
@@ -26,6 +67,10 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type, PyObject* _Nullable arg
 PyObjCMethodSignature* _Nullable PyObjCSelector_GetMetadata(PyObject* _self)
 {
     assert(PyObjCSelector_Check(_self));
+
+    if (PyObjCBoundSelector_Check(_self)) {
+        return PyObjCSelector_GetMetadata(PyObjCBoundSelector_SELECTOR(_self));
+    }
 
     PyObjCSelector* self = (PyObjCSelector*)_self;
 
@@ -130,6 +175,17 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
         // LCOV_EXCL_STOP
     }
 
+    r = PyDict_SetItemString(
+        result, "_simple_",
+        ((PyObjCSelector*)self)->sel_methinfo->shortcut_signature ? Py_True : Py_False);
+
+    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(result);
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
 #if PY_VERSION_HEX >= 0x030f00a7
     PyObject* tmp = PyFrozenDict_New(result);
     Py_CLEAR(result);
@@ -140,30 +196,26 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
 #endif
 }
 
-static PyMethodDef sel_methods[] = {{.ml_name  = "__metadata__",
-                                     .ml_meth  = (PyCFunction)sel_metadata,
-                                     .ml_flags = METH_NOARGS,
-                                     .ml_doc   = sel_metadata_doc},
-                                    {
-                                        .ml_name = NULL /* SENTINEL */
-                                    }};
+static PyMethodDef base_methods[] = {{.ml_name  = "__metadata__",
+                                      .ml_meth  = (PyCFunction)sel_metadata,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc   = sel_metadata_doc},
+                                     {
+                                         .ml_name = NULL /* SENTINEL */
+                                     }};
 
-PyDoc_STRVAR(base_self_doc, "'self' object for bound methods, None otherwise");
+PyDoc_STRVAR(base_self_doc, "Always *None*");
 
-static PyObject*
-base_self(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable base_self(PyObject* _self __attribute__((__unused__)),
+                                     void*     closure __attribute__((__unused__)))
 {
-    PyObjCSelector* self = (PyObjCSelector*)_self;
-
-    /* free-threading: no locking needed because 'sel_self' is constant after
-     * initialization.
-     */
-    if (self->sel_self) {
-        Py_INCREF(self->sel_self);
-        return self->sel_self;
-    } else {
-        Py_RETURN_NONE;
+    if (PyErr_Warn(PyExc_DeprecationWarning,
+                   "using the *self* attribute on objc.native_selector or "
+                   "objc.python_selector instances is deprecated")
+        < 0) {
+        return NULL;
     }
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(base_signature_doc, "Objective-C signature for the method");
@@ -333,67 +385,45 @@ base_required(PyObject* _self, void* closure __attribute__((__unused__)))
     }
 }
 
-static PyGetSetDef base_getset[] = {{
-                                        .name = "isHidden",
-                                        .get  = base_hidden,
-                                        .set  = base_hidden_setter,
-                                        .doc  = base_hidden_doc,
-                                    },
-                                    {
-                                        .name = "isRequired",
-                                        .get  = base_required,
-                                        .doc  = base_required_doc,
-                                    },
-                                    {
-                                        .name = "isClassMethod",
-                                        .get  = base_class_method,
-                                        .doc  = base_class_method_doc,
-                                    },
-                                    {
-                                        .name = "definingClass",
-                                        .get  = base_class,
-                                        .doc  = base_class_doc,
-                                    },
-                                    {
-                                        .name = "__objclass__",
-                                        .get  = base_class,
-                                        .doc  = base_class_doc,
-                                    },
-                                    {
-                                        .name = "signature",
-                                        .get  = base_signature,
-                                        .set  = base_signature_setter,
-                                        .doc  = base_signature_doc,
-                                    },
-                                    {
-                                        .name = "native_signature",
-                                        .get  = base_native_signature,
-                                        .doc  = base_native_signature_doc,
-                                    },
-                                    {
-                                        .name = "self",
-                                        .get  = base_self,
-                                        .doc  = base_self_doc,
-                                    },
-                                    {
-                                        .name = "selector",
-                                        .get  = base_selector,
-                                        .doc  = base_selector_doc,
-                                    },
-                                    {
-                                        .name = "__name__",
-                                        .get  = base_name,
-                                        .doc  = base_name_doc,
-                                    },
-                                    {
-                                        .name = NULL /* SENTINEL */
-                                    }};
+static PyObject* _Nullable base_descr_get(PyObject* _meth, PyObject* _Nullable obj,
+                                          PyObject* _Nullable class)
+{
+    assert(PyObjCNativeSelector_Check(_meth) || PyObjCPythonSelector_Check(_meth));
+    PyObjCSelector* meth = (PyObjCSelector*)_meth;
+
+    if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
+        if (class != nil && PyType_Check(class)
+            && PyType_IsSubtype((PyTypeObject*)class, &PyObjCClass_Type)) {
+            obj = PyObjCClass_ClassForMetaClass(class);
+            if (unlikely(obj == NULL)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_SetString(PyObjCExc_InternalError,
+                                "Cannot find class for metaclass");
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+        } else {
+            if (unlikely(class == NULL)) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
+                PyErr_SetString(PyExc_TypeError, "class is NULL");
+                return NULL;
+                // LCOV_EXCL_STOP
+            }
+            obj = class;
+        }
+    } else {
+        if (!obj || (obj && PyObjCClass_Check(obj))) {
+            Py_INCREF(_meth);
+            return _meth;
+        }
+    }
+    return PyObjCBoundSelector_New(obj, meth);
+}
 
 static void
 sel_dealloc(PyObject* object)
 {
     PyObjCSelector* self = (PyObjCSelector*)object;
-    Py_CLEAR(self->sel_self);
     Py_CLEAR(self->sel_methinfo);
 
     PyMem_Free((char*)self->sel_python_signature);
@@ -443,8 +473,6 @@ static PyType_Slot sel_slots[] = {
     {.slot = Py_tp_dealloc, .pfunc = (void*)&sel_dealloc},
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_doc, .pfunc = (void*)&base_selector_type_doc},
-    {.slot = Py_tp_methods, .pfunc = (void*)&sel_methods},
-    {.slot = Py_tp_getset, .pfunc = (void*)&base_getset},
     {.slot = Py_tp_new, .pfunc = (void*)&pysel_new},
 
     {0, NULL} /* sentinel */
@@ -452,11 +480,11 @@ static PyType_Slot sel_slots[] = {
 
 static PyType_Spec sel_spec = {
     .name      = "objc.selector",
-    .basicsize = sizeof(PyObjCSelector),
+    .basicsize = sizeof(PyObjCBaseSelector),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_BASETYPE,
-    .slots = sel_slots,
+                 | Py_TPFLAGS_BASETYPE,
+    .slots     = sel_slots,
 };
 
 /*
@@ -467,20 +495,10 @@ static PyObject*
 objcsel_repr(PyObject* _self)
 {
     PyObjCNativeSelector* sel = (PyObjCNativeSelector*)_self;
-    PyObject*             rval;
-    if (sel->base.sel_self == NULL) {
-        rval = PyUnicode_FromFormat(
-            "<unbound native-selector %s in %s%s>", sel_getName(sel->base.sel_selector),
-            class_isMetaClass(sel->base.sel_class) ? "metaclass " : "",
-            class_getName(sel->base.sel_class));
-
-    } else {
-        rval =
-            PyUnicode_FromFormat("<native-selector %s of %R>",
-                                 sel_getName(sel->base.sel_selector), sel->base.sel_self);
-    }
-
-    return rval;
+    return PyUnicode_FromFormat(
+        "<unbound native-selector %s in %s%s>", sel_getName(sel->base.sel_selector),
+        class_isMetaClass(sel->base.sel_class) ? "metaclass " : "",
+        class_getName(sel->base.sel_class));
 }
 
 static Py_hash_t
@@ -490,9 +508,6 @@ objcsel_hash(PyObject* o)
     Py_hash_t             h       = 0;
     const char*           selname = sel_getName(self->base.sel_selector);
 
-    if (self->base.sel_self) {
-        h ^= PyObject_Hash(self->base.sel_self);
-    }
     h ^= (long)(self->base.sel_class);
 #if PY_VERSION_HEX >= 0x030e0000
     h ^= Py_HashBuffer(selname, strlen(selname));
@@ -520,9 +535,6 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
             if (sel_a->base.sel_class != sel_b->base.sel_class) {
                 same = 0;
             }
-            if (sel_a->base.sel_self != sel_b->base.sel_self) {
-                same = 0;
-            }
             if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
                 Py_RETURN_FALSE;
             } else {
@@ -540,8 +552,8 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
 
     } else {
         if (PyObjCSelector_Check(a) && PyObjCSelector_Check(b)) {
-            SEL sel_a = PyObjCSelector_GET_SELECTOR(a);
-            SEL sel_b = PyObjCSelector_GET_SELECTOR(b);
+            SEL sel_a = PyObjCSelector_GetSelector(a);
+            SEL sel_b = PyObjCSelector_GetSelector(b);
 
             int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
             switch (op) { // LCOV_BR_EXCL_LINE
@@ -579,9 +591,14 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
 static void
 objcsel_dealloc(PyObject* obj)
 {
-    if (((PyObjCNativeSelector*)obj)->sel_cif != NULL) {
+    if (((PyObjCNativeSelector*)obj)->sel_cif != NULL) { // LCOV_BR_EXCL_LINE
+        /* XXX: Native selectors are cached on the class and hence
+         *      not deallocated once actually called.
+         */
+        // LCOV_EXCL_START
         PyObjCFFI_FreeCIF(((PyObjCNativeSelector*)obj)->sel_cif);
-    }
+        // LCOV_EXCL_STOP
+    } // LCOV_EXCL_LINE
     sel_dealloc(obj);
 }
 
@@ -589,79 +606,63 @@ static PyObject* _Nullable objcsel_vectorcall_simple(
     PyObject* _self, PyObject* _Nonnull const* _Nonnull args, size_t nargsf,
     PyObject* _Nullable kwnames)
 {
-    PyObjCNativeSelector* self   = (PyObjCNativeSelector*)_self;
-    PyObject*             pyself = self->base.sel_self;
+    PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
     }
-    if (pyself == NULL) {
-        if (PyVectorcall_NARGS(nargsf) < 1) {
-            PyErr_SetString(PyExc_TypeError, "Missing argument: self");
-            return NULL;
-        }
-
-        pyself = args[0];
-        assert(pyself != NULL);
-
-        args   = args + 1;
-        nargsf = PyVectorcall_NARGS(nargsf) - 1;
+    if (PyVectorcall_NARGS(nargsf) < 1) {
+        PyErr_SetString(PyExc_TypeError, "Missing argument: self");
+        return NULL;
     }
 
-    {
-        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-        if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
-            return NULL;                  // LCOV_EXCL_LINE
-        }
+    PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
+    if (unlikely(methinfo == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                  // LCOV_EXCL_LINE
+    }
 
-        if (version_is_deprecated(methinfo->deprecated)) {
-            char  buf[128];
-            Class cls = PyObjCSelector_GetClass(_self);
-            SEL   sel = PyObjCSelector_GetSelector(_self);
+    if (version_is_deprecated(methinfo->deprecated)) {
+        char  buf[128];
+        Class cls = PyObjCSelector_GetClass(_self);
+        SEL   sel = PyObjCSelector_GetSelector(_self);
 
-            snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
-                     PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
-                     sel_getName(sel), methinfo->deprecated / 100,
-                     methinfo->deprecated % 100);
-            if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
-                Py_CLEAR(methinfo);
-                return NULL;
-            }
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
+                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
+                 sel_getName(sel), methinfo->deprecated / 100,
+                 methinfo->deprecated % 100);
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            Py_CLEAR(methinfo);
+            return NULL;
         }
+    }
+    Py_CLEAR(methinfo);
+
+    if (sel_validate_self(&(self->base), args[0]) < 0) {
         Py_CLEAR(methinfo);
+        return NULL;
     }
-
-    if (!(self->base.sel_flags & PyObjCSelector_kCLASS_METHOD)) {
-        /*
-         * Class methods should always be bound, therefore we only
-         * have to validate the type of self for instance methods.
-         */
-        assert(self->base.sel_class != Nil);
-        PyObject* myClass = PyObjCClass_New(self->base.sel_class);
-        if (unlikely(myClass == NULL)) { // LCOV_BR_EXCL_LINE
-            return NULL;                 // LCOV_EXCL_LINE
-        }
-
-        if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyUnicode_Check(pyself)
-                  && PyObjC_class_isSubclassOf(self->base.sel_class,
-                                               [NSString class])))) {
-
-            Py_DECREF(myClass);
-            PyErr_Format(PyExc_TypeError,
-                         "Expecting instance of %s as self, got one "
-                         "of %s",
-                         class_getName(self->base.sel_class), Py_TYPE(pyself)->tp_name);
+    if (PyObjCSelector_IsClassMethod(_self) && PyObjCMetaClass_Check(args[0])
+        && PyObject_IsSubclass(args[0], (PyObject*)&PyObjCMetaClass_Type)) {
+        PyObject* tmp = PyObjCClass_ClassForMetaClass(args[0]);
+        if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_InternalError, "Cannot find class for metaclass");
             return NULL;
+            // LCOV_EXCL_STOP
         }
-        Py_DECREF(myClass);
+        PyObject* res = PyObjCFFI_Caller_SimpleSEL((PyObject*)self, tmp, args + 1,
+                                                   PyVectorcall_NARGS(nargsf) - 1);
+        Py_CLEAR(tmp);
+        return res;
     }
-    return PyObjCFFI_Caller_SimpleSEL((PyObject*)self, pyself, args, nargsf);
+    return PyObjCFFI_Caller_SimpleSEL((PyObject*)self, args[0], args + 1,
+                                      PyVectorcall_NARGS(nargsf) - 1);
 }
 
 PyObjC_CallFunc _Nullable PyObjCSelector_GetCallFunc(PyObjCNativeSelector*  obj,
                                                      PyObjCMethodSignature* methinfo)
 {
+    assert(PyObjCNativeSelector_Check(obj));
     if (obj->sel_call_func != NULL) {
         return obj->sel_call_func;
     } else {
@@ -695,27 +696,17 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
      */
 
     PyObjCNativeSelector* self    = (PyObjCNativeSelector*)_self;
-    PyObject*             pyself  = self->base.sel_self;
     PyObjC_CallFunc       execute = NULL;
-    PyObject*             res;
 
     if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
     }
 
-    if (pyself == NULL) {
-        /* XXX: Fold this into execution of callfunc, that also checks for bound/unbound
-         */
-        if (PyVectorcall_NARGS(nargsf) < 1) {
-            PyErr_SetString(PyExc_TypeError, "Missing argument: self");
-            return NULL;
-        }
-
-        pyself = args[0];
-        if (unlikely(pyself == NULL)) { // LCOV_BR_EXCL_LINE
-            // Guard against invalid input data
-            return NULL; // LCOV_EXCL_LINE
-        }
+    /* XXX: Fold this into execution of callfunc, that also checks for bound/unbound
+     */
+    if (PyVectorcall_NARGS(nargsf) < 1) {
+        PyErr_SetString(PyExc_TypeError, "Missing argument: self");
+        return NULL;
     }
 
     PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
@@ -747,39 +738,27 @@ static PyObject* _Nullable objcsel_vectorcall(PyObject* _self,
         return NULL;
     }
 
-    /* XXX: The if statement below can be simplified, both cases are mostly the same */
-    if (self->base.sel_self != NULL) {
-        res = execute((PyObject*)self, self->base.sel_self, args,
-                      PyVectorcall_NARGS(nargsf));
-
-    } else {
-        PyObject* myClass;
-
-        assert(self->base.sel_class != Nil);
-
-        myClass = PyObjCClass_New(self->base.sel_class);
-        if (unlikely(myClass == NULL)) { // LCOV_BR_EXCL_LINE
-            return NULL;                 // LCOV_EXCL_LINE
-        }
-        if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyUnicode_Check(pyself)
-                  && PyObjC_class_isSubclassOf(self->base.sel_class,
-                                               [NSString class])))) {
-
-            Py_DECREF(myClass);
-            PyErr_Format(PyExc_TypeError,
-                         "Expecting instance of %s as self, got one "
-                         "of %s",
-                         class_getName(self->base.sel_class), Py_TYPE(pyself)->tp_name);
-            return NULL;
-        }
-        Py_DECREF(myClass);
-
-        res = execute((PyObject*)self, pyself, args + 1, PyVectorcall_NARGS(nargsf) - 1);
+    if (sel_validate_self(&(self->base), args[0]) < 0) {
+        return NULL;
     }
-    return res;
+    if (PyObjCSelector_IsClassMethod(_self) && PyObjCMetaClass_Check(args[0])
+        && PyObject_IsSubclass(args[0], (PyObject*)&PyObjCMetaClass_Type)) {
+        PyObject* tmp = PyObjCClass_ClassForMetaClass(args[0]);
+        if (unlikely(tmp == NULL)) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            PyErr_SetString(PyObjCExc_InternalError, "Cannot find class for metaclass");
+            return NULL;
+            // LCOV_EXCL_STOP
+        }
+        PyObject* res =
+            execute((PyObject*)self, tmp, args + 1, PyVectorcall_NARGS(nargsf) - 1);
+        Py_CLEAR(tmp);
+        return res;
+    }
+    return execute((PyObject*)self, args[0], args + 1, PyVectorcall_NARGS(nargsf) - 1);
 }
 
+#if 0
 static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullable obj,
                                              PyObject* _Nullable class)
 {
@@ -860,6 +839,16 @@ static PyObject* _Nullable objcsel_descr_get(PyObject* _self, PyObject* _Nullabl
 
     return (PyObject*)result;
 }
+#endif
+
+static PyObject* _Nullable objcsel_new(PyTypeObject* type,
+                                       PyObject* _Nullable args
+                                       __attribute__((__unused__)),
+                                       PyObject* _Nullable kwds
+                                       __attribute__((__unused__)))
+{
+    return PyErr_Format(PyExc_TypeError, "Cannot create instances of %s", type->tp_name);
+}
 
 static PyGetSetDef objcsel_getset[] = {{
                                            .name = "__doc__",
@@ -870,6 +859,58 @@ static PyGetSetDef objcsel_getset[] = {{
                                            .name = "__signature__",
                                            .get  = PyObjC_GetCallableSignature,
                                            .doc  = "inspect.Signature for a method",
+                                       },
+                                       {
+                                           .name = "isHidden",
+                                           .get  = base_hidden,
+                                           .set  = base_hidden_setter,
+                                           .doc  = base_hidden_doc,
+                                       },
+                                       {
+                                           .name = "isRequired",
+                                           .get  = base_required,
+                                           .doc  = base_required_doc,
+                                       },
+                                       {
+                                           .name = "isClassMethod",
+                                           .get  = base_class_method,
+                                           .doc  = base_class_method_doc,
+                                       },
+                                       {
+                                           .name = "definingClass",
+                                           .get  = base_class,
+                                           .doc  = base_class_doc,
+                                       },
+                                       {
+                                           .name = "__objclass__",
+                                           .get  = base_class,
+                                           .doc  = base_class_doc,
+                                       },
+                                       {
+                                           .name = "signature",
+                                           .get  = base_signature,
+                                           .set  = base_signature_setter,
+                                           .doc  = base_signature_doc,
+                                       },
+                                       {
+                                           .name = "native_signature",
+                                           .get  = base_native_signature,
+                                           .doc  = base_native_signature_doc,
+                                       },
+                                       {
+                                           .name = "self",
+                                           .get  = base_self,
+                                           .doc  = base_self_doc,
+                                       },
+                                       {
+                                           .name = "selector",
+                                           .get  = base_selector,
+                                           .doc  = base_selector_doc,
+                                       },
+                                       {
+                                           .name = "__name__",
+                                           .get  = base_name,
+                                           .doc  = base_name_doc,
                                        },
                                        {
                                            .name = NULL /* SENTINEL */
@@ -892,10 +933,12 @@ static PyType_Slot objcsel_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_richcompare, .pfunc = (void*)&objcsel_richcompare},
     {.slot = Py_tp_getset, .pfunc = (void*)&objcsel_getset},
-    {.slot = Py_tp_descr_get, .pfunc = (void*)&objcsel_descr_get},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)&base_descr_get},
+    {.slot = Py_tp_methods, .pfunc = (void*)&base_methods},
     {.slot = Py_tp_members, .pfunc = (void*)&objcsel_members},
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
     {.slot = Py_tp_hash, .pfunc = (void*)&objcsel_hash},
+    {.slot = Py_tp_new, .pfunc = (void*)&objcsel_new},
 
     {0, NULL} /* sentinel */
 };
@@ -905,7 +948,7 @@ static PyType_Spec objcsel_spec = {
     .basicsize = sizeof(PyObjCNativeSelector),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_HAVE_VECTORCALL,
+                 | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
 
     .slots = objcsel_slots,
 };
@@ -1024,12 +1067,13 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
                 } else {               // LCOV_EXCL_LINE
                     res = (PyObjCNativeSelector*)PyObjCSelector_NewNative(
                         (Class _Nonnull)object_getClass(object), sel, typestr, 0);
-                    if (res != NULL) {
+                    if (likely(res != NULL)) { // LCOV_BR_EXCL_LINE
                         /* Bind the method to self */
-                        res->base.sel_self = self;
-                        Py_INCREF(res->base.sel_self);
+                        retval = PyObjCBoundSelector_New(self, (PyObjCSelector*)res);
+                        Py_CLEAR(res);
+                    } else {
+                        retval = NULL; // LCOV_EXCL_LINE
                     }
-                    retval = (PyObject*)res;
                 }
             } else {
                 PyErr_Format(PyExc_AttributeError, "No attribute %s", name);
@@ -1067,7 +1111,6 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
         return NULL;              // LCOV_EXCL_LINE
 
-    result->base.sel_self             = NULL;
     result->base.sel_class            = class;
     result->base.sel_flags            = 0;
     result->base.sel_mappingcount     = 0;
@@ -1165,7 +1208,6 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* _Nullable signa
     result = PyObject_New(PyObjCPythonSelector, (PyTypeObject*)PyObjCPythonSelector_Type);
     if (unlikely(result == NULL)) // LCOV_BR_EXCL_LINE
         return NULL;              // LCOV_EXCL_LINE
-    result->base.sel_self  = NULL;
     result->base.sel_class = cls;
     result->base.sel_flags = 0;
     result->base.sel_methinfo =
@@ -1260,9 +1302,6 @@ pysel_hash(PyObject* o)
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)o;
     Py_hash_t             h    = 0;
 
-    if (self->base.sel_self) {
-        h ^= PyObject_Hash(self->base.sel_self);
-    }
     h ^= (long)(self->base.sel_class);
     h ^= PyObject_Hash(self->callable);
 
@@ -1282,9 +1321,6 @@ static PyObject* _Nullable pysel_richcompare(PyObject* a, PyObject* b, int op)
                 same = 0;
             }
             if (sel_a->base.sel_class != sel_b->base.sel_class) {
-                same = 0;
-            }
-            if (sel_a->base.sel_self != sel_b->base.sel_self) {
                 same = 0;
             }
             r = PyObject_RichCompareBool(sel_a->callable, sel_b->callable, Py_EQ);
@@ -1310,8 +1346,8 @@ static PyObject* _Nullable pysel_richcompare(PyObject* a, PyObject* b, int op)
         }
     } else {
         if (PyObjCSelector_Check(a) && PyObjCSelector_Check(b)) {
-            SEL sel_a = PyObjCSelector_GET_SELECTOR(a);
-            SEL sel_b = PyObjCSelector_GET_SELECTOR(b);
+            SEL sel_a = PyObjCSelector_GetSelector(a);
+            SEL sel_b = PyObjCSelector_GetSelector(b);
 
             int r = strcmp(sel_getName(sel_a), sel_getName(sel_b));
             switch (op) {
@@ -1349,25 +1385,16 @@ static PyObject*
 pysel_repr(PyObject* _self)
 {
     PyObjCPythonSelector* sel = (PyObjCPythonSelector*)_self;
-    PyObject*             rval;
 
-    if (sel->base.sel_self == NULL) {
-        if (sel->base.sel_class) {
-            rval = PyUnicode_FromFormat("<unbound selector %s of %s at %p>",
-                                        sel_getName(sel->base.sel_selector),
-                                        class_getName(sel->base.sel_class), sel);
-
-        } else {
-            rval = PyUnicode_FromFormat("<unbound selector %s at %p>",
-                                        sel_getName(sel->base.sel_selector), sel);
-        }
+    if (sel->base.sel_class) {
+        return PyUnicode_FromFormat("<unbound selector %s of %s at %p>",
+                                    sel_getName(sel->base.sel_selector),
+                                    class_getName(sel->base.sel_class), sel);
 
     } else {
-        rval =
-            PyUnicode_FromFormat("<selector %s of %R>",
-                                 sel_getName(sel->base.sel_selector), sel->base.sel_self);
+        return PyUnicode_FromFormat("<unbound selector %s at %p>",
+                                    sel_getName(sel->base.sel_selector), sel);
     }
-    return rval;
 }
 
 static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
@@ -1375,7 +1402,6 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
                                             size_t nargsf, PyObject* _Nullable kwnames)
 {
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
-    PyObject*             result;
 
     if (self->callable == NULL || self->callable == Py_None) {
         PyErr_Format(PyExc_TypeError, "Calling abstract methods with selector '%s'",
@@ -1384,22 +1410,9 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
     }
 
     if (!PyObjC_is_pymethod(self->callable)) {
-        if (self->base.sel_self == NULL) {
-            PyObject* self_arg;
-            if (PyVectorcall_NARGS(nargsf) < 1) {
-                PyErr_SetString(PyExc_TypeError, "need self argument");
-                return NULL;
-            }
-
-            self_arg = args[0];
-
-            if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
-                PyErr_Format(PyExc_TypeError,
-                             "Expecting an Objective-C class or "
-                             "instance as self, got a %s",
-                             Py_TYPE(self_arg)->tp_name);
-                return NULL;
-            }
+        if (PyVectorcall_NARGS(nargsf) < 1) {
+            PyErr_SetString(PyExc_TypeError, "need self argument");
+            return NULL;
         }
 
         /* normal function code will perform other checks */
@@ -1408,44 +1421,7 @@ static PyObject* _Nullable pysel_vectorcall(PyObject* _self,
     /*
      * Assume callable will check arguments
      */
-    if (self->base.sel_self == NULL) {
-        result = PyObject_Vectorcall(self->callable, args, nargsf, kwnames);
-
-    } else {
-        if (nargsf & PY_VECTORCALL_ARGUMENTS_OFFSET) {
-            /* We're allowed to use args[-1]; */
-            PyObject* tmp          = args[-1];
-            ((PyObject**)args)[-1] = self->base.sel_self;
-
-            result                 = PyObject_Vectorcall(self->callable, args - 1,
-                                                         PyVectorcall_NARGS(nargsf) + 1, kwnames);
-            ((PyObject**)args)[-1] = tmp;
-        } else {
-            /* Need to insert the self argument, but cannot use the args array for that
-             * Allocate a new array that's 2 larger, that way we can use
-             * PY_VECTORCALL_ARGUMENTS_OFFSET when performing the call.
-             */
-            PyObject** temp_args =
-                malloc((PyVectorcall_NARGS(nargsf) + 2) * sizeof(PyObject*));
-            if (unlikely(temp_args == NULL)) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                PyErr_NoMemory();
-                return NULL;
-                // LCOV_EXCL_STOP
-            }
-            temp_args[0] = Py_None;
-            temp_args[1] = self->base.sel_self;
-            memcpy(temp_args + 2, args, PyVectorcall_NARGS(nargsf) * sizeof(PyObject*));
-
-            result = PyObject_Vectorcall(self->callable, temp_args + 1,
-                                         (PyVectorcall_NARGS(nargsf) + 1)
-                                             | PY_VECTORCALL_ARGUMENTS_OFFSET,
-                                         kwnames);
-            free(temp_args);
-        } // LCOV_BR_EXCL_LINE
-    }
-
-    return result;
+    return PyObject_Vectorcall(self->callable, args, nargsf, kwnames);
 }
 
 static char*
@@ -1708,6 +1684,7 @@ static PyObject* _Nullable pysel_new(PyTypeObject* type __attribute__((__unused_
     return (PyObject*)result;
 }
 
+#if 0
 static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable obj,
                                            PyObject* _Nullable class)
 {
@@ -1791,6 +1768,7 @@ static PyObject* _Nullable pysel_descr_get(PyObject* _meth, PyObject* _Nullable 
 
     return (PyObject*)result;
 }
+#endif
 
 static void
 pysel_dealloc(PyObject* obj)
@@ -1840,6 +1818,58 @@ static PyGetSetDef pysel_getset[] = {{
                                          .doc  = "inspect.Signaturefor a method",
                                      },
                                      {
+                                         .name = "isHidden",
+                                         .get  = base_hidden,
+                                         .set  = base_hidden_setter,
+                                         .doc  = base_hidden_doc,
+                                     },
+                                     {
+                                         .name = "isRequired",
+                                         .get  = base_required,
+                                         .doc  = base_required_doc,
+                                     },
+                                     {
+                                         .name = "isClassMethod",
+                                         .get  = base_class_method,
+                                         .doc  = base_class_method_doc,
+                                     },
+                                     {
+                                         .name = "definingClass",
+                                         .get  = base_class,
+                                         .doc  = base_class_doc,
+                                     },
+                                     {
+                                         .name = "__objclass__",
+                                         .get  = base_class,
+                                         .doc  = base_class_doc,
+                                     },
+                                     {
+                                         .name = "signature",
+                                         .get  = base_signature,
+                                         .set  = base_signature_setter,
+                                         .doc  = base_signature_doc,
+                                     },
+                                     {
+                                         .name = "native_signature",
+                                         .get  = base_native_signature,
+                                         .doc  = base_native_signature_doc,
+                                     },
+                                     {
+                                         .name = "self",
+                                         .get  = base_self,
+                                         .doc  = base_self_doc,
+                                     },
+                                     {
+                                         .name = "selector",
+                                         .get  = base_selector,
+                                         .doc  = base_selector_doc,
+                                     },
+                                     {
+                                         .name = "__name__",
+                                         .get  = base_name,
+                                         .doc  = base_name_doc,
+                                     },
+                                     {
                                          .name = NULL /* SENTINEL */
                                      }};
 
@@ -1861,8 +1891,9 @@ static PyType_Slot pysel_slots[] = {
     {.slot = Py_tp_getattro, .pfunc = (void*)&PyObject_GenericGetAttr},
     {.slot = Py_tp_richcompare, .pfunc = (void*)&pysel_richcompare},
     {.slot = Py_tp_getset, .pfunc = (void*)&pysel_getset},
-    {.slot = Py_tp_descr_get, .pfunc = (void*)pysel_descr_get},
+    {.slot = Py_tp_descr_get, .pfunc = (void*)base_descr_get},
     {.slot = Py_tp_members, .pfunc = (void*)&pysel_members},
+    {.slot = Py_tp_methods, .pfunc = (void*)&base_methods},
     {.slot = Py_tp_call, .pfunc = (void*)&PyVectorcall_Call},
 
     {0, NULL} /* sentinel */
@@ -1873,7 +1904,7 @@ static PyType_Spec pysel_spec = {
     .basicsize = sizeof(PyObjCPythonSelector),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_HAVE_VECTORCALL,
+                 | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
 
     .slots = pysel_slots,
 };
@@ -1882,21 +1913,37 @@ const char*
 PyObjCSelector_Signature(PyObject* obj)
 {
     assert(PyObjCSelector_Check(obj));
+    assert(!PyObjCBoundSelector_Check(obj));
+
     return ((PyObjCSelector*)obj)->sel_python_signature;
+}
+
+const char*
+PyObjCSelector_GetNativeSignature(PyObject* obj)
+{
+    assert(PyObjCSelector_Check(obj));
+    assert(!PyObjCBoundSelector_Check(obj));
+
+    return ((PyObjCSelector*)obj)->sel_native_signature;
 }
 
 Class
 PyObjCSelector_GetClass(PyObject* sel)
 {
     assert(PyObjCSelector_Check(sel));
+    assert(!PyObjCBoundSelector_Check(sel));
 
-    return ((PyObjCNativeSelector*)sel)->base.sel_class;
+    return ((PyObjCSelector*)sel)->sel_class;
 }
 
 SEL
 PyObjCSelector_GetSelector(PyObject* sel)
 {
     assert(PyObjCSelector_Check(sel));
+
+    if (PyObjCBoundSelector_Check(sel)) {
+        return ((PyObjCSelector*)PyObjCBoundSelector_SELECTOR(sel))->sel_selector;
+    }
 
     return ((PyObjCSelector*)sel)->sel_selector;
 }
@@ -1906,7 +1953,7 @@ PyObjCSelector_Required(PyObject* sel)
 {
     assert(PyObjCSelector_Check(sel));
 
-    return (((PyObjCSelector*)sel)->sel_flags & PyObjCSelector_kREQUIRED) != 0;
+    return (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kREQUIRED) != 0;
 }
 
 int
@@ -1929,6 +1976,10 @@ int
 PyObjCSelector_GetFlags(PyObject* sel)
 {
     assert(PyObjCSelector_Check(sel));
+
+    if (PyObjCBoundSelector_Check(sel)) {
+        return ((PyObjCSelector*)PyObjCBoundSelector_SELECTOR(sel))->sel_flags;
+    }
 
     return ((PyObjCSelector*)sel)->sel_flags;
 }
@@ -1975,9 +2026,13 @@ PyObjCSelector_Setup(PyObject* module)
     }
     Py_INCREF(PyObjCNativeSelector_Type);
 
-    /* Make it impossible to subclass objc.selector, other than the two subtypes
-     * created in this function.
-     */
+    return 0;
+}
+
+int
+PyObjCSelector_PostSetup(PyObject* module __attribute__((__unused__)))
+{
+    /* Ensure that user code cannot create subclasses */
     ((PyTypeObject*)PyObjCSelector_Type)->tp_flags &= ~Py_TPFLAGS_BASETYPE;
     return 0;
 }

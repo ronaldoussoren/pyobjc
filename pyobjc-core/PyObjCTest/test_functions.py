@@ -17,7 +17,6 @@ from PyObjCTest.test_metadata_function import (
 )
 from PyObjCTest.test_deprecations import deprecation_warnings
 
-
 bundle = objc.lookUpClass("NSBundle").bundleWithPath_(
     "/System/Library/Frameworks/AppKit.framework"
 )
@@ -103,12 +102,10 @@ class TestFunctions(TestCase):
 
         self.assertEqual(
             NSRectClipList.__doc__,  # noqa: F821
-            textwrap.dedent(
-                f"""\
+            textwrap.dedent(f"""\
             void NSRectClipList(in {recttype}* arg0, long long arg1);
 
-            arg0: array with length in arg1"""
-            ),
+            arg0: array with length in arg1"""),
         )
 
         self.assertEqual(
@@ -324,7 +321,12 @@ class TestFunctions(TestCase):
             bundle,
             gl,
             [
-                ("NSFrameAddress", b"Q" * 600, ""),
+                (
+                    "NSFrameAddress",
+                    b"Q" * 600,
+                    "",
+                    {"retval": {"sel_of_type": b"v@:@"}},
+                ),
             ],
             True,
         )

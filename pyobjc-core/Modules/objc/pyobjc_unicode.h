@@ -4,8 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjCUnicode_Type;
-#define PyObjCUnicode_Check(obj)                                                         \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCUnicode_Type)
+#define PyObjCUnicode_Check(obj) Py_IS_TYPE((obj), (PyTypeObject*)PyObjCUnicode_Type)
 
 extern PyObject* _Nullable PyObjCUnicode_New(NSString* value);
 extern int PyObjCUnicode_Setup(PyObject* module);

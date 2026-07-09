@@ -69,8 +69,9 @@ static void
 calc_current_version(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1010
-    if (likely([NSProcessInfo instancesRespondToSelector:@selector
-                              (operatingSystemVersion)])) { // LCOV_BR_EXCL_LINE
+    if (likely(
+            [NSProcessInfo instancesRespondToSelector:
+                               @selector(operatingSystemVersion)])) { // LCOV_BR_EXCL_LINE
         NSAutoreleasePool* pool;
 
         pool           = [[NSAutoreleasePool alloc] init];
@@ -2053,53 +2054,53 @@ static PyMethodDef mod_methods[] = {
      .ml_meth  = (PyCFunction)PyObjC_LoadConstant,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
      .ml_doc   = "_loadConstant(name, type, magic)\n" CLINIC_SEP
-               "\nLoad a single C constant and return its value"},
+                 "\nLoad a single C constant and return its value"},
     {.ml_name  = "_nameForSignature",
      .ml_meth  = (PyCFunction)name_for_signature,
      .ml_flags = METH_O,
      .ml_doc   = "_nameForSignature(typestr)\n" CLINIC_SEP
-               "\nReturn a pretty name for a PyObjC type string"},
+                 "\nReturn a pretty name for a PyObjC type string"},
     {
         .ml_name  = "_rescanClass",
         .ml_meth  = (PyCFunction)force_rescan,
         .ml_flags = METH_VARARGS | METH_KEYWORDS,
         .ml_doc   = "_rescanClass(classObject)\n" CLINIC_SEP
-                  "\nForce a rescan of the method table of a class",
+                    "\nForce a rescan of the method table of a class",
     },
     {
         .ml_name  = "_rescanClass",
         .ml_meth  = (PyCFunction)force_rescan,
         .ml_flags = METH_VARARGS | METH_KEYWORDS,
         .ml_doc   = "_rescanClass(classObject)\n" CLINIC_SEP
-                  "\nForce a rescan of the method table of a class",
+                    "\nForce a rescan of the method table of a class",
     },
     {
         .ml_name  = "_dyld_shared_cache_contains_path",
         .ml_meth  = (PyCFunction)mod_dyld_shared_cache_contains_path,
         .ml_flags = METH_O,
         .ml_doc   = "_dyld_shared_cache_contains_path(path)\n" CLINIC_SEP
-                  "\nForce a rescan of the method table of a class",
+                    "\nForce a rescan of the method table of a class",
     },
     {
         .ml_name  = "_registerVectorType",
         .ml_meth  = (PyCFunction)mod_registerVectorType,
         .ml_flags = METH_O,
         .ml_doc   = "_registerVectorType(type)\n" CLINIC_SEP
-                  "\nRegister SIMD type with the bridge.",
+                    "\nRegister SIMD type with the bridge.",
     },
     {
         .ml_name  = "_registeredMetadataForSelector",
         .ml_meth  = (PyCFunction)mod_registeredMetadataForSelector,
         .ml_flags = METH_VARARGS,
         .ml_doc   = "_registeredMetadataForSelector(cls, selname)\n" CLINIC_SEP
-                  "\nLook up registered metadata info for a selector.",
+                    "\nLook up registered metadata info for a selector.",
     },
     {
         .ml_name  = "_returns_value",
         .ml_meth  = (PyCFunction)mod_returns_value,
         .ml_flags = METH_O,
         .ml_doc   = "_returns_value(func)\n" CLINIC_SEP
-                  "\nReturns True if `func` explicitly returns a value.",
+                    "\nReturns True if `func` explicitly returns a value.",
     },
     {
         .ml_name = NULL /* SENTINEL */
@@ -2245,6 +2246,8 @@ static setup_function _Nullable setup_functions[] = {
     PyObjCIMP_SetUp,
     PyObjC_init_ctests,
     PyObjCSelector_Setup,
+    PyObjCBoundSelector_Setup,
+    PyObjCSelector_PostSetup,
     PyObjC_setup_nsdata,
     PyObjC_setup_nscoder,
     PyObjC_setup_nsobject,

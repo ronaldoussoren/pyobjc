@@ -102,6 +102,7 @@ PyObject* PyObjCNM_update;
 PyObject* PyObjCNM_co_consts;
 PyObject* PyObjCNM___call__;
 PyObject* PyObjCNM___orig_bases__;
+PyObject* PyObjCNM___metadata__;
 
 int
 PyObjCUtil_Init(PyObject* module)
@@ -220,6 +221,7 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_co_consts, "co_consts");
     NEW_STR(PyObjCNM___call__, "__call__");
     NEW_STR(PyObjCNM___orig_bases__, "__orig_bases__");
+    NEW_STR(PyObjCNM___metadata__, "__metadata__");
 
 #undef NEW_STR
 

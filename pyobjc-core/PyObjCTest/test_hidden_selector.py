@@ -128,8 +128,8 @@ class TestHiddenSelector(TestCase):
         ):
             o.boolMethod()
         m = o.pyobjc_instanceMethods.boolMethod
-        self.assertIsInstance(m, objc.selector)
-        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertIsInstance(m, objc.bound_selector)
+        self.assertNotIsInstance(m.__func__, objc.native_selector)
         self.assertResultIsBOOL(m)
         v = m()
         self.assertIs(v, True)
@@ -139,8 +139,8 @@ class TestHiddenSelector(TestCase):
     def testHiddenCanBeIntrospected(self):
         o = OCTestHidden.alloc().init()
         m = o.pyobjc_instanceMethods.body
-        self.assertIsInstance(m, objc.selector)
-        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertIsInstance(m, objc.bound_selector)
+        self.assertNotIsInstance(m.__func__, objc.native_selector)
         self.assertTrue(m.isHidden)
 
         self.assertNotIn("body", dir(o))
@@ -276,8 +276,8 @@ class TestHiddenSelector(TestCase):
         self.assertIn(b"addedmethod", OCTestHidden.pyobjc_hiddenSelectors(False))
 
         m = o.pyobjc_instanceMethods.addedmethod
-        self.assertIsInstance(m, objc.selector)
-        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertIsInstance(m, objc.bound_selector)
+        self.assertNotIsInstance(m.__func__, objc.native_selector)
         v = m()
         self.assertEqual(v, "NEW")
 
@@ -353,8 +353,8 @@ class TestHiddenSelector(TestCase):
         ):
             o.boolMethod()
         m = o.pyobjc_instanceMethods.boolMethod
-        self.assertIsInstance(m, objc.selector)
-        self.assertNotIsInstance(m, objc.native_selector)
+        self.assertIsInstance(m, objc.bound_selector)
+        self.assertNotIsInstance(m.__func__, objc.native_selector)
         self.assertResultIsBOOL(m)
         v = m()
         self.assertIs(v, False)
