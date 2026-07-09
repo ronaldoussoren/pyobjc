@@ -6,74 +6,115 @@
    "FIFinderSyncController": {
     "methods": [
      {
-      "selector": "isExtensionEnabled",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isExtensionEnabled"
      },
      {
-      "selector": "setLastUsedDate:forItemWithURL:completion:",
-      "class_method": false,
       "args": {
        "2": {
         "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setLastUsedDate:forItemWithURL:completion:"
      },
      {
-      "selector": "setTagData:forItemWithURL:completion:",
-      "class_method": false,
       "args": {
        "2": {
         "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setTagData:forItemWithURL:completion:"
      }
     ]
    },
    "NSObject": {
     "methods": [
      {
-      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o", "type_override": "^@" }
-      }
-     },
-     {
-      "selector": "valuesForAttributes:forItemWithURL:completion:",
-      "class_method": false,
       "args": {
        "2": {
-        "type_override": "@?",
-	"callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
+        "type_modifier": "o",
+        "type_override": "^@"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "valuesForAttributes:forItemWithURL:completion:"
      }
     ]
    }
   },
   "formal_protocols": {
-    "FIFinderSync": { "rename": "FIFinderSyncProtocol" }
-   },
+   "FIFinderSync": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "name": "error",
+        "null_accepted": true,
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *"
+       }
+      },
+      "class_method": false,
+      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:"
+     }
+    ],
+    "rename": "FIFinderSyncProtocol"
+   }
+  },
   "functions": {},
   "informal_protocols": {}
  }
