@@ -110,6 +110,7 @@ FRAMEWORK_WRAPPERS = [
     ("LatentSemanticMapping", None, None),
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
+    ("LinkSecurity", "27.0", None),
     ("LocalAuthentication", "10.10", None),
     ("LocalAuthenticationEmbeddedUI", "12.0", None),
     ("MailKit", "12.0", None),

@@ -135,3 +135,6 @@ class TestPHImageManager(TestCase):
         self.assertArgIsBOOL(
             Photos.PHImageRequestOptions.setAllowSecondaryDegradedImage_, 0
         )
+
+        self.assertResultIsBOOL(Photos.PHImageRequestOptions.preferHDR)
+        self.assertArgIsBOOL(Photos.PHImageRequestOptions.setPreferHDR_, 0)

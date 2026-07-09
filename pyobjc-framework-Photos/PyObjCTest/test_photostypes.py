@@ -80,6 +80,12 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetPlaybackStyleVideo, 4)
         self.assertEqual(Photos.PHAssetPlaybackStyleVideoLooping, 5)
 
+        self.assertIsEnumType(Photos.PHAssetPlaybackVariation)
+        self.assertEqual(Photos.PHAssetPlaybackVariationNone, 0)
+        self.assertEqual(Photos.PHAssetPlaybackVariationAutoloop, 1)
+        self.assertEqual(Photos.PHAssetPlaybackVariationMirror, 2)
+        self.assertEqual(Photos.PHAssetPlaybackVariationLongExposure, 3)
+
         self.assertIsEnumType(Photos.PHAssetResourceType)
         self.assertEqual(Photos.PHAssetResourceTypePhoto, 1)
         self.assertEqual(Photos.PHAssetResourceTypeVideo, 2)

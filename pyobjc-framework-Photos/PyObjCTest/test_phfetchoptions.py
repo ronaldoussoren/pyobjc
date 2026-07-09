@@ -14,3 +14,6 @@ class TestPHFetchOptions(TestCase):
     def test_methods10_15(self):
         self.assertResultIsBOOL(Photos.PHFetchOptions.includeAllBurstAssets)
         self.assertArgIsBOOL(Photos.PHFetchOptions.setIncludeAllBurstAssets_, 0)
+
+        self.assertResultIsBOOL(Photos.PHFetchOptions.prefetchAssetExtendedMetadata)
+        self.assertArgIsBOOL(Photos.PHFetchOptions.setPrefetchAssetExtendedMetadata_, 0)

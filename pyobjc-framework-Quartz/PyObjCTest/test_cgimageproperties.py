@@ -894,11 +894,6 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImageProviderPreferredTileWidth, str)
         self.assertIsInstance(Quartz.kCGImageProviderPreferredTileHeight, str)
 
-    @min_os_level("27.0")
-    def test_constants27_0(self):
-        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAISystemUsed, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAISystemVersionUsed, str)
-
     @min_os_level("10.14")
     def test_functions(self):
         Quartz.CGImageSourceGetPrimaryImageIndex

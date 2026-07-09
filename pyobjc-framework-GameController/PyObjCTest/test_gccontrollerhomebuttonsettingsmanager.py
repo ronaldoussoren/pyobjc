@@ -5,33 +5,74 @@ from PyObjCTools.TestSupport import (
 import sys
 import GameController
 
+GCControllerHomeButtonSettingsDidChangeHandler = b"v@"
+
 
 class TestGCControllerHomeButtonSettingsManager(TestCase):
     def test_enums(self):
-        self.assertIsEnumType(GameController.GCControllerHomeButtonSettingsAction)
+        self.assertIsEnumType(GameController.GCControllerHomeButtonSettingSystemAction)
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsActionUnavailable, 0
+            GameController.GCControllerHomeButtonSettingSystemActionUnavailable, -1
         )
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsActionOpenCurrentApplication, 1
+            GameController.GCControllerHomeButtonSettingSystemActionOther, 0
         )
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsActionOther, sys.maxsize
+            GameController.GCControllerHomeButtonSettingSystemActionOpenCurrentApplication,
+            1,
         )
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsActionDisabled, -1
+            GameController.GCControllerHomeButtonSettingSystemActionDisabled,
+            sys.maxsize,
         )
 
-        self.assertIsEnumType(GameController.GCControllerHomeButtonSettingsActivity)
+        self.assertIsEnumType(GameController.GCControllerHomeButtonSettingInAppAction)
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsCustomizeActionActivity, 1
+            GameController.GCControllerHomeButtonSettingInAppActionUnavailable, -1
         )
         self.assertEqual(
-            GameController.GCControllerHomeButtonSettingsCustomizeOverridesActivity, 2
+            GameController.GCControllerHomeButtonSettingInAppActionDefault, 0
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingInAppActionDefer, 1
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingInAppActionDisabled, sys.maxsize
+        )
+
+        self.assertIsEnumType(
+            GameController.GCControllerHomeButtonSettingCustomizationStatus
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingCustomizationDefault, 0
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingCustomizationUser, 1
+        )
+
+        self.assertIsEnumType(
+            GameController.GCControllerHomeButtonSettingsCustomizationActivity
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingsCustomizeSystemActionActivity,
+            1,
+        )
+        self.assertEqual(
+            GameController.GCControllerHomeButtonSettingsCustomizeInAppActionActivity, 2
         )
 
     @min_os_level("27.0")
     def test_methods(self):
+        self.assertResultIsBlock(
+            GameController.GCControllerHomeButtonSettingsManager.settingsDidChangeHandler,
+            GCControllerHomeButtonSettingsDidChangeHandler,
+        )
+        self.assertArgIsBlock(
+            GameController.GCControllerHomeButtonSettingsManager.setSettingsDidChangeHandler_,
+            0,
+            GCControllerHomeButtonSettingsDidChangeHandler,
+        )
+
         self.assertResultIsBOOL(
             GameController.GCControllerHomeButtonSettingsManager.openControllerHomeButtonSettingsForActivity_error_
         )
@@ -41,6 +82,18 @@ class TestGCControllerHomeButtonSettingsManager(TestCase):
         )
 
         self.assertArgIsOut(
-            GameController.GCControllerHomeButtonSettingsManager.readControllerHomeButtonActionWithError_,
+            GameController.GCControllerHomeButtonSettingsManager.readControllerHomeButtonSystemAction_withError_,
+            1,
+        )
+        self.assertArgIsOut(
+            GameController.GCControllerHomeButtonSettingsManager.readControllerHomeButtonSystemActionWithError_,
+            0,
+        )
+        self.assertArgIsOut(
+            GameController.GCControllerHomeButtonSettingsManager.readControllerHomeButtonInAppAction_withError_,
+            1,
+        )
+        self.assertArgIsOut(
+            GameController.GCControllerHomeButtonSettingsManager.readControllerHomeButtonInAppActionWithError_,
             0,
         )
