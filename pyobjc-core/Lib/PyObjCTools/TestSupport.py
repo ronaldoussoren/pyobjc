@@ -19,7 +19,6 @@ from sysconfig import get_config_var as _get_config_var
 
 import objc
 
-
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
 __unittest = False
@@ -1204,7 +1203,7 @@ class TestCase(_unittest.TestCase):
             else:
                 if v is not proto:
                     self.fail(
-                        f"{mod.__name__}.{modalias} is not objc.protocolNamed({name!r}, but {v!r}"
+                        f"{mod.__name__}.{modalias} is not objc.protocolNamed({name!r}), but {v!r}"
                     )
 
     def assertPickleRoundTrips(self, value):

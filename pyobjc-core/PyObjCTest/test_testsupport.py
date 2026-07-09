@@ -1748,6 +1748,10 @@ class TestTestSupport(TestCase):
             self.assertClassIsFinal(type(self))
 
     def test_assertProtoclExists(self):
+        class Mod:
+            __name__ = "Mod"
+            pass
+
         objc.protocolNamed("NSObject")
         try:
             objc.protocolNamed("FooBar")
@@ -1765,6 +1769,42 @@ class TestTestSupport(TestCase):
             self.assertProtocolExists("NSObject")
         except self.failureException:
             self.fail("Unexpected test failure")
+
+        mod = Mod()
+
+        with self.assertRaisesRegex(
+            self.failureException, "Mod.NSObject does not exist"
+        ):
+            self.assertProtocolExists("NSObject", mod)
+
+        with self.assertRaisesRegex(
+            self.failureException, "Mod.NSObjectProtocol does not exist"
+        ):
+            self.assertProtocolExists("NSObject", mod, "NSObjectProtocol")
+
+        mod.NSObject = objc.protocolNamed("NSObject")
+        try:
+            self.assertProtocolExists("NSObject", mod)
+        except self.failureException:
+            self.fail("Unexpected test failure")
+
+        with self.assertRaisesRegex(
+            self.failureException, "Mod.NSObjectProtocol does not exist"
+        ):
+            self.assertProtocolExists("NSObject", mod, "NSObjectProtocol")
+
+        mod.NSObjectProtocol = mod.NSObject
+        try:
+            self.assertProtocolExists("NSObject", mod, "NSObjectProtocol")
+        except self.failureException:
+            self.fail("Unexpected test failure")
+
+        mod.NSObjectProtocol = object
+        with self.assertRaisesRegex(
+            self.failureException,
+            r"Mod.NSObjectProtocol is not objc.protocolNamed\('NSObject'\), but <class 'object'>",
+        ):
+            self.assertProtocolExists("NSObject", mod, "NSObjectProtocol")
 
         orig = objc.protocolNamed
         try:
