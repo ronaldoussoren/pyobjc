@@ -132,6 +132,7 @@
 #import "file_wrapper.h"
 #import "formal-protocol.h"
 #import "fsref.h"
+#import "function-call.h"
 #import "function.h"
 #import "helpers.h"
 #import "instance-var.h"

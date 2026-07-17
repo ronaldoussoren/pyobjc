@@ -857,17 +857,14 @@ class TestOverridingSpecials(TestCase):
         # XXX: TEst is no longer relevant
         o = NSObject.alloc()
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", category=objc.UninitializedDeallocWarning)
+        orig_stderr = sys.stderr
+        try:
+            sys.stderr = captured_stderr = io.StringIO()
 
-            orig_stderr = sys.stderr
-            try:
-                sys.stderr = captured_stderr = io.StringIO()
+            del o
 
-                del o
-
-            finally:
-                sys.stderr = orig_stderr
+        finally:
+            sys.stderr = orig_stderr
 
         self.assertNotIn(
             "leaking an uninitialized object of type NSObject",

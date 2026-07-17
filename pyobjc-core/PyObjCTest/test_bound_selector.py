@@ -94,4 +94,6 @@ class TestBoundSelector(TestCase):
         del o
         self.assertFalse(done)
         gc.collect()
+        gc.collect()
+        gc.collect()
         self.assertTrue(done)

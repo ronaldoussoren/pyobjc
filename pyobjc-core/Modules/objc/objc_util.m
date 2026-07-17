@@ -14,7 +14,6 @@ Class   NSAutoreleasePool_class;
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
-PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 13 */
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
 PyObject* PyObjCExc_BadPrototypeError;
@@ -121,7 +120,6 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
     NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
             PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);

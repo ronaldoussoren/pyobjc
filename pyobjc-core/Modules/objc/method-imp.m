@@ -98,7 +98,8 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
     assert(pyself != NULL);
     assert(self->callfunc != NULL);
 
-    return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
+    PyObject* r = self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
+    return r;
 }
 
 static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,

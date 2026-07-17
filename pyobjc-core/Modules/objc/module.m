@@ -2252,6 +2252,7 @@ static setup_function _Nullable setup_functions[] = {
     PyObjC_setup_nscoder,
     PyObjC_setup_nsobject,
     PyObjC_setup_simd,
+    PyObjC_setup_simd_functions,
     PyObjC_setup_nsinvocation,
     PyObjCCFType_Setup,
     PyObjCSwiftObject_Setup,
@@ -2301,6 +2302,9 @@ mod_exec_module(PyObject* m)
 
     if (unlikely(PyObjC_InitSuperCallRegistry() == -1)) { // LCOV_BR_EXCL_LINE
         return -1;                                        // LCOV_EXCL_LINE
+    }
+    if (unlikely(PyObjC_InitFunctionCallRegistry() == -1)) { // LCOV_BR_EXCL_LINE
+        return -1;                                           // LCOV_EXCL_LINE
     }
 
     /* Create a temporary release pool for handling values autoreleased during

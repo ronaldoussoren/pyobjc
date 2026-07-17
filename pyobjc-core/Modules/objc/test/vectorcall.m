@@ -86,7 +86,7 @@ static BOOL      shouldRaise = NO;
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        Py_CLEAR(clsvalues);
+        Py_CLEAR(values);
     PyObjC_END_WITH_GIL
     return result;
 }
@@ -107,7 +107,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_uchar16)v16C
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -122,7 +122,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_uchar16)clsv16C
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -137,7 +137,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_double2)v2d
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -152,7 +152,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_double2)clsv2d
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -170,7 +170,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -193,7 +193,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -213,7 +213,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float2)v2f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -228,7 +228,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float2)clsv2f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -246,7 +246,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -269,7 +269,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -292,7 +292,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -315,7 +315,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -338,7 +338,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -361,7 +361,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -381,7 +381,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_int2)v2i
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -396,7 +396,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_int2)clsv2i
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -414,7 +414,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -437,7 +437,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -457,7 +457,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float3)v3f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -472,7 +472,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float3)clsv3f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -490,7 +490,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -518,7 +518,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -546,7 +546,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -569,7 +569,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -592,7 +592,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -620,7 +620,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -648,7 +648,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -671,7 +671,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -694,7 +694,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -717,7 +717,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -740,7 +740,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -763,7 +763,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -786,7 +786,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -809,7 +809,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -829,7 +829,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float4)v4f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -844,7 +844,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float4)clsv4f
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -862,7 +862,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -885,7 +885,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -908,7 +908,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -931,7 +931,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -954,7 +954,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -982,7 +982,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1010,7 +1010,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1038,7 +1038,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1066,7 +1066,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1089,7 +1089,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1112,7 +1112,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1150,7 +1150,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1188,7 +1188,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1216,7 +1216,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1244,7 +1244,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1267,7 +1267,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1290,7 +1290,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1328,7 +1328,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1366,7 +1366,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1409,7 +1409,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1452,7 +1452,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1475,7 +1475,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1504,7 +1504,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1563,7 +1563,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1621,7 +1621,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1674,7 +1674,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1726,7 +1726,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1773,7 +1773,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1821,7 +1821,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1874,7 +1874,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1922,7 +1922,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -1960,7 +1960,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2002,7 +2002,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2049,7 +2049,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2096,7 +2096,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2143,7 +2143,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2192,7 +2192,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2251,7 +2251,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2304,7 +2304,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2342,7 +2342,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2380,7 +2380,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2403,7 +2403,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2430,7 +2430,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2477,7 +2477,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2520,7 +2520,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2548,7 +2548,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2576,7 +2576,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2604,7 +2604,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2632,7 +2632,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2660,7 +2660,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2688,7 +2688,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2721,7 +2721,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2754,7 +2754,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2792,7 +2792,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2830,7 +2830,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2863,7 +2863,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2896,7 +2896,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2929,7 +2929,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2962,7 +2962,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -2995,7 +2995,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3028,7 +3028,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3061,7 +3061,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3101,7 +3101,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3166,7 +3166,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3230,7 +3230,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3289,7 +3289,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3349,7 +3349,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3414,7 +3414,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3473,7 +3473,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3501,7 +3501,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3531,7 +3531,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3559,7 +3559,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3591,7 +3591,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3626,7 +3626,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3660,7 +3660,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3688,7 +3688,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3716,7 +3716,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3744,7 +3744,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3772,7 +3772,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3800,7 +3800,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3829,7 +3829,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3857,7 +3857,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3887,7 +3887,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3920,7 +3920,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3954,7 +3954,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -3995,7 +3995,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4033,7 +4033,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4066,7 +4066,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4099,7 +4099,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4137,7 +4137,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4182,7 +4182,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4247,7 +4247,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4311,7 +4311,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4370,7 +4370,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4428,7 +4428,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4481,7 +4481,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4535,7 +4535,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4594,7 +4594,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4647,7 +4647,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4685,7 +4685,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4723,7 +4723,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4761,7 +4761,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4800,7 +4800,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4823,7 +4823,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4848,7 +4848,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4876,7 +4876,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4906,7 +4906,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4929,7 +4929,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4954,7 +4954,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -4982,7 +4982,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5012,7 +5012,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5035,7 +5035,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5059,7 +5059,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5082,7 +5082,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5105,7 +5105,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5133,7 +5133,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5161,7 +5161,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5204,7 +5204,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5252,7 +5252,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5305,7 +5305,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5353,7 +5353,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5396,7 +5396,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5439,7 +5439,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5462,7 +5462,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5485,7 +5485,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5513,7 +5513,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5541,7 +5541,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5564,7 +5564,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5587,7 +5587,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5610,7 +5610,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5633,7 +5633,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5655,7 +5655,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5677,7 +5677,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5704,7 +5704,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5731,7 +5731,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5753,7 +5753,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5775,7 +5775,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5802,7 +5802,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5829,7 +5829,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5851,7 +5851,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5873,7 +5873,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5900,7 +5900,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5927,7 +5927,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5949,7 +5949,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5971,7 +5971,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -5998,7 +5998,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6025,7 +6025,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6057,7 +6057,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6089,7 +6089,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6116,7 +6116,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6143,7 +6143,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6170,7 +6170,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6197,7 +6197,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6219,7 +6219,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6241,7 +6241,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6268,7 +6268,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6295,7 +6295,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6317,7 +6317,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6339,7 +6339,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6371,7 +6371,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6403,7 +6403,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6440,7 +6440,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6477,7 +6477,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6504,7 +6504,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6532,7 +6532,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6554,7 +6554,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6578,7 +6578,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6605,7 +6605,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6633,7 +6633,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6655,7 +6655,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6677,7 +6677,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6704,7 +6704,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6731,7 +6731,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6753,7 +6753,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6775,7 +6775,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6797,7 +6797,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6819,7 +6819,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6841,7 +6841,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6863,7 +6863,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6890,7 +6890,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6918,7 +6918,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6945,7 +6945,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6974,7 +6974,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -6996,7 +6996,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7020,7 +7020,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7047,7 +7047,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7076,7 +7076,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7103,7 +7103,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7129,7 +7129,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1012
 - (GKBox)GKBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7144,7 +7144,7 @@ static BOOL      shouldRaise = NO;
 
 + (GKBox)clsGKBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7161,7 +7161,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1012
 - (GKQuad)GKQuad
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7176,7 +7176,7 @@ static BOOL      shouldRaise = NO;
 
 + (GKQuad)clsGKQuad
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7196,7 +7196,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7221,7 +7221,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7245,7 +7245,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLAxisAlignedBoundingBox)MDLAxisAlignedBoundingBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7261,7 +7261,7 @@ static BOOL      shouldRaise = NO;
 
 + (MDLAxisAlignedBoundingBox)clsMDLAxisAlignedBoundingBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7282,7 +7282,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7306,7 +7306,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7332,7 +7332,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7356,7 +7356,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7379,7 +7379,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1011
 - (MDLVoxelIndexExtent)MDLVoxelIndexExtent
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7395,7 +7395,7 @@ static BOOL      shouldRaise = NO;
 
 + (MDLVoxelIndexExtent)clsMDLVoxelIndexExtent
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7413,7 +7413,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1013
 - (MPSImageHistogramInfo)MPSImageHistogramInfo
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7430,7 +7430,7 @@ static BOOL      shouldRaise = NO;
 
 + (MPSImageHistogramInfo)clsMPSImageHistogramInfo
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7449,7 +7449,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1014
 - (MPSAxisAlignedBoundingBox)MPSAxisAlignedBoundingBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7465,7 +7465,7 @@ static BOOL      shouldRaise = NO;
 
 + (MPSAxisAlignedBoundingBox)clsMPSAxisAlignedBoundingBox
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7482,7 +7482,7 @@ static BOOL      shouldRaise = NO;
 #endif /* PyObjC_BUILD_RELEASE >= 1014 */
 - (simd_double4x4)simddouble4x4
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7499,7 +7499,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_double4x4)clssimddouble4x4
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7519,7 +7519,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7544,7 +7544,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7566,7 +7566,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float2x2)simdfloat2x2
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7581,7 +7581,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float2x2)clssimdfloat2x2
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7596,7 +7596,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float3x3)simdfloat3x3
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7613,7 +7613,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float3x3)clssimdfloat3x3
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7630,7 +7630,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float4x3)simdfloat4x3
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7647,7 +7647,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float4x3)clssimdfloat4x3
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7664,7 +7664,7 @@ static BOOL      shouldRaise = NO;
 
 - (simd_float4x4)simdfloat4x4
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7681,7 +7681,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_float4x4)clssimdfloat4x4
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7701,7 +7701,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7731,7 +7731,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7761,7 +7761,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7786,7 +7786,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7811,7 +7811,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7841,7 +7841,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7872,7 +7872,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7895,7 +7895,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7917,7 +7917,7 @@ static BOOL      shouldRaise = NO;
 #if PyObjC_BUILD_RELEASE >= 1013
 - (simd_quatf)simdquatf
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7932,7 +7932,7 @@ static BOOL      shouldRaise = NO;
 
 + (simd_quatf)clssimdquatf
 {
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7952,7 +7952,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -7975,7 +7975,7 @@ static BOOL      shouldRaise = NO;
     PyObject* items;
     PyObject* tmp;
 
-    if ([self shouldRaise]) {
+    if (shouldRaise) {
         shouldRaise = NO;
         [NSException raise:@"SimpleException" format:@"hello world"];
     }
@@ -9768,20 +9768,18 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
-        return -1;                 // LCOV_EXCL_LINE
+    if (PyObjC_ImportAPI(m) < 0) {
+        return -1;
     }
 
-    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
-                           "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
+    if (PyModule_AddObject(m, "OC_VectorCall", PyObjC_IdToPython([OC_VectorCall class]))
         < 0) {
-        return -1; // LCOV_EXCL_LINE
+        return -1;
     }
-    if (PyModule_AddObject(m, // LCOV_EXCL_LINE
-                           "OC_VectorCallInvoke",
+    if (PyModule_AddObject(m, "OC_VectorCallInvoke",
                            PyObjC_IdToPython([OC_VectorCallInvoke class]))
         < 0) {
-        return -1; // LCOV_EXCL_LINE
+        return -1;
     }
     return 0;
 }

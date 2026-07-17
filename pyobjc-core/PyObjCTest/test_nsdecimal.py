@@ -3,7 +3,6 @@ Tests for the NSDecimal wrapper type
 """
 
 import decimal
-import warnings
 
 import objc
 from objc import super  # noqa: A004
@@ -468,16 +467,13 @@ class TestUsingNSDecimalNumber(TestCase):
         ):
             cls.decimalNumberWithDecimal_("42.5")
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=objc.UninitializedDeallocWarning)
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            cls.alloc().initWithDecimal_(d, 1)
 
-            with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
-                cls.alloc().initWithDecimal_(d, 1)
-
-            with self.assertRaisesRegex(
-                TypeError, "Expecting an NSDecimal, got instance of 'str'"
-            ):
-                cls.alloc().initWithDecimal_("42.5")
+        with self.assertRaisesRegex(
+            TypeError, "Expecting an NSDecimal, got instance of 'str'"
+        ):
+            cls.alloc().initWithDecimal_("42.5")
 
     @skipUnless(False, "Test runs into platform bug")
     def test_subclassing(self):
@@ -493,10 +489,8 @@ class TestUsingNSDecimalNumber(TestCase):
             def decimalValue(self):
                 return super().decimalValue() + 1
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=objc.UninitializedDeallocWarning)
-            o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
-            objc.NSDecimal(o)
+        o = OC_DecimalNumberPlusOne.alloc().initWithDecimal_(objc.NSDecimal("1.5"))
+        objc.NSDecimal(o)
 
 
 class TestDecimalByReference(TestCase):

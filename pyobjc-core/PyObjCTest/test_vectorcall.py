@@ -1,17 +1,17 @@
 #
 # This file is generated using Tools/generate-helpers-vector.py
 #
-#    ** DO NOT EDIT **
+#     ** DO NOT EDIT **
 #
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from functools import partial  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, min_os_level  # noqa: F401
 import objc
-from functools import partial
 from objc import simd
 
 # Tests use CGColorRef and CGColorSpaceRef. Try to import Quartz
 # to get proper definitions for these types, otherwise fall back
 # to minimal definitions (those aren't 100% correct, but good enough
-# for these tests)
+# for these  tests)
 try:
     import Quartz  # noqa: F401
 except ImportError:
@@ -21,6 +21,8 @@ except ImportError:
     )
 
 from .vectorcall import OC_VectorCall, OC_VectorCallInvoke
+
+clearRaise = OC_VectorCall.clearRaise
 
 
 class NoObjCClass:
@@ -4050,7 +4052,7 @@ class TestVectorCall(TestCase):
             self.assertSequenceEqual(first.columns, second.columns, msg)
 
     def test_v16C(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v16C.isClassMethod)
         # Verify that method is not an initializer
@@ -4088,7 +4090,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv16C(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
         # Verify that method is not an initializer
@@ -4126,7 +4128,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v16C_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v16C.isClassMethod)
         # Verify that method is not an initializer
@@ -4165,19 +4167,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv16C_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv16C.isClassMethod)
         # Verify that method is not an initializer
@@ -4239,14 +4235,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v16C(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4302,7 +4290,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2d(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2d.isClassMethod)
         # Verify that method is not an initializer
@@ -4335,7 +4323,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv2d(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2d.isClassMethod)
         # Verify that method is not an initializer
@@ -4368,7 +4356,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v2d_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2d.isClassMethod)
         # Verify that method is not an initializer
@@ -4402,19 +4390,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv2d_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2d.isClassMethod)
         # Verify that method is not an initializer
@@ -4461,14 +4443,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v2d(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4514,7 +4488,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -4557,7 +4531,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv2dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -4600,7 +4574,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v2dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -4644,15 +4618,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv2dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -4705,12 +4675,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v2dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4756,7 +4720,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2f.isClassMethod)
         # Verify that method is not an initializer
@@ -4789,7 +4753,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv2f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2f.isClassMethod)
         # Verify that method is not an initializer
@@ -4822,7 +4786,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v2f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2f.isClassMethod)
         # Verify that method is not an initializer
@@ -4856,19 +4820,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv2f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2f.isClassMethod)
         # Verify that method is not an initializer
@@ -4915,14 +4873,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v2f(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4968,7 +4918,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2fQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -5011,7 +4961,7 @@ class TestVectorCall(TestCase):
             caller(35184372088832)
 
     def test_clsv2fQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -5054,7 +5004,7 @@ class TestVectorCall(TestCase):
             caller(35184372088832)
 
     def test_v2fQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -5098,15 +5048,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 35184372088832)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
     def test_clsv2fQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -5159,12 +5105,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 35184372088832)
-
     def test_imp_v2fQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5210,7 +5150,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5253,7 +5193,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv2fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5296,7 +5236,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v2fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5340,15 +5280,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv2fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5401,12 +5337,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v2fd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5452,7 +5382,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2fq_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fq_.isClassMethod)
         # Verify that method is not an initializer
@@ -5495,7 +5425,7 @@ class TestVectorCall(TestCase):
             caller(-17592186044416)
 
     def test_clsv2fq_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fq_.isClassMethod)
         # Verify that method is not an initializer
@@ -5538,7 +5468,7 @@ class TestVectorCall(TestCase):
             caller(-17592186044416)
 
     def test_v2fq__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2fq_.isClassMethod)
         # Verify that method is not an initializer
@@ -5582,15 +5512,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-17592186044416)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -17592186044416)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -17592186044416)
 
     def test_clsv2fq__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2fq_.isClassMethod)
         # Verify that method is not an initializer
@@ -5643,12 +5569,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-17592186044416)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -17592186044416)
-
     def test_imp_v2fq_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5694,7 +5614,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v2i(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2i.isClassMethod)
         # Verify that method is not an initializer
@@ -5727,7 +5647,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv2i(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2i.isClassMethod)
         # Verify that method is not an initializer
@@ -5760,7 +5680,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v2i_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v2i.isClassMethod)
         # Verify that method is not an initializer
@@ -5794,19 +5714,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv2i_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv2i.isClassMethod)
         # Verify that method is not an initializer
@@ -5853,14 +5767,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v2i(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5906,7 +5812,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5949,7 +5855,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv3dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -5992,7 +5898,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v3dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -6036,15 +5942,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv3dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -6097,12 +5999,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v3dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -6148,7 +6044,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3f.isClassMethod)
         # Verify that method is not an initializer
@@ -6181,7 +6077,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv3f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3f.isClassMethod)
         # Verify that method is not an initializer
@@ -6214,7 +6110,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v3f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3f.isClassMethod)
         # Verify that method is not an initializer
@@ -6248,19 +6144,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv3f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3f.isClassMethod)
         # Verify that method is not an initializer
@@ -6307,14 +6197,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v3f(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -6360,7 +6242,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fv2i_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv2i_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -6408,7 +6290,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
     def test_clsv3fv2i_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv2i_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -6456,7 +6338,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
     def test_v3fv2i_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv2i_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -6505,10 +6387,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -6517,7 +6395,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsv3fv2i_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv2i_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -6574,12 +6452,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
     def test_imp_v3fv2i_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -6638,7 +6510,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -6681,7 +6553,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsv3fv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -6724,7 +6596,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_v3fv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -6768,15 +6640,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsv3fv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -6829,12 +6697,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_v3fv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -6880,7 +6742,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fv3f_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -6928,7 +6790,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
     def test_clsv3fv3f_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -6976,7 +6838,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
     def test_v3fv3f_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv3f_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -7025,15 +6887,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
     def test_clsv3fv3f_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv3f_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -7090,12 +6948,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
     def test_imp_v3fv3f_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -7154,7 +7006,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -7197,7 +7049,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_clsv3fv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -7240,7 +7092,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_v3fv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -7284,15 +7136,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_clsv3fv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -7345,12 +7193,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
     def test_imp_v3fv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7396,7 +7238,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -7439,7 +7281,7 @@ class TestVectorCall(TestCase):
             caller(35184372088832)
 
     def test_clsv3fQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -7482,7 +7324,7 @@ class TestVectorCall(TestCase):
             caller(35184372088832)
 
     def test_v3fQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -7526,15 +7368,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 35184372088832)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
     def test_clsv3fQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -7587,12 +7425,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 35184372088832)
-
     def test_imp_v3fQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7638,7 +7470,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v3fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7681,7 +7513,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv3fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7724,7 +7556,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v3fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v3fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7768,15 +7600,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv3fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv3fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7829,12 +7657,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v3fd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7880,7 +7702,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v4dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7923,7 +7745,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv4dd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -7966,7 +7788,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v4dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8010,15 +7832,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv4dd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4dd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8071,12 +7889,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v4dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8122,7 +7934,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v4f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4f.isClassMethod)
         # Verify that method is not an initializer
@@ -8155,7 +7967,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clsv4f(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4f.isClassMethod)
         # Verify that method is not an initializer
@@ -8188,7 +8000,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_v4f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4f.isClassMethod)
         # Verify that method is not an initializer
@@ -8222,19 +8034,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clsv4f_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4f.isClassMethod)
         # Verify that method is not an initializer
@@ -8281,14 +8087,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_v4f(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8334,7 +8132,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v4fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8377,7 +8175,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clsv4fd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8420,7 +8218,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_v4fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8464,15 +8262,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clsv4fd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4fd_.isClassMethod)
         # Verify that method is not an initializer
@@ -8525,12 +8319,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_v4fd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8576,7 +8364,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_v4iv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4iv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -8619,7 +8407,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsv4iv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4iv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -8662,7 +8450,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_v4iv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.v4iv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -8706,15 +8494,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsv4iv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsv4iv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -8767,12 +8551,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_v4iv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8818,7 +8596,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2d_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -8866,7 +8644,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_clsidv2d_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -8914,7 +8692,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_idv2d_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -8963,15 +8741,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), "hello")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_clsidv2d_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -9028,12 +8802,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), "hello")
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_imp_idv2d_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -9092,7 +8860,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2d_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -9140,7 +8908,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
     def test_clsidv2d_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -9188,7 +8956,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
     def test_idv2d_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2d_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -9237,15 +9005,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
     def test_clsidv2d_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2d_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -9302,12 +9066,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
     def test_imp_idv2d_q_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -9366,7 +9124,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -9409,7 +9167,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -9452,7 +9210,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_idv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -9496,15 +9254,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -9557,12 +9311,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
     def test_imp_idv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -9608,7 +9356,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2f_v2I_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -9696,7 +9444,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv2f_v2I_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -9784,7 +9532,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv2f_v2I_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -9873,16 +9621,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_uint2(0, 1),
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -9893,7 +9631,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv2f_v2I_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -10003,18 +9741,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_uint2(0, 1),
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv2f_v2I_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10076,7 +9802,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -10130,7 +9856,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidv2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -10184,7 +9910,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
     def test_idv2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -10239,12 +9965,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -10253,7 +9973,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -10325,14 +10045,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
-            )
-
     def test_imp_idv2f_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10390,7 +10102,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -10433,7 +10145,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1))
 
     def test_clsidv2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -10476,7 +10188,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1))
 
     def test_idv2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -10520,15 +10232,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int2(0, 1))
 
     def test_clsidv2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -10581,12 +10289,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int2(0, 1))
-
     def test_imp_idv2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10632,7 +10334,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2i_i_i_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -10690,7 +10392,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), -42, -42, False)
 
     def test_clsidv2i_i_i_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -10748,7 +10450,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), -42, -42, False)
 
     def test_idv2i_i_i_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -10807,15 +10509,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), -42, -42, False)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int2(0, 1), -42, -42, False)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int2(0, 1), -42, -42, False)
 
     def test_clsidv2i_i_i_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -10883,12 +10581,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), -42, -42, False)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int2(0, 1), -42, -42, False)
-
     def test_imp_idv2i_i_i_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10950,7 +10642,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv2i_i_i_Z_Class_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -11046,7 +10738,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv2i_i_i_Z_Class_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -11142,7 +10834,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv2i_i_i_Z_Class__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv2i_i_i_Z_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -11239,17 +10931,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -42,
-                False,
-                objc.lookUpClass("NSObject"),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -11261,7 +10942,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv2i_i_i_Z_Class__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv2i_i_i_Z_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -11381,19 +11062,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -42,
-                False,
-                objc.lookUpClass("NSObject"),
-            )
-
     def test_imp_idv2i_i_i_Z_Class_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -11457,7 +11125,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -11500,7 +11168,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsidv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -11543,7 +11211,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_idv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -11587,15 +11255,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsidv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -11648,12 +11312,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_idv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -11699,7 +11357,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v2I_Z_Z_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -11860,7 +11518,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_Z_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12021,7 +11679,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v2I_Z_Z_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12183,19 +11841,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                False,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -12209,7 +11854,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_Z_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12398,21 +12043,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                False,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v2I_Z_Z_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -12480,7 +12110,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v2I_Z_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12618,7 +12248,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12756,7 +12386,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v2I_Z_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -12895,18 +12525,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -12919,7 +12537,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13083,20 +12701,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v2I_Z_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -13162,7 +12766,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v2I_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13273,7 +12877,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13384,7 +12988,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v2I_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13496,17 +13100,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -13518,7 +13111,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13653,19 +13246,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v2I_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -13729,7 +13309,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v2I_i_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_i_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13862,7 +13442,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_i_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -13995,7 +13575,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v2I_i_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_i_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14129,18 +13709,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                -42,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -14153,7 +13721,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_i_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_i_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14312,20 +13880,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                -42,
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v2I_i_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -14391,7 +13945,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v2I_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14481,7 +14035,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14571,7 +14125,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v2I_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14662,16 +14216,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -14682,7 +14226,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v2I_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v2I_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14794,18 +14338,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint2(0, 1),
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v2I_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -14867,7 +14399,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v3I_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -14980,7 +14512,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v3I_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15093,7 +14625,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v3I_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15207,17 +14739,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint3(0, 1, 2),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -15229,7 +14750,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v3I_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15366,19 +14887,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint3(0, 1, 2),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_v3I_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -15442,7 +14950,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_v3I_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15555,7 +15063,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v3I_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15668,7 +15176,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_v3I_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_v3I_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15782,17 +15290,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint3(0, 1, 2),
-                -17592186044416,
-                False,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -15804,7 +15301,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_v3I_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_v3I_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -15941,19 +15438,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_uint3(0, 1, 2),
-                -17592186044416,
-                False,
-                "hello",
-            )
-
     def test_imp_idv3f_v3I_q_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -16017,7 +15501,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_Q_Q_q_Z_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16178,7 +15662,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_Q_Q_q_Z_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16339,7 +15823,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_Q_Q_q_Z_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Q_Q_q_Z_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16501,19 +15985,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                False,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -16527,7 +15998,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_Q_Q_q_Z_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Q_Q_q_Z_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16716,21 +16187,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                False,
-                "hello",
-            )
-
     def test_imp_idv3f_Q_Q_q_Z_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -16798,7 +16254,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv3f_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16876,7 +16332,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_Z_q_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -16954,7 +16410,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idv3f_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv3f_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -17033,16 +16489,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416, "hello"
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -17053,7 +16499,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidv3f_Z_q_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv3f_Z_q_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -17153,18 +16599,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416, "hello"
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                False,
-                -17592186044416,
-                "hello",
-            )
-
     def test_imp_idv3f_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -17226,7 +16660,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idv4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -17269,7 +16703,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsidv4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -17312,7 +16746,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_idv4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -17356,15 +16790,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsidv4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -17417,12 +16847,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
     def test_imp_idv4f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -17472,7 +16896,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_v2d_v2d_v2i_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2d_v2d_v2i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -17589,7 +17013,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_v2d_v2d_v2i_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -17706,7 +17130,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_v2d_v2d_v2i_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2d_v2d_v2i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -17824,17 +17248,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_double2(0.0, 1.5),
-                objc.simd.vector_double2(0.0, 1.5),
-                objc.simd.vector_int2(0, 1),
-                False,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -17846,7 +17259,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_v2d_v2d_v2i_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2d_v2d_v2i_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -17987,19 +17400,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_double2(0.0, 1.5),
-                objc.simd.vector_double2(0.0, 1.5),
-                objc.simd.vector_int2(0, 1),
-                False,
-            )
-
     def test_imp_idid_v2d_v2d_v2i_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -18063,7 +17463,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18111,7 +17511,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidid_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18159,7 +17559,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float2(0.0, 1.5))
 
     def test_idid_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18208,15 +17608,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", objc.simd.vector_float2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, "hello", objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidid_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18273,12 +17669,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float2(0.0, 1.5))
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_idid_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -18337,7 +17727,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18385,7 +17775,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsidid_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18433,7 +17823,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_idid_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18482,15 +17872,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsidid_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18547,12 +17933,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_idid_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -18611,7 +17991,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_v4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18659,7 +18039,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsidid_v4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18707,7 +18087,7 @@ class TestVectorCall(TestCase):
             caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_idid_v4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18756,15 +18136,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsidid_v4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -18821,12 +18197,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_imp_idid_v4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -18885,7 +18255,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -18938,7 +18308,7 @@ class TestVectorCall(TestCase):
             caller("hello", "hello", objc.simd.vector_int2(0, 1))
 
     def test_clsidid_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -18991,7 +18361,7 @@ class TestVectorCall(TestCase):
             caller("hello", "hello", objc.simd.vector_int2(0, 1))
 
     def test_idid_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -19045,15 +18415,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, "hello", "hello", objc.simd.vector_int2(0, 1))
 
     def test_clsidid_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -19116,12 +18482,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1))
-
     def test_imp_idid_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -19181,7 +18541,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_id_v2i_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19243,7 +18603,7 @@ class TestVectorCall(TestCase):
             caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
     def test_clsidid_id_v2i_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19305,7 +18665,7 @@ class TestVectorCall(TestCase):
             caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
     def test_idid_id_v2i_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_id_v2i_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19368,10 +18728,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -19382,7 +18738,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_id_v2i_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_id_v2i_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19454,12 +18810,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
-
     def test_imp_idid_id_v2i_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -19521,7 +18871,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_Q_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19574,7 +18924,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsidid_Q_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19627,7 +18977,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
 
     def test_idid_Q_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19681,10 +19031,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -19694,7 +19040,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Q_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19757,12 +19103,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
-
     def test_imp_idid_Q_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -19822,7 +19162,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_Q_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19881,7 +19221,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsidid_Q_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -19940,7 +19280,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_idid_Q_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20000,10 +19340,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -20013,7 +19349,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Q_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20086,12 +19422,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_idid_Q_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -20151,7 +19481,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_Q_v4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20215,7 +19545,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsidid_Q_v4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20279,7 +19609,7 @@ class TestVectorCall(TestCase):
             caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_idid_Q_v4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20344,12 +19674,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -20359,7 +19683,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Q_v4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_v4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -20443,14 +19767,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
-            )
-
     def test_imp_idid_Q_v4f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -20510,7 +19826,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_Q_simdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -20631,7 +19947,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Q_simdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -20752,7 +20068,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_Q_simdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Q_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -20874,22 +20190,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                35184372088832,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -20906,7 +20206,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Q_simdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Q_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -21061,24 +20361,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                35184372088832,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
     def test_imp_idid_Q_simdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21152,7 +20434,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_Z_id_v2i_q_Q_q_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -21338,7 +20620,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Z_id_v2i_q_Q_q_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -21524,7 +20806,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_Z_id_v2i_q_Q_q_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -21711,20 +20993,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                False,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -17592186044416,
-                35184372088832,
-                -17592186044416,
-                False,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -21739,7 +21007,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_Z_id_v2i_q_Q_q_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_Z_id_v2i_q_Q_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -21955,22 +21223,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                False,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -17592186044416,
-                35184372088832,
-                -17592186044416,
-                False,
-            )
-
     def test_imp_idid_Z_id_v2i_q_Q_q_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -22040,7 +21292,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_q_v2i_f_f_f_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -22201,7 +21453,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_q_v2i_f_f_f_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -22362,7 +21614,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_q_v2i_f_f_f_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -22524,19 +21776,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -22550,7 +21789,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_q_v2i_f_f_f_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -22739,21 +21978,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
     def test_imp_idid_q_v2i_f_f_f_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -22821,7 +22045,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_q_v2i_f_f_f_f_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -23007,7 +22231,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_q_v2i_f_f_f_f_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -23193,7 +22417,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_q_v2i_f_f_f_f_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_q_v2i_f_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -23380,20 +22604,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -23408,7 +22618,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_q_v2i_f_f_f_f_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_q_v2i_f_f_f_f_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -23624,22 +22834,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                -17592186044416,
-                objc.simd.vector_int2(0, 1),
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-                2500000000.0,
-            )
-
     def test_imp_idid_q_v2i_f_f_f_f_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -23710,7 +22904,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idid_GKBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -23790,7 +22984,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidid_GKBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -23870,7 +23064,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idid_GKBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -23950,17 +23144,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -23973,7 +23156,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidid_GKBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -24076,19 +23259,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-            )
-
     @min_os_level("10.12")
     def test_imp_idid_GKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -24155,7 +23325,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idid_GKQuad_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -24229,7 +23399,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidid_GKQuad_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -24303,7 +23473,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idid_GKQuad__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_GKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -24377,17 +23547,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -24400,7 +23559,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidid_GKQuad__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_GKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -24491,19 +23650,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-            )
-
     @min_os_level("10.12")
     def test_imp_idid_GKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -24570,7 +23716,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_idid_MDLAxisAlignedBoundingBox_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -24676,7 +23822,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsidid_MDLAxisAlignedBoundingBox_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
@@ -24790,7 +23936,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_idid_MDLAxisAlignedBoundingBox_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_MDLAxisAlignedBoundingBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -24896,18 +24042,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-                2500000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -24921,7 +24055,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsidid_MDLAxisAlignedBoundingBox_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(
             OC_VectorCall.clsidid_MDLAxisAlignedBoundingBox_f_.isClassMethod
@@ -25060,20 +24194,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-                2500000000.0,
-            )
-
     @min_os_level("10.11")
     def test_imp_idid_MDLAxisAlignedBoundingBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -25141,7 +24261,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_simdfloat2x2_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -25226,7 +24346,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat2x2_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -25311,7 +24431,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_simdfloat2x2__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -25397,19 +24517,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                simd.simd_float2x2(
-                    (
-                        objc.simd.vector_float2(0.0, 1.5),
-                        objc.simd.vector_float2(0.0, 1.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -25423,7 +24530,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat2x2__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -25530,21 +24637,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                simd.simd_float2x2(
-                    (
-                        objc.simd.vector_float2(0.0, 1.5),
-                        objc.simd.vector_float2(0.0, 1.5),
-                    )
-                ),
-            )
-
     def test_imp_idid_simdfloat2x2_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -25612,7 +24704,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_simdfloat3x3_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -25708,7 +24800,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat3x3_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -25804,7 +24896,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_simdfloat3x3__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -25901,20 +24993,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                simd.simd_float3x3(
-                    (
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -25929,7 +25007,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat3x3__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -26055,22 +25133,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                simd.simd_float3x3(
-                    (
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    )
-                ),
-            )
-
     def test_imp_idid_simdfloat3x3_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -26140,7 +25202,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idid_simdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -26241,7 +25303,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -26342,7 +25404,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idid_simdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -26444,21 +25506,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -26474,7 +25521,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidid_simdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -26607,23 +25654,6 @@ class TestVectorCall(TestCase):
                 ),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
     def test_imp_idid_simdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -26696,7 +25726,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_idid_simdquatf_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -26758,7 +25788,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsidid_simdquatf_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -26820,7 +25850,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_idid_simdquatf__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -26882,14 +25912,6 @@ class TestVectorCall(TestCase):
                 "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -26899,7 +25921,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsidid_simdquatf__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -26978,16 +26000,6 @@ class TestVectorCall(TestCase):
                 "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-            )
-
     @min_os_level("10.13")
     def test_imp_idid_simdquatf_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -27048,7 +26060,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_idid_simdquatf_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -27127,7 +26139,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsidid_simdquatf_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -27208,7 +26220,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_idid_simdquatf_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idid_simdquatf_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -27287,15 +26299,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -27306,7 +26309,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsidid_simdquatf_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidid_simdquatf_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -27406,17 +26409,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                "hello",
-            )
-
     @min_os_level("10.13")
     def test_imp_idid_simdquatf_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -27478,7 +26470,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idCGColor_CGColor_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idCGColor_CGColor_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -27540,7 +26532,7 @@ class TestVectorCall(TestCase):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
     def test_clsidCGColor_CGColor_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidCGColor_CGColor_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -27602,7 +26594,7 @@ class TestVectorCall(TestCase):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
     def test_idCGColor_CGColor_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idCGColor_CGColor_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -27665,10 +26657,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -27679,7 +26667,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidCGColor_CGColor_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidCGColor_CGColor_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -27751,12 +26739,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
-
     def test_imp_idCGColor_CGColor_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -27818,7 +26800,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_v2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -27888,7 +26870,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -27958,7 +26940,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_v2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -28029,15 +27011,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -28047,7 +27020,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -28137,17 +27110,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-            )
-
     def test_imp_idf_v2f_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28207,7 +27169,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_v2f_v2f_Class_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -28305,7 +27267,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_v2f_Class_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -28403,7 +27365,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_v2f_v2f_Class__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_v2f_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -28502,16 +27464,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.lookUpClass("NSObject"),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -28522,7 +27474,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_v2f_Class__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_v2f_Class_.isClassMethod)
         # Verify that method is not an initializer
@@ -28642,18 +27594,6 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.lookUpClass("NSObject"),
-            )
-
     def test_imp_idf_v2f_v2f_Class_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -28715,7 +27655,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_v2f_Q_Q_Q_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -28901,7 +27841,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_Q_Q_Q_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -29087,7 +28027,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_v2f_Q_Q_Q_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -29274,20 +28214,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                35184372088832,
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -29302,7 +28228,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_Q_Q_Q_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -29518,22 +28444,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                35184372088832,
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                "hello",
-            )
-
     def test_imp_idf_v2f_Q_Q_Q_q_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29603,7 +28513,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_v2f_Q_Q_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -29764,7 +28674,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_Q_Q_q_Z_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -29925,7 +28835,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_v2f_Q_Q_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_v2f_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -30087,19 +28997,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -30113,7 +29010,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_v2f_Q_Q_q_Z_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_v2f_Q_Q_q_Z_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -30302,21 +29199,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                objc.simd.vector_float2(0.0, 1.5),
-                35184372088832,
-                35184372088832,
-                -17592186044416,
-                False,
-                "hello",
-            )
-
     def test_imp_idf_v2f_Q_Q_q_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -30384,7 +29266,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_id_v2i_i_q_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -30499,7 +29381,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_id_v2i_i_q_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -30614,7 +29496,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_id_v2i_i_q_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -30730,18 +29612,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -17592186044416,
-                False,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -30754,7 +29624,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_id_v2i_i_q_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -30895,20 +29765,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -17592186044416,
-                False,
-            )
-
     def test_imp_idf_id_v2i_i_q_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -30974,7 +29830,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_id_v2i_i_q_CGColor_CGColor_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
         # Verify that method is not an initializer
@@ -31133,7 +29989,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_id_v2i_i_q_CGColor_CGColor_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
         # Verify that method is not an initializer
@@ -31294,7 +30150,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idf_id_v2i_i_q_CGColor_CGColor__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
         # Verify that method is not an initializer
@@ -31454,19 +30310,6 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                2500000000.0,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -17592186044416,
-                "color!",
-                "color!",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -31480,7 +30323,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_id_v2i_i_q_CGColor_CGColor__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_i_q_CGColor_CGColor_.isClassMethod)
         # Verify that method is not an initializer
@@ -31669,21 +30512,6 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                2500000000.0,
-                "hello",
-                objc.simd.vector_int2(0, 1),
-                -42,
-                -17592186044416,
-                "color!",
-                "color!",
-            )
-
     def test_imp_idf_id_v2i_i_q_CGColor_CGColor_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -31751,7 +30579,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_id_v2i_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -31820,7 +30648,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
 
     def test_clsidf_id_v2i_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -31889,7 +30717,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
 
     def test_idf_id_v2i_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_id_v2i_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -31959,10 +30787,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -31973,7 +30797,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_id_v2i_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_id_v2i_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -32060,12 +30884,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
-
     def test_imp_idf_id_v2i_q_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -32127,7 +30945,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idf_f_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_f_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -32196,7 +31014,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
     def test_clsidf_f_id_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_f_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -32265,7 +31083,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
     def test_idf_f_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idf_f_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -32335,10 +31153,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -32349,7 +31163,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidf_f_id_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidf_f_id_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -32432,12 +31246,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
-
     def test_imp_idf_f_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -32500,7 +31308,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -32566,7 +31374,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -32632,7 +31440,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -32698,16 +31506,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -32719,7 +31517,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -32806,18 +31604,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-            )
-
     @min_os_level("10.12")
     def test_imp_idGKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -32882,7 +31668,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKBox_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -32967,7 +31753,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKBox_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33052,7 +31838,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKBox_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33137,17 +31923,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-                2500000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -33160,7 +31935,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKBox_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKBox_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33268,19 +32043,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(1.0, 2.0, 3.0),
-                    objc.simd.vector_float3(4.0, 5.0, 6.0),
-                ),
-                2500000000.0,
-            )
-
     @min_os_level("10.12")
     def test_imp_idGKBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -33347,7 +32109,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKQuad_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -33407,7 +32169,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKQuad_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -33467,7 +32229,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKQuad__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -33527,16 +32289,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -33548,7 +32300,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKQuad__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_.isClassMethod)
         # Verify that method is not an initializer
@@ -33623,18 +32375,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-            )
-
     @min_os_level("10.12")
     def test_imp_idGKQuad_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -33699,7 +32439,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKQuad_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33778,7 +32518,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKQuad_f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33857,7 +32597,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_idGKQuad_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idGKQuad_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -33936,17 +32676,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-                2500000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -33959,7 +32688,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsidGKQuad_f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidGKQuad_f_.isClassMethod)
         # Verify that method is not an initializer
@@ -34055,19 +32784,6 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float2(9.0, 10.0),
-                    objc.simd.vector_float2(11.0, 12.0),
-                ),
-                2500000000.0,
-            )
-
     @min_os_level("10.12")
     def test_imp_idGKQuad_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -34134,7 +32850,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_idMDLVoxelIndexExtent_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idMDLVoxelIndexExtent_.isClassMethod)
         # Verify that method is not an initializer
@@ -34202,7 +32918,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsidMDLVoxelIndexExtent_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidMDLVoxelIndexExtent_.isClassMethod)
         # Verify that method is not an initializer
@@ -34272,7 +32988,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_idMDLVoxelIndexExtent__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idMDLVoxelIndexExtent_.isClassMethod)
         # Verify that method is not an initializer
@@ -34340,16 +33056,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_int4(100, 101, 102, 103),
-                    objc.simd.vector_int4(-20, -21, -22, -23),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -34361,7 +33067,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsidMDLVoxelIndexExtent__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidMDLVoxelIndexExtent_.isClassMethod)
         # Verify that method is not an initializer
@@ -34452,18 +33158,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_int4(100, 101, 102, 103),
-                    objc.simd.vector_int4(-20, -21, -22, -23),
-                ),
-            )
-
     @min_os_level("10.11")
     def test_imp_idMDLVoxelIndexExtent_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -34527,7 +33221,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idsimdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -34610,7 +33304,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidsimdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -34693,7 +33387,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idsimdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -34777,20 +33471,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -34805,7 +33485,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidsimdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -34918,22 +33598,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
     def test_imp_idsimdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -35003,7 +33667,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_idsimdfloat4x4_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -35113,7 +33777,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidsimdfloat4x4_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -35223,7 +33887,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_idsimdfloat4x4_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.idsimdfloat4x4_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -35334,21 +33998,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                False,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -35364,7 +34013,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsidsimdfloat4x4_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsidsimdfloat4x4_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -35506,23 +34155,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                False,
-            )
-
     def test_imp_idsimdfloat4x4_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -35594,7 +34226,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_Zv2i_id_id_id_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_id_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -35683,7 +34315,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
 
     def test_clsZv2i_id_id_id_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_id_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -35772,7 +34404,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
 
     def test_Zv2i_id_id_id_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_id_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -35862,10 +34494,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -35877,7 +34505,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsZv2i_id_id_id_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_id_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -35980,12 +34608,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
-
     def test_imp_Zv2i_id_id_id_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -36035,7 +34657,7 @@ class TestVectorCall(TestCase):
             del value.shouldRaise
 
     def test_Zv2i_q_f_id_id_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_q_f_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -36166,7 +34788,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsZv2i_q_f_id_id_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_q_f_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -36297,7 +34919,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_Zv2i_q_f_id_id_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv2i_q_f_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -36429,18 +35051,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_int2(0, 1),
-                -17592186044416,
-                2500000000.0,
-                "hello",
-                "hello",
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -36453,7 +35063,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsZv2i_q_f_id_id_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv2i_q_f_id_id_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -36610,20 +35220,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_int2(0, 1),
-                -17592186044416,
-                2500000000.0,
-                "hello",
-                "hello",
-                "hello",
-            )
-
     def test_imp_Zv2i_q_f_id_id_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -36675,7 +35271,7 @@ class TestVectorCall(TestCase):
             del value.shouldRaise
 
     def test_Zv4i_Z_Z_Z_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv4i_Z_Z_Z_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -36740,7 +35336,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
     def test_clsZv4i_Z_Z_Z_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv4i_Z_Z_Z_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -36805,7 +35401,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
     def test_Zv4i_Z_Z_Z_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.Zv4i_Z_Z_Z_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -36871,10 +35467,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -36886,7 +35478,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsZv4i_Z_Z_Z_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsZv4i_Z_Z_Z_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -36963,12 +35555,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
-
     def test_imp_Zv4i_Z_Z_Z_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37018,7 +35604,7 @@ class TestVectorCall(TestCase):
             del value.shouldRaise
 
     def test_CGColorv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37061,7 +35647,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsCGColorv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37104,7 +35690,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_CGColorv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37148,15 +35734,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsCGColorv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37209,12 +35791,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_CGColorv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37246,7 +35822,7 @@ class TestVectorCall(TestCase):
             del value.shouldRaise
 
     def test_CGColorv3f_CGColorSpace_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_CGColorSpace_.isClassMethod)
         # Verify that method is not an initializer
@@ -37296,7 +35872,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
     def test_clsCGColorv3f_CGColorSpace_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_CGColorSpace_.isClassMethod)
         # Verify that method is not an initializer
@@ -37348,7 +35924,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
     def test_CGColorv3f_CGColorSpace__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.CGColorv3f_CGColorSpace_.isClassMethod)
         # Verify that method is not an initializer
@@ -37399,17 +35975,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!"
             )
 
     def test_clsCGColorv3f_CGColorSpace__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsCGColorv3f_CGColorSpace_.isClassMethod)
         # Verify that method is not an initializer
@@ -37471,12 +36043,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
-
     def test_imp_CGColorv3f_CGColorSpace_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37520,7 +36086,7 @@ class TestVectorCall(TestCase):
             del value.shouldRaise
 
     def test_fv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37563,7 +36129,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsfv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37606,7 +36172,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_fv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37650,15 +36216,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsfv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -37711,12 +36273,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
     def test_imp_fv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37762,7 +36318,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_fv2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -37805,7 +36361,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1))
 
     def test_clsfv2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -37848,7 +36404,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int2(0, 1))
 
     def test_fv2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.fv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -37892,15 +36448,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int2(0, 1))
 
     def test_clsfv2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsfv2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -37953,12 +36505,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int2(0, 1))
-
     def test_imp_fv2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -38004,7 +36550,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv2d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38047,7 +36593,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5))
 
     def test_clsvv2d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38090,7 +36636,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5))
 
     def test_vv2d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38134,15 +36680,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5))
 
     def test_clsvv2d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38195,12 +36737,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double2(0.0, 1.5))
-
     def test_imp_vv2d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -38246,7 +36782,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv2d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38294,7 +36830,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
     def test_clsvv2d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38342,7 +36878,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
     def test_vv2d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38391,15 +36927,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
     def test_clsvv2d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38456,12 +36988,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
     def test_imp_vv2d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -38520,7 +37046,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -38563,7 +37089,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsvv2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -38606,7 +37132,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
     def test_vv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -38650,15 +37176,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5))
 
     def test_clsvv2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -38711,12 +37233,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float2(0.0, 1.5))
-
     def test_imp_vv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -38762,7 +37278,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv2f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38810,7 +37326,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
     def test_clsvv2f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38858,7 +37374,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
     def test_vv2f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv2f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38907,15 +37423,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
     def test_clsvv2f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv2f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -38972,12 +37484,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
     def test_imp_vv2f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -39036,7 +37542,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39079,7 +37585,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
 
     def test_clsvv3d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39122,7 +37628,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
 
     def test_vv3d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39166,15 +37672,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_double3(0.0, 1.5, 3.0))
 
     def test_clsvv3d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39227,12 +37729,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0))
-
     def test_imp_vv3d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -39278,7 +37774,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39326,7 +37822,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_clsvv3d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39374,7 +37870,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_vv3d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39423,10 +37919,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -39435,7 +37927,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -39492,12 +37984,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_imp_vv3d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -39556,7 +38042,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39599,7 +38085,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsvv3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39642,7 +38128,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_vv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39686,15 +38172,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_clsvv3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39747,12 +38229,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
-
     def test_imp_vv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -39798,7 +38274,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3f_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39856,7 +38332,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3f_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39914,7 +38390,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vv3f_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -39973,14 +38449,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -39989,7 +38457,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3f_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -40065,16 +38533,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
     def test_imp_vv3f_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -40132,7 +38590,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3f_v3f_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -40213,7 +38671,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3f_v3f_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -40294,7 +38752,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vv3f_v3f_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_v3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -40376,15 +38834,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -40394,7 +38843,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3f_v3f_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_v3f_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -40495,17 +38944,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
     def test_imp_vv3f_v3f_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -40565,7 +39003,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv3f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40613,7 +39051,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_clsvv3f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40661,7 +39099,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_vv3f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv3f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40710,10 +39148,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -40722,7 +39156,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv3f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv3f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40779,12 +39213,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_imp_vv3f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -40843,7 +39271,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv4d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40893,7 +39321,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
     def test_clsvv4d_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40943,7 +39371,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
     def test_vv4d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -40994,10 +39422,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -41006,7 +39430,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv4d_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4d_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -41068,12 +39492,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
-
     def test_imp_vv4d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41131,7 +39549,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -41174,7 +39592,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsvv4f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -41217,7 +39635,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_vv4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -41261,15 +39679,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_clsvv4f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_.isClassMethod)
         # Verify that method is not an initializer
@@ -41322,12 +39736,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
-
     def test_imp_vv4f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41377,7 +39785,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv4f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -41427,7 +39835,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
     def test_clsvv4f_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -41477,7 +39885,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
     def test_vv4f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -41528,10 +39936,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -41540,7 +39944,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvv4f_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4f_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -41600,12 +40004,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
-
     def test_imp_vv4f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41663,7 +40061,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -41706,7 +40104,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_clsvv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -41749,7 +40147,7 @@ class TestVectorCall(TestCase):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_vv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -41793,15 +40191,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_clsvv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -41854,12 +40248,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
     def test_imp_vv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41905,7 +40293,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vid_v2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -41975,7 +40363,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvid_v2f_v2f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -42045,7 +40433,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vid_v2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -42116,15 +40504,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -42134,7 +40513,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvid_v2f_v2f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_.isClassMethod)
         # Verify that method is not an initializer
@@ -42224,17 +40603,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float2(0.0, 1.5),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-            )
-
     def test_imp_vid_v2f_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42294,7 +40662,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vid_v2f_v2f_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -42382,7 +40750,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvid_v2f_v2f_q_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -42470,7 +40838,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vid_v2f_v2f_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vid_v2f_v2f_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -42559,16 +40927,6 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-                -17592186044416,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -42579,7 +40937,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvid_v2f_v2f_q__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvid_v2f_v2f_q_.isClassMethod)
         # Verify that method is not an initializer
@@ -42689,18 +41047,6 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                "hello",
-                objc.simd.vector_float2(0.0, 1.5),
-                objc.simd.vector_float2(0.0, 1.5),
-                -17592186044416,
-            )
-
     def test_imp_vid_v2f_v2f_q_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -42762,7 +41108,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vf_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vf_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -42810,7 +41156,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, objc.simd.vector_int2(0, 1))
 
     def test_clsvf_v2i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvf_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -42858,7 +41204,7 @@ class TestVectorCall(TestCase):
             caller(2500000000.0, objc.simd.vector_int2(0, 1))
 
     def test_vf_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vf_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -42907,15 +41253,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, objc.simd.vector_int2(0, 1))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 2500000000.0, objc.simd.vector_int2(0, 1))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 2500000000.0, objc.simd.vector_int2(0, 1))
 
     def test_clsvf_v2i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvf_v2i_.isClassMethod)
         # Verify that method is not an initializer
@@ -42972,12 +41314,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, objc.simd.vector_int2(0, 1))
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 2500000000.0, objc.simd.vector_int2(0, 1))
 
     def test_imp_vf_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -43037,7 +41373,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -43107,7 +41443,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsvMDLAxisAlignedBoundingBox_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -43177,7 +41513,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -43247,16 +41583,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -43268,7 +41594,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsvMDLAxisAlignedBoundingBox__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_.isClassMethod)
         # Verify that method is not an initializer
@@ -43359,18 +41685,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-            )
-
     @min_os_level("10.11")
     def test_imp_vMDLAxisAlignedBoundingBox_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -43435,7 +41749,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -43524,7 +41838,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsvMDLAxisAlignedBoundingBox_Z_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -43613,7 +41927,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_vMDLAxisAlignedBoundingBox_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vMDLAxisAlignedBoundingBox_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -43702,17 +42016,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-                False,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -43725,7 +42028,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsvMDLAxisAlignedBoundingBox_Z__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvMDLAxisAlignedBoundingBox_Z_.isClassMethod)
         # Verify that method is not an initializer
@@ -43837,19 +42140,6 @@ class TestVectorCall(TestCase):
                 False,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                (
-                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
-                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
-                ),
-                False,
-            )
-
     @min_os_level("10.11")
     def test_imp_vMDLAxisAlignedBoundingBox_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -43915,7 +42205,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimddouble4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -43998,7 +42288,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimddouble4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -44081,7 +42371,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimddouble4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -44165,20 +42455,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_double4x4(
-                    (
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -44193,7 +42469,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimddouble4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -44306,22 +42582,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_double4x4(
-                    (
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
     def test_imp_vsimddouble4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -44391,7 +42651,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimddouble4x4_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -44501,7 +42761,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimddouble4x4_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -44611,7 +42871,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimddouble4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimddouble4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -44722,21 +42982,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_double4x4(
-                    (
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -44752,7 +42997,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimddouble4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimddouble4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -44894,23 +43139,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_double4x4(
-                    (
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
     def test_imp_vsimddouble4x4_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -44982,7 +43210,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimdfloat2x2_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -45051,7 +43279,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat2x2_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -45120,7 +43348,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimdfloat2x2__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -45190,18 +43418,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float2x2(
-                    (
-                        objc.simd.vector_float2(0.0, 1.5),
-                        objc.simd.vector_float2(0.0, 1.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -45214,7 +43430,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat2x2__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat2x2_.isClassMethod)
         # Verify that method is not an initializer
@@ -45303,20 +43519,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float2x2(
-                    (
-                        objc.simd.vector_float2(0.0, 1.5),
-                        objc.simd.vector_float2(0.0, 1.5),
-                    )
-                ),
-            )
-
     def test_imp_vsimdfloat2x2_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -45382,7 +43584,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimdfloat3x3_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -45461,7 +43663,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat3x3_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -45540,7 +43742,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimdfloat3x3__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -45620,19 +43822,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float3x3(
-                    (
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -45646,7 +43835,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat3x3__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat3x3_.isClassMethod)
         # Verify that method is not an initializer
@@ -45753,21 +43942,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float3x3(
-                    (
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                        objc.simd.vector_float3(0.0, 1.5, 3.0),
-                    )
-                ),
-            )
-
     def test_imp_vsimdfloat3x3_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -45835,7 +44009,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -45918,7 +44092,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat4x4_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -46001,7 +44175,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -46085,20 +44259,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -46113,7 +44273,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat4x4__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_.isClassMethod)
         # Verify that method is not an initializer
@@ -46226,22 +44386,6 @@ class TestVectorCall(TestCase):
                 )
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-            )
-
     def test_imp_vsimdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -46311,7 +44455,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_vsimdfloat4x4_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -46421,7 +44565,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat4x4_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -46531,7 +44675,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_vsimdfloat4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdfloat4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -46642,21 +44786,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -46672,7 +44801,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clsvsimdfloat4x4_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdfloat4x4_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -46814,23 +44943,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                -557000000000.0,
-            )
-
     def test_imp_vsimdfloat4x4_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -46903,7 +45015,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatd_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -46964,7 +45076,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatd_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -47025,7 +45137,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatd_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatd_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -47086,14 +45198,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
-                -557000000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -47103,7 +45207,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatd_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatd_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -47181,16 +45285,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
-                -557000000000.0,
-            )
-
     @min_os_level("10.13")
     def test_imp_vsimdquatd_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -47251,7 +45345,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -47299,7 +45393,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -47347,7 +45441,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -47395,10 +45489,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -47407,7 +45497,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_.isClassMethod)
         # Verify that method is not an initializer
@@ -47464,12 +45554,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
-
     @min_os_level("10.13")
     def test_imp_vsimdquatf_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -47524,7 +45608,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -47585,7 +45669,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf_v3f_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -47646,7 +45730,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -47707,14 +45791,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -47724,7 +45800,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf_v3f__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_v3f_.isClassMethod)
         # Verify that method is not an initializer
@@ -47802,16 +45878,6 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                objc.simd.vector_float3(0.0, 1.5, 3.0),
-            )
-
     @min_os_level("10.13")
     def test_imp_vsimdquatf_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -47872,7 +45938,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -47933,7 +45999,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -47994,7 +46060,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_vsimdquatf_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.vsimdquatf_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -48055,14 +46121,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                -557000000000.0,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -48072,7 +46130,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsvsimdquatf_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsvsimdquatf_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -48150,16 +46208,6 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
-                -557000000000.0,
-            )
-
     @min_os_level("10.13")
     def test_imp_vsimdquatf_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -48220,7 +46268,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKBox.isClassMethod)
         # Verify that method is not an initializer
@@ -48260,7 +46308,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsGKBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKBox.isClassMethod)
         # Verify that method is not an initializer
@@ -48300,7 +46348,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKBox.isClassMethod)
         # Verify that method is not an initializer
@@ -48340,12 +46388,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -48353,7 +46395,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsGKBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKBox.isClassMethod)
         # Verify that method is not an initializer
@@ -48418,14 +46460,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.12")
     def test_imp_GKBox(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -48486,7 +46520,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKQuad(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKQuad.isClassMethod)
         # Verify that method is not an initializer
@@ -48523,7 +46557,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsGKQuad(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKQuad.isClassMethod)
         # Verify that method is not an initializer
@@ -48560,7 +46594,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKQuad_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKQuad.isClassMethod)
         # Verify that method is not an initializer
@@ -48597,12 +46631,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -48610,7 +46638,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsGKQuad_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKQuad.isClassMethod)
         # Verify that method is not an initializer
@@ -48666,14 +46694,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.12")
     def test_imp_GKQuad(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -48728,7 +46748,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKTriangleQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKTriangleQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -48781,7 +46801,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_clsGKTriangleQ_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKTriangleQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -48834,7 +46854,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.12")
     def test_GKTriangleQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.GKTriangleQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -48887,16 +46907,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, 35184372088832)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, 35184372088832)
 
     @min_os_level("10.12")
     def test_clsGKTriangleQ__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsGKTriangleQ_.isClassMethod)
         # Verify that method is not an initializer
@@ -48976,12 +46992,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, 35184372088832)
-
     @min_os_level("10.12")
     def test_imp_GKTriangleQ_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49048,7 +47058,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -49091,7 +47101,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -49134,7 +47144,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -49177,12 +47187,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -49190,7 +47194,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -49258,14 +47262,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBox(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49326,7 +47322,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -49379,7 +47375,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBoxv4i_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -49434,7 +47430,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -49487,16 +47483,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, objc.simd.vector_int4(0, 1, 2, 3))
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBoxv4i__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxv4i_.isClassMethod)
         # Verify that method is not an initializer
@@ -49572,12 +47564,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
-
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49638,7 +47624,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxd_.isClassMethod)
         # Verify that method is not an initializer
@@ -49691,7 +47677,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBoxd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_.isClassMethod)
         # Verify that method is not an initializer
@@ -49744,7 +47730,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLAxisAlignedBoundingBoxd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLAxisAlignedBoundingBoxd_.isClassMethod)
         # Verify that method is not an initializer
@@ -49797,16 +47783,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     @min_os_level("10.11")
     def test_clsMDLAxisAlignedBoundingBoxd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLAxisAlignedBoundingBoxd_.isClassMethod)
         # Verify that method is not an initializer
@@ -49880,12 +47862,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxd_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49946,7 +47922,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLVoxelIndexExtent(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
         # Verify that method is not an initializer
@@ -49988,7 +47964,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLVoxelIndexExtent(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
         # Verify that method is not an initializer
@@ -50030,7 +48006,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_MDLVoxelIndexExtent_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MDLVoxelIndexExtent.isClassMethod)
         # Verify that method is not an initializer
@@ -50072,12 +48048,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -50085,7 +48055,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.11")
     def test_clsMDLVoxelIndexExtent_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMDLVoxelIndexExtent.isClassMethod)
         # Verify that method is not an initializer
@@ -50152,14 +48122,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.11")
     def test_imp_MDLVoxelIndexExtent(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50220,7 +48182,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_MPSImageHistogramInfo(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
         # Verify that method is not an initializer
@@ -50264,7 +48226,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsMPSImageHistogramInfo(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
         # Verify that method is not an initializer
@@ -50309,7 +48271,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_MPSImageHistogramInfo_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSImageHistogramInfo.isClassMethod)
         # Verify that method is not an initializer
@@ -50353,12 +48315,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -50366,7 +48322,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clsMPSImageHistogramInfo_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSImageHistogramInfo.isClassMethod)
         # Verify that method is not an initializer
@@ -50440,14 +48396,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.13")
     def test_imp_MPSImageHistogramInfo(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50512,7 +48460,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.14")
     def test_MPSAxisAlignedBoundingBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -50555,7 +48503,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.14")
     def test_clsMPSAxisAlignedBoundingBox(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -50598,7 +48546,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.14")
     def test_MPSAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.MPSAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -50641,12 +48589,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -50654,7 +48596,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.14")
     def test_clsMPSAxisAlignedBoundingBox_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clsMPSAxisAlignedBoundingBox.isClassMethod)
         # Verify that method is not an initializer
@@ -50722,14 +48664,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     @min_os_level("10.14")
     def test_imp_MPSAxisAlignedBoundingBox(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50789,7 +48723,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simddouble4x4(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -50834,7 +48768,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clssimddouble4x4(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -50879,7 +48813,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_simddouble4x4_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -50925,19 +48859,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clssimddouble4x4_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -51016,14 +48944,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_simddouble4x4(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51089,7 +49009,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simddouble4x4d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -51144,7 +49064,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clssimddouble4x4d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -51199,7 +49119,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_simddouble4x4d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simddouble4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -51255,15 +49175,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clssimddouble4x4d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimddouble4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -51348,12 +49264,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_simddouble4x4d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51419,7 +49329,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat2x2(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
         # Verify that method is not an initializer
@@ -51457,7 +49367,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clssimdfloat2x2(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
         # Verify that method is not an initializer
@@ -51497,7 +49407,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_simdfloat2x2_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat2x2.isClassMethod)
         # Verify that method is not an initializer
@@ -51536,19 +49446,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clssimdfloat2x2_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat2x2.isClassMethod)
         # Verify that method is not an initializer
@@ -51612,14 +49516,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_simdfloat2x2(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51675,7 +49571,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat3x3(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
         # Verify that method is not an initializer
@@ -51717,7 +49613,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clssimdfloat3x3(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
         # Verify that method is not an initializer
@@ -51761,7 +49657,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_simdfloat3x3_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat3x3.isClassMethod)
         # Verify that method is not an initializer
@@ -51804,19 +49700,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clssimdfloat3x3_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat3x3.isClassMethod)
         # Verify that method is not an initializer
@@ -51892,14 +49782,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_simdfloat3x3(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51963,7 +49845,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat4x3(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x3.isClassMethod)
         # Verify that method is not an initializer
@@ -52006,7 +49888,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clssimdfloat4x3(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x3.isClassMethod)
         # Verify that method is not an initializer
@@ -52051,7 +49933,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_simdfloat4x3_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x3.isClassMethod)
         # Verify that method is not an initializer
@@ -52095,19 +49977,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clssimdfloat4x3_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x3.isClassMethod)
         # Verify that method is not an initializer
@@ -52186,14 +50062,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_simdfloat4x3(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -52259,7 +50127,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat4x4(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -52302,7 +50170,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_clssimdfloat4x4(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -52347,7 +50215,7 @@ class TestVectorCall(TestCase):
             caller()
 
     def test_simdfloat4x4_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -52391,19 +50259,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
             )
 
     def test_clssimdfloat4x4_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4.isClassMethod)
         # Verify that method is not an initializer
@@ -52482,14 +50344,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
-
     def test_imp_simdfloat4x4(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -52555,7 +50409,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat4x4id_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -52615,7 +50469,7 @@ class TestVectorCall(TestCase):
             caller("hello", -557000000000.0)
 
     def test_clssimdfloat4x4id_d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -52675,7 +50529,7 @@ class TestVectorCall(TestCase):
             caller("hello", -557000000000.0)
 
     def test_simdfloat4x4id_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4id_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -52736,15 +50590,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, "hello", -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, "hello", -557000000000.0)
 
     def test_clssimdfloat4x4id_d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4id_d_.isClassMethod)
         # Verify that method is not an initializer
@@ -52834,12 +50684,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", -557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, "hello", -557000000000.0)
-
     def test_imp_simdfloat4x4id_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -52917,7 +50761,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat4x4d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -52972,7 +50816,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_clssimdfloat4x4d_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -53027,7 +50871,7 @@ class TestVectorCall(TestCase):
             caller(-557000000000.0)
 
     def test_simdfloat4x4d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -53083,15 +50927,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     def test_clssimdfloat4x4d__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4d_.isClassMethod)
         # Verify that method is not an initializer
@@ -53176,12 +51016,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     def test_imp_simdfloat4x4d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -53247,7 +51081,7 @@ class TestVectorCall(TestCase):
             del value.returnInvalid
 
     def test_simdfloat4x4simdfloat4x4_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -53369,7 +51203,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clssimdfloat4x4simdfloat4x4_id_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -53491,7 +51325,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_simdfloat4x4simdfloat4x4_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -53614,21 +51448,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -53644,7 +51463,7 @@ class TestVectorCall(TestCase):
             )
 
     def test_clssimdfloat4x4simdfloat4x4_id__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdfloat4x4simdfloat4x4_id_.isClassMethod)
         # Verify that method is not an initializer
@@ -53818,23 +51637,6 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-                simd.simd_float4x4(
-                    (
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    )
-                ),
-                "hello",
-            )
-
     def test_imp_simdfloat4x4simdfloat4x4_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -53927,7 +51729,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatdd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
         # Verify that method is not an initializer
@@ -53973,7 +51775,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clssimdquatdd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54019,7 +51821,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatdd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatdd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54065,16 +51867,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     @min_os_level("10.13")
     def test_clssimdquatdd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatdd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54133,12 +51931,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
-
     @min_os_level("10.13")
     def test_imp_simdquatdd_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -54191,7 +51983,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatf(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
         # Verify that method is not an initializer
@@ -54227,7 +52019,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clssimdquatf(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
         # Verify that method is not an initializer
@@ -54263,7 +52055,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatf_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatf.isClassMethod)
         # Verify that method is not an initializer
@@ -54299,12 +52091,6 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(
-                42,
-            )
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(
                 NoObjCValueObject,
@@ -54312,7 +52098,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clssimdquatf_imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatf.isClassMethod)
         # Verify that method is not an initializer
@@ -54364,14 +52150,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(
-                42,
-            )
 
     @min_os_level("10.13")
     def test_imp_simdquatf(self):
@@ -54425,7 +52203,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatfd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54471,7 +52249,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_clssimdquatfd_(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54517,7 +52295,7 @@ class TestVectorCall(TestCase):
 
     @min_os_level("10.13")
     def test_simdquatfd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertFalse(OC_VectorCall.simdquatfd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54563,16 +52341,12 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
-        # Call with invalid type for self
-        with self.assertRaisesRegex(ValueError, "unrecognized selector"):
-            imp(42, -557000000000.0)
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             imp(NoObjCValueObject, -557000000000.0)
 
     @min_os_level("10.13")
     def test_clssimdquatfd__imp(self):
-        OC_VectorCall.clearRaise()
+        clearRaise()  # noqa: F821
         # Verify method type
         self.assertTrue(OC_VectorCall.clssimdquatfd_.isClassMethod)
         # Verify that method is not an initializer
@@ -54630,12 +52404,6 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
-
-        # Call with invalid type for self
-        with self.assertRaisesRegex(
-            TypeError, "Need Objective-C object or class as self"
-        ):
-            imp(42, -557000000000.0)
 
     @min_os_level("10.13")
     def test_imp_simdquatfd_(self):

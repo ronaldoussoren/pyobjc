@@ -93,12 +93,9 @@ class TestRegressions(TestCase):
         self.assertFalse(NSObject.instancesRespondToSelector_("frodel"))
 
     def testDeallocUninit(self):
-        with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
-            for clsName in ["NSURL", "NSObject", "NSArray"]:
-                d = objc.lookUpClass(clsName).alloc()
-                del d
+        for clsName in ["NSURL", "NSObject", "NSArray"]:
+            d = objc.lookUpClass(clsName).alloc()
+            del d
 
         # Check that we generate a warning for unitialized objects that
         # get deallocated

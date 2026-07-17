@@ -7,8 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* PyObjCFunc_Type;
-#define PyObjCFunction_Check(value)                                                      \
-    PyObject_TypeCheck(value, (PyTypeObject*)PyObjCFunc_Type)
+#define PyObjCFunction_Check(value) Py_IS_TYPE((value), (PyTypeObject*)PyObjCFunc_Type)
 
 int(PyObjCFunction_Check)(PyObject* value) { return PyObjCFunction_Check(value); }
 
@@ -16,6 +15,7 @@ typedef struct {
     PyObject_HEAD
 
     ffi_cif* _Nullable cif;
+    PyObjC_FunctionCallFunc _Nullable invoker;
     PyObjCMethodSignature* methinfo;
     void*                  function;
     PyObject* _Nullable doc;
@@ -107,6 +107,36 @@ static PyObject* _Nullable func_repr(PyObject* _self)
     } else {
         return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
     }
+}
+
+static PyObject* _Nullable func_vectorcall_invoker(PyObject* s, PyObject* const* args,
+                                                   size_t nargsf,
+                                                   PyObject* _Nullable kwnames)
+{
+    func_object* self = (func_object*)s;
+
+    if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
+        return NULL;
+    }
+
+    if (version_is_deprecated(self->methinfo->deprecated)) {
+        char buf[128];
+
+        snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)", // LCOV_BR_EXCL_LINE
+                 (self->name ? PyUnicode_AsUTF8(self->name) : "objc.function instance"),
+                 self->methinfo->deprecated / 100, self->methinfo->deprecated % 100);
+
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            return NULL;
+        }
+    }
+
+    if (self->methinfo->suggestion != NULL) {
+        PyErr_SetObject(PyExc_TypeError, self->methinfo->suggestion);
+        return NULL;
+    }
+
+    return self->invoker(s, args, PyVectorcall_NARGS(nargsf));
 }
 
 static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
@@ -399,8 +429,8 @@ static PyType_Spec func_spec = {
     .basicsize = sizeof(func_object),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = func_slots,
+                 | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = func_slots,
 };
 
 PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, void* func,
@@ -426,6 +456,15 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
         result->vectorcall = func_vectorcall_simple;
     }
     result->cif = NULL;
+
+    result->invoker = PyObjC_FindFunctionCaller(func, methinfo->signature);
+    if (result->invoker == NULL && PyErr_Occurred()) {
+        Py_DECREF(result);
+        return NULL;
+    } else if (result->invoker != NULL) {
+        result->vectorcall = func_vectorcall_invoker;
+        return (PyObject*)result;
+    }
 
     ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (cif == NULL) {
@@ -477,6 +516,12 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);
 
+    result->invoker = PyObjC_FindFunctionCaller(func, methinfo->signature);
+    if (result->invoker != NULL) {
+        result->vectorcall = func_vectorcall_invoker;
+        return (PyObject*)result;
+    }
+
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (unlikely(result->cif == NULL)) { // LCOV_BR_EXCL_LINE
         Py_DECREF(result);               // LCOV_EXCL_LINE
@@ -490,6 +535,12 @@ PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject* func)
 {
     Py_INCREF(((func_object*)func)->methinfo);
     return ((func_object*)func)->methinfo;
+}
+
+void*
+PyObjCFunc_GetCallable(PyObject* func)
+{
+    return ((func_object*)func)->function;
 }
 
 int

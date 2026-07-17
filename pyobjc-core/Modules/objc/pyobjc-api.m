@@ -50,6 +50,7 @@ struct pyobjc_api objc_api = {
     .checkargcount             = PyObjC_CheckArgCount,
     .checknokwnames            = PyObjC_CheckNoKwnames,
     .createopaquepointertype   = PyObjCCreateOpaquePointerType,
+    .register_functioncaller   = PyObjCRegister_FunctionCaller,
 };
 
 int
