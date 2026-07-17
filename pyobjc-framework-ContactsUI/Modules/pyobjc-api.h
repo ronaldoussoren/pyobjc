@@ -60,6 +60,11 @@ typedef int(RegisterMethodMappingFunctionType)(
                                     PyObject* _Nonnull const* _Nonnull, size_t),
     IMP _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull));
 
+#ifndef PyObjC_FUNCTION_CALL_H
+typedef PyObject* _Nullable (*PyObjC_FunctionCallFunc)(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs);
+#endif
+
 struct pyobjc_api {
     int                                api_version; /* API version */
     size_t                             struct_len;  /* Length of this struct */
@@ -117,6 +122,7 @@ struct pyobjc_api {
 
     PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*,
                                                             const char*);
+    int (*_Nonnull register_functioncaller)(void*, PyObjC_FunctionCallFunc);
 };
 
 #ifndef PYOBJC_BUILD
@@ -159,6 +165,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_CheckArgCount (PyObjC_API->checkargcount)
 #define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->createopaquepointertype)
+#define PyObjCRegister_FunctionCaller (PyObjC_API->register_functioncaller)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
