@@ -97,6 +97,7 @@ CFLAGS = [
     "-g",
     # "-O0",
     "-O3",
+    "-UNDEBUG",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -389,13 +390,11 @@ class oc_egg_info(egg_info.egg_info):
         else:
             sdk_version = os.path.basename(sdk_root)
 
-        build_info = textwrap.dedent(
-            f"""\
+        build_info = textwrap.dedent(f"""\
             macOS {macos_version} ({macos_build})
             {clang_version}
             SDK: {sdk_version}
-            """
-        )
+            """)
 
         self.write_file(
             "pyobjc-build-info.txt",

@@ -4235,6 +4235,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
+
     def test_imp_v16C(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4442,6 +4447,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_v2d(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -4675,6 +4685,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_v2dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -4872,6 +4885,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_v2f(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -5105,6 +5123,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 35184372088832)
+
     def test_imp_v2fQ_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5336,6 +5357,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
 
     def test_imp_v2fd_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -5569,6 +5593,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-17592186044416)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -17592186044416)
+
     def test_imp_v2fq_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -5766,6 +5793,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_v2i(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -5999,6 +6031,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_v3dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -6196,6 +6231,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_v3f(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -6453,6 +6493,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int2(0, 1), objc.simd.vector_int2(0, 1))
+
     def test_imp_v3fv2i_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -6696,6 +6739,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_v3fv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -6949,6 +6995,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
+
     def test_imp_v3fv3f_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7193,6 +7242,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
+
     def test_imp_v3fv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7424,6 +7476,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 35184372088832)
 
     def test_imp_v3fQ_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -7657,6 +7712,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_v3fd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -7889,6 +7947,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_v4dd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8086,6 +8147,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_v4f(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -8319,6 +8385,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_v4fd_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -8550,6 +8619,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_v4iv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -8802,6 +8874,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), "hello")
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), "hello")
 
     def test_imp_idv2d_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -9067,6 +9142,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -17592186044416)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), -17592186044416)
+
     def test_imp_idv2d_q_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -9310,6 +9388,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_idv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -9741,6 +9822,15 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv2f_v2I_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10045,6 +10135,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42, objc.simd.vector_float2(0.0, 1.5), objc.simd.vector_float2(0.0, 1.5)
+            )
+
     def test_imp_idv2f_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -10288,6 +10383,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int2(0, 1))
 
     def test_imp_idv2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -10580,6 +10678,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), -42, -42, False)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int2(0, 1), -42, -42, False)
 
     def test_imp_idv2i_i_i_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -11062,6 +11163,16 @@ class TestVectorCall(TestCase):
                 objc.lookUpClass("NSObject"),
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -42,
+                False,
+                objc.lookUpClass("NSObject"),
+            )
+
     def test_imp_idv2i_i_i_Z_Class_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -11311,6 +11422,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_idv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -12043,6 +12157,18 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv3f_v2I_Z_Z_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -12701,6 +12827,17 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                False,
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv3f_v2I_Z_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -13239,6 +13376,16 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                False,
+                -17592186044416,
+                "hello",
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 False,
@@ -13880,6 +14027,17 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -42,
+                False,
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv3f_v2I_i_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -14332,6 +14490,15 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint2(0, 1),
+                -17592186044416,
+                "hello",
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint2(0, 1),
                 -17592186044416,
@@ -14887,6 +15054,16 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                False,
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv3f_v3I_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -15431,6 +15608,16 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_uint3(0, 1, 2),
+                -17592186044416,
+                False,
+                "hello",
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_uint3(0, 1, 2),
                 -17592186044416,
@@ -16187,6 +16374,18 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                False,
+                "hello",
+            )
+
     def test_imp_idv3f_Q_Q_q_Z_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -16599,6 +16798,15 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0), False, -17592186044416, "hello"
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                False,
+                -17592186044416,
+                "hello",
+            )
+
     def test_imp_idv3f_Z_q_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -16846,6 +17054,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_imp_idv4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -17400,6 +17611,16 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_double2(0.0, 1.5),
+                objc.simd.vector_int2(0, 1),
+                False,
+            )
+
     def test_imp_idid_v2d_v2d_v2i_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -17670,6 +17891,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float2(0.0, 1.5))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", objc.simd.vector_float2(0.0, 1.5))
+
     def test_imp_idid_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -17934,6 +18158,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
+
     def test_imp_idid_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -18197,6 +18424,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_imp_idid_v4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -18481,6 +18711,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1))
 
     def test_imp_idid_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -18810,6 +19043,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", "hello", objc.simd.vector_int2(0, 1), 2500000000.0)
+
     def test_imp_idid_id_v2i_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -19102,6 +19338,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", 35184372088832, objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_idid_Q_v2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -19421,6 +19660,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", 35184372088832, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_idid_Q_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -19766,6 +20008,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42, "hello", 35184372088832, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)
+            )
 
     def test_imp_idid_Q_v4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -20349,6 +20596,21 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                35184372088832,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 35184372088832,
                 simd.simd_float4x4(
@@ -21223,6 +21485,19 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                False,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                35184372088832,
+                -17592186044416,
+                False,
+            )
+
     def test_imp_idid_Z_id_v2i_q_Q_q_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -21969,6 +22244,18 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 -17592186044416,
                 objc.simd.vector_int2(0, 1),
@@ -22834,6 +23121,19 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                -17592186044416,
+                objc.simd.vector_int2(0, 1),
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+                2500000000.0,
+            )
+
     def test_imp_idid_q_v2i_f_f_f_f_f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -23259,6 +23559,16 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+            )
+
     @min_os_level("10.12")
     def test_imp_idid_GKBox_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -23643,6 +23953,16 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 (
                     objc.simd.vector_float2(9.0, 10.0),
@@ -24194,6 +24514,17 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                2500000000.0,
+            )
+
     @min_os_level("10.11")
     def test_imp_idid_MDLAxisAlignedBoundingBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -24628,6 +24959,18 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                simd.simd_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 simd.simd_float2x2(
                     (
@@ -25123,6 +25466,19 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                simd.simd_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 simd.simd_float3x3(
                     (
@@ -25654,6 +26010,20 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+            )
+
     def test_imp_idid_simdfloat4x4_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -25998,6 +26368,13 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 "hello", simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
             )
 
     @min_os_level("10.13")
@@ -26409,6 +26786,14 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                "hello",
+            )
+
     @min_os_level("10.13")
     def test_imp_idid_simdquatf_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -26738,6 +27123,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("color!", "color!", "hello", objc.simd.vector_int2(0, 1))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "color!", "color!", "hello", objc.simd.vector_int2(0, 1))
 
     def test_imp_idCGColor_CGColor_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -27105,6 +27493,14 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -27588,6 +27984,15 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.lookUpClass("NSObject"),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 2500000000.0,
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -28444,6 +28849,19 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            )
+
     def test_imp_idf_v2f_Q_Q_Q_q_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29199,6 +29617,18 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                2500000000.0,
+                objc.simd.vector_float2(0.0, 1.5),
+                35184372088832,
+                35184372088832,
+                -17592186044416,
+                False,
+                "hello",
+            )
+
     def test_imp_idf_v2f_Q_Q_q_Z_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -29757,6 +30187,17 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                False,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 2500000000.0,
                 "hello",
                 objc.simd.vector_int2(0, 1),
@@ -30512,6 +30953,18 @@ class TestVectorCall(TestCase):
                 "color!",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                2500000000.0,
+                "hello",
+                objc.simd.vector_int2(0, 1),
+                -42,
+                -17592186044416,
+                "color!",
+                "color!",
+            )
+
     def test_imp_idf_id_v2i_i_q_CGColor_CGColor_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -30884,6 +31337,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 2500000000.0, "hello", objc.simd.vector_int2(0, 1), -17592186044416)
+
     def test_imp_idf_id_v2i_q_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -31246,6 +31702,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 2500000000.0, 2500000000.0, "hello", objc.simd.vector_int2(0, 1))
+
     def test_imp_idf_f_id_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -31602,6 +32061,15 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(1.0, 2.0, 3.0),
                     objc.simd.vector_float3(4.0, 5.0, 6.0),
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
             )
 
     @min_os_level("10.12")
@@ -32043,6 +32511,16 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float3(1.0, 2.0, 3.0),
+                    objc.simd.vector_float3(4.0, 5.0, 6.0),
+                ),
+                2500000000.0,
+            )
+
     @min_os_level("10.12")
     def test_imp_idGKBox_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -32373,6 +32851,15 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float2(9.0, 10.0),
                     objc.simd.vector_float2(11.0, 12.0),
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
             )
 
     @min_os_level("10.12")
@@ -32784,6 +33271,16 @@ class TestVectorCall(TestCase):
                 2500000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float2(9.0, 10.0),
+                    objc.simd.vector_float2(11.0, 12.0),
+                ),
+                2500000000.0,
+            )
+
     @min_os_level("10.12")
     def test_imp_idGKQuad_f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -33156,6 +33653,15 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_int4(100, 101, 102, 103),
                     objc.simd.vector_int4(-20, -21, -22, -23),
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_int4(100, 101, 102, 103),
+                    objc.simd.vector_int4(-20, -21, -22, -23),
+                ),
             )
 
     @min_os_level("10.11")
@@ -33596,6 +34102,19 @@ class TestVectorCall(TestCase):
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     )
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
             )
 
     def test_imp_idsimdfloat4x4_(self):
@@ -34155,6 +34674,20 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                False,
+            )
+
     def test_imp_idsimdfloat4x4_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -34607,6 +35140,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int2(0, 1), "hello", "hello", "hello", "hello")
 
     def test_imp_Zv2i_id_id_id_id_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -35220,6 +35756,17 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_int2(0, 1),
+                -17592186044416,
+                2500000000.0,
+                "hello",
+                "hello",
+                "hello",
+            )
+
     def test_imp_Zv2i_q_f_id_id_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -35555,6 +36102,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int4(0, 1, 2, 3), False, False, False, False)
+
     def test_imp_Zv4i_Z_Z_Z_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -35790,6 +36340,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_CGColorv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -36043,6 +36596,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), "colorspace!")
+
     def test_imp_CGColorv3f_CGColorSpace_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -36272,6 +36828,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_fv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -36505,6 +37064,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int2(0, 1))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int2(0, 1))
+
     def test_imp_fv2i_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -36736,6 +37298,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5))
 
     def test_imp_vv2d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -36989,6 +37554,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double2(0.0, 1.5), -557000000000.0)
+
     def test_imp_vv2d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37232,6 +37800,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float2(0.0, 1.5))
 
     def test_imp_vv2f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -37485,6 +38056,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float2(0.0, 1.5), -557000000000.0)
+
     def test_imp_vv2f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -37728,6 +38302,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0))
 
     def test_imp_vv3d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -37985,6 +38562,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double3(0.0, 1.5, 3.0), -557000000000.0)
+
     def test_imp_vv3d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -38228,6 +38808,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_imp_vv3f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -38529,6 +39112,13 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
@@ -38944,6 +39534,14 @@ class TestVectorCall(TestCase):
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            )
+
     def test_imp_vv3f_v3f_v3f_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -39213,6 +39811,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float3(0.0, 1.5, 3.0), -557000000000.0)
 
     def test_imp_vv3f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -39492,6 +40093,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+
     def test_imp_vv4d_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -39735,6 +40339,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
 
     def test_imp_vv4f_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -40004,6 +40611,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), -557000000000.0)
+
     def test_imp_vv4f_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -40247,6 +40857,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
 
     def test_imp_vv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -40598,6 +41211,14 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 "hello",
                 objc.simd.vector_float2(0.0, 1.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -41047,6 +41668,15 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                "hello",
+                objc.simd.vector_float2(0.0, 1.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                -17592186044416,
+            )
+
     def test_imp_vid_v2f_v2f_q_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -41314,6 +41944,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(2500000000.0, objc.simd.vector_int2(0, 1))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 2500000000.0, objc.simd.vector_int2(0, 1))
 
     def test_imp_vf_v2i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -41683,6 +42316,15 @@ class TestVectorCall(TestCase):
                     objc.simd.vector_float3(-8.0, -9.0, -10.0),
                     objc.simd.vector_float3(-11.0, -12.0, -13.0),
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
             )
 
     @min_os_level("10.11")
@@ -42140,6 +42782,16 @@ class TestVectorCall(TestCase):
                 False,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float3(-8.0, -9.0, -10.0),
+                    objc.simd.vector_float3(-11.0, -12.0, -13.0),
+                ),
+                False,
+            )
+
     @min_os_level("10.11")
     def test_imp_vMDLAxisAlignedBoundingBox_Z_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -42580,6 +43232,19 @@ class TestVectorCall(TestCase):
                         objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
                     )
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
             )
 
     def test_imp_vsimddouble4x4_(self):
@@ -43139,6 +43804,20 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_double4x4(
+                    (
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
     def test_imp_vsimddouble4x4_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -43517,6 +44196,17 @@ class TestVectorCall(TestCase):
                         objc.simd.vector_float2(0.0, 1.5),
                     )
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float2x2(
+                    (
+                        objc.simd.vector_float2(0.0, 1.5),
+                        objc.simd.vector_float2(0.0, 1.5),
+                    )
+                ),
             )
 
     def test_imp_vsimdfloat2x2_(self):
@@ -43940,6 +44630,18 @@ class TestVectorCall(TestCase):
                         objc.simd.vector_float3(0.0, 1.5, 3.0),
                     )
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float3x3(
+                    (
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                        objc.simd.vector_float3(0.0, 1.5, 3.0),
+                    )
+                ),
             )
 
     def test_imp_vsimdfloat3x3_(self):
@@ -44384,6 +45086,19 @@ class TestVectorCall(TestCase):
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                     )
                 )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
             )
 
     def test_imp_vsimdfloat4x4_(self):
@@ -44943,6 +45658,20 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                -557000000000.0,
+            )
+
     def test_imp_vsimdfloat4x4_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -45285,6 +46014,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_quatd(objc.simd.vector_double4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            )
+
     @min_os_level("10.13")
     def test_imp_vsimdquatd_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -45553,6 +46289,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)))
 
     @min_os_level("10.13")
     def test_imp_vsimdquatf_(self):
@@ -45874,6 +46613,13 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                objc.simd.vector_float3(0.0, 1.5, 3.0),
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
                 simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
                 objc.simd.vector_float3(0.0, 1.5, 3.0),
             )
@@ -46208,6 +46954,13 @@ class TestVectorCall(TestCase):
                 -557000000000.0,
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_quatf(objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5)),
+                -557000000000.0,
+            )
+
     @min_os_level("10.13")
     def test_imp_vsimdquatf_d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -46460,6 +47213,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
+
     @min_os_level("10.12")
     def test_imp_GKBox(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -46693,6 +47451,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     @min_os_level("10.12")
     def test_imp_GKQuad(self):
@@ -46992,6 +47755,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(35184372088832)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, 35184372088832)
+
     @min_os_level("10.12")
     def test_imp_GKTriangleQ_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -47261,6 +48027,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBox(self):
@@ -47564,6 +48335,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(objc.simd.vector_int4(0, 1, 2, 3))
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, objc.simd.vector_int4(0, 1, 2, 3))
+
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxv4i_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -47862,6 +48636,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     @min_os_level("10.11")
     def test_imp_MDLAxisAlignedBoundingBoxd_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -48121,6 +48898,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     @min_os_level("10.11")
     def test_imp_MDLVoxelIndexExtent(self):
@@ -48396,6 +49178,11 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
+
     @min_os_level("10.13")
     def test_imp_MPSImageHistogramInfo(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -48663,6 +49450,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     @min_os_level("10.14")
     def test_imp_MPSAxisAlignedBoundingBox(self):
@@ -48943,6 +49735,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_simddouble4x4(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49264,6 +50061,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     def test_imp_simddouble4x4d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -49515,6 +50315,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_simdfloat2x2(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -49781,6 +50586,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_simdfloat3x3(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50061,6 +50871,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_simdfloat4x3(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50343,6 +51158,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     def test_imp_simdfloat4x4(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -50684,6 +51504,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", -557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, "hello", -557000000000.0)
+
     def test_imp_simdfloat4x4id_d_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51015,6 +51838,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
 
     def test_imp_simdfloat4x4d_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -51637,6 +52463,20 @@ class TestVectorCall(TestCase):
                 "hello",
             )
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                "hello",
+            )
+
     def test_imp_simdfloat4x4simdfloat4x4_id_(self):
         value = OC_VectorCallInstance.alloc().init()
         value.argvalues = 1
@@ -51931,6 +52771,9 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
 
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
+
     @min_os_level("10.13")
     def test_imp_simdquatdd_(self):
         value = OC_VectorCallInstance.alloc().init()
@@ -52150,6 +52993,11 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller()
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+            )
 
     @min_os_level("10.13")
     def test_imp_simdquatf(self):
@@ -52404,6 +53252,9 @@ class TestVectorCall(TestCase):
         OC_VectorCall.setRaise()
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(-557000000000.0)
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(42, -557000000000.0)
 
     @min_os_level("10.13")
     def test_imp_simdquatfd_(self):

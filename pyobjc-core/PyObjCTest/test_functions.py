@@ -4,6 +4,8 @@ import textwrap
 import warnings
 import sys
 from PyObjCTools.TestSupport import TestCase
+from .function import function_list as function_list2
+from .test_deprecations import deprecation_warnings
 
 from PyObjCTest.test_metadata_function import (
     getDoubleFunc,
@@ -15,7 +17,6 @@ from PyObjCTest.test_metadata_function import (
     get2ndGetter,
     function_list,
 )
-from PyObjCTest.test_deprecations import deprecation_warnings
 
 bundle = objc.lookUpClass("NSBundle").bundleWithPath_(
     "/System/Library/Frameworks/AppKit.framework"
@@ -638,3 +639,82 @@ class TestFunctions(TestCase):
                 False,
             )
             self.assertArgHasType(m["kill"], 0, b"i")
+
+    def test_function_override(self):
+        m = {}
+        objc.loadFunctionList(
+            function_list2,
+            m,
+            [
+                ("doubleInt", b"ii"),
+                ("trippleInt", b"ii", "", {"suggestion": "no valid api"}),
+                ("quadrupleInt", b"ii", "", {"deprecated": 2600}),
+                (
+                    "passFunction",
+                    b"v^?",
+                    "",
+                    {
+                        "arguments": {
+                            0: {
+                                "callable_retained": False,
+                                "callable": {
+                                    "arguments": {
+                                        0: {
+                                            "type": "^?",
+                                            "callable": {
+                                                "arguments": {0: {"type": "i"}},
+                                                "retval": {"type": "i"},
+                                            },
+                                        },
+                                    },
+                                    "retval": {"type": "v"},
+                                },
+                            }
+                        },
+                    },
+                ),
+                (
+                    "retainedFromVector",
+                    b"@{simd_float4x4=[4<4f>]}",
+                    "",
+                    {"retval": {"already_retained": True}},
+                ),
+                (
+                    "cfretainedFromVector",
+                    b"@{simd_float4x4=[4<4f>]}",
+                    "",
+                    {"retval": {"already_cfretained": True}},
+                ),
+            ],
+            skip_undefined=False,
+        )
+        self.assertEqual(m["doubleInt"](9), -18)
+
+        with self.assertRaisesRegex(TypeError, "no valid api"):
+            m["trippleInt"](9)
+
+        self.assertEqual(m["quadrupleInt"](9), -18)
+        with deprecation_warnings("27.0"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error")
+                with self.assertRaises(objc.ApiDeprecationWarning):
+                    m["quadrupleInt"](9)
+
+        stored = None
+
+        def fun(v):
+            nonlocal stored
+            stored = v
+
+        m["passFunction"](fun)
+        self.assertIsInstance(stored, objc.function)
+        self.assertEqual(stored(4), -8)
+
+        vec = (((3.0, 4.5, 5.5, 9.0),) * 4,)
+        self.assertResultIsRetained(m["retainedFromVector"])
+        v = m["retainedFromVector"](vec)
+        self.assertEqual(v, "3.0 4.5 5.5")
+
+        self.assertResultIsCFRetained(m["cfretainedFromVector"])
+        v = m["cfretainedFromVector"](vec)
+        self.assertEqual(v, "3.0 4.5 5.5")

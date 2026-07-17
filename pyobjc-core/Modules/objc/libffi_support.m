@@ -1573,6 +1573,14 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
             }
             break;
 
+        case _C_PTR:
+            if (argtype[1] == _C_UNDEF && methinfo->argtype[i]->callable) {
+                v = PyObjCFunc_WithMethodSignature(NULL, *(void**)args[i],
+                                                   methinfo->argtype[i]->callable);
+                break;
+            };
+            /* Fallthrough */
+
         default:
             v = pythonify_c_value(argtype, args[i]);
 

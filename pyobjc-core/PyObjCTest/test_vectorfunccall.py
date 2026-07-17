@@ -52,7 +52,6 @@ objc.loadFunctionList(
         ("Bid_v3f_", b"B@<3f>"),
         ("simdfloat3x3id_", b"{simd_float3x3=[3<3f>]}@"),
         ("simdfloat4x4id_", b"{simd_float4x4=[4<4f>]}@"),
-        ("simdfloat4x4id_charp_q_", b"{simd_float4x4=[4<4f>]}@^tq"),
         ("simdfloat4x4id_q_", b"{simd_float4x4=[4<4f>]}@q"),
     ],
 )
@@ -107,6 +106,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller("hello", "hello")
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(NoObjCValueObject)
 
@@ -114,6 +114,9 @@ class TestVectorCall(TestCase):
         setRaise()  # noqa: F821
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello")
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0="hello")
 
     def test_idsimdfloat4x4_(self):
         clearRaise()  # noqa: F821
@@ -178,6 +181,7 @@ class TestVectorCall(TestCase):
                 ),
             )
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(None)
 
@@ -186,6 +190,18 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller(
                 simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                )
+            )
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(
+                arg0=simd.simd_float4x4(
                     (
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                         objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -349,6 +365,21 @@ class TestVectorCall(TestCase):
                 -17592186044416,
             )
 
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(
+                arg0=simd.simd_float4x4(
+                    (
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                        objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    )
+                ),
+                arg1=2500000000.0,
+                arg2=2500000000.0,
+                arg3=-17592186044416,
+            )
+
     def test_Bid_v3f_(self):
         clearRaise()  # noqa: F821
         # Check that the signature is as expected
@@ -376,6 +407,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0), "hello")
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(NoObjCValueObject, objc.simd.vector_float3(0.0, 1.5, 3.0))
 
@@ -386,6 +418,9 @@ class TestVectorCall(TestCase):
         setRaise()  # noqa: F821
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", objc.simd.vector_float3(0.0, 1.5, 3.0))
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0="hello", arg1=objc.simd.vector_float3(0.0, 1.5, 3.0))
 
     def test_simdfloat3x3id_(self):
         clearRaise()  # noqa: F821
@@ -423,6 +458,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller("hello", "hello")
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(NoObjCValueObject)
 
@@ -430,6 +466,9 @@ class TestVectorCall(TestCase):
         setRaise()  # noqa: F821
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello")
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0="hello")
 
     def test_simdfloat4x4id_(self):
         clearRaise()  # noqa: F821
@@ -468,6 +507,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller("hello", "hello")
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(NoObjCValueObject)
 
@@ -476,61 +516,8 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello")
 
-    def test_simdfloat4x4id_charp_q_(self):
-        clearRaise()  # noqa: F821
-        # Check that the signature is as expected
-        self.assertResultHasType(
-            simdfloat4x4id_charp_q_, b"{simd_float4x4=[4<4f>]}"  # noqa: F821
-        )  # noqa: F821
-        self.assertArgHasType(simdfloat4x4id_charp_q_, 0, b"@")  # noqa: F821
-        self.assertArgHasType(simdfloat4x4id_charp_q_, 1, b"^t")  # noqa: F821
-        self.assertArgHasType(simdfloat4x4id_charp_q_, 2, b"q")  # noqa: F821
-
-        caller = simdfloat4x4id_charp_q_  # noqa: F821
-
-        # Valid call
-        rv = caller("hello", b"names", -17592186044416)
-        self.assertEqual(
-            rv,
-            simd.simd_float4x4(
-                (
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
-                )
-            ),
-        )
-
-        stored = storedvalue()  # noqa: F821
-        self.assertIsInstance(stored, (list, tuple))
-        self.assertEqual(len(stored), 3)
-        self.assertEqual(stored[0], "hello")
-        self.assertEqual(stored[1], b"names")
-        self.assertEqual(stored[2], -17592186044416)
-
-        # Too few arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", b"names")
-
-        # Too many arguments call
-        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
-            caller("hello", b"names", -17592186044416, "hello")
-
-        # Bad value for arguments
-        with self.assertRaises((TypeError, ValueError)):
-            caller(NoObjCValueObject, b"names", -17592186044416)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", None, -17592186044416)
-
-        with self.assertRaises((TypeError, ValueError)):
-            caller("hello", b"names", None)
-
-        # Exception handling
-        setRaise()  # noqa: F821
-        with self.assertRaisesRegex(objc.error, "SimpleException"):
-            caller("hello", b"names", -17592186044416)
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0="hello")
 
     def test_simdfloat4x4id_q_(self):
         clearRaise()  # noqa: F821
@@ -571,6 +558,7 @@ class TestVectorCall(TestCase):
         with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
             caller("hello", -17592186044416, "hello")
 
+        # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(NoObjCValueObject, -17592186044416)
 
@@ -581,3 +569,6 @@ class TestVectorCall(TestCase):
         setRaise()  # noqa: F821
         with self.assertRaisesRegex(objc.error, "SimpleException"):
             caller("hello", -17592186044416)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0="hello", arg1=-17592186044416)

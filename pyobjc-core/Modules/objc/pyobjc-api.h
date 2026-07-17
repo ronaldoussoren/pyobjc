@@ -165,6 +165,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_CheckArgCount (PyObjC_API->checkargcount)
 #define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->createopaquepointertype)
+#define PyObjCRegister_FunctionCaller (PyObjC_API->register_functioncaller)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

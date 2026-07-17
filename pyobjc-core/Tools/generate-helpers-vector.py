@@ -191,7 +191,8 @@ FUNC_SIGNATURES = [
     b"B@<3f>",
     b"{simd_float3x3=[3<3f>]}@",
     b"{simd_float4x4=[4<4f>]}@",
-    b"{simd_float4x4=[4<4f>]}@^tq",
+    # XXX: byref
+    # b"{simd_float4x4=[4<4f>]}@^tq",
     b"{simd_float4x4=[4<4f>]}@q",
 ]
 
@@ -436,10 +437,8 @@ static PyObject* _Nullable adjust_retval(PyObjCMethodSignature* methinfo,
         CFRelease(retval);
     }
 
-    if (methinfo->initializer) {
-        /* method returns +1 without being annotated as such */
-        [retval release];
-    }
+    assert (!methinfo->initializer);
+
     return result;
 }
 
@@ -1371,10 +1370,9 @@ def generate_setup_function_func(stream: typing.IO[str]):
 
         seen_call[call_name] = idx
 
-        # XXX
         print("    if (PyObjC_RegisterFunctionSignatureMapping(", file=stream)
         print(f'        "{signature.decode()}", {call_name})', file=stream)
-        print("       == -1) {", file=stream)
+        print("       == -1) { // LCOV_BR_EXCL_LINE", file=stream)
         print("            return -1; // LCOV_EXCL_LINE", file=stream)
         print("    }", file=stream)
 
@@ -1383,7 +1381,7 @@ def generate_setup_function_func(stream: typing.IO[str]):
             print("", file=stream)
             print("    if (PyObjC_RegisterFunctionSignatureMapping(", file=stream)
             print(f'        "{alt_signature.decode()}", {call_name})', file=stream)
-            print("       == -1) {", file=stream)
+            print("       == -1) { // LCOV_BR_EXCL_LINE", file=stream)
             print("            return -1; // LCOV_EXCL_LINE", file=stream)
             print("    }", file=stream)
 
@@ -1952,7 +1950,7 @@ def generate_call_testcase(
         file=stream,
     )
     print("", file=stream)
-    if len(sigparts) > 3:
+    if len(sigparts) > arg_off:
         print("        # Bad value for arguments", file=stream)
     for idx in range(len(sigparts) - arg_off):
         print("        with self.assertRaises((TypeError, ValueError)):", file=stream)
@@ -1986,6 +1984,27 @@ def generate_call_testcase(
                 f"            imp(NoObjCValueObject, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
                 file=stream,
             )
+
+        else:
+            print(
+                "        with self.assertRaisesRegex(TypeError, 'Need Objective-C object'):",
+                file=stream,
+            )
+            print(
+                f"            imp(42, {', '.join(repr(valid_value(s)) for s in sigparts[3:])})",
+                file=stream,
+            )
+
+    if function and len(sigparts) > arg_off:
+        print("", file=stream)
+        print(
+            "        with self.assertRaisesRegex(TypeError, 'does not accept keyword arguments'):",
+            file=stream,
+        )
+        print(
+            f"                caller({', '.join(f'arg{i}={valid_value(s)!r}' for i, s in enumerate(sigparts[arg_off:]))})",
+            file=stream,
+        )
 
     print("", file=stream)
 

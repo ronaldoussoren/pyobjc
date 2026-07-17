@@ -185,6 +185,18 @@ def function_call():
         "objc function call",
         timeit.timeit(setup=setup, stmt="f(5.0)"),
     )
+    setup = textwrap.dedent("""\
+    import ctypes
+    libc = ctypes.CDLL(None)
+    f = libc.sin
+    f.restype = ctypes.c_double
+    f.argtypes = [ctypes.c_double]
+    """)
+    print_bench(
+        "ctypes function call",
+        timeit.timeit(setup=setup, stmt="f(5.0)"),
+    )
+    print()
 
 
 @benchmark
@@ -215,9 +227,10 @@ def call_from_objc():
 
     print_bench(
         "call no-args from objc",
-        # timeit.timeit(setup=setup, stmt="a.makeObjectsPerformSelector_(b'aSelector')"),
-        timeit.timeit(setup=setup, stmt=""),
+        timeit.timeit(setup=setup, stmt="a.makeObjectsPerformSelector_(b'aSelector')")
+        / 10,
     )
+    print()
 
 
 # @benchmark

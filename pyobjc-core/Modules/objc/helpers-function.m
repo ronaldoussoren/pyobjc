@@ -59,10 +59,8 @@ static PyObject* _Nullable adjust_retval(PyObjCMethodSignature* methinfo,
         CFRelease(retval);
     }
 
-    if (methinfo->initializer) {
-        /* method returns +1 without being annotated as such */
-        [retval release];
-    }
+    assert(!methinfo->initializer);
+
     return result;
 }
 
@@ -284,48 +282,6 @@ static PyObject* _Nullable call_simd_float4x4_id(PyObject*        method,
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
 
-static PyObject* _Nullable call_simd_float4x4_id_charp_q(PyObject*        method,
-                                                         PyObject* const* arguments,
-                                                         size_t           nargs)
-{
-    simd_float4x4 rv;
-    id            arg0;
-    char*         arg1;
-    long long     arg2;
-
-    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
-        return NULL;
-
-    if (depythonify_c_value("@", arguments[0], &arg0) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("^t", arguments[1], &arg1) == -1) {
-        return NULL;
-    }
-    if (depythonify_c_value("q", arguments[2], &arg2) == -1) {
-        return NULL;
-    }
-
-    void*                  function = PyObjCFunc_GetCallable(method);
-    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
-
-    Py_BEGIN_ALLOW_THREADS
-        @try {
-            rv = ((simd_float4x4 (*)(id, char*, long long))function)(arg0, arg1, arg2);
-        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
-            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
-        }
-    Py_END_ALLOW_THREADS
-
-    if (PyErr_Occurred()) {
-        Py_CLEAR(methinfo);
-        return NULL;
-    }
-
-    Py_CLEAR(methinfo);
-    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
-}
-
 static PyObject* _Nullable call_simd_float4x4_id_q(PyObject*        method,
                                                    PyObject* const* arguments,
                                                    size_t           nargs)
@@ -368,47 +324,43 @@ PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
 {
     // LCOV_BR_EXCL_START
 
-    if (PyObjC_RegisterFunctionSignatureMapping("<3f>@", call_v3f_id) == -1) {
+    if (PyObjC_RegisterFunctionSignatureMapping("<3f>@", call_v3f_id)
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterFunctionSignatureMapping("@{simd_float4x4=[4<4f>]}",
                                                 call_id_simd_float4x4)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterFunctionSignatureMapping("@{simd_float4x4=[4<4f>]}ffq",
                                                 call_id_simd_float4x4_f_f_q)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterFunctionSignatureMapping("B@<3f>", call_B_id_v3f) == -1) {
+    if (PyObjC_RegisterFunctionSignatureMapping("B@<3f>", call_B_id_v3f)
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterFunctionSignatureMapping("{simd_float3x3=[3<3f>]}@",
                                                 call_simd_float3x3_id)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterFunctionSignatureMapping("{simd_float4x4=[4<4f>]}@",
                                                 call_simd_float4x4_id)
-        == -1) {
-        return -1; // LCOV_EXCL_LINE
-    }
-
-    if (PyObjC_RegisterFunctionSignatureMapping("{simd_float4x4=[4<4f>]}@^tq",
-                                                call_simd_float4x4_id_charp_q)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterFunctionSignatureMapping("{simd_float4x4=[4<4f>]}@q",
                                                 call_simd_float4x4_id_q)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 

@@ -243,42 +243,6 @@ simdfloat4x4id_(id arg0)
 }
 
 static simd_float4x4
-simdfloat4x4id_charp_q_(id arg0, char* arg1, long long arg2)
-{
-    PyObject* items;
-    PyObject* tmp;
-
-    if (shouldRaise) {
-        shouldRaise = NO;
-        [NSException raise:@"SimpleException" format:@"hello world"];
-    }
-
-    PyObjC_BEGIN_WITH_GIL
-        items = values = PyList_New(0);
-        if (items == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("@", &arg0);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("^t", &arg1);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-        tmp = PyObjC_ObjCToPython("q", &arg2);
-        if (tmp == NULL)
-            PyObjC_GIL_FORWARD_EXC();
-        if (PyList_Append(items, tmp) == -1)
-            PyObjC_GIL_FORWARD_EXC();
-    PyObjC_END_WITH_GIL
-    return (simd_float4x4){
-        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
-         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
-}
-
-static simd_float4x4
 simdfloat4x4id_q_(id arg0, long long arg1)
 {
     PyObject* items;
@@ -324,7 +288,6 @@ static struct function {
                     {"Bid_v3f_", (F)Bid_v3f_},
                     {"simdfloat3x3id_", (F)simdfloat3x3id_},
                     {"simdfloat4x4id_", (F)simdfloat4x4id_},
-                    {"simdfloat4x4id_charp_q_", (F)simdfloat4x4id_charp_q_},
                     {"simdfloat4x4id_q_", (F)simdfloat4x4id_q_},
                     {NULL, NULL}};
 

@@ -45,7 +45,7 @@ PyObjCRegister_FunctionCaller(void* func, PyObjC_FunctionCallFunc call_to_objc)
         // LCOV_EXCL_STOP
     }
 
-    entry = PyCapsule_New(call_to_objc, "objc.__funblock__", NULL);
+    entry = PyCapsule_New(call_to_objc, "objc.__funcblock__", NULL);
     if (unlikely(entry == NULL)) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(py_func);
@@ -53,8 +53,9 @@ PyObjCRegister_FunctionCaller(void* func, PyObjC_FunctionCallFunc call_to_objc)
         // LCOV_EXCL_STOP
     }
 
-    if (unlikely(PyDict_SetItem(special_registry, py_func, entry)
-                 == -1)) { // LCOV_BR_EXCL_LINE
+    if (unlikely(PyDict_SetItem( // LCOV_BR_EXCL_LINE
+                     special_registry, py_func, entry)
+                 == -1)) {
         // LCOV_EXCL_START
         Py_DECREF(py_func);
         Py_DECREF(entry);
@@ -145,8 +146,7 @@ static PyObject* _Nullable find_signature(const char* signature)
 
     PyObject* key = PyBytes_FromStringAndSize(NULL, strlen(signature) + 10);
     if (unlikely(key == NULL)) { // LCOV_BR_EXCL_LINE
-        return NULL;
-        ; // LCOV_EXCL_LINE
+        return NULL;             // LCOV_EXCL_LINE
     }
 
     res = PyObjCRT_SimplifySignature(signature, PyBytes_AS_STRING(key),
@@ -185,15 +185,17 @@ PyObjC_FunctionCallFunc _Nullable PyObjC_FindFunctionCaller(void*       func,
     if (unlikely(py_func == NULL)) { // LCOV_BR_EXCL_LINE
         return NULL;                 // LCOV_EXCL_LINE
     }
-    found = PyDict_GetItem(special_registry, py_func);
-    Py_CLEAR(py_func);
-    if (found == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        return NULL;                         // LCOV_EXCL_LINE
-    }
-
-    found = find_signature(signature);
-    if (found == NULL) {
-        return NULL;
+    switch (PyDict_GetItemRef( // LCOV_BR_EXCL_LINE
+        special_registry, py_func, &found)) {
+    case -1:
+        return NULL; // LCOV_EXCL_LINE
+    case 0:
+        found = find_signature(signature);
+        if (found == NULL) {
+            return NULL;
+        }
+        break;
+        /* case 1: pass */
     }
 
     result = (PyObjC_FunctionCallFunc)PyCapsule_GetPointer(found, "objc.__funcblock__");

@@ -458,9 +458,11 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     result->cif = NULL;
 
     result->invoker = PyObjC_FindFunctionCaller(func, methinfo->signature);
-    if (result->invoker == NULL && PyErr_Occurred()) {
+    if (unlikely(result->invoker == NULL && PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     } else if (result->invoker != NULL) {
         result->vectorcall = func_vectorcall_invoker;
         return (PyObject*)result;
@@ -520,6 +522,11 @@ PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signa
     if (result->invoker != NULL) {
         result->vectorcall = func_vectorcall_invoker;
         return (PyObject*)result;
+    } else if (unlikely(PyErr_Occurred())) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(result);
+        return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
