@@ -15008,6 +15008,129 @@ mkimp_MDLVoxelIndexExtent(PyObject*              callable,
     return imp_implementationWithBlock(block);
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 2700
+
+static PyObject* _Nullable call_MPSFunctions_AABB_MPSFunctions_AABB(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
+{
+    struct objc_super super;
+    MPSFunctions_AABB rv;
+    MPSFunctions_AABB arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{MPSFunctions_AABB=<4f><4f>}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    bool                   isIMP;
+    id                     self_obj;
+    Class                  super_class;
+    int                    flags;
+    PyObjCMethodSignature* methinfo = NULL;
+
+    if (extract_method_info(method, self, &isIMP, &self_obj, &super_class, &flags,
+                            &methinfo)
+        == -1) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (isIMP) {
+                // LCOV_BR_EXCL_START
+                rv = ((MPSFunctions_AABB (*)(id, SEL, MPSFunctions_AABB))(
+                    PyObjCIMP_GetIMP(method)))(self_obj, PyObjCIMP_GetSelector(method),
+                                               arg0);
+                // LCOV_BR_EXCL_STOP
+
+            } else {
+                super.receiver    = self_obj;
+                super.super_class = super_class;
+
+                // LCOV_BR_EXCL_START
+#ifdef __x86_64__
+                rv = ((MPSFunctions_AABB (*)(struct objc_super*, SEL,
+                                             MPSFunctions_AABB))objc_msgSendSuper_stret)(
+#else
+                rv = ((MPSFunctions_AABB (*)(struct objc_super*, SEL,
+                                             MPSFunctions_AABB))objc_msgSendSuper)(
+#endif
+                    &super, PyObjCSelector_GetSelector(method), arg0);
+                // LCOV_BR_EXCL_STOP
+            }
+
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{MPSFunctions_AABB=<4f><4f>}", &rv);
+}
+
+static IMP
+mkimp_MPSFunctions_AABB_MPSFunctions_AABB(PyObject*              callable,
+                                          PyObjCMethodSignature* methinfo
+                                          __attribute__((__unused__)))
+{
+    Py_INCREF(callable);
+
+    MPSFunctions_AABB (^block)(id, MPSFunctions_AABB) = ^(id _Nullable self,
+                                                          MPSFunctions_AABB arg0) {
+      PyGILState_STATE state = PyGILState_Ensure();
+
+      int       cookie;
+      PyObject* args[3] = {NULL};
+      PyObject* pyself  = PyObjCObject_NewTransient(self, &cookie);
+      if (pyself == NULL) { // LCOV_BR_EXCL_LINE
+          goto error;       // LCOV_EXCL_LINE
+      } // LCOV_EXCL_LINE
+
+      args[1] = pyself;
+      args[2] = pythonify_c_value("{MPSFunctions_AABB=<4f><4f>}", &arg0);
+      if (args[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;      // LCOV_EXCL_LINE
+
+      PyObject* result = PyObject_Vectorcall(callable, args + 1,
+                                             2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      if (result == NULL)
+          goto error;
+      MPSFunctions_AABB oc_result;
+      if (depythonify_c_value("{MPSFunctions_AABB=<4f><4f>}", result, &oc_result) == -1) {
+          Py_DECREF(result);
+          goto error;
+      }
+
+      Py_DECREF(result);
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+
+      PyObjCObject_ReleaseTransient(pyself, cookie);
+      PyGILState_Release(state);
+      return oc_result;
+
+  error:
+      if (pyself) { // LCOV_BR_EXCL_LINE
+          PyObjCObject_ReleaseTransient(pyself, cookie);
+      }
+
+      for (size_t i = 2; i < 3; i++) {
+          Py_CLEAR(args[i]);
+      }
+      PyObjCErr_ToObjCWithGILState(&state);
+    };
+
+    return imp_implementationWithBlock(block);
+}
+#endif /* PyObjC_BUILD_RELEASE >= 2700 */
 #if PyObjC_BUILD_RELEASE >= 1013
 
 static PyObject* _Nullable call_MPSImageHistogramInfo(PyObject* method, PyObject* self,
@@ -17476,6 +17599,16 @@ PyObjC_setup_simd(PyObject* module __attribute__((__unused__)))
         return -1; // LCOV_EXCL_LINE
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+
+#if PyObjC_BUILD_RELEASE >= 2700
+    if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE
+            "{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}",
+            call_MPSFunctions_AABB_MPSFunctions_AABB,
+            mkimp_MPSFunctions_AABB_MPSFunctions_AABB)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 2700 */
 
 #if PyObjC_BUILD_RELEASE >= 1013
     if (PyObjC_RegisterSignatureMapping( // LCOV_BR_EXCL_LINE

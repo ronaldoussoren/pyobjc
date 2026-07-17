@@ -42,11 +42,31 @@ CALL_PREFIX = "call"
 MKIMP_PREFIX = "mkimp"
 
 # XXX : The 'grep' command should be integrated into this script(but written in Python)
-# grep full_signature../*/Lib/*/ _metadata.py                                             \
-#    | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort - u
+# grep full_signature ../*/Lib/**/_metadata.py                                             \
+#    | sed 's@.*full_signature.: \([^ ]*\).*@\1@' | sort -u
 #
 # XXX : The list below is censored, actually running the grep command will find a number of
 # "pointer to" arguments which I've stripped for now.
+
+
+def needs_wrapper(signature):
+    for tp in objc.splitSignature(signature):
+        if tp.startswith(objc._C_VECTOR_B):
+            return True
+        elif tp.startswith(objc._C_STRUCT_B):
+            _, fields = objc.splitStructSignature(tp)
+            for _, f in fields:
+                if needs_wrapper(f):
+                    return True
+                elif f.startswith(objc._C_ARY_B):
+                    f = f[1:-1]
+                    while f[:1].isdigit():
+                        f = f[1:]
+                    if needs_wrapper(f):
+                        return True
+    return False
+
+
 METH_SIGNATURES = [
     b"<16C>@:",
     b"<2d>@:",
@@ -98,6 +118,9 @@ METH_SIGNATURES = [
     b"@@:@Q<4f>",
     b"@@:@Q{simd_float4x4=[4<4f>]}",
     b"@@:@Z@<2i>qQqZ",
+    b"@@:@^{CGColorConversionInfo=}@^{MPSFunctions_AABB=<4f><4f>}Q^@",
+    b"@@:@^{CGColorSpace=}^{CGColorSpace=}@^{MPSFunctions_AABB=<4f><4f>}Q^@",
+    b"@@:@^{MPSImageHistogramInfo=QZ<4f><4f>}",
     b"@@:@q<2i>ffff",
     b"@@:@q<2i>fffff",
     b"@@:@{GKBox=<3f><3f>}",
@@ -108,6 +131,11 @@ METH_SIGNATURES = [
     b"@@:@{simd_float4x4=[4<4f>]}",
     b"@@:@{simd_quatf=<4f>}",
     b"@@:@{simd_quatf=<4f>}@",
+    b"@@:^<2f>",
+    b"@@:^<2f>Q",
+    b"@@:^<2f>QfZ",
+    b"@@:^<2f>q^@",
+    b"@@:^<3f>QfZ",
     b"@@:^{CGColor=}^{CGColor=}@<2i>",
     b"@@:f<2f><2f>",
     b"@@:f<2f><2f>#",
@@ -117,6 +145,7 @@ METH_SIGNATURES = [
     b"@@:f@<2i>iq^{CGColor=}^{CGColor=}",
     b"@@:f@<2i>q",
     b"@@:ff@<2i>",
+    b"@@:qq^<2f>^<2f>",
     b"@@:{GKBox=<3f><3f>}",
     b"@@:{GKBox=<3f><3f>}f",
     b"@@:{GKQuad=<2f><2f>}",
@@ -124,9 +153,25 @@ METH_SIGNATURES = [
     b"@@:{MDLVoxelIndexExtent=<4i><4i>}",
     b"@@:{simd_float4x4=[4<4f>]}",
     b"@@:{simd_float4x4=[4<4f>]}Z",
+    b"Q@:^<2d>Q",
+    b"Q@:^<2f>Q",
+    b"Q@:^<3d>Q",
+    b"Q@:^<3d>Qd",
+    b"Q@:^<3f>Q",
+    b"Q@:^<3f>Qd",
+    b"Q@:^<4d>Q",
+    b"Q@:^<4f>Q",
+    b"Q@:^{simd_double4x4=[4<4d>]}Q",
+    b"Q@:^{simd_float4x4=[4<4f>]}Q",
+    b"Q@:^{simd_quatd=<4d>}Q",
+    b"Q@:^{simd_quatd=<4d>}Qd",
+    b"Q@:^{simd_quatf=<4f>}Q",
+    b"Q@:^{simd_quatf=<4f>}Qd",
     b"Z@:<2i>@@@@",
     b"Z@:<2i>qf@@@",
     b"Z@:<4i>ZZZZ",
+    b"Z@:^{simd_float4x4=[4<4f>]}@^@",
+    b"^<2f>@:",
     b"^{CGColor=}@:<3f>",
     b"^{CGColor=}@:<3f>^{CGColorSpace=}",
     b"f@:<2f>",
@@ -147,6 +192,26 @@ METH_SIGNATURES = [
     b"v@:<4i>",
     b"v@:@<2f><2f>",
     b"v@:@<2f><2f>q",
+    b"v@:^<2d>^dQ",
+    b"v@:^<2f>^dQ",
+    b"v@:^<3d>Q^dQ",
+    b"v@:^<3d>Qd",
+    b"v@:^<3d>^dQ",
+    b"v@:^<3f>Q^dQ",
+    b"v@:^<3f>Qd",
+    b"v@:^<3f>^dQ",
+    b"v@:^<4d>^dQ",
+    b"v@:^<4f>^dQ",
+    b"v@:^{simd_double4x4=[4<4d>]}Q",
+    b"v@:^{simd_double4x4=[4<4d>]}^dQ",
+    b"v@:^{simd_float4x4=[4<4f>]}Q",
+    b"v@:^{simd_float4x4=[4<4f>]}^dQ",
+    b"v@:^{simd_quatd=<4d>}Q^dQ",
+    b"v@:^{simd_quatd=<4d>}Qd",
+    b"v@:^{simd_quatd=<4d>}^dQ",
+    b"v@:^{simd_quatf=<4f>}Q^dQ",
+    b"v@:^{simd_quatf=<4f>}Qd",
+    b"v@:^{simd_quatf=<4f>}^dQ",
     b"v@:f<2i>",
     b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}",
     b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z",
@@ -167,6 +232,7 @@ METH_SIGNATURES = [
     b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>",
     b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d",
     b"{MDLVoxelIndexExtent=<4i><4i>}@:",
+    b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}",
     b"{MPSImageHistogramInfo=QZ<4f><4f>}@:",
     b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:",
     b"{simd_double4x4=[4<4d>]}@:",
@@ -182,6 +248,8 @@ METH_SIGNATURES = [
     b"{simd_quatf=<4f>}@:",
     b"{simd_quatf=<4f>}@:d",
 ]
+METH_SIGNATURES = [item for item in METH_SIGNATURES if needs_wrapper(item)]
+
 
 # XXX: Extract this from compiled metadata files
 FUNC_SIGNATURES = [
@@ -195,6 +263,7 @@ FUNC_SIGNATURES = [
     # b"{simd_float4x4=[4<4f>]}@^tq",
     b"{simd_float4x4=[4<4f>]}@q",
 ]
+FUNC_SIGNATURES = [item for item in FUNC_SIGNATURES if needs_wrapper(item)]
 
 HELPER_PREFIX = """\
 /*
@@ -1246,6 +1315,9 @@ def print_macos_available(stream, signature):
     elif b"MPSAxisAlignedBoundingBox" in signature:
         print("    if objc.macos_available(10, 14):", file=stream)
         return "    "
+    elif b"MPSFunctions_AABB" in signature:
+        print("    if objc.macos_available(10, 13):", file=stream)
+        return "    "
     elif b"MPS" in signature or b"simd_quat" in signature:
         print("    if objc.macos_available(10, 13):", file=stream)
         return "    "
@@ -1259,6 +1331,8 @@ def print_min_os_level(stream, signature):
         print('    @min_os_level("10.11")', file=stream)
     elif b"MPSAxisAlignedBoundingBox" in signature:
         print('    @min_os_level("10.14")', file=stream)
+    elif b"MPSFunctions_AABB" in signature:
+        print('    @min_os_level("27.0")', file=stream)
     elif b"MPS" in signature or b"simd_quat" in signature:
         print('    @min_os_level("10.13")', file=stream)
 
@@ -1270,6 +1344,8 @@ def pre_lines(stream, signature):
         print("#if PyObjC_BUILD_RELEASE >= 1011", file=stream)
     elif b"MPSAxisAlignedBoundingBox" in signature:
         print("#if PyObjC_BUILD_RELEASE >= 1014", file=stream)
+    elif b"MPSFunctions_AABB" in signature:
+        print("#if PyObjC_BUILD_RELEASE >= 2700", file=stream)
     elif b"MPS" in signature or b"simd_quat" in signature:
         print("#if PyObjC_BUILD_RELEASE >= 1013", file=stream)
 
@@ -1281,6 +1357,8 @@ def post_lines(stream, signature):
         print("#endif /* PyObjC_BUILD_RELEASE >= 1011 */", file=stream)
     elif b"MPSAxisAlignedBoundingBox" in signature:
         print("#endif /* PyObjC_BUILD_RELEASE >= 1014 */", file=stream)
+    elif b"MPSFunctions_AABB" in signature:
+        print("#endif /* PyObjC_BUILD_RELEASE >= 2700 */", file=stream)
     elif b"MPS" in signature or b"simd_quat" in signature:
         print("#endif /* PyObjC_BUILD_RELEASE >= 1013 */", file=stream)
 
@@ -1677,7 +1755,7 @@ class LiteralRepr:
         return self._value
 
 
-# VAlues to use during testing, valid entries must match what's used in
+# Values to use during testing, valid entries must match what's used in
 # the ObjC generator for return values.
 VALUES = {
     # typestr : (valid, invalid)
@@ -1740,6 +1818,13 @@ VALUES = {
         (
             2**42,
             True,
+            simd.vector_float4(1, 2, 3, 4),
+            simd.vector_float4(-1, -2, -3, -4),
+        ),
+        None,
+    ),
+    b"{MPSFunctions_AABB=<4f><4f>}": (
+        (
             simd.vector_float4(1, 2, 3, 4),
             simd.vector_float4(-1, -2, -3, -4),
         ),

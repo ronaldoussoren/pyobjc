@@ -766,6 +766,16 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"NSObject",
+    b"MPSFunctionsAABBMPSFunctionsAABB:",
+    {"full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"clsMPSFunctionsAABBMPSFunctionsAABB:",
+    {"full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"},
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
     b"MPSImageHistogramInfo",
     {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
 )
@@ -2185,6 +2195,19 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
+            )
+
+    if objc.macos_available(10, 13):
+
+        def MPSFunctionsAABBMPSFunctionsAABB_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
+            return (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
             )
 
     if objc.macos_available(10, 13):
@@ -3817,6 +3840,20 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
             return (
                 objc.simd.vector_int4(100, 101, 102, 103),
                 objc.simd.vector_int4(-20, -21, -22, -23),
+            )
+
+    if objc.macos_available(10, 13):
+
+        @classmethod
+        def MPSFunctionsAABBMPSFunctionsAABB_(self, arg0):
+            self.argvalues = (arg0,)
+            if getattr(self, "shouldRaise", False):
+                raise RuntimeError("failure!")
+            if getattr(self, "returnInvalid", False):
+                return NoObjCClass()
+            return (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
             )
 
     if objc.macos_available(10, 13):
@@ -48959,6 +48996,455 @@ class TestVectorCall(TestCase):
         try:
             with self.assertRaises((ValueError, TypeError)):
                 OC_VectorCallInvoke.MDLVoxelIndexExtentOn_(value)
+        finally:
+            del value.returnInvalid
+
+    @min_os_level("27.0")
+    def test_MPSFunctionsAABBMPSFunctionsAABB_(self):
+        clearRaise()  # noqa: F821
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+        self.assertArgHasType(
+            OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_,
+            0,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.MPSFunctionsAABBMPSFunctionsAABB_
+
+        # Valid call
+        rv = caller(
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(
+            stored[0],
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                )
+            )
+
+    @min_os_level("27.0")
+    def test_clsMPSFunctionsAABBMPSFunctionsAABB_(self):
+        clearRaise()  # noqa: F821
+        # Verify method type
+        self.assertTrue(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_.isClassMethod
+        )
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+        self.assertArgHasType(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_,
+            0,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        caller = oc.clsMPSFunctionsAABBMPSFunctionsAABB_
+
+        # Valid call
+        rv = caller(
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(
+            stored[0],
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                )
+            )
+
+    @min_os_level("27.0")
+    def test_MPSFunctionsAABBMPSFunctionsAABB__imp(self):
+        clearRaise()  # noqa: F821
+        # Verify method type
+        self.assertFalse(OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_.isClassMethod)
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+        self.assertArgHasType(
+            OC_VectorCall.MPSFunctionsAABBMPSFunctionsAABB_,
+            0,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"MPSFunctionsAABBMPSFunctionsAABB:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(
+            stored[0],
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            imp(
+                NoObjCValueObject,
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+            )
+
+    @min_os_level("27.0")
+    def test_clsMPSFunctionsAABBMPSFunctionsAABB__imp(self):
+        clearRaise()  # noqa: F821
+        # Verify method type
+        self.assertTrue(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_.isClassMethod
+        )
+        # Verify that method is not an initializer
+        self.assertIsNotInitializer(OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_)
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+        self.assertArgHasType(
+            OC_VectorCall.clsMPSFunctionsAABBMPSFunctionsAABB_,
+            0,
+            b"{MPSFunctions_AABB=<4f><4f>}",
+        )
+
+        # Create test object
+        oc = OC_VectorCall
+        oc_inst = OC_VectorCall.alloc().init()
+        self.assertIsNot(oc, None)
+
+        # Set caller to the selector/IMP to call (With bound self)
+        imp = oc.methodForSelector_(b"clsMPSFunctionsAABBMPSFunctionsAABB:")
+        self.assertIsInstance(imp, objc.IMP)
+        caller = partial(imp, oc)
+
+        # Valid call
+        rv = caller(
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            )
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Valid call through instance
+        rv = imp(
+            oc_inst,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Valid call through meta
+        rv = imp(
+            type(oc),
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertEqual(
+            rv,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        stored = oc.storedvalue()
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(
+            stored[0],
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+                "hello",
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        OC_VectorCall.setRaise()
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                )
+            )
+
+        with self.assertRaisesRegex(TypeError, "Need Objective-C object"):
+            imp(
+                42,
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+            )
+
+    @min_os_level("27.0")
+    def test_imp_MPSFunctionsAABBMPSFunctionsAABB_(self):
+        value = OC_VectorCallInstance.alloc().init()
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
+        finally:
+            del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
+        finally:
+            del value.returnInvalid
+
+    @min_os_level("27.0")
+    def test_imp_MPSFunctionsAABBMPSFunctionsAABB__cls(self):
+        value = OC_VectorCallClass
+        value.argvalues = 1
+        result = OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
+        self.assertEqual(
+            result,
+            (
+                objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+            ),
+        )
+        self.assertEqual(
+            value.argvalues,
+            (
+                (
+                    objc.simd.vector_float4(1.0, 2.0, 3.0, 4.0),
+                    objc.simd.vector_float4(-1.0, -2.0, -3.0, -4.0),
+                ),
+            ),
+        )
+
+        # Test raising an exception
+        value.shouldRaise = True
+        try:
+            with self.assertRaisesRegex(RuntimeError, "failure"):
+                OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
+        finally:
+            del value.shouldRaise
+
+        value.returnInvalid = True
+        try:
+            with self.assertRaises((ValueError, TypeError)):
+                OC_VectorCallInvoke.MPSFunctionsAABBMPSFunctionsAABBOn_(value)
         finally:
             del value.returnInvalid
 

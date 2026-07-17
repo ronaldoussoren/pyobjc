@@ -7410,6 +7410,56 @@ static BOOL      shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 2700
+- (MPSFunctions_AABB)MPSFunctionsAABBMPSFunctionsAABB:(MPSFunctions_AABB)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{MPSFunctions_AABB=<4f><4f>}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSFunctions_AABB){(vector_float4){1.0, 2.0, 3.0, 4.0},
+                               (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
++ (MPSFunctions_AABB)clsMPSFunctionsAABBMPSFunctionsAABB:(MPSFunctions_AABB)arg0
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = clsvalues = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{MPSFunctions_AABB=<4f><4f>}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (MPSFunctions_AABB){(vector_float4){1.0, 2.0, 3.0, 4.0},
+                               (vector_float4){-1.0, -2.0, -3.0, -4.0}};
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 2700 */
 #if PyObjC_BUILD_RELEASE >= 1013
 - (MPSImageHistogramInfo)MPSImageHistogramInfo
 {
@@ -9561,6 +9611,24 @@ static BOOL      shouldRaise = NO;
 }
 
 #endif /* PyObjC_BUILD_RELEASE >= 1011 */
+#if PyObjC_BUILD_RELEASE >= 2700
++ (id)MPSFunctionsAABBMPSFunctionsAABBOn:(OC_VectorCall*)value
+{
+    MPSFunctions_AABB result = [value
+        MPSFunctionsAABBMPSFunctionsAABB:(MPSFunctions_AABB){
+                                             (vector_float4){1.0, 2.0, 3.0, 4.0},
+                                             (vector_float4){-1.0, -2.0, -3.0, -4.0}}];
+    id                cinter;
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* inter = PyObjC_ObjCToPython("{MPSFunctions_AABB=<4f><4f>}", &result);
+        if (PyObjC_PythonToObjC("@", inter, &cinter) == -1) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+    PyObjC_END_WITH_GIL
+    return cinter;
+}
+
+#endif /* PyObjC_BUILD_RELEASE >= 2700 */
 #if PyObjC_BUILD_RELEASE >= 1013
 + (id)MPSImageHistogramInfoOn:(OC_VectorCall*)value
 {
