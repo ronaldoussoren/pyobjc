@@ -293,8 +293,8 @@ static PyType_Spec sig_spec = {
     .basicsize = sizeof(PyObjCMethodSignature),
     .itemsize  = sizeof(struct _PyObjC_ArgDescr*),
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = sig_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = sig_slots,
 };
 
 PyObject* PyObjCMethodSignature_Type;
@@ -1939,7 +1939,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
 
     if (process_metadata_object( // LCOV_BR_EXCL_LINE
             methinfo, (PyObjCMethodSignature*)metadata, is_native)
-        == -1) {
+        == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(methinfo);
         Py_XDECREF(metadata);
@@ -2304,7 +2304,7 @@ PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
     PyObject* result = PyObjC_CopyRegistry(
         registry, (PyObjC_ItemTransform)PyObjCMethodSignature_AsFrozenDict);
 #if PY_VERSION_HEX >= 0x030f00a7
-    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LIN#
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         return result;              // LCOV_EXCL_LINE
     }
     PyObject* tmp = PyFrozenDict_New(result);

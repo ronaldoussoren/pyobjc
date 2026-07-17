@@ -67,13 +67,13 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL2:",
-        {"arguments": {2 + 0: {"sel_of_type": "i@:i"}}},
+        {"arguments": {2 + 0: META_DICT({"sel_of_type": "i@:i"})}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL3:",
-        {"arguments": {2 + 0: {"sel_of_type": 42}}},
+        {"arguments": META_DICT({2 + 0: {"sel_of_type": 42}})},
     )
 
     objc.registerMetaDataForSelector(
@@ -1625,33 +1625,36 @@ def setupMetaData():
         b"callFunction:",
         {
             "arguments": {
-                2 + 0: {"callable": {"arguments": {}, "retval": {"type": "@"}}}
+                2
+                + 0: {"callable": META_DICT({"arguments": {}, "retval": {"type": "@"}})}
             }
         },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"callVectorFunction:",
-        {
-            "arguments": {
-                2
-                + 0: {
-                    "callable": {
-                        "arguments": {0: {"type": "<3f>"}},
-                        "retval": {"type": "@"},
+        META_DICT(
+            {
+                "arguments": {
+                    2
+                    + 0: {
+                        "callable": {
+                            "arguments": {0: {"type": "<3f>"}},
+                            "retval": {"type": "@"},
+                        }
                     }
                 }
             }
-        },
+        ),
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"callFunction3:",
         {
-            "arguments": {
-                2 + 0: {"callable": {"arguments": {}, "retval": {"type": "<2f>"}}}
-            }
+            "arguments": META_DICT(
+                {2 + 0: {"callable": {"arguments": {}, "retval": {"type": "<2f>"}}}}
+            )
         },
     )
 

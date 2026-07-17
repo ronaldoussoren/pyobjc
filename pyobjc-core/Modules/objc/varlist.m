@@ -357,7 +357,7 @@ static void
 varlist_dealloc(PyObject* self)
 {
     PyTypeObject* tp = Py_TYPE(self);
-    if (((PyObjCVarList*)self)->typestr != NULL) {
+    if (((PyObjCVarList*)self)->typestr != NULL) { // LCOV_BR_EXCL_LINE
         PyMem_Free(((PyObjCVarList*)self)->typestr);
     }
     PyObject_Del(self);
@@ -421,8 +421,8 @@ static PyType_Spec varlist_spec = {
     .basicsize = sizeof(PyObjCVarList),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = varlist_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = varlist_slots,
 };
 
 PyObject* PyObjCVarList_Type = (PyObject* _Nonnull)NULL;

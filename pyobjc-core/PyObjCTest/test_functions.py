@@ -700,6 +700,13 @@ class TestFunctions(TestCase):
                 with self.assertRaises(objc.ApiDeprecationWarning):
                     m["quadrupleInt"](9)
 
+            with warnings.catch_warnings(record=True) as cm:
+                warnings.simplefilter("always")
+                m["quadrupleInt"](9)
+
+            self.assertEqual(len(cm), 1)
+            self.assertEqual(cm[0].category, objc.ApiDeprecationWarning)
+
         stored = None
 
         def fun(v):

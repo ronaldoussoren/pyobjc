@@ -1,5 +1,7 @@
 /*
  * Implementation of 'native' and 'python' selectors
+ *
+ * XXX: Implement GC protocol in these classes
  */
 #include "pyobjc.h"
 

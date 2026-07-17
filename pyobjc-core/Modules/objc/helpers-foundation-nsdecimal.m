@@ -308,7 +308,7 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
     }
 
     if (_NSDecimalNumber_Class != NULL
-        && PyObject_IsInstance(pyValue, _NSDecimalNumber_Class)) {
+        && PyObject_IsInstance(pyValue, _NSDecimalNumber_Class)) { // LCOV_BR_EXCL_LINE
         NSDecimalNumber* val = PyObjCObject_GetObject(pyValue);
         *outResult           = [val decimalValue]; // LCOV_BR_EXCL_LINE
         return 0;

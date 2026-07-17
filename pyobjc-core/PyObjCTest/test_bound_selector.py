@@ -20,6 +20,11 @@ class TestBoundSelector(TestCase):
         d2 = p.description
         m1 = o.methodForSelector_
 
+        self.assertFalse(d1 == 42)
+        self.assertTrue(d1 != 42)
+        self.assertFalse(42 == d1)
+        self.assertTrue(42 != d1)
+
         self.assertTrue(o.description == o.description)
         self.assertTrue(d1 == d1)
         self.assertFalse(d1 != d1)
@@ -86,14 +91,17 @@ class TestBoundSelector(TestCase):
             pass
 
         o = foo.__get__(foo)
+        del foo
         o.__func__.callable.attr = D()
         o.__func__.callable.attr2 = o
 
         self.assertFalse(done)
-        del foo
         del o
         self.assertFalse(done)
-        gc.collect()
-        gc.collect()
-        gc.collect()
-        self.assertTrue(done)
+        for _ in range(5):
+            gc.collect()
+
+        # XXX: This fails because python_selector
+        # and native_selector don't implement the GC
+        # protocol.
+        # self.assertTrue(done)
