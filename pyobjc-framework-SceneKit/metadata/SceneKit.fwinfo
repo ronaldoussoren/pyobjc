@@ -2319,18 +2319,6 @@
       "0": { "type_override": "[4f]" }
     }
    },
-   "SCNVector4ToFloat4": {
-    "ignore": true, "comment": "simd"
-   },
-   "SCNVector4FromFloat4": {
-    "ignore": true, "comment": "simd"
-   },
-   "SCNMatrix4FromMat4": {
-    "ignore": true, "comment": "simd"
-   },
-   "SCNMatrix4ToMat4": {
-    "ignore": true, "comment": "simd"
-   },
    "SCNMatrix4ToGLKMatrix4": {
     "retval": {
      "type_override": "[16f]"

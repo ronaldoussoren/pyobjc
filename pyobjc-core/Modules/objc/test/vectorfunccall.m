@@ -313,6 +313,153 @@ CGPointv2f_CGRect_Q_Q_(simd_float2 arg0, CGRect arg1, unsigned long long arg2,
     return (CGPoint){1.0, 2.0};
 }
 
+static simd_float3
+v3fSCNVector3_(SCNVector3 arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{SCNVector3=ddd}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_float3){0.0, 1.5, 3.0};
+}
+
+static SCNVector3
+SCNVector3v3f_(simd_float3 arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<3f>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (SCNVector3){1.0, 2.0, 3.0};
+}
+
+static simd_float4
+v4fSCNVector4_(SCNVector4 arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{SCNVector4=dddd}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_float4){0.0, 1.5, 3.0, 4.5};
+}
+
+static SCNVector4
+SCNVector4v4f_(simd_float4 arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<4f>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (SCNVector4){1.0, 2.0, 3.0, 4.0};
+}
+
+static simd_float4x4
+simdfloat4x4CATransform3D_(CATransform3D arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{CATransform3D=dddddddddddddddd}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
+static CATransform3D
+CATransform3Dsimdfloat4x4_(simd_float4x4 arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{simd_float4x4=[4<4f>]}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (CATransform3D){1.0, 2.0,  3.0,  4.0,  5.0,  6.0,  7.0,  8.0,
+                           9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0};
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
@@ -330,6 +477,12 @@ static struct function {
                     {"simdfloat4x4id_", (F)simdfloat4x4id_},
                     {"simdfloat4x4id_q_", (F)simdfloat4x4id_q_},
                     {"CGPointv2f_CGRect_Q_Q_", (F)CGPointv2f_CGRect_Q_Q_},
+                    {"v3fSCNVector3_", (F)v3fSCNVector3_},
+                    {"SCNVector3v3f_", (F)SCNVector3v3f_},
+                    {"v4fSCNVector4_", (F)v4fSCNVector4_},
+                    {"SCNVector4v4f_", (F)SCNVector4v4f_},
+                    {"simdfloat4x4CATransform3D_", (F)simdfloat4x4CATransform3D_},
+                    {"CATransform3Dsimdfloat4x4_", (F)CATransform3Dsimdfloat4x4_},
                     {NULL, NULL}};
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

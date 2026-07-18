@@ -267,6 +267,12 @@ FUNC_SIGNATURES = [
     # b"{simd_float4x4=[4<4f>]}@^tq",
     b"{simd_float4x4=[4<4f>]}@q",
     b"{CGPoint=dd}<2f>{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
+    b"<3f>{SCNVector3=ddd}",
+    b"{SCNVector3=ddd}<3f>",
+    b"<4f>{SCNVector4=dddd}",
+    b"{SCNVector4=dddd}<4f>",
+    b"{simd_float4x4=[4<4f>]}{CATransform3D=dddddddddddddddd}",
+    b"{CATransform3D=dddddddddddddddd}{simd_float4x4=[4<4f>]}",
 ]
 FUNC_SIGNATURES = [item for item in FUNC_SIGNATURES if needs_wrapper(item)]
 
@@ -1840,6 +1846,21 @@ VALUES = {
     b"{CGPoint=dd}": (LiteralRepr("(1.0, 2.0)", "(CGPoint){1.0, 2.0}"), None),
     b"{CGRect={CGPoint=dd}{CGSize=dd}}": (
         LiteralRepr("((1.0, 2.0), (3.0, 4.0))", "(CGRect){{1.0, 2.0}, {3.0, 4.0}}"),
+        None,
+    ),
+    b"{SCNVector3=ddd}": (
+        LiteralRepr("(1.0, 2.0, 3.0)", "(SCNVector3){1.0, 2.0, 3.0}"),
+        None,
+    ),
+    b"{SCNVector4=dddd}": (
+        LiteralRepr("(1.0, 2.0, 3.0, 4.0)", "(SCNVector4){1.0, 2.0, 3.0, 4.0}"),
+        None,
+    ),
+    b"{CATransform3D=dddddddddddddddd}": (
+        LiteralRepr(
+            "(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)",
+            "(CATransform3D){1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0}",
+        ),
         None,
     ),
 }

@@ -367,6 +367,207 @@ static PyObject* _Nullable call_CGPoint_v2f_CGRect_Q_Q(PyObject*        method,
     Py_CLEAR(methinfo);
     return pythonify_c_value("{CGPoint=dd}", &rv);
 }
+
+static PyObject* _Nullable call_v3f_SCNVector3(PyObject*        method,
+                                               PyObject* const* arguments, size_t nargs)
+{
+    simd_float3 rv;
+    SCNVector3  arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{SCNVector3=ddd}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float3 (*)(SCNVector3))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<3f>", &rv);
+}
+
+static PyObject* _Nullable call_SCNVector3_v3f(PyObject*        method,
+                                               PyObject* const* arguments, size_t nargs)
+{
+    SCNVector3  rv;
+    simd_float3 arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<3f>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((SCNVector3 (*)(simd_float3))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{SCNVector3=ddd}", &rv);
+}
+
+static PyObject* _Nullable call_v4f_SCNVector4(PyObject*        method,
+                                               PyObject* const* arguments, size_t nargs)
+{
+    simd_float4 rv;
+    SCNVector4  arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{SCNVector4=dddd}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4 (*)(SCNVector4))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<4f>", &rv);
+}
+
+static PyObject* _Nullable call_SCNVector4_v4f(PyObject*        method,
+                                               PyObject* const* arguments, size_t nargs)
+{
+    SCNVector4  rv;
+    simd_float4 arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<4f>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((SCNVector4 (*)(simd_float4))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{SCNVector4=dddd}", &rv);
+}
+
+static PyObject* _Nullable call_simd_float4x4_CATransform3D(PyObject*        method,
+                                                            PyObject* const* arguments,
+                                                            size_t           nargs)
+{
+    simd_float4x4 rv;
+    CATransform3D arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{CATransform3D=dddddddddddddddd}", arguments[0], &arg0)
+        == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4x4 (*)(CATransform3D))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static PyObject* _Nullable call_CATransform3D_simd_float4x4(PyObject*        method,
+                                                            PyObject* const* arguments,
+                                                            size_t           nargs)
+{
+    CATransform3D rv;
+    simd_float4x4 arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("{simd_float4x4=[4<4f>]}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((CATransform3D (*)(simd_float4x4))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{CATransform3D=dddddddddddddddd}", &rv);
+}
 int
 PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
 {
@@ -415,6 +616,44 @@ PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
     if (PyObjC_RegisterFunctionSignatureMapping(
             "{CGPoint=dd}<2f>{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
             call_CGPoint_v2f_CGRect_Q_Q)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("<3f>{SCNVector3=ddd}",
+                                                call_v3f_SCNVector3)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("{SCNVector3=ddd}<3f>",
+                                                call_SCNVector3_v3f)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("<4f>{SCNVector4=dddd}",
+                                                call_v4f_SCNVector4)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("{SCNVector4=dddd}<4f>",
+                                                call_SCNVector4_v4f)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{simd_float4x4=[4<4f>]}{CATransform3D=dddddddddddddddd}",
+            call_simd_float4x4_CATransform3D)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{CATransform3D=dddddddddddddddd}{simd_float4x4=[4<4f>]}",
+            call_CATransform3D_simd_float4x4)
         == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
