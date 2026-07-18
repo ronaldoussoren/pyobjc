@@ -1974,13 +1974,65 @@
   "classes": {
   },
   "functions": {
+   "AuthorizationExecuteWithPrivileges": {
+    "args": {
+     "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true },
+     "3": { "type_modifier": "n", "type_override": "^^t", "c_array_delimited_by_null": true },
+     "4": { "type_modifier": "o", "null_accepted": true }
+    }
+   },
+   "AuthorizationCopyRights": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" },
+     "4": { "type_modifier": "o" }
+    }
+   },
+   "AuthorizationCopyRightsAsync": {
+    "args": {
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
+    }
+   },
+   "AuthorizationCreate": {
+    "args": {
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "n" },
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "AuthorizationCopyInfo": {
+    "args": {
+     "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "SecKeychainFindGenericPassword": {
+    "args": {
+     "2": { "type_override": "^t", "c_array_lenght_in_arg": 1, "type_modifier": "n" },
+     "4": { "type_override": "^t", "c_array_lenght_in_arg": 3, "type_modifier": "n" },
+     "5": { "type_modifier": "o" },
+     "6": { "type_override": "^t", "c_array_lenght_in_arg": 5, "type_modifier": "o" },
+     "7": { "type_modifier": "o" }
+    }
+   },
+   "SecKeychainFindInternetPassword": {
+    "args": {
+     "2": { "type_override": "^t", "c_array_lenght_in_arg": 1, "type_modifier": "n" },
+     "4": { "type_override": "^t", "c_array_lenght_in_arg": 3, "type_modifier": "n" },
+     "6": { "type_override": "^t", "c_array_lenght_in_arg": 5, "type_modifier": "n" },
+     "8": { "type_override": "^t", "c_array_lenght_in_arg": 7, "type_modifier": "n" },
+     "12": { "type_modifier": "o" },
+     "13": { "type_override": "^t", "c_array_lenght_in_arg": 12, "type_modifier": "o" },
+     "14": { "type_modifier": "o" }
+    }
+   },
+   "AuthorizationFreeItemSet": { "ignore": true },
    "SecIdentityCopyPreference": { "ignore": true },
    "SecIdentitySetPreference": { "ignore": true },
    "SecKeychainItemCreateFromContent": { "ignore": true },
    "SecKeychainGetCSPHandle": { "ignore": true },
    "SecKeychainGetDLDBHandle": { "ignore": true },
-   "SecKeychainFindGenericPassword": { "ignore": true },
-   "SecKeychainFindInternetPassword": { "ignore": true },
    "SecCertificateGetAlgorithmID": { "ignore": true },
    "SecCertificateSetPreference": { "ignore": true },
    "SecCertificateCopyPreference": { "ignore": true },

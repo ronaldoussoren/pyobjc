@@ -122,10 +122,10 @@ class TestAuthorization(TestCase):
         self.assertFalse(hasattr(Security, "AuthorizationFreeItemSet"))
 
         # Not sure how to test this without increased privileges....
-        self.assertFalse(isinstance(Security.AuthorizationCopyRights, objc.function))
-        self.assertFalse(
+        self.assertTrue(isinstance(Security.AuthorizationCopyRights, objc.function))
+        self.assertTrue(
             isinstance(Security.AuthorizationCopyRightsAsync, objc.function)
         )
-        self.assertFalse(
+        self.assertTrue(
             isinstance(Security.AuthorizationExecuteWithPrivileges, objc.function)
         )

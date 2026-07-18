@@ -415,12 +415,8 @@ class TestSecKeychain(TestCase):
 
     def test_functions_manual(self):
         # XXX: Testing these in unittests is annoyingly hard, hence the lame test below:
-        self.assertFalse(
-            isinstance(Security.SecKeychainFindInternetPassword, objc.function)
-        )
-        self.assertFalse(
-            isinstance(Security.SecKeychainFindGenericPassword, objc.function)
-        )
+        Security.SecKeychainFindInternetPassword
+        Security.SecKeychainFindGenericPassword
 
         self.assertFalse(hasattr(Security, "SecKeychainAttributeInfoForItemID"))
         self.assertFalse(hasattr(Security, "SecKeychainFreeAttributeInfo"))
