@@ -203,20 +203,12 @@ class TestNSArraySpecialMethods(TestCase):
         a = Foundation.NSArray.alloc().initWithObjects_count_(("a", "b", "c", "d"), 3)
         self.assertEqual(a, ["a", "b", "c"])
 
-        import warnings
-
-        warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
-        try:
-            self.assertRaises(
-                ValueError,
-                Foundation.NSArray.alloc().initWithObjects_count_,
-                ("a", "b"),
-                3,
-            )
-
-        finally:
-            del warnings.filters[0]
+        self.assertRaises(
+            ValueError,
+            Foundation.NSArray.alloc().initWithObjects_count_,
+            ("a", "b"),
+            3,
+        )
 
     def test_array_with_objects(self):
         a = Foundation.NSArray.arrayWithObjects_count_(("a", "b", "c", "d"), 3)

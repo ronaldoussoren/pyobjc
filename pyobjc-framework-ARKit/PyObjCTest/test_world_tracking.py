@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import ARKit
 
@@ -33,3 +33,7 @@ class TestWorldTracking(TestCase):
         ARKit.ar_device_anchor_get_tracking_state
         ARKit.ar_world_tracking_provider_query_device_anchor_at_timestamp
         ARKit.ar_world_tracking_provider_get_required_authorization_type
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        ARKit.ar_device_anchor_get_origin_from_anchor_transform_with_correction

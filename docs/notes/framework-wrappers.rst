@@ -417,7 +417,7 @@ The framework name links to API notes for that framework, the python packages li
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`LinkPresentation </apinotes/LinkPresentation>`                                 | `pyobjc-framework-LinkPresentation`_                 |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-     | LinkSecurity                                                                         | -                                                    | No public API on macOS.                 |
+     | :doc:`LinkSecurity </apinotes/LinkSecurity>`                                         | `pyobjc-framework-LinkSecurity`_                     |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | LiveCommunicationKit                                                                 | -                                                    |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -865,10 +865,12 @@ prioritizing work.
 
 .. _pyscard: https://pypi.org/project/pyscard
 
+.. _`pyobjc-framework-ARKit`: https://pypi.org/project/pyobjc-framework-ARKit/
 .. _`pyobjc-framework-AVFoundation`: https://pypi.org/project/pyobjc-framework-AVFoundation/
 .. _`pyobjc-framework-AVKit`: https://pypi.org/project/pyobjc-framework-AVKit/
 .. _`pyobjc-framework-AVRouting`: https://pypi.org/project/pyobjc-framework-AVRouting/
 .. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
+.. _`pyobjc-framework-AccessoryAccess`: https://pypi.org/project/pyobjc-framework-AccessoryAccess/
 .. _`pyobjc-framework-Accounts`: https://pypi.org/project/pyobjc-framework-Accounts/
 .. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
 .. _`pyobjc-framework-AdSupport`: https://pypi.org/project/pyobjc-framework-AdSupport/
@@ -887,11 +889,14 @@ prioritizing work.
 .. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CalendarStore`: https://pypi.org/project/pyobjc-framework-CalendarStore/
 .. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
+.. _`pyobjc-framework-Carbon`: https://pypi.org/project/pyobjc-framework-Carbon/
+.. _`pyobjc-framework-Cinematic`: https://pypi.org/project/pyobjc-framework-Cinematic/
 .. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/
 .. _`pyobjc-framework-CloudKit`: https://pypi.org/project/pyobjc-framework-CloudKit/
 .. _`pyobjc-framework-Cocoa`: https://pypi.org/project/pyobjc-framework-Cocoa/
 .. _`pyobjc-framework-Collaboration`: https://pypi.org/project/pyobjc-framework-Collaboration/
 .. _`pyobjc-framework-ColorSync`: https://pypi.org/project/pyobjc-framework-ColorSync/
+.. _`pyobjc-framework-CompositorServices`: https://pypi.org/project/pyobjc-framework-CompositorServices/
 .. _`pyobjc-framework-ContactsUI`: https://pypi.org/project/pyobjc-framework-ContactsUI/
 .. _`pyobjc-framework-Contacts`: https://pypi.org/project/pyobjc-framework-Contacts/
 .. _`pyobjc-framework-CoreAudioKit`: https://pypi.org/project/pyobjc-framework-CoreAudioKit/
@@ -917,12 +922,14 @@ prioritizing work.
 .. _`pyobjc-framework-DiscRecordingUI`: https://pypi.org/project/pyobjc-framework-DiscRecordingUI/
 .. _`pyobjc-framework-DiscRecording`: https://pypi.org/project/pyobjc-framework-DiscRecording/
 .. _`pyobjc-framework-DiskArbitration`: https://pypi.org/project/pyobjc-framework-DiskArbitration/
+.. _`pyobjc-framework-EnhancedLinkSecurity`: https://pypi.org/project/pyobjc-framework-EnhancedLinkSecurity/
 .. _`pyobjc-framework-EventKit`: https://pypi.org/project/pyobjc-framework-EventKit/
 .. _`pyobjc-framework-ExceptionHandling`: https://pypi.org/project/pyobjc-framework-ExceptionHandling/
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-ExtensionKit`: https://pypi.org/project/pyobjc-framework-ExtensionKit/
 .. _`pyobjc-framework-ExternalAccessory`: https://pypi.org/project/pyobjc-framework-ExternalAccessory/
 .. _`pyobjc-framework-FSEvents`: https://pypi.org/project/pyobjc-framework-FSEvents/
+.. _`pyobjc-framework-FSKit`: https://pypi.org/project/pyobjc-framework-FSKit/
 .. _`pyobjc-framework-FileProviderUI`: https://pypi.org/project/pyobjc-framework-FileProviderUI/
 .. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-FileProvider/
 .. _`pyobjc-framework-FinderSync`: https://pypi.org/project/pyobjc-framework-FinderSync/
@@ -931,6 +938,9 @@ prioritizing work.
 .. _`pyobjc-framework-GameKit`: https://pypi.org/project/pyobjc-framework-GameKit/
 .. _`pyobjc-framework-GameplayKit`: https://pypi.org/project/pyobjc-framework-GameplayKit/
 .. _`pyobjc-framework-HealthKit`: https://pypi.org/project/pyobjc-framework-HealthKit/
+.. _`pyobjc-framework-HomeKit`: https://pypi.org/project/pyobjc-framework-HomeKit/
+.. _`pyobjc-framework-IOBluetoothUI`: https://pypi.org/project/pyobjc-framework-IOBluetoothUI/
+.. _`pyobjc-framework-IOBluetooth`: https://pypi.org/project/pyobjc-framework-IOBluetooth/
 .. _`pyobjc-framework-IOSurface`: https://pypi.org/project/pyobjc-framework-IOSurface/
 .. _`pyobjc-framework-ImageCaptureCore`: https://pypi.org/project/pyobjc-framework-ImageCaptureCore/
 .. _`pyobjc-framework-InputMethodKit`: https://pypi.org/project/pyobjc-framework-InputMethodKit/
@@ -942,18 +952,20 @@ prioritizing work.
 .. _`pyobjc-framework-LatentSemanticMapping`: https://pypi.org/project/pyobjc-framework-LatentSemanticMapping/
 .. _`pyobjc-framework-LaunchServices`: https://pypi.org/project/pyobjc-framework-LaunchServices/
 .. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
+.. _`pyobjc-framework-LinkSecurity`: https://pypi.org/project/pyobjc-framework-LinkSecurity/
 .. _`pyobjc-framework-LocalAuthenticationEmbeddedUI`: https://pypi.org/project/pyobjc-framework-LocalAuthenticationEmbeddedUI/
 .. _`pyobjc-framework-LocalAuthentication`: https://pypi.org/project/pyobjc-framework-LocalAuthentication/
 .. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
 .. _`pyobjc-framework-MailKit`: https://pypi.org/project/pyobjc-framework-MailKit/
 .. _`pyobjc-framework-MapKit`: https://pypi.org/project/pyobjc-framework-MapKit/
 .. _`pyobjc-framework-MediaAccessibility`: https://pypi.org/project/pyobjc-framework-MediaAccessibility/
+.. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
 .. _`pyobjc-framework-MediaLibrary`: https://pypi.org/project/pyobjc-framework-MediaLibrary/
 .. _`pyobjc-framework-MediaPlayer`: https://pypi.org/project/pyobjc-framework-MediaPlayer/
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-Message`: https://pypi.org/project/pyobjc-framework-Message/
-.. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
 .. _`pyobjc-framework-MetalFX`: https://pypi.org/project/pyobjc-framework-MetalFX/
+.. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
 .. _`pyobjc-framework-MetalPerformanceShadersGraph`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShadersGraph/
 .. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
 .. _`pyobjc-framework-Metal`: https://pypi.org/project/pyobjc-framework-Metal/
@@ -968,6 +980,7 @@ prioritizing work.
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
 .. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/
 .. _`pyobjc-framework-OpenDirectory`: https://pypi.org/project/pyobjc-framework-OpenDirectory/
+.. _`pyobjc-framework-PHASE`: https://pypi.org/project/pyobjc-framework-PHASE/
 .. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
 .. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/
 .. _`pyobjc-framework-PhotosUI`: https://pypi.org/project/pyobjc-framework-PhotosUI/
@@ -980,6 +993,7 @@ prioritizing work.
 .. _`pyobjc-framework-QuickLookThumbnailing`: https://pypi.org/project/pyobjc-framework-QuickLookThumbnailing/
 .. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
 .. _`pyobjc-framework-SafariServices`: https://pypi.org/project/pyobjc-framework-SafariServices/
+.. _`pyobjc-framework-SafetyKit`: https://pypi.org/project/pyobjc-framework-SafetyKit/
 .. _`pyobjc-framework-SceneKit`: https://pypi.org/project/pyobjc-framework-SceneKit/
 .. _`pyobjc-framework-ScreenCaptureKit`: https://pypi.org/project/pyobjc-framework-ScreenCaptureKit/
 .. _`pyobjc-framework-ScreenSaver`: https://pypi.org/project/pyobjc-framework-ScreenSaver/
@@ -989,6 +1003,7 @@ prioritizing work.
 .. _`pyobjc-framework-SecurityInterface`: https://pypi.org/project/pyobjc-framework-SecurityInterface/
 .. _`pyobjc-framework-SecurityUI`: https://pypi.org/project/pyobjc-framework-SecurityUI/
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
+.. _`pyobjc-framework-SensitiveContentAnalysis`: https://pypi.org/project/pyobjc-framework-SensitiveContentAnalysis/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
 .. _`pyobjc-framework-SharedWithYouCore`: https://pypi.org/project/pyobjc-framework-SharedWithYouCore/
 .. _`pyobjc-framework-SharedWithYou`: https://pypi.org/project/pyobjc-framework-SharedWithYou/
@@ -997,10 +1012,13 @@ prioritizing work.
 .. _`pyobjc-framework-SoundAnalysis`: https://pypi.org/project/pyobjc-framework-SoundAnalysis/
 .. _`pyobjc-framework-Speech`: https://pypi.org/project/pyobjc-framework-Speech/
 .. _`pyobjc-framework-SpriteKit`: https://pypi.org/project/pyobjc-framework-SpriteKit/
+.. _`pyobjc-framework-StateReporting`: https://pypi.org/project/pyobjc-framework-StateReporting/
 .. _`pyobjc-framework-StoreKit`: https://pypi.org/project/pyobjc-framework-StoreKit/
+.. _`pyobjc-framework-Symbols`: https://pypi.org/project/pyobjc-framework-Symbols/
 .. _`pyobjc-framework-SyncServices`: https://pypi.org/project/pyobjc-framework-SyncServices/
 .. _`pyobjc-framework-SystemConfiguration`: https://pypi.org/project/pyobjc-framework-SystemConfiguration/
 .. _`pyobjc-framework-SystemExtensions`: https://pypi.org/project/pyobjc-framework-SystemExtensions/
+.. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/
 .. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
 .. _`pyobjc-framework-UserNotificationsUI`: https://pypi.org/project/pyobjc-framework-UserNotificationsUI/
 .. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
@@ -1014,21 +1032,3 @@ prioritizing work.
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-libxpc`: https://pypi.org/project/pyobjc-framework-libxpc/
-.. _`pyobjc-framework-SafetyKit`: https://pypi.org/project/pyobjc-framework-SafetyKit/
-.. _`pyobjc-framework-ThreadNetwork`: https://pypi.org/project/pyobjc-framework-ThreadNetwork/
-.. _`pyobjc-framework-IOBluetooth`: https://pypi.org/project/pyobjc-framework-IOBluetooth/
-.. _`pyobjc-framework-IOBluetoothUI`: https://pypi.org/project/pyobjc-framework-IOBluetoothUI/
-.. _`pyobjc-framework-PHASE`: https://pypi.org/project/pyobjc-framework-PHASE/
-.. _`pyobjc-framework-Symbols`: https://pypi.org/project/pyobjc-framework-Symbols/
-.. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
-.. _`pyobjc-framework-SensitiveContentAnalysis`: https://pypi.org/project/pyobjc-framework-SensitiveContentAnalysis/
-.. _`pyobjc-framework-Cinematic`: https://pypi.org/project/pyobjc-framework-Cinematic/
-.. _`pyobjc-framework-FSKit`: https://pypi.org/project/pyobjc-framework-FSKit/
-.. _`pyobjc-framework-MediaExtension`: https://pypi.org/project/pyobjc-framework-MediaExtension/
-.. _`pyobjc-framework-Carbon`: https://pypi.org/project/pyobjc-framework-Carbon/
-.. _`pyobjc-framework-ARKit`: https://pypi.org/project/pyobjc-framework-ARKit/
-.. _`pyobjc-framework-CompositorServices`: https://pypi.org/project/pyobjc-framework-CompositorServices/
-.. _`pyobjc-framework-HomeKit`: https://pypi.org/project/pyobjc-framework-HomeKit/
-.. _`pyobjc-framework-AccessoryAccess`: https://pypi.org/project/pyobjc-framework-AccessoryAccess/
-.. _`pyobjc-framework-EnhancedLinkSecurity`: https://pypi.org/project/pyobjc-framework-EnhancedLinkSecurity/
-.. _`pyobjc-framework-StateReporting`: https://pypi.org/project/pyobjc-framework-StateReporting/

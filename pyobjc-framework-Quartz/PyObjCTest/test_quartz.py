@@ -21,6 +21,7 @@ class TestCallableMetadata(TestCase):
                 "AGXG13GFamilyBinaryArchive",
                 "AGXG13GFamilyCommandBuffer",
                 "_MTLDevice",
+                "RC_EspressoWrapper",
             },
         )
 

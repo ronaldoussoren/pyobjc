@@ -202,7 +202,7 @@ class oc_test(Command):
                 "errors": len(result.errors),
                 "xfails": len(getattr(result, "expectedFailures", [])),
                 "xpass": len(getattr(result, "unexpectedSuccesses", [])),
-                "skip=": len(getattr(result, "skipped", [])),
+                "skip": len(getattr(result, "skipped", [])),
                 "testSeconds": (time_after - time_before),
             }
             print(f"SUMMARY: {summary}")

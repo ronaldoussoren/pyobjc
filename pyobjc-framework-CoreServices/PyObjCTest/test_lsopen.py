@@ -1,6 +1,6 @@
 import os
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure, os_release
 import objc
 
 
@@ -83,17 +83,21 @@ class TestLSOpen(TestCase):
         self.assertArgIsOut(CoreServices.LSOpenItemsWithRole, 5)
         self.assertArgSizeInArg(CoreServices.LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
-        ok, psns = CoreServices.LSOpenItemsWithRole(
-            [ref], 1, CoreServices.kLSRolesAll, None, None, None, 1
-        )
-        self.assertIn(ok, (0, -50))
-        self.assertIsInstance(psns, (list, tuple))
-        for x in psns:
-            # Actually a ProcessSerialNumber, but those aren't wrapped yet
-            self.assertIsInstance(x, tuple)
-            self.assertEqual(len(x), 2)
-            self.assertIsInstance(x[0], int)
-            self.assertIsInstance(x[1], int)
+
+        if os_release() != "27.0":
+            # XXX: Broken in beta 3
+
+            ok, psns = CoreServices.LSOpenItemsWithRole(
+                [ref], 1, CoreServices.kLSRolesAll, None, None, None, 1
+            )
+            self.assertIn(ok, (0, -50))
+            self.assertIsInstance(psns, (list, tuple))
+            for x in psns:
+                # Actually a ProcessSerialNumber, but those aren't wrapped yet
+                self.assertIsInstance(x, tuple)
+                self.assertEqual(len(x), 2)
+                self.assertIsInstance(x[0], int)
+                self.assertIsInstance(x[1], int)
 
         self.assertArgIsIn(CoreServices.LSOpenURLsWithRole, 2)
         self.assertArgIsIn(CoreServices.LSOpenURLsWithRole, 3)

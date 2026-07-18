@@ -6,8 +6,11 @@
    "ar_error_domain": { "typestr": "@" }
   },
   "functions": {
-   "ar_anchor_get_origin_from_anchor_transform": { "ignore": true },
-   "ar_device_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_accessory_anchor_get_anchor_from_location_transform_with_correction": {
+    "args": {
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
+    }
+   },
    "ar_trackable_anchor_is_tracked": {
     "args": {
      "0": { "type_override": "@"}
@@ -300,7 +303,7 @@
    },
    "ar_hand_anchor_get_identifier": {
     "args": {
-     "1": {}
+     "1": { "c_array_of_fixed_size": 16, "type_modifier": "o" }
     }
    },
    "ar_hand_skeleton_enumerate_joints_f": {

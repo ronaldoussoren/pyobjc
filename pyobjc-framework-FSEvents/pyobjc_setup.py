@@ -110,13 +110,11 @@ class oc_egg_info(egg_info.egg_info):
         else:
             sdk_version = os.path.basename(sdk_root)
 
-        build_info = textwrap.dedent(
-            f"""\
+        build_info = textwrap.dedent(f"""\
             macOS {macos_version} ({macos_build})
             {clang_version}
             SDK: {sdk_version}
-            """
-        )
+            """)
 
         self.write_file(
             "pyobjc-build-info.txt",
@@ -204,7 +202,7 @@ class oc_test(Command):
                 "errors": len(result.errors),
                 "xfails": len(getattr(result, "expectedFailures", [])),
                 "xpass": len(getattr(result, "unexpectedSuccesses", [])),
-                "skip=": len(getattr(result, "skipped", [])),
+                "skip": len(getattr(result, "skipped", [])),
                 "testSeconds": (time_after - time_before),
             }
             print(f"SUMMARY: {summary}")

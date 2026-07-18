@@ -9,8 +9,9 @@ AUMIDIOutputEventBlock = b"iqC" + objc._C_NSInteger + b"n^v"
 
 # XXX: This won't work automaticly
 AUMIDIEventListBlock = (
-    b"iq" + objc._C_CHAR_AS_INT + b"^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"
+    b"iQ" + objc._C_CHAR_AS_INT + b"^{MIDIEventList=iI[1{MIDIEventPacket=II[64I]}]}"
 )
+AVMIDIEventListBlock = b"iqC^{MIDIEventList=iI[1{MIDIEventPacket=QI[64I]}]}"
 
 
 class TestAVAudioEngine(TestCase):
@@ -131,10 +132,10 @@ class TestAVAudioEngine(TestCase):
         self.assertArgIsBlock(
             AVFoundation.AVAudioEngine.connectMIDI_to_format_eventListProvider_,
             3,
-            AUMIDIEventListBlock,
+            AVMIDIEventListBlock,
         )
         self.assertArgIsBlock(
             AVFoundation.AVAudioEngine.connectMIDI_toNodes_format_eventListProvider_,
             3,
-            AUMIDIEventListBlock,
+            AVMIDIEventListBlock,
         )

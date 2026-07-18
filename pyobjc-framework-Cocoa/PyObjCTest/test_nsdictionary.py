@@ -15,21 +15,11 @@ class TestNSDictionarySubclassing(TestCase):
         class DictTestExceptionClass(Foundation.NSDictionary):
             pass
 
-        # Don't use self.assertRaises here, we once had a bug that
-        # causes this to fail, while the assertRaises version would
-        # (probably) have worked.
-        import warnings
-
-        warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
         try:
-            try:
-                _ = DictTestExceptionClass.alloc().initWithDictionary_({})
-                self.fail()
-            except ValueError:
-                pass
-        finally:
-            del warnings.filters[0]
+            _ = DictTestExceptionClass.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
 
     def test_another_exception_in_init(self):
         if objc.platform != "MACOSX":
@@ -41,18 +31,11 @@ class TestNSDictionarySubclassing(TestCase):
                     DictTestExceptionClass2, self
                 ).initWithObjects_forKeys_count_(o, k, c)
 
-        import warnings
-
-        warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
         try:
-            try:
-                _ = DictTestExceptionClass2.alloc().initWithDictionary_({})
-                self.fail()
-            except ValueError:
-                pass
-        finally:
-            del warnings.filters[0]
+            _ = DictTestExceptionClass2.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
 
     def test_exception_in_initClsMeth(self):
         if objc.platform != "MACOSX":
