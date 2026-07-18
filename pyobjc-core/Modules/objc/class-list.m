@@ -60,7 +60,7 @@ PyObjC_GetClassList(bool ignore_invalid_identifiers)
          * on macOS 10.12, 10.13 and 10.14. Both older and
          * newer versions don't have the bug this works around.
          *
-         * Ignoring the entiry block when building on macOS 10.11
+         * Ignoring the entire block when building on macOS 10.11
          * or earlier is fine, anyone deploying on multiple macOS
          * versions should build on the latest one (and preferably
          * use the "official" binary wheels).

@@ -22,7 +22,6 @@ from PyObjCTools.TestSupport import (
     min_python_release,
 )
 
-
 MYDIR = os.path.dirname(os.path.abspath(__file__))
 
 

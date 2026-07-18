@@ -3,6 +3,7 @@
 Run the various tests in the free-threading
 directory and report on the results.
 """
+
 import pathlib
 import subprocess
 import sys

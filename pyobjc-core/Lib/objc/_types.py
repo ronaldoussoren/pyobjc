@@ -1,3 +1,4 @@
+# noqa: A005
 """
 Helper for typing framework bindings
 """

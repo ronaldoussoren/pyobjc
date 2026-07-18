@@ -1,7 +1,6 @@
 import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
-
 if hasattr(GameKit, "GKLeaderboardSet"):
 
     class TestGKLeaderboardSetHelper(GameKit.GKLeaderboardSet):

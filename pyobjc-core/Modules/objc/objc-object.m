@@ -105,8 +105,8 @@ static PyObject* _Nullable object_repr(PyObject* _self)
      * Free threaded: the UNINITIALIZED flags is never re-set once cleared.
      */
     PyObject* args[2] = {NULL, (PyObject*)self};
-    res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
-                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    res = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
+                                    1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     if (res == NULL) {
         PyErr_Clear();
     } else if (res == Py_None) {

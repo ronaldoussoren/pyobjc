@@ -493,8 +493,8 @@ NS_ASSUME_NONNULL_BEGIN
         } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value};
-        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
-                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         } // LCOV_EXCL_LINE
@@ -517,8 +517,8 @@ NS_ASSUME_NONNULL_BEGIN
         } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value, tmp};
-        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
-                                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
+                                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(tmp);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -542,8 +542,8 @@ NS_ASSUME_NONNULL_BEGIN
         } // LCOV_EXCL_LINE
 
         PyObject* args[3] = {NULL, value, tmp};
-        PyObject* r       = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
-                                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* r = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
+                                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(tmp);
         if (r == NULL) {
             PyObjC_GIL_FORWARD_EXC();

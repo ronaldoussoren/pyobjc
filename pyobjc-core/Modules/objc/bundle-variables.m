@@ -212,7 +212,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
                 /* Load C string variable. Special handling for the signature and value to
                  * get the correct behaviour: Load a null terminated C string (as bytes)
                  *
-                 * Used in practive for a number of VersionString globals in Apple
+                 * Used in practice for a number of VersionString globals in Apple
                  * frameworks.
                  */
                 py_val = pythonify_c_value(gCharPtr, &value);

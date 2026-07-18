@@ -40,7 +40,6 @@ from .testbndl import (
     pyObjCPy,
 )
 
-
 objc.registerMetaDataForSelector(
     b"OC_ArrayTest",
     b"uniarrayOf12",

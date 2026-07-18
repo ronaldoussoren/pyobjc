@@ -99,7 +99,7 @@ class PyObjCMessageRunner(NSObject):
         assert NSThread.isMainThread(), "Call is not executing on the Main thread!"
 
         # Unpack the payload.
-        (func, args, kwargs) = self._payload
+        func, args, kwargs = self._payload
 
         # Run it.
         func(*args, **kwargs)

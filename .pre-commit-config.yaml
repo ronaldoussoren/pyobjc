@@ -44,7 +44,7 @@ repos:
 
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.2
+    rev: v2.4.3
     hooks:
     -   id: codespell
         args: ["--config", ".codespellrc"]
@@ -68,11 +68,6 @@ repos:
       pass_filenames: false
       always_run: true
       entry: ./development-support/check-num-metadata-versions
-
-#  - repo: https://github.com/pre-commit/mirrors-clang-format
-#    rev: 'v13.0.0'
-#    hooks:
-#    -   id: clang-format
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

@@ -10,7 +10,6 @@ from Foundation import (
     NSKeyValueObservingOptionNew,
 )
 
-
 _kvoclassed = {}
 
 

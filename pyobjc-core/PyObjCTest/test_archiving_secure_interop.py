@@ -24,7 +24,6 @@ from PyObjCTools.TestSupport import (
 
 from plistlib import loads
 
-
 MYDIR = os.path.dirname(os.path.abspath(__file__))
 
 

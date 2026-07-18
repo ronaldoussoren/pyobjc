@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import TestCase
 
 import IOBluetooth
 
-
 IOBluetoothUserNotificationCallback = (
     b"v^v^{OpaqueIOBluetoothObjectRef=}^{OpaqueIOBluetoothObjectRef=}"
 )

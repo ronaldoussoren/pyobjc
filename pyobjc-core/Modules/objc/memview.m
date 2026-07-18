@@ -55,8 +55,8 @@ static PyType_Spec memview_spec = {
     .basicsize = sizeof(struct pyobjc_memview),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = memview_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = memview_slots,
 };
 
 PyObject* _Nullable PyObjCMemView_New(void)

@@ -364,30 +364,21 @@ def synthesize(
     setterName = f"set{name[0].upper()}{name[1:]}_"
 
     if copy:
-        setter = textwrap.dedent(
-            """
-            def %(name)s(self, value):
-                self.%(ivar)s = value.copy()
-            """
-            % {"name": setterName, "ivar": ivarName}
-        )
+        setter = textwrap.dedent("""
+            def {name}(self, value):
+                self.{ivar} = value.copy()
+            """.format(name=setterName, ivar=ivarName))
 
     else:
-        setter = textwrap.dedent(
-            """
-            def %(name)s(self, value):
-                self.%(ivar)s = value
-            """
-            % {"name": setterName, "ivar": ivarName}
-        )
+        setter = textwrap.dedent("""
+            def {name}(self, value):
+                self.{ivar} = value
+            """.format(name=setterName, ivar=ivarName))
 
-    getter = textwrap.dedent(
-        """
-            def %(name)s(self):
-                return self.%(ivar)s
-            """
-        % {"name": name, "ivar": ivarName}
-    )
+    getter = textwrap.dedent("""
+            def {name}(self):
+                return self.{ivar}
+            """.format(name=name, ivar=ivarName))
 
     if readwrite:
         exec(setter, globals(), classDict)

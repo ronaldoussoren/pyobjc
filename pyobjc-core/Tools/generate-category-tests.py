@@ -7,6 +7,7 @@ dynamic features in Objective-C (e.g. method swifling).
 Don't worry too much about formatting, the output will get
 reformatted by black and clang-format.
 """
+
 import pathlib
 import textwrap
 import itertools
@@ -241,9 +242,7 @@ def generate_testext_base(num_base):
             stream.write(BASE_TMPL % {"idx": idx})
         stream.write(EXT_SFX)
         for idx in range(num_base):
-            stream.write(
-                textwrap.dedent(
-                    f"""\
+            stream.write(textwrap.dedent(f"""\
                     if (PyModule_AddObject(m, // LCOV_BR_EXCL_LINE
                                            "OC_Category_GP{idx}",
                                            PyObjC_IdToPython([OC_Category_GP{idx} class]))
@@ -262,9 +261,7 @@ def generate_testext_base(num_base):
                         < 0) {{
                         return -1; // LCOV_EXCL_LINE
                     }}
-                    """
-                )
-            )
+                    """))
 
         stream.write(EXT_END % {"name": "categories_base"})
 
@@ -309,8 +306,7 @@ def generate_testcases() -> int:
             stream.write(f"    def test_base_methods_{'_'.join(order)}(self):\n")
             for c in order:
                 if c == "child":
-                    stream.write(
-                        f"""\
+                    stream.write(f"""\
         with self.subTest("child"):
             o = mod.OC_Category_C{num_base}.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP{num_base} - method1 - GP")
@@ -322,13 +318,11 @@ def generate_testcases() -> int:
             self.assertEqual(o.pMethod2(), "P{num_base} - method2 - C")
 
             self.assertEqual(o.method1(), "C{num_base} - method1 - C")
-         """
-                    )
+         """)
                 stream.write("\n")
 
                 if c == "parent":
-                    stream.write(
-                        f"""\
+                    stream.write(f"""\
         with self.subTest("parent"):
             o = mod.OC_Category_P{num_base}.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP{num_base} - method1 - GP")
@@ -339,13 +333,11 @@ def generate_testcases() -> int:
             self.assertEqual(o.pMethod1(), "P{num_base} - method1 - P")
             self.assertEqual(o.pMethod2(), "P{num_base} - method2 - P")
 
-         """
-                    )
+         """)
                 stream.write("\n")
 
                 if c == "parent":
-                    stream.write(
-                        f"""\
+                    stream.write(f"""\
         with self.subTest("grandparent"):
             o = mod.OC_Category_GP{num_base}.alloc().init()
             self.assertEqual(o.gpMethod1(), "GP{num_base} - method1 - GP")
@@ -353,8 +345,7 @@ def generate_testcases() -> int:
             self.assertEqual(o.gpMethod3(), "GP{num_base} - method3 - GP")
             self.assertEqual(o.gpMethod4(), "GP{num_base} - method4 - GP")
 
-         """
-                    )
+         """)
                 stream.write("\n")
 
             num_base += 1
@@ -386,13 +377,11 @@ def generate_testcases() -> int:
                         f"        from . import category_gp{num_base}   # noqa: F401\n"
                     )
 
-                stream.write(
-                    f"""\
+                stream.write(f"""\
         c = mod.OC_Category_C{num_base}.alloc().init()
         p = mod.OC_Category_P{num_base}.alloc().init()
         gp = mod.OC_Category_GP{num_base}.alloc().init()
-        """
-                )
+        """)
                 stream.write("\n")
 
                 if load == "after_inst":
@@ -421,8 +410,7 @@ def generate_testcases() -> int:
 
                 for c in order:
                     if c == "child":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("child"):
             self.assertEqual(c.gpMethod1(), "GP{num_base} - gpMethod1 - GP{num_base}(Cat)")
             self.assertEqual(c.gpMethod2(), "GP{num_base} - method2 - P")
@@ -436,13 +424,11 @@ def generate_testcases() -> int:
 
             self.assertEqual(c.method1(), "C{num_base} - method1 - C")
             self.assertEqual(c.method2(), "GP{num_base} - method2 - GP{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "parent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("parent"):
             self.assertEqual(p.gpMethod1(), "GP{num_base} - gpMethod1 - GP{num_base}(Cat)")
             self.assertEqual(p.gpMethod2(), "GP{num_base} - method2 - P")
@@ -453,21 +439,18 @@ def generate_testcases() -> int:
             self.assertEqual(p.pMethod1(), "P{num_base} - method1 - P")
             self.assertEqual(p.pMethod2(), "P{num_base} - method2 - P")
             self.assertEqual(p.pMethod3(), "GP{num_base} - pMethod3 - GP{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "grandparent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("grandparent"):
             self.assertEqual(gp.gpMethod1(), "GP{num_base} - gpMethod1 - GP{num_base}(Cat)")
             self.assertEqual(gp.gpMethod2(), "GP{num_base} - method2 - GP")
             self.assertEqual(gp.gpMethod3(), "GP{num_base} - method3 - GP")
             self.assertEqual(gp.gpMethod4(), "GP{num_base} - method4 - GP")
             self.assertEqual(gp.gpMethod5(), "GP{num_base} - gpMethod5 - GP{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                 num_base += 1
@@ -498,13 +481,11 @@ def generate_testcases() -> int:
                         f"        from . import category_p{num_base}   # noqa: F401\n"
                     )
 
-                stream.write(
-                    f"""\
+                stream.write(f"""\
         c = mod.OC_Category_C{num_base}.alloc().init()
         p = mod.OC_Category_P{num_base}.alloc().init()
         gp = mod.OC_Category_GP{num_base}.alloc().init()
-        """
-                )
+        """)
                 stream.write("\n")
 
                 if load == "after_inst":
@@ -533,8 +514,7 @@ def generate_testcases() -> int:
 
                 for c in order:
                     if c == "child":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("child"):
             self.assertEqual(c.gpMethod1(), "P{num_base} - gpMethod1 - P{num_base}(Cat)")
             self.assertEqual(c.gpMethod2(), "GP{num_base} - method2 - P")
@@ -548,13 +528,11 @@ def generate_testcases() -> int:
 
             self.assertEqual(c.method1(), "C{num_base} - method1 - C")
             self.assertEqual(c.method2(), "P{num_base} - method2 - P{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "parent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("parent"):
             self.assertEqual(p.gpMethod1(), "P{num_base} - gpMethod1 - P{num_base}(Cat)")
             self.assertEqual(p.gpMethod2(), "GP{num_base} - method2 - P")
@@ -565,21 +543,18 @@ def generate_testcases() -> int:
             self.assertEqual(p.pMethod1(), "P{num_base} - pMethod1 - P{num_base}(Cat)")
             self.assertEqual(p.pMethod2(), "P{num_base} - method2 - P")
             self.assertEqual(p.pMethod3(), "P{num_base} - pMethod3 - P{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "grandparent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("grandparent"):
             self.assertEqual(gp.gpMethod1(), "GP{num_base} - method1 - GP")
             self.assertEqual(gp.gpMethod2(), "GP{num_base} - method2 - GP")
             self.assertEqual(gp.gpMethod3(), "GP{num_base} - method3 - GP")
             self.assertEqual(gp.gpMethod4(), "GP{num_base} - method4 - GP")
             #self.assertEqual(gp.gpMethod5(), "GP{num_base} - method5 - GP")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                 num_base += 1
@@ -610,13 +585,11 @@ def generate_testcases() -> int:
                         f"        from . import category_c{num_base}  # noqa: F401\n"
                     )
 
-                stream.write(
-                    f"""\
+                stream.write(f"""\
         c = mod.OC_Category_C{num_base}.alloc().init()
         p = mod.OC_Category_P{num_base}.alloc().init()
         gp = mod.OC_Category_GP{num_base}.alloc().init()
-        """
-                )
+        """)
                 stream.write("\n")
 
                 if load == "after_inst":
@@ -645,8 +618,7 @@ def generate_testcases() -> int:
 
                 for c in order:
                     if c == "child":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("child"):
             self.assertEqual(c.gpMethod1(), "C{num_base} - gpMethod1 - C{num_base}(Cat)")
             self.assertEqual(c.gpMethod2(), "GP{num_base} - method2 - P")
@@ -660,13 +632,11 @@ def generate_testcases() -> int:
 
             self.assertEqual(c.method1(), "C{num_base} - method1 - C{num_base}(Cat)")
             self.assertEqual(c.method2(), "C{num_base} - method2 - C{num_base}(Cat)")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "parent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("parent"):
             self.assertEqual(p.gpMethod1(), "GP{num_base} - method1 - GP")
             self.assertEqual(p.gpMethod2(), "GP{num_base} - method2 - P")
@@ -677,21 +647,18 @@ def generate_testcases() -> int:
             self.assertEqual(p.pMethod1(), "P{num_base} - method1 - P")
             self.assertEqual(p.pMethod2(), "P{num_base} - method2 - P")
             #self.assertEqual(p.pMethod3(), "P{num_base} - method3 - P")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                     if c == "grandparent":
-                        stream.write(
-                            f"""\
+                        stream.write(f"""\
         with self.subTest("grandparent"):
             self.assertEqual(gp.gpMethod1(), "GP{num_base} - method1 - GP")
             self.assertEqual(gp.gpMethod2(), "GP{num_base} - method2 - GP")
             self.assertEqual(gp.gpMethod3(), "GP{num_base} - method3 - GP")
             self.assertEqual(gp.gpMethod4(), "GP{num_base} - method4 - GP")
             #self.assertEqual(gp.gpMethod5(), "GP{num_base} - method5 - GP")
-         """
-                        )
+         """)
                         stream.write("\n")
 
                 num_base += 1

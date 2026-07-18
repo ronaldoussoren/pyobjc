@@ -137,8 +137,8 @@ static PyType_Spec weakref_spec = {
     .basicsize = sizeof(PyObjC_WeakRef),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_HAVE_VECTORCALL,
-    .slots = weakref_slots,
+                 | Py_TPFLAGS_HAVE_VECTORCALL,
+    .slots     = weakref_slots,
 };
 
 int

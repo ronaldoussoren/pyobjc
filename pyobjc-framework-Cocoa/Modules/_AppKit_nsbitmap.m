@@ -453,10 +453,9 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(
             class_NSBitmapImageRep,
-            @selector
-            (initWithBitmapDataPlanes:
-                           pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha
-                                     :isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:),
+            @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:
+                      samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:
+                      bitsPerPixel:),
             call_NSBitmapImageRep_initWithBitmap, PyObjCUnsupportedMethod_IMP)
         < 0) {
 
@@ -465,10 +464,9 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(
             class_NSBitmapImageRep,
-            @selector(initWithBitmapDataPlanes:
-                                    pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel
-                                              :hasAlpha:isPlanar:colorSpaceName
-                                              :bitmapFormat:bytesPerRow:bitsPerPixel:),
+            @selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:
+                      samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:
+                      bytesPerRow:bitsPerPixel:),
             call_NSBitmapImageRep_initWithBitmapFormat, PyObjCUnsupportedMethod_IMP)
         < 0) {
 

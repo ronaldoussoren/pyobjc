@@ -422,8 +422,8 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 
         ((PyObjCObject*)rval)->objc_object = datum;
         ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
-                                       | PyObjCObject_kSHOULD_NOT_RELEASE
-                                       | PyObjCObject_kMAGIC_COOKIE;
+                                             | PyObjCObject_kSHOULD_NOT_RELEASE
+                                             | PyObjCObject_kMAGIC_COOKIE;
         return rval;
     }
 }

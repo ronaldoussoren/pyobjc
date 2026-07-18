@@ -18,7 +18,6 @@ from pickle import PicklingError, UnpicklingError
 
 import objc
 
-
 # _getattribute and whichmodule are adapted from the
 # same function's in Python 3.4's pickle module. The
 # primary difference is that the functions below

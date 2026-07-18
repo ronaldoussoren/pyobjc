@@ -223,8 +223,8 @@ NS_ASSUME_NONNULL_BEGIN
      */
 
     NSString*  tmpval    = [[NSString alloc] initWithBytes:bytes
-                                                length:length
-                                              encoding:encoding];
+                                                    length:length
+                                                  encoding:encoding];
     Py_ssize_t charcount = [tmpval length];
 
     /* NOTE: the malloc() call can be avoided when sizeof(unichar) == sizeof(Py_UNICODE)

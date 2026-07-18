@@ -81,7 +81,7 @@ class Circle(NSObject):
 
     def drawInView_(self, aView):
         # ignore aView here for simplicity...
-        (xLoc, yLoc, radius, shadowOffset, shadowAngle) = (
+        xLoc, yLoc, radius, shadowOffset, shadowAngle = (
             self.xLoc,
             self.yLoc,
             self.radius,

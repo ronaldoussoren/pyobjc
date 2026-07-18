@@ -2,7 +2,6 @@ import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 import SpriteKit
 
-
 SKActionTimingFunction = objc._C_FLT + objc._C_FLT
 
 

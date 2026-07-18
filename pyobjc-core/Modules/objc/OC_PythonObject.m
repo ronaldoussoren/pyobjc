@@ -1047,7 +1047,7 @@ static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 /* NOTE: NSProxy does not implement isKindOfClass on Leopard, therefore we
  * have to provide it ourself.
  *
- * Luckily that's kind of easy, we know the entiry class hierarchy and also
+ * Luckily that's kind of easy, we know the entire class hierarchy and also
  * know there are no subclasses.
  */
 - (BOOL)isKindOfClass:(Class)aClass

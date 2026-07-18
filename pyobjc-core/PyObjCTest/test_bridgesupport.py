@@ -18,7 +18,6 @@ from PyObjCTools.TestSupport import (
 
 from importlib import reload
 
-
 IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 TEST_XML = b"""\

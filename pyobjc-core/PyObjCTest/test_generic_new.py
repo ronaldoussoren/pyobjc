@@ -44,14 +44,12 @@ class TestDefaultNewForPythonClass(TestCase):
         self.assertIsInstance(doc, str)
         self.assertEqual(
             doc,
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
             NSObject():
                returns cls.alloc().init()
 
             The order of keyword arguments is significant
-        """
-            ),
+        """),
         )
 
         self.assertIsInstance(NSObject.__new__, new_mod.function_wrapper)
@@ -127,8 +125,7 @@ class TestDefaultNewForPythonClass(TestCase):
         self.assertIsInstance(doc, str)
         self.assertEqual(
             doc,
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
                 OCPyNew1():
                    returns cls.alloc().init()
 
@@ -139,8 +136,7 @@ class TestDefaultNewForPythonClass(TestCase):
                    returns cls.alloc().initWithX_y_(x, y)
 
                 The order of keyword arguments is significant
-            """
-            ),
+            """),
         )
 
         new = OCPyNew1.__new__
@@ -329,8 +325,7 @@ class TestDefaultNewForObjectiveCClass(TestCase):
 
         self.assertEqual(
             OC_GenericNewChild2.__new__.__doc__,
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
             OC_GenericNewChild2(*, URL):
                returns cls.alloc().initWithURL_(URL)
 
@@ -347,8 +342,7 @@ class TestDefaultNewForObjectiveCClass(TestCase):
                returns cls.alloc().initWithX_y_z_(x, y, z)
 
             The order of keyword arguments is significant
-        """
-            ),
+        """),
         )
 
     def test_class_factory(self):
@@ -357,8 +351,7 @@ class TestDefaultNewForObjectiveCClass(TestCase):
 
         self.assertEqual(
             OC_GenericNewChild3.__new__.__doc__,
-            textwrap.dedent(
-                """\
+            textwrap.dedent("""\
             OC_GenericNewChild3():
                returns cls.alloc().init()
 
@@ -378,8 +371,7 @@ class TestDefaultNewForObjectiveCClass(TestCase):
                returns cls.alloc().initWithValue_(value)
 
             The order of keyword arguments is significant
-            """
-            ),
+            """),
         )
 
     def test_without_generic_new(self):

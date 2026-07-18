@@ -76,9 +76,9 @@ struct Struct2       v1 = {1, 2, {3, 4, 5, 6, 7}};
 short                v2 = 8;
 
 [obj methodWithMyStruct:v1 andShort:v2];
-inv =
-    [NSInvocation invocationWithMethodSignature:[obj methodSignatureForSelector:@selector
-                                                     (methodWithMyStruct:andShort:)]];
+inv = [NSInvocation
+    invocationWithMethodSignature:
+        [obj methodSignatureForSelector:@selector(methodWithMyStruct:andShort:)]];
 [inv setTarget:obj];
 [inv setSelector:@selector(methodWithMyStruct:andShort:)];
 [inv setArgument:&v1 atIndex:2];
@@ -1211,8 +1211,9 @@ BEGIN_UNITTEST(PyObjC_NSMethodSignatureToTypeString_Errors)
 char               buffer[2048];
 char*              result;
 NSMethodSignature* sig = [NSURL
-    instanceMethodSignatureForSelector:@selector
-    (initByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:)];
+    instanceMethodSignatureForSelector:@selector(
+                                           initByResolvingBookmarkData:options:
+                                           relativeToURL:bookmarkDataIsStale:error:)];
 ASSERT(sig != nil);
 
 result = PyObjC_NSMethodSignatureToTypeString(sig, buffer, 0);

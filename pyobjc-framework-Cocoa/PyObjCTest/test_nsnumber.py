@@ -19,9 +19,7 @@ PLIST = b"""\
 \t<integer>1</integer>
 </dict>
 </plist>
-""".decode(
-    "latin1"
-)
+""".decode("latin1")
 
 
 def stripDocType(val):

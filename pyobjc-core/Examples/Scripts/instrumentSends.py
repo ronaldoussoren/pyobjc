@@ -10,7 +10,6 @@ all method calls. This file shows how to call that API.
 import Foundation
 import objc
 
-
 objc.loadBundleFunctions(
     Foundation.__bundle__,
     globals(),
