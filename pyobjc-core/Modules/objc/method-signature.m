@@ -1255,7 +1255,12 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
                 tp[0] = typeModifier;
                 strlcpy(tp + 1, withoutModifiers, bufsize - 1);
 
-                assert(!descr->typeOverride);
+                if (descr->typeOverride) {
+                    /* XXX: Can happen when a function has an array
+                     *      type argument, eg: b"iI[256C]"
+                     */
+                    PyMem_Free((char*)descr->type);
+                }
 
                 descr->typeOverride = YES;
                 descr->type         = tp;
