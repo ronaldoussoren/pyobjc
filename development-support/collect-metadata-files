@@ -10,6 +10,7 @@ IGNORE = {
     # Frameworks not present in the latest SDK
     "GameCenter",
     "PubSub",
+    "DVDPlayback",
 }
 
 
@@ -18,6 +19,7 @@ BASE = pathlib.Path(__file__).resolve().parent.parent
 SDK_VERSION = subprocess.check_output(
     ["xcrun", "-sdk", "macosx", "--show-sdk-version"]
 ).decode()
+SDK_VERSION = "27"
 
 
 def main() -> None:
@@ -102,11 +104,11 @@ def main() -> None:
                     )
                 continue
 
-            print(f"   docmeta in {nm}")
-            subprocess.check_call(
-                ["objective-metadata-tool", f"--ini-section={section}", "docmeta"],
-                cwd=nm,
-            )
+            # print(f"   docmeta in {nm}")
+            # subprocess.check_call(
+            #    ["objective-metadata-tool", f"--ini-section={section}", "docmeta"],
+            #    cwd=nm,
+            # )
 
     if scan_failed:
         print(f"{RED}Scanning failed for:{RESET}")

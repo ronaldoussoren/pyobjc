@@ -10,6 +10,8 @@ def main() -> None:
     for item in TOP_DIR.iterdir():
         if not item.name.startswith("pyobjc-framework-"):
             continue
+        if 'PubSub' in item.name:
+            continue
         if not (item / "metadata").exists():
             continue
 
