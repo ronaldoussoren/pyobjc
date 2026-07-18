@@ -12,7 +12,7 @@ def _setup():
 
     import CoreFoundation
     import objc
-    from . import _metadata, _manual
+    from . import _metadata, _CFNetwork
 
     frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
     if not os.path.exists(frameworkPath):
@@ -24,7 +24,7 @@ def _setup():
         frameworkPath=objc.pathForFramework(frameworkPath),
         globals_dict=globals(),
         inline_list=None,
-        parents=(_manual, CoreFoundation),
+        parents=(_CFNetwork, CoreFoundation),
         metadict=_metadata.__dict__,
     )
 

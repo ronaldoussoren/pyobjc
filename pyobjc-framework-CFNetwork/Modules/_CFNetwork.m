@@ -53,8 +53,8 @@ static CFNetServiceClientContext mod_CFNetServiceClientContext = {0, NULL, mod_r
                                                                   mod_release, 0};
 
 static void
-m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
-                                         CFErrorRef error)
+mod_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
+                                           CFErrorRef error)
 {
     PyObject* context = (PyObject*)_context;
 
@@ -187,8 +187,8 @@ mod_CFNetServiceMonitorClientCallBack(CFNetServiceMonitorRef  monitor,
 }
 
 static void
-m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
-                       const CFStreamError* error, void* _context)
+mod_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
+                         const CFStreamError* error, void* _context)
 {
     PyObject* context = (PyObject*)_context;
 
@@ -230,29 +230,26 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
 }
 
 static PyObject*
-m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__unused__)),
-                                               PyObject* args)
+mod_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     CFStringRef script;
     CFURLRef    url;
-    PyObject*   callback;
-    PyObject*   ctx;
-    PyObject*   py_script;
-    PyObject*   py_url;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_script, &py_url, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_script, (id*)&script) == -1) {
+    if (depythonify_python_object(args[0], (id*)&script) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_url, (id*)&url) == -1) {
+    if (depythonify_python_object(args[1], (id*)&url) == -1) {
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -265,7 +262,7 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
     Py_BEGIN_ALLOW_THREADS
         @try {
             ref = CFNetworkExecuteProxyAutoConfigurationScript(
-                script, url, m_CFProxyAutoConfigurationResultCallback, &context);
+                script, url, mod_CFProxyAutoConfigurationResultCallback, &context);
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             ref = NULL;
@@ -284,29 +281,26 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 }
 
 static PyObject*
-m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unused__)),
-                                            PyObject* args)
+mod_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
-    CFURLRef  script;
-    CFURLRef  url;
-    PyObject* callback;
-    PyObject* ctx;
-    PyObject* py_script;
-    PyObject* py_url;
+    CFURLRef script;
+    CFURLRef url;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_script, &py_url, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_script, (id*)&script) == -1) {
+    if (depythonify_python_object(args[0], (id*)&script) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_url, (id*)&url) == -1) {
+    if (depythonify_python_object(args[1], (id*)&url) == -1) {
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -319,7 +313,7 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
     Py_BEGIN_ALLOW_THREADS
         @try {
             ref = CFNetworkExecuteProxyAutoConfigurationURL(
-                script, url, m_CFProxyAutoConfigurationResultCallback, &context);
+                script, url, mod_CFProxyAutoConfigurationResultCallback, &context);
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             ref = NULL;
@@ -338,22 +332,19 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
 }
 
 static PyObject*
-m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
+mod_CFHostSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFHostRef host;
-    PyObject* callback;
-    PyObject* ctx;
-    PyObject* py_host;
     Boolean   ok = 0;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_host, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_host, (id*)&host) == -1) {
+    if (depythonify_python_object(args[0], (id*)&host) == -1) {
         return NULL;
     }
-    if (callback == Py_None) {
+    if (args[1] == Py_None) {
         Py_BEGIN_ALLOW_THREADS
             @try {
                 ok = CFHostSetClient(host, NULL, NULL);
@@ -369,7 +360,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
         return PyBool_FromLong(!!ok);
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -379,7 +370,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            ok = CFHostSetClient(host, m_CFHostClientCallBack, &context);
+            ok = CFHostSetClient(host, mod_CFHostClientCallBack, &context);
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
         }
@@ -448,22 +439,20 @@ mod_CFNetServiceBrowserClientCallBack(CFNetServiceBrowserRef browser, CFOptionFl
 }
 
 static PyObject*
-mod_CFNetServiceBrowserCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
+mod_CFNetServiceBrowserCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                              size_t    nargs)
 {
     CFAllocatorRef allocator;
-    PyObject*      callback;
-    PyObject*      ctx;
-    PyObject*      py_allocator;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_allocator, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_allocator, (id*)&allocator) == -1) {
+    if (depythonify_python_object(args[0], (id*)&allocator) == -1) {
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -495,22 +484,20 @@ mod_CFNetServiceBrowserCreate(PyObject* mod __attribute__((__unused__)), PyObjec
 }
 
 static PyObject*
-mod_CFNetServiceSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
+mod_CFNetServiceSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                          size_t    nargs)
 {
     CFNetServiceRef service;
-    PyObject*       callback;
-    PyObject*       ctx;
-    PyObject*       py_service;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_service, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_service, (id*)&service) == -1) {
+    if (depythonify_python_object(args[0], (id*)&service) == -1) {
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -542,28 +529,25 @@ mod_CFNetServiceSetClient(PyObject* mod __attribute__((__unused__)), PyObject* a
 }
 
 static PyObject*
-mod_CFNetServiceMonitorCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
+mod_CFNetServiceMonitorCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                              size_t    nargs)
 {
     CFAllocatorRef  allocator;
     CFNetServiceRef service;
-    PyObject*       callback;
-    PyObject*       ctx;
-    PyObject*       py_allocator;
-    PyObject*       py_service;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_service, &callback, &ctx)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_allocator, (id*)&allocator) == -1) {
+    if (depythonify_python_object(args[0], (id*)&allocator) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_service, (id*)&service) == -1) {
+    if (depythonify_python_object(args[1], (id*)&service) == -1) {
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", callback, ctx);
+    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
     if (py_context == NULL) {
         return NULL;
     }
@@ -594,31 +578,48 @@ mod_CFNetServiceMonitorCreate(PyObject* mod __attribute__((__unused__)), PyObjec
     return rv;
 }
 
-static PyMethodDef mod_methods[] = {
-    {"CFNetworkExecuteProxyAutoConfigurationScript",
-     (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript, METH_VARARGS,
-     "CFNetworkExecuteProxyAutoConfigurationScript(arg0, arg1, arg2, arg3)"},
-    {"CFNetworkExecuteProxyAutoConfigurationURL",
-     (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationURL, METH_VARARGS,
-     "CFNetworkExecuteProxyAutoConfigurationURL(arg0, arg1, arg2, arg3)"},
-    {"CFHostSetClient", (PyCFunction)m_CFHostSetClient, METH_VARARGS,
-     "CFHostSetClient(arg0, arg1, arg2)"},
-    {"CFNetServiceBrowserCreate", (PyCFunction)mod_CFNetServiceBrowserCreate,
-     METH_VARARGS, "CFNetServiceBrowserCreate(arg0, arg1, arg2)"},
-    {"CFNetServiceSetClient", (PyCFunction)mod_CFNetServiceSetClient, METH_VARARGS,
-     "CFNetServiceSetClient(arg0, arg1, arg2)"},
-    {"CFNetServiceMonitorCreate", (PyCFunction)mod_CFNetServiceMonitorCreate,
-     METH_VARARGS, "CFNetServiceMonitorCreate(arg0, arg1, arg2, arg3)"},
-    {
-        0,
-        0,
-        0,
-    }};
+static PyMethodDef mod_methods[] = {{
+    0,
+    0,
+    0,
+}};
 
 static int
 mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0) {
+        return -1;
+    }
+
+    if (PyObjCRegister_FunctionCaller(CFNetworkExecuteProxyAutoConfigurationScript,
+                                      mod_CFNetworkExecuteProxyAutoConfigurationScript)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNetworkExecuteProxyAutoConfigurationURL,
+                                      mod_CFNetworkExecuteProxyAutoConfigurationURL)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFHostSetClient, mod_CFHostSetClient) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNetServiceBrowserCreate,
+                                      mod_CFNetServiceBrowserCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNetServiceSetClient, mod_CFNetServiceSetClient)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNetServiceSetClient, mod_CFNetServiceSetClient)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNetServiceMonitorCreate,
+                                      mod_CFNetServiceMonitorCreate)
+        == -1) {
         return -1;
     }
     return 0;
@@ -645,7 +646,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 
 static struct PyModuleDef mod_module = {
     .m_base     = PyModuleDef_HEAD_INIT,
-    .m_name     = "_manual",
+    .m_name     = "_CFNetwork",
     .m_doc      = NULL,
     .m_size     = 0,
     .m_methods  = mod_methods,
@@ -655,10 +656,10 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__manual(void);
+PyObject* PyInit__CFNetwork(void);
 
 PyObject* __attribute__((__visibility__("default")))
-PyInit__manual(void)
+PyInit__CFNetwork(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

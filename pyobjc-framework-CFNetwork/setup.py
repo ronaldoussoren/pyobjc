@@ -29,8 +29,8 @@ setup(
     packages=["CFNetwork"],
     ext_modules=[
         Extension(
-            "CFNetwork._manual",
-            ["Modules/_manual.m"],
+            "CFNetwork._CFNetwork",
+            ["Modules/_CFNetwork.m"],
             extra_link_args=["-framework", "CoreServices"],
         )
     ],
