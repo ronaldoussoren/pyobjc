@@ -474,7 +474,7 @@
    "dispatch_data_create_map": {
     "args": {
      "0": { "type_override": "@" },
-     "1": { "type_override": "o^^v" },
+     "1": { "type_override": "o^^v", "c_array_length_in_arg": 2 },
      "2": { "type_override": "o^L" }
     },
     "retval": {

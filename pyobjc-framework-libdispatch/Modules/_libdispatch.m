@@ -5,11 +5,9 @@
 #include <dispatch/dispatch.h>
 
 static PyObject*
-m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_dispatch_data_create_map(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                           size_t    nargs)
 {
-    PyObject* py_data;
-    PyObject* py_buffer;
-    PyObject* py_size;
     PyObject* py_result;
     PyObject* py_memview;
 
@@ -17,18 +15,19 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
     const void* buffer = NULL;
     size_t      size   = 0;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_data, &py_buffer, &py_size)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(id), py_data, &data) == -1) {
+
+    if (PyObjC_PythonToObjC(@encode(id), args[0], &data) == -1) {
         return NULL;
     }
-    if (py_buffer != Py_None) {
-        PyErr_SetString(PyExc_TypeError, "Buffer must be None");
+    if (args[1] != Py_None) {
+        PyErr_SetString(PyExc_TypeError, "'buffer' must be None");
         return NULL;
     }
-    if (py_size != Py_None) {
-        PyErr_SetString(PyExc_TypeError, "Size must be None");
+    if (args[2] != Py_None) {
+        PyErr_SetString(PyExc_TypeError, "'size' must be None");
         return NULL;
     }
 
@@ -51,8 +50,6 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
 }
 
 static PyMethodDef mod_methods[] = {
-    {"dispatch_data_create_map", (PyCFunction)m_dispatch_data_create_map, METH_VARARGS,
-     NULL},
     {0, 0, 0, 0} /* sentinel */
 };
 
@@ -77,6 +74,12 @@ mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) == -1)
         return -1;
+
+    if (PyObjCRegister_FunctionCaller( // LCOV_BR_EXCL_LINE
+            dispatch_data_create_map, m_dispatch_data_create_map)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
 
     /*
      * Register a number of struct pointer types that are actually Objective-C objects

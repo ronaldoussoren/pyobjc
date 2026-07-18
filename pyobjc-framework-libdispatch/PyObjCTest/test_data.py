@@ -32,8 +32,10 @@ class TestDataAPI(TestCase):
         self.assertResultHasType(dispatch.dispatch_data_get_size, objc._C_ULNG)
         self.assertArgHasType(dispatch.dispatch_data_get_size, 0, objc._C_ID)
 
-        # FIXME: dispatch_data_create_map
-        self.assertIsInstance(dispatch.dispatch_data_create_map, type(id))
+        self.assertArgIsOut(dispatch.dispatch_data_create_map, 1)
+        self.assertArgIsOut(dispatch.dispatch_data_create_map, 2)
+        # XXX: This is not quite correct, but possibly acceptable for a manual binding
+        self.assertArgSizeInArg(dispatch.dispatch_data_create_map, 1, 2)
 
         self.assertResultIsRetained(dispatch.dispatch_data_create_concat)
         self.assertResultHasType(dispatch.dispatch_data_create_concat, objc._C_ID)
