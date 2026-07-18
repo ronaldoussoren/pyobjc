@@ -354,10 +354,9 @@
     "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
    },
    "xpc_dictionary_create": {
-    "ignore": true,
     "args": {
-     "0": { "c_array_length_in_arg": 2, "type_modifier": "n" },
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+     "0": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^^t" },
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^^t" }
     },
     "retval": { "already_retained": true }
    },
@@ -627,10 +626,10 @@
     "variadic": true
    },
    "xpc_string_create_with_format_and_arguments": {
-    "ignore": true,
+    "suggestion": "Use 'xpc.xpc_string_create_with_format' instead.",
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "^v" }
     }
    },
    "xpc_string_get_string_ptr": {

@@ -5,43 +5,51 @@
 #include <xpc/xpc.h>
 
 static PyObject*
-mod_xpc_dictionary_create(PyObject* mod __attribute__((__unused__)), PyObject* args)
+mod_xpc_dictionary_create(PyObject* meth __attribute__((__unused__)),
+                          PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*  keys;
-    PyObject*  values;
-    Py_ssize_t nitems;
+    PyObject* keys;
+    PyObject* values;
+    size_t    nitems;
 
-    if (!PyArg_ParseTuple(args, "OOn", &keys, &values, &nitems)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    keys = PySequence_Tuple(keys);
+    if (PyObjC_PythonToObjC(@encode(size_t), args[2], &nitems) == -1) {
+        return NULL;
+    }
+
+    keys = PySequence_Tuple(args[0]);
     if (keys == NULL) {
         return NULL;
     }
-    values = PySequence_Tuple(values);
+    values = PySequence_Tuple(args[1]);
     if (values == NULL) {
         Py_DECREF(keys);
         return NULL;
     }
 
-    if (PyTuple_Size(keys) != nitems) {
+    assert(PyTuple_Check(keys));
+    assert(PyTuple_Check(values));
+
+    if ((size_t)PyTuple_GET_SIZE(keys) != nitems) {
         Py_DECREF(keys);
         Py_DECREF(values);
-        PyErr_Format(PyExc_ValueError, "Expecting keys sequence of exactly %ld items",
-                     nitems);
+        PyErr_Format(PyExc_ValueError,
+                     "Expecting keys sequence of exactly %ld items for 'keys'", nitems);
         return NULL;
     }
 
-    if (PyTuple_Size(values) != nitems) {
+    if ((size_t)PyTuple_GET_SIZE(values) != nitems) {
         Py_DECREF(keys);
         Py_DECREF(values);
-        PyErr_Format(PyExc_ValueError, "Expecting values sequence of exactly %ld items",
-                     nitems);
+        PyErr_Format(PyExc_ValueError,
+                     "Expecting values sequence of exactly %ld items 'values'", nitems);
         return NULL;
     }
 
-    for (Py_ssize_t i = 0; i < nitems; i++) {
+    for (size_t i = 0; i < nitems; i++) {
         if (!PyBytes_Check(PyTuple_GET_ITEM(keys, i))) {
             PyErr_SetString(PyExc_TypeError, "Keys should be sequence of bytes");
             Py_DECREF(keys);
@@ -66,7 +74,7 @@ mod_xpc_dictionary_create(PyObject* mod __attribute__((__unused__)), PyObject* a
         return NULL;
     }
 
-    for (Py_ssize_t i = 0; i < nitems; i++) {
+    for (size_t i = 0; i < nitems; i++) {
         key_array[i] = PyBytes_AsString(PyTuple_GET_ITEM(keys, i));
         if (depythonify_python_object(PyTuple_GET_ITEM(values, i), value_array + i)
             == -1) {
@@ -89,11 +97,6 @@ mod_xpc_dictionary_create(PyObject* mod __attribute__((__unused__)), PyObject* a
 }
 
 static PyMethodDef mod_methods[] = {
-    {.ml_name  = "xpc_dictionary_create",
-     .ml_meth  = (PyCFunction)mod_xpc_dictionary_create,
-     .ml_flags = METH_VARARGS,
-     .ml_doc   = "xpc_dictionary_create(keys, values, nitem, /)" CLINIC_SEP},
-
     {0, 0, 0, 0} /* sentinel */
 };
 
@@ -180,8 +183,14 @@ static struct int64_constants {
 static int
 mod_exec_module(PyObject* module)
 {
-    if (PyObjC_ImportAPI(module) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(module) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+
+    if (PyObjCRegister_FunctionCaller( // LCOV_BR_EXCL_LINE
+            xpc_dictionary_create, mod_xpc_dictionary_create)
+        == -1) {
+        return -1; // LCOV_EXCL_LINE
+    }
 
     /*
      * Register a number of struct pointer types that are actually Objective-C objects

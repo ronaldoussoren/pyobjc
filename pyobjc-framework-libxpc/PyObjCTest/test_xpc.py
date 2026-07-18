@@ -134,7 +134,15 @@ class TestXPC(TestCase):
         self.assertArgIsNullTerminated(xpc.xpc_string_create_with_format, 0)
         self.assertArgIsPrintf(xpc.xpc_string_create_with_format, 0)
 
-        self.assertNotHasAttr(xpc, "xpc_string_create_with_format_and_arguments")
+        with self.assertRaisesRegex(
+            TypeError, "Use 'xpc.xpc_string_create_with_format' instead."
+        ):
+            xpc.xpc_string_create_with_format_and_arguments("foo", [])
+
+        self.assertArgIsIn(xpc.xpc_string_create_with_format_and_arguments, 0)
+        self.assertArgIsNullTerminated(
+            xpc.xpc_string_create_with_format_and_arguments, 0
+        )
 
         xpc.xpc_string_get_length
 
@@ -205,11 +213,11 @@ class TestXPC(TestCase):
         self.assertResultIsRetained(xpc.xpc_array_create_connection)
 
         # Manual binding:
-        # self.assertResultIsRetained(xpc.xpc_dictionary_create)
-        # self.assertArgIsIn(xpc.xpc_dictionary_create, 0)
-        # self.assertArgSizeInArg(xpc.xpc_dictionary_create, 0, 2)
-        # self.assertArgIsIn(xpc.xpc_dictionary_create, 1)
-        # self.assertArgSizeInArg(xpc.xpc_dictionary_create, 1, 2)
+        self.assertResultIsRetained(xpc.xpc_dictionary_create)
+        self.assertArgIsIn(xpc.xpc_dictionary_create, 0)
+        self.assertArgSizeInArg(xpc.xpc_dictionary_create, 0, 2)
+        self.assertArgIsIn(xpc.xpc_dictionary_create, 1)
+        self.assertArgSizeInArg(xpc.xpc_dictionary_create, 1, 2)
 
         value = xpc.xpc_dictionary_create(
             [b"key1", b"key2"], [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], 2
