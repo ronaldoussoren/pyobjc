@@ -219,9 +219,8 @@
     }
    },
    "AXValueCreate": {
-    "ignore": true,
     "args": {
-     "1": {}
+     "1": { "type_modifier": "n", "type_override": "^@"}
     },
     "retval": {
      "already_cfretained": true
@@ -236,10 +235,9 @@
     "variadic": false
    },
    "AXValueGetValue": {
-    "ignore": true,
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o", "null_accepted": false, "type_override": "^@"}
     }
    },
    "AddIconToSuite": {

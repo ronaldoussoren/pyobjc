@@ -14,10 +14,9 @@
 #endif
 
 static PyObject*
-m_AXValueCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
+m_AXValueCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     UInt32     valueType;
-    PyObject*  py_value;
     AXValueRef value;
     CGPoint    point;
     CGSize     size;
@@ -27,42 +26,46 @@ m_AXValueCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
     void*      valuePtr;
     PyObject*  result;
 
-    if (!PyArg_ParseTuple(args, "IO", &valueType, &py_value)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(UInt32), args[0], &valueType) == -1) {
         return NULL;
     }
 
     switch (valueType) {
     case kAXValueTypeCGPoint:
         valuePtr = (void*)&point;
-        if (PyObjC_PythonToObjC(@encode(CGPoint), py_value, valuePtr) == -1) {
+        if (PyObjC_PythonToObjC(@encode(CGPoint), args[1], valuePtr) == -1) {
             return NULL;
         }
         break;
 
     case kAXValueTypeCGSize:
         valuePtr = (void*)&size;
-        if (PyObjC_PythonToObjC(@encode(CGSize), py_value, valuePtr) == -1) {
+        if (PyObjC_PythonToObjC(@encode(CGSize), args[1], valuePtr) == -1) {
             return NULL;
         }
         break;
 
     case kAXValueTypeCGRect:
         valuePtr = (void*)&rect;
-        if (PyObjC_PythonToObjC(@encode(CGRect), py_value, valuePtr) == -1) {
+        if (PyObjC_PythonToObjC(@encode(CGRect), args[1], valuePtr) == -1) {
             return NULL;
         }
         break;
 
     case kAXValueTypeCFRange:
         valuePtr = (void*)&range;
-        if (PyObjC_PythonToObjC(@encode(CFRange), py_value, valuePtr) == -1) {
+        if (PyObjC_PythonToObjC(@encode(CFRange), args[1], valuePtr) == -1) {
             return NULL;
         }
         break;
 
     case kAXValueTypeAXError:
         valuePtr = (void*)&error;
-        if (PyObjC_PythonToObjC(@encode(AXError), py_value, valuePtr) == -1) {
+        if (PyObjC_PythonToObjC(@encode(AXError), args[1], valuePtr) == -1) {
             return NULL;
         }
         break;
@@ -84,11 +87,9 @@ m_AXValueCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
 }
 
 static PyObject*
-m_AXValueGetValue(PyObject* mod __attribute__((__unused__)), PyObject* args)
+m_AXValueGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     UInt32     valueType;
-    PyObject*  py_value;
-    PyObject*  py_valuePtr;
     AXValueRef value;
     CGPoint    point;
     CGSize     size;
@@ -98,15 +99,19 @@ m_AXValueGetValue(PyObject* mod __attribute__((__unused__)), PyObject* args)
     void*      valuePtr;
     Boolean    ok;
 
-    if (!PyArg_ParseTuple(args, "OIO", &py_value, &valueType, &py_valuePtr)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AXValueRef), py_value, &value) == -1) {
+    if (PyObjC_PythonToObjC(@encode(AXValueRef), args[0], &value) == -1) {
         return NULL;
     }
 
-    if (py_valuePtr != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(UInt32), args[1], &valueType) == -1) {
+        return NULL;
+    }
+
+    if (args[2] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "'valuePtr' should be None");
         return NULL;
     }
@@ -172,11 +177,6 @@ m_AXValueGetValue(PyObject* mod __attribute__((__unused__)), PyObject* args)
 }
 
 static PyMethodDef mod_methods[] = {
-    {"AXValueCreate", (PyCFunction)m_AXValueCreate, METH_VARARGS,
-     "AXValueCreate(/, type, value) -> axvalue"},
-    {"AXValueGetValue", (PyCFunction)m_AXValueGetValue, METH_VARARGS,
-     "AXValueGetValue(/, axvalue, type, *None*) -> value"},
-
     {0, 0, 0, 0} /* sentinel */
 };
 
@@ -186,6 +186,12 @@ mod_exec_module(PyObject* m)
     if (PyObjC_ImportAPI(m) == -1)
         return -1;
 
+    if (PyObjCRegister_FunctionCaller(AXValueCreate, m_AXValueCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(AXValueGetValue, m_AXValueGetValue) == -1) {
+        return -1;
+    }
     return 0;
 }
 
