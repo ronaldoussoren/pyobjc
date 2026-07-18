@@ -181,28 +181,25 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
 /* And finally the function wrappers */
 
 static PyObject*
-mod_SCDynamicStoreCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+mod_SCDynamicStoreCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                         size_t    nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_name;
-    PyObject*      callout;
-    PyObject*      context;
     CFAllocatorRef allocator;
     CFStringRef    name;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_name, &callout, &context)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFStringRef), py_name, &name) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFStringRef), args[1], &name) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callout, context);
+    PyObject* real_info = Py_BuildValue("OO", args[2], args[3]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -241,36 +238,30 @@ mod_SCDynamicStoreCreate(PyObject* self __attribute__((__unused__)), PyObject* a
 }
 
 static PyObject*
-mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
-                                    PyObject* args)
+mod_SCDynamicStoreCreateWithOptions(PyObject* meth,
+                                    PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*       py_allocator;
-    PyObject*       py_name;
-    PyObject*       py_options;
-    PyObject*       callout;
-    PyObject*       context;
     CFAllocatorRef  allocator;
     CFDictionaryRef storeOptions;
     CFStringRef     name;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &py_options, &callout,
-                          &context)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_options, &storeOptions) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFStringRef), args[1], &name) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFStringRef), py_name, &name) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[2], &storeOptions) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callout, context);
+    PyObject* real_info = Py_BuildValue("OO", args[3], args[4]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -311,22 +302,20 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-mod_SCPreferencesSetCallback(PyObject* self __attribute__((__unused__)), PyObject* args)
+mod_SCPreferencesSetCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                             size_t    nargs)
 {
-    PyObject*        py_prefs;
-    PyObject*        callout;
-    PyObject*        context;
     SCPreferencesRef prefs;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_prefs, &callout, &context)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(SCPreferencesRef), py_prefs, &prefs) < 0) {
+    if (PyObjC_PythonToObjC(@encode(SCPreferencesRef), args[0], &prefs) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callout, context);
+    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -359,30 +348,26 @@ mod_SCPreferencesSetCallback(PyObject* self __attribute__((__unused__)), PyObjec
 }
 
 static PyObject*
-mod_SCNetworkConnectionCreateWithServiceID(PyObject* self __attribute__((__unused__)),
-                                           PyObject* args)
+mod_SCNetworkConnectionCreateWithServiceID(PyObject* meth,
+                                           PyObject* _Nonnull const* _Nonnull args,
+                                           size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_serviceID;
-    PyObject*      callout;
-    PyObject*      context;
     CFAllocatorRef allocator;
     CFStringRef    serviceID;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_serviceID, &callout,
-                          &context)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFStringRef), py_serviceID, &serviceID) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFStringRef), args[1], &serviceID) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callout, context);
+    PyObject* real_info = Py_BuildValue("OO", args[2], args[3]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -420,23 +405,21 @@ mod_SCNetworkConnectionCreateWithServiceID(PyObject* self __attribute__((__unuse
 }
 
 static PyObject*
-mod_SCNetworkReachabilitySetCallback(PyObject* self __attribute__((__unused__)),
-                                     PyObject* args)
+mod_SCNetworkReachabilitySetCallback(PyObject* meth,
+                                     PyObject* _Nonnull const* _Nonnull args,
+                                     size_t nargs)
 {
-    PyObject*                py_target;
-    PyObject*                callout;
-    PyObject*                context;
     SCNetworkReachabilityRef target;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_target, &callout, &context)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(SCNetworkReachabilityRef), py_target, &target) < 0) {
+    if (PyObjC_PythonToObjC(@encode(SCNetworkReachabilityRef), args[0], &target) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callout, context);
+    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -468,36 +451,6 @@ mod_SCNetworkReachabilitySetCallback(PyObject* self __attribute__((__unused__)),
 }
 
 static PyMethodDef mod_methods[] = {
-    {
-        "SCDynamicStoreCreate",
-        (PyCFunction)mod_SCDynamicStoreCreate,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "SCDynamicStoreCreateWithOptions",
-        (PyCFunction)mod_SCDynamicStoreCreateWithOptions,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "SCPreferencesSetCallback",
-        (PyCFunction)mod_SCPreferencesSetCallback,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "SCNetworkConnectionCreateWithServiceID",
-        (PyCFunction)mod_SCNetworkConnectionCreateWithServiceID,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "SCNetworkReachabilitySetCallback",
-        (PyCFunction)mod_SCNetworkReachabilitySetCallback,
-        METH_VARARGS,
-        NULL,
-    },
     {0, 0, 0, 0} /* sentinel */
 };
 
@@ -505,6 +458,31 @@ static int
 mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0) {
+        return -1;
+    }
+
+    if (PyObjCRegister_FunctionCaller(SCDynamicStoreCreate, mod_SCDynamicStoreCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(SCDynamicStoreCreateWithOptions,
+                                      mod_SCDynamicStoreCreateWithOptions)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(SCPreferencesSetCallback,
+                                      mod_SCPreferencesSetCallback)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(SCNetworkConnectionCreateWithServiceID,
+                                      mod_SCNetworkConnectionCreateWithServiceID)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(SCNetworkReachabilitySetCallback,
+                                      mod_SCNetworkReachabilitySetCallback)
+        == -1) {
         return -1;
     }
 
@@ -536,7 +514,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 
 static struct PyModuleDef mod_module = {
     .m_base     = PyModuleDef_HEAD_INIT,
-    .m_name     = "_manual",
+    .m_name     = "_SystemConfiguration",
     .m_doc      = NULL,
     .m_size     = 0,
     .m_methods  = mod_methods,
@@ -546,10 +524,10 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__manual(void);
+PyObject* PyInit__SystemConfiguration(void);
 
 PyObject* __attribute__((__visibility__("default")))
-PyInit__manual(void)
+PyInit__SystemConfiguration(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

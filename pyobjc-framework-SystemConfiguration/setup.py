@@ -23,8 +23,8 @@ setup(
     packages=["SystemConfiguration"],
     ext_modules=[
         Extension(
-            "SystemConfiguration._manual",
-            ["Modules/_manual.m"],
+            "SystemConfiguration._SystemConfiguration",
+            ["Modules/_SystemConfiguration.m"],
         )
     ],
     version=VERSION,
