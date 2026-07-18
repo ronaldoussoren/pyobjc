@@ -1037,14 +1037,6 @@
      "2": { "typestr": "L" }
     },
     "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
-   },
-   "VNNormalizedFaceBoundingBoxPointForLandmarkPoint": {
-    "ignore": true,
-    "comment": "vector argument"
-   },
-   "VNImagePointForFaceLandmarkPoint": {
-    "ignore": true,
-    "comment": "vector argument"
    }
   }
  }

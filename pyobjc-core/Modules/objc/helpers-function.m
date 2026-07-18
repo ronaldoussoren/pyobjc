@@ -319,6 +319,54 @@ static PyObject* _Nullable call_simd_float4x4_id_q(PyObject*        method,
     Py_CLEAR(methinfo);
     return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
 }
+
+static PyObject* _Nullable call_CGPoint_v2f_CGRect_Q_Q(PyObject*        method,
+                                                       PyObject* const* arguments,
+                                                       size_t           nargs)
+{
+    CGPoint            rv;
+    simd_float2        arg0;
+    CGRect             arg1;
+    unsigned long long arg2;
+    unsigned long long arg3;
+
+    if (PyObjC_CheckArgCount(method, 4, 4, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("<2f>", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("{CGRect={CGPoint=dd}{CGSize=dd}}", arguments[1], &arg1)
+        == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("Q", arguments[2], &arg2) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("Q", arguments[3], &arg3) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((CGPoint (*)(simd_float2, CGRect, unsigned long long,
+                               unsigned long long))function)(arg0, arg1, arg2, arg3);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{CGPoint=dd}", &rv);
+}
 int
 PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
 {
@@ -360,6 +408,13 @@ PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
 
     if (PyObjC_RegisterFunctionSignatureMapping("{simd_float4x4=[4<4f>]}@q",
                                                 call_simd_float4x4_id_q)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{CGPoint=dd}<2f>{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
+            call_CGPoint_v2f_CGRect_Q_Q)
         == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }

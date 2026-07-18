@@ -273,6 +273,46 @@ simdfloat4x4id_q_(id arg0, long long arg1)
          (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
 }
 
+static CGPoint
+CGPointv2f_CGRect_Q_Q_(simd_float2 arg0, CGRect arg1, unsigned long long arg2,
+                       unsigned long long arg3)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2f>", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("{CGRect={CGPoint=dd}{CGSize=dd}}", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("Q", &arg2);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("Q", &arg3);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (CGPoint){1.0, 2.0};
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
@@ -289,6 +329,7 @@ static struct function {
                     {"simdfloat3x3id_", (F)simdfloat3x3id_},
                     {"simdfloat4x4id_", (F)simdfloat4x4id_},
                     {"simdfloat4x4id_q_", (F)simdfloat4x4id_q_},
+                    {"CGPointv2f_CGRect_Q_Q_", (F)CGPointv2f_CGRect_Q_Q_},
                     {NULL, NULL}};
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};

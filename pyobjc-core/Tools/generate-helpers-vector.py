@@ -15,7 +15,7 @@ import Quartz  # noqa: F401
 from objc import simd
 import typing
 import pathlib
-from objc._callable_docstr import describe_type
+from objc._callable_docstr import describe_type as _describe_type
 
 HELPER_FILE = (
     pathlib.Path(__file__).resolve().parent.parent / "Modules/objc/helpers-vector.m"
@@ -47,6 +47,10 @@ MKIMP_PREFIX = "mkimp"
 #
 # XXX : The list below is censored, actually running the grep command will find a number of
 # "pointer to" arguments which I've stripped for now.
+
+
+def describe_type(value):
+    return _describe_type(value).split(".")[-1]
 
 
 def needs_wrapper(signature):
@@ -262,6 +266,7 @@ FUNC_SIGNATURES = [
     # XXX: byref
     # b"{simd_float4x4=[4<4f>]}@^tq",
     b"{simd_float4x4=[4<4f>]}@q",
+    b"{CGPoint=dd}<2f>{CGRect={CGPoint=dd}{CGSize=dd}}QQ",
 ]
 FUNC_SIGNATURES = [item for item in FUNC_SIGNATURES if needs_wrapper(item)]
 
@@ -1832,6 +1837,11 @@ VALUES = {
     ),
     objc._C_PTR + objc._C_CHAR_AS_TEXT: (LiteralRepr('b"names"', "names"), None),
     objc._C_PTR + objc._C_VOID: (LiteralRepr('b"bytes"', "bytes"), None),
+    b"{CGPoint=dd}": (LiteralRepr("(1.0, 2.0)", "(CGPoint){1.0, 2.0}"), None),
+    b"{CGRect={CGPoint=dd}{CGSize=dd}}": (
+        LiteralRepr("((1.0, 2.0), (3.0, 4.0))", "(CGRect){{1.0, 2.0}, {3.0, 4.0}}"),
+        None,
+    ),
 }
 
 SIMD_TYPES = {

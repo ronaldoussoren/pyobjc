@@ -43,7 +43,6 @@ class TestVNUtils(TestCase):
         self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 1, objc._C_ULNG)
         self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 2, objc._C_ULNG)
 
-        # XXX: These need explict tests
         Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint
         Vision.VNImagePointForFaceLandmarkPoint
 
