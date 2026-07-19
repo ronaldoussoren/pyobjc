@@ -1,6 +1,5 @@
 import CoreMediaIO
 from PyObjCTools.TestSupport import TestCase, fourcc
-import objc
 
 CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
 
@@ -183,7 +182,6 @@ class TestCMIOHardwareDevice(TestCase):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 
-        self.assertNotIsInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
-        self.assertNotIsInstance(
-            CoreMediaIO.CMIODeviceProcessRS422Command, objc.function
-        )
+        # XXX: Needs manual testing:
+        CoreMediaIO.CMIODeviceProcessAVCCommand
+        CoreMediaIO.CMIODeviceProcessRS422Command

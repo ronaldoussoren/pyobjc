@@ -190,12 +190,12 @@
    }
   },
   "functions": {
-   "CMIODeviceProcessAVCCommand": { "ignore": true,
+   "CMIODeviceProcessAVCCommand": {
     "args": {
      "1": { "type_modifier": "n" }
     }
    },
-   "CMIODeviceProcessRS422Command": { "ignore": true,
+   "CMIODeviceProcessRS422Command": {
     "args": {
      "1": { "type_modifier": "n" }
     }
