@@ -128,51 +128,39 @@ clear_parameterset(size_t parameterSetCount, uint8_t** parameterSetPointers,
 }
 
 static PyObject*
-m_CMVideoFormatDescriptionCreateFromH264ParameterSets(PyObject* mod
-                                                      __attribute__((__unused__)),
-                                                      PyObject* args, PyObject* kwds)
+m_CMVideoFormatDescriptionCreateFromH264ParameterSets(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    static char*           keywords[] = {"allocator",
-                                         "parameterSetCount",
-                                         "parameterSetPointers",
-                                         "parameterSetSizes",
-                                         "NALUnitHeaderLength",
-                                         "formatDescriptionOut",
-                                         NULL};
     CFAllocatorRef         allocator;
-    PyObject*              py_allocator;
     Py_ssize_t             parameterSetCount;
     uint8_t**              parameterSetPointers;
     Py_buffer*             parameterSetViews;
-    PyObject*              py_parameterSetPointers;
     size_t*                parameterSetSizes;
-    PyObject*              py_parameterSetSizes;
     int                    NALUnitHeaderLength;
     CMFormatDescriptionRef formatDescriptionOut;
-    PyObject*              py_formatDescriptionOut;
     OSStatus               rv;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OnOOiO", keywords, &py_allocator,
-                                     &parameterSetCount, &py_parameterSetPointers,
-                                     &py_parameterSetSizes, &NALUnitHeaderLength,
-                                     &py_formatDescriptionOut)) {
+    if (PyObjC_CheckArgCount(meth, 6, 6, nargs) == -1) {
         return NULL;
     }
 
-    if (parameterSetCount < 0) {
-        PyErr_SetString(PyExc_ValueError, "parameterSetCount out of range");
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) == -1) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &parameterSetCount) == -1) {
         return NULL;
     }
-    if (py_formatDescriptionOut != Py_None) {
+
+    if (PyObjC_PythonToObjC(@encode(int), args[4], &NALUnitHeaderLength) == -1) {
+        return NULL;
+    }
+
+    if (args[5] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "formatDescriptionOut must be None");
         return NULL;
     }
-    if (parse_parameterset(parameterSetCount, py_parameterSetPointers,
-                           &parameterSetPointers, py_parameterSetSizes,
+    if (parse_parameterset(parameterSetCount, args[2], &parameterSetPointers, args[3],
                            &parameterSetSizes, &parameterSetViews)
         == -1) {
         return NULL;
@@ -186,7 +174,7 @@ m_CMVideoFormatDescriptionCreateFromH264ParameterSets(PyObject* mod
                        parameterSetViews);
 
     if (rv == 0) {
-        py_formatDescriptionOut =
+        PyObject* py_formatDescriptionOut =
             PyObjC_ObjCToPython(@encode(CMFormatDescriptionRef), &formatDescriptionOut);
         CFRelease(formatDescriptionOut);
         return Py_BuildValue("iN", rv, py_formatDescriptionOut);
@@ -198,37 +186,32 @@ m_CMVideoFormatDescriptionCreateFromH264ParameterSets(PyObject* mod
 #if PyObjC_BUILD_RELEASE >= 1013
 
 static PyObject*
-m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
-                                                      __attribute__((__unused__)),
-                                                      PyObject* args, PyObject* kwds)
+m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    static char*           keywords[] = {"allocator",
-                                         "parameterSetCount",
-                                         "parameterSetPointers",
-                                         "parameterSetSizes",
-                                         "NALUnitHeaderLength",
-                                         "extensions",
-                                         "formatDescriptionOut",
-                                         NULL};
     CFAllocatorRef         allocator;
-    PyObject*              py_allocator;
     Py_ssize_t             parameterSetCount;
     uint8_t**              parameterSetPointers;
     Py_buffer*             parameterSetViews;
-    PyObject*              py_parameterSetPointers;
     size_t*                parameterSetSizes;
-    PyObject*              py_parameterSetSizes;
     int                    NALUnitHeaderLength;
     CMFormatDescriptionRef formatDescriptionOut;
-    PyObject*              py_formatDescriptionOut;
     CFDictionaryRef        extensions;
-    PyObject*              py_extensions;
     OSStatus               rv;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OkOOiOO", keywords, &py_allocator,
-                                     &parameterSetCount, &py_parameterSetPointers,
-                                     &py_parameterSetSizes, &NALUnitHeaderLength,
-                                     &py_extensions, &py_formatDescriptionOut)) {
+    if (PyObjC_CheckArgCount(meth, 7, 7, nargs) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &parameterSetCount) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(int), args[4], &NALUnitHeaderLength) == -1) {
         return NULL;
     }
 
@@ -237,18 +220,14 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[5], &extensions) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_extensions, &extensions) == -1) {
-        return NULL;
-    }
-    if (py_formatDescriptionOut != Py_None) {
+    if (args[6] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "formatDescriptionOut must be None");
         return NULL;
     }
-    if (parse_parameterset(parameterSetCount, py_parameterSetPointers,
-                           &parameterSetPointers, py_parameterSetSizes,
+    if (parse_parameterset(parameterSetCount, args[2], &parameterSetPointers, args[3],
                            &parameterSetSizes, &parameterSetViews)
         == -1) {
         return NULL;
@@ -267,7 +246,7 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
                        parameterSetViews);
 
     if (rv == 0) {
-        py_formatDescriptionOut =
+        PyObject* py_formatDescriptionOut =
             PyObjC_ObjCToPython(@encode(CMFormatDescriptionRef), &formatDescriptionOut);
         CFRelease(formatDescriptionOut);
         return Py_BuildValue("iN", rv, py_formatDescriptionOut);
@@ -279,42 +258,34 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
 #endif
 
 static PyMethodDef mod_methods[] = {
-    {"CMVideoFormatDescriptionCreateFromH264ParameterSets",
-     (PyCFunction)m_CMVideoFormatDescriptionCreateFromH264ParameterSets,
-     METH_VARARGS | METH_KEYWORDS, NULL},
-#if PyObjC_BUILD_RELEASE >= 1013
-
-    {"CMVideoFormatDescriptionCreateFromHEVCParameterSets",
-     (PyCFunction)m_CMVideoFormatDescriptionCreateFromHEVCParameterSets,
-     METH_VARARGS | METH_KEYWORDS, NULL},
-
-#endif
-
     {NULL} /* Sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-#if PyObjC_BUILD_RELEASE >= 1013 && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13
+    if (PyObjC_ImportAPI(m) == -1)
+        return -1;
+
+    if (PyObjCRegister_FunctionCaller(
+            CMVideoFormatDescriptionCreateFromH264ParameterSets,
+            m_CMVideoFormatDescriptionCreateFromH264ParameterSets)
+        == -1) {
+        return -1;
+    }
+#if PyObjC_BUILD_RELEASE >= 1013
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
-
-    if (&CMVideoFormatDescriptionCreateFromHEVCParameterSets == NULL) {
-        if (PyObject_DelAttrString(m,
-                                   "CMVideoFormatDescriptionCreateFromHEVCParameterSets")
-            == -1) {
-            return -1;
-        }
+    if (PyObjCRegister_FunctionCaller(
+            CMVideoFormatDescriptionCreateFromHEVCParameterSets,
+            m_CMVideoFormatDescriptionCreateFromHEVCParameterSets)
+        == -1) {
+        return -1;
     }
-
 #pragma clang diagnostic pop
 
 #endif
-
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
 
     return 0;
 }

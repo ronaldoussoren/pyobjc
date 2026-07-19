@@ -756,16 +756,13 @@ class TestCMFormatDescription(TestCase):
 
     @expectedFailure
     def test_functions_manual(self):
-        self.assertNotIsInstance(
-            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets, objc.function
-        )
-        self.assertNotIsInstance(
-            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets, objc.function
-        )
-
         self.fail(
             "CMVideoFormatDescriptionGetH264ParameterSetAtIndex"
         )  # Needs manual wrapper
+
+    @min_os_level("10.13")
+    @expectedFailure
+    def test_functions_manual10_13(self):
         self.fail(
             "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex"
         )  # Needs manual wrapper

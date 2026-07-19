@@ -85,6 +85,20 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMVideoFormatDescriptionCreateFromHEVCParameterSets": {
+   "args": {
+    "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+    "3": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+    "6": { "type_modifier": "o", "null_accepted": false }
+   }
+  },
+  "CMVideoFormatDescriptionCreateFromH264ParameterSets": {
+   "args": {
+    "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+    "3": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+    "5": { "type_modifier": "o", "null_accepted": false }
+   }
+  },
   "CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroupWithExtensions": {
    "args": {
     "3": { "type_modifier": "o", "already_cfretained": true }
@@ -2017,8 +2031,6 @@
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CMVideoFormatDescriptionCreateFromH264ParameterSets": { "ignore": true },
-   "CMVideoFormatDescriptionCreateFromHEVCParameterSets": { "ignore": true },
    "CMVideoFormatDescriptionGetCleanAperture": {
     "args": {
      "0": {}
