@@ -195,6 +195,15 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CTRunDelegateGetRefCon": {
+    "doc": "Only use this on CTRunDelegateRef objects that are created in Python"
+   },
+   "CTRunDelegateCreate": {
+    "args": {
+     "0": { "type_override": "@", "doc": "Tuple of 3 callables" },
+     "1": { "type_override": "@", "doc": "Can be an arbitrary object" }
+    }
+   },
    "CTFontDescriptorMatchFontDescriptorsWithProgressHandler": {
     "args": {
       "2": {
@@ -1458,10 +1467,12 @@
      "0": {
       "type_override": "^{__CTParagraphStyle=}"
      },
+     "2": { "doc": "Pass 0 to determine the size automatically" },
      "3": {
       "c_array_length_in_arg": 2,
       "type_modifier": "o",
-      "type_override": "^v"
+      "type_override": "^v",
+      "doc": "Value must be ``None``. When *size* is 0 the returned value will have the expected type, otherwise it will by a bytes object"
      }
     }
    },

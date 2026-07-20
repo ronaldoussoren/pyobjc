@@ -26,8 +26,8 @@ setup(
     packages=["CoreText"],
     ext_modules=[
         Extension(
-            "CoreText._manual",
-            ["Modules/_manual.m"],
+            "CoreText._CoreText",
+            ["Modules/_CoreText.m"],
             extra_link_args=["-framework", "CoreServices"],
         )
     ],

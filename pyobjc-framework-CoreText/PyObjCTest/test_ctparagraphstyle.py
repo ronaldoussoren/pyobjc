@@ -94,6 +94,15 @@ class TestCTParagraphStyle(TestCase):
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
+            CoreText.kCTParagraphStyleSpecifierAlignment,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(v, int)
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
             CoreText.kCTParagraphStyleSpecifierFirstLineHeadIndent,
             CoreText.sizeof_CGFloat,
             None,
@@ -104,13 +113,21 @@ class TestCTParagraphStyle(TestCase):
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
-            CoreText.kCTParagraphStyleSpecifierLineBreakMode,
-            CoreText.sizeof_CTLineBreakMode,
+            CoreText.kCTParagraphStyleSpecifierFirstLineHeadIndent,
+            0,
             None,
         )
         self.assertTrue(ok)
-        self.assertIsInstance(v, bytes)
-        self.assertEqual(len(v), CoreText.sizeof_CTLineBreakMode)
+        self.assertIsInstance(v, float)
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            CoreText.kCTParagraphStyleSpecifierLineBreakMode,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(v, int)
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
@@ -178,6 +195,14 @@ class TestCTParagraphStyle(TestCase):
         self.assertEqual(
             v, chr(CoreText.kCTWritingDirectionRightToLeft).encode("latin1")
         )
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            CoreText.kCTParagraphStyleSpecifierBaseWritingDirection,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertEqual(v, CoreText.kCTWritingDirectionRightToLeft)
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
@@ -188,3 +213,12 @@ class TestCTParagraphStyle(TestCase):
         self.assertTrue(ok)
         self.assertIsInstance(v, bytes)
         self.assertEqual(v, struct.pack(float_pack, 10.5))
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            CoreText.kCTParagraphStyleSpecifierFirstLineHeadIndent,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertEqual(v, 10.5)

@@ -5,24 +5,23 @@
 #import <ApplicationServices/ApplicationServices.h>
 
 static PyObject*
-m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CTFontCopyAvailableTables(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                            size_t    nargs)
 {
-    PyObject*          py_font;
-    PyObject*          py_options;
     CTFontRef          font;
     CTFontTableOptions options;
     CFArrayRef         ref;
     Py_ssize_t         len, i;
     PyObject*          result;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_font, &py_options)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CTFontRef), py_font, &font) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CTFontRef), args[0], &font) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CTFontTableOptions), py_options, &options) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CTFontTableOptions), args[1], &options) == -1) {
         return NULL;
     }
 
@@ -66,26 +65,95 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject
 }
 
 static PyObject*
-m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
+                                       PyObject* _Nonnull const* _Nonnull args,
+                                       size_t nargs)
 {
-    PyObject*           py_style;
-    CTParagraphStyleRef style;
-    CFArrayRef          output = NULL;
-    PyObject*           result;
-    bool                b;
+    CTParagraphStyleRef       style;
+    CTParagraphStyleSpecifier spec;
+    size_t                    size;
+    PyObject*                 result = NULL;
+    bool                      b;
+    uint8_t                   uint8_value = 0;
+    unsigned long             ulong_value = 0;
+    CGFloat                   float_value = 0.0;
+    id                        id_value    = NULL;
+    void*                     value_buf   = NULL;
 
-    if (!PyArg_ParseTuple(args, "O", &py_style)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CTParagraphStyleRef), py_style, &style) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CTParagraphStyleRef), args[0], &style) == -1) {
         return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier), args[1], &spec) == -1) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(size_t), args[2], &size) == -1) {
+        return NULL;
+    }
+    if (args[3] != Py_None) {
+        PyErr_Format(PyExc_ValueError, "'valueBuffer' must be None");
+        return NULL;
+    }
+
+    if (size == 0) {
+        switch (spec) {
+        case kCTParagraphStyleSpecifierAlignment:
+        case kCTParagraphStyleSpecifierLineBreakMode:
+        case kCTParagraphStyleSpecifierBaseWritingDirection:
+            value_buf = &uint8_value;
+            size      = sizeof(uint8_value);
+            break;
+
+        case kCTParagraphStyleSpecifierFirstLineHeadIndent:
+        case kCTParagraphStyleSpecifierHeadIndent:
+        case kCTParagraphStyleSpecifierTailIndent:
+        case kCTParagraphStyleSpecifierDefaultTabInterval:
+        case kCTParagraphStyleSpecifierLineHeightMultiple:
+        case kCTParagraphStyleSpecifierMaximumLineHeight:
+        case kCTParagraphStyleSpecifierMinimumLineHeight:
+        case kCTParagraphStyleSpecifierLineSpacing:
+        case kCTParagraphStyleSpecifierParagraphSpacing:
+        case kCTParagraphStyleSpecifierParagraphSpacingBefore:
+        case kCTParagraphStyleSpecifierMaximumLineSpacing:
+        case kCTParagraphStyleSpecifierMinimumLineSpacing:
+        case kCTParagraphStyleSpecifierLineSpacingAdjustment:
+            value_buf = &float_value;
+            size      = sizeof(float_value);
+            break;
+
+        case kCTParagraphStyleSpecifierLineBoundsOptions:
+            value_buf = &ulong_value;
+            size      = sizeof(ulong_value);
+            break;
+
+        case kCTParagraphStyleSpecifierTabStops:
+            value_buf = &id_value;
+            size      = sizeof(id_value);
+            break;
+
+        default:
+            PyErr_SetString(PyExc_ValueError, "Cannot automatically determine 'size'");
+            return NULL;
+        }
+
+    } else if (size == sizeof(id_value) && spec == kCTParagraphStyleSpecifierTabStops) {
+        value_buf = &id_value;
+        size      = sizeof(id_value);
+
+    } else {
+        result = PyBytes_FromStringAndSize(NULL, size);
+        if (result == NULL) {
+            return NULL;
+        }
+        value_buf = PyBytes_AS_STRING(result);
     }
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            b = CTParagraphStyleGetValueForSpecifier(
-                style, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &output);
+            b = CTParagraphStyleGetValueForSpecifier(style, spec, size, value_buf);
         } @catch (NSException* localException) {
             b = 0;
             PyObjCErr_FromObjC(localException);
@@ -93,21 +161,34 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)), PyObje
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        Py_CLEAR(result);
         return NULL;
     }
 
     if (!b) {
+        Py_CLEAR(result);
         return Py_BuildValue("OO", Py_False, Py_None);
     }
 
-    result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSArray*)output));
+    if (result != NULL) {
+        result = Py_BuildValue("ON", Py_True, result);
+    } else if (value_buf == &uint8_value) {
+        result = Py_BuildValue("ON", Py_True, PyLong_FromLong(uint8_value));
+    } else if (value_buf == &float_value) {
+        result = Py_BuildValue("ON", Py_True, PyFloat_FromDouble(float_value));
+    } else if (value_buf == &ulong_value) {
+        result = Py_BuildValue("ON", Py_True, PyLong_FromUnsignedLong(ulong_value));
+    } else if (value_buf == &id_value) {
+        result = Py_BuildValue("ON", Py_True, PyObjC_IdToPython(id_value));
+    }
+
     return result;
 }
 
 static PyObject*
-m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                         size_t    nargs)
 {
-    PyObject*                py_settings;
     PyObject*                seq;
     PyObject*                result;
     Py_ssize_t               len, i;
@@ -116,11 +197,15 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
     CTParagraphStyleRef      style = NULL;
     Py_buffer*               views = NULL;
 
-    if (!PyArg_ParseTuple(args, "On", &py_settings, &len)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_settings == Py_None) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &len) == -1) {
+        return NULL;
+    }
+
+    if (args[0] == Py_None) {
         /* Handle simple case */
         if (len != 0) {
             PyErr_SetString(PyExc_ValueError, "settings list is 'None', length is not 0");
@@ -149,7 +234,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         return result;
     }
 
-    seq = PySequence_Tuple(py_settings);
+    seq = PySequence_Tuple(args[0]);
     if (seq == NULL) {
         return NULL;
     }
@@ -375,17 +460,18 @@ static CTRunDelegateCallbacks m_CTRunDelegateCallbacks = {
 };
 
 static PyObject*
-m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CTRunDelegateGetRefCon(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                         size_t    nargs)
 {
-    PyObject*        py_delegate;
     CTRunDelegateRef delegate;
     PyObject*        py_refcon;
     void*            refcon;
 
-    if (!PyArg_ParseTuple(args, "O", &py_delegate)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CTRunDelegateRef), py_delegate, &delegate) == -1) {
+
+    if (PyObjC_PythonToObjC(@encode(CTRunDelegateRef), args[0], &delegate) == -1) {
         return NULL;
     }
 
@@ -401,34 +487,35 @@ m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* a
 }
 
 static PyObject*
-m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CTRunDelegateCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                      size_t    nargs)
 {
     PyObject*        py_delegate;
-    PyObject*        py_getAscender;
-    PyObject*        py_getDescender;
-    PyObject*        py_getWidth;
-    PyObject*        py_refCon;
     PyObject*        info;
     CTRunDelegateRef delegate;
 
-    if (!PyArg_ParseTuple(args, "(OOO)O", &py_getAscender, &py_getDescender, &py_getWidth,
-                          &py_refCon)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
-    if (!PyCallable_Check(py_getAscender)) {
+    if (!PyTuple_Check(args[0]) || PyTuple_GET_SIZE(args[0]) != 3) {
+        PyErr_SetString(PyExc_ValueError, "arg0 must be a tuple of 3 callables");
+        return NULL;
+    }
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 0))) {
         PyErr_SetString(PyExc_TypeError, "getAscender is not callable");
         return NULL;
     }
-    if (!PyCallable_Check(py_getDescender)) {
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 1))) {
         PyErr_SetString(PyExc_TypeError, "getDescender is not callable");
         return NULL;
     }
-    if (!PyCallable_Check(py_getWidth)) {
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 2))) {
         PyErr_SetString(PyExc_TypeError, "getWidth is not callable");
         return NULL;
     }
-    info =
-        Py_BuildValue("(OOOO)", py_getAscender, py_getDescender, py_getWidth, py_refCon);
+    info = Py_BuildValue("(OOOO)", PyTuple_GET_ITEM(args[0], 0),
+                         PyTuple_GET_ITEM(args[0], 1), PyTuple_GET_ITEM(args[0], 2),
+                         args[1]);
     if (info == NULL) {
         return NULL;
     }
@@ -443,41 +530,39 @@ m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     return py_delegate;
 }
 
-static PyMethodDef mod_methods[] = {
-    {"CTFontCopyAvailableTables", (PyCFunction)m_CTFontCopyAvailableTables, METH_VARARGS,
-     NULL},
-    {"CTParagraphStyleGetTabStops", (PyCFunction)m_CTParagraphStyleGetTabStops,
-     METH_VARARGS, "CTParagraphStyleGetTabStops(style) -> (stop, ...)"},
-    {
-        "CTParagraphStyleCreate",
-        (PyCFunction)m_CTParagraphStyleCreate,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "CTRunDelegateGetRefCon",
-        (PyCFunction)m_CTRunDelegateGetRefCon,
-        METH_VARARGS,
-        NULL,
-    },
-    {
-        "CTRunDelegateCreate",
-        (PyCFunction)m_CTRunDelegateCreate,
-        METH_VARARGS,
-        "CTRunDelegateCreate((getAscent, getDescent, getWidth), info) -> runDelegate",
-    },
-
-    {
-        0,
-        0,
-        0,
-    }};
+static PyMethodDef mod_methods[] = {{
+    0,
+    0,
+    0,
+}};
 
 static int
 mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0)
         return -1;
+
+    if (PyObjCRegister_FunctionCaller(CTFontCopyAvailableTables,
+                                      m_CTFontCopyAvailableTables)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CTParagraphStyleCreate, m_CTParagraphStyleCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CTRunDelegateGetRefCon, m_CTRunDelegateGetRefCon)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CTRunDelegateCreate, m_CTRunDelegateCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CTParagraphStyleGetValueForSpecifier,
+                                      m_CTParagraphStyleGetValueForSpecifier)
+        == -1) {
+        return -1;
+    }
 
     if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0)
         return -1;
@@ -520,7 +605,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 
 static struct PyModuleDef mod_module = {
     .m_base     = PyModuleDef_HEAD_INIT,
-    .m_name     = "_manual",
+    .m_name     = "_CoreText",
     .m_doc      = NULL,
     .m_size     = 0,
     .m_methods  = mod_methods,
@@ -530,10 +615,10 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__manual(void);
+PyObject* PyInit__CoreText(void);
 
 PyObject* __attribute__((__visibility__("default")))
-PyInit__manual(void)
+PyInit__CoreText(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
