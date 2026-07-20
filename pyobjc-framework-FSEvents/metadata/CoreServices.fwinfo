@@ -64,7 +64,6 @@
     }
    },
    "FSEventStreamCreate": {
-    "ignore": true,
     "args": {
      "0": {
       "type_override": "^{__CFAllocator=}"
@@ -98,19 +97,19 @@
       "type_override": "^?"
      },
      "2": {
-      "type_override": "^{FSEventStreamContext=q^v^?^?^?}"
+      "type_override": "@",
+      "doc": "An arbitrary object can be used for the context, the context structure is managed automatically"
      },
      "3": {
       "type_override": "^{__CFArray=}"
      }
     },
     "retval": {
-     "already_retained": true,
+     "already_cfretained": true,
      "type_override": "^{__FSEventStream=}"
     }
    },
    "FSEventStreamCreateRelativeToDevice": {
-    "ignore": true,
     "args": {
      "0": {
       "type_override": "^{__CFAllocator=}"
@@ -144,14 +143,15 @@
       "type_override": "^?"
      },
      "2": {
-      "type_override": "^{FSEventStreamContext=q^v^?^?^?}"
+      "type_override": "@",
+      "doc": "An arbitrary object can be used for the context, the context structure is managed automatically"
      },
      "4": {
       "type_override": "^{__CFArray=}"
      }
     },
     "retval": {
-     "already_retained": true,
+     "already_cfretained": true,
      "type_override": "^{__FSEventStream=}"
     }
    },

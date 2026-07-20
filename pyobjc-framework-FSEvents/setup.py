@@ -24,7 +24,7 @@ setup(
     description="Wrappers for the framework FSEvents on macOS",
     min_os_level="10.5",
     packages=["FSEvents"],
-    ext_modules=[Extension("FSEvents._callbacks", ["Modules/_callbacks.m"])],
+    ext_modules=[Extension("FSEvents._FSEvents", ["Modules/_FSEvents.m"])],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
