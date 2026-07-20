@@ -11,9 +11,6 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
-   "MTAudioProcessingTapCreate": {
-    "ignore": true
-   },
    "MTAudioProcessingTapGetSourceAudio": {
     "args": {
      "0": {},
@@ -24,7 +21,7 @@
     }
    },
    "MTAudioProcessingTapGetStorage": {
-    "ignore": true
+    "doc": "Only use this on taps created in Python"
    },
    "MTCopyLocalizedNameForMediaSubType": {
     "retval": {

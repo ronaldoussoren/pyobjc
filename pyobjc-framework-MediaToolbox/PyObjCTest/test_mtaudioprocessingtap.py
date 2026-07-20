@@ -1,6 +1,5 @@
 import MediaToolbox
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class TestMTAudioProcessingTap(TestCase):
@@ -15,17 +14,13 @@ class TestMTAudioProcessingTap(TestCase):
         self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 5)
 
         # XXX: These two funtions should be tested manually:
-        self.assertNotIsInstance(
-            MediaToolbox.MTAudioProcessingTapGetStorage, objc.function
-        )
-        self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapCreate, objc.function)
+        MediaToolbox.MTAudioProcessingTapGetStorage
+        MediaToolbox.MTAudioProcessingTapCreate
 
     @min_os_level("27.0")
     def test_functions27_0(self):
         # XXX: This funtion should be tested manually:
-        self.assertNotIsInstance(
-            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat, objc.function
-        )
+        MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat
 
     def test_constants(self):
         self.assertEqual(
