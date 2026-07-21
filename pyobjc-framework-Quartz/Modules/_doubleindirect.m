@@ -9,19 +9,30 @@
 #import <ApplicationServices/ApplicationServices.h>
 
 static PyObject*
-m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CGWaitForScreenRefreshRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                              size_t    nargs)
 {
     CGRect*     rectArray = NULL;
     CGRectCount count     = 0;
     CGError     err;
 
-    if (PyTuple_Size(args) == 2) {
-        if (PyTuple_GetItem(args, 0) != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "pRectArray");
+    if (nargs == 0) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving out 'pRectArray' and 'pCount' is deprecated", 0)
+            == -1) {
             return NULL;
         }
-        if (PyTuple_GetItem(args, 1) != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "pCount");
+    } else {
+        if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
+            return NULL;
+        }
+
+        if (args[0] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "'pRectArray' must be None");
+            return NULL;
+        }
+        if (args[1] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "'pCount' must be None");
             return NULL;
         }
     }
@@ -67,7 +78,8 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObje
 }
 
 static PyObject*
-m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CGWaitForScreenUpdateRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                             size_t    nargs)
 {
     CGRect*                 rectArray = NULL;
     size_t                  count     = 0;
@@ -75,41 +87,47 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObjec
     CGScreenUpdateOperation currentOperation;
     CGScreenUpdateMoveDelta delta;
     CGError                 err;
-    PyObject*               py_ops;
 
-    if (!PyArg_ParseTuple(args, "O", &py_ops)) {
-        PyObject* py_curop;
-        PyObject* py_rectarr;
-        PyObject* py_count;
-        PyObject* py_delta;
-
-        if (!PyArg_ParseTuple(args, "OOOOO", &py_ops, &py_curop, &py_rectarr, &py_count,
-                              &py_delta)) {
+    if (nargs == 1) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving out 'currentOperation', 'pRectArray', 'pCount' and "
+                         "'pDelta' is deprecated",
+                         0)
+            == -1) {
+            return NULL;
+        }
+        if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), args[0],
+                                &requestedOperations)
+            < 0) {
+            return NULL;
+        }
+    } else {
+        if (PyObjC_CheckArgCount(meth, 5, 5, nargs)) {
             return NULL;
         }
 
-        if (py_curop != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "currentOperation != None");
+        if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), args[0],
+                                &requestedOperations)
+            < 0) {
             return NULL;
         }
-        if (py_rectarr != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "pRectArray != None");
-            return NULL;
-        }
-        if (py_count != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "pCount != None");
-            return NULL;
-        }
-        if (py_delta != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "pDelta != None");
-            return NULL;
-        }
-    }
 
-    if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), py_ops,
-                            &requestedOperations)
-        < 0) {
-        return NULL;
+        if (args[1] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "currentOperation must be None");
+            return NULL;
+        }
+        if (args[2] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "pRectArray must be None");
+            return NULL;
+        }
+        if (args[3] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "pCount must be None");
+            return NULL;
+        }
+        if (args[4] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "pDelta must be None");
+            return NULL;
+        }
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -159,11 +177,10 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObjec
 }
 
 static PyObject*
-m_CGReleaseScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CGReleaseScreenRefreshRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                              size_t    nargs)
 {
-    PyObject* array;
-
-    if (!PyArg_Parse(args, "O", &array)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
@@ -175,21 +192,29 @@ m_CGReleaseScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObje
     return Py_None;
 }
 
-static PyMethodDef mod_methods[] = {
-    {"CGWaitForScreenRefreshRects", (PyCFunction)m_CGWaitForScreenRefreshRects,
-     METH_VARARGS, NULL},
-    {"CGWaitForScreenUpdateRects", (PyCFunction)m_CGWaitForScreenUpdateRects,
-     METH_VARARGS, NULL},
-    {"CGReleaseScreenRefreshRects", (PyCFunction)m_CGReleaseScreenRefreshRects,
-     METH_VARARGS, NULL},
-
-    {0, 0, 0, 0}};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int
 mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0)
         return -1;
+
+    if (PyObjCRegister_FunctionCaller(CGWaitForScreenRefreshRects,
+                                      m_CGWaitForScreenRefreshRects)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CGWaitForScreenUpdateRects,
+                                      m_CGWaitForScreenUpdateRects)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CGReleaseScreenRefreshRects,
+                                      m_CGReleaseScreenRefreshRects)
+        == -1) {
+        return -1;
+    }
 
     return 0;
 }

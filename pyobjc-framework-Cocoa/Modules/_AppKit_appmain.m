@@ -1,31 +1,29 @@
 /*
  * Workaround to make NSAppicationMain more usable from Python.
  */
+NS_ASSUME_NONNULL_BEGIN
 
-static PyObject*
-objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* args,
-                       PyObject* kwds)
+static PyObject* _Nullable objc_NSApplicationMain(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
-    static char* keywords[] = {"argv", NULL};
-    char**       argv       = NULL;
-    int          argc;
-    PyObject*    arglist;
-    int          i;
-    PyObject*    v;
-    int          res;
+    char**    argv = NULL;
+    int       argc;
+    int       i;
+    PyObject* v;
+    int       res;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:NSApplicationMain", keywords,
-                                     &arglist)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
-    if (!PySequence_Check(arglist)) {
+    if (!PySequence_Check(args[0])) {
         PyErr_SetString(PyExc_TypeError,
                         "NSApplicationMain: need list of strings as argument");
         return NULL;
     }
 
-    argc = PySequence_Size(arglist);
+    argc = PySequence_Size(args[0]);
     argv = calloc((argc + 1), sizeof(char**));
     if (argv == NULL) {
         PyErr_SetString(PyExc_MemoryError, "Out of memory");
@@ -33,7 +31,7 @@ objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* arg
     }
 
     for (i = 0; i < argc; i++) {
-        v = PySequence_GetItem(arglist, i);
+        v = PySequence_GetItem(args[0], i);
         if (v == NULL) {
             goto error_cleanup;
         }
@@ -95,8 +93,13 @@ error_cleanup:
     return NULL;
 }
 
-#define APPKIT_APPMAIN_METHODS                                                           \
-    {"NSApplicationMain", (PyCFunction)objc_NSApplicationMain,                           \
-     METH_VARARGS | METH_KEYWORDS,                                                       \
-     "NSApplicationMain(arg0, arg1)\n\nint NSApplicationMain(int argc, const char "      \
-     "*argv[]);"},
+static int
+setup_appmain(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(NSApplicationMain, objc_NSApplicationMain) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

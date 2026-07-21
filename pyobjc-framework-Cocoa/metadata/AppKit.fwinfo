@@ -28774,7 +28774,7 @@
    },
    "NSApplicationMain": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 0, "type_override": "^^t" }
     }
    },
    "NSAvailableWindowDepths": {
@@ -28811,8 +28811,8 @@
    },
    "NSConvertGlyphsToPackedGlyphs": {
     "args": {
-     "0": {},
-     "3": {}
+     "0": { "c_array_length_in_arg": 1, "type_modifier": "n" },
+     "3": { "c_array_of_varialbe_length": true, "type_modifier": "o", "type_override": "^v" }
     }
    },
    "NSCountWindows": {

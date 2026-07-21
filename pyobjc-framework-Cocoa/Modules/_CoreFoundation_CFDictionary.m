@@ -1,28 +1,26 @@
-static PyObject*
-mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
-                                 PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*       pyDict;
-    PyObject*       pyKeys;
-    PyObject*       pyValues;
     PyObject*       result;
     CFDictionaryRef dict;
     void*           keys;
     void*           values;
     CFIndex         count;
 
-    if (!PyArg_ParseTuple(args, "OOO", &pyDict, &pyKeys, &pyValues)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), pyDict, &dict) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[0], &dict) < 0) {
         return NULL;
     }
 
     count = -1;
-    if (pyKeys == PyObjC_NULL) {
+    if (args[1] == PyObjC_NULL) {
         keys = NULL;
-    } else if (pyKeys == Py_None) {
+    } else if (args[1] == Py_None) {
         count = CFDictionaryGetCount(dict);
         keys  = malloc(sizeof(void*) * count);
         if (keys == NULL) {
@@ -34,9 +32,9 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (pyValues == PyObjC_NULL) {
+    if (args[1] == PyObjC_NULL) {
         values = NULL;
-    } else if (pyValues == Py_None) {
+    } else if (args[1] == Py_None) {
         if (count == -1) {
             count = CFDictionaryGetCount(dict);
         }
@@ -72,6 +70,7 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
+    PyObject* pyKeys;
     if (keys != NULL) {
         pyKeys = PyObjC_CArrayToPython(@encode(id), keys, count);
         free(keys);
@@ -80,6 +79,7 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
         Py_INCREF(pyKeys);
     }
 
+    PyObject* pyValues;
     if (values != NULL) {
         pyValues = PyObjC_CArrayToPython(@encode(id), values, count);
         free(values);
@@ -92,6 +92,15 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
     return result;
 }
 
-#define COREFOUNDATION_DICTIONARY_METHODS                                                \
-    {"CFDictionaryGetKeysAndValues", (PyCFunction)mod_CFDictionaryGetKeysAndValues,      \
-     METH_VARARGS, NULL},
+static int
+setup_dictionary(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFDictionaryGetKeysAndValues,
+                                      mod_CFDictionaryGetKeysAndValues)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

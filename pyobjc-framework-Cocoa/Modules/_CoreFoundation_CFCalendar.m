@@ -5,9 +5,10 @@
  * arguments are integers and the number of arguments is trivially derived
  * from the format string these implementations are fairly trivial.
  */
+NS_ASSUME_NONNULL_BEGIN
 
-static PyObject*
-mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFCalendarAddComponents(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFCalendarRef  calendar;
     CFAbsoluteTime at;
@@ -17,38 +18,37 @@ mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject
     Boolean        result;
     int            r;
 
-    if (PyTuple_Size(args) < 4) {
-        PyErr_Format(PyExc_TypeError, "Expecting at least 4 arguments, got %ld",
-                     PyTuple_Size(args));
+    if (nargs < 4) {
+        PyErr_Format(PyExc_TypeError, "Expecting at least 4 arguments, got %ld", nargs);
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), PyTuple_GetItem(args, 0), &calendar);
+    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), args[0], &calendar);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), PyTuple_GetItem(args, 1), &at);
+    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), args[1], &at);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFOptionFlags), PyTuple_GetItem(args, 2), &flags);
+    r = PyObjC_PythonToObjC(@encode(CFOptionFlags), args[2], &flags);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(char*), PyTuple_GetItem(args, 3), &componentDesc);
+    r = PyObjC_PythonToObjC(@encode(char*), args[3], &componentDesc);
     if (r == -1) {
         return NULL;
     }
 
-    if ((size_t)PyTuple_Size(args) != 4 + strlen(componentDesc)) {
+    if ((size_t)nargs != 4 + strlen(componentDesc)) {
         PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
-                     4 + strlen(componentDesc), PyTuple_Size(args));
+                     4 + strlen(componentDesc), nargs);
         return NULL;
     }
-    if (PyTuple_Size(args) > 4 + 10) {
+    if (nargs > 4 + 10) {
         PyErr_SetString(PyExc_TypeError,
                         "At most 10 characters supported in componentDesc");
         return NULL;
@@ -58,7 +58,7 @@ mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject
 
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
-        r = PyObjC_PythonToObjC(@encode(int), PyTuple_GetItem(args, 4 + i), params + i);
+        r = PyObjC_PythonToObjC(@encode(int), args[4 + i], params + i);
         if (r == -1) {
             return NULL;
         }
@@ -94,9 +94,8 @@ mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject
     return Py_BuildValue("NN", b, a);
 }
 
-static PyObject*
-mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
-                                  PyObject* args)
+static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFCalendarRef  calendar;
     CFAbsoluteTime at;
@@ -105,33 +104,32 @@ mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     Boolean        result;
     int            r;
 
-    if (PyTuple_Size(args) < 3) {
-        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld",
-                     PyTuple_Size(args));
+    if (nargs < 3) {
+        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld", nargs);
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), PyTuple_GetItem(args, 0), &calendar);
+    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), args[0], &calendar);
     if (r == -1) {
         return NULL;
     }
 
-    if (PyTuple_GetItem(args, 1) != Py_None) {
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_TypeError, "placeholder for 'at' must be None");
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(char*), PyTuple_GetItem(args, 2), &componentDesc);
+    r = PyObjC_PythonToObjC(@encode(char*), args[2], &componentDesc);
     if (r == -1) {
         return NULL;
     }
 
-    if ((size_t)PyTuple_Size(args) != 3 + strlen(componentDesc)) {
+    if ((size_t)nargs != 3 + strlen(componentDesc)) {
         PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
-                     3 + strlen(componentDesc), PyTuple_Size(args));
+                     3 + strlen(componentDesc), nargs);
         return NULL;
     }
-    if (PyTuple_Size(args) > 3 + 10) {
+    if (nargs > 3 + 10) {
         PyErr_SetString(PyExc_TypeError,
                         "At most 10 characters supported in componentDesc");
         return NULL;
@@ -141,7 +139,7 @@ mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
 
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
-        r = PyObjC_PythonToObjC(@encode(int), PyTuple_GetItem(args, 3 + i), params + i);
+        r = PyObjC_PythonToObjC(@encode(int), args[3 + i], params + i);
         if (r == -1) {
             return NULL;
         }
@@ -176,9 +174,8 @@ mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     return Py_BuildValue("NN", b, a);
 }
 
-static PyObject*
-mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
-                                    PyObject* args)
+static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFCalendarRef  calendar;
     CFAbsoluteTime at;
@@ -187,23 +184,22 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     Boolean        result;
     int            r;
 
-    if (PyTuple_Size(args) < 3) {
-        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld",
-                     PyTuple_Size(args));
+    if (nargs < 3) {
+        PyErr_Format(PyExc_TypeError, "Expecting at least 3 arguments, got %ld", nargs);
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), PyTuple_GetItem(args, 0), &calendar);
+    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), args[0], &calendar);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), PyTuple_GetItem(args, 1), &at);
+    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), args[1], &at);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(char*), PyTuple_GetItem(args, 2), &componentDesc);
+    r = PyObjC_PythonToObjC(@encode(char*), args[2], &componentDesc);
     if (r == -1) {
         return NULL;
     }
@@ -214,10 +210,10 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyTuple_Size(args) != 3) {
-        if ((size_t)PyTuple_Size(args) != 3 + strlen(componentDesc)) {
+    if (nargs != 3) {
+        if ((size_t)nargs != 3 + strlen(componentDesc)) {
             PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
-                         3 + strlen(componentDesc), PyTuple_Size(args));
+                         3 + strlen(componentDesc), nargs);
             return NULL;
         }
 
@@ -225,7 +221,7 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
 
         len = strlen(componentDesc);
         for (i = 0; i < len; i++) {
-            if (PyTuple_GetItem(args, 3 + i) != Py_None) {
+            if (args[+i] != Py_None) {
                 PyErr_SetString(PyExc_ValueError, "Bad placeholder value");
                 return NULL;
             }
@@ -273,9 +269,8 @@ mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
     return rv;
 }
 
-static PyObject*
-mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
-                                     PyObject* args)
+static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFCalendarRef  calendar;
     CFAbsoluteTime startingAt;
@@ -286,34 +281,32 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
     Boolean        result;
     int            r;
 
-    if (PyTuple_Size(args) < 5) {
-        PyErr_Format(PyExc_TypeError, "Expecting at least 5 arguments, got %ld",
-                     PyTuple_Size(args));
+    if (nargs < 5) {
+        PyErr_Format(PyExc_TypeError, "Expecting at least 5 arguments, got %ld", nargs);
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), PyTuple_GetItem(args, 0), &calendar);
+    r = PyObjC_PythonToObjC(@encode(CFCalendarRef), args[0], &calendar);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), PyTuple_GetItem(args, 1),
-                            &startingAt);
+    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), args[1], &startingAt);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), PyTuple_GetItem(args, 2), &resultAt);
+    r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), args[2], &resultAt);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(CFOptionFlags), PyTuple_GetItem(args, 3), &options);
+    r = PyObjC_PythonToObjC(@encode(CFOptionFlags), args[3], &options);
     if (r == -1) {
         return NULL;
     }
 
-    r = PyObjC_PythonToObjC(@encode(char*), PyTuple_GetItem(args, 4), &componentDesc);
+    r = PyObjC_PythonToObjC(@encode(char*), args[4], &componentDesc);
     if (r == -1) {
         return NULL;
     }
@@ -324,10 +317,10 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyTuple_Size(args) != 5) {
-        if ((size_t)PyTuple_Size(args) != 5 + strlen(componentDesc)) {
+    if (nargs != 5) {
+        if ((size_t)nargs != 5 + strlen(componentDesc)) {
             PyErr_Format(PyExc_TypeError, "Expecting %ld arguments, got %ld",
-                         3 + strlen(componentDesc), PyTuple_Size(args));
+                         3 + strlen(componentDesc), nargs);
             return NULL;
         }
 
@@ -335,7 +328,7 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
 
         len = strlen(componentDesc);
         for (i = 0; i < len; i++) {
-            if (PyTuple_GetItem(args, 5 + i) != Py_None) {
+            if (args[5 + i] != Py_None) {
                 PyErr_SetString(PyExc_ValueError, "Bad placeholder value");
                 return NULL;
             }
@@ -383,12 +376,30 @@ mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
     return rv;
 }
 
-#define COREFOUNDATION_CALENDAR_METHODS                                                  \
-    {"CFCalendarAddComponents", (PyCFunction)mod_CFCalendarAddComponents, METH_VARARGS,  \
-     NULL},                                                                              \
-        {"CFCalendarComposeAbsoluteTime",                                                \
-         (PyCFunction)mod_CFCalendarComposeAbsoluteTime, METH_VARARGS, NULL},            \
-        {"CFCalendarDecomposeAbsoluteTime",                                              \
-         (PyCFunction)mod_CFCalendarDecomposeAbsoluteTime, METH_VARARGS, NULL},          \
-        {"CFCalendarGetComponentDifference",                                             \
-         (PyCFunction)mod_CFCalendarGetComponentDifference, METH_VARARGS, NULL},
+static int
+setup_calendar(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFCalendarAddComponents,
+                                      mod_CFCalendarAddComponents)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFCalendarComposeAbsoluteTime,
+                                      mod_CFCalendarComposeAbsoluteTime)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFCalendarDecomposeAbsoluteTime,
+                                      mod_CFCalendarDecomposeAbsoluteTime)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFCalendarGetComponentDifference,
+                                      mod_CFCalendarGetComponentDifference)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

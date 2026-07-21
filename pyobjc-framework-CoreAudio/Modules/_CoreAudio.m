@@ -13,17 +13,17 @@
 #include "_CoreAudio_AudioChannelLayout.m"
 #include "_CoreAudio_AudioValueTranslation.m"
 
+/* Note: TestAudioFormatNativeEndian is a macro */
 static PyObject*
-m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObject* args)
+m_TestAudioFormatNativeEndian(PyObject* meth, PyObject* const* args, Py_ssize_t nargs)
 {
     AudioStreamBasicDescription description;
-    PyObject*                   o;
 
-    if (!PyArg_ParseTuple(args, "O", &o)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), o, &description)
+    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), args[0], &description)
         == -1) {
         return NULL;
     }
@@ -37,7 +37,7 @@ m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObjec
 
 static PyMethodDef mod_methods[] = {
     {"TestAudioFormatNativeEndian", (PyCFunction)m_TestAudioFormatNativeEndian,
-     METH_VARARGS, NULL},
+     METH_FASTCALL, NULL},
 
     {0, 0, 0, 0} /* sentinel */
 };

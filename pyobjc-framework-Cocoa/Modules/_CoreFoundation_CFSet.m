@@ -1,25 +1,25 @@
-static PyObject*
-mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFSetGetValues(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
-    PyObject* pySet;
-    PyObject* pyValues;
-    CFSetRef  set;
-    void*     values;
-    CFIndex   count;
+    CFSetRef set;
+    void*    values;
+    CFIndex  count;
 
-    if (!PyArg_ParseTuple(args, "OO", &pySet, &pyValues)) {
-
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFSetRef), pySet, &set) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFSetRef), args[0], &set) < 0) {
         return NULL;
     }
 
-    if (pyValues == PyObjC_NULL) {
+    if (args[1] == PyObjC_NULL) {
         values = NULL;
         count  = 0;
-    } else if (pyValues == Py_None) {
+    } else if (args[1] == Py_None) {
         count  = CFSetGetCount(set);
         values = malloc(sizeof(void*) * count);
         if (values == NULL) {
@@ -47,6 +47,7 @@ mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
+    PyObject* pyValues;
     if (values != NULL) {
         pyValues = PyObjC_CArrayToPython(@encode(id), values, count);
         free(values);
@@ -58,5 +59,13 @@ mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
     return pyValues;
 }
 
-#define COREFOUNDATION_SET_METHODS                                                       \
-    {"CFSetGetValues", (PyCFunction)mod_CFSetGetValues, METH_VARARGS, NULL},
+static int
+setup_set(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFSetGetValues, mod_CFSetGetValues) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

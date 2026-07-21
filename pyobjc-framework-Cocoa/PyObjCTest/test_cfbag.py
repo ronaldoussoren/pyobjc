@@ -1,5 +1,6 @@
 import CoreFoundation
 import objc
+import warnings
 from PyObjCTools.TestSupport import TestCase
 
 
@@ -68,9 +69,22 @@ class TestCFBag(TestCase):
         exists, value = CoreFoundation.CFBagGetValueIfPresent(bag, "b", None)
         self.assertFalse(exists)
         self.assertIs(value, None)
-        values = set(CoreFoundation.CFBagGetValues(bag))
+        values = set(CoreFoundation.CFBagGetValues(bag, None))
         expected = {"Hello", 42, "World", "a"}
         self.assertEqual(values, expected)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "leaving of the second argument is deprecated"
+            ):
+                CoreFoundation.CFBagGetValues(bag)
+
+        with warnings.catch_warnings(record=True) as wrns:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            CoreFoundation.CFBagGetValues(bag)
+        self.assertEqual(len(wrns), 1)
+        self.assertEqual(wrns[0].category, DeprecationWarning)
 
     def test_mutation(self):
         bag = CoreFoundation.CFBagCreateMutable(None, 0)

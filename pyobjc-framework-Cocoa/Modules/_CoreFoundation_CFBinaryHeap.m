@@ -1,6 +1,7 @@
 /*
  * Manual wrappers for CFBinaryHeap
  */
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (OC_Comparison)
 - (NSComparisonResult)compare:(NSObject*)other;
@@ -45,19 +46,22 @@ static CFBinaryHeapCallBacks mod_NSObjectBinaryHeapCallbacks = {
     0, mod_binheap_retain, mod_binheap_release, mod_binheap_copydescription,
     mod_binheap_compare};
 
-static PyObject*
-mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFBinaryHeapCreate(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
-    PyObject*       py_allocator;
     Py_ssize_t      count = -1;
     CFAllocatorRef  allocator;
     CFBinaryHeapRef heap;
 
-    if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &count) < 0) {
         return NULL;
     }
 
@@ -70,17 +74,16 @@ mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)), PyObject* arg
     return result;
 }
 
-static PyObject*
-mod_CFBinaryHeapGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFBinaryHeapGetValues(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*       py_heap;
     CFBinaryHeapRef heap;
 
-    if (!PyArg_ParseTuple(args, "O", &py_heap)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFBinaryHeapRef), py_heap, &heap) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFBinaryHeapRef), args[0], &heap) < 0) {
         return NULL;
     }
 
@@ -99,7 +102,17 @@ mod_CFBinaryHeapGetValues(PyObject* self __attribute__((__unused__)), PyObject* 
     return result;
 }
 
-#define COREFOUNDATION_CFBINARYHEAP_METHODS                                              \
-    {"CFBinaryHeapCreate", (PyCFunction)mod_CFBinaryHeapCreate, METH_VARARGS, NULL},     \
-        {"CFBinaryHeapGetValues", (PyCFunction)mod_CFBinaryHeapGetValues, METH_VARARGS,  \
-         NULL},
+static int
+setup_cfbinaryheap(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFBinaryHeapCreate, mod_CFBinaryHeapCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFBinaryHeapGetValues, mod_CFBinaryHeapGetValues)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

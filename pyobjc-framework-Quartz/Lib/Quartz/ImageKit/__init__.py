@@ -11,7 +11,7 @@ def _setup():
 
     import AppKit
     import objc
-    from . import _metadata, _imagekit
+    from . import _metadata, _ImageKit
 
     if objc.macos_available(14, 0):
         identifier = "com.apple.quartzframework"
@@ -29,7 +29,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _imagekit,
+            _ImageKit,
             AppKit,
         ),
         metadict=_metadata.__dict__,

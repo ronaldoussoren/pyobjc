@@ -15087,7 +15087,6 @@
    }
   },
   "functions": {
-   "NSFileTypeForHFSTypeCode": { "ignore": true },
    "NSJavaClassesFromPath": {
      "args": {
         "3": {

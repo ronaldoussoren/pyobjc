@@ -7,8 +7,9 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-static PyObject*
-makeipaddr(struct sockaddr* addr, int addrlen)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
 {
     char      buf[NI_MAXHOST];
     int       error;
@@ -24,8 +25,7 @@ makeipaddr(struct sockaddr* addr, int addrlen)
     return PyBytes_FromString(buf);
 }
 
-static PyObject*
-makesockaddr(struct sockaddr* addr, int addrlen)
+static PyObject* _Nullable makesockaddr(struct sockaddr* addr, int addrlen)
 {
     if (addrlen == 0) {
         /* No address -- may be recvfrom() from known socket */
@@ -75,9 +75,9 @@ makesockaddr(struct sockaddr* addr, int addrlen)
     }
 }
 
-static PyObject*
-call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* const* arguments,
-                            size_t nargs)
+static PyObject* _Nullable call_NSNetService_addresses(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -152,3 +152,5 @@ setup_nsnetservice(PyObject* m __attribute__((__unused__)))
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

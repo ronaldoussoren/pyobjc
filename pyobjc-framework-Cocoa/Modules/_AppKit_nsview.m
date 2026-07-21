@@ -1,6 +1,8 @@
-static PyObject*
-call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
-                                      PyObject* const* arguments, size_t nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_NSView_getRectsBeingDrawn_count_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -67,3 +69,5 @@ setup_nsview(PyObject* m __attribute__((__unused__)))
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

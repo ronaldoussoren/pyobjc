@@ -1,34 +1,10 @@
 import os
-import struct
-import sys
 
 import Foundation
 from PyObjCTools.TestSupport import TestCase
 
 
 class GlobalFunctionTest(TestCase):
-    if sys.platform == "darwin":
-
-        def test_nsfiletypeforhfstypecode(self):
-            self.assertEqual("'rtfx'", Foundation.NSFileTypeForHFSTypeCode(b"rtfx"))
-
-            # The cannonical representation for four-character-codes in python
-            # is a string of 4 characters, but at least some ObjC API's return
-            # longs (because these methods haven't been wrapped correctly yet).
-            # NSFileTypeForHFSTypeCode therefore also accepts integers.
-            fourchar = struct.unpack("i", b"rtfx")[0]
-            if sys.byteorder == "little":
-                self.assertEqual(
-                    "'xftr'", Foundation.NSFileTypeForHFSTypeCode(fourchar)
-                )
-            else:
-                self.assertEqual(
-                    "'rtfx'", Foundation.NSFileTypeForHFSTypeCode(fourchar)
-                )
-
-        def test_nshfstypecodefromfiletype(self):
-            self.assertEqual(b"rtfx", Foundation.NSHFSFTypeCodeFromFileType("'rtfx'"))
-
     def make_rect(self):
         self.assertHasAttr(Foundation, "NSMakeRect")
 

@@ -16,8 +16,10 @@
 #include "_AppKit_nsview.m"
 #include "_AppKit_protocols.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyMethodDef mod_methods[] = {
-    APPKIT_APPMAIN_METHODS APPKIT_NSFONT_METHODS{0, 0, 0, 0} /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 static int
@@ -26,6 +28,10 @@ mod_exec_module(PyObject* m)
     if (PyObjC_ImportAPI(m) == -1)
         return -1;
 
+    if (setup_appmain(m) == -1)
+        return -1;
+    if (setup_nsfont(m) == -1)
+        return -1;
     if (setup_carbon(m) == -1)
         return -1;
     if (setup_nsbezierpath(m) == -1)
@@ -79,3 +85,5 @@ PyInit__AppKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

@@ -640,7 +640,7 @@
      },
      "7": {},
      "8": {},
-     "9": {}
+     "9": { "type_modifier": "o" }
     }
    },
    "CVGetCurrentHostTime": {

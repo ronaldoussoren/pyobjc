@@ -1,7 +1,8 @@
-static PyObject*
-call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject* self,
-                                                     PyObject* const* arguments,
-                                                     size_t           nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*          result;
     struct objc_super  super;
@@ -67,9 +68,9 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject*
     return result;
 }
 
-static PyObject*
-call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
-                                     PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     const void*       dataPlanes[5] = {0};
     int               width, height;
@@ -185,9 +186,9 @@ error_cleanup: {
     return NULL;
 }
 
-static PyObject*
-call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
-                                           PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmapFormat(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     const void*       dataPlanes[5] = {0};
@@ -311,9 +312,9 @@ error_cleanup:
     return NULL;
 }
 
-static PyObject*
-call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
-                                           PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSBitmapImageRep_getBitmapDataPlanes_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -378,9 +379,9 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
     return result;
 }
 
-static PyObject*
-call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self,
-                                 PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSBitmapImageRep_bitmapData(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -491,3 +492,5 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

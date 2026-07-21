@@ -1,3 +1,5 @@
+NS_ASSUME_NONNULL_BEGIN
+
 static void*
 mod_filedescr_retain(void* info)
 {
@@ -38,38 +40,33 @@ mod_CFFileDescriptorCallBack(CFFileDescriptorRef f, CFOptionFlags callBackType,
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFFileDescriptorCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*                        py_allocator;
-    PyObject*                        py_descriptor;
-    PyObject*                        py_closeOnInvalidate;
-    PyObject*                        callout;
-    PyObject*                        info;
     CFAllocatorRef                   allocator;
     CFFileDescriptorNativeDescriptor descriptor;
     Boolean                          closeOnInvalidate;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_descriptor,
-                          &py_closeOnInvalidate, &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorNativeDescriptor), py_descriptor,
+
+    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorNativeDescriptor), args[1],
                             &descriptor)
         < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(bool), py_closeOnInvalidate, &closeOnInvalidate)
-        < 0) {
+
+    if (PyObjC_PythonToObjC(@encode(bool), args[2], &closeOnInvalidate) < 0) {
         return NULL;
     }
 
     CFFileDescriptorContext context = mod_CFFileDescriptorContext;
-    context.info                    = Py_BuildValue("OO", callout, info);
+    context.info                    = PyTuple_Pack(2, args[3], args[4]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -98,24 +95,22 @@ mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject*
     return result;
 }
 
-static PyObject*
-mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFFileDescriptorGetContext(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*               py_f;
-    PyObject*               py_context;
     CFFileDescriptorRef     f;
     CFFileDescriptorContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorRef), args[0], &f) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFFileDescriptorRef), py_f, &f) < 0) {
         return NULL;
     }
 
@@ -148,8 +143,19 @@ mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObj
     return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
-#define COREFOUNDATION_FILEDESCRIPTOR_METHODS                                            \
-    {"CFFileDescriptorCreate", (PyCFunction)mod_CFFileDescriptorCreate, METH_VARARGS,    \
-     NULL},                                                                              \
-        {"CFFileDescriptorGetContext", (PyCFunction)mod_CFFileDescriptorGetContext,      \
-         METH_VARARGS, NULL},
+static int
+setup_filedescriptor(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFFileDescriptorCreate, mod_CFFileDescriptorCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFFileDescriptorGetContext,
+                                      mod_CFFileDescriptorGetContext)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

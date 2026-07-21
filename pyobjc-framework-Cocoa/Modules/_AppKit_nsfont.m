@@ -1,15 +1,11 @@
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-static PyObject*
-m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
-                                PyObject* arguments)
+static PyObject* _Nullable m_NSConvertGlyphsToPackedGlyphs(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject* py_glBuf;
-    PyObject* py_count;
-    PyObject* py_packing;
-    PyObject* py_packedGlyphs;
-
     NSGlyph*                glBuf;
     int                     bufCode;
     PyObject*               buffer = NULL;
@@ -19,27 +15,25 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
     NSMultibyteGlyphPacking packing;
     char*                   packedGlyphs;
 
-    if (!PyArg_ParseTuple(arguments, "OOOO", &py_glBuf, &py_count, &py_packing,
-                          &py_packedGlyphs)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (py_packedGlyphs != Py_None) {
+    if (args[3] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "packedGlyphs argument must be None");
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(NSInteger), py_count, &count) == -1) {
+    if (PyObjC_PythonToObjC(@encode(NSInteger), args[1], &count) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), py_packing, &packing)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), args[2], &packing) == -1) {
         return NULL;
     }
 
     c       = count;
-    bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), py_glBuf, (void**)&glBuf,
-                                    &c, &buffer, &view);
+    bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), args[0], (void**)&glBuf, &c,
+                                    &buffer, &view);
     if (bufCode == -1) {
         return NULL;
     }
@@ -92,9 +86,15 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
 
 #pragma clang diagnostic pop
 
-#define APPKIT_NSFONT_METHODS                                                            \
-    {"NSConvertGlyphsToPackedGlyphs", (PyCFunction)m_NSConvertGlyphsToPackedGlyphs,      \
-     METH_VARARGS,                                                                       \
-     "NSConvertGlyphsToPackedGlyphs(arg0, arg1, arg2, arg3)\n\nNSInteger "               \
-     "NSConvertGlyphsToPackedGlyphs(NSGlyph *glBuf, NSInteger count, "                   \
-     "NSMultibyteGlyphPacking packing, char *packedGlyphs);"},
+static int
+setup_nsfont(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(NSConvertGlyphsToPackedGlyphs,
+                                      m_NSConvertGlyphsToPackedGlyphs)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

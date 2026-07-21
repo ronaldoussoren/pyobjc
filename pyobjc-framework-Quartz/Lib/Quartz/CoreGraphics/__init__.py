@@ -17,7 +17,7 @@ def _setup():
         _callbacks,
         _doubleindirect,
         _sortandmap,
-        _coregraphics,
+        _CoreGraphics,
         _contextmanager,
     )
     from ._inlines import _inline_list_
@@ -39,7 +39,7 @@ def _setup():
             _callbacks,
             _doubleindirect,
             _sortandmap,
-            _coregraphics,
+            _CoreGraphics,
             _contextmanager,
             CoreFoundation,
         ),
@@ -54,8 +54,8 @@ def _setup():
     # XXX: To be verified
     from . import CGPathElement
 
-    _sortandmap.setCGPathElement(CGPathElement)
-    del _sortandmap.setCGPathElement
+    _sortandmap._setCGPathElement(CGPathElement)
+    del _sortandmap._setCGPathElement
 
     # XXX: Move these to metadata!
 

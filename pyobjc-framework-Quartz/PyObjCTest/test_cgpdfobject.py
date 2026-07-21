@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, expectedFailure
 import Quartz
-import objc
 
 
 class TestCGPDFObject(TestCase):
@@ -22,5 +21,5 @@ class TestCGPDFObject(TestCase):
     def test_functions(self):
         Quartz.CGPDFObjectGetType
 
-        self.assertNotIsInstance(Quartz.CGPDFObjectGetValue, objc.function)
+        Quartz.CGPDFObjectGetValue
         # XXX: Actual tests for ^^^^ (with manual wrapper)

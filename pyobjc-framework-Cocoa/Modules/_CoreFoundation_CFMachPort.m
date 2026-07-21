@@ -1,3 +1,5 @@
+NS_ASSUME_NONNULL_BEGIN
+
 static const void*
 mod_machport_retain(const void* info)
 {
@@ -70,31 +72,28 @@ mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void* _info)
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFMachPortCreate(PyObject* meth,
+                                                PyObject* _Nonnull const* _Nonnull args,
+                                                size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      callout;
-    PyObject*      info;
-    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
     Boolean        shouldFree;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &callout, &info, &py_shouldFree)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
+    if (args[3] != Py_None && args[3] != PyObjC_NULL) {
         PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
         return NULL;
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
-    context.info              = Py_BuildValue("OOO", callout, info, Py_None);
+    context.info              = PyTuple_Pack(3, args[1], args[2], Py_None);
     if (context.info == NULL) {
         return NULL;
     }
@@ -103,7 +102,7 @@ mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     Py_BEGIN_ALLOW_THREADS
         @try {
             rv = CFMachPortCreate(allocator, mod_CFMachPortCallBack, &context,
-                                  &shouldFree);
+                                  args[3] == PyObjC_NULL ? NULL : &shouldFree);
 
         } @catch (NSException* localException) {
             rv = NULL;
@@ -117,9 +116,14 @@ mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    PyObject* result =
-        Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
-                      PyBool_FromLong(shouldFree));
+    PyObject* result;
+    if (args[3] == PyObjC_NULL) {
+        result = Py_BuildValue("NO", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyObjC_NULL);
+    } else {
+        result = Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyBool_FromLong(shouldFree));
+    }
 
     if (rv != NULL) {
         CFRelease(rv);
@@ -127,38 +131,32 @@ mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     return result;
 }
 
-static PyObject*
-mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFMachPortCreateWithPort(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_port;
-    PyObject*      callout;
-    PyObject*      info;
-    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
     mach_port_t    port;
     Boolean        shouldFree;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_port, &callout, &info,
-                          &py_shouldFree)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(mach_port_t), py_port, &port) < 0) {
+    if (PyObjC_PythonToObjC(@encode(mach_port_t), args[1], &port) < 0) {
         return NULL;
     }
 
-    if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
+    if (args[4] != Py_None && args[4] != PyObjC_NULL) {
         PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
         return NULL;
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
-    context.info              = Py_BuildValue("OO", callout, info);
+    context.info              = PyTuple_Pack(2, args[2], args[3]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -167,7 +165,8 @@ mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObjec
     Py_BEGIN_ALLOW_THREADS
         @try {
             rv = CFMachPortCreateWithPort(allocator, port, mod_CFMachPortCallBack,
-                                          &context, &shouldFree);
+                                          &context,
+                                          args[4] == PyObjC_NULL ? NULL : &shouldFree);
 
         } @catch (NSException* localException) {
             rv = NULL;
@@ -181,9 +180,14 @@ mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObjec
         return NULL;
     }
 
-    PyObject* result =
-        Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
-                      PyBool_FromLong(shouldFree));
+    PyObject* result;
+    if (args[4] == PyObjC_NULL) {
+        result = Py_BuildValue("NO", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyObjC_NULL);
+    } else {
+        result = Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyBool_FromLong(shouldFree));
+    }
 
     if (rv != NULL) {
         CFRelease(rv);
@@ -191,24 +195,22 @@ mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObjec
     return result;
 }
 
-static PyObject*
-mod_CFMachPortGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFMachPortGetContext(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*         py_f;
-    PyObject*         py_context;
     CFMachPortRef     f;
     CFMachPortContext context = {.version = 0};
 
-    if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != NULL && py_context != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), args[0], &f) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), py_f, &f) < 0) {
         return NULL;
     }
 
@@ -242,19 +244,16 @@ mod_CFMachPortGetContext(PyObject* self __attribute__((__unused__)), PyObject* a
 /*
  * Invalidation callbacks are supported only on MachPorts created from Python.
  */
-static PyObject*
-mod_CFMachPortSetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
-                                      PyObject* args)
+static PyObject* _Nullable mod_CFMachPortSetInvalidationCallBack(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*     py_port;
-    PyObject*     callout;
     CFMachPortRef port;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_port, &callout)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), py_port, &port) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), args[0], &port) < 0) {
         return NULL;
     }
 
@@ -280,8 +279,9 @@ mod_CFMachPortSetInvalidationCallBack(PyObject* self __attribute__((__unused__))
     }
 
     Py_DECREF(PyTuple_GetItem((PyObject*)context.info, 2));
-    Py_INCREF(callout);
-    PyTuple_SetItem((PyObject*)context.info, 2, callout);
+    Py_INCREF(args[1]);
+    /* XXX: This is using a PyTuple as mutable storage! */
+    PyTuple_SetItem((PyObject*)context.info, 2, args[1]);
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -300,18 +300,16 @@ mod_CFMachPortSetInvalidationCallBack(PyObject* self __attribute__((__unused__))
     return Py_None;
 }
 
-static PyObject*
-mod_CFMachPortGetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
-                                      PyObject* args)
+static PyObject* _Nullable mod_CFMachPortGetInvalidationCallBack(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*     py_port;
     CFMachPortRef port;
 
-    if (!PyArg_ParseTuple(args, "O", &py_port)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), py_port, &port) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFMachPortRef), args[0], &port) < 0) {
         return NULL;
     }
 
@@ -366,13 +364,32 @@ mod_CFMachPortGetInvalidationCallBack(PyObject* self __attribute__((__unused__))
     return NULL;
 }
 
-#define COREFOUNDATION_MACHPORT_METHODS                                                  \
-    {"CFMachPortCreate", (PyCFunction)mod_CFMachPortCreate, METH_VARARGS, NULL},         \
-        {"CFMachPortCreateWithPort", (PyCFunction)mod_CFMachPortCreateWithPort,          \
-         METH_VARARGS, NULL},                                                            \
-        {"CFMachPortGetContext", (PyCFunction)mod_CFMachPortGetContext, METH_VARARGS,    \
-         NULL},                                                                          \
-        {"CFMachPortSetInvalidationCallBack",                                            \
-         (PyCFunction)mod_CFMachPortSetInvalidationCallBack, METH_VARARGS, NULL},        \
-        {"CFMachPortGetInvalidationCallBack",                                            \
-         (PyCFunction)mod_CFMachPortGetInvalidationCallBack, METH_VARARGS, NULL},
+static int
+setup_machport(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFMachPortCreate, mod_CFMachPortCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFMachPortCreateWithPort,
+                                      mod_CFMachPortCreateWithPort)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFMachPortGetContext, mod_CFMachPortGetContext)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFMachPortSetInvalidationCallBack,
+                                      mod_CFMachPortSetInvalidationCallBack)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFMachPortGetInvalidationCallBack,
+                                      mod_CFMachPortGetInvalidationCallBack)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

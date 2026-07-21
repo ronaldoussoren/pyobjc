@@ -3,6 +3,8 @@
  * size of a C-style array depends on the value of another argument.
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if PyObjC_BUILD_RELEASE < 1014
 #define NSBezierPathElementMoveTo NSMoveToBezierPathElement
 #define NSBezierPathElementLineTo NSLineToBezierPathElement
@@ -13,10 +15,9 @@
 #define NSBezierPathElementCubicCurveTo NSBezierPathElementCurveTo
 #endif
 
-static PyObject*
-call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
-                                                   PyObject* const* arguments,
-                                                   size_t           nargs)
+static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*           result;
     PyObject*           v;
@@ -102,9 +103,9 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
     return result;
 }
 
-static PyObject*
-call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
-                                               PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSBezierPath_setAssociatedPoints_atIndex_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -318,3 +319,5 @@ setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
     }
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

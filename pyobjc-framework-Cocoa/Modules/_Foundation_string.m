@@ -3,10 +3,11 @@
  *
  */
 
-static PyObject*
-call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObject* self,
-                                                         PyObject* const* arguments,
-                                                         size_t           nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_NSString_getCString_maxLength_range_remainingRange_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     NSRange           aRange;
     NSRange           leftoverRange;
@@ -96,9 +97,9 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
     return res;
 }
 
-static PyObject*
-call_NSString_getCString_maxLength_(PyObject* method, PyObject* self,
-                                    PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSString_getCString_maxLength_(
+    PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
+    size_t nargs)
 {
     char*             buf;
     NSUInteger        maxLength;
@@ -178,3 +179,5 @@ setup_nssstring(PyObject* m __attribute__((__unused__)))
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

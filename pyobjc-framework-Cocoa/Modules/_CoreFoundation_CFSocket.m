@@ -1,3 +1,4 @@
+NS_ASSUME_NONNULL_BEGIN
 
 static const void*
 mod_socket_retain(const void* info)
@@ -74,34 +75,38 @@ mod_CFSocketCallBack(CFSocketRef s, CFSocketCallBackType type, CFDataRef address
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFSocketCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFSocketCreate(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
-    PyObject*       py_allocator;
     SInt32          protocolFamily;
     SInt32          socketType;
     SInt32          protocol;
-    PyObject*       py_callBackTypes;
-    PyObject*       callout;
-    PyObject*       info;
     CFAllocatorRef  allocator;
     CFOptionFlags   callBackTypes;
     CFSocketContext context = mod_CFSocketContext;
 
-    if (!PyArg_ParseTuple(args, "OiiiOOO", &py_allocator, &protocolFamily, &socketType,
-                          &protocol, &py_callBackTypes, &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 7, 7, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_callBackTypes, &callBackTypes)
-        < 0) {
+    if (PyObjC_PythonToObjC(@encode(SInt32), args[1], &protocolFamily) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(SInt32), args[2], &socketType) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(SInt32), args[3], &protocol) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[4], &callBackTypes) < 0) {
         return NULL;
     }
 
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info = PyTuple_Pack(2, args[5], args[6]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -131,36 +136,29 @@ mod_CFSocketCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     return result;
 }
 
-static PyObject*
-mod_CFSocketCreateWithNative(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFSocketCreateWithNative(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*            py_allocator;
-    PyObject*            py_sock;
-    PyObject*            py_callBackTypes;
-    PyObject*            callout;
-    PyObject*            info;
     CFAllocatorRef       allocator;
     CFSocketNativeHandle sock;
     CFOptionFlags        callBackTypes;
     CFSocketContext      context = mod_CFSocketContext;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_sock, &py_callBackTypes,
-                          &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFSocketNativeHandle), py_sock, &sock) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFSocketNativeHandle), args[1], &sock) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_callBackTypes, &callBackTypes)
-        < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[2], &callBackTypes) < 0) {
         return NULL;
     }
 
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info = PyTuple_Pack(2, args[3], args[4]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -190,37 +188,29 @@ mod_CFSocketCreateWithNative(PyObject* self __attribute__((__unused__)), PyObjec
     return result;
 }
 
-static PyObject*
-mod_CFSocketCreateWithSocketSignature(PyObject* self __attribute__((__unused__)),
-                                      PyObject* args)
+static PyObject* _Nullable mod_CFSocketCreateWithSocketSignature(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*         py_allocator;
-    PyObject*         py_signature;
-    PyObject*         py_callBackTypes;
-    PyObject*         callout;
-    PyObject*         info;
     CFAllocatorRef    allocator;
     CFSocketSignature signature;
     CFOptionFlags     callBackTypes;
     CFSocketContext   context = mod_CFSocketContext;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_signature, &py_callBackTypes,
-                          &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFSocketSignature), py_signature, &signature) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFSocketSignature), args[1], &signature) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_callBackTypes, &callBackTypes)
-        < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[2], &callBackTypes) < 0) {
         return NULL;
     }
 
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info = PyTuple_Pack(2, args[3], args[4]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -250,42 +240,33 @@ mod_CFSocketCreateWithSocketSignature(PyObject* self __attribute__((__unused__))
     return result;
 }
 
-static PyObject*
-mod_CFSocketCreateConnectedToSocketSignature(PyObject* self __attribute__((__unused__)),
-                                             PyObject* args)
+static PyObject* _Nullable mod_CFSocketCreateConnectedToSocketSignature(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*         py_allocator;
-    PyObject*         py_signature;
-    PyObject*         py_callBackTypes;
-    PyObject*         callout;
-    PyObject*         info;
-    PyObject*         py_timeout;
     CFAllocatorRef    allocator;
     CFSocketSignature signature;
     CFOptionFlags     callBackTypes;
     CFTimeInterval    timeout;
     CFSocketContext   context = mod_CFSocketContext;
 
-    if (!PyArg_ParseTuple(args, "OOOOOO", &py_allocator, &py_signature, &py_callBackTypes,
-                          &callout, &info, &py_timeout)) {
+    if (PyObjC_CheckArgCount(meth, 6, 6, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFSocketSignature), py_signature, &signature) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFSocketSignature), args[1], &signature) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_callBackTypes, &callBackTypes)
-        < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[2], &callBackTypes) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFTimeInterval), py_timeout, &timeout) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFTimeInterval), args[5], &timeout) < 0) {
         return NULL;
     }
 
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info = PyTuple_Pack(2, args[3], args[4]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -316,22 +297,21 @@ mod_CFSocketCreateConnectedToSocketSignature(PyObject* self __attribute__((__unu
     return result;
 }
 
-static PyObject*
-mod_CFSocketGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFSocketGetContext(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
-    PyObject*       py_sock;
-    PyObject*       py_context;
     CFSocketRef     sock;
     CFSocketContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_sock, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFSocketRef), py_sock, &sock) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFSocketRef), args[0], &sock) < 0) {
         return NULL;
     }
-    if (py_context != Py_None) {
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "context argument must be None");
         return NULL;
     }
@@ -361,12 +341,31 @@ mod_CFSocketGetContext(PyObject* self __attribute__((__unused__)), PyObject* arg
     return PyTuple_GetItem(context.info, 1);
 }
 
-#define COREFOUNDATION_SOCKET_METHODS                                                    \
-    {"CFSocketCreate", (PyCFunction)mod_CFSocketCreate, METH_VARARGS, NULL},             \
-        {"CFSocketCreateWithNative", (PyCFunction)mod_CFSocketCreateWithNative,          \
-         METH_VARARGS, NULL},                                                            \
-        {"CFSocketCreateWithSocketSignature",                                            \
-         (PyCFunction)mod_CFSocketCreateWithSocketSignature, METH_VARARGS, NULL},        \
-        {"CFSocketCreateConnectedToSocketSignature",                                     \
-         (PyCFunction)mod_CFSocketCreateConnectedToSocketSignature, METH_VARARGS, NULL}, \
-        {"CFSocketGetContext", (PyCFunction)mod_CFSocketGetContext, METH_VARARGS, NULL},
+static int
+setup_socket(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFSocketCreate, mod_CFSocketCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFSocketCreateWithNative,
+                                      mod_CFSocketCreateWithNative)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFSocketCreateWithSocketSignature,
+                                      mod_CFSocketCreateWithSocketSignature)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFSocketCreateConnectedToSocketSignature,
+                                      mod_CFSocketCreateConnectedToSocketSignature)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFSocketGetContext, mod_CFSocketGetContext) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

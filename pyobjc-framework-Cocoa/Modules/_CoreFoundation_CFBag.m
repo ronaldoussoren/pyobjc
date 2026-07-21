@@ -1,25 +1,36 @@
 /*
  * Manual wrappers for CFBag
  */
-static PyObject*
-mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFBagGetValues(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
-    PyObject* py_bag;
-    PyObject* py_none = Py_None;
-    CFBagRef  bag;
+    CFBagRef bag;
 
-    /* XXX: Make py_none required in  next major release */
-    if (!PyArg_ParseTuple(args, "O|O", &py_bag, &py_none)) {
-        return NULL;
-    }
+    if (nargs == 1) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving of the second argument is deprecated", 0)
+            == -1) {
+            return NULL;
+        }
+        if (PyObjC_PythonToObjC(@encode(CFBagRef), args[0], &bag) < 0) {
+            return NULL;
+        }
+    } else {
+        if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
+            return NULL;
+        }
 
-    if (PyObjC_PythonToObjC(@encode(CFBagRef), py_bag, &bag) < 0) {
-        return NULL;
-    }
+        if (PyObjC_PythonToObjC(@encode(CFBagRef), args[0], &bag) < 0) {
+            return NULL;
+        }
 
-    if (py_none != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "'values' must be None");
-        return NULL;
+        if (args[1] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "'values' must be None");
+            return NULL;
+        }
     }
 
     CFIndex    count   = CFBagGetCount(bag);
@@ -37,11 +48,10 @@ mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
     return result;
 }
 
-static PyObject*
-mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFBagCreate(PyObject* meth,
+                                           PyObject* _Nonnull const* _Nonnull args,
+                                           size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_members;
     Py_ssize_t     count;
     CFAllocatorRef allocator;
     void**         members;
@@ -50,15 +60,19 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     Py_buffer      view;
     CFBagRef       bag;
 
-    if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_members, &count)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, @encode(NSObject*), py_members, (void**)&members,
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[2], &count) < 0) {
+        return NULL;
+    }
+
+    r = PyObjC_PythonToCArray(NO, NO, @encode(NSObject*), args[1], (void**)&members,
                               &count, &buf, &view);
     if (r == -1) {
         return NULL;
@@ -77,19 +91,21 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     return result;
 }
 
-static PyObject*
-mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFBagCreateMutable(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
-    PyObject*      py_allocator;
     Py_ssize_t     count;
     CFAllocatorRef allocator;
     CFBagRef       bag;
 
-    if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
-
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &count) < 0) {
         return NULL;
     }
 
@@ -102,7 +118,19 @@ mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)), PyObject* arg
     return result;
 }
 
-#define COREFOUNDATION_CFBAG_METHODS                                                     \
-    {"CFBagCreate", (PyCFunction)mod_CFBagCreate, METH_VARARGS, NULL},                   \
-        {"CFBagCreateMutable", (PyCFunction)mod_CFBagCreateMutable, METH_VARARGS, NULL}, \
-        {"CFBagGetValues", (PyCFunction)mod_CFBagGetValues, METH_VARARGS, NULL},
+static int
+setup_cfbag(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFBagCreate, mod_CFBagCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFBagCreateMutable, mod_CFBagCreateMutable) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFBagGetValues, mod_CFBagGetValues) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

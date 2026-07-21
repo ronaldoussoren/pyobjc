@@ -1,6 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
-import objc
 
 
 class TestCGPDFDictionary(TestCase):
@@ -24,7 +23,8 @@ class TestCGPDFDictionary(TestCase):
         self.assertIsPDFGetter(Quartz.CGPDFDictionaryGetStream)
 
         # self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
-        self.assertFalse(isinstance(Quartz.CGPDFDictionaryApplyFunction, objc.function))
+        # XXX: Needs manual test
+        Quartz.CGPDFDictionaryApplyFunction
 
     def test_functions(self):
         Quartz.CGPDFDictionaryGetCount

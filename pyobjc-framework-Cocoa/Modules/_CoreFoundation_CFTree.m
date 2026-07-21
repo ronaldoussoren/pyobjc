@@ -1,6 +1,6 @@
+NS_ASSUME_NONNULL_BEGIN
 
-static const void*
-mod_CFTreeRetainCallback(const void* info)
+static const void* _Nullable mod_CFTreeRetainCallback(const void* _Nullable info)
 {
     return [(NSObject*)info retain];
 }
@@ -11,8 +11,7 @@ mod_CFTreeReleaseCallback(const void* info)
     [(NSObject*)info release];
 }
 
-static CFStringRef
-mod_CFTreeCopyDescriptionCallback(const void* info)
+static CFStringRef _Nullable mod_CFTreeCopyDescriptionCallback(const void* _Nullable info)
 {
     NSString* result = [(NSObject*)info description];
     [result retain];
@@ -23,24 +22,23 @@ static CFTreeContext mod_CFTreeContext = {0, NULL, mod_CFTreeRetainCallback,
                                           mod_CFTreeReleaseCallback,
                                           mod_CFTreeCopyDescriptionCallback};
 
-static PyObject*
-mod_CFTreeGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFTreeGetContext(PyObject* meth,
+                                                PyObject* _Nonnull const* _Nonnull args,
+                                                size_t nargs)
 {
-    PyObject*     py_tree;
-    PyObject*     py_context;
     CFTreeRef     tree;
     CFTreeContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != NULL && py_context != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFTreeRef), args[0], &tree) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFTreeRef), py_tree, &tree) < 0) {
         return NULL;
     }
 
@@ -72,24 +70,23 @@ mod_CFTreeGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
     return PyObjC_ObjCToPython(@encode(id), &context.info);
 }
 
-static PyObject*
-mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFTreeSetContext(PyObject* meth,
+                                                PyObject* _Nonnull const* _Nonnull args,
+                                                size_t nargs)
 {
-    PyObject*     py_tree;
-    PyObject*     py_context;
     CFTreeRef     tree;
     CFTreeContext context;
     NSObject*     info;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFTreeRef), py_tree, &tree) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFTreeRef), args[0], &tree) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(id), py_context, &info) < 0) {
+    if (PyObjC_PythonToObjC(@encode(id), args[1], &info) < 0) {
         return NULL;
     }
 
@@ -113,25 +110,24 @@ mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
     return Py_None;
 }
 
-static PyObject*
-mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFTreeCreate(PyObject* meth,
+                                            PyObject* _Nonnull const* _Nonnull args,
+                                            size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_context;
     CFTreeRef      tree;
     CFTreeContext  context;
     CFAllocatorRef allocator;
     NSObject*      info;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_allocator, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(id), py_context, &info) < 0) {
+    if (PyObjC_PythonToObjC(@encode(id), args[1], &info) < 0) {
         return NULL;
     }
 
@@ -164,26 +160,25 @@ mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     return py_tree;
 }
 
-static PyObject*
-mod_CFTreeGetChildren(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFTreeGetChildren(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
-    PyObject*  py_tree;
-    PyObject*  py_buffer;
     CFTreeRef  tree;
     CFIndex    count;
     CFTreeRef* children = NULL;
     PyObject*  result;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_buffer)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_buffer != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFTreeRef), args[0], &tree) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFTreeRef), py_tree, &tree) < 0) {
         return NULL;
     }
 
@@ -225,13 +220,25 @@ mod_CFTreeGetChildren(PyObject* self __attribute__((__unused__)), PyObject* args
     return result;
 }
 
-#define COREFOUNDATION_TREE_METHODS                                                      \
-    {"CFTreeCreate", (PyCFunction)mod_CFTreeCreate, METH_VARARGS, NULL},                 \
-        {"CFTreeGetContext", (PyCFunction)mod_CFTreeGetContext, METH_VARARGS, NULL},     \
-        {"CFTreeSetContext", (PyCFunction)mod_CFTreeSetContext, METH_VARARGS, NULL},     \
-        {                                                                                \
-            "CFTreeGetChildren",                                                         \
-            (PyCFunction)mod_CFTreeGetChildren,                                          \
-            METH_VARARGS,                                                                \
-            NULL,                                                                        \
-        },
+static int
+setup_tree(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFTreeCreate, mod_CFTreeCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFTreeGetContext, mod_CFTreeGetContext) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFTreeGetChildren, mod_CFTreeGetChildren) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

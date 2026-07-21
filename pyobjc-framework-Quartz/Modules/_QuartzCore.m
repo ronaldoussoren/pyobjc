@@ -1,13 +1,22 @@
 /*
- * Manual wrappers for ImageKit
+ * Manual wrappers for QuartzCore
  */
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#if PyObjC_BUILD_RELEASE >= 1015
+#import <CoreImage/CIFilterBuiltins.h>
+#endif
+
+#if PyObjC_BUILD_RELEASE >= 1013
+#import <CoreImage/CoreImage.h>
+#endif
+
 #import <Quartz/Quartz.h>
 
-#include "_ImageKit_protocols.m"
+#include "_CoreImage_protocols.m"
+#include "_QuartzCore_protocols.m"
 
 static PyMethodDef mod_methods[] = {{
     0,
@@ -46,7 +55,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 
 static struct PyModuleDef mod_module = {
     .m_base     = PyModuleDef_HEAD_INIT,
-    .m_name     = "_imagekit",
+    .m_name     = "_QuartzCore",
     .m_doc      = NULL,
     .m_size     = 0,
     .m_methods  = mod_methods,
@@ -56,10 +65,10 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__imagekit(void);
+PyObject* PyInit__QuartzCore(void);
 
 PyObject* __attribute__((__visibility__("default")))
-PyInit__imagekit(void)
+PyInit__QuartzCore(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

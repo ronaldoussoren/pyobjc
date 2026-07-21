@@ -46,25 +46,23 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
 }
 
 static PyObject*
-m_CGPDFDictionaryApplyFunction(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CGPDFDictionaryApplyFunction(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                               size_t    nargs)
 {
-    PyObject*          d;
-    PyObject*          f;
-    PyObject*          i;
     CGPDFDictionaryRef dictionary;
 
-    if (!PyArg_ParseTuple(args, "OOO", &d, &f, &i)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
-    if (!PyCallable_Check(f)) {
+    if (!PyCallable_Check(args[1])) {
         PyErr_SetString(PyExc_TypeError, "callback not callable");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), d, &dictionary) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), args[0], &dictionary) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", f, i);
+    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -116,42 +114,40 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 }
 
 static PyObject*
-setCGPathElement(PyObject* self __attribute__((__unused__)), PyObject* args)
+setCGPathElement(PyObject* meth, PyObject* const* args, Py_ssize_t nargs)
 {
     PyObject* v;
 
-    if (!PyArg_ParseTuple(args, "O", &v)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
     Py_XDECREF(gCGPathElement);
-    Py_INCREF(v);
-    gCGPathElement = v;
+    Py_INCREF(args[0]);
+    gCGPathElement = args[0];
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject*
-m_CGPathApply(PyObject* self __attribute__((__unused__)), PyObject* args)
+m_CGPathApply(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject* py_path;
-    PyObject* callback;
-    PyObject* info;
     CGPathRef path;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_path, &info, &callback)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
-    if (!PyCallable_Check(callback)) {
+
+    if (!PyCallable_Check(args[2])) {
         PyErr_SetString(PyExc_TypeError, "callback not callable");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGPathRef), py_path, &path) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGPathRef), args[0], &path) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callback, info);
+    PyObject* real_info = Py_BuildValue("OO", args[2], args[1]);
     if (real_info == NULL) {
         return NULL;
     }
@@ -176,21 +172,9 @@ m_CGPathApply(PyObject* self __attribute__((__unused__)), PyObject* args)
 }
 
 static PyMethodDef mod_methods[] = {{
-                                        "CGPDFDictionaryApplyFunction",
-                                        (PyCFunction)m_CGPDFDictionaryApplyFunction,
-                                        METH_VARARGS,
-                                        NULL,
-                                    },
-                                    {
-                                        "CGPathApply",
-                                        (PyCFunction)m_CGPathApply,
-                                        METH_VARARGS,
-                                        NULL,
-                                    },
-                                    {
-                                        "setCGPathElement",
+                                        "_setCGPathElement",
                                         (PyCFunction)setCGPathElement,
-                                        METH_VARARGS,
+                                        METH_FASTCALL,
                                         NULL,
                                     },
 
@@ -201,6 +185,15 @@ mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0)
         return -1;
+
+    if (PyObjCRegister_FunctionCaller(CGPDFDictionaryApplyFunction,
+                                      m_CGPDFDictionaryApplyFunction)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CGPathApply, m_CGPathApply) == -1) {
+        return -1;
+    }
 
     return 0;
 }

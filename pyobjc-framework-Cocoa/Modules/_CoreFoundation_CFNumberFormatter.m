@@ -1,15 +1,12 @@
-static PyObject*
-mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__)),
-                                        PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*            py_formatter;
     CFNumberFormatterRef formatter;
     Py_ssize_t           type;
-    PyObject*            py_string;
     CFStringRef          string;
-    PyObject*            py_range;
     CFRange              range;
-    PyObject*            py_buf;
     union {
         SInt8     sint8;
         SInt16    sint16;
@@ -27,22 +24,24 @@ mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__
         CFIndex   indexv;
     } buf;
 
-    if (!PyArg_ParseTuple(args, "OOOnO", &py_formatter, &py_string, &py_range, &type,
-                          &py_buf)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
-    if (py_buf != Py_None) {
+
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), args[0], &formatter) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CFStringRef), args[1], &string) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CFRange), args[2], &range) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[3], &type) < 0) {
+        return NULL;
+    }
+    if (args[4] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "Bad value for buffer");
-        return NULL;
-    }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter)
-        < 0) {
-        return NULL;
-    }
-    if (PyObjC_PythonToObjC(@encode(CFStringRef), py_string, &string) < 0) {
-        return NULL;
-    }
-    if (PyObjC_PythonToObjC(@encode(CFRange), py_range, &range) < 0) {
         return NULL;
     }
 
@@ -138,16 +137,12 @@ mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__
     }
 }
 
-static PyObject*
-mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unused__)),
-                                           PyObject* args)
+static PyObject* _Nullable mod_CFNumberFormatterCreateStringWithValue(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*            py_allocator;
     CFAllocatorRef       allocator;
-    PyObject*            py_formatter;
     CFNumberFormatterRef formatter;
     Py_ssize_t           type;
-    PyObject*            py_value;
     int                  n;
     union {
         SInt8     sint8;
@@ -166,72 +161,74 @@ mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unuse
         CFIndex   indexv;
     } buf;
 
-    if (!PyArg_ParseTuple(args, "OOnO", &py_allocator, &py_formatter, &type, &py_value)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter)
-        < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), args[1], &formatter) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[2], &type) < 0) {
         return NULL;
     }
 
     switch (type) {
     case kCFNumberSInt8Type:
-        n = PyObjC_PythonToObjC(@encode(SInt8), py_value, &buf.sint8);
+        n = PyObjC_PythonToObjC(@encode(SInt8), args[3], &buf.sint8);
         break;
 
     case kCFNumberSInt16Type:
-        n = PyObjC_PythonToObjC(@encode(SInt16), py_value, &buf.sint16);
+        n = PyObjC_PythonToObjC(@encode(SInt16), args[3], &buf.sint16);
         break;
 
     case kCFNumberSInt32Type:
-        n = PyObjC_PythonToObjC(@encode(SInt32), py_value, &buf.sint32);
+        n = PyObjC_PythonToObjC(@encode(SInt32), args[3], &buf.sint32);
         break;
 
     case kCFNumberSInt64Type:
-        n = PyObjC_PythonToObjC(@encode(SInt64), py_value, &buf.sint64);
+        n = PyObjC_PythonToObjC(@encode(SInt64), args[3], &buf.sint64);
         break;
 
     case kCFNumberFloat32Type:
-        n = PyObjC_PythonToObjC(@encode(Float32), py_value, &buf.float32);
+        n = PyObjC_PythonToObjC(@encode(Float32), args[3], &buf.float32);
         break;
 
     case kCFNumberFloat64Type:
-        n = PyObjC_PythonToObjC(@encode(Float64), py_value, &buf.float64);
+        n = PyObjC_PythonToObjC(@encode(Float64), args[3], &buf.float64);
         break;
 
     case kCFNumberCharType:
-        n = PyObjC_PythonToObjC(@encode(char), py_value, &buf.charv);
+        n = PyObjC_PythonToObjC(@encode(char), args[3], &buf.charv);
         break;
 
     case kCFNumberShortType:
-        n = PyObjC_PythonToObjC(@encode(short), py_value, &buf.shortv);
+        n = PyObjC_PythonToObjC(@encode(short), args[3], &buf.shortv);
         break;
 
     case kCFNumberIntType:
-        n = PyObjC_PythonToObjC(@encode(int), py_value, &buf.intv);
+        n = PyObjC_PythonToObjC(@encode(int), args[3], &buf.intv);
         break;
 
     case kCFNumberLongType:
-        n = PyObjC_PythonToObjC(@encode(long), py_value, &buf.longv);
+        n = PyObjC_PythonToObjC(@encode(long), args[3], &buf.longv);
         break;
 
     case kCFNumberLongLongType:
-        n = PyObjC_PythonToObjC(@encode(long long), py_value, &buf.longlongv);
+        n = PyObjC_PythonToObjC(@encode(long long), args[3], &buf.longlongv);
         break;
 
     case kCFNumberFloatType:
-        n = PyObjC_PythonToObjC(@encode(float), py_value, &buf.floatv);
+        n = PyObjC_PythonToObjC(@encode(float), args[3], &buf.floatv);
         break;
 
     case kCFNumberDoubleType:
-        n = PyObjC_PythonToObjC(@encode(double), py_value, &buf.doublev);
+        n = PyObjC_PythonToObjC(@encode(double), args[3], &buf.doublev);
         break;
 
     case kCFNumberCFIndexType:
-        n = PyObjC_PythonToObjC(@encode(CFIndex), py_value, &buf.indexv);
+        n = PyObjC_PythonToObjC(@encode(CFIndex), args[3], &buf.indexv);
         break;
 
     default:
@@ -264,8 +261,20 @@ mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unuse
     return result;
 }
 
-#define COREFOUNDATION_NUMBERFORMATTER_METHODS                                           \
-    {"CFNumberFormatterCreateStringWithValue",                                           \
-     (PyCFunction)mod_CFNumberFormatterCreateStringWithValue, METH_VARARGS, NULL},       \
-        {"CFNumberFormatterGetValueFromString",                                          \
-         (PyCFunction)mod_CFNumberFormatterGetValueFromString, METH_VARARGS, NULL},
+static int
+setup_numberformatter(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFNumberFormatterCreateStringWithValue,
+                                      mod_CFNumberFormatterCreateStringWithValue)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFNumberFormatterGetValueFromString,
+                                      mod_CFNumberFormatterGetValueFromString)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

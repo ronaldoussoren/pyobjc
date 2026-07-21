@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata, _quartzcore
+    from . import _metadata, _QuartzCore
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.QuartzCore",
@@ -22,7 +22,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _quartzcore,
+            _QuartzCore,
             Foundation,
         ),
         metadict=_metadata.__dict__,

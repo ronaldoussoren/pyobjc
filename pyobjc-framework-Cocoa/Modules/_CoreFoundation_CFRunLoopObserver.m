@@ -1,3 +1,4 @@
+NS_ASSUME_NONNULL_BEGIN
 
 static const void*
 mod_observer_retain(const void* info)
@@ -38,40 +39,33 @@ mod_CFRunLoopObserverCallBack(CFRunLoopObserverRef f, CFRunLoopActivity activity
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFRunLoopObserverCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFRunLoopObserverCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_activities;
-    PyObject*      py_repeats;
-    PyObject*      py_order;
-    PyObject*      callout;
-    PyObject*      info;
     CFAllocatorRef allocator;
     CFOptionFlags  activities;
     Boolean        repeats;
     CFIndex        order;
 
-    if (!PyArg_ParseTuple(args, "OOOOOO", &py_allocator, &py_activities, &py_repeats,
-                          &py_order, &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 6, 6, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_activities, &activities) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[1], &activities) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(bool), py_repeats, &repeats) < 0) {
+    if (PyObjC_PythonToObjC(@encode(bool), args[2], &repeats) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFIndex), py_order, &order) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFIndex), args[3], &order) < 0) {
         return NULL;
     }
 
     CFRunLoopObserverContext context = mod_CFRunLoopObserverContext;
-    context.info                     = Py_BuildValue("OO", callout, info);
+    context.info                     = PyTuple_Pack(2, args[4], args[5]);
     if (context.info == NULL) {
         return NULL;
     }
@@ -100,25 +94,22 @@ mod_CFRunLoopObserverCreate(PyObject* self __attribute__((__unused__)), PyObject
     return result;
 }
 
-static PyObject*
-mod_CFRunLoopObserverGetContext(PyObject* self __attribute__((__unused__)),
-                                PyObject* args)
+static PyObject* _Nullable mod_CFRunLoopObserverGetContext(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*                py_f;
-    PyObject*                py_context;
     CFRunLoopObserverRef     f;
     CFRunLoopObserverContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != NULL && py_context != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFRunLoopObserverRef), args[0], &f) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFRunLoopObserverRef), py_f, &f) < 0) {
         return NULL;
     }
 
@@ -152,12 +143,23 @@ mod_CFRunLoopObserverGetContext(PyObject* self __attribute__((__unused__)),
         return PyObjC_NULL;
     }
 
-    Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
-    return PyTuple_GetItem((PyObject*)context.info, 1);
+    return PySequence_GetItem((PyObject*)context.info, 1);
 }
 
-#define COREFOUNDATION_RUNLOOP_METHODS                                                   \
-    {"CFRunLoopObserverCreate", (PyCFunction)mod_CFRunLoopObserverCreate, METH_VARARGS,  \
-     NULL},                                                                              \
-        {"CFRunLoopObserverGetContext", (PyCFunction)mod_CFRunLoopObserverGetContext,    \
-         METH_VARARGS, NULL},
+static int
+setup_runloop(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFRunLoopObserverCreate,
+                                      mod_CFRunLoopObserverCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFRunLoopObserverGetContext,
+                                      mod_CFRunLoopObserverGetContext)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

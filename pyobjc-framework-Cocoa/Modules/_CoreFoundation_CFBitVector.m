@@ -1,21 +1,25 @@
 /*
  * Manual wrappers for CFBitVector
  */
-static PyObject*
-mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFBitVectorCreate(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_bytes;
     Py_buffer      view;
     Py_ssize_t     count;
     CFAllocatorRef allocator;
     CFBitVectorRef vector;
 
-    if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_bytes, &count)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[2], &count) < 0) {
         return NULL;
     }
 
@@ -30,7 +34,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
         byteCount = count / 8;
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, "z", py_bytes, &bytes, &byteCount, &buf, &view);
+    r = PyObjC_PythonToCArray(NO, NO, "z", args[1], &bytes, &byteCount, &buf, &view);
     if (r == -1) {
         return NULL;
     }
@@ -51,27 +55,25 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     return result;
 }
 
-static PyObject*
-mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFBitVectorGetBits(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
-    PyObject*      py_vector;
-    PyObject*      py_range;
-    PyObject*      py_bytes;
     CFBitVectorRef vector;
     CFRange        range;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_vector, &py_range, &py_bytes)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFBitVectorRef), py_vector, &vector) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFBitVectorRef), args[0], &vector) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFRange), py_range, &range) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFRange), args[1], &range) < 0) {
         return NULL;
     }
-    if (py_bytes != Py_None) {
-        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R", py_bytes);
+    if (args[2] != Py_None) {
+        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R", args[2]);
         return NULL;
     }
 
@@ -85,6 +87,16 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* arg
     return buffer;
 }
 
-#define COREFOUNDATION_BITVECTOR_METHODS                                                 \
-    {"CFBitVectorCreate", (PyCFunction)mod_CFBitVectorCreate, METH_VARARGS, NULL},       \
-        {"CFBitVectorGetBits", (PyCFunction)mod_CFBitVectorGetBits, METH_VARARGS, NULL},
+static int
+setup_bitvector(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFBitVectorCreate, mod_CFBitVectorCreate) == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFBitVectorGetBits, mod_CFBitVectorGetBits) == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

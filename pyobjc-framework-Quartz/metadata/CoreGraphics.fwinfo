@@ -725,6 +725,9 @@
     }
    },
    "CGDataConsumerCreate": {
+    "args": {
+     "1": { "type_override": "@", "doc": "Tuple (putBytes, release); release can be None" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -768,7 +771,9 @@
     }
    },
    "CGDataProviderCreateSequential": {
-    "ignore": true,
+    "args": {
+     "1": { "type_override": "@", "doc": "Tuple(getBytes, skipForward, rewind, release); release can be None" }
+    },
     "retval": {
      "already_cfretained": true
     }
@@ -1589,10 +1594,10 @@
    },
    "CGFunctionCreate": {
     "args": {
-     "0": {},
-     "2": {},
-     "4": {},
-     "5": {}
+     "0": { "type_modifier": "@" },
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "4": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+     "5": { "type_override": "@", "doc": "callable to evaluate the function" }
     },
     "retval": {
      "already_cfretained": true
@@ -2343,12 +2348,6 @@
      "0": {}
     }
    },
-   "CGPDFObjectGetValue": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
    "CGPDFOperatorTableCreate": {
     "retval": {
      "already_cfretained": true
@@ -2555,7 +2554,7 @@
    "CGPSConverterCreate": {
     "args": {
      "0": {},
-     "1": {},
+     "1": { "type_override": "@", "doc": "tuple (beginDocument, endDocument, beginPage, endPage, noteProgress, noteMessage), each of those either a callable or None" },
      "2": {}
     },
     "retval": {
@@ -2818,7 +2817,7 @@
    "CGPatternCreate": {
     "args": {
      "0": {},
-     "7": {}
+     "7": { "type_override": "@", "doc": "None, or a 2-tuple ``(drawPattern, releaseInfo)`` (either one can be None)" }
     },
     "retval": {
      "already_cfretained": true
@@ -2890,11 +2889,6 @@
       }
      },
      "1": {}
-    }
-   },
-   "CGReleaseScreenRefreshRects": {
-    "args": {
-     "0": {}
     }
    },
    "CGScreenRegisterMoveCallback": {
@@ -3033,16 +3027,17 @@
    },
    "CGWaitForScreenRefreshRects": {
     "args": {
-     "0": {},
-     "1": {}
-    }
+     "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
+     "1": { "type_modifier": "o" }
+    },
+    "doc": "The returned *rects* will be garbage collected as usual, no need to call ``CGReleaseScreenRefreshRects``."
    },
    "CGWaitForScreenUpdateRects": {
     "args": {
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {}
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 3 },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" }
     }
    },
    "CGWindowListCopyWindowInfo": {
@@ -4276,15 +4271,6 @@
      "0": {}
     }
    },
-   "CGDataConsumerCreate": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDataConsumerCreateWithCFData": {
     "args": {
      "0": {}
@@ -4315,15 +4301,6 @@
    "CGDataProviderCopyData": {
     "args": {
      "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateSequential": {
-    "args": {
-     "0": {},
-     "1": {}
     },
     "retval": {
      "already_cfretained": true
@@ -5182,17 +5159,6 @@
     },
     "retval": {}
    },
-   "CGFunctionCreate": {
-    "args": {
-     "0": {},
-     "2": {},
-     "4": {},
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGFunctionRelease": {
     "args": {
      "0": {}
@@ -5910,7 +5876,6 @@
     }
    },
    "CGPDFObjectGetValue": {
-    "ignore": true,
     "args": {
      "0": { "type_override": "^{CGPDFObject=}" },
      "2": { "type_modifier": "o", "c_array_of_variable_length": true }
@@ -6134,24 +6099,6 @@
    "CGPSConverterAbort": {
     "args": {
      "0": {}
-    }
-   },
-   "CGPSConverterConvert": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
-   },
-   "CGPSConverterCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPSConverterIsConverting": {
@@ -6440,15 +6387,6 @@
     },
     "retval": {}
    },
-   "CGPatternCreate": {
-    "args": {
-     "0": {},
-     "7": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPatternRelease": {
     "args": {
      "0": {}
@@ -6520,8 +6458,9 @@
     }
    },
    "CGReleaseScreenRefreshRects": {
+    "suggestion": "The rects returned by 'CGWaitForScreenRefreshRects' are released automaticly",
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "CGScreenRegisterMoveCallback": {
@@ -6656,20 +6595,6 @@
       }
      },
      "1": {}
-    }
-   },
-   "CGWaitForScreenRefreshRects": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGWaitForScreenUpdateRects": {
-    "args": {
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {}
     }
    },
    "CGWindowListCopyWindowInfo": {

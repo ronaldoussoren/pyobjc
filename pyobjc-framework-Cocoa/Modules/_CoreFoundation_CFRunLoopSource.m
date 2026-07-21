@@ -1,3 +1,4 @@
+NS_ASSUME_NONNULL_BEGIN
 
 static const void*
 mod_source_retain(const void* info)
@@ -95,33 +96,30 @@ static CFRunLoopSourceContext mod_CFRunLoopSourceContext = {
     0,    NULL, mod_source_retain, mod_source_release, NULL,
     NULL, NULL, mod_schedule,      mod_cancel,         mod_perform};
 
-static PyObject*
-mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFRunLoopSourceCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*              py_allocator;
-    PyObject*              py_order;
-    PyObject*              py_context;
     CFAllocatorRef         allocator;
     CFIndex                order;
     CFRunLoopSourceContext context = mod_CFRunLoopSourceContext;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_allocator, &py_order, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFIndex), py_order, &order) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFIndex), args[1], &order) < 0) {
         return NULL;
     }
 
-    if (!PyTuple_Check(py_context) || PyTuple_Size(py_context) != 5) {
+    if (!PyTuple_Check(args[2]) || PyTuple_GET_SIZE(args[2]) != 5) {
         PyErr_SetString(PyExc_ValueError, "context must be tuple of length 5");
         return NULL;
     }
 
-    PyObject* v = PyTuple_GetItem(py_context, 0);
+    PyObject* v = PyTuple_GET_ITEM(args[2], 0);
     NSInteger i;
 
     if (PyObjC_PythonToObjC(@encode(NSInteger), v, &i) == -1) {
@@ -132,8 +130,8 @@ mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* 
         return NULL;
     }
 
-    context.info = py_context;
-    Py_INCREF(py_context);
+    context.info = args[2];
+    Py_INCREF(args[2]);
 
     CFRunLoopSourceRef rv = NULL;
     Py_BEGIN_ALLOW_THREADS
@@ -158,24 +156,22 @@ mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* 
     return result;
 }
 
-static PyObject*
-mod_CFRunLoopSourceGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFRunLoopSourceGetContext(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*              py_f;
-    PyObject*              py_context;
     CFRunLoopSourceRef     f;
     CFRunLoopSourceContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != NULL && py_context != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(CFRunLoopSourceRef), args[0], &f) < 0) {
+        return NULL;
+    }
+
+    if (args[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "invalid context");
-        return NULL;
-    }
-
-    if (PyObjC_PythonToObjC(@encode(CFRunLoopSourceRef), py_f, &f) < 0) {
         return NULL;
     }
 
@@ -213,8 +209,19 @@ mod_CFRunLoopSourceGetContext(PyObject* self __attribute__((__unused__)), PyObje
     return (PyObject*)(context.info);
 }
 
-#define COREFOUNDATION_RUNLOOPSOURCE_METHODS                                             \
-    {"CFRunLoopSourceCreate", (PyCFunction)mod_CFRunLoopSourceCreate, METH_VARARGS,      \
-     NULL},                                                                              \
-        {"CFRunLoopSourceGetContext", (PyCFunction)mod_CFRunLoopSourceGetContext,        \
-         METH_VARARGS, NULL},
+static int
+setup_runloop_source(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFRunLoopSourceCreate, mod_CFRunLoopSourceCreate)
+        == -1) {
+        return -1;
+    }
+    if (PyObjCRegister_FunctionCaller(CFRunLoopSourceGetContext,
+                                      mod_CFRunLoopSourceGetContext)
+        == -1) {
+        return -1;
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

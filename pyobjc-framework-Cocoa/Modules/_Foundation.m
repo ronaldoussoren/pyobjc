@@ -13,8 +13,10 @@
 #include "_Foundation_string.m"
 #include "_Foundation_typecode.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyMethodDef mod_methods[] = {
-    FOUNDATION_TYPECODE_METHODS{0, 0, 0, 0} /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 static int
@@ -25,6 +27,8 @@ mod_exec_module(PyObject* m)
     if (setup_nsnetservice(m) == -1)
         return -1;
     if (setup_nssstring(m) == -1)
+        return -1;
+    if (setup_typecode(m) == -1)
         return -1;
 
     return 0;
@@ -72,3 +76,5 @@ PyInit__Foundation(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

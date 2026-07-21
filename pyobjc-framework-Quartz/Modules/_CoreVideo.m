@@ -34,12 +34,10 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
 }
 
 static PyObject*
-mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
-                                 PyObject* args)
+mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                                 size_t    nargs)
 {
     CVReturn         rv;
-    PyObject*        py_rv;
-    PyObject*        func_result;
     CFAllocatorRef   allocator;
     size_t           width;
     size_t           height;
@@ -47,48 +45,40 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     size_t           bytesPerRow;
     CFDictionaryRef  pixelBufferAttributes;
     CVPixelBufferRef pixelBuffer;
-    PyObject*        py_allocator;
-    PyObject*        py_width;
-    PyObject*        py_height;
-    PyObject*        py_pixelFormatType;
-    PyObject*        py_buffer;
-    PyObject*        py_bytesPerRow;
-    PyObject*        releaseCallback;
-    PyObject*        info;
     PyObject*        view;
-    PyObject*        py_pixelBufferAttributes;
-    PyObject*        py_pixelBuffer = Py_None;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOOOO|O", &py_allocator, &py_width, &py_height,
-                          &py_pixelFormatType, &py_buffer, &py_bytesPerRow,
-                          &releaseCallback, &info, &py_pixelBufferAttributes,
-                          &py_pixelBuffer)) {
-
+    if (PyObjC_CheckArgCount(meth, 9, 10, nargs) == -1) {
         return NULL;
+    }
+    if (nargs == 9) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving out 'pixelBuffer' is deprecated", 0)
+            == -1) {
+            return NULL;
+        }
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_width, &width) < 0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), args[1], &width) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) < 0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), args[2], &height) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(OSType), py_pixelFormatType, &pixelFormatType) < 0) {
+    if (PyObjC_PythonToObjC(@encode(OSType), args[3], &pixelFormatType) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) < 0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), args[5], &bytesPerRow) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_pixelBufferAttributes,
-                            &pixelBufferAttributes)
+    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[8], &pixelBufferAttributes)
         < 0) {
         return NULL;
     }
 
-    if (py_pixelBuffer != Py_None) {
+    if (args[9] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "pixelBufferOut must be None");
         return NULL;
     }
@@ -98,11 +88,11 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObject_GetBuffer(py_buffer, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) < 0) {
+    if (PyObject_GetBuffer(args[4], PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OOOO", releaseCallback, info, py_buffer, view);
+    PyObject* real_info = Py_BuildValue("OOOO", args[6], args[7], args[4], view);
     if (real_info == NULL) {
         return NULL;
     }
@@ -131,41 +121,30 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return Py_None;
     }
 
-    py_pixelBuffer = PyObjC_ObjCToPython(@encode(CVPixelBufferRef), &pixelBuffer);
+    PyObject* py_pixelBuffer =
+        PyObjC_ObjCToPython(@encode(CVPixelBufferRef), &pixelBuffer);
     CFRelease(pixelBuffer); /* Compensate for create rule */
     if (py_pixelBuffer == NULL) {
         return NULL;
     }
 
-    py_rv = PyObjC_ObjCToPython(@encode(CVReturn), &rv);
-    if (py_rv == NULL) {
-        Py_DECREF(py_pixelBuffer);
-        return NULL;
-    }
-
-    func_result = PyTuple_New(2);
-    if (func_result == NULL) {
-        Py_DECREF(py_pixelBuffer);
-        Py_DECREF(py_rv);
-    }
-
-    PyTuple_SET_ITEM(func_result, 0, py_rv);
-    PyTuple_SET_ITEM(func_result, 1, py_pixelBuffer);
-
-    return func_result;
+    return Py_BuildValue("(NN)", PyObjC_ObjCToPython(@encode(CVReturn), &rv),
+                         py_pixelBuffer);
 }
 
-static PyMethodDef mod_methods[] = {{"CVPixelBufferCreateWithBytes",
-                                     (PyCFunction)mod_CVPixelBufferCreateWithBytes,
-                                     METH_VARARGS, NULL},
-
-                                    {0, 0, 0, 0}};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static int
 mod_exec_module(PyObject* m)
 {
     if (PyObjC_ImportAPI(m) < 0)
         return -1;
+
+    if (PyObjCRegister_FunctionCaller(CVPixelBufferCreateWithBytes,
+                                      mod_CVPixelBufferCreateWithBytes)
+        == -1) {
+        return -1;
+    }
 
     return 0;
 }
@@ -195,7 +174,7 @@ static struct PyModuleDef_Slot mod_slots[] = {
 
 static struct PyModuleDef mod_module = {
     .m_base     = PyModuleDef_HEAD_INIT,
-    .m_name     = "_CVPixelBuffer",
+    .m_name     = "_CoreVideo",
     .m_doc      = NULL,
     .m_size     = 0,
     .m_methods  = mod_methods,
@@ -205,10 +184,10 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CVPixelBuffer(void);
+PyObject* PyInit__CoreVideo(void);
 
 PyObject* __attribute__((__visibility__("default")))
-PyInit__CVPixelBuffer(void)
+PyInit__CoreVideo(void)
 {
     return PyModuleDef_Init(&mod_module);
 }

@@ -11,7 +11,7 @@ def _setup():
 
     import CoreFoundation
     import objc
-    from . import _metadata, _CVPixelBuffer
+    from . import _metadata, _CoreVideo
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.CoreVideo",
@@ -22,7 +22,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _CVPixelBuffer,
+            _CoreVideo,
             CoreFoundation,
         ),
         metadict=_metadata.__dict__,

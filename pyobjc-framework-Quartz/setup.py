@@ -71,8 +71,8 @@ setup(
     ext_modules=[
         # CoreVideo
         Extension(
-            "Quartz.CoreVideo._CVPixelBuffer",
-            ["Modules/_CVPixelBuffer.m"],
+            "Quartz.CoreVideo._CoreVideo",
+            ["Modules/_CoreVideo.m"],
             extra_link_args=["-framework", "Quartz"],
         ),
         # CoreGraphics
@@ -98,13 +98,13 @@ setup(
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.CoreGraphics._coregraphics",
-            ["Modules/_coregraphics.m"],
+            "Quartz.CoreGraphics._CoreGraphics",
+            ["Modules/_CoreGraphics.m"],
             extra_link_args=["-framework", "ApplicationServices"],
         ),
         Extension(
-            "Quartz.ImageKit._imagekit",
-            ["Modules/_imagekit.m"],
+            "Quartz.ImageKit._ImageKit",
+            ["Modules/_ImageKit.m"],
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
@@ -113,8 +113,8 @@ setup(
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.QuartzCore._quartzcore",
-            ["Modules/_quartzcore.m"],
+            "Quartz.QuartzCore._QuartzCore",
+            ["Modules/_QuartzCore.m"],
             extra_link_args=["-framework", "QuartzCore"],
             depends=["Modules/_CoreImage_protocols.m"],
         ),
