@@ -18,10 +18,76 @@ Version 13.0a0
     bound selectors in the lists of required and optional
     selectors.
 
+  * A number of framework bindings used to expose some complex
+    Apple API functions as regular Python builtin functions, those
+    are now instances of :class:`objc.function`.
+
+    In regular usage the only side effect of this is that keyword
+    arguments are no longer supported for such functions.
+
+  * :class:`objc.UninitializedDeallocWarning` was removed.
+
+    The bridge already never emitted this warning starting from
+    version 11.1.
+
+  * A number of functions in framework bindings used to accept
+    keyword arguments and no longer do due to a changed implementation
+    strategy.
+
+    .. dropdown:: List of such functions
+
+       * CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets
+
+       * CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets
+
+       * CoreMediaIO.CMIODeviceProcessAVCCommand
+
+       * CoreMediaIO.CMIODeviceProcessRS422Command
+
+       * MediaToolbox.MTAudioProcessingTapCreate
+
+       * MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat
+
+       * MediaToolbox.MTAudioProcessingTapGetStorage
+
+       * Foundation.NSFileTypeForHFSTypeCode
+
+       * AppKit.NSApplicationMain
+
+  * The first argument of :func:`CoreText.CTRunDelegateCreate` must now
+    be a tuple, earlier versions accepted arbitrary sequences.
+
+  * The last argument of :func:`CoreText.CTParagraphStyleGetValueForSpecifier`
+    must be :data:`None` and can no longer be a mutable buffer object.
+
+  * :func:`Quartz.CGReleaseScreenRefreshRects` will now raise an exception. It
+    was already a no-op.
+
+  * :func:`Foundation.NSHFSFTypeCodeFromFileType` is longer present,
+    this was a type for :func:`Foundation.NSHFSTypeCodeFromFileType`.
+
 * Deprecations:
 
   * The attribute :data:`objc.platform` is deprecated and will be removed
      in PyObjC 14. Its value is always ``"MACOSX"``.
+
+  * :func:`Quartz.CGWaitForScreenRefreshRects` can currently be called
+    without arguments. This feature is deprecated and all arguments
+    will be required in PyObjC 14.
+
+  * :func:`Quartz.CGWaitForScreenUpdateRects` can currently be called
+    without one instead of five arguments. This feature is deprecated
+    and all arguments will be required in PyObjC 14.
+
+  * :func`Quartz.CVPixelBufferCreateWithBytes` currently has an
+    optional last argument. That feature is deprecated, the argument
+    will be required in PyObjC 14.
+
+  * The last argument of :func:`CoreFoundation.CFBagGetValues` and
+    :func:`CoreFpundation.CFRunLoopTimerGetContext`  is
+    currently optional. That feature is deprecated and the last
+    argument will be required in PyObjC 14.
+
 
 * Framework bindings updated for macOS 27 SDK (beta 3)
 
@@ -517,7 +583,39 @@ Version 13.0a0
 * Improved error message when the *self* argument in
   calls to a class selector is invalid.
 
+* The SIMD functions in the ARKit bindings are now supported as well.
 
+* Added an internal API to override how C functions are called
+  by :class:`objc.function`, similar to an override system used
+  for calling selectors.
+
+  This enabled adding support for SIMD values in :class:`objc.functions`,
+  and enabled using :class:`objc.function` for functions with interfaces
+  that cannot be described fully using the metadata system.
+
+
+* Add support for C APIs that pass a function pointer to a callback
+  function (when that callback is implemented in Python).
+
+* :func:`CoreText.CTParagraphStyleGetValueForSpecifier` will now
+  automatically size the buffer when passing 0 for the *size* parameter,
+  and will in that case also return the retrieved value with the expected
+  type instead of as bytes object.
+
+  The passed in buffer must now be :data:`None` and cannot be a mutable
+  buffer type.
+
+* :func:`Quartz.CGPSConverterCreate` will now accept :data:`None` for
+  individual callbacks in the *callbacks* argument.
+
+* :func:`CoreFoundation.CFMachPortCreate`, :func:`CoreFoundation.CFMachPortCreateWithPort`,
+  and :func:`CoreFoundation.`CFMessagePortCreateLocal`
+  now correctly handle :data:`objc.NULL` for the last argument.
+
+* :func:`CoreFoundation.CFReadStreamSetClient` now correctly handles
+  a callback value of :data:`None` (removes the current callback)
+  and accepts :data:`None` of the context (with the same semantics
+  as :data:`objc.NULL`).
 
 Version 12.2.1
 --------------
