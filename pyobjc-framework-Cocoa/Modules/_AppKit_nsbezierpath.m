@@ -19,8 +19,6 @@ static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
     PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
     size_t nargs)
 {
-    PyObject*           result;
-    PyObject*           v;
     struct objc_super   super;
     NSInteger           idx;
     int                 pointCount;
@@ -81,26 +79,8 @@ static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
         return NULL;
     }
 
-    result = PyTuple_New(2);
-    if (result == NULL)
-        return NULL;
-
-    v = PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res);
-    if (v == NULL) {
-        Py_DECREF(result);
-        return NULL;
-    }
-
-    PyTuple_SetItem(result, 0, v);
-
-    v = PyObjC_CArrayToPython(@encode(NSPoint), points, pointCount);
-    if (v == NULL) {
-        Py_DECREF(result);
-        return NULL;
-    }
-    PyTuple_SetItem(result, 1, v);
-
-    return result;
+    return Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res),
+                         PyObjC_CArrayToPython(@encode(NSPoint), points, pointCount));
 }
 
 static PyObject* _Nullable call_NSBezierPath_setAssociatedPoints_atIndex_(
@@ -184,38 +164,31 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
     NSBezierPathElement (^block)(NSBezierPath*, NSInteger, NSPointArray) = ^(
         NSBezierPath* self, NSInteger idx, NSPointArray points) {
       PyObject*           result;
-      PyObject*           seq     = NULL;
-      PyObject*           arglist = NULL;
-      PyObject*           v;
+      PyObject*           seq = NULL;
+      PyObject*           arglist[3];
       int                 err;
       int                 pointCount;
       int                 i;
-      PyObject*           pyself = NULL;
       int                 cookie = 0;
       NSBezierPathElement element;
 
       PyGILState_STATE state = PyGILState_Ensure();
 
-      arglist = PyTuple_New(2);
-      if (arglist == NULL)
+      arglist[0] = NULL;
+
+      arglist[1] = PyObjCObject_NewTransient(self, &cookie);
+      if (arglist[1] == NULL)
           goto error;
 
-      pyself = PyObjCObject_NewTransient(self, &cookie);
-      if (pyself == NULL)
+      arglist[2] = PyLong_FromLong(idx);
+      if (arglist[2] == NULL)
           goto error;
-      PyTuple_SetItem(arglist, 0, pyself);
-      Py_INCREF(pyself);
 
-      v = PyLong_FromLong(idx);
-      if (v == NULL)
-          goto error;
-      PyTuple_SetItem(arglist, 1, v);
-
-      result = PyObject_Call((PyObject*)callable, arglist, NULL);
-      Py_DECREF(arglist);
-      arglist = NULL;
-      PyObjCObject_ReleaseTransient(pyself, cookie);
-      pyself = NULL;
+      result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                   2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      PyObjCObject_ReleaseTransient(arglist[1], cookie);
+      arglist[1] = NULL;
+      Py_CLEAR(arglist[2]);
       if (result == NULL)
           goto error;
 
@@ -229,6 +202,7 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
           goto error;
       }
 
+      PyObject* v;
       v = PyTuple_GET_ITEM(seq, 0);
 
       err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, &element);
@@ -284,8 +258,8 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
 
   error:
       Py_XDECREF(arglist);
-      if (pyself) {
-          PyObjCObject_ReleaseTransient(pyself, cookie);
+      if (arglist[1]) {
+          PyObjCObject_ReleaseTransient(arglist[1], cookie);
       }
       Py_XDECREF(seq);
       PyObjCErr_ToObjCWithGILState(&state);

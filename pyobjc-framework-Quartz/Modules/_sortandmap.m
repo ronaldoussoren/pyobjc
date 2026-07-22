@@ -19,19 +19,19 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SetItem(args, 0, PyBytes_FromString(key));
+    PyTuple_SET_ITEM(args, 0, PyBytes_FromString(key));
     if (PyTuple_GetItem(args, 0) == NULL) {
         Py_DECREF(args);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SetItem(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
+    PyTuple_SET_ITEM(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
     if (PyTuple_GetItem(args, 1) == NULL) {
         Py_DECREF(args);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SetItem(args, 2, PyTuple_GetItem(info, 1));
+    PyTuple_SET_ITEM(args, 2, PyTuple_GetItem(info, 1));
     Py_INCREF(PyTuple_GetItem(args, 2));
 
     PyObject* result = PyObject_Call(PyTuple_GetItem(info, 0), args, NULL);
@@ -116,8 +116,6 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 static PyObject*
 setCGPathElement(PyObject* meth, PyObject* const* args, Py_ssize_t nargs)
 {
-    PyObject* v;
-
     if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }

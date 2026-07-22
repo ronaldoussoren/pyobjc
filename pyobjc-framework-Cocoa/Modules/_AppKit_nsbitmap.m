@@ -4,7 +4,6 @@ static PyObject* _Nullable call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
     PyObject* method, PyObject* self, PyObject* _Nonnull const* _Nonnull arguments,
     size_t nargs)
 {
-    PyObject*          result;
     struct objc_super  super;
     NSTIFFCompression* list     = NULL;
     NSInteger          numTypes = 0;
@@ -42,30 +41,13 @@ static PyObject* _Nullable call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
         return NULL;
     }
 
-    result = PyTuple_New(2);
-    if (result == NULL) {
-        return NULL;
-    }
-
-    PyTuple_SetItem(result, 1, PyLong_FromLong(numTypes));
-    if (PyTuple_GetItem(result, 1) == NULL) {
-        Py_DECREF(result);
-        return NULL;
-    }
-
     if (numTypes < 0) {
-        PyTuple_SetItem(result, 0, Py_None);
-        Py_INCREF(Py_None);
+        return Py_BuildValue("NO", PyLong_FromLong(numTypes), Py_None);
     } else {
-        PyObject* v = PyObjC_CArrayToPython(@encode(NSTIFFCompression), list, numTypes);
-        if (v == NULL) {
-            Py_DECREF(result);
-            return NULL;
-        }
-        PyTuple_SetItem(result, 0, v);
+        return Py_BuildValue(
+            "NN", PyLong_FromLong(numTypes),
+            PyObjC_CArrayToPython(@encode(NSTIFFCompression), list, numTypes));
     }
-
-    return result;
 }
 
 static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
@@ -368,10 +350,10 @@ static PyObject* _Nullable call_NSBitmapImageRep_getBitmapDataPlanes_(
                     result = NULL;
                     return NULL;
                 }
-                PyTuple_SetItem(result, i, buffer);
+                PyTuple_SET_ITEM(result, i, buffer);
             } else {
                 Py_INCREF(Py_None);
-                PyTuple_SetItem(result, i, Py_None);
+                PyTuple_SET_ITEM(result, i, Py_None);
             }
         }
     }

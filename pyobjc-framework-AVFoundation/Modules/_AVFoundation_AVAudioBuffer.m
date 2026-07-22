@@ -58,7 +58,7 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, i, t);
+        PyTuple_SET_ITEM(result, i, t);
     }
 
     return result;
@@ -120,7 +120,7 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, i, t);
+        PyTuple_SET_ITEM(result, i, t);
     }
 
     return result;
@@ -182,7 +182,7 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, i, t);
+        PyTuple_SET_ITEM(result, i, t);
     }
 
     return result;

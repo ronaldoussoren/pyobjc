@@ -64,7 +64,7 @@ build_itemset(AuthorizationItemSet* itemset)
                 Py_DECREF(result);
                 return NULL;
             }
-            PyTuple_SetItem(result, i, t);
+            PyTuple_SET_ITEM(result, i, t);
         }
     }
     return result;

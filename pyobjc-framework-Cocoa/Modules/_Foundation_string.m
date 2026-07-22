@@ -90,9 +90,9 @@ static PyObject* _Nullable call_NSString_getCString_maxLength_range_remainingRan
             return NULL;
         }
 
-        PyTuple_SetItem(res, 1, rangeObj);
+        PyTuple_SET_ITEM(res, 1, rangeObj);
     } else {
-        PyTuple_SetItem(res, 1, PyObjC_NULL);
+        PyTuple_SET_ITEM(res, 1, PyObjC_NULL);
     }
     return res;
 }

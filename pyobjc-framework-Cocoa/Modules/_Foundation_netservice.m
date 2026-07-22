@@ -128,7 +128,7 @@ static PyObject* _Nullable call_NSNetService_addresses(
             Py_DECREF(result);
             return NULL;
         }
-        PyTuple_SetItem(result, i, v);
+        PyTuple_SET_ITEM(result, i, v);
     }
 
     return result;

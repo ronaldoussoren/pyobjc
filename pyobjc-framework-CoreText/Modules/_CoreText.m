@@ -53,8 +53,8 @@ m_CTFontCopyAvailableTables(PyObject* meth, PyObject* _Nonnull const* _Nonnull a
 
     for (i = 0; i < len; i++) {
         CTFontTableTag tag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex(ref, i);
-        PyTuple_SetItem(result, i, PyLong_FromLong(tag));
-        if (PyTuple_GetItem(result, i) == NULL) {
+        PyTuple_SET_ITEM(result, i, PyLong_FromLong(tag));
+        if (PyTuple_GET_ITEM(result, i) == NULL) {
             Py_DECREF(result);
             CFRelease(ref);
             return NULL;

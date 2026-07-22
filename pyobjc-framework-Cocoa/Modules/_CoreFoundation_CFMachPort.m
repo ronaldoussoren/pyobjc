@@ -281,7 +281,7 @@ static PyObject* _Nullable mod_CFMachPortSetInvalidationCallBack(
     Py_DECREF(PyTuple_GetItem((PyObject*)context.info, 2));
     Py_INCREF(args[1]);
     /* XXX: This is using a PyTuple as mutable storage! */
-    PyTuple_SetItem((PyObject*)context.info, 2, args[1]);
+    PyTuple_SET_ITEM((PyObject*)context.info, 2, args[1]);
 
     Py_BEGIN_ALLOW_THREADS
         @try {

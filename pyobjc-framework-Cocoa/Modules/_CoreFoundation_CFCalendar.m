@@ -254,7 +254,7 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
     if (b == NULL) {
         return NULL;
     }
-    PyTuple_SetItem(rv, 0, b);
+    PyTuple_SET_ITEM(rv, 0, b);
 
     Py_ssize_t i, len;
     len = strlen(componentDesc);
@@ -264,7 +264,7 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
             Py_DECREF(rv);
             return NULL;
         }
-        PyTuple_SetItem(rv, i + 1, v);
+        PyTuple_SET_ITEM(rv, i + 1, v);
     }
     return rv;
 }
@@ -361,7 +361,7 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
     if (b == NULL) {
         return NULL;
     }
-    PyTuple_SetItem(rv, 0, b);
+    PyTuple_SET_ITEM(rv, 0, b);
 
     Py_ssize_t i, len;
     len = strlen(componentDesc);
@@ -371,7 +371,7 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
             Py_DECREF(rv);
             return NULL;
         }
-        PyTuple_SetItem(rv, i + 1, v);
+        PyTuple_SET_ITEM(rv, i + 1, v);
     }
     return rv;
 }
