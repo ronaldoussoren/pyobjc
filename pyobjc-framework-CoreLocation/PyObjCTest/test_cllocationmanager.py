@@ -29,6 +29,7 @@ class TestCLLocationManager(TestCase):
         self.assertEqual(CoreLocation.CLActivityTypeFitness, 3)
         self.assertEqual(CoreLocation.CLActivityTypeOtherNavigation, 4)
         self.assertEqual(CoreLocation.CLActivityTypeAirborne, 5)
+        self.assertEqual(CoreLocation.CLActivityTypeMaritime, 6)
 
         self.assertIsEnumType(CoreLocation.CLAccuracyAuthorization)
         self.assertEqual(CoreLocation.CLAccuracyAuthorizationFullAccuracy, 0)

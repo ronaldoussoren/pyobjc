@@ -12,3 +12,4 @@ class TestSFContentBlockerManager(TestCase):
         self.assertEqual(SafariServices.SFSafariServicesVersion12_0, 3)
         self.assertEqual(SafariServices.SFSafariServicesVersion12_1, 4)
         self.assertEqual(SafariServices.SFSafariServicesVersion13_0, 5)
+        self.assertEqual(SafariServices.SFSafariServicesVersion27_0, 6)

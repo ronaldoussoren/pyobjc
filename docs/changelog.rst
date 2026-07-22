@@ -89,7 +89,7 @@ Version 13.0a0
     argument will be required in PyObjC 14.
 
 
-* Framework bindings updated for macOS 27 SDK (beta 3)
+* Framework bindings updated for macOS 27 SDK (beta 4)
 
 * Add support for the following frameworks (all new in macOS 27):
 

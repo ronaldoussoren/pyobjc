@@ -192,3 +192,11 @@ class TestAEAssessmentConfiguration(TestCase):
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setRequiresSingleUser_,
             0,
         )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsAccessibilityFullKeyboardAccess
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsAccessibilityFullKeyboardAccess_,
+            0,
+        )

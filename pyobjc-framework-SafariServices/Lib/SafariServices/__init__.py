@@ -46,6 +46,8 @@ def _setup():
         ("SFSafariTab", b"new"),
         ("SFSafariWindow", b"init"),
         ("SFSafariWindow", b"new"),
+        ("SFSafariSettings", b"init"),
+        ("SFSafariSettings", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

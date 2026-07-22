@@ -9,6 +9,8 @@ class TestCLLocationUpdater(TestCase):
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationAutomotiveNavigation, 1)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationOtherNavigation, 2)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationFitness, 3)
+        self.assertEqual(CoreLocation.CLLiveUpdateConfigurationAirborne, 4)
+        self.assertEqual(CoreLocation.CLLiveUpdateConfigurationMaritime, 5)
 
     @min_os_level("14.0")
     def test_methods14_0(self):

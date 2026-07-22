@@ -62,6 +62,19 @@ class TestNSWritingToolsCoordinatorHelper(AppKit.NSObject):
     def writingToolsCoordinator_willChangeToState_completion_(self, a, b, c):
         pass
 
+    def writingToolsCoordinator_requestsPreviewForTextAnimation_ofRange_inContext_textDecoration_completion_(
+        self, a, b, c, d, e, f
+    ):
+        pass
+
+    def writingToolsCoordinator_requestsGrammarResultsForContext_completion_(
+        self, a, b, c
+    ):
+        pass
+
+    def writingToolsCoordinator_setGrammarCheckingEnabled_(self, a, b):
+        pass
+
 
 class TestNSWritingToolsCoordinator(TestCase):
     def test_enums(self):
@@ -82,6 +95,15 @@ class TestNSWritingToolsCoordinator(TestCase):
         self.assertEqual(
             AppKit.NSWritingToolsCoordinatorTextReplacementReasonNoninteractive, 1
         )
+        self.assertEqual(
+            AppKit.NSWritingToolsCoordinatorTextReplacementReasonAccepted, 2
+        )
+        self.assertEqual(
+            AppKit.NSWritingToolsCoordinatorTextReplacementReasonRejected, 3
+        )
+        self.assertEqual(
+            AppKit.NSWritingToolsCoordinatorTextReplacementReasonTemporary, 4
+        )
 
         self.assertIsEnumType(AppKit.NSWritingToolsCoordinatorContextScope)
         self.assertEqual(AppKit.NSWritingToolsCoordinatorContextScopeUserSelection, 0)
@@ -96,6 +118,15 @@ class TestNSWritingToolsCoordinator(TestCase):
             AppKit.NSWritingToolsCoordinatorTextAnimationAnticipateInactive, 8
         )
         self.assertEqual(AppKit.NSWritingToolsCoordinatorTextAnimationTranslate, 9)
+        self.assertEqual(
+            AppKit.NSWritingToolsCoordinatorTextAnimationIndicateGrammar, 10
+        )
+
+        self.assertIsEnumType(AppKit.NSWritingToolsCoordinatorTextDecoration)
+        self.assertEqual(AppKit.NSWritingToolsCoordinatorTextDecorationNone, 0)
+        self.assertEqual(
+            AppKit.NSWritingToolsCoordinatorTextDecorationGrammarUnderline, 1
+        )
 
     @min_sdk_level("15.2")
     def test_protocols(self):
@@ -258,6 +289,38 @@ class TestNSWritingToolsCoordinator(TestCase):
             TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_willChangeToState_completion_,
             2,
             b"v",
+        )
+
+        self.assertArgHasType(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_requestsPreviewForTextAnimation_ofRange_inContext_textDecoration_completion_,
+            1,
+            b"q",
+        )
+        self.assertArgHasType(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_requestsPreviewForTextAnimation_ofRange_inContext_textDecoration_completion_,
+            2,
+            AppKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_requestsPreviewForTextAnimation_ofRange_inContext_textDecoration_completion_,
+            4,
+            b"q",
+        )
+        self.assertArgIsBlock(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_requestsPreviewForTextAnimation_ofRange_inContext_textDecoration_completion_,
+            5,
+            b"v@",
+        )
+
+        self.assertArgIsBlock(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_requestsGrammarResultsForContext_completion_,
+            2,
+            b"v@",
+        )
+
+        self.assertArgIsBOOL(
+            TestNSWritingToolsCoordinatorHelper.writingToolsCoordinator_setGrammarCheckingEnabled_,
+            1,
         )
 
     @min_os_level("15.2")

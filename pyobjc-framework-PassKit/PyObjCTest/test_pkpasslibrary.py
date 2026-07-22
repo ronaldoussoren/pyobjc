@@ -113,3 +113,21 @@ class TestPKPassLibrary(TestCase):
             1,
             b"vq",
         )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesWithData_completionHandler_,
+            1,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesFromArchiveAtFileURL_completionHandler_,
+            1,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesFromArchiveWithData_completionHandler_,
+            1,
+            b"vq",
+        )

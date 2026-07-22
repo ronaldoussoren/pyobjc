@@ -9,10 +9,6 @@ class TestAVLegibleMediaOptionsMenuControllerHelper(AVKit.NSObject):
 
 class TestAVLegibleMediaOptionsMenuController(TestCase):
     def test_enums(self):
-        self.assertIsEnumType(AVKit.AVLegibleMediaOptionsMenuType)
-        self.assertEqual(AVKit.AVLegibleMediaOptionsMenuTypeDefault, 0)
-        self.assertEqual(AVKit.AVLegibleMediaOptionsMenuTypeCaptionAppearance, 1)
-
         self.assertIsEnumType(AVKit.AVLegibleMediaOptionsMenuStateChangeReason)
         self.assertEqual(AVKit.AVLegibleMediaOptionsMenuStateChangeReasonNone, 0)
         self.assertEqual(
