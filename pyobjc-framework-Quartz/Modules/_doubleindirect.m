@@ -47,13 +47,13 @@ m_CGWaitForScreenRefreshRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull
 
 #pragma clang diagnostic pop
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (err == kCGErrorSuccess) {
@@ -102,7 +102,7 @@ m_CGWaitForScreenUpdateRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
             return NULL;
         }
     } else {
-        if (PyObjC_CheckArgCount(meth, 5, 5, nargs)) {
+        if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
             return NULL;
         }
 
@@ -141,14 +141,14 @@ m_CGWaitForScreenUpdateRects(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
 
 #pragma clang diagnostic pop
 
-        } @catch (NSException* localException) {
-            err = -1; /* Avoid compiler warning */
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            err = -1;                            // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (err == kCGErrorSuccess) {
@@ -197,23 +197,23 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LIN#
+        return -1;               // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CGWaitForScreenRefreshRects,
                                       m_CGWaitForScreenRefreshRects)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LIN#
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGWaitForScreenUpdateRects,
                                       m_CGWaitForScreenUpdateRects)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LIN#
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGReleaseScreenRefreshRects,
                                       m_CGReleaseScreenRefreshRects)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LIN#
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

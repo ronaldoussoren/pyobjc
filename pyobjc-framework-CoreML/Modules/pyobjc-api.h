@@ -185,21 +185,25 @@ static inline int
 PyObjC_ImportAPI(PyObject* calling_module)
 {
     PyObjC_API = (struct pyobjc_api*)PyCapsule_Import("objc." PYOBJC_API_NAME, 0);
-    if (PyObjC_API == NULL) {
-        return -1;
+    if (PyObjC_API == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;            // LCOV_EXCL_LINE
     }
-    if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
+    if (PyObjC_API->api_version != PYOBJC_API_VERSION) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError,
                      "Wrong version of PyObjC C API (got %d, expected %d)",
                      (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
-    if (PyObjC_API->struct_len < PyObjC_EXPECTED_STRUCT_SIZE) {
+    if (PyObjC_API->struct_len < PyObjC_EXPECTED_STRUCT_SIZE) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError,
                      "Wrong struct-size of PyObjC C API (got %d, expected %d)",
                      (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     /* Current pyobjc implementation doesn't allow deregistering

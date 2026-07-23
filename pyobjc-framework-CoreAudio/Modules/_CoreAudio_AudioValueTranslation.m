@@ -136,13 +136,13 @@ avt_create_input_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     unsigned int                    buf_size;
     void*                           new_buf;
 
-    if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size)) {
         return NULL;
     }
 
     new_buf = PyMem_Malloc(buf_size);
-    if (new_buf == NULL) {
-        return NULL;
+    if (new_buf == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_CRITICAL_SECTION(self);
@@ -178,8 +178,8 @@ avt_create_output_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     new_buf = PyMem_Malloc(buf_size);
-    if (new_buf == NULL) {
-        return NULL;
+    if (new_buf == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_CRITICAL_SECTION(self);
@@ -236,17 +236,19 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 
     result = PyObject_New(struct audio_value_translation,
                           (PyTypeObject*)audio_value_translation_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->avt_ownsstorage       = 1;
     result->avt_owns_input_buffer = result->avt_owns_output_buffer = 0;
     result->avt_input_buffer = result->avt_output_buffer = NULL;
     result->avt_translation = PyMem_Malloc(sizeof(AudioValueTranslation));
-    if (result->avt_translation == NULL) {
+    if (result->avt_translation == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result->avt_translation->mInputData      = NULL;
@@ -256,9 +258,11 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 
     if (input_bufsize != -1) {
         result->avt_translation->mInputData = PyMem_Malloc(input_bufsize);
-        if (result->avt_translation->mInputData == NULL) {
+        if (result->avt_translation->mInputData == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         result->avt_translation->mInputDataSize = (unsigned int)input_bufsize;
         result->avt_owns_input_buffer           = 1;
@@ -266,9 +270,11 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 
     if (output_bufsize != -1) {
         result->avt_translation->mOutputData = PyMem_Malloc(output_bufsize);
-        if (result->avt_translation->mOutputData == NULL) {
+        if (result->avt_translation->mOutputData == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         result->avt_translation->mOutputDataSize = (unsigned int)output_bufsize;
         result->avt_owns_output_buffer           = 1;
@@ -288,7 +294,7 @@ avt_dealloc(PyObject* object)
     if (self->avt_owns_output_buffer && self->avt_output_buffer != NULL) {
         PyMem_Free(self->avt_output_buffer);
     }
-    if (self->avt_ownsstorage) {
+    if (self->avt_ownsstorage && self->avt_translation) {
         PyMem_Free(self->avt_translation);
     }
     Py_TYPE(object)->tp_free(object);
@@ -334,8 +340,8 @@ pythonify_audio_value_translation(void* pointer)
 
     result = PyObject_New(struct audio_value_translation,
                           (PyTypeObject*)audio_value_translation_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->avt_ownsstorage       = 0;
@@ -372,32 +378,36 @@ init_audio_value_translation(PyObject* module)
     int r;
 
     PyObject* tmp = PyType_FromSpec(&avt_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     audio_value_translation_type = tmp;
 
     PyObject* ts = PyBytes_FromString(@encode(AudioValueTranslation));
-    if (ts == NULL) {
+    if (ts == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_value_translation_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     r = PyObject_SetAttrString(audio_value_translation_type, "__typestr__", ts);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_value_translation_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyModule_AddObject(module, "AudioValueTranslation", audio_value_translation_type);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_value_translation_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(audio_value_translation_type);
 
-    r = PyObjCPointerWrapper_Register(
+    return PyObjCPointerWrapper_Register(
         "AudioValueTranslation*", @encode(AudioValueTranslation*),
         pythonify_audio_value_translation, depythonify_audio_value_translation);
-
-    return r;
 }

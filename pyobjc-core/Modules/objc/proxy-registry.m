@@ -133,8 +133,8 @@ PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
             return current;
         } else {
             PyUnstable_EnableTryIncRef(proxy);
-            NSMapInsert(python_proxies, original, proxy);
             Py_INCREF(proxy);
+            NSMapInsert(python_proxies, original, proxy);
             PyMutex_Unlock(&proxy_mutex);
             return proxy;
         }

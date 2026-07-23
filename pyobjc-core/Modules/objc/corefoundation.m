@@ -26,7 +26,7 @@ static PyObject* _Nullable cf_repr(PyObject* self)
     }
 
     CFStringRef repr = CFCopyDescription(PyObjCObject_GetObject(self));
-    if (unlikely(repr)) { // LCOV_BR_EXCL_LINE
+    if (likely(repr)) { // LCOV_BR_EXCL_LINE
         PyObject* result = id_to_python((id)repr);
         CFRelease(repr);
         return result;
@@ -102,7 +102,7 @@ static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
         /* rval can be NULL for memory errors and the like, but not
          * in normal circumstances
          */
-        if (unlikely(rval)) { // LCOV_BR_EXCL_LINE
+        if (likely(rval)) { // LCOV_BR_EXCL_LINE
             PyObject* actual = PyObjC_RegisterPythonProxy(self, rval);
             Py_DECREF(rval);
             return actual;

@@ -125,6 +125,33 @@ class TestNSFont(TestCase):
     def test_functions(self):
         glyphs = [ord("A"), ord("B"), ord("9"), ord("a")]
 
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            AppKit.NSConvertGlyphsToPackedGlyphs()
+
+        with self.assertRaisesRegex(TypeError, "converting to a C array"):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                42, len(glyphs), AppKit.NSNativeShortGlyphPacking, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 2"
+        ):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, "42", AppKit.NSNativeShortGlyphPacking, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, len(glyphs), "42", None
+            )
+
+        with self.assertRaisesRegex(ValueError, "packedGlyphs argument must be None"):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, len(glyphs), AppKit.NSNativeShortGlyphPacking, bytearray(100)
+            )
+
         rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
             glyphs, len(glyphs), AppKit.NSNativeShortGlyphPacking, None
         )

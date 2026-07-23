@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import SystemConfiguration
 import objc
 
@@ -88,12 +88,39 @@ class TestSCNetworkConnection(TestCase):
             self.assertTrue(servId is None)
             self.assertTrue(userOpts is None)
 
+        lst = []
+
         def callout(ref, status, info):
-            pass
+            lst.apppend((ref, status, info))
 
         ctx = object()
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
+                NoObjCClass(), "pyobjc.test.id", callout, ctx
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
+                None, NoObjCClass(), callout, ctx
+            )
+
         v = SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
             None, "pyobjc.test.id", callout, ctx
+        )
+
+        rl = SystemConfiguration.CFRunLoopGetCurrent()
+        SystemConfiguration.SCNetworkConnectionScheduleWithRunLoop(
+            v, rl, SystemConfiguration.kCFRunLoopCommonModes
+        )
+        SystemConfiguration.CFRunLoopRunInMode(
+            SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
+        )
+        SystemConfiguration.SCNetworkConnectionUnscheduleFromRunLoop(
+            v, rl, SystemConfiguration.kCFRunLoopCommonModes
         )
 
         self.assertResultIsCFRetained(

@@ -33,7 +33,32 @@ static PyObject* _Nullable mod_CFNumberGetValue(PyObject* meth,
         return NULL;
     }
     if (args[2] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "Bad value for buffer");
+        PyErr_SetString(PyExc_ValueError, "'buffer' must be None");
+        return NULL;
+    }
+
+    /* Invalid values will cause a hard crash */
+    switch (type) {
+    case kCFNumberSInt8Type:
+    case kCFNumberSInt16Type:
+    case kCFNumberSInt32Type:
+    case kCFNumberSInt64Type:
+    case kCFNumberFloat32Type:
+    case kCFNumberFloat64Type:
+    case kCFNumberCharType:
+    case kCFNumberShortType:
+    case kCFNumberIntType:
+    case kCFNumberLongType:
+    case kCFNumberLongLongType:
+    case kCFNumberFloatType:
+    case kCFNumberDoubleType:
+    case kCFNumberCFIndexType:
+    case kCFNumberNSIntegerType:
+    case kCFNumberCGFloatType:
+        break;
+
+    default:
+        PyErr_SetString(PyExc_ValueError, "invalid CFNumberType value");
         return NULL;
     }
 
@@ -42,14 +67,13 @@ static PyObject* _Nullable mod_CFNumberGetValue(PyObject* meth,
         @try {
             rv = CFNumberGetValue(number, type, &buf);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     if (rv) {
         PyObject* n;
@@ -95,6 +119,7 @@ static PyObject* _Nullable mod_CFNumberGetValue(PyObject* meth,
             break;
 
         case kCFNumberLongLongType:
+        case kCFNumberNSIntegerType:
             n = PyObjC_ObjCToPython(@encode(long long), &buf.longlongv);
             break;
 
@@ -103,6 +128,7 @@ static PyObject* _Nullable mod_CFNumberGetValue(PyObject* meth,
             break;
 
         case kCFNumberDoubleType:
+        case kCFNumberCGFloatType:
             n = PyObjC_ObjCToPython(@encode(double), &buf.doublev);
             break;
 
@@ -111,8 +137,10 @@ static PyObject* _Nullable mod_CFNumberGetValue(PyObject* meth,
             break;
 
         default:
-            PyErr_SetString(PyExc_ValueError, "number type");
+            // LCOV_EXCL_START
+            PyErr_SetString(PyExc_ValueError, "number type not supported");
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         return Py_BuildValue("NN", PyBool_FromLong(1), n);
@@ -195,6 +223,7 @@ static PyObject* _Nullable mod_CFNumberCreate(PyObject* meth,
         break;
 
     case kCFNumberLongType:
+    case kCFNumberNSIntegerType:
         n = PyObjC_PythonToObjC(@encode(long), args[2], &buf.longv);
         break;
 
@@ -207,6 +236,7 @@ static PyObject* _Nullable mod_CFNumberCreate(PyObject* meth,
         break;
 
     case kCFNumberDoubleType:
+    case kCFNumberCGFloatType:
         n = PyObjC_PythonToObjC(@encode(double), args[2], &buf.doublev);
         break;
 
@@ -215,8 +245,10 @@ static PyObject* _Nullable mod_CFNumberCreate(PyObject* meth,
         break;
 
     default:
-        PyErr_SetString(PyExc_ValueError, "number type");
+        // LCOV_EXCL_START
+        PyErr_SetString(PyExc_ValueError, "number type not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (n == -1) {
@@ -228,14 +260,13 @@ static PyObject* _Nullable mod_CFNumberCreate(PyObject* meth,
         @try {
             rv = CFNumberCreate(allocator, type, &buf);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFNumberRef), &rv);
     if (rv) {
@@ -247,11 +278,13 @@ static PyObject* _Nullable mod_CFNumberCreate(PyObject* meth,
 static int
 setup_number(PyObject* m __attribute__((__unused__)))
 {
-    if (PyObjCRegister_FunctionCaller(CFNumberGetValue, mod_CFNumberGetValue) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFNumberGetValue, mod_CFNumberGetValue)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFNumberCreate, mod_CFNumberCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFNumberCreate, mod_CFNumberCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

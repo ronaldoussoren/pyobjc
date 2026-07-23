@@ -2,7 +2,7 @@ import socket
 
 import CFNetwork
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFHost(TestCase):
@@ -75,8 +75,17 @@ class TestCFHost(TestCase):
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
+        def callback_raises(host, typeinfo, error, ctx):
+            raise RuntimeError("callback error")
+
         host = CFNetwork.CFHostCreateWithName(None, "localhost")
         CFNetwork.CFHostSetClient(host, callback, ctx)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 2"):
+            CFNetwork.CFHostSetClient(host, callback)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFHostSetClient(NoObjCClass(), callback, ctx)
 
         rl = CFNetwork.CFRunLoopGetCurrent()
         CFNetwork.CFHostScheduleWithRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
@@ -103,3 +112,23 @@ class TestCFHost(TestCase):
         self.assertIsInstance(lst, CFNetwork.CFArrayRef)
         self.assertIsInstance(lst[0], CFNetwork.CFDataRef)
         self.assertIsInstance(ok, bool)
+
+        CFNetwork.CFHostSetClient(host, None, 42)
+
+        lst[:] = []
+        host = CFNetwork.CFHostCreateWithName(None, "localhost")
+        CFNetwork.CFHostSetClient(host, callback_raises, ctx)
+        CFNetwork.CFHostScheduleWithRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
+
+        ok, err = CFNetwork.CFHostStartInfoResolution(
+            host, CFNetwork.kCFHostAddresses, None
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(ok, bool)
+        self.assertIsInstance(err, CFNetwork.CFStreamError)
+
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 4.0, False)
+
+        CFNetwork.CFHostUnscheduleFromRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
+        self.assertEqual(len(lst), 0)

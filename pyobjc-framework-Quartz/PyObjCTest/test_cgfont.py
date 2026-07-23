@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import Quartz
 import objc
 
@@ -107,6 +107,14 @@ class TestCGFont(TestCase):
             Quartz.CGDataProviderCreateWithCFData(data)
         )
         self.assertIsInstance(font, Quartz.CGFontRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            Quartz.CGFontCopyTableTags()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGFontCopyTableTags(NoObjCClass())
+
+        self.assertIs(Quartz.CGFontCopyTableTags(None), None)
 
         tags = Quartz.CGFontCopyTableTags(font)
         self.assertIsInstance(tags, tuple)

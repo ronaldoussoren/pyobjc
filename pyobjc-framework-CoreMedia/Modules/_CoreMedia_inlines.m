@@ -32,8 +32,8 @@ static int
 mod_exec_module(PyObject* m)
 {
     if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
-        < 0) {
-        return -1;
+        < 0) {     // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

@@ -1,6 +1,7 @@
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
 import objc
+from .runloophelper import check_cfrunloop_side_effects
 
 
 class TestUserNotification(TestCase):
@@ -11,6 +12,7 @@ class TestUserNotification(TestCase):
         value = CoreFoundation.CFUserNotificationGetTypeID()
         self.assertIsInstance(value, int)
 
+    @check_cfrunloop_side_effects
     def test_creation(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfusernotificaton"
@@ -49,11 +51,18 @@ class TestUserNotification(TestCase):
         )
         self.assertIsInstance(rls, CoreFoundation.CFRunLoopSourceRef)
         CoreFoundation.CFRunLoopAddSource(rl, rls, runloop_mode)
-        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, True)
+        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, False)
 
         CoreFoundation.CFUserNotificationCancel(ref)
-        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, True)
+        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, False)
         CoreFoundation.CFRunLoopRemoveSource(rl, rls, runloop_mode)
+
+        with self.assertRaisesRegex(ValueError, "retrieved context is not valid"):
+            # The CFRunLoopSourceGetContext bindings can only return the context
+            # for sources created in Python using CFRunLoopSourceCreate
+            # XXX: This test should be elsewhere, but this way of testing is
+            #      slightly more convenient.
+            CoreFoundation.CFRunLoopSourceGetContext(rls, None)
 
         self.assertEqual(len(values), 1)
         self.assertIs(values[0][0], ref)

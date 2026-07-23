@@ -42,14 +42,14 @@ static PyObject* _Nullable objc_NSFileTypeForHFSTypeCode(
     Py_BEGIN_ALLOW_THREADS
         @try {
             oc_result = NSFileTypeForHFSTypeCode(hfsTypeCode);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            oc_result = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            oc_result = NULL;                    // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     result = PyObjC_IdToPython(oc_result);
     return result;
@@ -60,8 +60,8 @@ setup_typecode(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(NSFileTypeForHFSTypeCode,
                                       objc_NSFileTypeForHFSTypeCode)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

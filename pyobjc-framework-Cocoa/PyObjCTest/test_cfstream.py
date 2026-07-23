@@ -9,10 +9,12 @@ from PyObjCTools.TestSupport import (
     skipUnless,
     os_level_key,
     os_release,
+    NoObjCClass,
 )
 import objc
 
 from .test_cfsocket import onTheNetwork
+from .runloophelper import check_cfrunloop_side_effects
 
 
 class TestStream(TestCase):
@@ -424,13 +426,20 @@ class TestStream(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
+    @check_cfrunloop_side_effects
     def test_read_socket_async(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
-        strval = b"hello world"
-        readStream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
-            None, strval, len(strval), CoreFoundation.kCFAllocatorNull
+        # readStream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
+        #    None, strval, len(strval), CoreFoundation.kCFAllocatorNull
+        # )
+        import pathlib
+
+        readStream = CoreFoundation.CFReadStreamCreateWithFile(
+            None, pathlib.Path("/etc/services")
         )
+        #    None, strval, len(strval), CoreFoundation.kCFAllocatorNull
+        # )
         self.assertIsInstance(readStream, CoreFoundation.CFReadStreamRef)
         data = {}
 
@@ -439,11 +448,25 @@ class TestStream(TestCase):
         def callback(stream, kind, info):
             state.append((stream, kind, info))
 
+        def callback_raises(stream, kind, info):
+            raise RuntimeError("callback error")
+
         status = CoreFoundation.CFReadStreamGetStatus(readStream)
         self.assertIsInstance(status, int)
         self.assertEqual(status, CoreFoundation.kCFStreamStatusNotOpen)
 
         CoreFoundation.CFReadStreamOpen(readStream)
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            CoreFoundation.CFReadStreamSetClient()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFReadStreamSetClient(NoObjCClass(), 0, callback, data)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreFoundation.CFReadStreamSetClient(readStream, "flats", callback, data)
 
         ok = CoreFoundation.CFReadStreamSetClient(
             readStream,
@@ -460,9 +483,26 @@ class TestStream(TestCase):
         )
         try:
             CoreFoundation.CFRunLoopRunInMode(
-                CoreFoundation.kCFRunLoopDefaultMode, 1.0, True
+                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
             )
             CoreFoundation.CFRunLoopWakeUp(rl)
+
+            ok = CoreFoundation.CFReadStreamSetClient(
+                readStream,
+                CoreFoundation.kCFStreamEventHasBytesAvailable
+                | CoreFoundation.kCFStreamEventErrorOccurred
+                | CoreFoundation.kCFStreamEventEndEncountered,
+                callback_raises,
+                data,
+            )
+            self.assertTrue(ok)
+
+            CoreFoundation.CFReadStreamRead(readStream, None, 100)
+
+            with self.assertRaisesRegex(RuntimeError, "callback error"):
+                CoreFoundation.CFRunLoopRunInMode(
+                    CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+                )
         finally:
             CoreFoundation.CFReadStreamClose(readStream)
             CoreFoundation.CFReadStreamUnscheduleFromRunLoop(
@@ -483,6 +523,16 @@ class TestStream(TestCase):
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventHasBytesAvailable)
 
+        ok = CoreFoundation.CFReadStreamSetClient(
+            readStream,
+            CoreFoundation.kCFStreamEventHasBytesAvailable
+            | CoreFoundation.kCFStreamEventErrorOccurred
+            | CoreFoundation.kCFStreamEventEndEncountered,
+            None,
+            None,
+        )
+        self.assertTrue(ok)
+
     @skipUnless(
         not (
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
@@ -493,6 +543,7 @@ class TestStream(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
+    @check_cfrunloop_side_effects
     def test_write_socket_async(self):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
@@ -510,6 +561,25 @@ class TestStream(TestCase):
         def callback(stream, kind, info):
             state.append((stream, kind, info))
 
+        def callback_raises(stream, kind, info):
+            raise RuntimeError("callback error")
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            CoreFoundation.CFWriteStreamSetClient()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFWriteStreamSetClient(
+                NoObjCClass(),
+                CoreFoundation.kCFStreamEventCanAcceptBytes,
+                callback,
+                data,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreFoundation.CFWriteStreamSetClient(writeStream, "42", callback, data)
+
         ok = CoreFoundation.CFWriteStreamSetClient(
             writeStream,
             CoreFoundation.kCFStreamEventCanAcceptBytes
@@ -525,9 +595,31 @@ class TestStream(TestCase):
         )
         try:
             CoreFoundation.CFRunLoopRunInMode(
-                CoreFoundation.kCFRunLoopDefaultMode, 1.0, True
+                CoreFoundation.kCFRunLoopDefaultMode,
+                0.5,
+                False,
             )
             CoreFoundation.CFRunLoopWakeUp(rl)
+
+            ok = CoreFoundation.CFWriteStreamSetClient(
+                writeStream,
+                CoreFoundation.kCFStreamEventCanAcceptBytes
+                | CoreFoundation.kCFStreamEventErrorOccurred
+                | CoreFoundation.kCFStreamEventEndEncountered,
+                callback_raises,
+                data,
+            )
+            self.assertIs(ok, True)
+
+            CoreFoundation.CFWriteStreamWrite(writeStream, b"hello" * 5, 5 * 5)
+
+            with self.assertRaisesRegex(RuntimeError, "callback error"):
+                CoreFoundation.CFRunLoopRunInMode(
+                    CoreFoundation.kCFRunLoopDefaultMode,
+                    0.5,
+                    False,
+                )
+
         finally:
             CoreFoundation.CFWriteStreamClose(writeStream)
             CoreFoundation.CFWriteStreamUnscheduleFromRunLoop(
@@ -547,6 +639,16 @@ class TestStream(TestCase):
         self.assertIs(state[0][0], writeStream)
         self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], CoreFoundation.kCFStreamEventCanAcceptBytes)
+
+        ok = CoreFoundation.CFWriteStreamSetClient(
+            writeStream,
+            CoreFoundation.kCFStreamEventCanAcceptBytes
+            | CoreFoundation.kCFStreamEventErrorOccurred
+            | CoreFoundation.kCFStreamEventEndEncountered,
+            None,
+            None,
+        )
+        self.assertIs(ok, True)
 
     def test_functions(self):
         CoreFoundation.CFReadStreamSetDispatchQueue  # Nothing to test

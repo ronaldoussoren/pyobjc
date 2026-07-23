@@ -15,8 +15,10 @@ def _setup():
     from . import _metadata, _CFNetwork
 
     frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
-    if not os.path.exists(frameworkPath):
-        frameworkPath = "/System/Library/Frameworks/CoreServices.framework"
+    if not os.path.exists(frameworkPath):  # pragma: no branch
+        frameworkPath = (
+            "/System/Library/Frameworks/CoreServices.framework"  # pragma: no cover
+        )
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="CFNetwork",

@@ -22,14 +22,14 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (setup_nsnetservice(m) == -1)
-        return -1;
-    if (setup_nssstring(m) == -1)
-        return -1;
-    if (setup_typecode(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsnetservice(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nssstring(m) == -1)    // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_typecode(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
 
     return 0;
 }

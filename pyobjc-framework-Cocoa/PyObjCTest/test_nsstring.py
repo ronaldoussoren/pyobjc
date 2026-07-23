@@ -314,7 +314,7 @@ class TestNSString(TestCase):
             Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, b"o^v"
         )
         self.assertArgSizeInArg(
-            Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, 1
+            Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, (1, 3)
         )
         self.assertArgIsOut(
             Foundation.NSString.getCString_maxLength_range_remainingRange_, 3
@@ -467,12 +467,48 @@ class TestNSString(TestCase):
         x = v.getCString_maxLength_(None, 16)
         self.assertEqual(x, b"hello world")
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            x = v.getCString_maxLength_()
+
+        with self.assertRaisesRegex(ValueError, "buffer must be None"):
+            x = v.getCString_maxLength_(bytearray(40), 16)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            x = v.getCString_maxLength_(None, "foo")
+
         self.assertRaises(objc.error, v.getCString_maxLength_, None, 4)
 
-        x, loc = v.getCString_maxLength_range_remainingRange_(None, 4, (1, 4), None)
+        x, loc = v.getCString_maxLength_range_remainingRange_(None, 10, (1, 4), None)
         self.assertEqual(x, b"ello")
         self.assertEqual(loc.location, 5)
         self.assertEqual(loc.length, 0)
+
+        x, loc = v.getCString_maxLength_range_remainingRange_(
+            None, 10, (1, 4), objc.NULL
+        )
+        self.assertEqual(x, b"ello")
+        self.assertIs(loc, objc.NULL)
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            v.getCString_maxLength_range_remainingRange_()
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            v.getCString_maxLength_range_remainingRange_(None, 4, 42, None)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            v.getCString_maxLength_range_remainingRange_(None, "four", (1, 4), None)
+
+        with self.assertRaisesRegex(ValueError, "output buffer must be None"):
+            v.getCString_maxLength_range_remainingRange_(bytearray(4), 4, (1, 4), None)
+
+        with self.assertRaisesRegex(ValueError, "range buffer must be None or NULL"):
+            v.getCString_maxLength_range_remainingRange_(None, 4, (1, 4), bytearray(8))
 
 
 class TestNSStringBridging(TestCase):

@@ -14,46 +14,65 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
     *parameterSetSizes    = NULL;
     *parameterSetViews    = NULL;
 
-    if (!PyTuple_Check(py_parameterSetPointers)) {
-        PyErr_SetString(PyExc_TypeError, "parameterSetPointers must be tuple of buffers");
+    if (parameterSetCount < 0) {
+        PyErr_SetString(PyExc_ValueError, "parameterSetCount out of range");
         return -1;
     }
-    if (!PyTuple_Check(py_parameterSetSizes)) {
-        PyErr_SetString(PyExc_TypeError, "parameterSetSizes must be tuple of buffers");
+
+    PyObject* seq_psp = PySequence_Tuple(py_parameterSetPointers);
+    if (seq_psp == NULL) {
+        PyErr_SetString(PyExc_TypeError,
+                        "parameterSetPointers must be sequence of buffers");
         return -1;
     }
-    if (PyTuple_Size(py_parameterSetPointers) < parameterSetCount) {
-        PyErr_SetString(PyExc_ValueError, "parameterSetPointers is too small");
+    PyObject* seq_pss = PySequence_Tuple(py_parameterSetSizes);
+    if (seq_pss == NULL) {
+        PyErr_SetString(PyExc_TypeError,
+                        "parameterSetSizes must be sequence of integers");
         return -1;
     }
-    if (PyTuple_Size(py_parameterSetSizes) < parameterSetCount) {
-        PyErr_SetString(PyExc_ValueError, "parameterSetSizes is too small");
+
+    if (PyTuple_Size(seq_psp) != parameterSetCount) {
+        PyErr_Format(PyExc_ValueError, "expecting %ld parameterSetPointers, got %ld",
+                     parameterSetCount, PyTuple_Size(seq_psp));
+        return -1;
+    }
+    if (PyTuple_Size(seq_pss) < parameterSetCount) {
+        PyErr_Format(PyExc_ValueError, "expecting %ld parameterSetSizes, got %ld",
+                     parameterSetCount, PyTuple_Size(seq_pss));
         return -1;
     }
 
     *parameterSetPointers = PyMem_Malloc(sizeof(uint8_t**) * parameterSetCount);
-    if (*parameterSetPointers == NULL) {
-        return -1;
+    if (*parameterSetPointers == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;                       // LCOV_EXCL_LINE
     }
 
     *parameterSetSizes = PyMem_Malloc(sizeof(size_t*) * parameterSetCount);
-    if (*parameterSetPointers == NULL) {
+    if (*parameterSetPointers == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(parameterSetPointers);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     *parameterSetViews = PyMem_Malloc(sizeof(Py_buffer) * parameterSetCount);
-    if (*parameterSetViews == NULL) {
+    if (*parameterSetViews == NULL) { // // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(parameterSetPointers);
         PyMem_Free(parameterSetSizes);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < parameterSetCount; i++) {
         long expected_size;
 
-        if (PyLong_Check(PyTuple_GetItem(py_parameterSetSizes, i))) {
-            expected_size = PyLong_AsLong(PyTuple_GetItem(py_parameterSetSizes, i));
+        PyObject* cur_size = PyTuple_GET_ITEM(seq_pss, i);
+        PyObject* cur_buf  = PyTuple_GET_ITEM(seq_psp, i);
+
+        if (PyLong_Check(cur_size)) {
+            expected_size = PyLong_AsLong(cur_size);
             if (expected_size == -1 && PyErr_Occurred()) {
                 goto error;
             }
@@ -70,7 +89,7 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
             goto error;
         }
 
-        if (PyUnicode_Check(PyTuple_GetItem(py_parameterSetPointers, i))) {
+        if (PyUnicode_Check(cur_buf)) {
             /* Explicitly reject unicode objects, those implement the buffer protocol but
              * are not usable here.
              */
@@ -79,8 +98,7 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
             goto error;
         }
 
-        if (PyObject_GetBuffer(PyTuple_GetItem(py_parameterSetPointers, i),
-                               (*parameterSetViews) + i, PyBUF_CONTIG_RO)
+        if (PyObject_GetBuffer(cur_buf, (*parameterSetViews) + i, PyBUF_CONTIG_RO)
             == -1) {
             goto error;
         }
@@ -215,11 +233,6 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(
         return NULL;
     }
 
-    if (parameterSetCount < 0) {
-        PyErr_SetString(PyExc_ValueError, "parameterSetCount out of range");
-        return NULL;
-    }
-
     if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[5], &extensions) == -1) {
         return NULL;
     }
@@ -264,14 +277,14 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(
             CMVideoFormatDescriptionCreateFromH264ParameterSets,
             m_CMVideoFormatDescriptionCreateFromH264ParameterSets)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 #if PyObjC_BUILD_RELEASE >= 1013
 
@@ -280,8 +293,8 @@ mod_exec_module(PyObject* m)
     if (PyObjCRegister_FunctionCaller(
             CMVideoFormatDescriptionCreateFromHEVCParameterSets,
             m_CMVideoFormatDescriptionCreateFromHEVCParameterSets)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 #pragma clang diagnostic pop
 

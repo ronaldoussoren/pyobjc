@@ -29,35 +29,43 @@ m_CTFontCopyAvailableTables(PyObject* meth, PyObject* _Nonnull const* _Nonnull a
         @try {
             ref = CTFontCopyAvailableTables(font, options);
 
-        } @catch (NSException* localException) {
-            ref = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            ref = NULL;                          // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (ref == NULL) {
-        if (PyErr_Occurred()) {
-            return NULL;
+    if (ref == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
 
+        // We'll hever get here during testing,
+        // the function only returns NULL for legacy fonts.
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     len    = CFArrayGetCount(ref);
     result = PyTuple_New(len);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CFRelease(ref);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < len; i++) {
         CTFontTableTag tag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex(ref, i);
         PyTuple_SET_ITEM(result, i, PyLong_FromLong(tag));
-        if (PyTuple_GET_ITEM(result, i) == NULL) {
+        if (PyTuple_GET_ITEM(result, i) == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             CFRelease(ref);
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
     CFRelease(ref);
@@ -145,8 +153,8 @@ m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
 
     } else {
         result = PyBytes_FromStringAndSize(NULL, size);
-        if (result == NULL) {
-            return NULL;
+        if (result == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         }
         value_buf = PyBytes_AS_STRING(result);
     }
@@ -154,15 +162,17 @@ m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
     Py_BEGIN_ALLOW_THREADS
         @try {
             b = CTParagraphStyleGetValueForSpecifier(style, spec, size, value_buf);
-        } @catch (NSException* localException) {
-            b = 0;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            b = 0;                               // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (!b) {
@@ -178,7 +188,7 @@ m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
         result = Py_BuildValue("ON", Py_True, PyFloat_FromDouble(float_value));
     } else if (value_buf == &ulong_value) {
         result = Py_BuildValue("ON", Py_True, PyLong_FromUnsignedLong(ulong_value));
-    } else if (value_buf == &id_value) {
+    } else if (value_buf == &id_value) { // LCOV_BR_EXCL_LINE
         result = Py_BuildValue("ON", Py_True, PyObjC_IdToPython(id_value));
     }
 
@@ -215,18 +225,20 @@ m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
             @try {
                 style = CTParagraphStyleCreate(NULL, 0);
 
-            } @catch (NSException* localException) {
-                style = NULL;
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSException* localException) { // LCOV_EXCL_LINE
+                style = NULL;                        // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) {
-            return NULL;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
-        if (style == NULL) {
+        if (style == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_INCREF(Py_None);
             return Py_None;
+            // LCOV_EXCL_STOP
         }
 
         result = PyObjC_ObjCToPython(@encode(CTParagraphStyleRef), &style);
@@ -246,19 +258,23 @@ m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
         return NULL;
     }
 
-    settings = malloc(sizeof(*settings) * len);
-    if (settings == NULL) {
+    settings = PyMem_Malloc(sizeof(*settings) * len);
+    if (settings == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(seq);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    views = malloc(sizeof(Py_buffer) * len);
-    if (views == NULL) {
-        free(settings);
+    views = PyMem_Malloc(sizeof(Py_buffer) * len);
+    if (views == NULL) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
+        PyMem_Free(settings);
         Py_DECREF(seq);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < len; i++) {
@@ -327,9 +343,9 @@ m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
         @try {
             rv = CTParagraphStyleCreate(settings, len);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -339,19 +355,23 @@ m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
         }
     }
 
-    free(settings);
-    free(views);
+    PyMem_Free(settings);
+    PyMem_Free(views);
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         if (rv) {
             CFRelease(rv);
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (rv == NULL) {
+    if (rv == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     result = PyObjC_ObjCToPython(@encode(CTParagraphStyleRef), &rv);
@@ -366,8 +386,8 @@ setup_error:
         }
     }
 
-    free(settings);
-    free(views);
+    PyMem_Free(settings);
+    PyMem_Free(views);
     return NULL;
 }
 
@@ -393,12 +413,24 @@ m_CTRunDelegateGetAscentCallback(void* refCon)
 
     PyObject* rv = PyObject_CallFunction(cb, "O", rc);
     if (rv == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
         Py_DECREF(rv);
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     PyGILState_Release(state);
@@ -417,12 +449,24 @@ m_CTRunDelegateGetDescentCallback(void* refCon)
 
     PyObject* rv = PyObject_CallFunction(cb, "O", rc);
     if (rv == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
         Py_DECREF(rv);
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     PyGILState_Release(state);
@@ -441,12 +485,24 @@ m_CTRunDelegateGetWidthCallback(void* refCon)
 
     PyObject* rv = PyObject_CallFunction(cb, "O", rc);
     if (rv == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     if (PyObjC_PythonToObjC(@encode(CGFloat), rv, &value) < 0) {
         Py_DECREF(rv);
-        PyObjCErr_ToObjCWithGILState(&state);
+        /* This callback is invoked in a context where exceptions
+         * cannot be raised
+         */
+        PyErr_WriteUnraisable(cb);
+        // PyObjCErr_ToObjCWithGILState(&state);
+        PyGILState_Release(state);
+        return 42.0;
     }
 
     PyGILState_Release(state);
@@ -476,11 +532,17 @@ m_CTRunDelegateGetRefCon(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
     }
 
     refcon = CTRunDelegateGetRefCon(delegate);
-    if (refcon == NULL) {
+    if (refcon == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
+    /* This will crash when the delegate wasn't created
+     * in Python. There's nothing we can do about this
+     * though.
+     */
     py_refcon = PyTuple_GetItem((PyObject*)refcon, 3);
     Py_INCREF(py_refcon);
     return py_refcon;
@@ -513,17 +575,18 @@ m_CTRunDelegateCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         PyErr_SetString(PyExc_TypeError, "getWidth is not callable");
         return NULL;
     }
-    info = Py_BuildValue("(OOOO)", PyTuple_GET_ITEM(args[0], 0),
-                         PyTuple_GET_ITEM(args[0], 1), PyTuple_GET_ITEM(args[0], 2),
-                         args[1]);
-    if (info == NULL) {
-        return NULL;
+    info = PyTuple_Pack(4, PyTuple_GET_ITEM(args[0], 0), PyTuple_GET_ITEM(args[0], 1),
+                        PyTuple_GET_ITEM(args[0], 2), args[1]);
+    if (info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     delegate = CTRunDelegateCreate(&m_CTRunDelegateCallbacks, (void*)info);
-    if (delegate == NULL) {
+    if (delegate == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     py_delegate = PyObjC_ObjCToPython(@encode(CTRunDelegateRef), &delegate);
     CFRelease(delegate);
@@ -539,43 +602,47 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CTFontCopyAvailableTables,
                                       m_CTFontCopyAvailableTables)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CTParagraphStyleCreate, m_CTParagraphStyleCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CTRunDelegateGetRefCon, m_CTRunDelegateGetRefCon)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CTRunDelegateCreate, m_CTRunDelegateCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CTRunDelegateCreate, m_CTRunDelegateCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CTParagraphStyleGetValueForSpecifier,
                                       m_CTParagraphStyleGetValueForSpecifier)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0)
-        return -1;
-    if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment)) < 0)
-        return -1;
-    if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0)
-        return -1;
+    if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat))
+        < 0)       // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment))
+        < 0)       // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode))
+        < 0)       // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection",
                                 sizeof(CTWritingDirection))
-        < 0)
-        return -1;
-    if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0)
-        return -1;
+        < 0)                                                     // LCOV_BR_EXCL_LINE
+        return -1;                                               // LCOV_EXCL_LINE
+    if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0) // LCOV_BR_EXCL_LINE
+        return -1;                                               // LCOV_EXCL_LINE
 
     return 0;
 }

@@ -1,6 +1,6 @@
 import Foundation
 import CFNetwork
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFNetServices(TestCase):
@@ -36,11 +36,11 @@ class TestCFNetServices(TestCase):
         self.assertIsInstance(CFNetwork.CFNetServiceGetTypeID(), int)
         self.assertIsInstance(CFNetwork.CFNetServiceMonitorGetTypeID(), int)
         self.assertIsInstance(CFNetwork.CFNetServiceBrowserGetTypeID(), int)
+        self.assertArgIsOut(CFNetwork.CFNetServiceBrowserSearchForDomains, 2)
+        self.assertArgIsOut(CFNetwork.CFNetServiceBrowserSearchForServices, 3)
 
         self.assertResultIsCFRetained(CFNetwork.CFNetServiceCreate)
-        serv = CFNetwork.CFNetServiceCreate(
-            None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999
-        )
+        serv = CFNetwork.CFNetServiceCreate(None, "local.", "ssh", "pyobjc-test", 9999)
         self.assertIsInstance(serv, CFNetwork.CFNetServiceRef)
 
         self.assertResultIsCFRetained(CFNetwork.CFNetServiceCreateCopy)
@@ -111,23 +111,157 @@ class TestCFNetServices(TestCase):
 
         CFNetwork.CFNetServiceCancel(serv)
 
-    @expectedFailure
-    def test_tests_missing(self):
-        self.fail("CFNetServiceSetClient")
-        self.fail("CFNetServiceMonitorCreate")
-        self.fail("CFNetServiceMonitorInvalidate")
-        self.fail("CFNetServiceMonitorStart")
-        self.fail("CFNetServiceMonitorStop")
-        self.fail("CFNetServiceMonitorScheduleWithRunLoop")
-        self.fail("CFNetServiceMonitorUnscheduleFromRunLoop")
-        self.fail("CFNetServiceBrowserCreate")
-        self.fail("CFNetServiceBrowserInvalidate")
-        self.fail("CFNetServiceBrowserSearchForDomains")
-        self.fail("CFNetServiceBrowserSearchForServices")
-        self.fail("CFNetServiceBrowserStopSearch")
-        self.fail("CFNetServiceBrowserScheduleWithRunLoop")
-        self.fail("CFNetServiceBrowserUnscheduleFromRunLoop")
-        self.fail("CFNetServiceRegister")
-        self.fail("CFNetServiceResolve")
-        self.fail("CFNetServiceGetProtocolSpecificInformation")
-        self.fail("CFNetServiceSetProtocolSpecificInformation")
+    def test_manual(self):
+        rl = CFNetwork.CFRunLoopGetCurrent()
+        ctx = object()
+        lst = []
+        domain = None
+
+        def browser_cb(browser, flags, domainOrService, error, info):
+            nonlocal domain
+            if flags & CFNetwork.kCFNetServiceFlagIsDomain:
+                domain = domainOrService
+
+        def browser_cb_raises(browser, flags, domainOrService, error, info):
+            raise RuntimeError("callback error")
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CFNetwork.CFNetServiceBrowserCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFNetServiceBrowserCreate(NoObjCClass(), browser_cb, None)
+
+        browser = CFNetwork.CFNetServiceBrowserCreate(None, browser_cb, None)
+        self.assertIsNot(browser, None)
+
+        CFNetwork.CFNetServiceBrowserScheduleWithRunLoop(
+            browser, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        ok, err = CFNetwork.CFNetServiceBrowserSearchForDomains(browser, True, None)
+        self.assertIs(ok, True)
+
+        CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
+
+        CFNetwork.CFNetServiceBrowserUnscheduleFromRunLoop(
+            browser, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+
+        self.assertIsNot(domain, None)
+
+        browser = CFNetwork.CFNetServiceBrowserCreate(None, browser_cb_raises, None)
+        self.assertIsNot(browser, None)
+        CFNetwork.CFNetServiceBrowserScheduleWithRunLoop(
+            browser, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        ok, err = CFNetwork.CFNetServiceBrowserSearchForDomains(browser, True, None)
+        self.assertIs(ok, True)
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
+        CFNetwork.CFNetServiceBrowserUnscheduleFromRunLoop(
+            browser, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+
+        svc_lst = []
+
+        def callback(svc, error, context):
+            svc_lst.append((svc, error, context))
+
+        def callback_raises(svc, error, context):
+            raise RuntimeError("callback error")
+
+        svc = CFNetwork.CFNetServiceCreate(
+            None, domain, "_ssh._tcp", "pyobjcmon-test", 9999
+        )
+        self.assertIsInstance(svc, CFNetwork.CFNetServiceRef)
+        CFNetwork.CFNetServiceScheduleWithRunLoop(
+            svc, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        ok, err = CFNetwork.CFNetServiceRegisterWithOptions(
+            svc, CFNetwork.kCFNetServiceFlagNoAutoRename, None
+        )
+        self.assertIs(ok, True)
+
+        CFNetwork.CFNetServiceSetClient(svc, callback, ctx)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CFNetwork.CFNetServiceSetClient()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFNetServiceSetClient(NoObjCClass(), callback, ctx)
+
+        CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
+        self.assertGreater(len(svc_lst), 0)
+        for item in svc_lst:
+            self.assertIs(item[0], svc)
+            self.assertIsInstance(item[1], CFNetwork.CFStreamError)
+
+        svc2 = CFNetwork.CFNetServiceCreate(
+            None, domain, "_ssh._tcp", "pyobjcmon-test2", 9999
+        )
+        CFNetwork.CFNetServiceScheduleWithRunLoop(
+            svc2, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        ok, err = CFNetwork.CFNetServiceRegisterWithOptions(
+            svc2, CFNetwork.kCFNetServiceFlagNoAutoRename, None
+        )
+        self.assertIs(ok, True)
+        CFNetwork.CFNetServiceSetClient(svc2, callback_raises, ctx)
+
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
+        CFNetwork.CFNetServiceUnscheduleFromRunLoop(
+            svc2, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        del svc2
+
+        self.assertArgIsOut(CFNetwork.CFNetServiceMonitorStop, 1)
+
+        def callback(mon, svc, typeinfo, rdata, error, info):
+            lst.append((mon, svc, typeinfo, rdata, error, info))
+            CFNetwork.CFNetServiceMonitorStop(monitor, None)
+
+        def callback_raises(mon, svc, typeinfo, rdata, error, info):
+            raise RuntimeError("callback error")
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            CFNetwork.CFNetServiceMonitorCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFNetServiceMonitorCreate(NoObjCClass(), svc, callback, ctx)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFNetServiceMonitorCreate(None, NoObjCClass(), callback, ctx)
+
+        monitor = CFNetwork.CFNetServiceMonitorCreate(None, svc, callback, ctx)
+        self.assertArgIsOut(CFNetwork.CFNetServiceMonitorStart, 2)
+        ok, err = CFNetwork.CFNetServiceMonitorStart(
+            monitor, CFNetwork.kCFNetServiceMonitorTXT, None
+        )
+        self.assertIs(ok, True)
+
+        CFNetwork.CFNetServiceMonitorScheduleWithRunLoop(
+            monitor, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+
+        CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 1.0, False)
+
+        CFNetwork.CFNetServiceMonitorUnscheduleFromRunLoop(
+            monitor, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        self.assertGreater(len(lst), 0)
+        for entry in lst:
+            self.assertIs(entry[0], monitor)
+            self.assertIn(entry[1], (svc, None))
+            self.assertIsInstance(entry[2], int)
+            self.assertIsInstance(entry[3], (Foundation.NSData, type(None)))
+            self.assertIsInstance(entry[4], Foundation.CFStreamError)
+            self.assertIs(entry[5], ctx)
+
+        CFNetwork.CFNetServiceMonitorInvalidate(monitor)
+
+        monitor = CFNetwork.CFNetServiceMonitorCreate(None, svc, callback_raises, ctx)
+        self.assertArgIsOut(CFNetwork.CFNetServiceMonitorStart, 2)
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CFNetwork.CFNetServiceMonitorStart(
+                monitor, CFNetwork.kCFNetServiceMonitorTXT, None
+            )

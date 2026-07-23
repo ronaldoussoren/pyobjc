@@ -2341,7 +2341,8 @@
    "CFLocaleCreateLocaleIdentifierFromComponents": {
     "args": {
      "0": {},
-     "1": {}
+     "1": {},
+     "2": { "doc": "Note that the 'data' argument to the callback is invalidated by the system on return of the callback." }
     },
     "retval": {
      "already_cfretained": true

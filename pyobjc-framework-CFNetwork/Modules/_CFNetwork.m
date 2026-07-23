@@ -22,6 +22,8 @@ mod_release(const void* info)
     PyGILState_Release(state);
 }
 
+// LCOV_EXCL_START
+// This function is at best using during C-level debugging.
 static CFStringRef
 mod_copyDescription(const void* info)
 {
@@ -41,10 +43,14 @@ mod_copyDescription(const void* info)
         return (CFStringRef)CFRetain(result);
     }
 }
+// LCOV_EXCL_STOP
 
 static CFStreamClientContext mod_CFStreamClientContext = {
-    0, (CFStringRef (*)(void*))mod_copyDescription, (void* (*)(void*))mod_retain,
-    (void (*)(void*))mod_release, NULL};
+    .version         = 0,
+    .copyDescription = (CFStringRef (*)(void*))mod_copyDescription,
+    .retain          = (void* (*)(void*))mod_retain,
+    .release         = (void (*)(void*))mod_release,
+    .info            = NULL};
 
 static CFHostClientContext mod_CFHostClientContext = {0, NULL, mod_retain, mod_release,
                                                       0};
@@ -64,19 +70,22 @@ mod_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_list = PyObjC_IdToPython((NSObject*)(NSArray*)proxyList);
-    if (py_list == NULL) {
+    if (py_list == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
     PyObject* py_error = PyObjC_IdToPython((NSObject*)(NSError*)error);
-    if (py_error == NULL) {
+    if (py_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_list);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObject_CallFunction(py_func, "ONN", py_ctx, py_list, py_error);
-
     if (rv == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
         return;
@@ -98,15 +107,19 @@ mod_CFNetServiceClientCallBack(CFNetServiceRef service, CFStreamError* error,
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_service = PyObjC_IdToPython((NSObject*)service);
-    if (py_service == NULL) {
+    if (py_service == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
     PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
-    if (py_error == NULL) {
+    if (py_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_service);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObject_CallFunction(py_func, "NNO", py_service, py_error, py_ctx);
@@ -134,44 +147,54 @@ mod_CFNetServiceMonitorClientCallBack(CFNetServiceMonitorRef  monitor,
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_monitor = PyObjC_IdToPython((NSObject*)monitor);
-    if (py_monitor == NULL) {
+    if (py_monitor == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_service = PyObjC_IdToPython((NSObject*)service);
-    if (py_service == NULL) {
+    if (py_service == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_monitor);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_typeInfo =
         PyObjC_ObjCToPython(@encode(CFNetServiceMonitorType), &typeInfo);
-    if (py_typeInfo == NULL) {
+    if (py_typeInfo == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_monitor);
         Py_DECREF(py_service);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_rdata = PyObjC_IdToPython((NSObject*)(NSData*)rdata);
-    if (py_rdata == NULL) {
+    if (py_rdata == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_monitor);
         Py_DECREF(py_service);
         Py_DECREF(py_typeInfo);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
-    if (py_error == NULL) {
+    if (py_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_monitor);
         Py_DECREF(py_service);
         Py_DECREF(py_typeInfo);
         Py_DECREF(py_rdata);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObject_CallFunction(py_func, "NNNNNO", py_monitor, py_service,
@@ -198,23 +221,29 @@ mod_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_host = PyObjC_IdToPython((NSObject*)host);
-    if (py_host == NULL) {
+    if (py_host == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
     PyObject* py_info = PyObjC_ObjCToPython(@encode(CFHostInfoType), &typeInfo);
-    if (py_info == NULL) {
+    if (py_info == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_host);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_error = PyObjC_ObjCToPython("{CFStreamError=qi}", (void*)error);
-    if (py_error == NULL) {
+    if (py_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_host);
         Py_DECREF(py_info);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv =
@@ -249,9 +278,9 @@ mod_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* meth,
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[2], args[3]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext;
@@ -263,16 +292,16 @@ mod_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* meth,
         @try {
             ref = CFNetworkExecuteProxyAutoConfigurationScript(
                 script, url, mod_CFProxyAutoConfigurationResultCallback, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            ref = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            ref = NULL;                          // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* rv = PyObjC_IdToPython((NSObject*)ref);
@@ -300,9 +329,9 @@ mod_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* meth,
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[2], args[3]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext;
@@ -314,16 +343,16 @@ mod_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* meth,
         @try {
             ref = CFNetworkExecuteProxyAutoConfigurationURL(
                 script, url, mod_CFProxyAutoConfigurationResultCallback, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            ref = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            ref = NULL;                          // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* rv = PyObjC_IdToPython((NSObject*)ref);
@@ -348,21 +377,21 @@ mod_CFHostSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, siz
         Py_BEGIN_ALLOW_THREADS
             @try {
                 ok = CFHostSetClient(host, NULL, NULL);
-            } @catch (NSException* localException) {
-                PyObjCErr_FromObjC(localException);
+            } @catch (NSException* localException) { // LCOV_EXCL_LINE
+                PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
             }
         Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) {
-            return NULL;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         }
 
         return PyBool_FromLong(!!ok);
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[1], args[2]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFHostClientContext context = mod_CFHostClientContext;
@@ -371,15 +400,15 @@ mod_CFHostSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, siz
     Py_BEGIN_ALLOW_THREADS
         @try {
             ok = CFHostSetClient(host, mod_CFHostClientCallBack, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     return PyBool_FromLong(!!ok);
@@ -398,32 +427,40 @@ mod_CFNetServiceBrowserClientCallBack(CFNetServiceBrowserRef browser, CFOptionFl
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_browser = PyObjC_IdToPython((NSObject*)browser);
-    if (py_browser == NULL) {
+    if (py_browser == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
     PyObject* py_flags = PyObjC_ObjCToPython(@encode(CFOptionFlags), &flags);
-    if (py_flags == NULL) {
+    if (py_flags == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_browser);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_domainOrService = PyObjC_ObjCToPython("@", &domainOrService);
-    if (py_domainOrService == NULL) {
+    if (py_domainOrService == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_browser);
         Py_DECREF(py_flags);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* py_error = PyObjC_ObjCToPython(@encode(CFStreamError), (void*)error);
-    if (py_error == NULL) {
+    if (py_error == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_browser);
         Py_DECREF(py_flags);
         Py_DECREF(py_domainOrService);
         PyObjCErr_ToObjCWithGILState(&state);
         return;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObject_CallFunction(py_func, "NNNNO", py_browser, py_flags,
@@ -452,9 +489,9 @@ mod_CFNetServiceBrowserCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[1], args[2]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFNetServiceClientContext context = mod_CFNetServiceClientContext;
@@ -466,16 +503,16 @@ mod_CFNetServiceBrowserCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull
         @try {
             ref = CFNetServiceBrowserCreate(
                 allocator, mod_CFNetServiceBrowserClientCallBack, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            ref = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            ref = NULL;                          // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* rv = PyObjC_IdToPython((NSObject*)ref);
@@ -497,9 +534,9 @@ mod_CFNetServiceSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull arg
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[1], args[2]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[1], args[2]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFNetServiceClientContext context = mod_CFNetServiceClientContext;
@@ -510,16 +547,16 @@ mod_CFNetServiceSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull arg
     Py_BEGIN_ALLOW_THREADS
         @try {
             ok = CFNetServiceSetClient(service, mod_CFNetServiceClientCallBack, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            ok = NO;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            ok = NO;                             // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* rv = ok ? Py_True : Py_False;
@@ -547,9 +584,9 @@ mod_CFNetServiceMonitorCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull
         return NULL;
     }
 
-    PyObject* py_context = Py_BuildValue("OO", args[2], args[3]);
-    if (py_context == NULL) {
-        return NULL;
+    PyObject* py_context = PyTuple_Pack(2, args[2], args[3]);
+    if (py_context == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;          // LCOV_EXCL_LINE
     }
 
     CFNetServiceClientContext context = mod_CFNetServiceClientContext;
@@ -561,16 +598,16 @@ mod_CFNetServiceMonitorCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull
         @try {
             ref = CFNetServiceMonitorCreate(
                 allocator, service, mod_CFNetServiceMonitorClientCallBack, &context);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            ref = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            ref = NULL;                          // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* rv = PyObjC_IdToPython((NSObject*)ref);
@@ -587,40 +624,41 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     if (PyObjCRegister_FunctionCaller(CFNetworkExecuteProxyAutoConfigurationScript,
                                       mod_CFNetworkExecuteProxyAutoConfigurationScript)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNetworkExecuteProxyAutoConfigurationURL,
                                       mod_CFNetworkExecuteProxyAutoConfigurationURL)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFHostSetClient, mod_CFHostSetClient) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFHostSetClient, mod_CFHostSetClient)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNetServiceBrowserCreate,
                                       mod_CFNetServiceBrowserCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNetServiceSetClient, mod_CFNetServiceSetClient)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNetServiceSetClient, mod_CFNetServiceSetClient)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNetServiceMonitorCreate,
                                       mod_CFNetServiceMonitorCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

@@ -620,23 +620,64 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertPickleRoundTrips(v)
 
     def test_functions(self):
-        CoreAudio.TestAudioFormatNativeEndian
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            CoreAudio.TestAudioFormatNativeEndian()
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            CoreAudio.TestAudioFormatNativeEndian(42)
+
+        self.assertIs(
+            CoreAudio.TestAudioFormatNativeEndian(
+                CoreAudio.AudioStreamBasicDescription(
+                    mFormatID=CoreAudio.kAudioFormatLinearPCM,
+                    mFormatFlags=CoreAudio.kAudioFormatFlagIsBigEndian,
+                )
+            ),
+            False,
+        )
+        self.assertIs(
+            CoreAudio.TestAudioFormatNativeEndian(
+                CoreAudio.AudioStreamBasicDescription(
+                    mFormatID=CoreAudio.kAudioFormatLinearPCM, mFormatFlags=0
+                )
+            ),
+            True,
+        )
 
         self.assertArgIsIn(CoreAudio.IsAudioFormatNativeEndian, 0)
         self.assertResultHasType(CoreAudio.IsAudioFormatNativeEndian, objc._C_BOOL)
+        self.assertIsInstance(
+            CoreAudio.IsAudioFormatNativeEndian(
+                CoreAudio.AudioStreamBasicDescription()
+            ),
+            bool,
+        )
 
         self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 2, objc._C_BOOL)
         self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 3, objc._C_BOOL)
         self.assertArgHasType(CoreAudio.CalculateLPCMFlags, 4, objc._C_BOOL)
+        self.assertIsInstance(
+            CoreAudio.CalculateLPCMFlags(4, 4, False, False, False), int
+        )
 
         self.assertArgIsOut(CoreAudio.FillOutASBDForLPCM, 0)
         self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 5, objc._C_BOOL)
         self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 6, objc._C_BOOL)
         self.assertArgHasType(CoreAudio.FillOutASBDForLPCM, 7, objc._C_BOOL)
+        self.assertIsInstance(
+            CoreAudio.FillOutASBDForLPCM(None, 24000.0, 1, 1, 16, False, False, False),
+            CoreAudio.AudioStreamBasicDescription,
+        )
 
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleTime, 0)
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithHostTime, 0)
         self.assertArgIsOut(CoreAudio.FillOutAudioTimeStampWithSampleAndHostTime, 0)
+        self.assertIsInstance(
+            CoreAudio.FillOutAudioTimeStampWithSampleTime(None, 24000.0),
+            CoreAudio.AudioTimeStamp,
+        )
 
     @min_os_level("10.11")
     def test_functions10_11(self):
@@ -662,6 +703,14 @@ class TestManualWrappers(TestCase):
         self.assertEqual(buf.mNumberChannels, 5)
         v = buf.mData
         self.assert_buffer_size(v, 1024)
+
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            buf.create_buffer()
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            buf.create_buffer("42")
 
         buf.create_buffer(2048)
         v2 = buf.mData
@@ -697,6 +746,14 @@ class TestManualWrappers(TestCase):
         self.assertEqual(avt.mInputDataSize, 0)
         self.assertEqual(avt.mOutputData, None)
         self.assertEqual(avt.mOutputDataSize, 0)
+
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            avt.create_input_buffer()
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            avt.create_input_buffer("four")
 
         avt.create_input_buffer(1024)
 

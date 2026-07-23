@@ -21,29 +21,36 @@ init_callback(MTAudioProcessingTapRef tap, void* clientInfo, void** tapStorageOu
     PyObject* cb_info = (PyObject*)clientInfo;
     PyObject* cb;
     *tapStorageOut = clientInfo;
+    Py_INCREF(clientInfo);
 
-    cb = PyTuple_GetItem(cb_info, INIT_OFFSET);
+    cb = PyTuple_GET_ITEM(cb_info, INIT_OFFSET);
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
         PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        if (tap == NULL) {
-            fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-            PyErr_Print();
-        } else {
-
-            PyObject* rv = PyObject_CallFunction(
-                cb, "OOO", py_tap, PyTuple_GetItem(cb_info, INFO_OFFSET), Py_None);
-            Py_DECREF(py_tap);
-            if (rv == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-            }
-            Py_XDECREF(rv);
-        }
+        if (tap == NULL) // LCOV_BR_EXCL_LINE
+            goto error;  // LCOV_EXCL_LINE
+        PyObject* rv = PyObject_CallFunction(
+            cb,
+            "NO"
+            "O",
+            py_tap, PyTuple_GET_ITEM(cb_info, INFO_OFFSET), Py_None);
+        if (rv == NULL)
+            goto error;
+        Py_DECREF(PyTuple_GET_ITEM(clientInfo, INFO_OFFSET));
+        PyTuple_SET_ITEM(clientInfo, INFO_OFFSET, rv);
     }
 
+    PyGILState_Release(state);
+    return;
+
+error:
+    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    PyErr_Print();
+    Py_DECREF(PyTuple_GET_ITEM(clientInfo, INFO_OFFSET));
+    PyTuple_SET_ITEM(clientInfo, INFO_OFFSET, Py_None);
+    Py_INCREF(Py_None);
     PyGILState_Release(state);
 }
 
@@ -52,30 +59,33 @@ finalize_callback(MTAudioProcessingTapRef tap)
 {
     PyObject* cb_info = (PyObject*)MTAudioProcessingTapGetStorage(tap);
 
-    PyObject* cb = PyTuple_GetItem(cb_info, FINALIZE_OFFSET);
+    PyObject* cb = PyTuple_GET_ITEM(cb_info, FINALIZE_OFFSET);
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        if (tap == NULL) {
-            fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-            PyErr_Print();
-        } else {
+        PyObject* pytap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
+        if (pytap == NULL) // LCOV_BR_EXCL_LINE
+            goto error;    // LCOV_EXCL_LINE
+        PyObject* rv = PyObject_CallFunctionObjArgs(cb, pytap, NULL);
+        Py_CLEAR(pytap);
+        if (rv == NULL)
+            goto error;
 
-            PyObject* rv = PyObject_CallFunction(cb, "O", py_tap);
-            Py_DECREF(py_tap);
-            if (rv == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-            }
-            Py_XDECREF(rv);
-        }
+        Py_CLEAR(rv);
     }
 
     /* The finalize callback is the last time any callback will be called,
      * therefore clean up the python state information.
      */
+    Py_XDECREF(cb_info);
+    PyGILState_Release(state);
+    return;
+
+error:
+    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    PyErr_Print();
+
     Py_XDECREF(cb_info);
     PyGILState_Release(state);
 }
@@ -86,54 +96,27 @@ prepare_callback(MTAudioProcessingTapRef tap, CMItemCount maxFrames,
 {
     PyObject* cb_info = (PyObject*)MTAudioProcessingTapGetStorage(tap);
 
-    PyObject* cb = PyTuple_GetItem(cb_info, PREPARE_OFFSET);
+    PyObject* cb = PyTuple_GET_ITEM(cb_info, PREPARE_OFFSET);
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        int       have_error = 0;
-        PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        PyObject* py_maxFrames        = NULL;
-        PyObject* py_processingFormat = NULL;
-        if (tap == NULL) {
-            fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-            PyErr_Print();
-            have_error = 1;
-        }
-        if (!have_error) {
-            py_maxFrames = PyObjC_ObjCToPython(@encode(CMItemCount), &maxFrames);
-            if (py_maxFrames == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-                have_error = 1;
-            }
-        }
-        if (!have_error) {
-            py_processingFormat = PyObjC_ObjCToPython(
-                @encode(AudioStreamBasicDescription), (void*)processingFormat);
-            if (py_processingFormat == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-                have_error = 1;
-            }
-        }
-
-        if (!have_error) {
-            PyObject* rv = PyObject_CallFunction(cb, "OOO", py_tap, py_maxFrames,
-                                                 py_processingFormat);
-            Py_DECREF(py_tap);
-            if (rv == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-            }
-            Py_XDECREF(rv);
-        }
-
-        Py_XDECREF(py_tap);
-        Py_XDECREF(py_maxFrames);
-        Py_XDECREF(py_processingFormat);
+        PyObject* rv = PyObject_CallFunction(
+            cb, "NNN", PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap),
+            PyObjC_ObjCToPython(@encode(CMItemCount), &maxFrames),
+            PyObjC_ObjCToPython(@encode(AudioStreamBasicDescription),
+                                (void*)processingFormat));
+        if (rv == NULL)
+            goto error;
+        Py_XDECREF(rv);
     }
 
+    PyGILState_Release(state);
+    return;
+
+error:
+    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    PyErr_Print();
     PyGILState_Release(state);
 }
 
@@ -142,27 +125,25 @@ unprepare_callback(MTAudioProcessingTapRef tap)
 {
     PyObject* cb_info = (PyObject*)MTAudioProcessingTapGetStorage(tap);
 
-    PyObject* cb = PyTuple_GetItem(cb_info, UNPREPARE_OFFSET);
+    PyObject* cb = PyTuple_GET_ITEM(cb_info, UNPREPARE_OFFSET);
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        if (tap == NULL) {
-            fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-            PyErr_Print();
-        } else {
-
-            PyObject* rv = PyObject_CallFunction(cb, "O", py_tap);
-            Py_DECREF(py_tap);
-            if (rv == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-            }
-            Py_XDECREF(rv);
+        PyObject* rv = PyObject_CallFunction(
+            cb, "N", PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap));
+        if (rv == NULL) {
+            goto error;
         }
+        Py_XDECREF(rv);
     }
 
+    PyGILState_Release(state);
+    return;
+
+error:
+    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    PyErr_Print();
     PyGILState_Release(state);
 }
 
@@ -173,81 +154,50 @@ process_callback(MTAudioProcessingTapRef tap, CMItemCount numberFrames,
 {
     PyObject* cb_info = (PyObject*)MTAudioProcessingTapGetStorage(tap);
 
-    PyObject* cb = PyTuple_GetItem(cb_info, PROCESS_OFFSET);
+    PyObject* cb = PyTuple_GET_ITEM(cb_info, PROCESS_OFFSET);
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        int       have_error = 0;
-        PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        PyObject* py_numberFrames    = NULL;
-        PyObject* py_flags           = NULL;
-        PyObject* py_bufferListInOut = NULL;
-        if (tap == NULL) {
-            fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-            PyErr_Print();
-            have_error = 1;
-        }
-        if (!have_error) {
-            py_numberFrames = PyObjC_ObjCToPython(@encode(CMItemCount), &numberFrames);
-            if (py_numberFrames == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-                have_error = 1;
-            }
-        }
-        if (!have_error) {
-            py_flags = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapFlags), &flags);
-            if (py_flags == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-                have_error = 1;
-            }
-        }
-        if (!have_error) {
-            py_bufferListInOut =
-                PyObjC_ObjCToPython(@encode(AudioBufferList*), &bufferListInOut);
-            if (py_bufferListInOut == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-                have_error = 1;
-            }
-        }
+        PyObject* py_bufferListInOut;
+        PyObject* rv = PyObject_CallFunction(
+            cb, "NNNNOO", PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap),
+            PyObjC_ObjCToPython(@encode(CMItemCount), &numberFrames),
+            PyObjC_ObjCToPython(@encode(MTAudioProcessingTapFlags), &flags),
+            (py_bufferListInOut =
+                 PyObjC_ObjCToPython(@encode(AudioBufferList*), &bufferListInOut)),
+            Py_None, Py_None);
+        if (rv == NULL)
+            goto error;
 
-        if (!have_error) {
-            PyObject* rv =
-                PyObject_CallFunction(cb, "OOOOOO", py_tap, py_numberFrames, py_flags,
-                                      py_bufferListInOut, Py_None, Py_None);
-            Py_DECREF(py_tap);
-            if (rv == NULL) {
-                fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                PyErr_Print();
-            }
-            if (!PyTuple_Check(rv) || PyTuple_Size(rv) != 3) {
-                fprintf(stderr, "MTAudioProcessing processing callback should return "
-                                "(bufferListInOut, numFrames, flags)\n");
-            } else {
-                if (PyTuple_GetItem(rv, 0) != py_bufferListInOut) {
-                    fprintf(stderr, "MTAudioProcessing processing callback should return "
-                                    "(bufferListInOut, numFrames, flags)\n");
-                }
-                (void)PyObjC_PythonToObjC(@encode(CMItemCount), PyTuple_GetItem(rv, 1),
-                                          (void*)numberFramesOut);
-                (void)PyObjC_PythonToObjC(@encode(MTAudioProcessingTapFlags),
-                                          PyTuple_GetItem(rv, 2), (void*)flagsOut);
-                if (PyErr_Occurred()) {
-                    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
-                    PyErr_Print();
-                }
-            }
-            Py_XDECREF(rv);
+        if (!PyTuple_Check(rv) || PyTuple_Size(rv) != 3) {
+            PyErr_SetString(PyExc_TypeError,
+                            "MTAudioProcessing processing callback should return "
+                            "(bufferListInOut, numFrames, flags)\n");
+            goto error;
         }
-
-        Py_XDECREF(py_tap);
-        Py_XDECREF(py_numberFrames);
-        Py_XDECREF(py_bufferListInOut);
+        if (PyTuple_GET_ITEM(rv, 0) != py_bufferListInOut) {
+            /* XXX: Is this correct? Can one replace the bufferList entirely? */
+            PyErr_SetString(PyExc_TypeError,
+                            "MTAudioProcessing processing callback should return "
+                            "(bufferListInOut, numFrames, flags)\n");
+            goto error;
+        }
+        (void)PyObjC_PythonToObjC(@encode(CMItemCount), PyTuple_GET_ITEM(rv, 1),
+                                  (void*)numberFramesOut);
+        (void)PyObjC_PythonToObjC(@encode(MTAudioProcessingTapFlags),
+                                  PyTuple_GET_ITEM(rv, 2), (void*)flagsOut);
+        Py_CLEAR(rv);
+        if (PyErr_Occurred()) {
+            goto error;
+        }
     }
 
+    PyGILState_Release(state);
+    return;
+error:
+    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    PyErr_Print();
     PyGILState_Release(state);
 }
 
@@ -273,7 +223,7 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
     int                           i;
     OSStatus                      rv;
 
-    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
@@ -291,7 +241,7 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
     }
 
     if (args[3] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "tapOut should be None");
+        PyErr_SetString(PyExc_ValueError, "'tapOut' should be None");
         return NULL;
     }
 
@@ -318,8 +268,8 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
                         PyTuple_GET_ITEM(args[1], 2), PyTuple_GET_ITEM(args[1], 3),
                         PyTuple_GET_ITEM(args[1], 4), PyTuple_GET_ITEM(args[1], 5),
                         PyTuple_GET_ITEM(args[1], 6));
-    if (info == NULL) {
-        return NULL;
+    if (info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     callbacks.clientInfo = info;
@@ -328,19 +278,15 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
         @try {
             rv = MTAudioProcessingTapCreate(allocator, &callbacks, flags, &tap);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            rv = -1;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            rv = -1;                             // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (allocator != NULL) {
-        CFRelease(allocator);
-    }
-
-    if (rv == -1 && PyErr_Occurred()) {
-        Py_DECREF(info);
-        return NULL;
+    if (rv == -1 && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        Py_DECREF(info);                // LCOV_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
     }
 
     if (rv != 0) {
@@ -356,7 +302,7 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
         Py_INCREF(Py_None);
     }
 
-    return Py_BuildValue("iN", rv, py_tapOut);
+    return Py_BuildValue("lN", (long)rv, py_tapOut);
 }
 
 #if PyObjC_BUILD_RELEASE >= 2700
@@ -402,7 +348,7 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
     }
 
     if (args[4] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "tapOut should be None");
+        PyErr_SetString(PyExc_ValueError, "'tapOut' should be None");
         return NULL;
     }
     if (!PyLong_Check(PyTuple_GET_ITEM(args[1], 0))
@@ -424,13 +370,13 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
         }
     }
 
-    info = PyTuple_Pack(OFFSET_COUNT, PyTuple_GetItem(args[1], 1),
-                        PyTuple_GetItem(args[1], 2), PyTuple_GetItem(args[1], 3),
-                        PyTuple_GetItem(args[1], 4), PyTuple_GetItem(args[1], 5),
-                        PyTuple_GetItem(args[1], 6));
+    info = PyTuple_Pack(OFFSET_COUNT, PyTuple_GET_ITEM(args[1], 1),
+                        PyTuple_GET_ITEM(args[1], 2), PyTuple_GET_ITEM(args[1], 3),
+                        PyTuple_GET_ITEM(args[1], 4), PyTuple_GET_ITEM(args[1], 5),
+                        PyTuple_GET_ITEM(args[1], 6));
 
-    if (info == NULL) {
-        return NULL;
+    if (info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     callbacks.clientInfo = info;
@@ -445,16 +391,9 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
             rv = -1;
         }
     Py_END_ALLOW_THREADS
-
-    if (allocator != NULL) {
-        CFRelease(allocator);
-    }
-    if (preferredFormat != NULL) {
-        CFRelease(preferredFormat);
-    }
+    Py_DECREF(info);
 
     if (rv == -1 && PyErr_Occurred()) {
-        Py_DECREF(info);
         return NULL;
     }
 
@@ -471,7 +410,7 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
         Py_INCREF(Py_None);
     }
 
-    return Py_BuildValue("iN", rv, py_tapOut);
+    return Py_BuildValue("lN", (long)rv, py_tapOut);
 }
 
 #pragma clang diagnostic pop
@@ -494,7 +433,7 @@ m_MTAudioProcessingTapGetStorage(PyObject* meth, PyObject* _Nonnull const* _Nonn
 
     cb_info = (PyObject*)MTAudioProcessingTapGetStorage(tap);
     Py_INCREF(PyTuple_GET_ITEM(cb_info, INFO_OFFSET));
-    return PyTuple_GetItem(cb_info, INFO_OFFSET);
+    return PyTuple_GET_ITEM(cb_info, INFO_OFFSET);
 }
 
 static PyMethodDef mod_methods[] = {
@@ -505,26 +444,26 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     if (PyObjCRegister_FunctionCaller(MTAudioProcessingTapCreate,
                                       m_MTAudioProcessingTapCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(MTAudioProcessingTapGetStorage,
                                       m_MTAudioProcessingTapGetStorage)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 #if PyObjC_BUILD_RELEASE >= 2700
     if (__builtin_available(macOS 27.0, *)) {
         if (PyObjCRegister_FunctionCaller(MTAudioProcessingTapCreateWithPreferredFormat,
                                           m_MTAudioProcessingTapCreateWithPreferredFormat)
-            == -1) {
-            return -1;
+            == -1) {   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
     }
 #endif

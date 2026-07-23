@@ -1,9 +1,12 @@
 import contextlib
 import socket
 import objc
+import subprocess
+import os
+import time
 
 from PyObjCTest.test_scnetwork import resolver_available
-from PyObjCTools.TestSupport import TestCase, skipUnless
+from PyObjCTools.TestSupport import TestCase, skipUnless, NoObjCClass
 import SystemConfiguration
 
 
@@ -68,7 +71,7 @@ class TestSCNetworkReachability(TestCase):
                 SystemConfiguration.SCNetworkReachabilityCreateWithAddress
             )
             ref = v = SystemConfiguration.SCNetworkReachabilityCreateWithAddress(
-                None, sd.getsockname()
+                None, ("www.github.com", 443)
             )
             self.assertIsInstance(v, SystemConfiguration.SCNetworkReachabilityRef)
 
@@ -93,7 +96,19 @@ class TestSCNetworkReachability(TestCase):
             def callout(ref, flags, ctx):
                 lst.append([ref, flags, ctx])
 
+            def callout_raises(ref, flags, ctx):
+                raise RuntimeError("callback error")
+
             ctx = object()
+
+            with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+                SystemConfiguration.SCNetworkReachabilitySetCallback()
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    NoObjCClass(), callout, ctx
+                )
+
             v = SystemConfiguration.SCNetworkReachabilitySetCallback(ref, callout, ctx)
             self.assertTrue(v is True)
 
@@ -105,9 +120,22 @@ class TestSCNetworkReachability(TestCase):
                 ref, rl, SystemConfiguration.kCFRunLoopCommonModes
             )
 
+            if os.geteuid() == 0:
+                print("Warning: shutdown interface 'en0' for testing")
+                subprocess.check_call(["ifconfig", "en0", "down"])
+
             SystemConfiguration.CFRunLoopRunInMode(
                 SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
             )
+
+            if os.geteuid() == 0:
+                time.sleep(1)
+                self.assertGreater(len(lst), 0)
+
+            for item in lst:
+                self.assertIs(item[0], ref)
+                self.assertIsInstance(item[1], int)
+                self.assertIs(item[2], ctx)
 
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilityUnscheduleFromRunLoop
@@ -119,3 +147,27 @@ class TestSCNetworkReachability(TestCase):
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilitySetDispatchQueue
             )
+
+            if os.geteuid() == 0:
+                lst[:] = []
+                v = SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    ref, callout_raises, ctx
+                )
+                SystemConfiguration.SCNetworkReachabilityScheduleWithRunLoop(
+                    ref, rl, SystemConfiguration.kCFRunLoopDefaultMode
+                )
+                subprocess.check_call(["ifconfig", "en0", "up"])
+
+                with self.assertRaisesRegex(RuntimeError, "callback error"):
+                    SystemConfiguration.CFRunLoopRunInMode(
+                        SystemConfiguration.kCFRunLoopDefaultMode, 15.0, False
+                    )
+
+                self.assertEqual(len(lst), 0)
+
+                SystemConfiguration.SCNetworkReachabilityUnscheduleFromRunLoop(
+                    ref, rl, SystemConfiguration.kCFRunLoopDefaultMode
+                )
+                v = SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    ref, None, None
+                )

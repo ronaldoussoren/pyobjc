@@ -285,9 +285,20 @@ class TestHeader(TestCase):
             AppKit.NSRect.__typestr__,
         )
 
-    def test_tests_missing(self):
+    def test_manual_binding(self):
+
         v = AppKit.NSView.alloc().init()
         v.setNeedsDisplayInRect_(((0, 0), (50, 50)))
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            v.getRectsBeingDrawn_count_()
+
+        with self.assertRaisesRegex(ValueError, "buffer must be None"):
+            v.getRectsBeingDrawn_count_(bytearray(), None)
+
+        with self.assertRaisesRegex(ValueError, "count must be None"):
+            v.getRectsBeingDrawn_count_(None, bytearray())
+
         r = v.getRectsBeingDrawn_count_(None, None)
         self.assertIsInstance(r, tuple)
         self.assertEqual(len(r), 2)

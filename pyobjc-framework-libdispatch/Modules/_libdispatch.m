@@ -36,14 +36,16 @@ m_dispatch_data_create_map(PyObject* meth, PyObject* _Nonnull const* _Nonnull ar
     if (result) {
         [result release];
     }
-    if (py_result == NULL) {
-        return NULL;
+    if (py_result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     py_memview = PyMemoryView_FromMemory((char*)buffer, size, PyBUF_READ);
-    if (py_memview == NULL) {
+    if (py_memview == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return Py_BuildValue("(NNk)", py_result, py_memview, (unsigned long)size);
@@ -60,8 +62,8 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
     int       r;
 
     v = PyObjC_ObjCToPython(typestr, (void*)value);
-    if (v == NULL) {
-        return -1;
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;   // LCOV_EXCL_LINE
     }
 
     r = PyModule_AddObject(m, name, v);
@@ -72,131 +74,139 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller( // LCOV_BR_EXCL_LINE
             dispatch_data_create_map, m_dispatch_data_create_map)
-        == -1) {
+        == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
 
     /*
      * Register a number of struct pointer types that are actually Objective-C objects
      */
-    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0)
-        if (PyObjCPointerWrapper_RegisterID("dispatch_queue_t", "^{dispatch_queue_s=}")
-            < 0)
-            goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}") < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}") < 0)
-        goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}")
+        < 0)                             // LCOV_BR_EXCL_LINE
+        goto error;                      // LCOV_EXCL_LINE
+    if (PyObjCPointerWrapper_RegisterID( // LCOV_BR_EXCL_LINE
+            "dispatch_queue_t", "^{dispatch_queue_s=}")
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
+    if (PyObjCPointerWrapper_RegisterID("dispatch_data_t", "^{dispatch_data_s=}")
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
+    if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}")
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     if (PyObjCPointerWrapper_RegisterID("dispatch_queue_attr_t",
                                         "^{dispatch_queue_attr_s=}")
-        < 0)
-        goto error;
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t",
                                         "^{dispatch_semaphore_s=}")
-        < 0)
-        goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t", "^{dispatch_source_t=}") < 0)
-        goto error;
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
+    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t", "^{dispatch_source_t=}")
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
     PyObject* source_type = PyObjCCreateOpaquePointerType(
         "dispatch_source_type_t", "^{dispatch_source_type_s=}",
         "type of dispatch source constants");
-    if (source_type == NULL)
-        goto error;
+    if (source_type == NULL) // LCOV_BR_EXCL_LINE
+        goto error;          // LCOV_EXCL_LINE
 
-    if (PyModule_AddObject(m, "dispatch_source_type_t", source_type) < 0)
-        goto error;
+    if (PyModule_AddObject(m, "dispatch_source_type_t", source_type)
+        < 0)        // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
     /*
      * Register constants
      */
 
     id v = (id)DISPATCH_QUEUE_CONCURRENT;
-    if (add_constant(m, "DISPATCH_QUEUE_CONCURRENT", @encode(id), &v) != 0)
-        goto error;
+    if (add_constant(m, "DISPATCH_QUEUE_CONCURRENT", @encode(id), &v)
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     v = (id)dispatch_data_empty;
-    if (add_constant(m, "dispatch_data_empty", @encode(id), &v) != 0)
-        goto error;
+    if (add_constant(m, "dispatch_data_empty", @encode(id), &v) != 0) // LCOV_BR_EXCL_LINE
+        goto error;                                                   // LCOV_EXCL_LINE
     if (add_constant(m, "DISPATCH_DATA_DESTRUCTOR_FREE", @encode(id),
                      &DISPATCH_DATA_DESTRUCTOR_FREE)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     if (add_constant(m, "DISPATCH_DATA_DESTRUCTOR_MUNMAP", @encode(id),
                      &DISPATCH_DATA_DESTRUCTOR_MUNMAP)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
     dispatch_source_type_t s = DISPATCH_SOURCE_TYPE_DATA_ADD;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_ADD", @encode(dispatch_source_type_t),
                      &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_DATA_OR;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_OR", @encode(dispatch_source_type_t),
                      &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
 #if PyObjC_BUILD_RELEASE >= 1013
-    if (@available(macOS 10.13, *)) {
+    if (@available(macOS 10.13, *)) { // LCOV_BR_EXCL_LINE
         s = DISPATCH_SOURCE_TYPE_DATA_REPLACE;
         if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_REPLACE",
                          @encode(dispatch_source_type_t), &s)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
     }
 #endif
 
     s = DISPATCH_SOURCE_TYPE_WRITE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MACH_SEND", @encode(dispatch_source_type_t),
                      &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_MACH_RECV;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MACH_RECV", @encode(dispatch_source_type_t),
                      &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_MEMORYPRESSURE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MEMORYPRESSURE",
                      @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_PROC;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_PROC", @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_READ;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_READ", @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_SIGNAL;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_SIGNAL", @encode(dispatch_source_type_t),
                      &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_TIMER;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_TIMER", @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_VNODE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_VNODE", @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     s = DISPATCH_SOURCE_TYPE_WRITE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_WRITE", @encode(dispatch_source_type_t), &s)
-        != 0)
-        goto error;
+        != 0)       // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
 
     return 0;
 
 error:
-    return -1;
+    return -1; // LCOV_EXCL_LINE
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {

@@ -10,6 +10,10 @@
 #import <CoreMediaIO/CMIOExtensionStream.h>
 #endif
 
+// LCOV_EXCL_START
+// This function is only present to ensure protocols are
+// available at runtime.
+
 static void __attribute__((__used__))
 use_protocols(void)
 {
@@ -24,6 +28,7 @@ use_protocols(void)
     Py_XDECREF(p);
 #endif
 }
+// LCOV_EXCL_STOP
 
 static PyObject*
 m_CMIODeviceProcessAVCCommand(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
@@ -105,18 +110,18 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CMIODeviceProcessAVCCommand,
                                       m_CMIODeviceProcessAVCCommand)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CMIODeviceProcessRS422Command,
                                       m_CMIODeviceProcessRS422Command)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

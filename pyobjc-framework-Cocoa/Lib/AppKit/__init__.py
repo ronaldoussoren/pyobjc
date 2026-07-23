@@ -136,8 +136,8 @@ def _setup():
     for cls in ("NSViewCornerRadii",):
         try:
             objc.lookUpClass(cls).__objc_final__ = True
-        except objc.error:
-            pass
+        except objc.error:  # pragma: no cover
+            pass  # pragma: no cover
 
     # Fix types for a number of character constants
     # XXX: Move this to metadata
@@ -228,8 +228,8 @@ def _setup():
     ]:
         try:
             globals_dict[nm] = chr(__getattr__(nm))  # noqa: F821
-        except AttributeError:
-            pass
+        except AttributeError:  # pragma: no cover
+            pass  # pragma: no cover
 
 
 globals().pop("_setup")()

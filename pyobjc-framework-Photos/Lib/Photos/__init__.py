@@ -13,10 +13,10 @@ def _setup():
     import objc
     from . import _metadata, _Photos
 
-    if objc.macos_available(10, 15):
+    if objc.macos_available(10, 15):  # pragma: no branch
         identifier = "com.apple.Photos"
     else:
-        identifier = "com.apple.PhotoKit.Photos"
+        identifier = "com.apple.PhotoKit.Photos"  # pragma: no cover
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Photos",

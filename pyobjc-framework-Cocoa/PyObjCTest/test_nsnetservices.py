@@ -1,5 +1,7 @@
 import Foundation
+import re
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from .runloophelper import check_cfrunloop_side_effects
 
 
 class TestNSNetServicesHelper(Foundation.NSObject):
@@ -81,3 +83,39 @@ class TestNSNetservices(TestCase):
         self.assertArgIsBOOL(
             TestNSNetServicesHelper.netServiceBrowser_didRemoveService_moreComing_, 2
         )
+
+    @check_cfrunloop_side_effects
+    def test_manual(self):
+        ns1 = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(
+            "local.", "_http._tcp", "pyobjctest99", 10000
+        )
+        ns1.publish()
+
+        ns2 = Foundation.NSNetService.alloc().initWithDomain_type_name_(
+            "local.", "_http._tcp", "pyobjctest99"
+        )
+        ns2.resolve()
+
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            ns1.addresses(42)
+
+        Foundation.CFRunLoopRunInMode(Foundation.kCFRunLoopDefaultMode, 5.0, False)
+
+        a1 = ns1.addresses()
+        a2 = ns2.addresses()
+        self.assertIsInstance(a1, tuple)
+        self.assertIsInstance(a2, tuple)
+        self.assertGreater(len(a1) + len(a2), 0)
+
+        for item in a1 + a2:
+            self.assertIsInstance(item[0], str)
+            for p in item[1:]:
+                self.assertIsInstance(p, int)
+
+            if re.match(r"^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$", item[0]):
+                # IPv4
+                self.assertEqual(len(item), 2)
+                self.assertEqual(item[1], 10000)
+            else:
+                self.assertEqual(len(item), 4)
+                self.assertEqual(item[1], 10000)

@@ -76,9 +76,11 @@ m_AXValueCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t 
     }
 
     value = AXValueCreate(valueType, valuePtr);
-    if (value == NULL) {
+    if (value == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     } else {
         result = PyObjC_ObjCToPython(@encode(AXValueRef), &value);
         CFRelease(value);
@@ -170,8 +172,10 @@ m_AXValueGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
             /* We shouldn't get here, argument validation has already checked
              * the range of values
              */
+            // LCOV_EXCL_START
             PyErr_SetString(PyExc_RuntimeError, "Unexpected Value Type");
             return NULL;
+            // LCOV_EXCL_STOP
         }
     }
 }
@@ -183,14 +187,16 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
-    if (PyObjCRegister_FunctionCaller(AXValueCreate, m_AXValueCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(AXValueCreate, m_AXValueCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(AXValueGetValue, m_AXValueGetValue) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(AXValueGetValue, m_AXValueGetValue)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

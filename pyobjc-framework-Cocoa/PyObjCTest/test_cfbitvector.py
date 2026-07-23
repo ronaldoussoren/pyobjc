@@ -1,5 +1,6 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
+import objc
 
 
 def byte2bits(val):
@@ -18,6 +19,22 @@ class TestBitVector(TestCase):
         self.assertIsInstance(v, int)
 
     def test_creation(self):
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFBitVectorCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBitVectorCreate(
+                NoObjCClass(), [0x11, 0x22, 0x33, 0x44], 30
+            )
+
+        with self.assertRaisesRegex(TypeError, "converting to a C array"):
+            CoreFoundation.CFBitVectorCreate(None, 42, 30)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFBitVectorCreate(None, [1, 2, 3], "four")
+
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 30)
         self.assertIsInstance(bitset, CoreFoundation.CFBitVectorRef)
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(bitset), 30)
@@ -39,6 +56,11 @@ class TestBitVector(TestCase):
         self.assertEqual(CoreFoundation.CFBitVectorGetCount(set3), 0)
         self.assertIsNot(set3, set)
 
+        with self.assertRaisesRegex(objc.error, "array with negative size"):
+            bitset = CoreFoundation.CFBitVectorCreate(
+                None, [0x11, 0x22, 0x33, 0x44], -1
+            )
+
     def test_inspect(self):
         bitset = CoreFoundation.CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 32)
 
@@ -57,6 +79,21 @@ class TestBitVector(TestCase):
         for i in range(8):
             b = CoreFoundation.CFBitVectorGetBitAtIndex(bitset, i)
             self.assertEqual(b, bits[i])
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFBitVectorGetBits()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBitVectorGetBits(NoObjCClass(), (0, 8), None)
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            CoreFoundation.CFBitVectorGetBits(bitset, 8, None)
+
+        with self.assertRaisesRegex(ValueError, "'buffer' must be None"):
+            CoreFoundation.CFBitVectorGetBits(bitset, (0, 8), bytearray(10))
+
         bits = CoreFoundation.CFBitVectorGetBits(bitset, (0, 8), None)
         self.assertEqual(bits, b"\x11")
 

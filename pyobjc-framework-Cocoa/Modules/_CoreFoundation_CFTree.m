@@ -38,7 +38,7 @@ static PyObject* _Nullable mod_CFTreeGetContext(PyObject* meth,
     }
 
     if (args[1] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+        PyErr_SetString(PyExc_ValueError, "'context' must be None");
         return NULL;
     }
 
@@ -48,23 +48,26 @@ static PyObject* _Nullable mod_CFTreeGetContext(PyObject* meth,
         @try {
             CFTreeGetContext(tree, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (context.version != 0) {
+    if (context.version != 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not valid");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (context.retain != mod_CFTreeRetainCallback) {
+    if (context.retain != mod_CFTreeRetainCallback) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return PyObjC_ObjCToPython(@encode(id), &context.info);
@@ -97,14 +100,13 @@ static PyObject* _Nullable mod_CFTreeSetContext(PyObject* meth,
         @try {
             CFTreeSetContext(tree, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -140,19 +142,13 @@ static PyObject* _Nullable mod_CFTreeCreate(PyObject* meth,
         @try {
             tree = CFTreeCreate(allocator, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
-    if (tree == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* py_tree = PyObjC_ObjCToPython(@encode(CFTreeRef), &tree);
     CFRelease(tree); /* we're donated a reference */
@@ -187,32 +183,36 @@ static PyObject* _Nullable mod_CFTreeGetChildren(PyObject* meth,
         @try {
             count    = CFTreeGetChildCount(tree);
             children = malloc(count * sizeof(CFTreeRef));
-            if (children != NULL) {
+            if (children != NULL) { // LCOV_BR_EXCL_LINE
                 CFTreeGetChildren(tree, children);
             }
 
-        } @catch (NSException* localException) {
-            count = -1;
-            if (children != NULL) {
-                free(children);
-                children = NULL;
-            }
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            count = -1;                          // LCOV_EXCL_LINE
+            if (children != NULL) {              // LCOV_EXCL_LINE
+                free(children);                  // LCOV_EXCL_LINE
+                children = NULL;                 // LCOV_EXCL_LINE
+            } // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (children == NULL) {
-        if (!PyErr_Occurred()) {
-            PyErr_NoMemory();
+    if (children == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (!PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            PyErr_NoMemory();    // LCOV_EXCL_LINE
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (children) {
             free(children);
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result = PyObjC_CArrayToPython(@encode(CFTreeRef), children, count);
@@ -223,20 +223,25 @@ static PyObject* _Nullable mod_CFTreeGetChildren(PyObject* meth,
 static int
 setup_tree(PyObject* m __attribute__((__unused__)))
 {
-    if (PyObjCRegister_FunctionCaller(CFTreeCreate, mod_CFTreeCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFTreeCreate, mod_CFTreeCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFTreeGetContext, mod_CFTreeGetContext) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFTreeGetContext, mod_CFTreeGetContext)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFTreeSetContext, mod_CFTreeSetContext)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFTreeGetChildren, mod_CFTreeGetChildren) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFTreeGetChildren, mod_CFTreeGetChildren)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

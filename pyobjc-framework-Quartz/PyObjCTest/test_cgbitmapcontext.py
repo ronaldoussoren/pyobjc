@@ -1,7 +1,7 @@
 import array
 import objc
 
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import Quartz
 
 
@@ -46,6 +46,110 @@ class TestCGBitmapContext(TestCase):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         self.assertIsInstance(bytes_val, array.array)
         self.assertEqual(len(bytes_val), 100 * 80 * 4)
+
+        with self.assertRaisesRegex(TypeError, "expected 7 arguments, got 0"):
+            Quartz.CGBitmapContextCreate()
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'float"
+        ):
+            Quartz.CGBitmapContextCreate(
+                0.5,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(TypeError, "cannot use str as backing store"):
+            Quartz.CGBitmapContextCreate(
+                "bytes_val",
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                "100",
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                "80",
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                "8",
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                "400",
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                NoObjCClass(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                "Quartz.kCGImageAlphaPremultipliedLast",
+            )
+
         ctx = Quartz.CGBitmapContextCreate(
             bytes_val,
             100,
@@ -80,6 +184,126 @@ class TestCGBitmapContext(TestCase):
         self.assertIsInstance(img, Quartz.CGImageRef)
 
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
+
+        with self.assertRaisesRegex(TypeError, "expected 9 arguments, got 0"):
+            Quartz.CGBitmapContextCreateWithData()
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'float"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                0.5,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "cannot use str as backing store"):
+            Quartz.CGBitmapContextCreateWithData(
+                "bytes_val",
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                "100",
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                "80",
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                "8",
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                "400",
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                NoObjCClass(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                "Quartz.kCGImageAlphaPremultipliedLast",
+                None,
+                None,
+            )
+
         ctx = Quartz.CGBitmapContextCreateWithData(
             bytes_val,
             100,

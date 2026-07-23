@@ -6,6 +6,59 @@ An overview of the relevant changes in new, and older, releases.
 Version 13.0a0
 --------------
 
+* Main features
+
+  * Framework bindings updated for macOS 27 SDK (beta 4)
+
+  * Add support for the following frameworks (all new in macOS 27):
+
+    * :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`
+
+    * :doc:`LinkSecurity </apinotes/LinkSecurity>`
+
+    * :doc:`StateReporting </apinotes/StateReporting>`
+
+  * ``objc.formal_protocol`` can now be used as an additional base class
+    to indicate that a class implements a protocol.
+
+    The following two definitions are equivalent:
+
+    .. sourcecode:: python
+
+       class MyClass(NSObject, protocols=[NSFilePresenter]):
+           ...
+
+    and:
+
+    .. sourcecode:: python
+
+       class MyClass(NSObject, NSFilePresenter):
+           ...
+
+    The formal protocols that are used as a base class do not end
+    up in the MRO, but will be added to ``__pyobjc_protocols__``.
+
+    Mixing the two definition styles is supported as well, although
+    this will lead to less understandable code.
+
+  * :issue:`359`: Introduce a :class:`objc.bound_selector` for bound
+    selector objects.
+
+    In previous versions bound selectors used the same type as
+    unbound selectors (:class:`objc.python_selector` or
+    :class:`objc.native_selector`).
+
+    Using a separate bound selector results in slightly better
+    performance due to not creating the bound selector object
+    during regular method calls.
+
+    A :class:`objc.bound_selector` is a subclass of :class:`objc.selector`,
+    just like the other two classes and has the same attributes
+    as the selector value it binds. The only user-visible behaviour
+    change w.r.t. previous versions is that it is no longer
+    possible to test the flavour of a bound selector using
+    and :func:`isinstance` check.
+
 * Incompatible changes:
 
   * This release drops support for Python 3.10
@@ -66,6 +119,29 @@ Version 13.0a0
   * :func:`Foundation.NSHFSFTypeCodeFromFileType` is longer present,
     this was a type for :func:`Foundation.NSHFSTypeCodeFromFileType`.
 
+  * :func:`AppKit.NSConvertGlyphsToPackedGlyphs` now returns ``(0, None)`` instead
+    of :data:`None` when the ObjC function returns 0. The previous behaviour was
+    an unintended deviation from the PyObjC convention.
+
+  * :func:`CFDictionaryGetKeysAndValues` now includes :data:`objc.NULL` instead
+    of :data:`None` in the return tuple when the *keys* or *values* arguments are
+    :data:`objc.NULL`. This matches the behaviour of automatic bindings.
+
+  * :func:`AppKit.NSBezierPath.elementAtIndex_associatedPoints_` allows leaving
+    of the last argument. This feature is deprecated, starting PyObjC 14 the
+    second argument must be present (and :data:`None`) to match default behaviour
+    of the bridge.
+
+  * The addresses in the return value  of :meth:`AppKit.NSNetService.addresses` are
+    now strings instead of byte strings (to match the socket module).
+
+  * It is currently possible to call :meth:`AppKit.NSBitmapImageRep.getBitmapDataPlanes_`
+    without arguments. This behaviour is deprecated, passing :data:`None` is required
+    starting PyObjC 14.
+
+  * When overriding :meth:`AppKit.NSBezierPath.elementAtIndex_associatedPoints_` in
+    a subclass specify both parameters, previous versions required just one parameter.
+
 * Deprecations:
 
   * The attribute :data:`objc.platform` is deprecated and will be removed
@@ -89,16 +165,6 @@ Version 13.0a0
     argument will be required in PyObjC 14.
 
 
-* Framework bindings updated for macOS 27 SDK (beta 4)
-
-* Add support for the following frameworks (all new in macOS 27):
-
-  * :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`
-
-  * :doc:`LinkSecurity </apinotes/LinkSecurity>`
-
-  * :doc:`StateReporting </apinotes/StateReporting>`
-
 * The following frameworks are deprecated in macOS 27:
 
   * :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
@@ -109,28 +175,6 @@ Version 13.0a0
 
   .. note:: to be removed, headers are no longer available
 
-* ``objc.formal_protocol`` can now be used as an additional base class
-  to indicate that a class implements a protocol.
-
-  The following two definitions are equivalent:
-
-  .. sourcecode:: python
-
-     class MyClass(NSObject, protocols=[NSFilePresenter]):
-         ...
-
-  and:
-
-  .. sourcecode:: python
-
-     class MyClass(NSObject, NSFilePresenter):
-         ...
-
-  The formal protocols that are used as a base class do not end
-  up in the MRO, but will be added to ``__pyobjc_protocols__``.
-
-  Mixing the two definition styles is supported as well, although
-  this will lead to less understandable code.
 
 * All formal protocols (``@protocol ...`` in Objective-C) are exposed
   as attributes on module that implements the binding for the framework
@@ -562,23 +606,6 @@ Version 13.0a0
   Xcode 27 can no longer target macOS 10.15 or earlier when using
   C++.
 
-* :issue:`359`: Introduce a :class:`objc.bound_selector` for bound
-  selector objects.
-
-  In previous versions bound selectors used the same type as
-  unbound selectors (:class:`objc.python_selector` or
-  :class:`objc.native_selector`).
-
-  Using a separate bound selector results in slightly better
-  performance due to not creating the bound selector object
-  during regular method calls.
-
-  A :class:`objc.bound_selector` is a subclass of :class:`objc.selector`,
-  just like the other two classes and has the same attributes
-  as the selector value it binds. The only user-visible behaviour
-  change w.r.t. previous versions is that it is no longer
-  possible to test the flavour of a bound selector using
-  and :func:`isinstance` check.
 
 * Improved error message when the *self* argument in
   calls to a class selector is invalid.
@@ -612,10 +639,42 @@ Version 13.0a0
   and :func:`CoreFoundation.`CFMessagePortCreateLocal`
   now correctly handle :data:`objc.NULL` for the last argument.
 
+* The callback for :func:`CFMessagePortCreateLocal` now actually works,
+  in previous versions the process would crash hard when the callback
+  was invoked and returned a buffer.
+
+  .. note::
+
+     The 'data' argument for the callback is an :class:`NSData` object
+     that is invalidated by the system when the callback returns. Use
+     a copy of the buffer (e.g. ``bytes(data)``) when the value
+     is used after the callback returns.
+
+
 * :func:`CoreFoundation.CFReadStreamSetClient` now correctly handles
   a callback value of :data:`None` (removes the current callback)
   and accepts :data:`None` of the context (with the same semantics
   as :data:`objc.NULL`).
+
+* I already regularly run the testsuite for pyobjc-core with coverage testing
+  (both Python and Objective-C) and have extended this to the framework
+  bindings.
+
+  This resulted in more functional tests for the framework bindings to
+  get better test coverage, and fixed a small number of bugs.
+
+* :func:`Foundation.NSLocalizedAttributedStringWithDefaultValue` now
+  actually works.
+
+* :meth:`CoreAudio.AudioValueTranslation.create_input_buffer` and
+  :func:`CoreAudio.create_buffer`
+  used to give an internal error when passed the wrong number or types
+  of arguments.
+
+* Fix handling exceptions in the callback for :func:`Quartz.CGPathApply`.
+
+* Fix handling exceptions and reference counts in callbacks for
+  :func:`MediaToolbox.MTAudioProcessingTapCreate`.
 
 Version 12.2.1
 --------------

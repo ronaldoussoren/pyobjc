@@ -1,8 +1,9 @@
 import array
+import warnings
 
 import AppKit
 from objc import NO, YES
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NotBool, NoObjCClass
 
 
 class TestNSBitmapImageRep(TestCase):
@@ -99,20 +100,399 @@ class TestNSBitmapImageRepUsage(TestCase):
         width = 256
         height = 256
         dataPlanes = (None, None, None, None, None)
-        dataPlanes = None
+
+        with self.assertRaisesRegex(TypeError, "expected 10 arguments, got 0"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_()  # noqa: B950
+
+        with self.assertRaisesRegex(
+            TypeError, "First argument must be a 5 element sequence or None."
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                42, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
+            )
+        with self.assertRaisesRegex(
+            TypeError, "First argument must be a 5 element sequence or None."
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes + dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                (42,) + dataPlanes[:4],
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                (
+                    b"\x00" * 4000,
+                    42,
+                )
+                + dataPlanes[:3],
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                (
+                    b"x" * 4000,
+                    42,
+                )
+                + dataPlanes[:3],
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                "width",
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                "height",
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                "8",
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                "3",
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NotBool(),
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NotBool(),
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes, width, height, 8, 3, NO, NO, NoObjCClass(), 0, 0
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                "0",
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                "0",
+            )
+
         i1 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
             dataPlanes, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
-        self.assertTrue(i1)
+        self.assertIsInstance(i1, AppKit.NSBitmapImageRep)
+        self.assertEqual(i1.size(), (width, height))
 
         i2 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
             None, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
-        self.assertTrue(i2)
+        self.assertIsInstance(i2, AppKit.NSBitmapImageRep)
 
     def test_pixelformat(self):
         width = 16
         height = 16
+
+        with self.assertRaisesRegex(TypeError, "expected 11 arguments, got 0"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_()  # noqa: B950
+
+        with self.assertRaisesRegex(
+            TypeError, "First argument must be a 5 element sequence or None."
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                42,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "First argument must be a 5 element sequence or None."
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                (),
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                (None, None, b"x" * 4096, None, 42),
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                "width",
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                "height",
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                "8",
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                "3",
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NotBool(),
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NotBool(),
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                NoObjCClass(),
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                "AppKit.NSAlphaFirstBitmapFormat",
+                0,
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                "0",
+                0,
+            )
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                None,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                AppKit.NSAlphaFirstBitmapFormat,
+                0,
+                "0",
+            )
 
         i1 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
             None,
@@ -152,6 +532,9 @@ class TestNSBitmapImageRepUsage(TestCase):
             0,
         )
         self.assertIsInstance(i2, AppKit.NSBitmapImageRep)
+
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            i2.bitmapData(42)
 
         bitmapData = i2.bitmapData()
 
@@ -227,7 +610,13 @@ class TestNSBitmapImageRepUsage(TestCase):
             None, width, height, 8, 3, NO, YES, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
 
-        r, g, b, a, o = i3.getBitmapDataPlanes_()
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            i3.getBitmapDataPlanes_(None, 42)
+
+        with self.assertRaisesRegex(ValueError, "buffer must be None"):
+            i3.getBitmapDataPlanes_(42)
+
+        r, g, b, a, o = i3.getBitmapDataPlanes_(None)
         self.assertTrue(r)
         self.assertTrue(g)
         self.assertTrue(b)
@@ -252,6 +641,20 @@ class TestNSBitmapImageRepUsage(TestCase):
         d = i2.getPixel_atX_y_(a, 1, 1)
         self.assertIs(a, d)
 
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "leaving of the buffer argument is deprecated"
+            ):
+                i3.getBitmapDataPlanes_()
+
+        with warnings.catch_warnings(record=True) as wrn:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            r1 = i3.getBitmapDataPlanes_()
+        self.assertEqual(len(wrn), 1)
+        r2 = i3.getBitmapDataPlanes_(None)
+        self.assertEqual(r1, r2)
+
 
 class TestBadCreation(TestCase):
     # Redirect stderr to /dev/null for the duration of this test,
@@ -275,6 +678,9 @@ class TestBadCreation(TestCase):
         try:
             self.assertRaises(ValueError, y.init)
         finally:
+            with self.assertRaisesRegex(TypeError, "expected 10 arguments, got 0"):
+                y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_()
+
             width = 256
             height = 256
             dataPlanes = (None, None, None, None, None)
@@ -290,11 +696,3 @@ class TestBadCreation(TestCase):
                 0,
                 0,
             )
-
-    def test_thread_compression(self):
-        lst, nr = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
-        self.assertIsInstance(lst, tuple)
-        self.assertIsInstance(nr, int)
-        self.assertEqual(len(lst), nr)
-        self.assertNotEqual(len(lst), 0)
-        self.assertIsInstance(lst[0], int)

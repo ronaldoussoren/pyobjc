@@ -16,22 +16,20 @@ static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
     PyObject* v;
 
     error = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
-    if (error) {
+    if (error) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         v = Py_BuildValue("(is)", error, gai_strerror(error));
         PyErr_SetObject(PyExc_RuntimeError, v);
         Py_DECREF(v);
         return NULL;
+        // LCOV_EXCL_STOP
     }
-    return PyBytes_FromString(buf);
+    return PyUnicode_FromString(buf);
 }
 
 static PyObject* _Nullable makesockaddr(struct sockaddr* addr, int addrlen)
 {
-    if (addrlen == 0) {
-        /* No address -- may be recvfrom() from known socket */
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
+    assert(addrlen != 0);
 
     switch (addr->sa_family) {
 
@@ -47,11 +45,6 @@ static PyObject* _Nullable makesockaddr(struct sockaddr* addr, int addrlen)
         return ret;
     }
 
-    case AF_UNIX: {
-        struct sockaddr_un* a = (struct sockaddr_un*)addr;
-        return PyBytes_FromString(a->sun_path);
-    }
-
     case AF_INET6: {
         struct sockaddr_in6* a;
         PyObject*            addrobj = makeipaddr(addr, sizeof(*a));
@@ -65,13 +58,12 @@ static PyObject* _Nullable makesockaddr(struct sockaddr* addr, int addrlen)
         return ret;
     }
 
-        /* More cases here... */
-
     default:
-        /* If we don't know the address family, don't raise an
-           exception -- return it as a tuple. */
+        // LCOV_EXCL_START
+        // This cannot happen, NSNetService only used IPv4 and IPv6.
         return Py_BuildValue("is#", addr->sa_family, addr->sa_data,
                              sizeof(addr->sa_data));
+        // LCOV_EXCL_STOP
     }
 }
 
@@ -96,25 +88,26 @@ static PyObject* _Nullable call_NSNetService_addresses(
 
             res = ((id (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, @selector(addresses));
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            res = nil;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            res = nil;                           // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (res == nil && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (res == nil && PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;                    // LCOV_EXCL_LINE
 
-    if (res == nil) {
+    if (res == nil) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     len    = [res count];
     result = PyTuple_New(len);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < len; i++) {
@@ -124,9 +117,11 @@ static PyObject* _Nullable call_NSNetService_addresses(
         item = [res objectAtIndex:i];
 
         v = makesockaddr((struct sockaddr*)[item bytes], [item length]);
-        if (v == NULL) {
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, v);
     }
@@ -138,16 +133,16 @@ static int
 setup_nsnetservice(PyObject* m __attribute__((__unused__)))
 {
     Class classNSNetService = objc_lookUpClass("NSNetService");
-    if (classNSNetService == NULL) {
-        return 0;
+    if (classNSNetService == NULL) { // LCOV_BR_EXCL_LINE
+        return 0;                    // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(classNSNetService, @selector(addresses),
                                      call_NSNetService_addresses,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

@@ -125,5 +125,14 @@ class TestCMTag(TestCase):
         self.assertResultIsCFRetained(CoreMedia.CMTagCopyAsDictionary)
         CoreMedia.CMTagMakeFromDictionary
 
-        CoreMedia.CMTAG_IS_VALID
+        tag = CoreMedia.CMTag(dataType=CoreMedia.kCMTagDataType_Invalid)
+        self.assertFalse(CoreMedia.CMTAG_IS_VALID(tag))
+        self.assertFalse(CoreMedia.CMTagIsValid(tag))
+        self.assertTrue(CoreMedia.CMTAG_IS_INVALID(tag))
+
+        tag.dataType = CoreMedia.kCMTagDataType_OSType
+        self.assertTrue(CoreMedia.CMTAG_IS_VALID(tag))
+        self.assertTrue(CoreMedia.CMTagIsValid(tag))
+        self.assertFalse(CoreMedia.CMTAG_IS_INVALID(tag))
+
         CoreMedia.CMTAG_IS_INVALID

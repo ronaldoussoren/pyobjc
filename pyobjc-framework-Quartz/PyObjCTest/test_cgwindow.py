@@ -59,6 +59,19 @@ class TestCGWindow(TestCase):
         self.assertTrue(len(v) > 0)
         self.assertIsInstance(v[0], Quartz.CFDictionaryRef)
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGWindowListCreate()
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreate("one", 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreate(0, "one")
+
         v = Quartz.CGWindowListCreate(0, 0)
         self.assertIsInstance(v, tuple)
         self.assertTrue(len(v) > 0)
@@ -66,6 +79,22 @@ class TestCGWindow(TestCase):
 
         aWindowID = v[0]
         windowArray = v
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            Quartz.CGWindowListCreateDescriptionFromArray()
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            Quartz.CGWindowListCreateDescriptionFromArray(42)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreateDescriptionFromArray(list(v) + ["root"])
+
+        self.assertEqual(Quartz.CGWindowListCreateDescriptionFromArray(()), ())
+        self.assertEqual(
+            Quartz.CGWindowListCreateDescriptionFromArray((min(v) - 1,)), ()
+        )
 
         v = Quartz.CGWindowListCreateDescriptionFromArray(v)
         self.assertIsInstance(v, Quartz.CFArrayRef)
@@ -77,6 +106,20 @@ class TestCGWindow(TestCase):
         if v is not None:
             # function requires specific permissions on macOS 15
             self.assertIsInstance(v, Quartz.CGImageRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            Quartz.CGWindowListCreateImageFromArray()
+
+        with self.assertRaisesRegex(TypeError, "epythonifying struct, got no sequence"):
+            Quartz.CGWindowListCreateImageFromArray(42, windowArray, 0)
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            Quartz.CGWindowListCreateImageFromArray(((0, 0), (100, 100)), 42, 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreateImageFromArray(((0, 0), (100, 100)), (), "none")
 
         v = Quartz.CGWindowListCreateImageFromArray(
             ((0, 0), (100, 100)), windowArray, 0

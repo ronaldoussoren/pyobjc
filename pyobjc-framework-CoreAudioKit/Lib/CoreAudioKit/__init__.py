@@ -12,7 +12,7 @@ def _setup():
     import CoreAudio
     import Foundation
     import objc
-    from . import _metadata
+    from . import _metadata, _CoreAudioKit
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="CoreAudioKit",
@@ -23,6 +23,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
+            _CoreAudioKit,
             CoreAudio,
             Foundation,
         ),

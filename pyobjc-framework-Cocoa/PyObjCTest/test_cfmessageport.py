@@ -1,6 +1,7 @@
 import CoreFoundation
+from Foundation import NSData
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestMessagePort(TestCase):
@@ -27,12 +28,38 @@ class TestMessagePort(TestCase):
         def callout(port, messageid, data, info):
             pass
 
+        with self.assertRaisesRegex(TypeError, "expected 5 arguments, got 0"):
+            CoreFoundation.CFMessagePortCreateLocal()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFMessagePortCreateLocal(
+                NoObjCClass(), "name", callout, context, None
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFMessagePortCreateLocal(
+                None, NoObjCClass(), callout, context, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "'shouldFree' should be None or NULL"):
+            CoreFoundation.CFMessagePortCreateLocal(None, "name", callout, context, 42)
+
         port, shouldFree = CoreFoundation.CFMessagePortCreateLocal(
             None, "name", callout, context, None
         )
         self.assertIsInstance(port, CoreFoundation.CFMessagePortRef)
         self.assertIs(shouldFree is True or shouldFree, False)
         self.assertFalse(CoreFoundation.CFMessagePortIsRemote(port))
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFMessagePortGetContext()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFMessagePortGetContext(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'context' must be None"):
+            CoreFoundation.CFMessagePortGetContext(port, 42)
+
         ctx = CoreFoundation.CFMessagePortGetContext(port, None)
         self.assertIs(ctx, context)
 
@@ -82,13 +109,25 @@ class TestMessagePort(TestCase):
         self.assertFalse(CoreFoundation.CFMessagePortIsValid(port))
         self.assertTrue(didInvalidate)
 
+        port, shouldFree = CoreFoundation.CFMessagePortCreateLocal(
+            None, "name", callout, context, objc.NULL
+        )
+        self.assertIsInstance(port, CoreFoundation.CFMessagePortRef)
+        self.assertIs(shouldFree, objc.NULL)
+
+        CoreFoundation.CFMessagePortInvalidate(port)
+
     def test_sending(self):
         curloop = CoreFoundation.CFRunLoopGetCurrent()
         context = []
+        should_raise = False
+        callback_return = b"hello world"
 
         def callout(port, messageid, data, info):
-            info.append((port, messageid, data))
-            return b"hello world"
+            if should_raise:
+                raise RuntimeError("callback error")
+            info.append((port, messageid, bytes(data), info))
+            return callback_return
 
         port, shouldFree = CoreFoundation.CFMessagePortCreateLocal(
             None, "pyobjc.test", callout, context, None
@@ -105,18 +144,48 @@ class TestMessagePort(TestCase):
             cli = CoreFoundation.CFMessagePortCreateRemote(None, "pyobjc.test")
             self.assertIsInstance(cli, CoreFoundation.CFMessagePortRef)
             self.assertIsNot(rls, None)
-            if 0:
+            err, data = CoreFoundation.CFMessagePortSendRequest(
+                cli,
+                99,
+                NSData.dataWithData_(b"message"),
+                1.0,
+                1.0,
+                CoreFoundation.kCFRunLoopDefaultMode,
+                None,
+            )
+            self.assertEqual(err, 0)
+            self.assertEqual(data, b"hello world")
+
+            should_raise = True
+            with self.assertRaisesRegex(RuntimeError, "callback error"):
                 err, data = CoreFoundation.CFMessagePortSendRequest(
                     cli,
-                    99,
-                    b"message",
+                    100,
+                    NSData.dataWithData_(b"message"),
                     1.0,
                     1.0,
                     CoreFoundation.kCFRunLoopDefaultMode,
                     None,
                 )
-                self.assertEqual(err, 0)
-                self.assertEqual(data, b"hello world")
+            should_raise = False
+
+            callback_return = NoObjCClass()
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                err, data = CoreFoundation.CFMessagePortSendRequest(
+                    cli,
+                    101,
+                    NSData.dataWithData_(b"message"),
+                    1.0,
+                    1.0,
+                    CoreFoundation.kCFRunLoopDefaultMode,
+                    None,
+                )
+
+            self.assertEqual(len(context), 2)
+            self.assertIs(context[0][0], port)
+            self.assertEqual(context[0][1], 99)
+            self.assertEqual(bytes(context[0][2]), b"message")
+            self.assertIs(context[0][3], context)
 
         finally:
             CoreFoundation.CFRunLoopRemoveSource(

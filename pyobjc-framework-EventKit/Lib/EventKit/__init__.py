@@ -13,10 +13,10 @@ def _setup():
     import objc
     from . import _metadata
 
-    if objc.macos_available(13, 0):
+    if objc.macos_available(13, 0):  # pragma: no branch
         identifier = "com.apple.eventkit"
     else:
-        identifier = "com.apple.ical.EventKit"
+        identifier = "com.apple.ical.EventKit"  # pragma: no cover
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="EventKit",

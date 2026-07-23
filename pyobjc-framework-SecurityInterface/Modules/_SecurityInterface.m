@@ -159,28 +159,28 @@ mod_exec_module(PyObject* m)
 {
     Class cls;
 
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
     cls = objc_lookUpClass("SFAuthorizationView");
-    if (cls == Nil) {
-        return 0;
+    if (cls == Nil) { // LCOV_BR_EXCL_LINE
+        return 0      // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationRights),
                                      call_authorizationRights,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1 // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationRights:),
                                      call_setAuthorizationRights_,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1 // LCOV_EXCL_LINE
     }
 
     return 0;

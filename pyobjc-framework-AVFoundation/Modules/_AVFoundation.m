@@ -19,10 +19,10 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (init_avaudiobuffer() == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
+    if (init_avaudiobuffer() == -1) // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
 
     return 0;
 }

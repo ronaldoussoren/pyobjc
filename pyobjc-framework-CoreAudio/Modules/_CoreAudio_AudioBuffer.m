@@ -125,15 +125,18 @@ ab_create_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     void*                new_buf;
     PyObject*            result;
 
-    if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size)) {
         return NULL;
     }
 
     Py_BEGIN_CRITICAL_SECTION(self);
 
     new_buf = PyMem_Malloc(buf_size);
-    if (new_buf == NULL) {
+    if (new_buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_NoMemory();
         result = NULL;
+        // LCOV_EXCL_STOP
     } else {
         if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
             PyMem_Free(self->ab_buf_pointer);
@@ -180,17 +183,19 @@ ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     }
 
     result = PyObject_New(struct audio_buffer, (PyTypeObject*)audio_buffer_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->ab_owns_storage = 1;
     result->ab_owns_buffer  = 0;
     result->ab_buf_pointer  = NULL;
     result->ab_buf          = PyMem_Malloc(sizeof(AudioBuffer));
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result->ab_buf->mNumberChannels = num_channels;
@@ -218,7 +223,7 @@ ab_dealloc(PyObject* object)
     if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
         PyMem_Free(self->ab_buf_pointer);
     }
-    if (self->ab_owns_storage) {
+    if (self->ab_owns_storage && self->ab_buf) {
         PyMem_Free(self->ab_buf);
     }
     Py_TYPE(object)->tp_free(object);
@@ -255,8 +260,8 @@ ab_create(AudioBuffer* item)
     struct audio_buffer* result;
 
     result = PyObject_New(struct audio_buffer, (PyTypeObject*)audio_buffer_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->ab_owns_storage = 0;
@@ -304,32 +309,37 @@ init_audio_buffer(PyObject* module)
     int r;
 
     PyObject* tmp = PyType_FromSpec(&ab_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     audio_buffer_type = tmp;
 
     PyObject* ts = PyBytes_FromString(@encode(AudioBuffer));
-    if (ts == NULL) {
+    if (ts == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     r = PyObject_SetAttrString(audio_buffer_type, "__typestr__", ts);
     Py_DECREF(ts);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyModule_AddObject(module, "AudioBuffer", audio_buffer_type);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(audio_buffer_type);
 
-    r = PyObjCPointerWrapper_Register("AudioBuffer*", @encode(AudioBuffer*),
-                                      pythonify_audio_buffer, depythonify_audio_buffer);
-
-    return r;
+    return PyObjCPointerWrapper_Register("AudioBuffer*", @encode(AudioBuffer*),
+                                         pythonify_audio_buffer,
+                                         depythonify_audio_buffer);
 }

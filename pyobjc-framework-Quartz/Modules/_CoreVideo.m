@@ -84,17 +84,17 @@ mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonn
     }
 
     view = PyObjCMemView_New();
-    if (view == NULL) {
-        return NULL;
+    if (view == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     if (PyObject_GetBuffer(args[4], PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OOOO", args[6], args[7], args[4], view);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(4, args[6], args[7], args[4], view);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -105,14 +105,16 @@ mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonn
                 mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (pixelBuffer == NULL) {
@@ -123,9 +125,9 @@ mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonn
 
     PyObject* py_pixelBuffer =
         PyObjC_ObjCToPython(@encode(CVPixelBufferRef), &pixelBuffer);
-    CFRelease(pixelBuffer); /* Compensate for create rule */
-    if (py_pixelBuffer == NULL) {
-        return NULL;
+    CFRelease(pixelBuffer);       /* Compensate for create rule */
+    if (py_pixelBuffer == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;              // LCOV_EXCL_LINE
     }
 
     return Py_BuildValue("(NN)", PyObjC_ObjCToPython(@encode(CVReturn), &rv),
@@ -137,13 +139,13 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CVPixelBufferCreateWithBytes,
                                       mod_CVPixelBufferCreateWithBytes)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

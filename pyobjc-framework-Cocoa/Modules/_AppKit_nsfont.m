@@ -40,11 +40,13 @@ static PyObject* _Nullable m_NSConvertGlyphsToPackedGlyphs(
     count = c;
 
     packedGlyphs = malloc(count * 4 + 1);
-    if (packedGlyphs == NULL) {
+    if (packedGlyphs == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjC_FreeCArray(bufCode, &view);
         Py_XDECREF(buffer);
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     NSInteger result = -1;
@@ -52,33 +54,23 @@ static PyObject* _Nullable m_NSConvertGlyphsToPackedGlyphs(
         @try {
             result = NSConvertGlyphsToPackedGlyphs(glBuf, count, packing, packedGlyphs);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     PyObjC_FreeCArray(bufCode, &view);
     Py_XDECREF(buffer);
 
-    if (PyErr_Occurred()) {
-        free(packedGlyphs);
-        return NULL;
-    }
-
-    if (result == 0) {
-        Py_INCREF(Py_None);
-        return Py_None;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        free(packedGlyphs); // LCOV_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* pyRes;
 
-    if (result == 0) {
-        pyRes = Py_BuildValue("Ns#", PyObjC_ObjCToPython(@encode(NSInteger), &result),
-                              packedGlyphs, result - 1);
-    } else {
-        pyRes = Py_BuildValue("Ns#", PyObjC_ObjCToPython(@encode(NSInteger), &result),
-                              packedGlyphs, result);
-    }
+    pyRes = Py_BuildValue("Ns#", PyObjC_ObjCToPython(@encode(NSInteger), &result),
+                          packedGlyphs, result);
 
     free(packedGlyphs);
     return pyRes;
@@ -91,8 +83,8 @@ setup_nsfont(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(NSConvertGlyphsToPackedGlyphs,
                                       m_NSConvertGlyphsToPackedGlyphs)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

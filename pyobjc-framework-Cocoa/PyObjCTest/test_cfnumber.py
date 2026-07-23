@@ -1,10 +1,29 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase
+import Foundation
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFNumber(TestCase):
     def test_cfnumber_get_value(self):
         number = 42
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFNumberGetValue()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberGetValue(
+                NoObjCClass(), CoreFoundation.kCFNumberSInt8Type, None
+            )
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFNumberGetValue(number, "byte", None)
+        with self.assertRaisesRegex(ValueError, "'buffer' must be None"):
+            CoreFoundation.CFNumberGetValue(
+                number, CoreFoundation.kCFNumberSInt8Type, bytearray(4)
+            )
+        with self.assertRaisesRegex(ValueError, "invalid CFNumberType value"):
+            CoreFoundation.CFNumberGetValue(number, -1, None)
 
         ok, v = CoreFoundation.CFNumberGetValue(
             number, CoreFoundation.kCFNumberSInt8Type, None
@@ -63,6 +82,13 @@ class TestCFNumber(TestCase):
         self.assertEqual(v, 42)
 
         ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberNSIntegerType, None
+        )
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, int))
+        self.assertEqual(v, 42)
+
+        ok, v = CoreFoundation.CFNumberGetValue(
             number, CoreFoundation.kCFNumberLongLongType, None
         )
         self.assertTrue(ok)
@@ -104,6 +130,21 @@ class TestCFNumber(TestCase):
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberCGFloatType, None
+        )
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, float))
+        self.assertEqual(v, 42.0)
+
+        ok, v = CoreFoundation.CFNumberGetValue(
+            Foundation.NSNumber.numberWithDouble_(50.5),
+            CoreFoundation.kCFNumberShortType,
+            None,
+        )
+        self.assertFalse(ok)
+        self.assertIs(v, None)
+
     def test_boolean(self):
         self.assertIsInstance(CoreFoundation.CFBooleanGetTypeID(), int)
         self.assertIs(
@@ -115,8 +156,26 @@ class TestCFNumber(TestCase):
         self.assertTrue(CoreFoundation.CFBooleanGetValue(True))
         self.assertFalse(CoreFoundation.CFBooleanGetValue(False))
 
-    def no_testNumber(self):
+    def test_creation(self):
         self.assertIsInstance(CoreFoundation.CFNumberGetTypeID(), int)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFNumberCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberCreate(
+                NoObjCClass(), CoreFoundation.kCFNumberSInt8Type, 1
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFNumberCreate(None, "int", 1)
+        with self.assertRaisesRegex(ValueError, "depythonifying 'char', got 'str'"):
+            CoreFoundation.CFNumberCreate(
+                None, CoreFoundation.kCFNumberSInt8Type, "one"
+            )
+
         # Add cases for all number types
         num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt8Type, 1)
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
@@ -198,6 +257,9 @@ class TestCFNumber(TestCase):
         self.assertIsInstance(num, CoreFoundation.CFNumberRef)
         self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
+
+        with self.assertRaisesRegex(ValueError, "number type not supported"):
+            CoreFoundation.CFNumberCreate(None, -1, 1)
 
     def test_number_types(self):
         v = CoreFoundation.CFNumberGetType(44)

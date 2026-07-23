@@ -67,8 +67,8 @@ static PyObject* _Nullable mod_CFFileDescriptorCreate(
 
     CFFileDescriptorContext context = mod_CFFileDescriptorContext;
     context.info                    = PyTuple_Pack(2, args[3], args[4]);
-    if (context.info == NULL) {
-        return NULL;
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     CFFileDescriptorRef rv = NULL;
@@ -77,15 +77,15 @@ static PyObject* _Nullable mod_CFFileDescriptorCreate(
             rv = CFFileDescriptorCreate(allocator, descriptor, closeOnInvalidate,
                                         mod_CFFileDescriptorCallBack, &context);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFFileDescriptorRef), &rv);
@@ -110,7 +110,7 @@ static PyObject* _Nullable mod_CFFileDescriptorGetContext(
     }
 
     if (args[1] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+        PyErr_SetString(PyExc_ValueError, "'context' must be None");
         return NULL;
     }
 
@@ -120,23 +120,21 @@ static PyObject* _Nullable mod_CFFileDescriptorGetContext(
         @try {
             CFFileDescriptorGetContext(f, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    if (context.version != 0) {
-        PyErr_SetString(PyExc_ValueError, "retrieved context is not valid");
-        return NULL;
-    }
-
-    if (context.retain != mod_filedescr_retain) {
+    if (context.version != 0
+        || context.retain != mod_filedescr_retain) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
@@ -147,13 +145,13 @@ static int
 setup_filedescriptor(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFFileDescriptorCreate, mod_CFFileDescriptorCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFFileDescriptorGetContext,
                                       mod_CFFileDescriptorGetContext)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

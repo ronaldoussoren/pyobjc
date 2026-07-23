@@ -2,7 +2,7 @@ import struct
 
 import CoreText
 from Foundation import NSArray
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import objc
 
 
@@ -63,12 +63,29 @@ class TestCTParagraphStyle(TestCase):
     def test_functions(self):
         v = CoreText.CTParagraphStyleGetTypeID()
         self.assertIsInstance(v, int)
+
         self.assertResultHasType(
             CoreText.CTParagraphStyleGetValueForSpecifier, objc._C_BOOL
         )
 
         # Test below is not needed due to manaul wrapper:
         # self.assertResultIsCFRetained(CTParagraphStyleCreate)
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreText.CTParagraphStyleCreate()
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            CoreText.CTParagraphStyleCreate(42, 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 5"
+        ):
+            CoreText.CTParagraphStyleCreate(None, "hello")
+
+        with self.assertRaisesRegex(
+            ValueError, "settings list is 'None', length is not 0"
+        ):
+            CoreText.CTParagraphStyleCreate(None, 10)
+
         style = CoreText.CTParagraphStyleCreate(None, 0)
         self.assertIsInstance(style, CoreText.CTParagraphStyleRef)
 
@@ -81,6 +98,45 @@ class TestCTParagraphStyle(TestCase):
         self.assertIsInstance(v, NSArray)
         self.assertTrue(len(v))
         self.assertIsInstance(v[0], CoreText.CTTextTabRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            CoreText.CTParagraphStyleGetValueForSpecifier()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreText.CTParagraphStyleGetValueForSpecifier(
+                NoObjCClass(),
+                CoreText.kCTParagraphStyleSpecifierAlignment,
+                CoreText.sizeof_CTTextAlignment,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            CoreText.CTParagraphStyleGetValueForSpecifier(
+                style,
+                "hello",
+                CoreText.sizeof_CTTextAlignment,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreText.CTParagraphStyleGetValueForSpecifier(
+                style,
+                CoreText.kCTParagraphStyleSpecifierAlignment,
+                "hello",
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, "'valueBuffer' must be None"):
+            CoreText.CTParagraphStyleGetValueForSpecifier(
+                style,
+                CoreText.kCTParagraphStyleSpecifierAlignment,
+                CoreText.sizeof_CTTextAlignment,
+                42,
+            )
 
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
@@ -95,6 +151,15 @@ class TestCTParagraphStyle(TestCase):
         ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
             style,
             CoreText.kCTParagraphStyleSpecifierAlignment,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(v, int)
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            CoreText.kCTParagraphStyleSpecifierLineBoundsOptions,
             0,
             None,
         )
@@ -176,6 +241,77 @@ class TestCTParagraphStyle(TestCase):
                 value=chr(CoreText.kCTWritingDirectionRightToLeft).encode("latin1"),
             )
         )
+        with self.assertRaisesRegex(
+            ValueError, f"need sequence of at least {len(options) + 5} arguments"
+        ):
+            CoreText.CTParagraphStyleCreate(options, len(options) + 5)
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            CoreText.CTParagraphStyleCreate(options + [42], len(options) + 1)
+        with self.assertRaisesRegex(ValueError, "settings item has length 4, not 3"):
+            CoreText.CTParagraphStyleCreate(options + [(1, 2, 3, 4)], len(options) + 1)
+        with self.assertRaisesRegex(
+            ValueError, "Multiple kCTParagraphStyleSpecifierTabStops settings"
+        ):
+            CoreText.CTParagraphStyleCreate(options + [options[-2]], len(options) + 1)
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            # XXX: With some effort the code code automaticly convert values.
+            CoreText.CTParagraphStyleCreate(
+                options
+                + [
+                    CoreText.CTParagraphStyleSetting(
+                        spec=CoreText.kCTParagraphStyleSpecifierBaseWritingDirection,
+                        valueSize=CoreText.sizeof_CTWritingDirection,
+                        value=42,
+                    )
+                ],
+                len(options) + 1,
+            )
+        with self.assertRaisesRegex(ValueError, "Got buffer of 40 bytes, need 1 bytes"):
+            CoreText.CTParagraphStyleCreate(
+                options
+                + [
+                    CoreText.CTParagraphStyleSetting(
+                        spec=CoreText.kCTParagraphStyleSpecifierBaseWritingDirection,
+                        valueSize=CoreText.sizeof_CTWritingDirection,
+                        value=b"x" * 40,
+                    )
+                ],
+                len(options) + 1,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            CoreText.CTParagraphStyleCreate(
+                options
+                + [
+                    CoreText.CTParagraphStyleSetting(
+                        spec="hello",
+                        valueSize=CoreText.sizeof_CTWritingDirection,
+                        value=b"x" * 40,
+                    )
+                ],
+                len(options) + 1,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreText.CTParagraphStyleCreate(
+                options
+                + [
+                    CoreText.CTParagraphStyleSetting(
+                        spec=CoreText.kCTParagraphStyleSpecifierBaseWritingDirection,
+                        valueSize="hello",
+                        value=b"x" * 40,
+                    )
+                ],
+                len(options) + 1,
+            )
+
         style = CoreText.CTParagraphStyleCreate(options, len(options))
         self.assertIsInstance(style, CoreText.CTParagraphStyleRef)
 
@@ -222,3 +358,34 @@ class TestCTParagraphStyle(TestCase):
         )
         self.assertTrue(ok)
         self.assertEqual(v, 10.5)
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            CoreText.kCTParagraphStyleSpecifierTabStops,
+            0,
+            None,
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(v, CoreText.NSArray)
+        self.assertNotEqual(len(v), 0)
+        for entry in v:
+            self.assertIsInstance(entry, CoreText.CTTextTabRef)
+
+        ok, v = CoreText.CTParagraphStyleGetValueForSpecifier(
+            style,
+            99,
+            8,
+            None,
+        )
+        self.assertFalse(ok)
+
+        with self.assertRaisesRegex(
+            ValueError, "Cannot automatically determine 'size'"
+        ):
+            CoreText.CTParagraphStyleGetValueForSpecifier(
+                style,
+                99,
+                0,
+                None,
+            )
+        self.assertFalse(ok)

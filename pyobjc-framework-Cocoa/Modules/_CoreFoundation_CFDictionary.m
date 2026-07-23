@@ -23,28 +23,32 @@ static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
     } else if (args[1] == Py_None) {
         count = CFDictionaryGetCount(dict);
         keys  = malloc(sizeof(void*) * count);
-        if (keys == NULL) {
+        if (keys == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     } else {
         PyErr_SetString(PyExc_ValueError, "keys must be None of NULL");
         return NULL;
     }
 
-    if (args[1] == PyObjC_NULL) {
+    if (args[2] == PyObjC_NULL) {
         values = NULL;
-    } else if (args[1] == Py_None) {
+    } else if (args[2] == Py_None) {
         if (count == -1) {
             count = CFDictionaryGetCount(dict);
         }
         values = malloc(sizeof(void*) * count);
-        if (values == NULL) {
+        if (values == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             if (keys != NULL) {
                 free(keys);
             }
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     } else {
         PyErr_SetString(PyExc_ValueError, "values must be None of NULL");
@@ -55,12 +59,13 @@ static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
         @try {
             CFDictionaryGetKeysAndValues(dict, keys, values);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         if (keys != NULL) {
             free(keys);
         }
@@ -68,6 +73,7 @@ static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
             free(values);
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* pyKeys;
@@ -75,7 +81,7 @@ static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
         pyKeys = PyObjC_CArrayToPython(@encode(id), keys, count);
         free(keys);
     } else {
-        pyKeys = Py_None;
+        pyKeys = PyObjC_NULL;
         Py_INCREF(pyKeys);
     }
 
@@ -84,7 +90,7 @@ static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
         pyValues = PyObjC_CArrayToPython(@encode(id), values, count);
         free(values);
     } else {
-        pyValues = Py_None;
+        pyValues = PyObjC_NULL;
         Py_INCREF(pyValues);
     }
 
@@ -97,8 +103,8 @@ setup_dictionary(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFDictionaryGetKeysAndValues,
                                       mod_CFDictionaryGetKeysAndValues)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

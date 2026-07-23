@@ -9,7 +9,6 @@
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_AppKit_appmain.m"
-#include "_AppKit_carbon.m"
 #include "_AppKit_nsbezierpath.m"
 #include "_AppKit_nsbitmap.m"
 #include "_AppKit_nsfont.m"
@@ -25,21 +24,19 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
-    if (setup_appmain(m) == -1)
-        return -1;
-    if (setup_nsfont(m) == -1)
-        return -1;
-    if (setup_carbon(m) == -1)
-        return -1;
-    if (setup_nsbezierpath(m) == -1)
-        return -1;
-    if (setup_nsbitmap(m) == -1)
-        return -1;
-    if (setup_nsview(m) == -1)
-        return -1;
+    if (setup_appmain(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsfont(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsbezierpath(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsbitmap(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsview(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
     return 0;
 }
 

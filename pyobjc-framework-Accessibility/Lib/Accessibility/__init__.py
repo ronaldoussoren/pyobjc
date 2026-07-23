@@ -36,8 +36,8 @@ def _setup():
     ):
         try:
             objc.lookUpClass(cls).__objc_final__ = True
-        except objc.error:
-            pass
+        except objc.error:  # pragma: no cover
+            pass  # pragma: no cover
 
     for cls, sel in (
         ("AXNumericDataAxisDescriptor", b"init"),

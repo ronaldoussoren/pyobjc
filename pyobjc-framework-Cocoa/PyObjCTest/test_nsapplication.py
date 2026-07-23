@@ -1,4 +1,7 @@
 import AppKit
+import textwrap
+import subprocess
+import sys
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
@@ -299,8 +302,7 @@ class TestNSApplication(TestCase):
         )
 
     def test_functions(self):
-        # Testing the next function is not doable in this context...
-        AppKit.NSApplicationMain
+
         self.assertResultIsBOOL(AppKit.NSApplicationLoad)
         self.assertIsInstance(AppKit.NSApplicationLoad(), bool)
 
@@ -455,3 +457,78 @@ class TestNSApplication(TestCase):
         self.assertResultIsBOOL(
             TestNSApplicationHelper.applicationSupportsSecureRestorableState_
         )
+
+    def test_nsapplicationmain(self):
+        # XXX: Add helper to actually run NSApplicationMain in a subprocess
+        #      Calling the function here just blocks the test runner (function
+        #      never returns)
+
+        with self.assertRaisesRegex(
+            TypeError, "expected between 1 and 2 arguments, got 0"
+        ):
+            # XXX: Deprecate single argument?
+            AppKit.NSApplicationMain()
+
+        with self.assertRaisesRegex(
+            TypeError, "need sequence of strings as argument, got int"
+        ):
+            AppKit.NSApplicationMain(42)
+
+        with self.assertRaisesRegex(TypeError, "need sequence of strings as argument"):
+            AppKit.NSApplicationMain(["argv0", 42])
+
+        with self.assertRaisesRegex(TypeError, "need sequence of strings as argument"):
+            AppKit.NSApplicationMain(2, ["argv0", 42])
+
+        with self.assertRaisesRegex(
+            ValueError, "expecting sequence of 1 strings, got 2"
+        ):
+            AppKit.NSApplicationMain(1, ["argv0", "argv1"])
+
+        with self.assertRaisesRegex(ValueError, "utf-8' codec can't encode character"):
+            AppKit.NSApplicationMain(2, ["argv0", "\udbff"])
+
+        with self.assertRaisesRegex(
+            ValueError, "expecting sequence of 3 strings, got 2"
+        ):
+            AppKit.NSApplicationMain(3, ["argv0", "argv1"])
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 3"
+        ):
+            AppKit.NSApplicationMain("two", ["argv0", "argv1"])
+
+        r = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                textwrap.dedent("""\
+                import AppKit
+                import CoreFoundation
+                import time
+                import os
+                import signal
+                import ctypes
+                import objc._machsignals
+
+                libc = ctypes.CDLL(None)
+                libc.exit.argtypes = [ ctypes.c_int ]
+
+                signal.alarm(5)
+                objc._machsignals._signalmapping[signal.SIGALRM] = lambda *s: libc.exit(21)
+                objc._machsignals.handle_signal(signal.SIGALRM)
+
+                def timer_callback(*args):
+                    getattr(libc, "___llvm_gcov_writeout", lambda:None)()
+                    libc.exit(42)
+
+                rl = CoreFoundation.CFRunLoopGetCurrent()
+                timer = CoreFoundation.CFRunLoopTimerCreateWithHandler(None, 0, 1, 0, 0, timer_callback)
+                CoreFoundation.CFRunLoopAddTimer(rl, timer, CoreFoundation.kCFRunLoopCommonModes)
+
+                AppKit.NSApplicationMain(["a"])
+                libc.exit(84)
+                """),
+            ]
+        )
+        self.assertEqual(r.returncode, 42)

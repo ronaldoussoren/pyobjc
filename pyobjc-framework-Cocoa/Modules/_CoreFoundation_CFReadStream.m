@@ -60,8 +60,8 @@ static PyObject* _Nullable mod_CFReadStreamSetClient(
     if (args[2] != NULL && (args[3] != PyObjC_NULL && args[3] != Py_None)) {
         context      = mod_CFStreamClientContext_Read;
         context.info = PyTuple_Pack(2, args[2], args[3]);
-        if (context.info == NULL) {
-            return NULL;
+        if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+            return NULL;            // LCOV_EXCL_LINE
         }
     }
 
@@ -83,18 +83,17 @@ static PyObject* _Nullable mod_CFReadStreamSetClient(
                 }
             }
 
-        } @catch (NSException* localException) {
-            rv = FALSE;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = FALSE;                          // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     if (args[3] != PyObjC_NULL) {
         Py_DECREF((PyObject*)context.info);
     }
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     return PyBool_FromLong(rv);
 }
@@ -103,8 +102,8 @@ static int
 setup_readstream(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFReadStreamSetClient, mod_CFReadStreamSetClient)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

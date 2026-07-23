@@ -1,8 +1,10 @@
 import os
+import tempfile
 import time
 
 import FSEvents
-from PyObjCTools.TestSupport import TestCase
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestFSEvents(TestCase):
@@ -72,6 +74,86 @@ class TestFSEvents(TestCase):
 
         context = object()
 
+        with self.assertRaisesRegex(TypeError, "expected 7 arguments, got 0"):
+            FSEvents.FSEventStreamCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            FSEvents.FSEventStreamCreate(
+                NoObjCClass(),
+                fsevents_callback,
+                context,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            FSEvents.FSEventStreamCreate(
+                None,
+                fsevents_callback,
+                context,
+                NoObjCClass(),
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            FSEvents.FSEventStreamCreate(
+                None,
+                fsevents_callback,
+                context,
+                ["/etc", "/tmp"],
+                "FSEvents.kFSEventStreamEventIdSinceNow",
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            FSEvents.FSEventStreamCreate(
+                None,
+                fsevents_callback,
+                context,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                "2.0",
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            FSEvents.FSEventStreamCreate(
+                None,
+                fsevents_callback,
+                context,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                "FSEvents.kFSEventStreamCreateFlagUseCFTypes",
+            )
+
+        self.assertIs(
+            FSEvents.FSEventStreamCreate(
+                None,
+                fsevents_callback,
+                context,
+                [],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                1.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            ),
+            None,
+        )
+
         ref = FSEvents.FSEventStreamCreate(
             None,
             fsevents_callback,
@@ -86,6 +168,105 @@ class TestFSEvents(TestCase):
         self.assertIsInstance(ref, FSEvents.FSEventStreamRef)
         FSEvents.FSEventStreamRelease(ref)
         ref = None
+
+        with self.assertRaisesRegex(TypeError, "expected 8 arguments, got 0"):
+            FSEvents.FSEventStreamCreateRelativeToDevice()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                NoObjCClass(),
+                fsevents_callback,
+                context,
+                os.stat("/").st_dev,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                "dev",
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                os.stat("/").st_dev,
+                NoObjCClass(),
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                os.stat("/").st_dev,
+                ["/etc", "/tmp"],
+                "FSEvents.kFSEventStreamEventIdSinceNow",
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                os.stat("/").st_dev,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                "2.0",
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                os.stat("/").st_dev,
+                ["/etc", "/tmp"],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                "FSEvents.kFSEventStreamCreateFlagUseCFTypes",
+            )
+
+        self.assertIs(
+            FSEvents.FSEventStreamCreateRelativeToDevice(
+                None,
+                fsevents_callback,
+                context,
+                -1,
+                [os.path.realpath("/etc"), os.path.realpath("/tmp")],
+                FSEvents.kFSEventStreamEventIdSinceNow,
+                2.0,
+                FSEvents.kFSEventStreamCreateFlagUseCFTypes
+                | FSEvents.kFSEventStreamCreateFlagNoDefer,
+            ),
+            None,
+        )
 
         ref = FSEvents.FSEventStreamCreateRelativeToDevice(
             None,
@@ -190,6 +371,78 @@ class TestFSEvents(TestCase):
         self.assertHasAttr(FSEvents, "FSEventStreamSetDispatchQueue")
 
         self.assertResultIsBOOL(FSEvents.FSEventStreamSetExclusionPaths)
+
+    def test_loop_integration(self):
+        lst = []
+        for base_flags in (0, FSEvents.kFSEventStreamCreateFlagUseCFTypes):
+            with self.subTest(base_flags=base_flags):
+                context = object()
+                lst[:] = []
+                rl = CoreFoundation.CFRunLoopGetCurrent()
+
+                def fsevents_callback(
+                    ref, info, numEvents, eventPaths, eventFlags, eventIds
+                ):
+                    lst.append(  # noqa: B023
+                        (ref, info, numEvents, eventPaths, eventFlags, eventIds)
+                    )
+
+                ref = FSEvents.FSEventStreamCreate(
+                    None,
+                    fsevents_callback,
+                    context,
+                    [os.getcwd()],
+                    FSEvents.kFSEventStreamEventIdSinceNow,
+                    0.5,
+                    base_flags | FSEvents.kFSEventStreamCreateFlagNoDefer,
+                )
+                self.assertIsNot(ref, None)
+
+                FSEvents.FSEventStreamScheduleWithRunLoop(
+                    ref, rl, CoreFoundation.kCFRunLoopDefaultMode
+                )
+                self.assertIs(FSEvents.FSEventStreamStart(ref), True)
+                with tempfile.NamedTemporaryFile(dir=os.getcwd()):
+                    with tempfile.NamedTemporaryFile(dir=os.getcwd()):
+                        try:
+                            CoreFoundation.CFRunLoopRunInMode(
+                                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+                            )
+
+                            saved_lst = lst
+                            del lst
+                            with tempfile.NamedTemporaryFile(dir=os.getcwd()):
+                                with self.assertRaisesRegex(
+                                    NameError, "cannot access free variable 'lst'"
+                                ):
+                                    CoreFoundation.CFRunLoopRunInMode(
+                                        CoreFoundation.kCFRunLoopDefaultMode, 1.0, False
+                                    )
+                            lst = saved_lst
+
+                        finally:
+                            FSEvents.FSEventStreamStop(ref)
+                            FSEvents.FSEventStreamUnscheduleFromRunLoop(
+                                ref, rl, CoreFoundation.kCFRunLoopDefaultMode
+                            )
+
+                self.assertEqual(len(lst), 1)
+                for item in lst:
+                    # Note:  FSEventStreamRef is not a CF type
+                    # self.assertIs(item[0], ref)
+                    self.assertEqual(item[0].__pointer__, ref.__pointer__)
+                    self.assertEqual(item[1], context)
+                    self.assertIsInstance(item[2], int)
+                    self.assertEqual(len(item[3]), item[2])
+                    self.assertTrue(
+                        all(
+                            isinstance(n, str if base_flags else bytes) for n in item[3]
+                        )
+                    )
+                    self.assertEqual(len(item[4]), item[2])
+                    self.assertTrue(all(isinstance(n, int) for n in item[4]))
+                    self.assertEqual(len(item[5]), item[2])
+                    self.assertTrue(all(isinstance(n, int) for n in item[5]))
 
     def test_opaque(self):
         self.assertHasAttr(FSEvents, "FSEventStreamRef")

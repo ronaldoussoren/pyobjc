@@ -15,5 +15,7 @@ class TestPHFetchOptions(TestCase):
         self.assertResultIsBOOL(Photos.PHFetchOptions.includeAllBurstAssets)
         self.assertArgIsBOOL(Photos.PHFetchOptions.setIncludeAllBurstAssets_, 0)
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
         self.assertResultIsBOOL(Photos.PHFetchOptions.prefetchAssetExtendedMetadata)
         self.assertArgIsBOOL(Photos.PHFetchOptions.setPrefetchAssetExtendedMetadata_, 0)

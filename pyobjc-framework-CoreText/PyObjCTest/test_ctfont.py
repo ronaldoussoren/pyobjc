@@ -1,6 +1,6 @@
 import CoreText
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
+from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc, NoObjCClass
 import objc
 
 
@@ -412,6 +412,19 @@ class TestCTFont(TestCase):
 
         self.assertArgIsCFRetained(CoreText.CTFontGetPlatformFont, 1)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithPlatformFont)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 1"):
+            CoreText.CTFontCopyAvailableTables(font)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreText.CTFontCopyAvailableTables(
+                NoObjCClass(), CoreText.kCTFontTableOptionNoOptions
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            CoreText.CTFontCopyAvailableTables(font, "hello")
 
         v = CoreText.CTFontCopyAvailableTables(
             font, CoreText.kCTFontTableOptionNoOptions

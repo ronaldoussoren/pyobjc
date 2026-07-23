@@ -17,12 +17,16 @@ mod_machport_release(const void* info)
     PyGILState_Release(state);
 }
 
+// LCOV_EXCL_START
+// Calls to this function cannot be triggered during testing, primarily
+// useful for debugging at the C level.
 static CFStringRef
 mod_machport_copyDescription(const void* info)
 {
     return CFStringCreateWithFormat(NULL, NULL, CFSTR("PyObjC Context %p"),
                                     PyTuple_GetItem((PyObject*)info, 1));
 }
+// LCOV_EXCL_STOP
 
 /*
  * NOTE: 'copyDescription' isn't actually used as far as I know,
@@ -88,14 +92,14 @@ static PyObject* _Nullable mod_CFMachPortCreate(PyObject* meth,
     }
 
     if (args[3] != Py_None && args[3] != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
+        PyErr_SetString(PyExc_ValueError, "'shouldFree' should be None or NULL");
         return NULL;
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
     context.info              = PyTuple_Pack(3, args[1], args[2], Py_None);
-    if (context.info == NULL) {
-        return NULL;
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     CFMachPortRef rv = NULL;
@@ -104,16 +108,16 @@ static PyObject* _Nullable mod_CFMachPortCreate(PyObject* meth,
             rv = CFMachPortCreate(allocator, mod_CFMachPortCallBack, &context,
                                   args[3] == PyObjC_NULL ? NULL : &shouldFree);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     PyObject* result;
@@ -151,14 +155,14 @@ static PyObject* _Nullable mod_CFMachPortCreateWithPort(
     }
 
     if (args[4] != Py_None && args[4] != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
+        PyErr_SetString(PyExc_ValueError, "'shouldFree' should be None or NULL");
         return NULL;
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
     context.info              = PyTuple_Pack(2, args[2], args[3]);
-    if (context.info == NULL) {
-        return NULL;
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     CFMachPortRef rv = NULL;
@@ -168,17 +172,16 @@ static PyObject* _Nullable mod_CFMachPortCreateWithPort(
                                           &context,
                                           args[4] == PyObjC_NULL ? NULL : &shouldFree);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* result;
     if (args[4] == PyObjC_NULL) {
@@ -210,7 +213,7 @@ static PyObject* _Nullable mod_CFMachPortGetContext(
     }
 
     if (args[1] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+        PyErr_SetString(PyExc_ValueError, "'context' must be None");
         return NULL;
     }
 
@@ -218,23 +221,26 @@ static PyObject* _Nullable mod_CFMachPortGetContext(
         @try {
             CFMachPortGetContext(f, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (context.version != 0) {
+    if (context.version != 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_ValueError, "retrieved context with version %ld is not valid",
                      (long)context.version);
         return NULL;
+        // LCOV_EXCL_STOP
     }
-    if (context.copyDescription != mod_machport_copyDescription) {
+    if (context.copyDescription != mod_machport_copyDescription) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
@@ -264,18 +270,21 @@ static PyObject* _Nullable mod_CFMachPortSetInvalidationCallBack(
         @try {
             CFMachPortGetContext(port, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    if (context.version != 0 || context.copyDescription != mod_machport_copyDescription) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+    if (context.version != 0
+        || context.copyDescription != mod_machport_copyDescription) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_SetString(PyExc_ValueError, "C context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_DECREF(PyTuple_GetItem((PyObject*)context.info, 2));
@@ -287,14 +296,13 @@ static PyObject* _Nullable mod_CFMachPortSetInvalidationCallBack(
         @try {
             CFMachPortSetInvalidationCallBack(port, mod_CFMachPortInvalidationCallBack);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -320,18 +328,20 @@ static PyObject* _Nullable mod_CFMachPortGetInvalidationCallBack(
         @try {
             CFMachPortGetContext(port, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (context.version != 0 || context.copyDescription != mod_machport_copyDescription) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+    if (context.version != 0
+        || context.copyDescription != mod_machport_copyDescription) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_SetString(PyExc_ValueError, "C context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     CFMachPortInvalidationCallBack rv = NULL;
@@ -340,13 +350,13 @@ static PyObject* _Nullable mod_CFMachPortGetInvalidationCallBack(
         @try {
             rv = CFMachPortGetInvalidationCallBack(port);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (rv == NULL) {
@@ -360,34 +370,37 @@ static PyObject* _Nullable mod_CFMachPortGetInvalidationCallBack(
         return result;
     }
 
+    // LCOV_EXCL_START
     PyErr_SetString(PyExc_ValueError, "Unsupported value for invalidate callback");
     return NULL;
+    // LCOV_EXCL_STOP
 }
 
 static int
 setup_machport(PyObject* m __attribute__((__unused__)))
 {
-    if (PyObjCRegister_FunctionCaller(CFMachPortCreate, mod_CFMachPortCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFMachPortCreate, mod_CFMachPortCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFMachPortCreateWithPort,
                                       mod_CFMachPortCreateWithPort)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFMachPortGetContext, mod_CFMachPortGetContext)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFMachPortSetInvalidationCallBack,
                                       mod_CFMachPortSetInvalidationCallBack)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFMachPortGetInvalidationCallBack,
                                       mod_CFMachPortGetInvalidationCallBack)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

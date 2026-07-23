@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 
 
 class TestNumberFormatter(TestCase):
@@ -28,22 +28,130 @@ class TestNumberFormatter(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "42.5")
 
-        v = CoreFoundation.CFNumberFormatterCreateStringWithValue(
-            None, fmt, CoreFoundation.kCFNumberDoubleType, 42.5
-        )
-        self.assertIsInstance(v, str)
-        self.assertEqual(v, "42.5")
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                NoObjCClass(), fmt, CoreFoundation.kCFNumberDoubleType, 42.5
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                None, NoObjCClass(), CoreFoundation.kCFNumberDoubleType, 42.5
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                None, fmt, "dbl", 42.5
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                None, fmt, CoreFoundation.kCFNumberDoubleType, "42.5"
+            )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            f"number type not supported: {CoreFoundation.kCFNumberMaxType + 2}",
+        ):
+            CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                None, fmt, CoreFoundation.kCFNumberMaxType + 2, "42.5"
+            )
+
+        for tp in (
+            CoreFoundation.kCFNumberDoubleType,
+            CoreFoundation.kCFNumberFloatType,
+            CoreFoundation.kCFNumberCGFloatType,
+            CoreFoundation.kCFNumberFloat32Type,
+            CoreFoundation.kCFNumberFloat64Type,
+        ):
+            with self.subTest(tp=tp):
+                v = CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                    None, fmt, tp, 42.5
+                )
+                if tp == CoreFoundation.kCFNumberCGFloatType:
+                    self.assertIs(v, None)
+                else:
+                    self.assertIsInstance(v, str)
+                    self.assertEqual(v, "42.5")
+
+        for tp in (
+            CoreFoundation.kCFNumberSInt8Type,
+            CoreFoundation.kCFNumberSInt16Type,
+            CoreFoundation.kCFNumberSInt32Type,
+            CoreFoundation.kCFNumberSInt64Type,
+            CoreFoundation.kCFNumberCharType,
+            CoreFoundation.kCFNumberShortType,
+            CoreFoundation.kCFNumberIntType,
+            CoreFoundation.kCFNumberLongType,
+            CoreFoundation.kCFNumberLongLongType,
+            CoreFoundation.kCFNumberCFIndexType,
+            CoreFoundation.kCFNumberNSIntegerType,
+        ):
+            with self.subTest(tp=tp):
+                v = CoreFoundation.CFNumberFormatterCreateStringWithValue(
+                    None, fmt, tp, 123
+                )
+                if tp == CoreFoundation.kCFNumberNSIntegerType:
+                    self.assertIs(v, None)
+                else:
+                    self.assertIsInstance(v, str)
+                    self.assertEqual(v, "123")
+
         num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
             None, fmt, "42.0a", (0, 5), 0
         )
         self.assertEqual(num, 42.0)
         self.assertEqual(rng, (0, 4))
-        ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
-            fmt, "42.0a", (0, 5), CoreFoundation.kCFNumberDoubleType, None
-        )
-        self.assertEqual(ok, True)
-        self.assertEqual(num, 42.0)
-        self.assertEqual(rng, (0, 4))
+
+        with self.assertRaisesRegex(TypeError, "expected 5 arguments, got 0"):
+            CoreFoundation.CFNumberFormatterGetValueFromString()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberFormatterGetValueFromString(
+                NoObjCClass(), "42.0a", (0, 5), CoreFoundation.kCFNumberDoubleType, None
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFNumberFormatterGetValueFromString(
+                None, NoObjCClass(), (0, 5), CoreFoundation.kCFNumberDoubleType, None
+            )
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            CoreFoundation.CFNumberFormatterGetValueFromString(
+                None, "42.0a", 42, CoreFoundation.kCFNumberDoubleType, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFNumberFormatterGetValueFromString(
+                fmt, "42.0a", (0, 5), "double", None
+            )
+
+        with self.assertRaisesRegex(ValueError, "'buffer' must be None"):
+            CoreFoundation.CFNumberFormatterGetValueFromString(
+                fmt, "42.0a", (0, 5), CoreFoundation.kCFNumberDoubleType, 42
+            )
+
+        for tp in (
+            CoreFoundation.kCFNumberFloat32Type,
+            CoreFoundation.kCFNumberFloat64Type,
+            CoreFoundation.kCFNumberDoubleType,
+            CoreFoundation.kCFNumberFloatType,
+        ):
+            with self.subTest(tp=tp):
+                ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+                    fmt, "42.0a", (0, 5), tp, None
+                )
+                self.assertEqual(ok, True)
+                self.assertEqual(num, 42.0)
+                self.assertEqual(rng, (0, 4))
+
         num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
             None,
             fmt,
@@ -53,6 +161,46 @@ class TestNumberFormatter(TestCase):
         )
         self.assertEqual(num, 42)
         self.assertEqual(rng, (0, 2))
+
+        for tp in (
+            CoreFoundation.kCFNumberSInt8Type,
+            CoreFoundation.kCFNumberSInt16Type,
+            CoreFoundation.kCFNumberSInt32Type,
+            CoreFoundation.kCFNumberSInt64Type,
+            CoreFoundation.kCFNumberCharType,
+            CoreFoundation.kCFNumberShortType,
+            CoreFoundation.kCFNumberIntType,
+            CoreFoundation.kCFNumberLongType,
+            CoreFoundation.kCFNumberLongLongType,
+            CoreFoundation.kCFNumberCFIndexType,
+        ):
+            with self.subTest(tp=tp, inrange=True):
+                ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+                    fmt, "42.0a", (0, 5), tp, None
+                )
+                self.assertEqual(ok, True)
+                self.assertEqual(num, 42)
+                self.assertEqual(rng, (0, 2))
+
+            with self.subTest(tp=tp, inrange=False):
+                s = "4200000000000000000000000.0a"
+                ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+                    fmt, s, (0, len(s)), tp, None
+                )
+                self.assertIs(ok, False)
+                self.assertEqual(num, None)
+                self.assertEqual(rng, None)
+
+        ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+            fmt, "42.0a", (0, 5), CoreFoundation.kCFNumberNSIntegerType, None
+        )
+        self.assertFalse(ok)
+
+        ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+            fmt, "42.0a", (0, 5), CoreFoundation.kCFNumberCGFloatType, None
+        )
+        self.assertFalse(ok)
+
         v = CoreFoundation.CFNumberFormatterCopyProperty(
             fmt, CoreFoundation.kCFNumberFormatterCurrencyCode
         )

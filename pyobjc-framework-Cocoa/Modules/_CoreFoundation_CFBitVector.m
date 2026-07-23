@@ -39,9 +39,7 @@ static PyObject* _Nullable mod_CFBitVectorCreate(PyObject* meth,
         return NULL;
     }
 
-    if (count == -1) {
-        count = byteCount * 8;
-    }
+    assert(count != -1); // always raises in PythonToCArray
 
     vector = CFBitVectorCreate(allocator, bytes, count);
 
@@ -73,13 +71,13 @@ static PyObject* _Nullable mod_CFBitVectorGetBits(PyObject* meth,
         return NULL;
     }
     if (args[2] != Py_None) {
-        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R", args[2]);
+        PyErr_Format(PyExc_ValueError, "'buffer' must be None", args[2]);
         return NULL;
     }
 
     PyObject* buffer = PyBytes_FromStringAndSize(NULL, (range.length + 7) / 8);
-    if (buffer == NULL) {
-        return NULL;
+    if (buffer == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
     memset(PyBytes_AsString(buffer), 0, (range.length + 7) / 8);
 
@@ -90,11 +88,13 @@ static PyObject* _Nullable mod_CFBitVectorGetBits(PyObject* meth,
 static int
 setup_bitvector(PyObject* m __attribute__((__unused__)))
 {
-    if (PyObjCRegister_FunctionCaller(CFBitVectorCreate, mod_CFBitVectorCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFBitVectorCreate, mod_CFBitVectorCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFBitVectorGetBits, mod_CFBitVectorGetBits) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFBitVectorGetBits, mod_CFBitVectorGetBits)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

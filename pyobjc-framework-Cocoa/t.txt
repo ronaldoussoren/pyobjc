@@ -1,1 +1,42 @@
-python -m unittest PyObjCTest.test_cfstring.TestString.test_functions PyObjCTest.test_nsstring.TestNSString.test_enums PyObjCTest.test_nsattributedstring_appkit.TestNSAttributedString.test_enums PyObjCTest.test_nsopengl.TestNSOpenGL.test_enums PyObjCTest.test_keyvalue.PyKeyValueCoding.test_take_values_from_dict PyObjCTest.test_nsurlerror.TestNSURLError.test_enums PyObjCTest.test_nstextselectionmanager.TestNSTextSelectionManager.test_protocols PyObjCTest.test_nsattributedstring.TestNSAttributedString.test_enums_appkit
+raw = """\
+<CFRunLoop 0x104aa9410 [0x1edf00880]>{wakeup port = 0x2203, stopped = false, ignoreWakeUps = true,
+current mode = (none),
+common modes = <CFBasicHash 0x7cd116490 [0x1edf00880]>{type = mutable set, count = 2,
+entries =>
+	1 : pyobjctest
+	2 : <CFString 0x1edf0ec28 [0x1edf00880]>{contents = "kCFRunLoopDefaultMode"}
+}
+,
+common mode items = (null),
+modes = <CFBasicHash 0x7cd1164c0 [0x1edf00880]>{type = mutable set, count = 2,
+entries =>
+	0 : <CFRunLoopMode 0x104aaa010 [0x1edf00880]>{name = pyobjctest.cfrunloop, port set = 0x1707, queue = 0x7cd034380, source = 0x7cd034400 (not fired), timer port = 0x250f,
+	sources0 = <CFBasicHash 0x7cd116610 [0x1edf00880]>{type = mutable set, count = 0,
+entries =>
+}
+,
+	sources1 = <CFBasicHash 0x7cd116640 [0x1edf00880]>{type = mutable set, count = 0,
+entries =>
+}
+,
+	observers = (
+),
+	timers = <CFArray 0x104aaa0f0 [0x1edf00880]>{type = mutable-small, count = 0, values = ()},
+	currently 806941764 (3828672045597) / soft deadline in: 7.68614177e+11 sec (@ -1) / hard deadline in: 7.68614177e+11 sec (@ -1)
+},
+
+	2 : <CFRunLoopMode 0x104aa5c80 [0x1edf00880]>{name = kCFRunLoopDefaultMode, port set = 0x2303, queue = 0x7cd034180, source = 0x7cd034200 (not fired), timer port = 0x2903,
+	sources0 = (null),
+	sources1 = (null),
+	observers = (
+),
+	timers = <CFArray 0x104a900e0 [0x1edf00880]>{type = mutable-small, count = 0, values = ()},
+	currently 806941764 (3828672046723) / soft deadline in: 7.68614177e+11 sec (@ -1) / hard deadline in: 7.68614177e+11 sec (@ -1)
+},
+
+}
+}
+"""
+
+import re
+print(re.findall("(sources0|sources1|timers|observers) = (.*)$", raw, re.MULTILINE))

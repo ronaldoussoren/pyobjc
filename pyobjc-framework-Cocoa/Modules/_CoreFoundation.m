@@ -35,45 +35,45 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
-    if (setup_cfbag(m) == -1)
-        return -1;
-    if (setup_cfbinaryheap(m) == -1)
-        return -1;
-    if (setup_bitvector(m) == -1)
-        return -1;
-    if (setup_calendar(m) == -1)
-        return -1;
-    if (setup_dictionary(m) == -1)
-        return -1;
-    if (setup_filedescriptor(m) == -1)
-        return -1;
-    if (setup_machport(m) == -1)
-        return -1;
-    if (setup_messageport(m) == -1)
-        return -1;
-    if (setup_number(m) == -1)
-        return -1;
-    if (setup_numberformatter(m) == -1)
-        return -1;
-    if (setup_readstream(m) == -1)
-        return -1;
-    if (setup_runloop(m) == -1)
-        return -1;
-    if (setup_runloop_source(m) == -1)
-        return -1;
-    if (setup_runloop_timer(m) == -1)
-        return -1;
-    if (setup_set(m) == -1)
-        return -1;
-    if (setup_socket(m) == -1)
-        return -1;
-    if (setup_tree(m) == -1)
-        return -1;
-    if (setup_writestream(m) == -1)
-        return -1;
+    if (setup_cfbag(m) == -1)           // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_cfbinaryheap(m) == -1)    // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_bitvector(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_calendar(m) == -1)        // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_dictionary(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_filedescriptor(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_machport(m) == -1)        // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_messageport(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_number(m) == -1)          // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_numberformatter(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_readstream(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop(m) == -1)         // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop_source(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop_timer(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_set(m) == -1)             // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_socket(m) == -1)          // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_tree(m) == -1)            // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_writestream(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
 
     return 0;
 }

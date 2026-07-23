@@ -247,7 +247,7 @@ class PyKeyValueCoding(TestCase):
             KeyError, STUB.keyValue_forObject_key_, 3, o, ["key1", "key3", "nosuchkey"]
         )
 
-    def take_value_for_key(self):
+    def test_take_value_for_key(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
@@ -268,7 +268,7 @@ class PyKeyValueCoding(TestCase):
         self.assertHasAttr(o, "key9")
         self.assertEqual(o.key9, "IX")
 
-    def take_value_for_key2(self):
+    def test_take_value_for_key2(self):
         o = KeyValueClass4.alloc().init()
 
         self.assertEqual(o.foo, "foobar")
@@ -337,6 +337,10 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(o.foo, "foobar")
         STUB.setKeyValue_forObject_key_value_(3, o, None, {"foo": "FOO"})
         self.assertEqual(o.foo, "FOO")
+
+        self.assertEqual(o.foo, "FOO")
+        STUB.setKeyValue_forObject_key_value_(6, o, None, {"foo": "BAR"})
+        self.assertEqual(o.foo, "BAR")
 
         self.assertRaises(
             KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, {"key9": "IX"}
@@ -497,17 +501,23 @@ class PyKeyValueCodingExplicit(TestCase):
             KeyError, STUB.keyValue_forObject_key_, 3, o, ["key1", "key3", "nosuchkey"]
         )
 
-    def take_value_for_key(self):
+    def test_take_value_for_key(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values["key3"], 3)
         STUB.setKeyValue_forObject_key_value_(0, o, "key3", "drie")
         self.assertEqual(o._values["key3"], "drie")
 
+        STUB.setKeyValue_forObject_key_value_(4, o, "key3", "drei")
+        self.assertEqual(o._values["key3"], "drei")
+
         self.assertEqual(o._values["key4"], "4")
         STUB.setKeyValue_forObject_key_value_(0, o, "key4", "vier")
         self.assertNotHasAttr(o, "key4")
         self.assertEqual(o._values["key4"], "viervierviervier")
+        STUB.setKeyValue_forObject_key_value_(4, o, "key4", "four")
+        self.assertNotHasAttr(o, "key4")
+        self.assertEqual(o._values["key4"], "fourfourfourfour")
 
         o._values["key5"] = 1
         STUB.setKeyValue_forObject_key_value_(0, o, "key5", "V")
@@ -570,6 +580,20 @@ class PyKeyValueCodingExplicit(TestCase):
             "world",
         )
 
+        STUB.setKeyValue_forObject_key_value_(
+            1, o, "multiple.level2.level3.keyA", "KeyAValue"
+        )
+        self.assertEqual(
+            o._values["multiple"]._values["level2"]._values["level3"]._values["keyA"],
+            "KeyAValue",
+        )
+        STUB.setKeyValue_forObject_key_value_(
+            5, o, "multiple.level2.level3.keyA", "KeyAValue2"
+        )
+        self.assertEqual(
+            o._values["multiple"]._values["level2"]._values["level3"]._values["keyA"],
+            "KeyAValue2",
+        )
         STUB.setKeyValue_forObject_key_value_(
             1, o, "multiple.level2.level3.keyA", "KeyAValue"
         )

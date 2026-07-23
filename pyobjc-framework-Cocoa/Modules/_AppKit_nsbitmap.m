@@ -30,19 +30,21 @@ static PyObject* _Nullable call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
             ((void (*)(struct objc_super*, SEL, NSTIFFCompression**,
                        NSInteger*))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), &list, &numTypes);
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            list     = NULL;
-            numTypes = -1;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            list     = NULL;                     // LCOV_EXCL_LINE
+            numTypes = -1;                       // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (list == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (list == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                        // LCOV_EXCL_LINE
     }
 
-    if (numTypes < 0) {
+    if (numTypes < 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         return Py_BuildValue("NO", PyLong_FromLong(numTypes), Py_None);
+        // LCOV_EXCL_STOP
     } else {
         return Py_BuildValue(
             "NN", PyLong_FromLong(numTypes),
@@ -77,12 +79,12 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
         PyObject* fast_planes = PySequence_Tuple(py_allPlanes);
         if (fast_planes == NULL) {
             PyErr_SetString(PyExc_TypeError,
-                            "First argument must be a 5 element Tuple or None.");
+                            "First argument must be a 5 element sequence or None.");
             return NULL;
         }
         if (PyTuple_GET_SIZE(fast_planes) != 5) {
             PyErr_SetString(PyExc_TypeError,
-                            "First argument must be a 5 element Tuple or None.");
+                            "First argument must be a 5 element sequence or None.");
             Py_DECREF(fast_planes);
             return NULL;
         }
@@ -116,7 +118,11 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
         goto error_cleanup;
     }
     hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
+    if (PyErr_Occurred())
+        goto error_cleanup;
     isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
+    if (PyErr_Occurred())
+        goto error_cleanup;
     if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString)
         == -1) {
         goto error_cleanup;
@@ -139,9 +145,9 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
                 &super, PyObjCSelector_GetSelector(method), dataPlanes, width, height,
                 bps, spp, hasAlpha, isPlanar, colorSpaceNameString, bpr, bpp);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            newImageRep = nil;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            newImageRep = nil;                   // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -151,8 +157,8 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmap(
         }
     }
 
-    if (newImageRep == nil && PyErr_Occurred()) {
-        return NULL;
+    if (newImageRep == nil && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                              // LCOV_EXCL_LINE
     }
 
     return PyObjC_IdToPython(newImageRep);
@@ -197,12 +203,12 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmapFormat(
         PyObject* fast_planes = PySequence_Tuple(py_allPlanes);
         if (fast_planes == NULL) {
             PyErr_SetString(PyExc_TypeError,
-                            "First argument must be a 5 element Tuple or None.");
+                            "First argument must be a 5 element sequence or None.");
             return NULL;
         }
         if (PyTuple_GET_SIZE(fast_planes) != 5) {
             PyErr_SetString(PyExc_TypeError,
-                            "First argument must be a 5 element Tuple or None.");
+                            "First argument must be a 5 element sequence or None.");
             Py_DECREF(fast_planes);
             return NULL;
         }
@@ -236,7 +242,11 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmapFormat(
         goto error_cleanup;
     }
     hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
+    if (PyErr_Occurred())
+        goto error_cleanup;
     isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
+    if (PyErr_Occurred())
+        goto error_cleanup;
     if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString)
         == -1) {
         goto error_cleanup;
@@ -264,10 +274,10 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmapFormat(
                     bps, spp, hasAlpha, isPlanar, colorSpaceNameString,
                     (NSBitmapFormat)format, bpr, bpp);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result      = NULL;
-            newImageRep = nil;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result      = NULL;                  // LCOV_EXCL_LINE
+            newImageRep = nil;                   // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -277,9 +287,8 @@ static PyObject* _Nullable call_NSBitmapImageRep_initWithBitmapFormat(
         }
     }
 
-    if (newImageRep == nil && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (newImageRep == nil && PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;                            // LCOV_EXCL_LINE
 
     result = PyObjC_IdToPython(newImageRep);
 
@@ -304,8 +313,21 @@ static PyObject* _Nullable call_NSBitmapImageRep_getBitmapDataPlanes_(
     int               i;
     int               bytesPerPlane;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
-        return NULL;
+    if (nargs == 0) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving of the buffer argument is deprecated", 0)
+            < 0) {
+            return NULL;
+        }
+
+    } else {
+        if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+            return NULL;
+        }
+        if (arguments[0] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "buffer must be None");
+            return NULL;
+        }
     }
 
     memset(dataPlanes, 0, sizeof(dataPlanes));
@@ -323,32 +345,34 @@ static PyObject* _Nullable call_NSBitmapImageRep_getBitmapDataPlanes_(
             bytesPerPlane =
                 [(NSBitmapImageRep*)PyObjCObject_GetObject(self) bytesPerPlane];
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result        = NULL;
-            bytesPerPlane = -1;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result        = NULL;                // LCOV_EXCL_LINE
+            bytesPerPlane = -1;                  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (bytesPerPlane == -1)
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     result = PyTuple_New(5);
-    if (result != NULL) {
+    if (result != NULL) { // LCOV_BR_EXCL_LINE
         for (i = 0; i < 5; i++) {
             if (dataPlanes[i]) {
                 Py_buffer info;
                 if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 0,
                                       PyBUF_FULL)
-                    < 0) {
-                    return NULL;
+                    < 0) {       // LCOV_BR_EXCL_LINE
+                    return NULL; // LCOV_EXCL_LINE
                 }
                 PyObject* buffer = PyMemoryView_FromBuffer(&info);
 
-                if ((!buffer) || PyErr_Occurred()) {
+                if (buffer == NULL) { // LCOV_BR_EXCL_LINE
+                    // LCOV_EXCL_START
                     Py_DECREF(result);
                     result = NULL;
                     return NULL;
+                    // LCOV_EXCL_STOP
                 }
                 PyTuple_SET_ITEM(result, i, buffer);
             } else {
@@ -386,33 +410,29 @@ static PyObject* _Nullable call_NSBitmapImageRep_bitmapData(
             bytesPerPlane =
                 [(NSBitmapImageRep*)PyObjCObject_GetObject(self) bytesPerPlane];
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result        = NULL;
-            bitmapData    = NULL;
-            bytesPerPlane = -1;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result        = NULL;                // LCOV_EXCL_LINE
+            bitmapData    = NULL;                // LCOV_EXCL_LINE
+            bytesPerPlane = -1;                  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (bytesPerPlane == -1 && PyErr_Occurred()) {
-        return NULL;
+    if (bytesPerPlane == -1 && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;                               // LCOV_EXCL_LINE
     }
 
     /* A memory view requires that the backing store implements the buffer
      * interface, therefore create a mutable bytes object to do that for us.
      */
     Py_buffer info;
-    if (PyBuffer_FillInfo(&info, NULL, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
-        return NULL;
+    if (PyBuffer_FillInfo(&info, NULL, bitmapData, bytesPerPlane, 0, PyBUF_FULL)
+        < 0) {       // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     result = PyMemoryView_FromBuffer(&info);
-
-    if (result == NULL) {
-        if (result) {
-            Py_DECREF(result);
-        }
-        result = NULL;
-    }
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        result = NULL;  // LCOV_EXCL_LINE
 
     return result;
 }
@@ -421,17 +441,17 @@ static int
 setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 {
     Class class_NSBitmapImageRep = objc_lookUpClass("NSBitmapImageRep");
-    if (class_NSBitmapImageRep == NULL) {
-        return 0;
+    if (class_NSBitmapImageRep == NULL) { // LCOV_BR_EXCL_LINE
+        return 0;                         // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep,
                                      @selector(getTIFFCompressionTypes:count:),
                                      call_NSBitmapImageRep_getTIFFCompressionTypes_count_,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(
@@ -440,9 +460,9 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
                       samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:
                       bitsPerPixel:),
             call_NSBitmapImageRep_initWithBitmap, PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(
@@ -451,25 +471,25 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
                       samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:
                       bytesPerRow:bitsPerPixel:),
             call_NSBitmapImageRep_initWithBitmapFormat, PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(
             class_NSBitmapImageRep, @selector(getBitmapDataPlanes:),
             call_NSBitmapImageRep_getBitmapDataPlanes_, PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep, @selector(bitmapData),
                                      call_NSBitmapImageRep_bitmapData,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

@@ -68,8 +68,8 @@ static PyObject* _Nullable mod_CFRunLoopTimerCreate(
 
     CFRunLoopTimerContext context = mod_CFRunLoopTimerContext;
     context.info                  = PyTuple_Pack(2, args[5], args[6]);
-    if (context.info == NULL) {
-        return NULL;
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     CFRunLoopTimerRef rv = NULL;
@@ -78,16 +78,15 @@ static PyObject* _Nullable mod_CFRunLoopTimerCreate(
             rv = CFRunLoopTimerCreate(allocator, fireDate, interval, flags, order,
                                       mod_CFRunLoopTimerCallBack, &context);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFRunLoopTimerRef), &rv);
     if (rv != NULL) {
@@ -121,7 +120,7 @@ static PyObject* _Nullable mod_CFRunLoopTimerGetContext(
         }
 
         if (args[1] != Py_None) {
-            PyErr_SetString(PyExc_ValueError, "invalid context");
+            PyErr_SetString(PyExc_ValueError, "'context' must be None");
             return NULL;
         }
     }
@@ -132,23 +131,27 @@ static PyObject* _Nullable mod_CFRunLoopTimerGetContext(
         @try {
             CFRunLoopTimerGetContext(f, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    if (context.version != 0) {
+    if (context.version != 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not valid");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (context.retain != mod_timer_retain) {
+    if (context.retain != mod_timer_retain) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (context.info == NULL) {
@@ -164,13 +167,13 @@ static int
 setup_runloop_timer(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFRunLoopTimerCreate, mod_CFRunLoopTimerCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFRunLoopTimerGetContext,
                                       mod_CFRunLoopTimerGetContext)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

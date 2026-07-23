@@ -75,17 +75,17 @@ m_CGDataConsumerCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     }
 
     if (!PyTuple_Check(args[1]) || PyTuple_GET_SIZE(args[1]) != 2) {
-        PyErr_SetString(PyExc_TypeError, "arg1 must be a tuple of two callables");
+        PyErr_SetString(PyExc_TypeError, "callbacks must be a tuple of two callables");
         return NULL;
     }
 
     if (!PyCallable_Check(PyTuple_GET_ITEM(args[1], 0))) {
-        PyErr_SetString(PyExc_TypeError, "putBytes is not callable");
+        PyErr_SetString(PyExc_TypeError, "putBytes is not a callable");
         return NULL;
     }
     if (PyTuple_GET_ITEM(args[1], 1) != Py_None
         && !PyCallable_Check(PyTuple_GET_ITEM(args[1], 1))) {
-        PyErr_SetString(PyExc_TypeError, "release is not callable");
+        PyErr_SetString(PyExc_TypeError, "release is not a callable or None");
         return NULL;
     }
 
@@ -100,15 +100,15 @@ m_CGDataConsumerCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         @try {
             result = CGDataConsumerCreate(real_info, &m_CGDataConsumerCallbacks);
 
-        } @catch (NSException* localException) {
-            result = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (result == NULL && PyErr_Occurred()) {
-        Py_DECREF(real_info);
-        return NULL;
+    if (result == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
+        Py_DECREF(real_info);                 // LCOV_EXCL_LINE
+        return NULL;                          // LCOV_EXCL_LINE
     }
 
     if (result == NULL) {
@@ -1631,68 +1631,72 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CGDataConsumerCreate, m_CGDataConsumerCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGDataProviderCreateSequential,
                                       m_CGDataProviderCreateSequential)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGDataProviderCreateWithData,
                                       m_CGDataProviderCreateWithData)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGFunctionCreate, m_CGFunctionCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGFunctionCreate, m_CGFunctionCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGDisplayRegisterReconfigurationCallback,
                                       m_CGDisplayRegisterReconfigurationCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGDisplayRemoveReconfigurationCallback,
                                       m_CGDisplayRemoveReconfigurationCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGScreenRegisterMoveCallback,
                                       m_CGScreenRegisterMoveCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGScreenUnregisterMoveCallback,
                                       m_CGScreenUnregisterMoveCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGRegisterScreenRefreshCallback,
                                       m_CGRegisterScreenRefreshCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGUnregisterScreenRefreshCallback,
                                       m_CGUnregisterScreenRefreshCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGEventTapCreate, m_CGEventTapCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGEventTapCreate, m_CGEventTapCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGEventTapCreateForPSN, m_CGEventTapCreateForPSN)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGPatternCreate, m_CGPatternCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGPatternCreate, m_CGPatternCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGPSConverterCreate, m_CGPSConverterCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGPSConverterCreate, m_CGPSConverterCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

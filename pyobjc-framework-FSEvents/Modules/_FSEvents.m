@@ -29,6 +29,9 @@ m_release_python(const void* value)
     PyGILState_Release(state);
 }
 
+// LCOV_EXCL_START
+// The description is here for debugging support, cannot be
+// triggered during testing.
 static CFStringRef
 m_copyDescription_python(const void* value)
 {
@@ -57,6 +60,7 @@ m_copyDescription_python(const void* value)
     PyGILState_Release(state);
     return result;
 }
+// LCOV_EXCL_STOP
 
 static FSEventStreamContext m_python_context_template = {
     0, NULL, m_retain_python, m_release_python, m_copyDescription_python};
@@ -74,48 +78,54 @@ m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInf
     PyObject*                v;
     PyObject*                paths;
 
-    v = PyTuple_GetItem((PyObject*)clientCallbackInfo, 0);
-    if (PyObjC_PythonToObjC(@encode(FSEventStreamCreateFlags), v, &flags) < 0) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    v = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 0);
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamCreateFlags), v, &flags)
+        < 0) {                                //  LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
-    info     = PyTuple_GetItem((PyObject*)clientCallbackInfo, 1);
-    callback = PyTuple_GetItem((PyObject*)clientCallbackInfo, 2);
+    info     = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 1);
+    callback = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 2);
 
     if (flags & kFSEventStreamCreateFlagUseCFTypes) {
         /* The evenPaths are an CFArray */
         paths = PyObjC_ObjCToPython(@encode(CFArrayRef), &eventPaths);
-        if (paths == NULL) {
-            PyObjCErr_ToObjCWithGILState(&state);
+        if (paths == NULL) {                      // LCOV_BR_EXCL_LINE
+            PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
         }
     } else {
         /* The evenPaths are a CArray of C strings */
         paths = PyObjC_CArrayToPython(@encode(char*), eventPaths, numEvents);
-        if (paths == NULL) {
-            PyObjCErr_ToObjCWithGILState(&state);
+        if (paths == NULL) {                      // LCOV_BR_EXCL_LINE
+            PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
         }
     }
 
-    PyObject* py_streamRef =
-        PyObjC_ObjCToPython(@encode(ConstFSEventStreamRef), &streamRef);
-    if (py_streamRef == NULL) {
+    PyObject* py_streamRef = PyObjC_ObjCToPython(@encode(FSEventStreamRef), &streamRef);
+    if (py_streamRef == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(paths);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STPP
     }
     PyObject* py_eventFlags = PyObjC_CArrayToPython(@encode(FSEventStreamCreateFlags),
                                                     (void*)eventFlags, numEvents);
-    if (py_eventFlags == NULL) {
+    if (py_eventFlags == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(paths);
         Py_DECREF(py_streamRef);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
     PyObject* py_eventIds =
         PyObjC_CArrayToPython(@encode(FSEventStreamEventId), (void*)eventIds, numEvents);
-    if (py_eventIds == NULL) {
+    if (py_eventIds == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(paths);
         Py_DECREF(py_streamRef);
         Py_DECREF(py_eventFlags);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result =
@@ -171,9 +181,9 @@ m_FSEventStreamCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
      * the arguments passed to the callback vary based on the value of
      * flags.
      */
-    PyObject* info = Py_BuildValue("OOO", args[6], args[2], args[1]);
-    if (info == NULL) {
-        return NULL;
+    PyObject* info = PyTuple_Pack(3, args[6], args[2], args[1]);
+    if (info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     FSEventStreamContext context = m_python_context_template;
@@ -186,16 +196,16 @@ m_FSEventStreamCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
             stream = FSEventStreamCreate(allocator, m_FSEVentStreamCallback, &context,
                                          pathsToWatch, sinceWhen, latency, flags);
 
-        } @catch (NSException* localException) {
-            stream = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            stream = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(info);
 
-    if (stream == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (stream == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
+        return NULL;                          // LCOV_EXCL_LINE
     }
 
     if (stream == NULL) {
@@ -254,9 +264,9 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* meth,
      * the arguments passed to the callback vary based on the value of
      * flags.
      */
-    PyObject* info = Py_BuildValue("OOO", args[7], args[2], args[1]);
-    if (info == NULL) {
-        return NULL;
+    PyObject* info = PyTuple_Pack(3, args[7], args[2], args[1]);
+    if (info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
     }
 
     FSEventStreamContext context = m_python_context_template;
@@ -269,16 +279,16 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* meth,
             stream = FSEventStreamCreateRelativeToDevice(
                 allocator, m_FSEVentStreamCallback, &context, deviceToWatch, pathsToWatch,
                 sinceWhen, latency, flags);
-        } @catch (NSException* localException) {
-            stream = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            stream = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(info);
 
-    if (stream == NULL && PyErr_Occurred()) {
-        return NULL;
+    if (stream == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
+        return NULL;                          // LCOV_EXCL_LINE
     }
 
     if (stream == NULL) {
@@ -304,17 +314,18 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
-    if (PyObjCRegister_FunctionCaller(FSEventStreamCreate, m_FSEventStreamCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(FSEventStreamCreate, m_FSEventStreamCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(FSEventStreamCreateRelativeToDevice,
                                       m_FSEventStreamCreateRelativeToDevice)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import Quartz
 import objc
 
@@ -170,8 +170,23 @@ class TestCGPath(TestCase):
             self.assertIsInstance(element.points, objc.varlist)
             self.assertIsInstance(element.points[0], Quartz.CGPoint)
 
+        def applier_raises(ctx, element):
+            raise RuntimeError("callback error")
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            Quartz.CGPathApply()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGPathApply(NoObjCClass(), info, applier)
+
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGPathApply(path, info, 42)
+
         Quartz.CGPathApply(path, info, applier)
         self.assertNotEqual(lst[0], 0)
+
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            Quartz.CGPathApply(path, info, applier_raises)
 
         path = Quartz.CGPathCreateMutable()
         self.assertIsInstance(path, Quartz.CGPathRef)

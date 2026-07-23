@@ -1,6 +1,13 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure, fourcc
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    fourcc,
+    NoObjCClass,
+)
 import Quartz
 import objc
+import os
+import tempfile
 
 
 class TestCVPixelBuffer(TestCase):
@@ -360,10 +367,192 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVPixelBufferCreate, 5)
         self.assertArgIsCFRetained(Quartz.CVPixelBufferCreate, 5)
 
-    @expectedFailure
     def test_manual(self):
-        self.fail("CVPixelBufferCreate requires manual wrapper")
-        self.fail("CVPixelBufferCreateWithBytes requires manual wrapper")
+        context = object()
+        released = None
+
+        def release(refcon):
+            nonlocal released
+            released = refcon
+
+        def release_raises(refcon):
+            raise RuntimeError("release error")
+
+        with self.assertRaisesRegex(
+            TypeError, "expected between 9 and 10 arguments, got 0"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                NoObjCClass(),
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                "200",
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                "100",
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                "Quartz.kCVPixelFormatType_Lossy_32BGRA",
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'NoneType'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                None,
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                "800",
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                800,
+                release,
+                context,
+                NoObjCClass(),
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, "pixelBufferOut must be None"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                800,
+                release,
+                context,
+                None,
+                42,
+            )
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            Quartz.kCVPixelFormatType_Lossy_32BGRA,
+            bytearray(200 * 100 * 10),
+            400,
+            release,
+            context,
+            {},
+            None,
+        )
+        self.assertIsNot(buf, None)
+        self.assertIs(released, None)
+        del buf
+        self.assertIs(released, context)
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            Quartz.kCVPixelFormatType_Lossy_32BGRA,
+            bytearray(200 * 100 * 10),
+            400,
+            release_raises,
+            context,
+            {},
+            None,
+        )
+        self.assertIsNot(buf, None)
+
+        with tempfile.TemporaryFile() as fp:
+            orig_stderr = os.dup(2)
+            try:
+                os.dup2(fp.fileno(), 2)
+                del buf
+
+            finally:
+                os.dup2(orig_stderr, 2)
+
+            fp.seek(0)
+            stderr = fp.read()
+
+        self.assertIn(
+            b"PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: release error",
+            stderr,
+        )
+
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
 
     def makeBuffer(self):

@@ -15,8 +15,8 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
     int       r;
 
     v = PyObjC_ObjCToPython(typestr, (void*)value);
-    if (v == NULL) {
-        return -1;
+    if (v == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;   // LCOV_EXCL_LINE
     }
 
     r = PyModule_AddObject(m, name, v);
@@ -27,56 +27,56 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
-    if (@available(macos 10.14, *)) {
+    if (@available(macos 10.14, *)) { // LCOV_BR_EXCL_LINE
         nw_connection_send_completion_t t = NW_CONNECTION_SEND_IDEMPOTENT_CONTENT;
         if (add_constant(m, "NW_CONNECTION_SEND_IDEMPOTENT_CONTENT",
                          @encode(nw_connection_send_completion_t), &t)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         nw_content_context_t t2 = NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT;
         if (add_constant(m, "NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT",
                          @encode(nw_content_context_t), &t2)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         t2 = NW_CONNECTION_FINAL_MESSAGE_CONTEXT;
         if (add_constant(m, "NW_CONNECTION_FINAL_MESSAGE_CONTEXT",
                          @encode(nw_content_context_t), &t2)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         t2 = NW_CONNECTION_DEFAULT_STREAM_CONTEXT;
         if (add_constant(m, "NW_CONNECTION_DEFAULT_STREAM_CONTEXT",
                          @encode(nw_content_context_t), &t2)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         nw_parameters_configure_protocol_block_t p = NW_PARAMETERS_DEFAULT_CONFIGURATION;
         if (add_constant(m, "NW_PARAMETERS_DEFAULT_CONFIGURATION",
                          @encode(nw_parameters_configure_protocol_block_t), &p)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
         p = NW_PARAMETERS_DISABLE_PROTOCOL;
         if (add_constant(m, "NW_PARAMETERS_DISABLE_PROTOCOL",
                          @encode(nw_parameters_configure_protocol_block_t), &p)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
     }
 
 #if PyObjC_BUILD_RELEASE >= 1016
-    if (@available(macos 10.16, *)) {
+    if (@available(macos 10.16, *)) { // LCOV_BR_EXCL_LINE
         nw_privacy_context_t c = NW_DEFAULT_PRIVACY_CONTEXT;
         if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT", @encode(nw_privacy_context_t),
                          &c)
-            != 0)
-            goto error;
+            != 0)       // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
     }
 #endif
 
     return 0;
 
 error:
-    return -1;
+    return -1; // LCOV_EXCL_LINE
 }
 
 static struct PyModuleDef_Slot mod_slots[] = {

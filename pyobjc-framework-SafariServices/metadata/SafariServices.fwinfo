@@ -12,7 +12,8 @@
    "SFSafariServicesVersion11_0": { "value": 2 },
    "SFSafariServicesVersion12_0": { "value": 3 },
    "SFSafariServicesVersion12_1": { "value": 4 },
-   "SFSafariServicesVersion13_0": { "value": 5 }
+   "SFSafariServicesVersion13_0": { "value": 5 },
+   "SFSafariServicesVersion27_0": { "value": 6 }
   },
   "classes": {
    "NSObject": {

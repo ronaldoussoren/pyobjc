@@ -1,6 +1,6 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFDictionary(TestCase):
@@ -118,11 +118,30 @@ class TestCFDictionary(TestCase):
         ok, value = CoreFoundation.CFDictionaryGetValueIfPresent(dct, "key3", None)
         self.assertFalse(ok)
         self.assertIs(value, None)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFDictionaryGetKeysAndValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(NoObjCClass(), None, None)
+
+        with self.assertRaisesRegex(ValueError, "keys must be None of NULL"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(dct, 42, None)
+
+        with self.assertRaisesRegex(ValueError, "values must be None of NULL"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, 42)
+
         keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, None)
+        self.assertEqual(set(keys), {"key1", "key2"})
         self.assertEqual(values, (42, 42))
-        keys = list(keys)
-        keys.sort()
-        self.assertEqual(keys, ["key1", "key2"])
+
+        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, objc.NULL, None)
+        self.assertIs(keys, objc.NULL)
+        self.assertEqual(values, (42, 42))
+
+        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, objc.NULL)
+        self.assertEqual(set(keys), {"key1", "key2"})
+        self.assertIs(values, objc.NULL)
 
     def test_mutation(self):
         dct = CoreFoundation.CFDictionaryCreateMutable(

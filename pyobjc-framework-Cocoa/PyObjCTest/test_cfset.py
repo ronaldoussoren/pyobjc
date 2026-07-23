@@ -1,6 +1,6 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestSet(TestCase):
@@ -64,6 +64,16 @@ class TestSet(TestCase):
         present, value = CoreFoundation.CFSetGetValueIfPresent(st, "c", None)
         self.assertIs(present, True)
         self.assertEqual(value, "c")
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFSetGetValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFSetGetValues(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'values' must be None"):
+            CoreFoundation.CFSetGetValues(None, 42)
+
         values = CoreFoundation.CFSetGetValues(st, None)
         values = list(values)
         values.sort()

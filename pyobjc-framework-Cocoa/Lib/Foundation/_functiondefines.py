@@ -34,8 +34,10 @@ def NSLocalizedAttributedString(key, comment):
 
 
 def NSLocalizedAttributedStringFromTable(key, tbl, comment):
-    return _Foundation.NSBundle.mainBundle.localizedAttributedStringForKey_value_table_(
-        key, "", tbl
+    return (
+        _Foundation.NSBundle.mainBundle().localizedAttributedStringForKey_value_table_(
+            key, "", tbl
+        )
     )
 
 

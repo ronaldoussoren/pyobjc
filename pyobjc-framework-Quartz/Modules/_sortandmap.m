@@ -10,33 +10,30 @@
 static void
 m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject* info    = (PyObject*)_info;
+    PyObject* args[4] = {NULL};
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* args = PyTuple_New(3);
-    if (args == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    args[1] = PyBytes_FromString(key);
+    if (args[1] == NULL) {                    // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
-    PyTuple_SET_ITEM(args, 0, PyBytes_FromString(key));
-    if (PyTuple_GetItem(args, 0) == NULL) {
-        Py_DECREF(args);
+    args[2] = PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value);
+    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(args[1]);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
-    PyTuple_SET_ITEM(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
-    if (PyTuple_GetItem(args, 1) == NULL) {
-        Py_DECREF(args);
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
+    args[3] = PyTuple_GET_ITEM(info, 1);
 
-    PyTuple_SET_ITEM(args, 2, PyTuple_GetItem(info, 1));
-    Py_INCREF(PyTuple_GetItem(args, 2));
-
-    PyObject* result = PyObject_Call(PyTuple_GetItem(info, 0), args, NULL);
-    Py_DECREF(args);
-
+    PyObject* result = PyObject_Vectorcall(PyTuple_GET_ITEM(info, 0), args + 1,
+                                           3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_CLEAR(args[1]);
+    Py_CLEAR(args[2]);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -63,8 +60,8 @@ m_CGPDFDictionaryApplyFunction(PyObject* meth, PyObject* _Nonnull const* _Nonnul
     }
 
     PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
-    if (real_info == NULL) {
-        return NULL;
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -76,7 +73,7 @@ m_CGPDFDictionaryApplyFunction(PyObject* meth, PyObject* _Nonnull const* _Nonnul
         }
     Py_END_ALLOW_THREADS
 
-    Py_DECREF(real_info);
+    Py_CLEAR(real_info);
     if (PyErr_Occurred()) {
         return NULL;
     }
@@ -97,15 +94,10 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_element =
+    PyObject* result = PyObject_CallFunction(
+        PyTuple_GetItem(info, 0), "ON", PyTuple_GetItem(info, 1),
         PyObject_CallFunction(gCGPathElement, "lN", element->type,
-                              PyObjCVarList_New(@encode(CGPoint), element->points));
-    if (element == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
-
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "ON",
-                                             PyTuple_GetItem(info, 1), py_element);
+                              PyObjCVarList_New(@encode(CGPoint), element->points)));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -114,15 +106,14 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 }
 
 static PyObject*
-setCGPathElement(PyObject* meth, PyObject* const* args, Py_ssize_t nargs)
+setCGPathElement(PyObject* meth __attribute__((__unused__)), PyObject* arg)
 {
-    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
-        return NULL;
-    }
-
+    /* This function is only called during import, therefore it
+     * is not necessary to use a lock to protect access to gCGPathElement.
+     */
     Py_XDECREF(gCGPathElement);
-    Py_INCREF(args[0]);
-    gCGPathElement = args[0];
+    Py_INCREF(arg);
+    gCGPathElement = arg;
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -145,25 +136,24 @@ m_CGPathApply(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t na
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[2], args[1]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[2], args[1]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             CGPathApply(path, real_info, m_CGPathApplierFunction);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -172,7 +162,7 @@ m_CGPathApply(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t na
 static PyMethodDef mod_methods[] = {{
                                         "_setCGPathElement",
                                         (PyCFunction)setCGPathElement,
-                                        METH_FASTCALL,
+                                        METH_O,
                                         NULL,
                                     },
 
@@ -181,16 +171,17 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
 
     if (PyObjCRegister_FunctionCaller(CGPDFDictionaryApplyFunction,
                                       m_CGPDFDictionaryApplyFunction)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGPathApply, m_CGPathApply) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGPathApply, m_CGPathApply)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

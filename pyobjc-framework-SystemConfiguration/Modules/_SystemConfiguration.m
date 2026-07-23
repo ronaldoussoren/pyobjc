@@ -72,14 +72,16 @@ mod_SCDynamicStoreCallBack(SCDynamicStoreRef store, CFArrayRef changedKeys, void
     PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_store  = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
-    if (py_store == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (py_store == NULL) {                   // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
     PyObject* py_keys = PyObjC_ObjCToPython(@encode(CFArrayRef), &changedKeys);
-    if (py_keys == NULL) {
+    if (py_keys == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_store);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result =
@@ -101,14 +103,16 @@ mod_SCPreferencesCallBack(SCPreferencesRef          prefs,
     PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_prefs  = PyObjC_ObjCToPython(@encode(SCPreferencesRef), &prefs);
-    if (py_prefs == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (py_prefs == NULL) {                   // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
     PyObject* py_type =
         PyObjC_ObjCToPython(@encode(SCPreferencesNotification), &notificationType);
-    if (py_type == NULL) {
+    if (py_type == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_prefs);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result =
@@ -120,6 +124,9 @@ mod_SCPreferencesCallBack(SCPreferencesRef          prefs,
     PyGILState_Release(state);
 }
 
+// LCOV_EXCL_START
+// This API is related to dial in interfaces, cannot test this
+// in my testing setup.
 static void
 mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef    connection,
                                 SCNetworkConnectionStatus status, void* _info)
@@ -149,6 +156,7 @@ mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef    connection,
     Py_DECREF(result);
     PyGILState_Release(state);
 }
+// LCOV_EXCL_STOP
 
 static void
 mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
@@ -160,13 +168,15 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
     PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_target = PyObjC_ObjCToPython(@encode(SCNetworkReachabilityRef), &target);
-    if (py_target == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (py_target == NULL) {                  // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
     PyObject* py_flags = PyObjC_ObjCToPython(@encode(SCNetworkConnectionFlags), &flags);
-    if (py_flags == NULL) {
+    if (py_flags == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_target);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result =
@@ -199,9 +209,9 @@ mod_SCDynamicStoreCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[2], args[3]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[2], args[3]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     SCDynamicStoreRef     store = NULL;
@@ -214,21 +224,22 @@ mod_SCDynamicStoreCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
             store = SCDynamicStoreCreate(allocator, name, mod_SCDynamicStoreCallBack,
                                          &real_context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            store = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            store = NULL;                        // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
-    if (store == NULL) {
-
+    if (store == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         if (PyErr_Occurred()) {
             return NULL;
         } else {
             Py_INCREF(Py_None);
             return Py_None;
         }
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
@@ -261,9 +272,9 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* meth,
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[3], args[4]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[3], args[4]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     SCDynamicStoreRef     store = NULL;
@@ -276,17 +287,17 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* meth,
             store = SCDynamicStoreCreateWithOptions(
                 allocator, name, storeOptions, mod_SCDynamicStoreCallBack, &real_context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            store = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            store = NULL;                        // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
     if (store == NULL) {
 
-        if (PyErr_Occurred()) {
-            return NULL;
+        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;        // LCOV_EXCL_LINE
         } else {
             Py_INCREF(Py_None);
             return Py_None;
@@ -315,9 +326,9 @@ mod_SCPreferencesSetCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[1], args[2]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     SCPreferencesContext real_context;
@@ -330,19 +341,21 @@ mod_SCPreferencesSetCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
             result =
                 SCPreferencesSetCallback(prefs, mod_SCPreferencesCallBack, &real_context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result = FALSE;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result = FALSE;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (!result) {
+    if (!result) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
 
         if (PyErr_Occurred()) {
             return NULL;
         }
-    }
+        // LCOV_EXCL_STOP
+    } // LCOV_EXCL_LINE
 
     return PyBool_FromLong(result);
 }
@@ -367,9 +380,9 @@ mod_SCNetworkConnectionCreateWithServiceID(PyObject* meth,
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[2], args[3]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[2], args[3]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     SCNetworkConnectionContext real_context;
@@ -382,23 +395,20 @@ mod_SCNetworkConnectionCreateWithServiceID(PyObject* meth,
             result = SCNetworkConnectionCreateWithServiceID(
                 allocator, serviceID, mod_SCNetworkConnectionCallBack, &real_context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
-    if (result == NULL) {
-
-        if (PyErr_Occurred()) {
-            return NULL;
-        }
-    }
+    if (result == NULL)       // LCOV_BR_EXCL_LINE
+        if (PyErr_Occurred()) // LCOV_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
 
     PyObject* rv = PyObjC_ObjCToPython(@encode(SCNetworkConnectionRef), &result);
-    if (result != NULL) {
+    if (result != NULL) { // LCOV_BR_EXCL_LINE
         CFRelease(result);
     }
     return rv;
@@ -419,9 +429,9 @@ mod_SCNetworkReachabilitySetCallback(PyObject* meth,
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[1], args[2]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     SCNetworkReachabilityContext real_context;
@@ -434,18 +444,18 @@ mod_SCNetworkReachabilitySetCallback(PyObject* meth,
             result = SCNetworkReachabilitySetCallback(
                 target, mod_SCNetworkReachabilityCallBack, &real_context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result = FALSE;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result = FALSE;                      // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
-    if (!result) {
-        if (PyErr_Occurred()) {
-            return NULL;
-        }
-    }
+    if (!result) // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
+    // LCOV_EXCL_STOP
 
     return PyBool_FromLong(result);
 }
@@ -457,33 +467,33 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0) {
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) { // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
     }
 
     if (PyObjCRegister_FunctionCaller(SCDynamicStoreCreate, mod_SCDynamicStoreCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(SCDynamicStoreCreateWithOptions,
                                       mod_SCDynamicStoreCreateWithOptions)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(SCPreferencesSetCallback,
                                       mod_SCPreferencesSetCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(SCNetworkConnectionCreateWithServiceID,
                                       mod_SCNetworkConnectionCreateWithServiceID)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(SCNetworkReachabilitySetCallback,
                                       mod_SCNetworkReachabilitySetCallback)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

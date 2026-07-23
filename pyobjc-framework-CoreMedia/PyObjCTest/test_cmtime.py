@@ -49,13 +49,34 @@ class TestCMTime(TestCase):
         self.assertPickleRoundTrips(v)
 
     def test_functions(self):
-        CoreMedia.CMTIME_IS_VALID
-        CoreMedia.CMTIME_IS_INVALID
-        CoreMedia.CMTIME_IS_POSITIVE_INFINITY
-        CoreMedia.CMTIME_IS_NEGATIVE_INFINITY
-        CoreMedia.CMTIME_IS_INDEFINITE
-        CoreMedia.CMTIME_IS_NUMERIC
-        CoreMedia.CMTIME_HAS_BEEN_ROUNDED
+        self.assertFalse(CoreMedia.CMTIME_IS_VALID(CoreMedia.kCMTimeInvalid))
+        self.assertTrue(CoreMedia.CMTIME_IS_INVALID(CoreMedia.kCMTimeInvalid))
+        self.assertTrue(CoreMedia.CMTIME_IS_VALID(CoreMedia.kCMTimeZero))
+        self.assertFalse(CoreMedia.CMTIME_IS_INVALID(CoreMedia.kCMTimeZero))
+
+        self.assertTrue(
+            CoreMedia.CMTIME_IS_POSITIVE_INFINITY(CoreMedia.kCMTimePositiveInfinity)
+        )
+        self.assertFalse(
+            CoreMedia.CMTIME_IS_POSITIVE_INFINITY(CoreMedia.kCMTimeNegativeInfinity)
+        )
+        self.assertFalse(CoreMedia.CMTIME_IS_POSITIVE_INFINITY(CoreMedia.kCMTimeZero))
+
+        self.assertTrue(
+            CoreMedia.CMTIME_IS_NEGATIVE_INFINITY(CoreMedia.kCMTimeNegativeInfinity)
+        )
+        self.assertFalse(
+            CoreMedia.CMTIME_IS_NEGATIVE_INFINITY(CoreMedia.kCMTimePositiveInfinity)
+        )
+        self.assertFalse(CoreMedia.CMTIME_IS_NEGATIVE_INFINITY(CoreMedia.kCMTimeZero))
+
+        self.assertFalse(CoreMedia.CMTIME_IS_INDEFINITE(CoreMedia.kCMTimeZero))
+        self.assertTrue(CoreMedia.CMTIME_IS_INDEFINITE(CoreMedia.kCMTimeIndefinite))
+
+        self.assertTrue(CoreMedia.CMTIME_IS_NUMERIC(CoreMedia.kCMTimeZero))
+        self.assertFalse(CoreMedia.CMTIME_IS_NUMERIC(CoreMedia.kCMTimePositiveInfinity))
+
+        self.assertFalse(CoreMedia.CMTIME_HAS_BEEN_ROUNDED(CoreMedia.kCMTimeZero))
 
         CoreMedia.CMTimeMake
         CoreMedia.CMTimeMakeWithEpoch

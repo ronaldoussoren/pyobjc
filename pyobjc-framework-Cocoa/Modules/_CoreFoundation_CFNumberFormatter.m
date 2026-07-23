@@ -41,7 +41,7 @@ static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
         return NULL;
     }
     if (args[4] != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "Bad value for buffer");
+        PyErr_SetString(PyExc_ValueError, "'buffer' must be None");
         return NULL;
     }
 
@@ -51,14 +51,13 @@ static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
             rv = CFNumberFormatterGetValueFromString(formatter, string, &range, type,
                                                      &buf);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     if (rv) {
         PyObject* n;
@@ -100,6 +99,7 @@ static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
             break;
 
         case kCFNumberLongType:
+        case kCFNumberNSIntegerType:
             n = PyObjC_ObjCToPython(@encode(long), &buf.longv);
             break;
 
@@ -112,6 +112,7 @@ static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
             break;
 
         case kCFNumberDoubleType:
+        case kCFNumberCGFloatType:
             n = PyObjC_ObjCToPython(@encode(double), &buf.doublev);
             break;
 
@@ -120,8 +121,10 @@ static PyObject* _Nullable mod_CFNumberFormatterGetValueFromString(
             break;
 
         default:
-            PyErr_SetString(PyExc_ValueError, "number type");
+            // LCOV_EXCL_START
+            PyErr_SetString(PyExc_ValueError, "unsupported number type");
             return NULL;
+            // LCOV_EXCL_STOP
         }
 
         return Py_BuildValue("NNN", PyBool_FromLong(1),
@@ -216,6 +219,7 @@ static PyObject* _Nullable mod_CFNumberFormatterCreateStringWithValue(
         break;
 
     case kCFNumberLongLongType:
+    case kCFNumberNSIntegerType:
         n = PyObjC_PythonToObjC(@encode(long long), args[3], &buf.longlongv);
         break;
 
@@ -224,6 +228,7 @@ static PyObject* _Nullable mod_CFNumberFormatterCreateStringWithValue(
         break;
 
     case kCFNumberDoubleType:
+    case kCFNumberCGFloatType:
         n = PyObjC_PythonToObjC(@encode(double), args[3], &buf.doublev);
         break;
 
@@ -232,12 +237,12 @@ static PyObject* _Nullable mod_CFNumberFormatterCreateStringWithValue(
         break;
 
     default:
-        PyErr_SetString(PyExc_ValueError, "number type");
+        PyErr_Format(PyExc_ValueError, "number type not supported: %ld", (long)type);
         return NULL;
     }
 
-    if (n == -1) {
-        return NULL;
+    if (n == -1) {   // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
 
     CFStringRef rv = NULL;
@@ -245,14 +250,13 @@ static PyObject* _Nullable mod_CFNumberFormatterCreateStringWithValue(
         @try {
             rv = CFNumberFormatterCreateStringWithValue(allocator, formatter, type, &buf);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFStringRef), &rv);
     if (rv) {
@@ -266,13 +270,13 @@ setup_numberformatter(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFNumberFormatterCreateStringWithValue,
                                       mod_CFNumberFormatterCreateStringWithValue)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFNumberFormatterGetValueFromString,
                                       mod_CFNumberFormatterGetValueFromString)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

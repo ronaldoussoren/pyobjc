@@ -25,11 +25,26 @@ static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
     NSPoint             points[3];
     NSBezierPathElement res;
 
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
-        return NULL;
-    }
-    if (PyObjC_PythonToObjC(@encode(NSInteger), arguments[0], &idx) == -1) {
-        return NULL;
+    if (nargs == 1) {
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "leaving of the second argument is deprecated", 0)
+            < 0) {
+            return NULL;
+        }
+        if (PyObjC_PythonToObjC(@encode(NSInteger), arguments[0], &idx) == -1) {
+            return NULL;
+        }
+    } else {
+        if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
+            return NULL;
+        }
+        if (PyObjC_PythonToObjC(@encode(NSInteger), arguments[0], &idx) == -1) {
+            return NULL;
+        }
+        if (arguments[1] != Py_None) {
+            PyErr_SetString(PyExc_ValueError, "buffer must be None");
+            return NULL;
+        }
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -47,16 +62,15 @@ static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
                                                 NSPoint*))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method), idx, points);
             }
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    switch (res) {
+    switch (res) { // LCOV_BR_EXCL_LINE
     case NSBezierPathElementMoveTo:
         pointCount = 1;
         break;
@@ -75,8 +89,10 @@ static PyObject* _Nullable call_NSBezierPath_elementAtIndex_associatedPoints_(
         pointCount = 0;
         break;
     default:
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "ObjC returned illegal value");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res),
@@ -141,14 +157,14 @@ static PyObject* _Nullable call_NSBezierPath_setAssociatedPoints_atIndex_(
                     &super, PyObjCSelector_GetSelector(method), points, idx);
             }
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
-            result = NULL;
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    if (PyErr_Occurred()) // LCOV_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     result = Py_None;
     Py_INCREF(result);
@@ -165,7 +181,7 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
         NSBezierPath* self, NSInteger idx, NSPointArray points) {
       PyObject*           result;
       PyObject*           seq = NULL;
-      PyObject*           arglist[3];
+      PyObject*           arglist[4];
       int                 err;
       int                 pointCount;
       int                 i;
@@ -177,15 +193,17 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
       arglist[0] = NULL;
 
       arglist[1] = PyObjCObject_NewTransient(self, &cookie);
-      if (arglist[1] == NULL)
-          goto error;
+      if (arglist[1] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;         // LCOV_EXCL_LINE
 
       arglist[2] = PyLong_FromLong(idx);
-      if (arglist[2] == NULL)
-          goto error;
+      if (arglist[2] == NULL) // LCOV_BR_EXCL_LINE
+          goto error;         // LCOV_EXCL_LINE
+
+      arglist[3] = Py_None;
 
       result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                   2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                                   3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       PyObjCObject_ReleaseTransient(arglist[1], cookie);
       arglist[1] = NULL;
       Py_CLEAR(arglist[2]);
@@ -210,8 +228,6 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
           goto error;
 
       v = PySequence_Tuple(PyTuple_GET_ITEM(seq, 1));
-      if (v == NULL)
-          goto error;
 
       switch (element) {
       case NSBezierPathElementMoveTo:
@@ -238,7 +254,8 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
       }
 
       if (PyTuple_GET_SIZE(v) != pointCount) {
-          PyErr_SetString(PyExc_ValueError, "wrong number of points");
+          PyErr_Format(PyExc_ValueError, "expected %ld points, got %ld", (long)pointCount,
+                       (long)PyTuple_GET_SIZE(v));
           Py_DECREF(v);
           goto error;
       }
@@ -257,10 +274,11 @@ mkimp_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* callable,
       return element;
 
   error:
-      Py_XDECREF(arglist);
-      if (arglist[1]) {
+      if (arglist[1]) { // LCOV_BR_EXCL_LINE
+          // LCOV_EXCL_START
           PyObjCObject_ReleaseTransient(arglist[1], cookie);
-      }
+          // LCOV_EXCL_STOP
+      } // LCOV_EXCL_LINE
       Py_XDECREF(seq);
       PyObjCErr_ToObjCWithGILState(&state);
       __builtin_unreachable();
@@ -272,24 +290,24 @@ static int
 setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
 {
     Class cls = objc_lookUpClass("NSBezierPath");
-    if (!cls) {
-        return 0;
+    if (!cls) {   // LCOV_BR_EXCL_LINE
+        return 0; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(elementAtIndex:associatedPoints:),
                                      call_NSBezierPath_elementAtIndex_associatedPoints_,
                                      mkimp_NSBezierPath_elementAtIndex_associatedPoints_)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAssociatedPoints:atIndex:),
                                      call_NSBezierPath_setAssociatedPoints_atIndex_,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

@@ -65,7 +65,7 @@ def _workaround():
         )
         resultID = mod.CFGetTypeID(r)
 
-        if mod.SKSearchGetTypeID() == 0:
+        if mod.SKSearchGetTypeID() == 0:  # pragma: no branch
             # Type doesn't get registered unless you try to use it.
             # That's no good for PyObjC, therefore forcefully create
             # a SKSearch object
@@ -74,7 +74,7 @@ def _workaround():
                 "SKSearchRef", b"^{__SKSearch=}", mod.SKSearchGetTypeID()
             )
         else:
-            searchref = mod.SKSearchRef
+            searchref = mod.SKSearchRef  # pragma: no cover
 
         del r
         del rI

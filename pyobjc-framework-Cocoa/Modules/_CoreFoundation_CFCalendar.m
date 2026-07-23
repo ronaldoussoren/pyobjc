@@ -14,7 +14,7 @@ static PyObject* _Nullable mod_CFCalendarAddComponents(
     CFAbsoluteTime at;
     CFOptionFlags  flags;
     char*          componentDesc;
-    int            params[10];
+    int            params[20];
     Boolean        result;
     int            r;
 
@@ -48,9 +48,9 @@ static PyObject* _Nullable mod_CFCalendarAddComponents(
                      4 + strlen(componentDesc), nargs);
         return NULL;
     }
-    if (nargs > 4 + 10) {
+    if (nargs > 4 + 20) {
         PyErr_SetString(PyExc_TypeError,
-                        "At most 10 characters supported in componentDesc");
+                        "At most 20 characters supported in componentDesc");
         return NULL;
     }
 
@@ -72,26 +72,17 @@ static PyObject* _Nullable mod_CFCalendarAddComponents(
                                              params[4], params[5], params[6], params[7],
                                              params[8], params[9]);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    PyObject* b = PyBool_FromLong(result);
-    if (b == NULL) {
-        return NULL;
-    }
-    PyObject* a = PyObjC_ObjCToPython(@encode(CFAbsoluteTime), &at);
-    if (a == NULL) {
-        Py_DECREF(b);
-        return NULL;
-    }
-
-    return Py_BuildValue("NN", b, a);
+    return Py_BuildValue("ON", result ? Py_True : Py_False,
+                         PyObjC_ObjCToPython(@encode(CFAbsoluteTime), &at));
 }
 
 static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
@@ -100,7 +91,7 @@ static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
     CFCalendarRef  calendar;
     CFAbsoluteTime at;
     char*          componentDesc;
-    int            params[10];
+    int            params[20];
     Boolean        result;
     int            r;
 
@@ -115,7 +106,7 @@ static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
     }
 
     if (args[1] != Py_None) {
-        PyErr_SetString(PyExc_TypeError, "placeholder for 'at' must be None");
+        PyErr_SetString(PyExc_ValueError, "'at' must be None");
         return NULL;
     }
 
@@ -129,9 +120,9 @@ static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
                      3 + strlen(componentDesc), nargs);
         return NULL;
     }
-    if (nargs > 3 + 10) {
+    if (nargs > 3 + 20) {
         PyErr_SetString(PyExc_TypeError,
-                        "At most 10 characters supported in componentDesc");
+                        "At most 20 characters supported in componentDesc");
         return NULL;
     }
 
@@ -152,26 +143,17 @@ static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
                 calendar, &at, componentDesc, params[0], params[1], params[2], params[3],
                 params[4], params[5], params[6], params[7], params[8], params[9]);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
-    PyObject* b = PyBool_FromLong(result);
-    if (b == NULL) {
-        return NULL;
-    }
-    PyObject* a = PyObjC_ObjCToPython(@encode(CFAbsoluteTime), &at);
-    if (a == NULL) {
-        Py_DECREF(b);
-        return NULL;
-    }
-
-    return Py_BuildValue("NN", b, a);
+    return Py_BuildValue("ON", result ? Py_True : Py_False,
+                         PyObjC_ObjCToPython(@encode(CFAbsoluteTime), &at));
 }
 
 static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
@@ -180,7 +162,7 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
     CFCalendarRef  calendar;
     CFAbsoluteTime at;
     char*          componentDesc;
-    int            params[10];
+    int            params[20];
     Boolean        result;
     int            r;
 
@@ -204,9 +186,9 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
         return NULL;
     }
 
-    if (strlen(componentDesc) > 10) {
+    if (strlen(componentDesc) > 20) {
         PyErr_SetString(PyExc_TypeError,
-                        "At most 10 characters supported in componentDesc");
+                        "At most 20 characters supported in componentDesc");
         return NULL;
     }
 
@@ -221,8 +203,8 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
 
         len = strlen(componentDesc);
         for (i = 0; i < len; i++) {
-            if (args[+i] != Py_None) {
-                PyErr_SetString(PyExc_ValueError, "Bad placeholder value");
+            if (args[i + 3] != Py_None) {
+                PyErr_SetString(PyExc_ValueError, "placeholder must be None");
                 return NULL;
             }
         }
@@ -236,23 +218,22 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
                 &params[3], &params[4], &params[5], &params[6], &params[7], &params[8],
                 &params[9]);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* rv = PyTuple_New(1 + strlen(componentDesc));
-    if (rv == NULL) {
-        return NULL;
+    if (rv == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;  // LCOV_EXCL_LINE
     }
 
     PyObject* b = PyBool_FromLong(result);
-    if (b == NULL) {
-        return NULL;
+    if (b == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     PyTuple_SET_ITEM(rv, 0, b);
 
@@ -260,9 +241,11 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
         PyObject* v = PyLong_FromLong(params[i]);
-        if (v == NULL) {
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(rv);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(rv, i + 1, v);
     }
@@ -277,7 +260,7 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
     CFAbsoluteTime resultAt;
     CFOptionFlags  options;
     char*          componentDesc;
-    int            params[10];
+    int            params[20];
     Boolean        result;
     int            r;
 
@@ -311,9 +294,9 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
         return NULL;
     }
 
-    if (strlen(componentDesc) > 10) {
+    if (strlen(componentDesc) > 20) {
         PyErr_SetString(PyExc_TypeError,
-                        "At most 10 characters supported in componentDesc");
+                        "At most 20 characters supported in componentDesc");
         return NULL;
     }
 
@@ -329,7 +312,7 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
         len = strlen(componentDesc);
         for (i = 0; i < len; i++) {
             if (args[5 + i] != Py_None) {
-                PyErr_SetString(PyExc_ValueError, "Bad placeholder value");
+                PyErr_SetString(PyExc_ValueError, "placeholder must be None");
                 return NULL;
             }
         }
@@ -343,23 +326,22 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
                 &params[1], &params[2], &params[3], &params[4], &params[5], &params[6],
                 &params[7], &params[8], &params[9]);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* rv = PyTuple_New(1 + strlen(componentDesc));
-    if (rv == NULL) {
-        return NULL;
+    if (rv == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;  // LCOV_EXCL_LINE
     }
 
     PyObject* b = PyBool_FromLong(result);
-    if (b == NULL) {
-        return NULL;
+    if (b == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL; // LCOV_EXCL_LINE
     }
     PyTuple_SET_ITEM(rv, 0, b);
 
@@ -367,9 +349,11 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
     len = strlen(componentDesc);
     for (i = 0; i < len; i++) {
         PyObject* v = PyLong_FromLong(params[i]);
-        if (v == NULL) {
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(rv);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(rv, i + 1, v);
     }
@@ -381,23 +365,23 @@ setup_calendar(PyObject* m __attribute__((__unused__)))
 {
     if (PyObjCRegister_FunctionCaller(CFCalendarAddComponents,
                                       mod_CFCalendarAddComponents)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFCalendarComposeAbsoluteTime,
                                       mod_CFCalendarComposeAbsoluteTime)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFCalendarDecomposeAbsoluteTime,
                                       mod_CFCalendarDecomposeAbsoluteTime)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CFCalendarGetComponentDifference,
                                       mod_CFCalendarGetComponentDifference)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

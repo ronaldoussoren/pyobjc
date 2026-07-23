@@ -12021,8 +12021,7 @@
       "retval": {
        "type_override": "Z"
       },
-      "selector": "getCString:maxLength:encoding:",
-      "suggestion": "use -cString instead"
+      "selector": "getCString:maxLength:encoding:"
      },
      {
       "args": {
@@ -12420,16 +12419,12 @@
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "getCString:maxLength:",
-      "suggestion": "use -cString instead"
+      "selector": "getCString:maxLength:"
      },
      {
       "args": {
        "0": {
-        "c_array_length_in_arg": 1,
+        "c_array_length_in_arg": [1, 3],
         "type_modifier": "o",
         "type_override": "^v"
        },
@@ -12439,11 +12434,7 @@
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "getCString:maxLength:range:remainingRange:",
-      "suggestion": "use -cString instead"
+      "selector": "getCString:maxLength:range:remainingRange:"
      },
      {
       "args": {

@@ -16,7 +16,7 @@ def _setup():
     from . import _metadata
     from ._inlines import _inline_list_
 
-    if objc.macos_available(11, 3):
+    if objc.macos_available(11, 3):  # pragma: no branch
         dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
             name="AVFAudio",
             frameworkIdentifier="com.apple.audio.AVFAudio",
@@ -28,7 +28,7 @@ def _setup():
             parents=(CoreAudio, CoreMedia, Foundation),
             metadict=_metadata.__dict__,
         )
-    else:
+    else:  # pragma: no cover
         dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
             name="AVFoundation",
             frameworkIdentifier="com.apple.avfoundation",

@@ -45,18 +45,18 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (init_audio_buffer(m) == -1)
-        return -1;
-    if (init_audio_buffer_list(m) == -1)
-        return -1;
-    if (init_audio_value_translation(m) == -1)
-        return -1;
-    if (init_audio_channel_description(m) == -1)
-        return -1;
-    if (init_audio_channel_layout(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)               // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_buffer(m) == -1)              // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_buffer_list(m) == -1)         // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_value_translation(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_channel_description(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_channel_layout(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
 
     return 0;
 }

@@ -27,15 +27,14 @@ m_CGFontCopyTableTags(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         @try {
             tags = CGFontCopyTableTags(font);
 
-        } @catch (NSException* localException) {
-            tags = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            tags = NULL;                         // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (tags == NULL && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (tags == NULL && PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;                      // LCOV_EXCL_LINE
 
     if (tags == NULL) {
         Py_INCREF(Py_None);
@@ -45,17 +44,21 @@ m_CGFontCopyTableTags(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     Py_ssize_t len = CFArrayGetCount(tags);
     Py_ssize_t i;
     PyObject*  result = PyTuple_New(len);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CFRelease(tags);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < len; i++) {
         uint32_t  cur = (uint32_t)(uintptr_t)CFArrayGetValueAtIndex(tags, i);
         PyObject* v   = PyObjC_ObjCToPython(@encode(uint32_t), &cur);
-        if (v == NULL) {
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             CFRelease(tags);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, v);
     }
@@ -88,35 +91,41 @@ m_CGWindowListCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         @try {
             windowList = CGWindowListCreate(option, relativeToWindow);
 
-        } @catch (NSException* localException) {
-            windowList = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            windowList = NULL;                   // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (windowList == NULL && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (windowList == NULL && PyErr_Occurred()) // LCOV_EXCL_LINE
+        return NULL;                            // LCOV_EXCL_LINE
 
-    if (windowList == NULL) {
+    if (windowList == NULL) { // LOV_BR_EXCL_LINE
+        /* Cannot reproduce this in testing */
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     Py_ssize_t len = CFArrayGetCount(windowList);
     Py_ssize_t i;
     PyObject*  result = PyTuple_New(len);
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CFRelease(windowList);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < len; i++) {
         CGWindowID cur = (CGWindowID)(NSInteger)CFArrayGetValueAtIndex(windowList, i);
         PyObject*  v   = PyObjC_ObjCToPython(@encode(CGWindowID), &cur);
-        if (v == NULL) {
+        if (v == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             CFRelease(windowList);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, v);
     }
@@ -133,10 +142,12 @@ createWindowList(PyObject* items)
     }
 
     CFMutableArrayRef array = CFArrayCreateMutable(NULL, PyTuple_GET_SIZE(seq), NULL);
-    if (array == NULL) {
+    if (array == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(seq);
         PyErr_SetString(PyExc_ValueError, "Cannot create CFArray");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_ssize_t len = PyTuple_GET_SIZE(seq);
@@ -177,21 +188,23 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* meth,
         @try {
             descriptions = CGWindowListCreateDescriptionFromArray(windowArray);
 
-        } @catch (NSException* localException) {
-            descriptions = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            descriptions = NULL;                 // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     CFRelease(windowArray);
 
-    if (descriptions == NULL && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (descriptions == NULL && PyErr_Occurred()) // LCOV_EXCL_LINE
+        return NULL;                              // LCOV_EXCL_LINE
 
-    if (descriptions == NULL) {
+    if (descriptions == NULL) { // LCOV_BR_EXCL_LINE
+        /* Cannot reproduce this in testing */
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObjC_ObjCToPython(@encode(CFArrayRef), &descriptions);
@@ -234,21 +247,23 @@ m_CGWindowListCreateImageFromArray(PyObject* meth,
                 CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
 #pragma clang diagnostic pop
 
-        } @catch (NSException* localException) {
-            image = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            image = NULL;                        // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     CFRelease(windowArray);
 
-    if (image == NULL && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (image == NULL && PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;                       // LCOV_EXCL_LINE
 
-    if (image == NULL) {
+    if (image == NULL) { // LCOV_BR_EXCL_LINE
+        /* Cannot reproduce in testing */
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObjC_ObjCToPython(@encode(CGImageRef), &image);
@@ -296,7 +311,7 @@ m_CGBitmapContextCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         /* pass */
 
     } else if (PyUnicode_Check(args[0])) {
-        PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
+        PyErr_SetString(PyExc_TypeError, "cannot use str as backing store");
         return NULL;
 
     } else {
@@ -317,9 +332,9 @@ m_CGBitmapContextCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
                                         height, bitsPerComponent, bytesPerRow, colorSpace,
                                         bitmapInfo);
 
-        } @catch (NSException* localException) {
-            ctx = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            ctx = NULL;                          // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -330,13 +345,14 @@ m_CGBitmapContextCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         PyBuffer_Release(&view);
     }
 
-    if (ctx == NULL && PyErr_Occurred()) {
-        return NULL;
-    }
+    if (ctx == NULL && PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;                     // LCOV_EXCL_LINE
 
-    if (ctx == NULL) {
+    if (ctx == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* rv = PyObjC_ObjCToPython(@encode(CGContextRef), &ctx);
@@ -409,14 +425,13 @@ m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnu
         /* pass */
 
     } else if (PyUnicode_Check(args[0])) {
-        PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
+        PyErr_SetString(PyExc_TypeError, "cannot use str as backing store");
         return NULL;
 
     } else {
         view = PyObjCMemView_New();
-        if (view == NULL) {
-            return NULL;
-        }
+        if (view == NULL) // LCOV_BR_EXCL_LINE
+            return NULL;  // LCOV_EXCL_LINE
 
         if (PyObject_GetBuffer(args[0], PyObjCMemView_GetBuffer(view), PyBUF_CONTIG)
             == -1) {
@@ -426,9 +441,8 @@ m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnu
     }
 
     PyObject* releaseInfo = PyTuple_Pack(4, args[7], args[8], args[0], view);
-    if (releaseInfo == NULL) {
-        return NULL;
-    }
+    if (releaseInfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
 
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
@@ -438,17 +452,19 @@ m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnu
                 bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback,
                 releaseInfo);
 
-        } @catch (NSException* localException) {
-            ctx = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            ctx = NULL;                          // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (ctx == NULL && PyErr_Occurred()) {
+    if (ctx == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         PyBuffer_Release(PyObjCMemView_GetBuffer(view));
         Py_DECREF(view);
         Py_DECREF(releaseInfo);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (ctx == NULL) {
@@ -595,38 +611,41 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
 
-    if (PyObjCRegister_FunctionCaller(CGFontCopyTableTags, m_CGFontCopyTableTags) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGFontCopyTableTags, m_CGFontCopyTableTags)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGWindowListCreate, m_CGWindowListCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGWindowListCreate, m_CGWindowListCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGWindowListCreateDescriptionFromArray,
                                       m_CGWindowListCreateDescriptionFromArray)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 #if MAC_OS_X_VERSION_MIN_REQUIRED < 150000
     if (PyObjCRegister_FunctionCaller(CGWindowListCreateImageFromArray,
                                       m_CGWindowListCreateImageFromArray)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED < 150000 */
     if (PyObjCRegister_FunctionCaller(CGBitmapContextCreate, m_CGBitmapContextCreate)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyObjCRegister_FunctionCaller(CGBitmapContextCreateWithData,
                                       m_CGBitmapContextCreateWithData)
-        == -1) {
-        return -1;
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CGPDFObjectGetValue, m_CGPDFObjectGetValue) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CGPDFObjectGetValue, m_CGPDFObjectGetValue)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

@@ -30,13 +30,13 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
                 res = ((float** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
             }
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (res == NULL) {
@@ -48,15 +48,17 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < channel_count; i++) {
         PyObject* t = PyObjCVarList_New(@encode(float), res[i]);
-        if (t == NULL) {
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, t);
     }
@@ -92,13 +94,13 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
                 res = ((int16_t** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
             }
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (res == NULL) {
@@ -110,15 +112,17 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < channel_count; i++) {
         PyObject* t = PyObjCVarList_New(@encode(int16_t), res[i]);
-        if (t == NULL) {
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, t);
     }
@@ -154,13 +158,13 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
                 res = ((int32_t** (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                     &super, PyObjCSelector_GetSelector(method));
             }
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     if (res == NULL) {
@@ -172,15 +176,17 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     for (i = 0; i < channel_count; i++) {
         PyObject* t = PyObjCVarList_New(@encode(int32_t), res[i]);
-        if (t == NULL) {
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             Py_DECREF(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         PyTuple_SET_ITEM(result, i, t);
     }
@@ -192,32 +198,33 @@ static int
 init_avaudiobuffer(void)
 {
     Class cls = objc_lookUpClass("AVAudioPCMBuffer");
-    if (!cls) {
-        return 0;
+    if (!cls) { // LCOV_BR_EXCL_LINE
+        /* macOS 10.9 or earlier */
+        return 0; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(cls, @selector(floatChannelData),
-                                     call_AVAudioPCMBuffer_floatChannelData,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (PyObjC_RegisterMethodMapping( // LCOV_ BR_EXCL_LINE
+            cls, @selector(floatChannelData), call_AVAudioPCMBuffer_floatChannelData,
+            PyObjCUnsupportedMethod_IMP)
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(cls, @selector(int16ChannelData),
-                                     call_AVAudioPCMBuffer_int16ChannelData,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+            cls, @selector(int16ChannelData), call_AVAudioPCMBuffer_int16ChannelData,
+            PyObjCUnsupportedMethod_IMP)
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
-    if (PyObjC_RegisterMethodMapping(cls, @selector(int32ChannelData),
-                                     call_AVAudioPCMBuffer_int32ChannelData,
-                                     PyObjCUnsupportedMethod_IMP)
-        < 0) {
+    if (PyObjC_RegisterMethodMapping( // LCOV_BR_EXCL_LINE
+            cls, @selector(int32ChannelData), call_AVAudioPCMBuffer_int32ChannelData,
+            PyObjCUnsupportedMethod_IMP)
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;

@@ -33,3 +33,20 @@ class TestSFAuthorizationView(TestCase):
         self.assertResultIsBOOL(
             TestSFAuthorizationViewHelper.authorizationViewShouldDeauthorize_
         )
+
+    def test_manual(self):
+        view = SecurityInterface.SFAuthorizationView.alloc().initWithFrame_(
+            ((0, 0), (300, 300))
+        )
+        self.assertIsInstance(view, SecurityInterface.SFAuthorizationView)
+
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            view.authorizationRights(1)
+
+        rights = view.authorizationRights()
+        self.assertIs(rights, None)
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 2"):
+            view.setAuthorizationRights_(None, 1)
+
+        view.setAuthorizationRights_(None)

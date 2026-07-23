@@ -2,11 +2,9 @@
 Some simple tests to check that the framework is properly wrapped.
 """
 
-import sys
-
 import objc
 from PyObjCTools import Debugging
-from PyObjCTools.TestSupport import TestCase, expectedFailure, expectedFailureIf
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestDebugging(TestCase):
@@ -69,7 +67,6 @@ class TestDebugging(TestCase):
         except Exception as exc:
             self.assertTrue(Debugging.isPythonException(exc))
 
-    @expectedFailureIf(sys.byteorder == "big")
     def test_atos(self):
         NSThread = objc.lookUpClass("NSThread")
         NSArray = objc.lookUpClass("NSArray")
@@ -85,47 +82,41 @@ class TestDebugging(TestCase):
         self.assertTrue(any(x in value for x in {"_objc.", "ffi_call_unix64"}))
 
     def test_install_exception_handler(self):
-        self.assertFalse(Debugging.handlerInstalled())
-        try:
-            Debugging.installExceptionHandler(
-                verbosity=Debugging.LOGSTACKTRACE, mask=Debugging.EVERYTHINGMASK
-            )
-            self.assertTrue(Debugging.handlerInstalled())
+        for verbosity in (Debugging.LOGSTACKTRACE, 0):
+            with self.subTest(verbosity=verbosity):
+                self.assertFalse(Debugging.handlerInstalled())
+                try:
+                    Debugging.installExceptionHandler(
+                        verbosity=verbosity, mask=Debugging.EVERYTHINGMASK
+                    )
+                    self.assertTrue(Debugging.handlerInstalled())
 
-            try:
-                cls = objc.lookUpClass("NSException")
-                cls.exceptionWithName_reason_userInfo_(
-                    "FooBar", "hello world", None
-                ).raise__()
-            except Exception as exc:
-                self.assertFalse(Debugging.isPythonException(exc))
+                    try:
+                        cls = objc.lookUpClass("NSException")
+                        cls.exceptionWithName_reason_userInfo_(
+                            "FooBar", "hello world", None
+                        ).raise__()
+                    except Exception as exc:
+                        self.assertFalse(Debugging.isPythonException(exc))
 
-            else:
-                self.fail("Exception not raised")
+                    else:
+                        self.fail("Exception not raised")
 
-            try:
-                cls = objc.lookUpClass("NSArray")
+                    try:
+                        cls = objc.lookUpClass("NSArray")
 
-                def test(value, idx, stop):
-                    raise ValueError("42")
+                        def test(value, idx, stop):
+                            raise ValueError("42")
 
-                a = cls.alloc().initWithArray_([1, 2, 3, 4])
-                a.indexOfObjectPassingTest_(test)
+                        a = cls.alloc().initWithArray_([1, 2, 3, 4])
+                        a.indexOfObjectPassingTest_(test)
 
-            except Exception as exc:
-                self.assertTrue(Debugging.isPythonException(exc))
+                    except Exception as exc:
+                        self.assertTrue(Debugging.isPythonException(exc))
 
-            else:
-                self.fail("Exception not raised")
+                    else:
+                        self.fail("Exception not raised")
 
-        finally:
-            Debugging.removeExceptionHandler()
-            self.assertFalse(Debugging.handlerInstalled())
-
-    @expectedFailure
-    def test_misc(self):
-        self.fail("Actually test this module")
-        # - nsLogPythonException
-        # - nsLogObjCException
-        #
-        # - Actually trigger handler in various modes
+                finally:
+                    Debugging.removeExceptionHandler()
+                    self.assertFalse(Debugging.handlerInstalled())

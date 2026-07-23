@@ -8,6 +8,7 @@ import CoreFoundation
 
 class TestCallableMetadata(TestCase):
     def test_callable_metadata_is_sane(self):
+        self.fail()
         self.assertCallableMetadataIsSane(
             Cocoa,
             exclude_cocoa=False,

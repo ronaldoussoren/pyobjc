@@ -35,9 +35,11 @@ static PyObject* _Nullable mod_CFBagGetValues(PyObject* meth,
 
     CFIndex    count   = CFBagGetCount(bag);
     NSObject** members = malloc(sizeof(NSObject*) * count);
-    if (members == NULL) {
+    if (members == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
     memset(members, 0, sizeof(NSObject*) * count);
 
@@ -121,14 +123,17 @@ static PyObject* _Nullable mod_CFBagCreateMutable(PyObject* meth,
 static int
 setup_cfbag(PyObject* m __attribute__((__unused__)))
 {
-    if (PyObjCRegister_FunctionCaller(CFBagCreate, mod_CFBagCreate) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFBagCreate, mod_CFBagCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFBagCreateMutable, mod_CFBagCreateMutable) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFBagCreateMutable, mod_CFBagCreateMutable)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
-    if (PyObjCRegister_FunctionCaller(CFBagGetValues, mod_CFBagGetValues) == -1) {
-        return -1;
+    if (PyObjCRegister_FunctionCaller(CFBagGetValues, mod_CFBagGetValues)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }

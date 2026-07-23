@@ -74,8 +74,8 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
     } else {
         Py_ssize_t i;
         self->abl_items = PyTuple_New(self->abl_list->mNumberBuffers);
-        if (self->abl_items == NULL) {
-            goto end;
+        if (self->abl_items == NULL) { // LCOV_BR_EXCL_LINE
+            goto end;                  // LCOV_EXCL_LINE
         } else {
             for (i = 0; i < (Py_ssize_t)self->abl_list->mNumberBuffers; i++) {
                 PyTuple_SET_ITEM(self->abl_items, i, Py_None);
@@ -85,10 +85,12 @@ abl_get_item(PyObject* _self, Py_ssize_t idx)
     }
 
     result = ab_create(self->abl_list->mBuffers + idx);
-    if (result != NULL) {
+    if (result != NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(PyTuple_GET_ITEM(self->abl_items, idx));
         PyTuple_SET_ITEM(self->abl_items, idx, result);
         Py_INCREF(result);
+        // LCOV_EXCL_STOP
     }
 end:
     (void)0;
@@ -108,21 +110,22 @@ abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    if (audio_buffer_list_type == NULL)
-        abort();
+    assert(audio_buffer_list_type != NULL);
     result =
         PyObject_New(struct audio_buffer_list, (PyTypeObject*)audio_buffer_list_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->abl_ownsstorage = 1;
     result->abl_items       = NULL;
     result->abl_list =
         PyMem_Malloc(sizeof(AudioBufferList) + (num_buffers * sizeof(AudioBuffer)));
-    if (result->abl_list == NULL) {
+    if (result->abl_list == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     result->abl_list->mNumberBuffers = num_buffers;
 
@@ -144,7 +147,7 @@ abl_dealloc(PyObject* object)
         Py_DECREF(self->abl_items);
     }
 
-    if (self->abl_ownsstorage) {
+    if (self->abl_ownsstorage && self->abl_list) {
         PyMem_Free(self->abl_list);
     }
     Py_TYPE(object)->tp_free(object);
@@ -186,8 +189,8 @@ pythonify_audio_buffer_list(void* pointer)
 
     result =
         PyObject_New(struct audio_buffer_list, (PyTypeObject*)audio_buffer_list_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->abl_ownsstorage = 0;
@@ -221,33 +224,37 @@ init_audio_buffer_list(PyObject* module)
     int r;
 
     PyObject* tmp = PyType_FromSpec(&abl_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     audio_buffer_list_type = tmp;
 
     PyObject* ts = PyBytes_FromString(@encode(AudioBufferList));
-    if (ts == NULL) {
+    if (ts == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_list_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     r = PyObject_SetAttrString(audio_buffer_list_type, "__typestr__", ts);
     Py_DECREF(ts);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_list_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyModule_AddObject(module, "AudioBufferList", audio_buffer_list_type);
-    if (r == -1) {
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_CLEAR(audio_buffer_list_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(audio_buffer_list_type);
 
-    r = PyObjCPointerWrapper_Register("AudioBufferList*", @encode(AudioBufferList*),
-                                      pythonify_audio_buffer_list,
-                                      depythonify_audio_buffer_list);
-
-    return r;
+    return PyObjCPointerWrapper_Register("AudioBufferList*", @encode(AudioBufferList*),
+                                         pythonify_audio_buffer_list,
+                                         depythonify_audio_buffer_list);
 }

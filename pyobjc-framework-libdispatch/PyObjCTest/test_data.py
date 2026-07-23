@@ -1,6 +1,6 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 dispatch_data_applier_t = b"B@Ln^vL"
 
@@ -76,6 +76,18 @@ class TestDataUsage(TestCase):
         self.assertIsNot(d2, None)
 
         self.assertEqual(dispatch.dispatch_data_get_size(d1), 6)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            dispatch.dispatch_data_create_map()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            dispatch.dispatch_data_create_map(NoObjCClass(), None, None)
+
+        with self.assertRaisesRegex(TypeError, "must be None"):
+            dispatch.dispatch_data_create_map(d1, 42, None)
+
+        with self.assertRaisesRegex(TypeError, "must be None"):
+            dispatch.dispatch_data_create_map(d1, None, 42)
 
         d, b, s = dispatch.dispatch_data_create_map(d1, None, None)
         self.assertIsNot(d, None)

@@ -26,4 +26,21 @@ class TestCMSimpleQueue(TestCase):
         CoreMedia.CMSimpleQueueGetCapacity
         CoreMedia.CMSimpleQueueGetCount
 
-        CoreMedia.CMSimpleQueueGetFullness
+        err, q = CoreMedia.CMSimpleQueueCreate(None, 4, None)
+        self.assertEqual(err, 0)
+        self.assertIsNot(q, None)
+
+        self.assertIsInstance(CoreMedia.CMSimpleQueueGetFullness(q), float)
+        self.assertEqual(CoreMedia.CMSimpleQueueGetFullness(q), 0.0)
+
+        r = CoreMedia.CMSimpleQueueEnqueue(q, 42)
+        self.assertEqual(r, 0)
+
+        self.assertEqual(CoreMedia.CMSimpleQueueGetCount(q), 1)
+        self.assertEqual(CoreMedia.CMSimpleQueueGetFullness(q), 0.25)
+
+        r = CoreMedia.CMSimpleQueueDequeue(q)
+        self.assertEqual(r, 42)
+
+        self.assertEqual(CoreMedia.CMSimpleQueueGetCount(q), 0)
+        self.assertEqual(CoreMedia.CMSimpleQueueGetFullness(q), 0.0)
