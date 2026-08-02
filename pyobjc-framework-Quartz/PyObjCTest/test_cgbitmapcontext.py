@@ -1,5 +1,7 @@
 import array
 import objc
+import os
+import tempfile
 
 from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import Quartz
@@ -311,6 +313,19 @@ class TestCGBitmapContext(TestCase):
             8,
             400,
             Quartz.CGColorSpaceCreateDeviceRGB(),
+            0,
+            None,
+            None,
+        )
+        self.assertIs(ctx, None)
+
+        ctx = Quartz.CGBitmapContextCreateWithData(
+            bytes_val,
+            100,
+            80,
+            8,
+            400,
+            Quartz.CGColorSpaceCreateDeviceRGB(),
             Quartz.kCGImageAlphaPremultipliedLast,
             None,
             None,
@@ -341,6 +356,39 @@ class TestCGBitmapContext(TestCase):
         self.assertEqual(len(a_list), 1)
         self.assertIs(a_list[0][0], release_info)
         self.assertIs(a_list[0][1], bytes_val)
+
+        def callback_raises(info, data):
+            raise RuntimeError("callback error")
+
+        with objc.autorelease_pool():
+            ctx = Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                callback_raises,
+                release_info,
+            )
+            self.assertIsInstance(ctx, Quartz.CGContextRef)
+
+        with tempfile.TemporaryFile() as fp:
+            saved_stderr = os.dup(2)
+            try:
+                os.dup2(fp.fileno(), 2)
+
+                del ctx
+            finally:
+                os.dup2(saved_stderr, 2)
+                fp.seek(0)
+                stderr = fp.read().decode()
+
+        self.assertIn(
+            "PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: callback error",
+            stderr,
+        )
 
     def test_structs(self):
         v = Quartz.CGContentInfo()

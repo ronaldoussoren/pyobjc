@@ -499,8 +499,8 @@ m_CGPDFObjectGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     if (PyObjC_PythonToObjC(@encode(CGPDFObjectType), args[1], &type) == -1) {
         return NULL;
     }
-    if (args[2] != Py_None && args[2] != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError, "value must be None or objc.NULL");
+    if (args[2] != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "value must be None");
         return NULL;
     }
 
@@ -511,89 +511,49 @@ m_CGPDFObjectGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     } break;
 
     case kCGPDFObjectTypeBoolean: {
-        if (args[2] == Py_None) {
-            CGPDFBoolean val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res), PyBool_FromLong(val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFBoolean val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res), PyBool_FromLong(val));
     } break;
 
     case kCGPDFObjectTypeInteger: {
-        if (args[2] == Py_None) {
-            CGPDFInteger val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res), PyLong_FromLong(val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFInteger val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res), PyLong_FromLong(val));
     } break;
     case kCGPDFObjectTypeReal: {
-        if (args[2] == Py_None) {
-            CGPDFReal val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res), PyFloat_FromDouble(val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFReal val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res), PyFloat_FromDouble(val));
     } break;
     case kCGPDFObjectTypeName: {
-        if (args[2] == Py_None) {
-            char* val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res), PyUnicode_FromString(val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        char* val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res), PyUnicode_FromString(val));
     } break;
     case kCGPDFObjectTypeString: {
-        if (args[2] == Py_None) {
-            CGPDFStringRef val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res),
-                                 PyObjC_ObjCToPython(@encode(CGPDFStringRef), &val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFStringRef val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res),
+                             PyObjC_ObjCToPython(@encode(CGPDFStringRef), &val));
     } break;
     case kCGPDFObjectTypeArray: {
-        if (args[2] == Py_None) {
-            CGPDFArrayRef val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res),
-                                 PyObjC_ObjCToPython(@encode(CGPDFArrayRef), &val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFArrayRef val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res),
+                             PyObjC_ObjCToPython(@encode(CGPDFArrayRef), &val));
     } break;
     case kCGPDFObjectTypeDictionary: {
-        if (args[2] == Py_None) {
-            CGPDFDictionaryRef val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res),
-                                 PyObjC_ObjCToPython(@encode(CGPDFDictionaryRef), &val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFDictionaryRef val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res),
+                             PyObjC_ObjCToPython(@encode(CGPDFDictionaryRef), &val));
     } break;
     case kCGPDFObjectTypeStream: {
-        if (args[2] == Py_None) {
-            CGPDFStreamRef val;
-            res = CGPDFObjectGetValue(obj, type, &val);
-            return Py_BuildValue("NN", PyBool_FromLong(res),
-                                 PyObjC_ObjCToPython(@encode(CGPDFStreamRef), &val));
-        } else {
-            res = CGPDFObjectGetValue(obj, type, NULL);
-            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
-        }
+        CGPDFStreamRef val;
+        res = CGPDFObjectGetValue(obj, type, &val);
+        return Py_BuildValue("NN", PyBool_FromLong(res),
+                             PyObjC_ObjCToPython(@encode(CGPDFStreamRef), &val));
     } break;
 
     default:

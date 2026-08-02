@@ -39,7 +39,7 @@ def _setup():
     def CIVector__getitem__(self, idx):
         if isinstance(idx, slice):
             start, stop, step = idx.indices(self.count())
-            return [self[i] for i in range(start, stop, step)]
+            return tuple(self[i] for i in range(start, stop, step))
 
         if idx < 0:
             new = self.count() + idx
@@ -47,6 +47,8 @@ def _setup():
                 raise IndexError(idx)
             idx = new
 
+        if idx >= self.count():
+            raise IndexError(idx)
         return self.valueAtIndex_(idx)
 
     objc.addConvenienceForClass(

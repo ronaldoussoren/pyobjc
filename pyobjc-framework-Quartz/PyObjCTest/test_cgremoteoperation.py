@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
-import warnings
 
 
 class TestCGRemoteOperation(TestCase):
@@ -63,60 +62,6 @@ class TestCGRemoteOperation(TestCase):
 
         Quartz.CGUnregisterScreenRefreshCallback(callbackRefresh, myInfo)
 
-        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 3"):
-            Quartz.CGWaitForScreenRefreshRects(None, None, None)
-
-        with self.assertRaisesRegex(ValueError, "'pRectArray' must be None"):
-            Quartz.CGWaitForScreenRefreshRects(42, None)
-
-        with self.assertRaisesRegex(ValueError, "'pCount' must be None"):
-            Quartz.CGWaitForScreenRefreshRects(None, 42)
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", category=DeprecationWarning)
-            with self.assertRaisesRegex(
-                DeprecationWarning,
-                "leaving out 'pRectArray' and 'pCount' is deprecated",
-            ):
-                Quartz.CGWaitForScreenRefreshRects()
-
-        # FIXME: This complete hangs the interpreter, don't have
-        # time to investigate this.
-        #    Quartz.CGWaitForScreenRefreshRects(None, None)
-        #
-
-        with self.assertRaisesRegex(TypeError, "expected 5 arguments, got 0"):
-            Quartz.CGWaitForScreenUpdateRects()
-
-        with self.assertRaisesRegex(
-            ValueError, "depythonifying 'unsigned int', got 'str'"
-        ):
-            Quartz.CGWaitForScreenUpdateRects("1", None, None, None, None)
-
-        with self.assertRaisesRegex(ValueError, "currentOperation must be None"):
-            Quartz.CGWaitForScreenUpdateRects(1, 42, None, None, None)
-
-        with self.assertRaisesRegex(ValueError, "pRectArray must be None"):
-            Quartz.CGWaitForScreenUpdateRects(1, None, 42, None, None)
-
-        with self.assertRaisesRegex(ValueError, "pCount must be None"):
-            Quartz.CGWaitForScreenUpdateRects(1, None, None, 42, None)
-
-        with self.assertRaisesRegex(ValueError, "pDelta must be None"):
-            Quartz.CGWaitForScreenUpdateRects(1, None, None, None, 42)
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("error", category=DeprecationWarning)
-            with self.assertRaisesRegex(
-                DeprecationWarning,
-                "leaving out 'currentOperation', 'pRectArray', 'pCount' and 'pDelta' is deprecated",
-            ):
-                Quartz.CGWaitForScreenUpdateRects(1)
-
-        # FIXME: This complete hangs the interpreter, don't have
-        # time to investigate this.
-        #    Quartz.CGWaitForScreenUpdateRect(1, None, None, None, None, None)
-
         v = Quartz.CGCursorIsVisible()
         self.assertIsInstance(v, int)
 
@@ -170,31 +115,30 @@ class TestCGRemoteOperation(TestCase):
 
         with self.assertRaisesRegex(
             TypeError,
-            "The rects returned by 'CGWaitForScreenRefreshRects' are released automaticly",
+            "function is not functional since macOS 10.8",
         ):
             Quartz.CGReleaseScreenRefreshRects()
 
-        # The default metadata results in not actually calling the bindings therefore create
-        # a copy of the function without this metadata.
-        d = {}
-        objc.loadBundleFunctions(
-            None,
-            d,
-            [
-                ("CGReleaseScreenRefreshRects", b"v^{CGRect={CGPoint=dd}{CGSize=dd}}"),
-            ],
-        )
-        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
-            d["CGReleaseScreenRefreshRects"]()
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not functional since macOS 10.8",
+        ):
+            Quartz.CGWaitForScreenRefreshRects(None, None)
 
-        d["CGReleaseScreenRefreshRects"]([])
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not functional since macOS 10.8",
+        ):
+            Quartz.CGWaitForScreenUpdateRects(None, None)
 
-    @expectedFailure
-    def test_blocks_forever(self):
-        self.fail("Quartz.CGWaitForScreenRefreshRects")
-        self.fail("Quartz.CGWaitForScreenUpdateRect")
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not supported",
+        ):
+            Quartz.CGScreenRegisterMoveCallback()
 
-    @expectedFailure
-    def test_missing(self):
-        self.fail("CGScreenRegisterMoveCallback")
-        self.fail("CGScreenUnregisterMoveCallback")
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not supported",
+        ):
+            Quartz.CGScreenUnregisterMoveCallback()

@@ -88,11 +88,6 @@ setup(
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.CoreGraphics._doubleindirect",
-            ["Modules/_doubleindirect.m"],
-            extra_link_args=["-framework", "Quartz"],
-        ),
-        Extension(
             "Quartz.CoreGraphics._sortandmap",
             ["Modules/_sortandmap.m"],
             extra_link_args=["-framework", "Quartz"],

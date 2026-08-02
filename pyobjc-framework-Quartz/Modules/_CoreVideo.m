@@ -78,7 +78,7 @@ mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonn
         return NULL;
     }
 
-    if (args[9] != Py_None) {
+    if (nargs == 10 && args[9] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "pixelBufferOut must be None");
         return NULL;
     }

@@ -8,6 +8,7 @@ import Quartz
 import objc
 import os
 import tempfile
+import warnings
 
 
 class TestCVPixelBuffer(TestCase):
@@ -367,7 +368,7 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVPixelBufferCreate, 5)
         self.assertArgIsCFRetained(Quartz.CVPixelBufferCreate, 5)
 
-    def test_manual(self):
+    def test_manual_createwithbytes(self):
         context = object()
         released = None
 
@@ -505,6 +506,55 @@ class TestCVPixelBuffer(TestCase):
                 42,
             )
 
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "leaving out 'pixelBuffer' is deprecated"
+            ):
+                Quartz.CVPixelBufferCreateWithBytes(
+                    None,
+                    200,
+                    100,
+                    Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                    bytearray(200 * 100 * 10),
+                    400,
+                    release,
+                    context,
+                    {},
+                )
+
+        with warnings.catch_warnings(record=True) as wrn:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            buf = Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                None,
+                context,
+                {},
+            )
+            self.assertIsNot(buf, None)
+            del buf
+        self.assertEqual(len(wrn), 1)
+        self.assertEqual(wrn[0].category, DeprecationWarning)
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            0,
+            bytearray(200 * 100 * 10),
+            400,
+            release,
+            context,
+            {},
+            None,
+        )
+        self.assertIs(buf, None)
+
         buf = Quartz.CVPixelBufferCreateWithBytes(
             None,
             200,
@@ -553,6 +603,7 @@ class TestCVPixelBuffer(TestCase):
             stderr,
         )
 
+    def test_manual_createwithplanarbytes(self):
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
 
     def makeBuffer(self):

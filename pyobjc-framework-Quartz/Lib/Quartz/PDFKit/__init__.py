@@ -16,7 +16,7 @@ def _setup():
 
     frameworkPath = "/System/Library/Frameworks/PDFKit.framework"
     frameworkIdentifier = "com.apple.PDFKit"
-    if not os.path.exists(frameworkPath):
+    if not os.path.exists(frameworkPath):  # pragma: no cover
         frameworkPath = "/System/Library/Frameworks/Quartz.framework"
         if objc.macos_available(13, 0):
             frameworkIdentifier = "com.apple.Quartz"

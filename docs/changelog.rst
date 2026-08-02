@@ -142,18 +142,23 @@ Version 13.0a0
   * When overriding :meth:`AppKit.NSBezierPath.elementAtIndex_associatedPoints_` in
     a subclass specify both parameters, previous versions required just one parameter.
 
+  * :meth:`Quartz.CIVector.__getitem__` now consistently raises when the index is
+    out of range. In previous versions a positive out of range value would return
+    0.0 (inherited from :meth:`valueAtIndex_ <Quartz.CIVector.valueAtIndex_>`.
+
 * Deprecations:
 
   * The attribute :data:`objc.platform` is deprecated and will be removed
      in PyObjC 14. Its value is always ``"MACOSX"``.
 
-  * :func:`Quartz.CGWaitForScreenRefreshRects` can currently be called
-    without arguments. This feature is deprecated and all arguments
-    will be required in PyObjC 14.
+  * :func:`Quartz.CGWaitForScreenRefreshRects`,
+    :func:`Quartz.CGWaitForScreenUpdateRects`,
+    :func:`Quartz.CGScreenRegisterMoveCallback`,
+    :func:`Quartz.CGScreenUnregisterMoveCallback` are no longer supported.
 
-  * :func:`Quartz.CGWaitForScreenUpdateRects` can currently be called
-    without one instead of five arguments. This feature is deprecated
-    and all arguments will be required in PyObjC 14.
+    The first two had manual bindings that were removed because
+    the system API hangs forever since at least macOS 10.9. The latter
+    two required, dit not have, manual bindings.
 
   * :func`Quartz.CVPixelBufferCreateWithBytes` currently has an
     optional last argument. That feature is deprecated, the argument

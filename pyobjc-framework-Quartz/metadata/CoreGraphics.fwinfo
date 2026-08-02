@@ -2892,6 +2892,7 @@
     }
    },
    "CGScreenRegisterMoveCallback": {
+    "suggestion": "function is not supported",
     "args": {
      "0": {
       "callable": {
@@ -2918,6 +2919,7 @@
     }
    },
    "CGScreenUnregisterMoveCallback": {
+    "suggestion": "function is not supported",
     "args": {
      "0": {
       "callable": {
@@ -3026,13 +3028,14 @@
     }
    },
    "CGWaitForScreenRefreshRects": {
+    "suggestion": "function is not functional since macOS 10.8",
     "args": {
      "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "1": { "type_modifier": "o" }
-    },
-    "doc": "The returned *rects* will be garbage collected as usual, no need to call ``CGReleaseScreenRefreshRects``."
+    }
    },
    "CGWaitForScreenUpdateRects": {
+    "suggestion": "function is not functional since macOS 10.8",
     "args": {
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o", "c_array_length_in_arg": 3 },
@@ -6458,61 +6461,9 @@
     }
    },
    "CGReleaseScreenRefreshRects": {
-    "suggestion": "The rects returned by 'CGWaitForScreenRefreshRects' are released automaticly",
+    "suggestion": "function is not functional since macOS 10.8",
     "args": {
      "0": { "type_modifier": "n" }
-    }
-   },
-   "CGScreenRegisterMoveCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "{CGScreenUpdateMoveDelta=ii}"
-        },
-        "1": {
-         "type": "Q"
-        },
-        "2": {
-         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-        },
-        "3": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
-    }
-   },
-   "CGScreenUnregisterMoveCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "{CGScreenUpdateMoveDelta=ii}"
-        },
-        "1": {
-         "type": "Q"
-        },
-        "2": {
-         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-        },
-        "3": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
     }
    },
    "CGSessionCopyCurrentDictionary": {

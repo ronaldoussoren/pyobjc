@@ -24,9 +24,9 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 0), "Oy#l", PyTuple_GetItem(info, 2),
-                              buffer, (Py_ssize_t)count, (Py_ssize_t)count);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "Oy#l",
+                                             PyTuple_GET_ITEM(info, 2), buffer,
+                                             (Py_ssize_t)count, (Py_ssize_t)count);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -47,9 +47,9 @@ m_CGDataConsumerReleaseInfoCallback(void* _info)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GetItem(info, 1) != Py_None) {
-        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "O",
-                                                 PyTuple_GetItem(info, 2));
+    if (PyTuple_GET_ITEM(info, 1) != Py_None) {
+        PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "O",
+                                                 PyTuple_GET_ITEM(info, 2));
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -91,9 +91,8 @@ m_CGDataConsumerCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
 
     PyObject* real_info = PyTuple_Pack(3, PyTuple_GET_ITEM(args[1], 0),
                                        PyTuple_GET_ITEM(args[1], 1), args[0]);
-    if (real_info == NULL) {
-        return NULL;
-    }
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     CGDataConsumerRef result;
     Py_BEGIN_ALLOW_THREADS
@@ -111,10 +110,15 @@ m_CGDataConsumerCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         return NULL;                          // LCOV_EXCL_LINE
     }
 
-    if (result == NULL) {
+    if (result == NULL) { //  LCOV_BR_EXCL_LINE
+        /* Returns NULL when the callback struct is
+         * invalid, which ours never is.
+         */
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CGDataConsumerRef), &result);
@@ -148,8 +152,8 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "OOl",
-                                             PyTuple_GetItem(info, 0), buf, count);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "OOl",
+                                             PyTuple_GET_ITEM(info, 0), buf, count);
     if (result == NULL) {
         Py_DECREF(result);
         Py_DECREF(buf);
@@ -165,16 +169,17 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     }
 
     size_t c_result;
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(result, 0), &c_result) < 0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(result, 0), &c_result)
+        < 0) {
         Py_DECREF(result);
         Py_DECREF(buf);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    if (PyTuple_GetItem(result, 1) != buf) {
+    if (PyTuple_GET_ITEM(result, 1) != buf) {
         Py_buffer view;
 
-        if (PyObject_GetBuffer(PyTuple_GetItem(result, 1), &view, PyBUF_CONTIG_RO)
+        if (PyObject_GetBuffer(PyTuple_GET_ITEM(result, 1), &view, PyBUF_CONTIG_RO)
             == -1) {
             Py_DECREF(result);
             Py_DECREF(buf);
@@ -210,9 +215,9 @@ m_CGDataProviderRewindCallback(void* _info)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GetItem(info, 3) != Py_None) {
-        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 3), "O",
-                                                 PyTuple_GetItem(info, 0));
+    if (PyTuple_GET_ITEM(info, 3) != Py_None) {
+        PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3), "O",
+                                                 PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -229,9 +234,9 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GetItem(info, 4) != Py_None) {
-        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 4), "O",
-                                                 PyTuple_GetItem(info, 0));
+    if (PyTuple_GET_ITEM(info, 4) != Py_None) {
+        PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 4), "O",
+                                                 PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -252,8 +257,8 @@ m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 2), "Ol",
-                                             PyTuple_GetItem(info, 0), count);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2), "Ol",
+                                             PyTuple_GET_ITEM(info, 0), count);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -360,12 +365,12 @@ m_releaseData(void* _info, const void* data, size_t size)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    tag  = PyLong_AsLong(PyTuple_GetItem(info, 2));
-    view = PyTuple_GetItem(info, 3);
+    tag  = PyLong_AsLong(PyTuple_GET_ITEM(info, 2));
+    view = PyTuple_GET_ITEM(info, 3);
 
-    if (PyTuple_GetItem(info, 1) != Py_None) {
-        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "O",
-                                                 PyTuple_GetItem(info, 0));
+    if (PyTuple_GET_ITEM(info, 1) != Py_None) {
+        PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "O",
+                                                 PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
             PyObjC_FreeCArray(tag, PyObjCMemView_GetBuffer(view));
             Py_DECREF(info);
@@ -430,16 +435,18 @@ m_CGDataProviderCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnul
         @try {
             result = CGDataProviderCreateWithData(real_info, arr, size, m_releaseData);
 
-        } @catch (NSException* localException) {
-            result = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyObjC_FreeCArray(tag, PyObjCMemView_GetBuffer(view));
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CGDataProviderRef), &result);
@@ -460,19 +467,22 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    domdim   = PyLong_AsLong(PyTuple_GetItem(info, 2));
-    rangedim = PyLong_AsLong(PyTuple_GetItem(info, 3));
+    domdim   = PyLong_AsLong(PyTuple_GET_ITEM(info, 2));
+    rangedim = PyLong_AsLong(PyTuple_GET_ITEM(info, 3));
 
     PyObject* input;
     if (inData) {
         input = PyObjC_CArrayToPython(@encode(CGFloat), (void*)inData, domdim);
+        if (input == NULL) {                      // LCOV_BR_EXCL_LINE
+            PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
+        }
     } else {
         input = Py_None;
         Py_INCREF(Py_None);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "OOO",
-                                             PyTuple_GetItem(info, 0), input, Py_None);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "OOO",
+                                             PyTuple_GET_ITEM(info, 0), input, Py_None);
     Py_DECREF(input);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -592,9 +602,9 @@ m_CGFunctionCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
             result = CGFunctionCreate(real_info, domainDimension, domainArr,
                                       rangeDimension, rangeArr, &m_CGFunctionCallbacks);
 
-        } @catch (NSException* localException) {
-            result = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -610,9 +620,8 @@ m_CGFunctionCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
 
     if (result == NULL) {
         Py_DECREF(real_info);
-        if (PyErr_Occurred()) {
-            return NULL;
-        }
+        if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+            return NULL;      // LCOV_EXCL_LINE
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -804,8 +813,8 @@ m_CGDisplayReconfigurationCallBack(CGDirectDisplayID           display,
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "OOO", py_display,
-                                             py_flags, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "OOO", py_display,
+                                             py_flags, PyTuple_GET_ITEM(info, 1));
     Py_DECREF(py_display);
     Py_DECREF(py_flags);
     if (result == NULL) {
@@ -926,8 +935,8 @@ m_CGScreenUpdateMoveCallback(CGScreenUpdateMoveDelta delta, size_t count,
     }
 
     PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 0), "OlOO", py_delta, (long)count,
-                              py_rectarray, PyTuple_GetItem(info, 1));
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "OlOO", py_delta, (long)count,
+                              py_rectarray, PyTuple_GET_ITEM(info, 1));
     Py_DECREF(py_delta);
     Py_DECREF(py_rectarray);
     if (result == NULL) {
@@ -1029,8 +1038,9 @@ m_CGScreenRefreshCallback(CGRectCount count, const CGRect* rectArray, void* _use
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "lOO", (long)count,
-                                             py_rectarray, PyTuple_GetItem(info, 1));
+    PyObject* result =
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "lOO", (long)count, py_rectarray,
+                              PyTuple_GET_ITEM(info, 1));
     Py_DECREF(py_rectarray);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -1151,8 +1161,9 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_proxy,
-                                             py_type, py_event, PyTuple_GetItem(info, 1));
+    PyObject* result =
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "NNNO", py_proxy, py_type,
+                              py_event, PyTuple_GET_ITEM(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -1287,8 +1298,8 @@ m_CGPatternDrawPatternCallback(void* _info, CGContextRef context)
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "ON",
-                                             PyTuple_GetItem(info, 1), ctx);
+    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "ON",
+                                             PyTuple_GET_ITEM(info, 1), ctx);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -1398,7 +1409,7 @@ m_CGPSConverterBeginDocumentCallback(void* _info)
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 1), "O", PyTuple_GetItem(info, 0));
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "O", PyTuple_GET_ITEM(info, 0));
 
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -1416,7 +1427,7 @@ m_CGPSConverterBeginPageCallback(void* _info, size_t pageNumber, CFDictionaryRef
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 3), "OlN", PyTuple_GetItem(info, 0), (long)pageNumber,
+        PyTuple_GET_ITEM(info, 3), "OlN", PyTuple_GET_ITEM(info, 0), (long)pageNumber,
         PyObjC_ObjCToPython(@encode(CFDictionaryRef), &pageInfo));
 
     if (result == NULL) {
@@ -1435,7 +1446,7 @@ m_CGPSConverterEndDocumentCallback(void* _info, bool success)
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 2), "ON", PyTuple_GetItem(info, 0),
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 2), "ON", PyTuple_GET_ITEM(info, 0),
                               PyBool_FromLong(success));
 
     if (result == NULL) {
@@ -1454,7 +1465,7 @@ m_CGPSConverterEndPageCallback(void* _info, size_t pageNumber, CFDictionaryRef p
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result = PyObject_CallFunction(
-        PyTuple_GetItem(info, 4), "OlN", PyTuple_GetItem(info, 0), (long)pageNumber,
+        PyTuple_GET_ITEM(info, 4), "OlN", PyTuple_GET_ITEM(info, 0), (long)pageNumber,
         PyObjC_ObjCToPython(@encode(CFDictionaryRef), &pageInfo));
 
     if (result == NULL) {
@@ -1473,7 +1484,7 @@ m_CGPSConverterMessageCallback(void* _info, CFStringRef message)
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 6), "ON", PyTuple_GetItem(info, 0),
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 6), "ON", PyTuple_GET_ITEM(info, 0),
                               PyObjC_ObjCToPython(@encode(CFStringRef), &message));
 
     if (result == NULL) {
@@ -1492,7 +1503,7 @@ m_CGPSConverterProgressCallback(void* _info)
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 5), "O", PyTuple_GetItem(info, 0));
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 5), "O", PyTuple_GET_ITEM(info, 0));
 
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -1509,9 +1520,9 @@ m_CGPSConverterReleaseInfoCallback(void* _info)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GetItem(info, 7) != Py_None) {
-        PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 7), "O",
-                                                 PyTuple_GetItem(info, 0));
+    if (PyTuple_GET_ITEM(info, 7) != Py_None) {
+        PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 7), "O",
+                                                 PyTuple_GET_ITEM(info, 0));
 
         if (result == NULL) {
             Py_DECREF(info);
