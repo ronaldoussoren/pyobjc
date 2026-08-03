@@ -21,6 +21,8 @@ class TestCGPDFObject(TestCase):
 
     def test_functions(self):
         pdfFile = pathlib.Path(__file__).parent / "testdoc.pdf"
+        # pdfFile = pathlib.Path("/System/Library/ProductDocuments/ProductGuides/ENERGY STAR.pdf")
+
         self.assertTrue(pdfFile.is_file())
 
         pdf = Quartz.CGPDFDocumentCreateWithURL(pdfFile)
@@ -30,7 +32,7 @@ class TestCGPDFObject(TestCase):
         self.assertIsNot(catalog, None)
 
         def save(key, value, context):
-            context.append(value)
+            context.append((key, value))
 
         saved_values = []
         Quartz.CGPDFDictionaryApplyFunction(catalog, save, saved_values)
@@ -40,10 +42,14 @@ class TestCGPDFObject(TestCase):
             Quartz.CGPDFDocumentGetInfo(pdf), save, saved_values
         )
 
-        for pnum in range(Quartz.CGPDFDocumentGetNumberOfPages(pdf)):
+        for pnum in range(1, Quartz.CGPDFDocumentGetNumberOfPages(pdf) + 1):
             page = Quartz.CGPDFDocumentGetPage(pdf, pnum)
             info = Quartz.CGPDFPageGetDictionary(page)
             Quartz.CGPDFDictionaryApplyFunction(info, save, saved_values)
+
+            # XXX: CGPDFContentStreamGetStreams can get at more information,
+            #      but returns a CFArrayRef with embedded CGPDF* values,
+            #      which aren't instances of a CF type-> needs manual binding.
 
         with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
             Quartz.CGPDFObjectGetValue()
@@ -54,40 +60,41 @@ class TestCGPDFObject(TestCase):
             Quartz.CGPDFObjectGetValue(42, 42, None)
 
         with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
-            Quartz.CGPDFObjectGetValue(saved_values[0], "1", None)
+            Quartz.CGPDFObjectGetValue(saved_values[0][1], "1", None)
 
         with self.assertRaisesRegex(ValueError, "Invalid object type"):
-            Quartz.CGPDFObjectGetValue(saved_values[0], 300, None)
+            Quartz.CGPDFObjectGetValue(saved_values[0][1], 300, None)
 
         with self.assertRaisesRegex(ValueError, "value must be None"):
             Quartz.CGPDFObjectGetValue(
-                saved_values[0], Quartz.CGPDFObjectGetType(saved_values[0]), 42
+                saved_values[0][1], Quartz.CGPDFObjectGetType(saved_values[0][1]), 42
             )
 
-        for value in saved_values:
+        for _key, value in saved_values:
             tp = Quartz.CGPDFObjectGetType(value)
             self.assertIsInstance(tp, int)
 
-            ok, value = Quartz.CGPDFObjectGetValue(value, tp, None)
+            ok, v = Quartz.CGPDFObjectGetValue(value, tp, None)
             match tp:
                 case Quartz.kCGPDFObjectTypeNull:
                     self.assertFalse(ok)
-                    self.assertIs(value, None)
+                    self.assertIs(v, None)
                 case Quartz.kCGPDFObjectTypeBoolean:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, bool)
+                    self.assertIsInstance(v, bool)
                 case Quartz.kCGPDFObjectTypeString:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, str)
+                    self.assertIsInstance(v, str)
                 case Quartz.kCGPDFObjectTypeName:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, str)
+                    self.assertIsInstance(v, str)
                 case Quartz.kCGPDFObjectTypeArray:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, Quartz.CGPDFArrayRef)
+                    self.assertIsInstance(v, Quartz.CGPDFArrayRef)
                 case Quartz.kCGPDFObjectTypeDictionary:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, Quartz.CGPDFDictionaryRef)
+                    self.assertIsInstance(v, Quartz.CGPDFDictionaryRef)
                 case Quartz.kCGPDFObjectTypeStream:
                     self.assertTrue(ok)
-                    self.assertIsInstance(value, Quartz.CGPDFStreamRef)
+                    self.assertIsInstance(v, Quartz.CGPDFStreamRef)
+            # print(_key, tp, ok, v)

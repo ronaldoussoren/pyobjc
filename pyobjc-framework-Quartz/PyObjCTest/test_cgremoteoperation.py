@@ -55,11 +55,20 @@ class TestCGRemoteOperation(TestCase):
                 self.assertIsInstance(i, Quartz.CGRect)
             callcount[0] += 1
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGRegisterScreenRefreshCallback()
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGRegisterScreenRefreshCallback(42, myInfo)
+
         err = Quartz.CGRegisterScreenRefreshCallback(callbackRefresh, myInfo)
         self.assertEqual(err, 0)
 
         # FIXME: should force a refresh here
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGUnregisterScreenRefreshCallback()
+        with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
+            Quartz.CGUnregisterScreenRefreshCallback(1, 2)
         Quartz.CGUnregisterScreenRefreshCallback(callbackRefresh, myInfo)
 
         v = Quartz.CGCursorIsVisible()

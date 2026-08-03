@@ -67,6 +67,11 @@ class TestCGDataProvider(TestCase):
         with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
             Quartz.CGDataProviderCreateWithData()
 
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Quartz.CGDataProviderCreateWithData(
+                info, "hello world", len(info[0]), release
+            )
+
         with self.assertRaisesRegex(
             ValueError, "depythonifying 'unsigned long long', got 'str'"
         ):
@@ -74,6 +79,12 @@ class TestCGDataProvider(TestCase):
 
         with self.assertRaisesRegex(TypeError, "release not callable"):
             Quartz.CGDataProviderCreateWithData(info, info[0], len(info[0]), 42)
+
+        provider = Quartz.CGDataProviderCreateWithData(
+            info, tuple(info[0]), len(info[0]), release
+        )
+        self.assertIsInstance(provider, Quartz.CGDataProviderRef)
+        del provider
 
         provider = Quartz.CGDataProviderCreateWithData(
             info, info[0], len(info[0]), release

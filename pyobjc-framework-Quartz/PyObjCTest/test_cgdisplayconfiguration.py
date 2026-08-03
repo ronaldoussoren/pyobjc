@@ -80,6 +80,12 @@ class TestCGDisplayConfigurationUsage(TestCase):
             self.assertEqual(err, 0)
             self.assertIsInstance(config, Quartz.CGDisplayConfigRef)
 
+            with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+                Quartz.CGDisplayRegisterReconfigurationCallback()
+
+            with self.assertRaisesRegex(TypeError, "callback not callable"):
+                Quartz.CGDisplayRegisterReconfigurationCallback(42, myInfo)
+
             err = Quartz.CGDisplayRegisterReconfigurationCallback(reconfig, myInfo)
             self.assertEqual(err, 0)
 
@@ -92,6 +98,11 @@ class TestCGDisplayConfigurationUsage(TestCase):
             Quartz.CGCompleteDisplayConfiguration(config, Quartz.kCGConfigureForAppOnly)
 
         finally:
+            with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+                Quartz.CGDisplayRemoveReconfigurationCallback()
+            with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
+                Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
+
             err = Quartz.CGDisplayRemoveReconfigurationCallback(reconfig, myInfo)
             self.assertEqual(err, 0)
             ln = len(info)

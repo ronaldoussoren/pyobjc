@@ -412,9 +412,8 @@ m_CGDataProviderCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnul
     void*      arr;
 
     view = PyObjCMemView_New();
-    if (view == NULL) {
-        return NULL;
-    }
+    if (view == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;  // LCOV_EXCL_LINE
 
     tag = PyObjC_PythonToCArray(NO, YES, @encode(char), args[1], &arr, &sz, &bufobj,
                                 PyObjCMemView_GetBuffer(view));
@@ -471,14 +470,9 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
     rangedim = PyLong_AsLong(PyTuple_GET_ITEM(info, 3));
 
     PyObject* input;
-    if (inData) {
-        input = PyObjC_CArrayToPython(@encode(CGFloat), (void*)inData, domdim);
-        if (input == NULL) {                      // LCOV_BR_EXCL_LINE
-            PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
-        }
-    } else {
-        input = Py_None;
-        Py_INCREF(Py_None);
+    input = PyObjC_CArrayToPython(@encode(CGFloat), (void*)inData, domdim);
+    if (input == NULL) {                      // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "OOO",
@@ -593,9 +587,8 @@ m_CGFunctionCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
     PyObject* real_info;
 
     real_info = Py_BuildValue("OOll", args[0], args[5], domainDimension, rangeDimension);
-    if (real_info == NULL) {
-        return NULL;
-    }
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -690,12 +683,14 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
     /* No free space found, increase the list */
     if (info->list == NULL) {
         info->list = PyMem_Malloc(sizeof(*info->list));
-        if (info->list == NULL) {
+        if (info->list == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
 #if PY_VERSION_HEX >= 0x030d0000
             PyMutex_Unlock(&callback_mutex);
 #endif
             return -1;
+            // LCOV_EXCL_STOP
         }
         info->list[0].callback  = callback;
         info->list[0].user_info = user_info;
@@ -708,12 +703,14 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
         struct callback_struct* tmp;
 
         tmp = PyMem_Realloc(info->list, sizeof(*info->list) * (info->count + 1));
-        if (tmp == NULL) {
+        if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
 #if PY_VERSION_HEX >= 0x030d0000
             PyMutex_Unlock(&callback_mutex);
 #endif
             return -1;
+            // LCOV_EXCL_STOP
         }
         info->list                        = tmp;
         info->list[info->count].callback  = callback;
@@ -802,15 +799,16 @@ m_CGDisplayReconfigurationCallBack(CGDirectDisplayID           display,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_display = PyObjC_ObjCToPython(@encode(CGDirectDisplayID), &display);
-    if (py_display == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
+    if (py_display == NULL)                   // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
 
     PyObject* py_flags =
         PyObjC_ObjCToPython(@encode(CGDisplayChangeSummaryFlags), &flags);
-    if (py_flags == NULL) {
+    if (py_flags == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_display);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "OOO", py_display,
@@ -849,23 +847,27 @@ m_CGDisplayRegisterReconfigurationCallback(PyObject* meth,
             err = CGDisplayRegisterReconfigurationCallback(
                 m_CGDisplayReconfigurationCallBack, real_info);
 
-        } @catch (NSException* localException) {
-            err = -1;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            err = -1;                            // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     if (insert_callback_info(&display_reconfig_callback, args[0], args[1], real_info)
-        == -1) {
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CGDisplayRemoveReconfigurationCallback(m_CGDisplayReconfigurationCallBack,
                                                real_info);
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return PyObjC_ObjCToPython(@encode(CGError), &err);
@@ -893,16 +895,15 @@ m_CGDisplayRemoveReconfigurationCallback(PyObject* meth,
             err = CGDisplayRemoveReconfigurationCallback(
                 m_CGDisplayReconfigurationCallBack, real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     remove_callback_info(&display_reconfig_callback, args[0], args[1]);
 
@@ -1070,20 +1071,25 @@ m_CGRegisterScreenRefreshCallback(PyObject* meth, PyObject* _Nonnull const* _Non
         @try {
             err = CGRegisterScreenRefreshCallback(m_CGScreenRefreshCallback, real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (insert_callback_info(&screen_refresh_callback, args[0], args[1], real_info) < 0) {
+    if (insert_callback_info(&screen_refresh_callback, args[0], args[1], real_info)
+        < 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CGUnregisterScreenRefreshCallback(m_CGScreenRefreshCallback, real_info);
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     return PyObjC_ObjCToPython(@encode(CGError), &err);
@@ -1107,14 +1113,13 @@ m_CGUnregisterScreenRefreshCallback(PyObject* meth,
         @try {
             CGUnregisterScreenRefreshCallback(m_CGScreenRefreshCallback, real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     remove_callback_info(&screen_refresh_callback, args[0], args[1]);
 
@@ -1125,6 +1130,7 @@ m_CGUnregisterScreenRefreshCallback(PyObject* meth,
 /*
  * CGEventTapCreate
  * CGEventTapCreateForPSN
+ * CGEventTapCreateForPid
  *
  * Note that these wrappers leak some memory: the 'refcon' info passed to the
  * C code will never be deallocated. This is too bad, but can't be avoided with
@@ -1144,21 +1150,24 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     PyObject* py_event;
 
     py_proxy = PyObjC_ObjCToPython(@encode(CGEventTapProxy), &proxy);
-    if (py_proxy == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
+    if (py_proxy == NULL)                     // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
 
     py_type = PyObjC_ObjCToPython(@encode(CGEventType), &type);
-    if (py_type == NULL) {
+    if (py_type == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_proxy);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     py_event = PyObjC_ObjCToPython(@encode(CGEventRef), &event);
-    if (py_event == NULL) {
+    if (py_event == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_proxy);
         Py_DECREF(py_type);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
     PyObject* result =
@@ -1202,25 +1211,27 @@ m_CGEventTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
     if (PyObjC_PythonToObjC(@encode(CGEventMask), args[3], &eventsOfInterest) < 0) {
         return NULL;
     }
-
-    PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
-    if (real_info == NULL) {
+    if (!PyCallable_Check(args[4])) {
+        PyErr_SetString(PyExc_ValueError, "callback should be a callable");
         return NULL;
     }
+
+    PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXC_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CGEventTapCreate(tap, place, options, eventsOfInterest,
                                       m_CGEventTapCallBack, (void*)real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CFMachPortRef), &result);
     if (result != NULL) {
@@ -1243,7 +1254,7 @@ m_CGEventTapCreateForPSN(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(ProcessSerialNumber), args[0], &psn) < 0) {
+    if (PyObjC_PythonToObjC("{ProcessSerialNumber=II}", args[0], &psn) < 0) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CGEventTapPlacement), args[1], &place) < 0) {
@@ -1255,25 +1266,27 @@ m_CGEventTapCreateForPSN(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
     if (PyObjC_PythonToObjC(@encode(CGEventMask), args[3], &eventsOfInterest) < 0) {
         return NULL;
     }
-
-    PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
-    if (real_info == NULL) {
+    if (!PyCallable_Check(args[4])) {
+        PyErr_SetString(PyExc_ValueError, "callback should be a callable");
         return NULL;
     }
+
+    PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CGEventTapCreateForPSN((void*)&psn, place, options, eventsOfInterest,
                                             m_CGEventTapCallBack, (void*)real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CFMachPortRef), &result);
     if (result) {
@@ -1281,6 +1294,63 @@ m_CGEventTapCreateForPSN(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
     }
     return retval;
 }
+
+#if PyObjC_BUILD_RELEASE >= 1011
+static PyObject*
+m_CGEventTapCreateForPid(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
+                         size_t    nargs)
+{
+    pid_t               pid;
+    CGEventTapPlacement place;
+    CGEventTapOptions   options;
+    CGEventMask         eventsOfInterest;
+    CFMachPortRef       result = NULL;
+
+    if (PyObjC_CheckArgCount(meth, 6, 6, nargs) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(pid_t), args[0], &pid) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CGEventTapPlacement), args[1], &place) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CGEventTapOptions), args[2], &options) < 0) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CGEventMask), args[3], &eventsOfInterest) < 0) {
+        return NULL;
+    }
+    if (!PyCallable_Check(args[4])) {
+        PyErr_SetString(PyExc_ValueError, "callback should be a callable");
+        return NULL;
+    }
+
+    PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            result = CGEventTapCreateForPid(pid, place, options, eventsOfInterest,
+                                            m_CGEventTapCallBack, (void*)real_info);
+
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+
+    PyObject* retval = PyObjC_ObjCToPython(@encode(CFMachPortRef), &result);
+    if (result) {
+        CFRelease(result); /* Compensate for donated ref */
+    }
+    return retval;
+}
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
 
 /*
  * CGPatternCreate
@@ -1294,8 +1364,8 @@ m_CGPatternDrawPatternCallback(void* _info, CGContextRef context)
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* ctx = PyObjC_ObjCToPython(@encode(CGContextRef), &context);
-    if (context == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (context == NULL) {                    // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "ON",
@@ -1357,10 +1427,15 @@ m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
     if (PyObjC_PythonToObjC(@encode(CGPatternTiling), args[5], &tiling) < 0) {
         return NULL;
     }
-    if (PyObject_IsTrue(args[6])) {
-        isColored = true;
-    } else {
+    switch (PyObject_IsTrue(args[6])) {
+    case 0:
         isColored = false;
+        break;
+    case 1:
+        isColored = true;
+        break;
+    case -1:
+        return NULL;
     }
 
     PyObject* real_info;
@@ -1369,9 +1444,8 @@ m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
         real_info = NULL;
     } else {
         real_info = PyTuple_Pack(2, args[7], args[0]);
-        if (real_info == NULL) {
-            return NULL;
-        }
+        if (real_info == NULL) // LCOV_BR_EXCL_LINE
+            return NULL;       // LCOV_EXCL_LINE
     }
 
     CGPatternRef result = NULL;
@@ -1382,18 +1456,22 @@ m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
                 CGPatternCreate((void*)real_info, bounds, matrix, xStep, yStep, tiling,
                                 isColored, real_info ? &m_CGPatternCallbacks : NULL);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CGPatternRef), &result);
-    CFRelease(result);
+    if (result != NULL) {
+        CFRelease(result);
+    }
     return retval;
 }
 
@@ -1605,6 +1683,13 @@ m_CGPSConverterCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
         return NULL;
     }
 
+    if (PyTuple_GET_ITEM(args[1], 6) == Py_None) {
+        callbacks.releaseInfo = NULL;
+    } else if (!PyCallable_Check(PyTuple_GET_ITEM(args[1], 6))) {
+        PyErr_SetString(PyExc_TypeError, "releaseInfo not callable or None");
+        return NULL;
+    }
+
     if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[2], &options) < 0) {
         return NULL;
     }
@@ -1617,16 +1702,18 @@ m_CGPSConverterCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            result = CGPSConverterCreate(real_info, &m_CGPSConverterCallbacks, options);
+            result = CGPSConverterCreate(real_info, &callbacks, options);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* v = PyObjC_ObjCToPython(@encode(CGPSConverterRef), &result);
@@ -1701,6 +1788,12 @@ mod_exec_module(PyObject* m)
         == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }
+#if PyObjC_BUILD_RELEASE >= 1011
+    if (PyObjCRegister_FunctionCaller(CGEventTapCreateForPid, m_CGEventTapCreateForPid)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1011 */
     if (PyObjCRegister_FunctionCaller(CGPatternCreate, m_CGPatternCreate)
         == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE

@@ -2,7 +2,7 @@ import os
 import objc
 
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NotBool
 
 
 class TestCGContext(TestCase):
@@ -486,8 +486,130 @@ class TestCGContext(TestCase):
 
             myInfo = object()
 
+            lst = []
+
             def drawPattern(info, context):
+                lst.append((info, context))
                 pass
+
+            with self.assertRaisesRegex(TypeError, "expected 8 arguments, got 0"):
+                Quartz.CGPatternCreate()
+
+            with self.assertRaisesRegex(
+                TypeError, "depythonifying struct, got no sequence"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    42,
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                TypeError, "depythonifying struct, got no sequence"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    42,  # Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'double', got 'str'"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    "10.0",
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'double', got 'str'"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    "10.0",
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    "Quartz.kCGPatternTilingConstantSpacing",
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(TypeError, "this is not a bool"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    NotBool(),
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(TypeError, "drawPattern must be a callable"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    42,
+                )
+
+            pattern = Quartz.CGPatternCreate(
+                myInfo,
+                Quartz.CGRectMake(0, 0, 10, 10),
+                Quartz.CGAffineTransformIdentity,
+                10.0,
+                10.0,
+                Quartz.kCGPatternTilingConstantSpacing,
+                False,
+                drawPattern,
+            )
+            self.assertIsInstance(pattern, Quartz.CGPatternRef)
+
+            pattern_nocb = Quartz.CGPatternCreate(
+                myInfo,
+                Quartz.CGRectMake(0, 0, 10, 10),
+                Quartz.CGAffineTransformIdentity,
+                10.0,
+                10.0,
+                Quartz.kCGPatternTilingConstantSpacing,
+                False,
+                None,
+            )
+            self.assertIs(pattern_nocb, None)
 
             pattern = Quartz.CGPatternCreate(
                 myInfo,
@@ -509,6 +631,12 @@ class TestCGContext(TestCase):
             )
             Quartz.CGContextSetFillPattern(context, pattern, (1.0, 1.0, 1.0, 1.0))
             Quartz.CGContextSetStrokePattern(context, pattern, (1.0, 1.0, 1.0, 1.0))
+            del lst
+            with self.assertRaisesRegex(NameError, "cannot access free variable 'lst'"):
+                Quartz.CGContextStrokeRect(context, ((0, 0), (100, 100)))
+            lst = []
+            Quartz.CGContextStrokeRect(context, ((0, 0), (100, 100)))
+            self.assertNotEqual(lst, [])
 
             fn = "/System/Library/CoreServices/DefaultDesktop.jpg"
             if not os.path.exists(fn):

@@ -1,6 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
+import ApplicationServices
 import objc
+import os
 
 
 class TestCGEvent(TestCase):
@@ -95,11 +97,258 @@ class TestCGEvent(TestCase):
     def test_functions10_11(self):
         Quartz.CGEventPostToPid
 
-    @expectedFailure
-    def test_missing(self):
-        self.fail("CGEventTapCreateForPSN")
-        self.fail("CGEventTapCreate")
-        self.fail("CGEventTapCreateForPid")
+    def test_manual_cgeventtapcreate(self):
+        lst = []
+        context = object()
+
+        def callback(proxy, tp, event, userInfo):
+            lst.append((proxy, tp, event, userInfo))  # noqa: F821
+
+        with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
+            Quartz.CGEventTapCreate()
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreate(
+                "Quartz.kCGSessionEventTap",
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreate(
+                Quartz.kCGSessionEventTap,
+                "Quartz.kCGHeadInsertEventTap",
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreate(
+                Quartz.kCGSessionEventTap,
+                Quartz.kCGHeadInsertEventTap,
+                "Quartz.kCGEventTapOptionListenOnly",
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGEventTapCreate(
+                Quartz.kCGSessionEventTap,
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                "Quartz.kCGEventMaskForAllEvents",
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(ValueError, "callback should be a callable"):
+            Quartz.CGEventTapCreate(
+                Quartz.kCGSessionEventTap,
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                42,
+                context,
+            )
+
+        tap = Quartz.CGEventTapCreate(
+            Quartz.kCGSessionEventTap,
+            Quartz.kCGHeadInsertEventTap,
+            Quartz.kCGEventTapOptionDefault,
+            Quartz.kCGEventMaskForAllEvents,
+            callback,
+            context,
+        )
+        self.assertIsInstance(tap, Quartz.CFMachPortRef)
+        self.assertTrue(Quartz.CGEventTapIsEnabled(tap))
+
+        rls = Quartz.CFMachPortCreateRunLoopSource(None, tap, 0)
+        rl = Quartz.CFRunLoopGetCurrent()
+        Quartz.CFRunLoopAddSource(rl, rls, Quartz.kCFRunLoopDefaultMode)
+        print("\nmove mouse")
+        Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
+        saved_lst = lst
+        del lst
+
+        with self.assertRaisesRegex(NameError, "cannot access free variable 'lst'"):
+            Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
+        Quartz.CFRunLoopRemoveSource(rl, rls, Quartz.kCFRunLoopDefaultMode)
+
+        for entry in saved_lst:
+            self.assertIsInstance(entry[0], Quartz.CGEventTapProxy)
+            self.assertIsInstance(entry[1], int)
+            self.assertIsInstance(entry[2], Quartz.CGEventRef)
+            self.assertIs(entry[3], context)
+
+    def test_manual_cgeventtapcreateforpid(self):
+        context = object()
+
+        def callback(proxy, tp, event, userInfo):
+            pass
+
+        with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
+            Quartz.CGEventTapCreateForPid()
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            Quartz.CGEventTapCreateForPid(
+                "os.getpid()",
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPid(
+                os.getpid(),
+                "Quartz.kCGHeadInsertEventTap",
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPid(
+                os.getpid(),
+                Quartz.kCGHeadInsertEventTap,
+                "Quartz.kCGEventTapOptionListenOnly",
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPid(
+                os.getpid(),
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                "Quartz.kCGEventMaskForAllEvents",
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(ValueError, "callback should be a callable"):
+            Quartz.CGEventTapCreateForPid(
+                os.getpid(),
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                42,
+                context,
+            )
+
+        tap = Quartz.CGEventTapCreateForPid(
+            os.getpid(),
+            Quartz.kCGHeadInsertEventTap,
+            Quartz.kCGEventTapOptionDefault,
+            Quartz.kCGEventMaskForAllEvents,
+            callback,
+            context,
+        )
+        self.assertIsInstance(tap, Quartz.CFMachPortRef)
+        self.assertTrue(Quartz.CGEventTapIsEnabled(tap))
+
+    def test_manual_cgeventtapcreateforpsn(self):
+        context = object()
+
+        _, psn = ApplicationServices.GetCurrentProcess(None)
+
+        def callback(proxy, tp, event, userInfo):
+            pass
+
+        with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
+            Quartz.CGEventTapCreateForPSN()
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            Quartz.CGEventTapCreateForPSN(
+                42,
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPSN(
+                psn,
+                "Quartz.kCGHeadInsertEventTap",
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPSN(
+                psn,
+                Quartz.kCGHeadInsertEventTap,
+                "Quartz.kCGEventTapOptionListenOnly",
+                Quartz.kCGEventMaskForAllEvents,
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGEventTapCreateForPSN(
+                psn,
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                "Quartz.kCGEventMaskForAllEvents",
+                callback,
+                context,
+            )
+
+        with self.assertRaisesRegex(ValueError, "callback should be a callable"):
+            Quartz.CGEventTapCreateForPSN(
+                psn,
+                Quartz.kCGHeadInsertEventTap,
+                Quartz.kCGEventTapOptionListenOnly,
+                Quartz.kCGEventMaskForAllEvents,
+                42,
+                context,
+            )
+
+        tap = Quartz.CGEventTapCreateForPSN(
+            psn,
+            Quartz.kCGHeadInsertEventTap,
+            Quartz.kCGEventTapOptionDefault,
+            Quartz.kCGEventMaskForAllEvents,
+            callback,
+            context,
+        )
+        self.assertIsInstance(tap, Quartz.CFMachPortRef)
+        self.assertTrue(Quartz.CGEventTapIsEnabled(tap))
 
     def test_functions(self):
         self.assertIsInstance(Quartz.CGEventGetTypeID(), int)
