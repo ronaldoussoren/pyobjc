@@ -164,7 +164,7 @@ mod_exec_module(PyObject* m)
 
     cls = objc_lookUpClass("SFAuthorizationView");
     if (cls == Nil) { // LCOV_BR_EXCL_LINE
-        return 0      // LCOV_EXCL_LINE
+        return 0;     // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationRights),
@@ -172,7 +172,7 @@ mod_exec_module(PyObject* m)
                                      PyObjCUnsupportedMethod_IMP)
         < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1 // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationRights:),
@@ -180,7 +180,7 @@ mod_exec_module(PyObject* m)
                                      PyObjCUnsupportedMethod_IMP)
         < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1 // LCOV_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;
