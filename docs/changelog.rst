@@ -146,11 +146,6 @@ Version 13.0a0
     out of range. In previous versions a positive out of range value would return
     0.0 (inherited from :meth:`valueAtIndex_ <Quartz.CIVector.valueAtIndex_>`.
 
-* Deprecations:
-
-  * The attribute :data:`objc.platform` is deprecated and will be removed
-     in PyObjC 14. Its value is always ``"MACOSX"``.
-
   * :func:`Quartz.CGWaitForScreenRefreshRects`,
     :func:`Quartz.CGWaitForScreenUpdateRects`,
     :func:`Quartz.CGScreenRegisterMoveCallback`,
@@ -159,6 +154,11 @@ Version 13.0a0
     The first two had manual bindings that were removed because
     the system API hangs forever since at least macOS 10.9. The latter
     two required, dit not have, manual bindings.
+
+* Deprecations:
+
+  * The attribute :data:`objc.platform` is deprecated and will be removed
+     in PyObjC 14. Its value is always ``"MACOSX"``.
 
   * :func`Quartz.CVPixelBufferCreateWithBytes` currently has an
     optional last argument. That feature is deprecated, the argument
@@ -625,6 +625,9 @@ Version 13.0a0
   and enabled using :class:`objc.function` for functions with interfaces
   that cannot be described fully using the metadata system.
 
+* :issue:`680`: The change in the previous item causes problems
+  with :func:`SystemConfiguration.SCDynamicStoreCreate`. Implemented
+  a workaround for that.
 
 * Add support for C APIs that pass a function pointer to a callback
   function (when that callback is implemented in Python).

@@ -29,7 +29,7 @@ class TestSCDynamicStore(TestCase):
         def callback(store, changedKeys, info):
             lst.append((store, changedKeys, info))
 
-        with self.assertRaisesRegex(TypeError, "Need 4 arguments, got 0"):
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
             SystemConfiguration.SCDynamicStoreCreate()
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):

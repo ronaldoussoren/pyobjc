@@ -52,7 +52,9 @@ class TestPython3Types(TestCase):
             objc.loadBundleFunctions(bundle, d, tab)
 
         tab = [(b"NSHomeDirectory", b"@")]
-        with self.assertRaisesRegex(TypeError, "functionInfo name not a string"):
+        with self.assertRaisesRegex(
+            TypeError, r"functionInfo\(\) argument 1 must be str, not bytes"
+        ):
             objc.loadBundleFunctions(bundle, d, tab)
 
     def testVariableLookup(self):
