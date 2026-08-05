@@ -1,7 +1,7 @@
 import sys
 
 import Security
-from PyObjCTools.TestSupport import TestCase, fourcc
+from PyObjCTools.TestSupport import TestCase, fourcc, NoObjCClass
 import objc
 
 SecKeychainCallback = (
@@ -413,10 +413,678 @@ class TestSecKeychain(TestCase):
         self.assertArgHasType(Security.SecKeychainSetAccess, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeychainSetAccess, 1, objc._C_ID)
 
-    def test_functions_manual(self):
-        # XXX: Testing these in unittests is annoyingly hard, hence the lame test below:
-        Security.SecKeychainFindInternetPassword
-        Security.SecKeychainFindGenericPassword
+    def test_functions_manual_internet_password(self):
+        server_name = b"invalid.python.org"
+        security_domain = b"secdomain"
+        account_name = b"pyobjc-test-user"
+        path = b"/demo"
+        password = b"secret-password"
 
+        # XXX: This adds a dummy password item to the user keychain,
+        #      which is not ideal.
+        status, item = Security.SecKeychainAddInternetPassword(
+            None,
+            len(server_name),
+            server_name,
+            len(security_domain),
+            security_domain,
+            len(account_name),
+            account_name,
+            len(path),
+            path,
+            443,
+            Security.kSecProtocolTypeHTTPS,
+            Security.kSecAuthenticationTypeHTTPBasic,
+            len(password),
+            password,
+            None,
+        )
+        self.assertIn(
+            status,
+            (
+                0,
+                Security.errSecDuplicateItem,
+            ),
+        )
+
+        with self.assertRaisesRegex(TypeError, "expected 15 arguments, got 0"):
+            Security.SecKeychainFindInternetPassword()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Security.SecKeychainFindInternetPassword(
+                NoObjCClass(),
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                "len(server_name)",
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name.decode(),
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                "len(security_domain)",
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain.decode(),
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                "len(account_name)",
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name.decode(),
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                "len(path)",
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path.decode(),
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned short', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                "443",
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                "Security.kSecProtocolTypeHTTPS",
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                "Security.kSecAuthenticationTypeHTTPBasic",
+                None,
+                None,
+                None,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "passwordLength must be None or objc.NULL"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                42,
+                None,
+                None,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "passwordData must be None or objc.NULL"
+        ):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                42,
+                None,
+            )
+        with self.assertRaisesRegex(TypeError, "item must be None or objc.NULL"):
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(security_domain),
+                security_domain,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                42,
+            )
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                None,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name) * 2,
+                server_name + server_name,
+                0,
+                None,
+                len(account_name),
+                account_name,
+                len(path),
+                path,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, Security.errSecItemNotFound)
+        self.assertIs(item, None)
+        self.assertEqual(password_length, 0)
+        self.assertEqual(password_data, None)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                None,
+                0,
+                None,
+                0,
+                None,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                objc.NULL,
+                0,
+                objc.NULL,
+                0,
+                objc.NULL,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindInternetPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                objc.NULL,
+                0,
+                objc.NULL,
+                0,
+                objc.NULL,
+                443,
+                Security.kSecProtocolTypeHTTPS,
+                Security.kSecAuthenticationTypeHTTPBasic,
+                objc.NULL,
+                objc.NULL,
+                objc.NULL,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIs(item, objc.NULL)
+        self.assertEqual(password_length, 0)
+        self.assertEqual(password_data, objc.NULL)
+
+    def test_functions_manual_generic_password(self):
+        server_name = b"generic-invalid.python.org"
+        account_name = b"pyobjc-test-user"
+        password = b"secret-password"
+
+        # XXX: This adds a dummy password item to the user keychain,
+        #      which is not ideal.
+        status, item = Security.SecKeychainAddGenericPassword(
+            None,
+            len(server_name),
+            server_name,
+            len(account_name),
+            account_name,
+            len(password),
+            password,
+            None,
+        )
+        self.assertIn(
+            status,
+            (
+                0,
+                Security.errSecDuplicateItem,
+            ),
+        )
+
+        with self.assertRaisesRegex(TypeError, "expected 8 arguments, got 0"):
+            Security.SecKeychainFindGenericPassword()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Security.SecKeychainFindGenericPassword(
+                NoObjCClass(),
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                "len(server_name)",
+                server_name,
+                len(account_name),
+                account_name,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name.decode(),
+                len(account_name),
+                account_name,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                "len(account_name)",
+                account_name,
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Expecting byte-buffer, got str"):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name.decode(),
+                None,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "passwordLength must be None or objc.NULL"
+        ):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name,
+                42,
+                None,
+                None,
+            )
+        with self.assertRaisesRegex(
+            TypeError, "passwordData must be None or objc.NULL"
+        ):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name,
+                None,
+                42,
+                None,
+            )
+        with self.assertRaisesRegex(TypeError, "item must be None or objc.NULL"):
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name,
+                None,
+                None,
+                42,
+            )
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                len(account_name),
+                account_name,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name) * 2,
+                server_name + server_name,
+                len(account_name),
+                account_name,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, Security.errSecItemNotFound)
+        self.assertIs(item, None)
+        self.assertEqual(password_length, 0)
+        self.assertEqual(password_data, None)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                None,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                objc.NULL,
+                None,
+                None,
+                None,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIsNot(item, None)
+        self.assertEqual(password_length, len(password))
+        self.assertEqual(password_data, password)
+
+        status, password_length, password_data, item = (
+            Security.SecKeychainFindGenericPassword(
+                None,
+                len(server_name),
+                server_name,
+                0,
+                objc.NULL,
+                objc.NULL,
+                objc.NULL,
+                objc.NULL,
+            )
+        )
+        self.assertEqual(status, 0)
+        self.assertIs(item, objc.NULL)
+        self.assertEqual(password_length, 0)
+        self.assertEqual(password_data, objc.NULL)
+
+    def test_functions_not_wrapped(self):
+        self.fail("why are thse not available?")
         self.assertFalse(hasattr(Security, "SecKeychainAttributeInfoForItemID"))
         self.assertFalse(hasattr(Security, "SecKeychainFreeAttributeInfo"))
