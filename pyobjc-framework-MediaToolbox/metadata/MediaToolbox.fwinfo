@@ -23,6 +23,18 @@
    "MTAudioProcessingTapGetStorage": {
     "doc": "Only use this on taps created in Python"
    },
+   "MTAudioProcessingTapCreate": {
+    "args": {
+     "1": { "type_override": "@", "doc": "tuple with callback information" },
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "MTAudioProcessingTapCreateWithPreferredFormat": {
+    "args": {
+     "1": { "type_override": "@", "doc": "tuple with callback information" },
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
    "MTCopyLocalizedNameForMediaSubType": {
     "retval": {
      "already_cfretained": true

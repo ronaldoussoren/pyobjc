@@ -123,8 +123,13 @@ class TestBundleFunctions(TestCase):
         ):
             objc.loadBundleFunctions(None, {}, [()])
 
-        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            objc.loadBundleFunctions(self.bundle, {}, [(NoObjectiveC(), b"@")])
+        # with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+        #    objc.loadBundleFunctions(self.bundle, {}, [(NoObjectiveC(), b"@")])
+
+        with self.assertRaisesRegex(
+            TypeError, r"functionInfo\(\) argument 1 must be str, not int"
+        ):
+            objc.loadBundleFunctions(self.bundle, {}, [(42, b"@")])
 
 
 class TestFunctionList(TestCase):

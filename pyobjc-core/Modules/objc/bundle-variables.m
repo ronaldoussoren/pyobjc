@@ -12,6 +12,14 @@
 
 #include <dlfcn.h>
 
+/* XXX: Needs more work: using CFBundleGetFunctionPointerForName causes
+ *      a crash on macOS 27 beta due to CFBundleGetFunctionPointerForName
+ *      returning an unexpected value for a function with a custom
+ *      invoker.
+ */
+#undef USE_CFBundleGetFunctionPointerForName
+/* #define CFBundleGetFunctionPointerForName 1 */
+
 NS_ASSUME_NONNULL_BEGIN
 
 static const char gCharPtr[] = {_C_CHARPTR, 0};
@@ -307,7 +315,9 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         PyObject* item = PyTuple_GET_ITEM(seq, i);
         void*     value;
         char*     signature;
+#if defined(USE_CFBundleGetFunctionPointerForName)
         NSString* name;
+#endif
         char*     c_name;
         PyObject* doc;
         PyObject* meta = NULL;
@@ -323,6 +333,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         }
 
         doc = NULL;
+#if defined(USE_CFBundleGetFunctionPointerForName)
         if (cfBundle != NULL) {
             if (!PyArg_ParseTuple(item, "O&y|UO:functionInfo", PyObjCObject_Convert,
                                   &name, &signature, &doc, &meta)) {
@@ -333,7 +344,8 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                 return NULL;
             }
             if (![name isKindOfClass:[NSString class]]) {
-                PyErr_SetString(PyExc_TypeError, "functionInfo name not a string");
+                PyErr_SetString(PyExc_TypeError,
+                                "functionInfo() argument 1 must be str, not bytes");
                 Py_DECREF(seq);
                 if (cfBundle != NULL) {
                     CFRelease(cfBundle);
@@ -342,11 +354,19 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             }
 
             value = CFBundleGetFunctionPointerForName(cfBundle, (CFStringRef)name);
-        } else {
+        } else
+#endif
+        {
             if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
                                   &meta)) {
                 Py_DECREF(seq);
+#if defined(USE_CFBundleGetFunctionPointerForName)
                 assert(cfBundle == NULL);
+#else
+                if (cfBundle != NULL) {
+                    CFRelease(cfBundle);
+                }
+#endif
                 return NULL;
             }
 
@@ -367,11 +387,14 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             PyObject* py_name;
             PyObject* py_val;
 
+            py_name = PyUnicode_FromString(c_name);
+#if defined(USE_CFBundleGetFunctionPointerForName)
             if (cfBundle == NULL) {
                 py_name = PyUnicode_FromString(c_name);
             } else {
                 py_name = id_to_python(name);
             }
+#endif
 
             if (unlikely(py_name == NULL)) { // LCOV_BR_EXCL_LINE
                 // LCOV_EXCL_START

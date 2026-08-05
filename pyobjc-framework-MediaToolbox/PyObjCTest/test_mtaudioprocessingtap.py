@@ -3,6 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import objc
 import AVFoundation
 import CoreFoundation
+import CoreMedia
+import CoreAudio
 import pathlib
 import contextlib
 import tempfile
@@ -215,8 +217,185 @@ class TestMTAudioProcessingTap(TestCase):
 
     @min_os_level("27.0")
     def test_functions27_0(self):
-        # XXX: This funtion should be tested manually:
-        self.fail("MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat")
+        events = []
+
+        def init(tap, info, pstorage):
+            events.append(("init", tap, info, pstorage))
+            return storage
+
+        def finalize(tap):
+            events.append("finalize")
+
+        def prepare(tap, maxFrames, processingFormat):
+            events.append(("prepare", tap, maxFrames, processingFormat))
+
+        def unprepare(tap):
+            events.append("unprepare")
+
+        def process(tap, numberFrames, flags, bufferList, numberFramesOut, flagsOut):
+            events.append(
+                (
+                    "process",
+                    tap,
+                    numberFrames,
+                    flags,
+                    bufferList,
+                    numberFramesOut,
+                    flagsOut,
+                )
+            )
+            return bufferList, numberFrames, 0
+
+        context = object()
+        storage = object()
+
+        status, format_descr = CoreMedia.CMAudioFormatDescriptionCreate(
+            None,
+            CoreAudio.AudioStreamBasicDescription(
+                mSampleRate=44100.0,
+                mFormatID=CoreAudio.kAudioFormatLinearPCM,
+                mFormatFlags=CoreAudio.kAudioFormatFlagIsSignedInteger
+                | CoreAudio.kAudioFormatFlagIsPacked,
+                mBytesPerPacket=4,
+                mFramesPerPacket=1,
+                mBytesPerFrame=2,
+                mChannelsPerFrame=2,
+                mBitsPerChannel=16,
+            ),
+            0,
+            None,
+            0,
+            None,
+            None,
+            None,
+        )
+        self.assertEqual(status, 0)
+
+        with self.assertRaisesRegex(TypeError, "expected 5 arguments, got 0"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                NoObjCClass(),
+                (0, context, init, finalize, prepare, unprepare, process),
+                0,
+                format_descr,
+                None,
+            )
+        with self.assertRaisesRegex(ValueError, "callbacks should be tuple of 7 items"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, r"callbacks\[0] must be kMTAudioProcessingTapCallbacksVersion_0"
+        ):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (1, context, init, finalize, prepare, unprepare, process),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[2] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, 42, finalize, prepare, unprepare, process),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[3] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, None, 42, prepare, unprepare, process),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[4] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, None, 42, unprepare, process),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[5] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, None, 42, process),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[6] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare, None, 42),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, r"callbacks\[6] should be callable"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare, unprepare, None),
+                0,
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare, unprepare, process),
+                "doit",
+                format_descr,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare, unprepare, process),
+                0,
+                NoObjCClass(),
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, "'tapOut' should be None"):
+            MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+                None,
+                (0, context, init, finalize, prepare, unprepare, process),
+                0,
+                format_descr,
+                42,
+            )
+
+        err, tap = MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat(
+            None,
+            (0, context, init, finalize, prepare, unprepare, process),
+            MediaToolbox.kMTAudioProcessingTapCreationFlag_PostEffects,
+            format_descr,
+            None,
+        )
+        self.assertEqual(err, 0)
+        self.assertIsInstance(tap, MediaToolbox.MTAudioProcessingTapRef)
+
+        self.assertEqual(events[0], ("init", tap, context, None))
 
     def test_constants(self):
         self.assertEqual(
