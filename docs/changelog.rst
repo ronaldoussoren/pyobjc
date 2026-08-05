@@ -681,6 +681,11 @@ Version 13.0a0
 * Fix handling exceptions and reference counts in callbacks for
   :func:`MediaToolbox.MTAudioProcessingTapCreate`.
 
+* Calling :func:`Quartz.CGEventTapCreateForPid` is now supported.
+
+* Fix crash when calling :func:`Security.SecKeychainFindInternetPassword`
+  with arguments of the incorrect type.
+
 Version 12.2.1
 --------------
 
