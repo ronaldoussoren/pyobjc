@@ -144,18 +144,18 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     PyGILState_STATE state = PyGILState_Ensure();
 
     Py_buffer view;
-    if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE)
+        < 0) {                                // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
     buf = PyMemoryView_FromBuffer(&view);
-    if (buf == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    if (buf == NULL) {                        // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "OOl",
                                              PyTuple_GET_ITEM(info, 0), buf, count);
     if (result == NULL) {
-        Py_DECREF(result);
         Py_DECREF(buf);
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -290,25 +290,25 @@ m_CGDataProviderCreateSequential(PyObject* meth, PyObject* _Nonnull const* _Nonn
         return NULL;
     }
 
-    if (!PyTuple_Check(args[0]) || PyTuple_GET_SIZE(args[0]) != 2) {
-        PyErr_SetString(PyExc_TypeError, "Expecting result of type tuple of 2");
+    if (!PyTuple_Check(args[1]) || PyTuple_GET_SIZE(args[1]) != 4) {
+        PyErr_SetString(PyExc_TypeError, "Callbacks should be tuple of 4 callables");
         return NULL;
     }
 
-    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 0))) {
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[1], 0))) {
         PyErr_SetString(PyExc_TypeError, "getBytes is not callable");
         return NULL;
     }
-    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 1))) {
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[1], 1))) {
         PyErr_SetString(PyExc_TypeError, "skipForward is not callable");
         return NULL;
     }
-    if (!PyCallable_Check(PyTuple_GET_ITEM(args[0], 2))) {
+    if (!PyCallable_Check(PyTuple_GET_ITEM(args[1], 2))) {
         PyErr_SetString(PyExc_TypeError, "rewind is not callable");
         return NULL;
     }
-    if (PyTuple_GET_ITEM(args[0], 3) != Py_None
-        && !PyCallable_Check(PyTuple_GET_ITEM(args[0], 3))) {
+    if (PyTuple_GET_ITEM(args[1], 3) != Py_None
+        && !PyCallable_Check(PyTuple_GET_ITEM(args[1], 3))) {
         PyErr_SetString(PyExc_TypeError, "release is not callable");
         return NULL;
     }
@@ -317,9 +317,8 @@ m_CGDataProviderCreateSequential(PyObject* meth, PyObject* _Nonnull const* _Nonn
         PyTuple_Pack(5, args[0], PyTuple_GET_ITEM(args[1], 0),
                      PyTuple_GET_ITEM(args[1], 1), PyTuple_GET_ITEM(args[1], 2),
                      PyTuple_GET_ITEM(args[1], 3), PyTuple_GET_ITEM(args[1], 4));
-    if (real_info == NULL) {
-        return NULL;
-    }
+    if (real_info == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     CGDataProviderRef result;
     Py_BEGIN_ALLOW_THREADS
@@ -327,21 +326,25 @@ m_CGDataProviderCreateSequential(PyObject* meth, PyObject* _Nonnull const* _Nonn
             result = CGDataProviderCreateSequential(real_info,
                                                     &m_CGDataProviderSequentialCallbacks);
 
-        } @catch (NSException* localException) {
-            result = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            result = NULL;                       // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (result == NULL && PyErr_Occurred()) {
+    if (result == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         Py_INCREF(Py_None);
         return Py_None;
+        // LCOV_EXCL_STOP
     }
 
     PyObject* retval = PyObjC_ObjCToPython(@encode(CGDataProviderRef), &result);
@@ -678,7 +681,7 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
 
             return 0;
         }
-    }
+    } // LCOV_EXCL_LINE
 
     /* No free space found, increase the list */
     if (info->list == NULL) {
@@ -967,20 +970,25 @@ m_CGScreenRegisterMoveCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnul
         @try {
             CGScreenRegisterMoveCallback(m_CGScreenUpdateMoveCallback, real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (insert_callback_info(&screen_move_callback, args[0], args[1], real_info) < 0) {
+    if (insert_callback_info(&screen_move_callback, args[0], args[1], real_info)
+        < 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         CGScreenUnregisterMoveCallback(m_CGScreenUpdateMoveCallback, real_info);
         Py_DECREF(real_info);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(Py_None);
@@ -1005,14 +1013,13 @@ m_CGScreenUnregisterMoveCallback(PyObject* meth, PyObject* _Nonnull const* _Nonn
         @try {
             CGScreenUnregisterMoveCallback(m_CGScreenUpdateMoveCallback, real_info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     remove_callback_info(&screen_move_callback, args[0], args[1]);
 
@@ -1218,7 +1225,7 @@ m_CGEventTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
 
     PyObject* real_info = PyTuple_Pack(2, args[4], args[5]);
     if (real_info == NULL) // LCOV_BR_EXCL_LINE
-        return NULL;       // LCOV_EXC_LINE
+        return NULL;       // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {

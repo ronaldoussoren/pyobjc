@@ -2892,7 +2892,6 @@
     }
    },
    "CGScreenRegisterMoveCallback": {
-    "suggestion": "function is not supported",
     "args": {
      "0": {
       "callable": {
@@ -2919,7 +2918,6 @@
     }
    },
    "CGScreenUnregisterMoveCallback": {
-    "suggestion": "function is not supported",
     "args": {
      "0": {
       "callable": {
@@ -3618,7 +3616,7 @@
     }
    },
    "CGDataProviderGetInfo": {
-    "retval": { "typestr": "v" },
+    "retval": { "typestr": "^v", "doc": "This returns an internal pointer, *not* the context passed into the creation functions." },
     "args": {
      "0": { "typestr": "^{CGDataProvider=}" }
     }

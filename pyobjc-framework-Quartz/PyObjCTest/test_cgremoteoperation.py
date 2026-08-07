@@ -146,14 +146,37 @@ class TestCGRemoteOperation(TestCase):
         ):
             Quartz.CGWaitForScreenUpdateRects(None, None)
 
-        with self.assertRaisesRegex(
-            TypeError,
-            "function is not supported",
-        ):
+        context = object()
+
+        def move_callback(delta, count, rects, info):
+            pass
+
+        def move_callback2(delta, count, rects, info):
+            pass
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
             Quartz.CGScreenRegisterMoveCallback()
 
-        with self.assertRaisesRegex(
-            TypeError,
-            "function is not supported",
-        ):
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGScreenRegisterMoveCallback(context, context)
+
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
             Quartz.CGScreenUnregisterMoveCallback()
+
+        with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
+            Quartz.CGScreenUnregisterMoveCallback(context, context)
+
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context)
+
+        context2 = object()
+        context3 = object()
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context)
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context2)
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context3)
+        Quartz.CGScreenRegisterMoveCallback(move_callback2, context3)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context3)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context2)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback2, context3)

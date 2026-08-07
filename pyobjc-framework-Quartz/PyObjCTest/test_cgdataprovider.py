@@ -118,12 +118,199 @@ class TestCGDataProvider(TestCase):
             stderr[0],
         )
 
+    def test_manual_dataprovider_sequential(self):
+        record = []
+
+        def getBytes(info, buf, count):
+            record.append(("getBytes", buf, count))
+            if len(record) % 2 == 0:
+                b = info.readinto(buf[:count])
+                return b, buf
+
+            else:
+                buf = info.read(count)
+                return len(buf), buf
+
+        def skipForward(info, count):
+            record.append(("skipForward", count))
+            c = info.seek(0, os.SEEK_CUR)
+            r = info.seek(count, os.SEEK_CUR)
+            return r - c
+
+        def rewind(info):
+            record.append(("rewind",))
+            info.seek(0)
+
+        def release(info):
+            record.append(("release",))
+
+        with open(
+            "/Library/Documentation/License.lpdf/Contents/Resources/English.lproj/License.pdf",
+            "rb",
+        ) as context:
+
+            with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+                Quartz.CGDataProviderCreateSequential()
+
+            with self.assertRaisesRegex(
+                TypeError, "Callbacks should be tuple of 4 callables"
+            ):
+                Quartz.CGDataProviderCreateSequential(
+                    context, (getBytes, skipForward, rewind)
+                )
+
+            with self.assertRaisesRegex(TypeError, "getBytes is not callable"):
+                Quartz.CGDataProviderCreateSequential(
+                    context, (None, skipForward, rewind, release)
+                )
+
+            with self.assertRaisesRegex(TypeError, "skipForward is not callable"):
+                Quartz.CGDataProviderCreateSequential(
+                    context, (getBytes, None, rewind, release)
+                )
+
+            with self.assertRaisesRegex(TypeError, "rewind is not callable"):
+                Quartz.CGDataProviderCreateSequential(
+                    context, (getBytes, skipForward, None, release)
+                )
+
+            with self.assertRaisesRegex(TypeError, "release is not callable"):
+                Quartz.CGDataProviderCreateSequential(
+                    context, (getBytes, skipForward, rewind, 42)
+                )
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward, rewind, None)
+            )
+            self.assertIsInstance(p, Quartz.CGDataProviderRef)
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward, rewind, release)
+            )
+            self.assertIsInstance(p, Quartz.CGDataProviderRef)
+
+            pdf = Quartz.CGPDFDocumentCreateWithProvider(p)
+            self.assertIsNot(pdf, None)
+
+            del p
+
+            context.seek(0)
+
+            def rewind_raises(info):
+                raise RuntimeError("cannot rewind")
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward, rewind_raises, None)
+            )
+            with self.assertRaisesRegex(RuntimeError, "cannot rewind"):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def skipForward_raises(info, count):
+                raise RuntimeError("cannot skip")
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward_raises, rewind, None)
+            )
+            with self.assertRaisesRegex(RuntimeError, "cannot skip"):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def skipForward_raises(info, count):
+                return "20"
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward_raises, rewind, None)
+            )
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'long long', got 'str'"
+            ):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def getBytes_raises(info, buf, count):
+                raise RuntimeError("cannot read")
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes_raises, skipForward, rewind, None)
+            )
+            with self.assertRaisesRegex(RuntimeError, "cannot read"):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def getBytes_raises(info, buf, count):
+                return None
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes_raises, skipForward, rewind, None)
+            )
+            with self.assertRaisesRegex(
+                TypeError, "Expecting result of type tuple of 2, got NoneType"
+            ):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def getBytes_raises(info, buf, count):
+                buf = info.read(count)
+                return str(len(buf)), buf
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes_raises, skipForward, rewind, None)
+            )
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'unsigned long long', got 'str'"
+            ):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def getBytes_raises(info, buf, count):
+                buf = info.read(count)
+                return len(buf), 42
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes_raises, skipForward, rewind, None)
+            )
+            with self.assertRaisesRegex(
+                TypeError, "a bytes-like object is required, not 'int'"
+            ):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            context.seek(0)
+
+            def getBytes_raises(info, buf, count):
+                buf = info.read(count)
+                return len(buf) * 10, buf
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes_raises, skipForward, rewind, None)
+            )
+            with self.assertRaisesRegex(ValueError, "Inconsistent size"):
+                Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            def release_raises(info):
+                raise RuntimeError("release fails")
+
+            p = Quartz.CGDataProviderCreateSequential(
+                context, (getBytes, skipForward, rewind, release_raises)
+            )
+
+            with saved_system_stderr() as stderr:
+                del p
+
+            self.assertIn(
+                "PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: release fails",
+                stderr[0],
+            )
+
     @expectedFailure
     def test_missing(self):
-        self.fail("CGDataProviderCreateSequential")  # + callbacks
         self.fail("CGDataProviderCreateDirect")  # + callbacks
-        self.fail("CGDataProviderCreate")  # + callbacks
-        self.fail("CGDataProviderCreateDirectAccess")  # + callbacks
 
     @min_os_level("10.13")
     def test_functions10_13(self):

@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import Quartz
 import ApplicationServices
 import objc
 import os
+import itertools
 
 
 class TestCGEvent(TestCase):
@@ -100,9 +101,11 @@ class TestCGEvent(TestCase):
     def test_manual_cgeventtapcreate(self):
         lst = []
         context = object()
+        eventtap_result = None
 
         def callback(proxy, tp, event, userInfo):
             lst.append((proxy, tp, event, userInfo))  # noqa: F821
+            return eventtap_result
 
         with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
             Quartz.CGEventTapCreate()
@@ -179,14 +182,43 @@ class TestCGEvent(TestCase):
         rls = Quartz.CFMachPortCreateRunLoopSource(None, tap, 0)
         rl = Quartz.CFRunLoopGetCurrent()
         Quartz.CFRunLoopAddSource(rl, rls, Quartz.kCFRunLoopDefaultMode)
-        print("\nmove mouse")
+        counter = itertools.count()
+
+        def mouse_mover(timer, info):
+            x, y = info
+            if next(counter) % 2 != 0:
+                x += 1.0
+                y -= 1.0
+            event = Quartz.CGEventCreateMouseEvent(
+                None, Quartz.kCGEventMouseMoved, (x, y), Quartz.kCGMouseButtonLeft
+            )
+            Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
+
+        event = Quartz.CGEventCreate(None)
+        current_location = Quartz.CGEventGetLocation(event)
+        timer = Quartz.CFRunLoopTimerCreate(
+            None, 0, 0.1, 0, 0, mouse_mover, current_location
+        )
+        Quartz.CFRunLoopAddTimer(rl, timer, Quartz.kCFRunLoopDefaultMode)
+
         Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
         saved_lst = lst
         del lst
 
         with self.assertRaisesRegex(NameError, "cannot access free variable 'lst'"):
             Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
+
+        lst = []
+        eventtap_result = NoObjCClass()
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
         Quartz.CFRunLoopRemoveSource(rl, rls, Quartz.kCFRunLoopDefaultMode)
+        Quartz.CFRunLoopRemoveTimer(rl, timer, Quartz.kCFRunLoopDefaultMode)
+
+        event = Quartz.CGEventCreateMouseEvent(
+            None, Quartz.kCGEventMouseMoved, current_location, Quartz.kCGMouseButtonLeft
+        )
+        Quartz.CGEventPost(Quartz.kCGHIDEventTap, event)
 
         for entry in saved_lst:
             self.assertIsInstance(entry[0], Quartz.CGEventTapProxy)

@@ -75,41 +75,73 @@ class TestCGDisplayConfigurationUsage(TestCase):
             self.assertTrue(userInfo is myInfo)
             info.append((display, flags, userInfo))
 
-        try:
-            err, config = Quartz.CGBeginDisplayConfiguration(None)
-            self.assertEqual(err, 0)
-            self.assertIsInstance(config, Quartz.CGDisplayConfigRef)
+        def reconfig_raises(display, flags, userInfo):
+            raise RuntimeError("reconfig raises")
 
-            with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
-                Quartz.CGDisplayRegisterReconfigurationCallback()
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGDisplayRegisterReconfigurationCallback()
 
-            with self.assertRaisesRegex(TypeError, "callback not callable"):
-                Quartz.CGDisplayRegisterReconfigurationCallback(42, myInfo)
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGDisplayRegisterReconfigurationCallback(42, myInfo)
 
-            err = Quartz.CGDisplayRegisterReconfigurationCallback(reconfig, myInfo)
-            self.assertEqual(err, 0)
+        for callback in (reconfig, reconfig_raises):
+            with self.subTest(callback=callback):
+                info[:] = []
 
-            err = Quartz.CGConfigureDisplayMode(
-                config,
-                Quartz.CGMainDisplayID(),
-                Quartz.CGDisplayAvailableModes(Quartz.CGMainDisplayID())[0],
-            )
+                try:
+                    err, config = Quartz.CGBeginDisplayConfiguration(None)
+                    self.assertEqual(err, 0)
+                    self.assertIsInstance(config, Quartz.CGDisplayConfigRef)
 
-            Quartz.CGCompleteDisplayConfiguration(config, Quartz.kCGConfigureForAppOnly)
+                    err = Quartz.CGDisplayRegisterReconfigurationCallback(
+                        callback, myInfo
+                    )
+                    self.assertEqual(err, 0)
 
-        finally:
-            with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
-                Quartz.CGDisplayRemoveReconfigurationCallback()
-            with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
-                Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
+                    err = Quartz.CGConfigureDisplayMode(
+                        config,
+                        Quartz.CGMainDisplayID(),
+                        Quartz.CGDisplayAvailableModes(Quartz.CGMainDisplayID())[0],
+                    )
 
-            err = Quartz.CGDisplayRemoveReconfigurationCallback(reconfig, myInfo)
-            self.assertEqual(err, 0)
-            ln = len(info)
+                    if callback == reconfig_raises:
+                        with self.assertRaisesRegex(RuntimeError, "reconfig raises"):
+                            Quartz.CGCompleteDisplayConfiguration(
+                                config, Quartz.kCGConfigureForAppOnly
+                            )
+                    else:
+                        Quartz.CGCompleteDisplayConfiguration(
+                            config, Quartz.kCGConfigureForAppOnly
+                        )
 
-            Quartz.CGRestorePermanentDisplayConfiguration()
+                finally:
+                    with self.assertRaisesRegex(
+                        TypeError, "expected 2 arguments, got 0"
+                    ):
+                        Quartz.CGDisplayRemoveReconfigurationCallback()
+                    with self.assertRaisesRegex(
+                        ValueError, "Cannot find callback info"
+                    ):
+                        Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
 
-            self.assertEqual(len(info), ln)
+                    if callback == reconfig:
+                        err = Quartz.CGDisplayRemoveReconfigurationCallback(
+                            reconfig, myInfo
+                        )
+                        self.assertEqual(err, 0)
+                        self.assertGreater(len(info), 0)
+                        for item in info:
+                            self.assertIsInstance(item[0], int)
+                            self.assertIsInstance(item[1], int)
+                            self.assertIs(item[2], myInfo)
+
+                    else:
+                        self.assertEqual(info, [])
+                    ln = len(info)
+
+                    Quartz.CGRestorePermanentDisplayConfiguration()
+
+                    self.assertEqual(len(info), ln)
 
         err = Quartz.CGDisplaySetStereoOperation(
             Quartz.CGMainDisplayID(), False, False, Quartz.kCGConfigureForAppOnly
