@@ -48,6 +48,7 @@ class TestCGRemoteOperation(TestCase):
         callcount = [0]
 
         def callbackRefresh(count, rects, info):
+            print("refresh")
             self.assertTrue(info is myInfo)
             self.assertIsInstance(rects, tuple)
             self.assertIsInstance(count, int)
@@ -63,7 +64,12 @@ class TestCGRemoteOperation(TestCase):
         err = Quartz.CGRegisterScreenRefreshCallback(callbackRefresh, myInfo)
         self.assertEqual(err, 0)
 
-        # FIXME: should force a refresh here
+        # XXX:
+        # - create and show a semi-transparent window (full screen, on top)
+        # - refresh every 10th of a second
+        # - destroy when the RunLoopRun call returns
+
+        # Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
 
         with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
             Quartz.CGUnregisterScreenRefreshCallback()

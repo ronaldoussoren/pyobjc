@@ -689,6 +689,10 @@ Version 13.0a0
 * Fix crash when calling :func:`Security.SecKeychainFindInternetPassword`
   with arguments of the incorrect type.
 
+* Any exception raised in the callback for :func:`AuthorizationCopyRightsAsync`
+  is now reported as an unraisable exception because the application will crash
+  hard when raising Objective-C exceptions in this context.
+
 Version 12.2.1
 --------------
 

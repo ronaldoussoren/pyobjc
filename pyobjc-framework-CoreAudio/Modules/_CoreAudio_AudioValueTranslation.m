@@ -173,7 +173,7 @@ avt_create_output_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     unsigned int                    buf_size;
     void*                           new_buf;
 
-    if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size)) {
         return NULL;
     }
 

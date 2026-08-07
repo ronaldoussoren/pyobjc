@@ -1085,6 +1085,5 @@ class TestSecKeychain(TestCase):
         self.assertEqual(password_data, objc.NULL)
 
     def test_functions_not_wrapped(self):
-        self.fail("why are thse not available?")
         self.assertFalse(hasattr(Security, "SecKeychainAttributeInfoForItemID"))
         self.assertFalse(hasattr(Security, "SecKeychainFreeAttributeInfo"))

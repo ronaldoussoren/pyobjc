@@ -1,6 +1,28 @@
 import Security
+import CoreFoundation
 from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import objc
+import io
+import contextlib
+import sys
+import os
+
+
+def is_interactive_tests():
+    return bool(os.getenv("PYOBJC_INTERACTIVE_TESTS"))
+
+
+@contextlib.contextmanager
+def captured_stderr():
+    result = []
+    orig_stderr = sys.stderr
+    try:
+        sys.stderr = stderr = io.StringIO()
+        yield result
+    finally:
+        sys.stderr = orig_stderr
+
+    result.append(stderr.getvalue())
 
 
 class TestAuthorization(TestCase):
@@ -112,9 +134,133 @@ class TestAuthorization(TestCase):
         with self.assertRaisesRegex(ValueError, "authorization must be None"):
             Security.AuthorizationCreate(None, None, 0, 42)
 
-        status, authref = Security.AuthorizationCreate(None, None, 0, None)
-        self.assertEqual(status, 0)
-        self.assertIsInstance(authref, Security.AuthorizationRef)
+        with self.assertRaisesRegex(TypeError, r"items\[0\] is not a sequence"):
+            Security.AuthorizationCreate(
+                [
+                    42,
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, r"items\[0\] is not a sequence of 4 items"
+        ):
+            Security.AuthorizationCreate(
+                [
+                    (b"name", 0, None, 0, True),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, r"items\[0\].name is not a byte string"):
+            Security.AuthorizationCreate(
+                [
+                    ("hello", 0, None, 0),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, r"items\[0\].valueLength is not an integer"
+        ):
+            Security.AuthorizationCreate(
+                [
+                    (b"hello", "0", None, 0),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, r"items\[0\].value is not a byte string of length 5"
+        ):
+            Security.AuthorizationCreate(
+                [
+                    (b"hello", 5, "value", 0),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, r"items\[0\].value is not a byte string of length 5"
+        ):
+            Security.AuthorizationCreate(
+                [
+                    (b"hello", 5, b"value!", 0),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, r"items\[0\].value is None, valueLength != 0"
+        ):
+            Security.AuthorizationCreate(
+                [
+                    (b"hello", 5, None, 0),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, r"items\[0\].flags is not an integer"):
+            Security.AuthorizationCreate(
+                [
+                    (b"hello", 0, None, "0"),
+                ],
+                None,
+                0,
+                None,
+            )
+
+        # XXX: This is an interactive test!
+        if is_interactive_tests():
+            rights = [
+                Security.AuthorizationItem(
+                    name=Security.kAuthorizationRightExecute,
+                    valueLength=11,
+                    value=b"/usr/bin/id",
+                    flags=0,
+                ),
+            ]
+            environment = [
+                Security.AuthorizationItem(
+                    name=Security.kAuthorizationEnvironmentPrompt,
+                    value=b"test prompt",
+                    valueLength=11,
+                    flags=0,
+                ),
+                Security.AuthorizationItem(
+                    name=Security.kAuthorizationEnvironmentIcon,
+                    value=None,
+                    valueLength=0,
+                    flags=0,
+                ),
+            ]
+
+            status, authref = Security.AuthorizationCreate(
+                rights,
+                environment,
+                Security.kAuthorizationFlagExtendRights
+                | Security.kAuthorizationFlagInteractionAllowed,
+                None,
+            )
+            self.assertEqual(status, 0)
+            self.assertIsInstance(authref, Security.AuthorizationRef)
+        else:
+            status, authref = Security.AuthorizationCreate([], [], 0, None)
+            self.assertEqual(status, 0)
 
         with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
             Security.AuthorizationCopyInfo()
@@ -133,27 +279,31 @@ class TestAuthorization(TestCase):
 
         status, info = Security.AuthorizationCopyInfo(authref, None, None)
         self.assertEqual(status, 0)
-        self.assertEqual(info, ())
+        if is_interactive_tests():
+            self.assertIsNot(info, ())
+            for item in info:
+                self.assertEqual(len(item), 4)
+                self.assertIsInstance(item.name, bytes)
+                self.assertIsInstance(item.valueLength, int)
+                self.assertIsInstance(item.value, (bytes, type(None)))
+                self.assertIsInstance(item.flags, int)
 
-        status, info = Security.AuthorizationCopyInfo(authref, b"username", None)
-        self.assertEqual(status, 0)
-        self.assertEqual(info, ())
-
-        Security.AuthorizationFree(authref, 0)
-
-        rights = (
-            Security.AuthorizationItem(
-                name=b"system.services.systemconfiguration.network"
-            ),
-        )
-
-        status, authref = Security.AuthorizationCreate(rights, None, 0, None)
-        self.assertNotEqual(status, 0)
-        self.assertIs(authref, None)
+                status, info = Security.AuthorizationCopyInfo(
+                    authref, b"username", None
+                )
+                self.assertEqual(status, 0)
+                self.assertEqual(
+                    info,
+                    (
+                        Security.AuthorizationItem(
+                            name=b"username", valueLength=6, value=b"ronald", flags=0
+                        ),
+                    ),
+                )
+        else:
+            self.assertEqual(info, ())
 
         self.assertFalse(hasattr(Security, "AuthorizationFreeItemSet"))
-
-        # XXX: Create a valid authref
 
         # Not sure how to test this without increased privileges....
 
@@ -183,9 +333,13 @@ class TestAuthorization(TestCase):
         ):
             Security.AuthorizationCopyRights(authref, [], [], 0, 42)
 
-        # status, item  = Security.AuthorizationCopyRights(authref, [], [], 0, None)
-        # self.assertEqual(status, 0)
-        # self.assertIsNot(item, None)
+        status, item = Security.AuthorizationCopyRights(authref, [], [], 0, None)
+        self.assertEqual(status, 0)
+        self.assertEqual(item, ())
+
+        status, item = Security.AuthorizationCopyRights(authref, [], [], 0, objc.NULL)
+        self.assertEqual(status, 0)
+        self.assertEqual(item, objc.NULL)
 
         # ASYNC
 
@@ -218,13 +372,41 @@ class TestAuthorization(TestCase):
         with self.assertRaisesRegex(ValueError, "callback must be callable"):
             Security.AuthorizationCopyRightsAsync(authref, [], [], 0, 42)
 
-        # status, item  = Security.AuthorizationCopyRightsAsync(authref, [], [], 0, callback)
-        # self.assertEqual(status, 0)
-        # self.assertIsNot(item, None)
+        Security.AuthorizationCopyRightsAsync(authref, [], [], 0, callback)
+        self.assertEqual(status, 0)
+        CoreFoundation.CFRunLoopRunInMode(
+            CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+        )
+        self.assertIsNot(items, [])
+        self.assertEqual(items[0], (0, ()))
+
+        Security.AuthorizationCopyRightsAsync(authref, [], [], 0, lambda sts, right: 42)
+        self.assertEqual(status, 0)
+
+        items[:] = []
+        with captured_stderr() as stderr:
+            CoreFoundation.CFRunLoopRunInMode(
+                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+            )
+            self.assertEqual(len(items), 0)
+
+        self.assertIn("Exception ignored in:", stderr[0])
+        self.assertIn("TypeError: callbackBlock returned value", stderr[0])
+
+        Security.AuthorizationCopyRightsAsync(
+            authref, [], [], 0, lambda sts, right: 1 / 0
+        )
+        self.assertEqual(status, 0)
+        with captured_stderr() as stderr:
+            CoreFoundation.CFRunLoopRunInMode(
+                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+            )
+            self.assertEqual(len(items), 0)
+
+        self.assertIn("Exception ignored in:", stderr[0])
+        self.assertIn("ZeroDivisionError: division by zero", stderr[0])
 
         # Execute
-
-        # XXX: Create authref
 
         with self.assertRaisesRegex(TypeError, "expected 5 arguments, got 0"):
             Security.AuthorizationExecuteWithPrivileges()
@@ -268,8 +450,28 @@ class TestAuthorization(TestCase):
                 authref, b"/usr/bin/id", 0, [b"id", b"-g"], 42
             )
 
-        # status, pipe = Security.AuthorizationExecuteWithPrivileges(authref, b"/usr/bin/id", 0, [b"id", b"-u"], None)
-        # self.assertEqual(status, 0)
-        # self.assertIsNot(pipe, None)
+        if is_interactive_tests():
+            status, pipe = Security.AuthorizationExecuteWithPrivileges(
+                authref, b"/usr/bin/id", 0, [b"-u"], None
+            )
+            self.assertEqual(status, 0)
+            self.assertIsNot(pipe, None)
+            data = pipe.read(100)
+            self.assertEqual(data, b"0\n")
 
-        self.fail("incomplete tests")
+            status, pipe = Security.AuthorizationExecuteWithPrivileges(
+                authref, b"/usr/bin/id", 0, [b"-u"], objc.NULL
+            )
+            self.assertEqual(status, 0)
+            self.assertIsNot(pipe, objc.NULL)
+
+        Security.AuthorizationFree(authref, 0)
+
+        items[:] = []
+        Security.AuthorizationCopyRightsAsync(authref, [], [], 0, callback)
+        self.assertEqual(status, 0)
+        CoreFoundation.CFRunLoopRunInMode(
+            CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+        )
+        self.assertIsNot(items, [])
+        self.assertEqual(items[0][1], None)

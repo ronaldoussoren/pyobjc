@@ -740,13 +740,71 @@ class TestManualWrappers(TestCase):
             bl[-4]
 
     def test_audio_value_translation(self):
-        avt = CoreAudio.AudioValueTranslation()
-        self.assertEqual(avt.mInputDataSize, 0)
-        self.assertEqual(avt.mInputData, None)
-        self.assertEqual(avt.mInputDataSize, 0)
-        self.assertEqual(avt.mOutputData, None)
-        self.assertEqual(avt.mOutputDataSize, 0)
+        # XXX: This API is a bit weird, ObjC usage of the API below.
+        # This binding works, but is not very user friendly. But: hard
+        # to make more user friendly without hardcoding a lot of API
+        # usage knowlegde in the C extension.
+        #
 
+        """
+        CFStringRef deviceUID = CFSTR("AppleHDAEngineOutput:0");
+        AudioDeviceID deviceID = kAudioObjectUnknown;
+
+        // 1. Setup the translation structure
+        AudioValueTranslation translation;
+        translation.mInputData = &deviceUID;
+        translation.mInputDataSize = sizeof(CFStringRef);
+        translation.mOutputData = &deviceID;
+        translation.mOutputDataSize = sizeof(AudioDeviceID);
+
+        // 2. Define the property address for UID-to-Device translation
+        AudioObjectPropertyAddress propertyAddress;
+        propertyAddress.mSelector = kAudioHardwarePropertyDeviceForUID; // 'duid'
+        propertyAddress.mScope = kAudioObjectPropertyScopeGlobal;
+        propertyAddress.mElement = kAudioObjectPropertyElementMaster;
+
+        UInt32 dataSize = sizeof(AudioValueTranslation);
+
+        // 3. Query Core Audio
+        OSStatus status = AudioObjectGetPropertyData(
+            kAudioObjectSystemObject,
+            &propertyAddress,
+            0,
+            nullptr,
+            &dataSize,
+            &translation
+        );
+        """
+        with self.assertRaisesRegex(
+            TypeError, "function takes no positional arguments"
+        ):
+            CoreAudio.AudioValueTranslation(1024)
+
+        with self.assertRaisesRegex(
+            OverflowError, "Python int too large to convert to C ssize_t"
+        ):
+            CoreAudio.AudioValueTranslation(input_buffer_size=2**100)
+
+        with self.assertRaisesRegex(ValueError, "input bufsize out of range"):
+            CoreAudio.AudioValueTranslation(input_buffer_size=2**62)
+
+        with self.assertRaisesRegex(
+            OverflowError, "Python int too large to convert to C ssize_t"
+        ):
+            CoreAudio.AudioValueTranslation(output_buffer_size=2**100)
+
+        with self.assertRaisesRegex(ValueError, "output bufsize out of range"):
+            CoreAudio.AudioValueTranslation(output_buffer_size=2**62)
+
+        avt = CoreAudio.AudioValueTranslation(
+            input_buffer_size=1024, output_buffer_size=2048
+        )
+        self.assertEqual(avt.mInputDataSize, 1024)
+        self.assert_buffer_size(avt.mInputData, 1024)
+        self.assertEqual(avt.mOutputDataSize, 2048)
+        self.assert_buffer_size(avt.mOutputData, 2048)
+
+        avt = CoreAudio.AudioValueTranslation()
         with self.assertRaisesRegex(TypeError, "function missing required argument"):
             avt.create_input_buffer()
 
@@ -761,8 +819,23 @@ class TestManualWrappers(TestCase):
         v = avt.mInputData
         self.assert_buffer_size(v, 1024)
 
+        avt.create_input_buffer(512)
+        self.assertEqual(avt.mInputDataSize, 512)
+        v = avt.mInputData
+        self.assert_buffer_size(v, 512)
+
+        avt.create_input_buffer(1024)
+
         self.assertEqual(avt.mOutputData, None)
         self.assertEqual(avt.mOutputDataSize, 0)
+
+        with self.assertRaisesRegex(TypeError, "function missing required argument"):
+            avt.create_output_buffer()
+
+        with self.assertRaisesRegex(
+            TypeError, "'str' object cannot be interpreted as an integer"
+        ):
+            avt.create_output_buffer("four")
 
         avt.create_output_buffer(2048)
 
@@ -773,6 +846,13 @@ class TestManualWrappers(TestCase):
         self.assertEqual(avt.mOutputDataSize, 2048)
         v = avt.mOutputData
         self.assert_buffer_size(v, 2048)
+
+        avt.create_output_buffer(512)
+        self.assertEqual(avt.mOutputDataSize, 512)
+        v = avt.mOutputData
+        self.assert_buffer_size(v, 512)
+
+        avt.create_output_buffer(2048)
 
         avt = CoreAudio.AudioValueTranslation(input_buffer_size=50)
 

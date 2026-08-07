@@ -51,6 +51,7 @@ struct pyobjc_api objc_api = {
     .checknokwnames            = PyObjC_CheckNoKwnames,
     .createopaquepointertype   = PyObjCCreateOpaquePointerType,
     .register_functioncaller   = PyObjCRegister_FunctionCaller,
+    .create_registered_struct  = PyObjC_CreateRegisteredStruct,
 };
 
 int

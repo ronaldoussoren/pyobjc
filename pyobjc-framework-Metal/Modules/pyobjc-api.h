@@ -123,6 +123,8 @@ struct pyobjc_api {
     PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*,
                                                             const char*);
     int (*_Nonnull register_functioncaller)(void*, PyObjC_FunctionCallFunc);
+    PyObject* _Nullable (*_Nonnull create_registered_struct)(
+        const char*, Py_ssize_t, const char* _Nonnull* _Nullable, Py_ssize_t*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -166,6 +168,7 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->createopaquepointertype)
 #define PyObjCRegister_FunctionCaller (PyObjC_API->register_functioncaller)
+#define PyObjC_CreateRegisteredStruct (PyObjC_API->create_registered_struct)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
