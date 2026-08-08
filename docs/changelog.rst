@@ -693,6 +693,15 @@ Version 13.0a0
   is now reported as an unraisable exception because the application will crash
   hard when raising Objective-C exceptions in this context.
 
+Version 12.2.2
+--------------
+
+* Builds with Xcode 27
+
+* The CoreAudio bindings no longer contain a C++ extension because
+  Xcode 27 can no longer target macOS 10.15 or earlier when using
+  C++.
+
 Version 12.2.1
 --------------
 
