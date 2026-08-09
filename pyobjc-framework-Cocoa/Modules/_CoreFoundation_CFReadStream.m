@@ -69,9 +69,7 @@ static PyObject* _Nullable mod_CFReadStreamSetClient(
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (args[2] == Py_None) {
-                if (args[3] == PyObjC_NULL || args[3] == Py_None) {
-                    rv = CFReadStreamSetClient(stream, streamEvents, NULL, NULL);
-                }
+                rv = CFReadStreamSetClient(stream, streamEvents, NULL, NULL);
 
             } else {
                 if (args[3] == PyObjC_NULL || args[3] == Py_None) {
@@ -88,7 +86,7 @@ static PyObject* _Nullable mod_CFReadStreamSetClient(
             PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
-    if (args[3] != PyObjC_NULL) {
+    if (args[3] != PyObjC_NULL && args[3] != Py_None) {
         Py_DECREF((PyObject*)context.info);
     }
 
