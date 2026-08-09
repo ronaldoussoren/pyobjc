@@ -24,6 +24,8 @@ PY_VERSIONS = [
     "3.14t",
     "3.15",
     "3.15t",
+    "3.16",
+    "3.16t",
 ]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
