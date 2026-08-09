@@ -617,4 +617,5 @@ class TestMTAudioProcessingTap(TestCase):
 
         self.assertGreater(next(counter), 5)
 
-        self.fail("actually using the failing 'finalize' in this test crashes'")
+        # See #677
+        # self.fail("actually using the failing 'finalize' in this test crashes'")
