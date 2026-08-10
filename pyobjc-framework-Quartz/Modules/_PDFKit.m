@@ -5,9 +5,15 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Quartz/Quartz.h>
 
 #include "_PDFKit_protocols.m"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyMethodDef mod_methods[] = {{
     0,
@@ -56,10 +62,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__PDFKit(void);
+PyObject* _Nullable PyInit__PDFKit(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__PDFKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

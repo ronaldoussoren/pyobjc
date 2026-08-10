@@ -2,11 +2,16 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
 
-static PyObject*
-m_CTFontCopyAvailableTables(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                            size_t    nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable m_CTFontCopyAvailableTables(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CTFontRef          font;
     CTFontTableOptions options;
@@ -72,10 +77,8 @@ m_CTFontCopyAvailableTables(PyObject* meth, PyObject* _Nonnull const* _Nonnull a
     return result;
 }
 
-static PyObject*
-m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
-                                       PyObject* _Nonnull const* _Nonnull args,
-                                       size_t nargs)
+static PyObject* _Nullable m_CTParagraphStyleGetValueForSpecifier(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CTParagraphStyleRef       style;
     CTParagraphStyleSpecifier spec;
@@ -195,9 +198,8 @@ m_CTParagraphStyleGetValueForSpecifier(PyObject* meth,
     return result;
 }
 
-static PyObject*
-m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                         size_t    nargs)
+static PyObject* _Nullable m_CTParagraphStyleCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     PyObject*                seq;
     PyObject*                result;
@@ -231,8 +233,8 @@ m_CTParagraphStyleCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
             }
         Py_END_ALLOW_THREADS
 
-        if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-            return NULL;        // LCOV_EXCL_LINE
+        if (style == NULL && PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+            return NULL;                         // LCOV_EXCL_LINE
         }
         if (style == NULL) { // LCOV_BR_EXCL_LINE
             // LCOV_EXCL_START
@@ -515,9 +517,8 @@ static CTRunDelegateCallbacks m_CTRunDelegateCallbacks = {
     m_CTRunDelegateGetWidthCallback,
 };
 
-static PyObject*
-m_CTRunDelegateGetRefCon(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                         size_t    nargs)
+static PyObject* _Nullable m_CTRunDelegateGetRefCon(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CTRunDelegateRef delegate;
     PyObject*        py_refcon;
@@ -548,9 +549,9 @@ m_CTRunDelegateGetRefCon(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
     return py_refcon;
 }
 
-static PyObject*
-m_CTRunDelegateCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                      size_t    nargs)
+static PyObject* _Nullable m_CTRunDelegateCreate(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     PyObject*        py_delegate;
     PyObject*        info;
@@ -682,10 +683,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreText(void);
+PyObject* _Nullable PyInit__CoreText(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreText(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

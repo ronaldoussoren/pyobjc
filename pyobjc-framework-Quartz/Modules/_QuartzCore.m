@@ -5,6 +5,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #if PyObjC_BUILD_RELEASE >= 1015
 #import <CoreImage/CIFilterBuiltins.h>
 #endif
@@ -17,6 +21,8 @@
 
 #include "_CoreImage_protocols.m"
 #include "_QuartzCore_protocols.m"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyMethodDef mod_methods[] = {{
     0,
@@ -65,10 +71,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__QuartzCore(void);
+PyObject* _Nullable PyInit__QuartzCore(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__QuartzCore(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

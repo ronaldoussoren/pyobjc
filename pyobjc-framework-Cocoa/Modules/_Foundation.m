@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Foundation/Foundation.h>
 
 /* We include the source code here instead of
@@ -69,9 +73,9 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__Foundation(void);
+PyObject* _Nullable PyInit__Foundation(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__Foundation(void)
 {
     return PyModuleDef_Init(&mod_module);

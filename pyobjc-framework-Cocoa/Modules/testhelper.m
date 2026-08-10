@@ -4,6 +4,8 @@
 
 #import <AppKit/AppKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PyObjC_TestClass3 : NSObject {
 }
 + createAHostWithAddress:(NSString*)address;
@@ -53,8 +55,8 @@
     if (i == 0) {
         return [cls dataWithBytes:"hello world" length:sizeof("hello world") - 1];
     } else {
-        id o = [cls alloc];
-        return [o initWithBytes:"hello world" length:sizeof("hello world") - 1];
+        return [[[cls alloc] initWithBytes:"hello world"
+                                    length:sizeof("hello world") - 1] autorelease];
     }
 }
 
@@ -76,7 +78,7 @@
     if (i == 0) {
         return [cls dictionaryWithObjects:objects forKeys:keys count:4];
     } else {
-        return [[cls alloc] initWithObjects:objects forKeys:keys count:4];
+        return [[[cls alloc] initWithObjects:objects forKeys:keys count:4] autorelease];
     }
 }
 
@@ -172,14 +174,17 @@
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [coder decodeValueOfObjCType:@encode(int) at:&i];
+
+    /* FIX when dropping support for macOS 10.13 */
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
     return i;
 }
 
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [coder decodeValueOfObjCType:@encode(double) at:&i];
+    /* FIX when dropping support for macOS 10.13 */
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 
@@ -268,10 +273,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit_testhelper(void);
+PyObject* _Nullable PyInit_testhelper(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit_testhelper(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

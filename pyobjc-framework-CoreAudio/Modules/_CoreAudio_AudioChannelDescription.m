@@ -5,6 +5,8 @@
  * basically a buffer with extra attributes.
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyObject* audio_channel_description_type;
 
 #define audio_channel_description_check(obj)                                             \
@@ -27,8 +29,8 @@ static PyMemberDef acd_members[] = {
     {.name = NULL} /* Sentinel */
 };
 
-static PyObject*
-acd_get_mChannelLabel(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable acd_get_mChannelLabel(PyObject* _self, void* closure
+                                                 __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
     PyObject*                         result;
@@ -58,8 +60,8 @@ acd_set_mChannelLabel(PyObject* _self, PyObject* value,
     return result;
 }
 
-static PyObject*
-acd_get_mChannelFlags(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable acd_get_mChannelFlags(PyObject* _self, void* closure
+                                                 __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
     PyObject*                         result;
@@ -71,8 +73,8 @@ acd_get_mChannelFlags(PyObject* _self, void* closure __attribute__((__unused__))
 }
 
 static int
-acd_set_mChannelFlags(PyObject* _self, PyObject* value,
-                      void* closure __attribute__((__unused__)))
+acd_set_mChannelFlags(PyObject* _self, PyObject* _Nullable value,
+                      void*     closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
     int                               result;
@@ -89,8 +91,8 @@ acd_set_mChannelFlags(PyObject* _self, PyObject* value,
     return result;
 }
 
-static PyObject*
-acd_get_mCoordinates(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable acd_get_mCoordinates(PyObject* _self,
+                                                void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
     PyObject*                         result;
@@ -104,8 +106,8 @@ acd_get_mCoordinates(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 static int
-acd_set_mCoordinates(PyObject* _self, PyObject* value,
-                     void* closure __attribute__((__unused__)))
+acd_set_mCoordinates(PyObject* _self, PyObject* _Nullable value,
+                     void*     closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
     int                               result;
@@ -144,8 +146,7 @@ static PyGetSetDef acd_getset[] = {
     {.name = NULL} /* Sentinel */
 };
 
-static PyObject*
-acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"mChannelLabel", "mChannelFlags", "mCoordinates", NULL};
     struct audio_channel_description* result;
@@ -219,8 +220,7 @@ static PyType_Spec acd_spec = {
     .slots     = acd_slots,
 };
 
-static PyObject*
-acd_create(AudioChannelDescription* item)
+static PyObject* _Nullable acd_create(AudioChannelDescription* item)
 {
     struct audio_channel_description* result;
 
@@ -236,8 +236,7 @@ acd_create(AudioChannelDescription* item)
     return (PyObject*)result;
 }
 
-static PyObject*
-pythonify_audio_channel_description(void* pointer)
+static PyObject* _Nullable pythonify_audio_channel_description(void* pointer)
 {
     AudioChannelDescription* buf_pointer = (AudioChannelDescription*)pointer;
 
@@ -282,7 +281,7 @@ init_audio_channel_description(PyObject* module)
     PyObject* ts = PyBytes_FromString(@encode(AudioChannelDescription));
     if (ts == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_channel_description_type);
+        Py_DECREF(audio_channel_description_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -291,7 +290,7 @@ init_audio_channel_description(PyObject* module)
     Py_DECREF(ts);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_channel_description_type);
+        Py_DECREF(audio_channel_description_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -300,7 +299,7 @@ init_audio_channel_description(PyObject* module)
                            audio_channel_description_type);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_channel_description_type);
+        Py_DECREF(audio_channel_description_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -310,3 +309,5 @@ init_audio_channel_description(PyObject* module)
         "AudioChannelDescription*", @encode(AudioChannelDescription*),
         pythonify_audio_channel_description, depythonify_audio_channel_description);
 }
+
+NS_ASSUME_NONNULL_END

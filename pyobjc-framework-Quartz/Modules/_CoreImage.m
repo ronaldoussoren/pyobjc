@@ -5,9 +5,15 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreImage/CoreImage.h>
 
 #include "_CoreImage_protocols.m"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyMethodDef mod_methods[] = {{
     0,
@@ -56,10 +62,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreImage(void);
+PyObject* _Nulable PyInit__CoreImage(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit__CoreImage(void)
-{
-    return PyModuleDef_Init(&mod_module);
-}
+PyObject* _Nulable __attribute__((__visibility__("default")))
+          PyInit__CoreImage(void)
+          {
+              return PyModuleDef_Init(&mod_module);
+          }
+
+NS_ASSUME_NONNULL_END

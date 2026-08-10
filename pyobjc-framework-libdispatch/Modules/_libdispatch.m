@@ -2,11 +2,16 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #include <dispatch/dispatch.h>
 
-static PyObject*
-m_dispatch_data_create_map(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                           size_t    nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable m_dispatch_data_create_map(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     PyObject* py_result;
     PyObject* py_memview;
@@ -240,10 +245,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__dispatch(void);
+PyObject* _Nullable PyInit__dispatch(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__dispatch(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

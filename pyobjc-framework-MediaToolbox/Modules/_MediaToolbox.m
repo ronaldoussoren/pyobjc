@@ -2,7 +2,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <MediaToolbox/MediaToolbox.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 enum {
     INFO_OFFSET,
@@ -46,7 +52,7 @@ init_callback(MTAudioProcessingTapRef tap, void* clientInfo, void** tapStorageOu
     return;
 
 error:
-    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    fputs("Ignoring exception in MTAudioProcessing callback\n", stderr);
     PyErr_Print();
     Py_DECREF(PyTuple_GET_ITEM(clientInfo, INFO_OFFSET));
     PyTuple_SET_ITEM(clientInfo, INFO_OFFSET, Py_None);
@@ -83,7 +89,7 @@ finalize_callback(MTAudioProcessingTapRef tap)
     return;
 
 error:
-    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    fputs("Ignoring exception in MTAudioProcessing callback\n", stderr);
     PyErr_Print();
 
     Py_XDECREF(cb_info);
@@ -115,7 +121,7 @@ prepare_callback(MTAudioProcessingTapRef tap, CMItemCount maxFrames,
     return;
 
 error:
-    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    fputs("Ignoring exception in MTAudioProcessing callback\n", stderr);
     PyErr_Print();
     PyGILState_Release(state);
 }
@@ -142,7 +148,7 @@ unprepare_callback(MTAudioProcessingTapRef tap)
     return;
 
 error:
-    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    fputs("Ignoring exception in MTAudioProcessing callback\n", stderr);
     PyErr_Print();
     PyGILState_Release(state);
 }
@@ -196,7 +202,7 @@ process_callback(MTAudioProcessingTapRef tap, CMItemCount numberFrames,
     PyGILState_Release(state);
     return;
 error:
-    fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
+    fputs("Ignoring exception in MTAudioProcessing callback\n", stderr);
     PyErr_Print();
     PyGILState_Release(state);
 }
@@ -210,9 +216,8 @@ static MTAudioProcessingTapCallbacks callback_template = {
     .unprepare  = unprepare_callback,
     .process    = process_callback};
 
-static PyObject*
-m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                             size_t    nargs)
+static PyObject* _Nullable m_MTAudioProcessingTapCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     unsigned int flags;
 
@@ -309,10 +314,8 @@ m_MTAudioProcessingTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
 #pragma clang diagnostic ignored "-Wunknown-pragmas"
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
-static PyObject*
-m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
-                                                PyObject* _Nonnull const* _Nonnull args,
-                                                size_t nargs)
+static PyObject* _Nullable m_MTAudioProcessingTapCreateWithPreferredFormat(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     unsigned int flags;
 
@@ -416,9 +419,8 @@ m_MTAudioProcessingTapCreateWithPreferredFormat(PyObject* meth,
 #pragma clang diagnostic pop
 #endif
 
-static PyObject*
-m_MTAudioProcessingTapGetStorage(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                 size_t    nargs)
+static PyObject* _Nullable m_MTAudioProcessingTapGetStorage(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     MTAudioProcessingTapRef tap;
     PyObject*               cb_info;
@@ -505,10 +507,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__MediaToolbox(void);
+PyObject* _Nullable PyInit__MediaToolbox(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__MediaToolbox(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

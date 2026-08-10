@@ -2,11 +2,17 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreMedia/CoreMedia.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunknown-pragmas"
 #pragma clang diagnostic ignored "-Wunguarded-availability"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1400
@@ -73,10 +79,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__inlines(void);
+PyObject* _Nullable PyInit__inlines(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__inlines(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

@@ -3,6 +3,10 @@
 #include "pyobjc-api.h"
 #include <objc/runtime.h>
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <AppKit/AppKit.h>
 
 /* We include the source code here instead of

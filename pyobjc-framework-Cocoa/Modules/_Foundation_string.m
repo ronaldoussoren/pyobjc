@@ -83,15 +83,8 @@ static PyObject* _Nullable call_NSString_getCString_maxLength_range_remainingRan
         // LCOV_EXCL_STOP
     }
 
-    PyTuple_SetItem(res, 0, PyBytes_FromString(buf));
+    PyTuple_SET_ITEM(res, 0, PyBytes_FromString(buf));
     free(buf);
-    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(res);
-        free(buf);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
 
     if (leftoverPtr != NULL) {
         PyObject* rangeObj = PyObjC_ObjCToPython(@encode(NSRange), &leftoverRange);

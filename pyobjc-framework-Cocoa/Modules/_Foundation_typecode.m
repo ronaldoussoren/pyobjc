@@ -31,7 +31,7 @@ static PyObject* _Nullable objc_NSFileTypeForHFSTypeCode(
     }
 
     if (PyLong_Check(args[0])) {
-        hfsTypeCode = PyLong_AsInt(args[0]);
+        hfsTypeCode = PyLong_AsLong(args[0]);
         if (PyErr_Occurred()) {
             return NULL;
         }

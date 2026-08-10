@@ -5,7 +5,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreVideo/CoreVideo.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static void
 mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddress)
@@ -33,9 +39,8 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CVPixelBufferCreateWithBytes(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                 size_t    nargs)
+static PyObject* _Nullable mod_CVPixelBufferCreateWithBytes(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CVReturn         rv;
     CFAllocatorRef   allocator;
@@ -186,10 +191,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreVideo(void);
+PyObject* _Nullable PyInit__CoreVideo(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreVideo(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

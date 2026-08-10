@@ -2,8 +2,14 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Foundation/Foundation.h>
 #import <SecurityInterface/SFAuthorizationView.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static int
 parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
@@ -103,8 +109,7 @@ free_itemset(AuthorizationItemSet* itemset)
     PyMem_Free(itemset->items);
 }
 
-static PyObject*
-build_itemset(AuthorizationItemSet* _Nonnull itemset)
+static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
 {
     PyObject* result = NULL;
     PyObject* t      = NULL;
@@ -120,6 +125,8 @@ build_itemset(AuthorizationItemSet* _Nonnull itemset)
     for (i = 0; i < itemset->count; i++) {
         Py_ssize_t         packed = -1;
         AuthorizationItem* item   = itemset->items + i;
+
+        assert(item != NULL);
 
         t = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}",
                                           sizeof("{_AuthorizationItem=^cL^vI}") - 1, NULL,
@@ -181,10 +188,10 @@ error:
     // LCOV_EXCL_STOP
 }
 
-static PyObject*
-call_authorizationRights(PyObject* method, PyObject* self,
-                         PyObject* const* arguments __attribute__((__unused__)),
-                         size_t           nargs)
+static PyObject* _Nullable call_authorizationRights(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments
+                                                    __attribute__((__unused__)),
+                                                    size_t nargs)
 {
     struct objc_super    super;
     AuthorizationRights* rights;
@@ -216,9 +223,9 @@ call_authorizationRights(PyObject* method, PyObject* self,
     return py_rights;
 }
 
-static PyObject*
-call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* const* arguments,
-                             size_t nargs)
+static PyObject* _Nullable call_setAuthorizationRights_(PyObject* method, PyObject* self,
+                                                        PyObject* const* arguments,
+                                                        size_t           nargs)
 {
     struct objc_super   super;
     AuthorizationRights rights;
@@ -328,10 +335,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__SecurityInterface(void);
+PyObject* _Nullable PyInit__SecurityInterface(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__SecurityInterface(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

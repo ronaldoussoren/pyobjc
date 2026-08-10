@@ -2,8 +2,14 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CFNetwork/CFNetwork.h>
 #import <CoreServices/CoreServices.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const void*
 mod_retain(const void* info)
@@ -24,8 +30,7 @@ mod_release(const void* info)
 
 // LCOV_EXCL_START
 // This function is at best using during C-level debugging.
-static CFStringRef
-mod_copyDescription(const void* info)
+static CFStringRef _Nullable mod_copyDescription(const void* info)
 {
     PyObject*        repr;
     PyGILState_STATE state = PyGILState_Ensure();
@@ -258,10 +263,8 @@ mod_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* meth,
-                                                 PyObject* _Nonnull const* _Nonnull args,
-                                                 size_t nargs)
+static PyObject* _Nullable mod_CFNetworkExecuteProxyAutoConfigurationScript(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFStringRef script;
     CFURLRef    url;
@@ -309,10 +312,8 @@ mod_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* meth,
     return rv;
 }
 
-static PyObject*
-mod_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* meth,
-                                              PyObject* _Nonnull const* _Nonnull args,
-                                              size_t nargs)
+static PyObject* _Nullable mod_CFNetworkExecuteProxyAutoConfigurationURL(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFURLRef script;
     CFURLRef url;
@@ -360,8 +361,9 @@ mod_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* meth,
     return rv;
 }
 
-static PyObject*
-mod_CFHostSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable mod_CFHostSetClient(PyObject* meth,
+                                               PyObject* _Nonnull const* _Nonnull args,
+                                               size_t nargs)
 {
     CFHostRef host;
     Boolean   ok = 0;
@@ -475,9 +477,8 @@ mod_CFNetServiceBrowserClientCallBack(CFNetServiceBrowserRef browser, CFOptionFl
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFNetServiceBrowserCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                              size_t    nargs)
+static PyObject* _Nullable mod_CFNetServiceBrowserCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef allocator;
 
@@ -520,9 +521,8 @@ mod_CFNetServiceBrowserCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull
     return rv;
 }
 
-static PyObject*
-mod_CFNetServiceSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                          size_t    nargs)
+static PyObject* _Nullable mod_CFNetServiceSetClient(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFNetServiceRef service;
 
@@ -565,9 +565,8 @@ mod_CFNetServiceSetClient(PyObject* meth, PyObject* _Nonnull const* _Nonnull arg
     return rv;
 }
 
-static PyObject*
-mod_CFNetServiceMonitorCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                              size_t    nargs)
+static PyObject* _Nullable mod_CFNetServiceMonitorCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef  allocator;
     CFNetServiceRef service;
@@ -694,10 +693,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CFNetwork(void);
+PyObject* _Nullable PyInit__CFNetwork(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CFNetwork(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

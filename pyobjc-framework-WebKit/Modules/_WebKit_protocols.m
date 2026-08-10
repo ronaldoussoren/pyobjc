@@ -6,6 +6,8 @@
 #import <WebKit/WKScriptMessageHandlerWithReply.h>
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 static void __attribute__((__used__))
 use_protocols(void)
 {
@@ -80,4 +82,5 @@ use_protocols(void)
 #endif
 }
 
+NS_ASSUME_NONNULL_END
 // LCOV_EXCL_STOP

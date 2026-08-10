@@ -4,6 +4,7 @@
  * These are basic bindings to the AudioBufferList type,
  * basically a buffer with extra attributes.
  */
+NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* audio_buffer_list_type;
 
@@ -98,8 +99,7 @@ end:
     return result;
 }
 
-static PyObject*
-abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
     static char*              keywords[] = {"num_buffers", NULL};
     struct audio_buffer_list* result;
@@ -176,8 +176,7 @@ static PyType_Spec abl_spec = {
     .slots     = abl_slots,
 };
 
-static PyObject*
-pythonify_audio_buffer_list(void* pointer)
+static PyObject* _Nullable pythonify_audio_buffer_list(void* pointer)
 {
     AudioBufferList*          buf_pointer = (AudioBufferList*)pointer;
     struct audio_buffer_list* result;
@@ -232,7 +231,7 @@ init_audio_buffer_list(PyObject* module)
     PyObject* ts = PyBytes_FromString(@encode(AudioBufferList));
     if (ts == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_buffer_list_type);
+        Py_DECREF(audio_buffer_list_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -240,7 +239,7 @@ init_audio_buffer_list(PyObject* module)
     Py_DECREF(ts);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_buffer_list_type);
+        Py_DECREF(audio_buffer_list_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -248,7 +247,7 @@ init_audio_buffer_list(PyObject* module)
     r = PyModule_AddObject(module, "AudioBufferList", audio_buffer_list_type);
     if (r == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_CLEAR(audio_buffer_list_type);
+        Py_DECREF(audio_buffer_list_type);
         return -1;
         // LCOV_EXCL_STOP
     }
@@ -258,3 +257,5 @@ init_audio_buffer_list(PyObject* module)
                                          pythonify_audio_buffer_list,
                                          depythonify_audio_buffer_list);
 }
+
+NS_ASSUME_NONNULL_END

@@ -2,15 +2,20 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #include <objc/objc-runtime.h>
 
 #import <SpriteKit/SpriteKit.h>
 
 #include "_SpriteKit_protocols.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if PyObjC_BUILD_RELEASE >= 1012
-static vector_float2*
-parse_v2f_array(NSInteger vertexCount, PyObject* value)
+static vector_float2* _Nullable parse_v2f_array(NSInteger vertexCount, PyObject* value)
 {
     vector_float2* result;
     NSInteger      i;
@@ -96,12 +101,14 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositi
     if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver)
         == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        PyMem_Free(srcPos);
-        PyMem_Free(dstPos);
+        if (srcPos != NULL)
+            PyMem_Free(srcPos);
+        if (dstPos != NULL)
+            PyMem_Free(dstPos);
         return NULL;
         // LCOV_EXCL_STOP
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     SEL sel = PyObjCSelector_GetSelector(method);
 
@@ -168,7 +175,7 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_gridByReplacingPositions_(
         return NULL;
         // LCOV_EXCL_STOP
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     SEL sel = PyObjCSelector_GetSelector(method);
 
@@ -278,10 +285,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__SpriteKit(void);
+PyObject* _Nullable PyInit__SpriteKit(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__SpriteKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

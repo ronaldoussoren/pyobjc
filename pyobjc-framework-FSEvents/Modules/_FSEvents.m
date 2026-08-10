@@ -5,10 +5,15 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreServices/CoreServices.h>
 
-static const void*
-m_retain_python(const void* value)
+NS_ASSUME_NONNULL_BEGIN
+
+static const void* _Nullable m_retain_python(const void* _Nullable value)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -20,7 +25,7 @@ m_retain_python(const void* value)
 }
 
 static void
-m_release_python(const void* value)
+m_release_python(const void* _Nullable value)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -32,8 +37,7 @@ m_release_python(const void* value)
 // LCOV_EXCL_START
 // The description is here for debugging support, cannot be
 // triggered during testing.
-static CFStringRef
-m_copyDescription_python(const void* value)
+static CFStringRef _Nullable m_copyDescription_python(const void* value)
 {
     CFStringRef result;
     PyObject*   description;
@@ -66,10 +70,10 @@ static FSEventStreamContext m_python_context_template = {
     0, NULL, m_retain_python, m_release_python, m_copyDescription_python};
 
 static void
-m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInfo,
-                        size_t numEvents, void* eventPaths,
-                        const FSEventStreamEventFlags eventFlags[],
-                        const FSEventStreamEventId    eventIds[])
+m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef,
+                        void* _Nullable clientCallbackInfo, size_t numEvents,
+                        void* eventPaths, const FSEventStreamEventFlags eventFlags[],
+                        const FSEventStreamEventId eventIds[])
 {
     PyGILState_STATE         state = PyGILState_Ensure();
     FSEventStreamCreateFlags flags;
@@ -143,9 +147,9 @@ m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInf
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_FSEventStreamCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                      size_t    nargs)
+static PyObject* _Nullable m_FSEventStreamCreate(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 7, 7, nargs) == -1) {
         return NULL;
@@ -220,10 +224,8 @@ m_FSEventStreamCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     return result;
 }
 
-static PyObject*
-m_FSEventStreamCreateRelativeToDevice(PyObject* meth,
-                                      PyObject* _Nonnull const* _Nonnull args,
-                                      size_t nargs)
+static PyObject* _Nullable m_FSEventStreamCreateRelativeToDevice(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 8, 8, nargs) == -1) {
         return NULL;
@@ -365,10 +367,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__FSEvents(void);
+PyObject* _Nullable PyInit__FSEvents(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__FSEvents(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

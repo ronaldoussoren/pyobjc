@@ -2,13 +2,18 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <VideoToolbox/VideoToolbox.h>
 
 #include "_VideoToolbox_protocols.m"
 
-static PyObject*
-m_VTCompressionSessionGetTimeRangesForNextPass(PyObject* self __attribute__((__unused__)),
-                                               PyObject* args, PyObject* kwds)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable m_VTCompressionSessionGetTimeRangesForNextPass(
+    PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"session", "timeRangeCountOut", "timeRangeArrayOut", NULL};
     PyObject*    py_session;
@@ -52,9 +57,9 @@ m_VTCompressionSessionGetTimeRangesForNextPass(PyObject* self __attribute__((__u
     }
 }
 
-static PyObject*
-m_VTDecompressionSessionCreate(PyObject* self __attribute__((__unused__)), PyObject* args,
-                               PyObject* kwds)
+static PyObject* _Nullable m_VTDecompressionSessionCreate(PyObject* self
+                                                          __attribute__((__unused__)),
+                                                          PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"allocator",
                                "videoFormatDescription",
@@ -188,10 +193,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__VideoToolbox(void);
+PyObject* _Nullable PyInit__VideoToolbox(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__VideoToolbox(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

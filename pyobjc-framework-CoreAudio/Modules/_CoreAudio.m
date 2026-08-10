@@ -1,8 +1,11 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
+#include "pyobjc-api.h"
 #include "structmember.h" /* Why is this needed */
 
-#include "pyobjc-api.h"
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
 
 #import <CoreAudio/CoreAudio.h>
 
@@ -13,9 +16,12 @@
 #include "_CoreAudio_AudioChannelLayout.m"
 #include "_CoreAudio_AudioValueTranslation.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Note: TestAudioFormatNativeEndian is a macro */
-static PyObject*
-m_TestAudioFormatNativeEndian(PyObject* meth, PyObject* const* args, Py_ssize_t nargs)
+static PyObject* _Nullable m_TestAudioFormatNativeEndian(PyObject*        meth,
+                                                         PyObject* const* args,
+                                                         Py_ssize_t       nargs)
 {
     AudioStreamBasicDescription description;
 
@@ -91,10 +97,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreAudio(void);
+PyObject* _Nullable PyInit__CoreAudio(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreAudio(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

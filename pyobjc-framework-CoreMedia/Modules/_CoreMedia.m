@@ -2,7 +2,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreMedia/CoreMedia.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 int
 parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointers,
@@ -145,8 +151,7 @@ clear_parameterset(size_t parameterSetCount, uint8_t** parameterSetPointers,
     PyMem_Free(parameterSetViews);
 }
 
-static PyObject*
-m_CMVideoFormatDescriptionCreateFromH264ParameterSets(
+static PyObject* _Nullable m_CMVideoFormatDescriptionCreateFromH264ParameterSets(
     PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef         allocator;
@@ -203,8 +208,7 @@ m_CMVideoFormatDescriptionCreateFromH264ParameterSets(
 
 #if PyObjC_BUILD_RELEASE >= 1013
 
-static PyObject*
-m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+static PyObject* _Nullable m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(
     PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef         allocator;
@@ -338,10 +342,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreMedia(void);
+PyObject* _Nullable PyInit__CoreMedia(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreMedia(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

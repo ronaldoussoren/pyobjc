@@ -1,5 +1,6 @@
 info:
 	@echo "c-coverage        - clean & test with C level coverage"
+	@echo "scan-build        - build with clang's static analyzer"
 
 # Run the test suite while recording C-level coverage
 c-coverage:
@@ -15,8 +16,26 @@ c-coverage:
 	python -mcoverage report --omit='PyObjCTest/*,setup.py,pyobjc_setup.py,Lib/**/_metadata.py' | grep -v `dirname $(PWD)`
 	if test -d Modules; then open htmlcov/index.html dist/c-coverage/Modules/index-sort-l.html; else open htmlcov/index.html; fi
 
-dummy:
-	rm -rf build
-	python setup.py build_ext --inplace
+scan-build:
+	test -d build || mkdir build
+	env CFLAGS="-DPyObjC_DEBUG -DUSE_STATIC_ANALYZER -UNDEBUG -O2" scan-build -o build   \
+	    --enable-checker nullability.NullPassedToNonnull \
+	    --enable-checker nullability.NullReturnedFromNonnull \
+	    --enable-checker nullability.NullableDereferenced \
+	    --enable-checker nullability.NullablePassedToNonnull \
+	    --enable-checker nullability.NullableReturnedFromNonnull \
+	    --enable-checker security.insecureAPI.DeprecatedOrUnsafeBufferHandling \
+	    --enable-checker security.insecureAPI.bcmp \
+	    --enable-checker security.insecureAPI.bcopy \
+	    --enable-checker security.insecureAPI.bzero \
+	    --enable-checker security.insecureAPI.rand \
+	    --enable-checker security.insecureAPI.strcpy \
+	    --enable-checker optin.portability.UnixAPI \
+	    --enable-checker valist.CopyToSelf \
+	    --enable-checker valist.Uninitialized \
+	    --enable-checker valist.Unterminated \
+	    --enable-checker security \
+	    python3 setup.py build_ext
+	open build/scan-build*/index.html
 
 .PHONY: info c-coverage

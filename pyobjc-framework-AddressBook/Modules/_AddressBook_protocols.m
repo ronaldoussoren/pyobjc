@@ -4,6 +4,8 @@
 
 #import <AddressBook/ABPersonPickerDelegate.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 static void __attribute__((__used__))
 use_protocols(void)
 {
@@ -13,5 +15,7 @@ use_protocols(void)
     p = PyObjC_IdToPython(@protocol(ABPersonPickerDelegate));
     Py_XDECREF(p);
 }
+
+NS_ASSUME_NONNULL_END
 
 // LCOV_EXCL_STOP

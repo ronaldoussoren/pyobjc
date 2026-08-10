@@ -2,11 +2,12 @@
  * Manual wrappers for a number of AVAudioBuffer methods
  */
 
-static PyObject*
-call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
-                                       PyObject* const* arguments
-                                       __attribute__((__unused__)),
-                                       size_t nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_AVAudioPCMBuffer_floatChannelData(
+    PyObject* method, PyObject* self,
+    PyObject* _Nonnull const* _Nonnull arguments __attribute__((__unused__)),
+    size_t nargs)
 {
     float**           res;
     AVAudioFormat*    format;
@@ -66,11 +67,10 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
     return result;
 }
 
-static PyObject*
-call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
-                                       PyObject* const* arguments
-                                       __attribute__((__unused__)),
-                                       size_t nargs)
+static PyObject* _Nullable call_AVAudioPCMBuffer_int16ChannelData(
+    PyObject* method, PyObject* self,
+    PyObject* _Nonnull const* _Nonnull arguments __attribute__((__unused__)),
+    size_t nargs)
 {
     int16_t**         res;
     AVAudioFormat*    format;
@@ -130,11 +130,10 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
     return result;
 }
 
-static PyObject*
-call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
-                                       PyObject* const* arguments
-                                       __attribute__((__unused__)),
-                                       size_t nargs)
+static PyObject* _Nullable call_AVAudioPCMBuffer_int32ChannelData(
+    PyObject* method, PyObject* self,
+    PyObject* _Nonnull const* _Nonnull arguments __attribute__((__unused__)),
+    size_t nargs)
 {
     int32_t**         res;
     AVAudioFormat*    format;
@@ -229,3 +228,5 @@ init_avaudiobuffer(void)
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

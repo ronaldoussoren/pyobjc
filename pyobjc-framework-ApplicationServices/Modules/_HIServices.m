@@ -2,7 +2,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 #if PyObjC_BUILD_RELEASE < 1011
 #define kAXValueTypeCGPoint kAXValueCGPointType
@@ -13,8 +19,9 @@
 #define kAXValueTypeIllegal kAXValueIllegalType
 #endif
 
-static PyObject*
-m_AXValueCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_AXValueCreate(PyObject* meth,
+                                           PyObject* _Nonnull const* _Nonnull args,
+                                           size_t nargs)
 {
     UInt32     valueType;
     AXValueRef value;
@@ -88,8 +95,9 @@ m_AXValueCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t 
     }
 }
 
-static PyObject*
-m_AXValueGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_AXValueGetValue(PyObject* meth,
+                                             PyObject* _Nonnull const* _Nonnull args,
+                                             size_t nargs)
 {
     UInt32     valueType;
     AXValueRef value;
@@ -231,10 +239,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__HIServices(void);
+PyObject* _Nullable PyInit__HIServices(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__HIServices(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

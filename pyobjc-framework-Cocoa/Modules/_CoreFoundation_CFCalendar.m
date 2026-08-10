@@ -64,7 +64,6 @@ static PyObject* _Nullable mod_CFCalendarAddComponents(
         }
     }
 
-    result = FALSE;
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CFCalendarAddComponents(calendar, &at, flags, componentDesc,
@@ -136,7 +135,6 @@ static PyObject* _Nullable mod_CFCalendarComposeAbsoluteTime(
         }
     }
 
-    result = FALSE;
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CFCalendarComposeAbsoluteTime(
@@ -210,7 +208,6 @@ static PyObject* _Nullable mod_CFCalendarDecomposeAbsoluteTime(
         }
     }
 
-    result = FALSE;
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CFCalendarDecomposeAbsoluteTime(
@@ -318,7 +315,6 @@ static PyObject* _Nullable mod_CFCalendarGetComponentDifference(
         }
     }
 
-    result = FALSE;
     Py_BEGIN_ALLOW_THREADS
         @try {
             result = CFCalendarGetComponentDifference(

@@ -42,7 +42,7 @@ static PyObject* _Nullable objc_NSApplicationMain(PyObject* meth,
             return NULL;
         }
     }
-    argv = calloc((argc + 1), sizeof(char**));
+    argv = calloc((argc + 1), sizeof(char*));
     if (argv == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         PyErr_NoMemory();

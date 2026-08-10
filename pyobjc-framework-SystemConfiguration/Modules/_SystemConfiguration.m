@@ -2,7 +2,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <SystemConfiguration/SystemConfiguration.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  * Context definitions
@@ -190,9 +196,8 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
 
 /* And finally the function wrappers */
 
-static PyObject*
-mod_SCDynamicStoreCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                         size_t    nargs)
+static PyObject* _Nullable mod_SCDynamicStoreCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef allocator;
     CFStringRef    name;
@@ -248,9 +253,8 @@ mod_SCDynamicStoreCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
     return result;
 }
 
-static PyObject*
-mod_SCDynamicStoreCreateWithOptions(PyObject* meth,
-                                    PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable mod_SCDynamicStoreCreateWithOptions(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef  allocator;
     CFDictionaryRef storeOptions;
@@ -312,9 +316,8 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* meth,
     return result;
 }
 
-static PyObject*
-mod_SCPreferencesSetCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                             size_t    nargs)
+static PyObject* _Nullable mod_SCPreferencesSetCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     SCPreferencesRef prefs;
 
@@ -360,10 +363,8 @@ mod_SCPreferencesSetCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull 
     return PyBool_FromLong(result);
 }
 
-static PyObject*
-mod_SCNetworkConnectionCreateWithServiceID(PyObject* meth,
-                                           PyObject* _Nonnull const* _Nonnull args,
-                                           size_t nargs)
+static PyObject* _Nullable mod_SCNetworkConnectionCreateWithServiceID(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFAllocatorRef allocator;
     CFStringRef    serviceID;
@@ -414,10 +415,8 @@ mod_SCNetworkConnectionCreateWithServiceID(PyObject* meth,
     return rv;
 }
 
-static PyObject*
-mod_SCNetworkReachabilitySetCallback(PyObject* meth,
-                                     PyObject* _Nonnull const* _Nonnull args,
-                                     size_t nargs)
+static PyObject* _Nullable mod_SCNetworkReachabilitySetCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     SCNetworkReachabilityRef target;
 
@@ -534,10 +533,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__SystemConfiguration(void);
+PyObject* _Nullable PyInit__SystemConfiguration(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__SystemConfiguration(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

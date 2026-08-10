@@ -2,11 +2,17 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #include <xpc/xpc.h>
 
-static PyObject*
-mod_xpc_dictionary_create(PyObject* meth __attribute__((__unused__)),
-                          PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_xpc_dictionary_create(
+    PyObject* meth __attribute__((__unused__)), PyObject* _Nonnull const* _Nonnull args,
+    size_t    nargs)
 {
     PyObject* keys;
     PyObject* values;
@@ -412,10 +418,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__xpc(void);
+PyObject* _Nullable PyInit__xpc(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__xpc(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

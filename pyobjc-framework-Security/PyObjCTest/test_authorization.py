@@ -317,6 +317,9 @@ class TestAuthorization(TestCase):
         ):
             Security.AuthorizationCopyRights(NoObjCClass(), [], [], 0, None)
 
+        with self.assertRaisesRegex(ValueError, "rights cannot be None"):
+            Security.AuthorizationCopyRights(authref, None, [], 0, None)
+
         with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
             Security.AuthorizationCopyRights(authref, 42, [], 0, None)
 
@@ -357,6 +360,9 @@ class TestAuthorization(TestCase):
             "Need instance of objc.AuthorizationRef, got instance of NoObjCClass",
         ):
             Security.AuthorizationCopyRightsAsync(NoObjCClass(), [], [], 0, callback)
+
+        with self.assertRaisesRegex(ValueError, "rights cannot be None"):
+            Security.AuthorizationCopyRightsAsync(authref, None, [], 0, callback)
 
         with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
             Security.AuthorizationCopyRightsAsync(authref, 42, [], 0, callback)

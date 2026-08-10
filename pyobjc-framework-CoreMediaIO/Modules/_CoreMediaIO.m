@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreMediaIO/CMIOHardwareDevice.h>
 
 #if PyObjC_BUILD_RELEASE >= 1203
@@ -9,6 +13,8 @@
 #import <CoreMediaIO/CMIOExtensionProvider.h>
 #import <CoreMediaIO/CMIOExtensionStream.h>
 #endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 // LCOV_EXCL_START
 // This function is only present to ensure protocols are
@@ -30,9 +36,8 @@ use_protocols(void)
 }
 // LCOV_EXCL_STOP
 
-static PyObject*
-m_CMIODeviceProcessAVCCommand(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                              size_t    nargs)
+static PyObject* _Nullable m_CMIODeviceProcessAVCCommand(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CMIODeviceID         deviceID;
     CMIODeviceAVCCommand avcCommand;
@@ -66,9 +71,8 @@ m_CMIODeviceProcessAVCCommand(PyObject* meth, PyObject* _Nonnull const* _Nonnull
     return Py_BuildValue("iN", r, args[1]);
 }
 
-static PyObject*
-m_CMIODeviceProcessRS422Command(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                size_t    nargs)
+static PyObject* _Nullable m_CMIODeviceProcessRS422Command(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CMIODeviceID           deviceID;
     CMIODeviceRS422Command rs422Command;
@@ -162,10 +166,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreMediaIO(void);
+PyObject* _Nullable PyInit__CoreMediaIO(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreMediaIO(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

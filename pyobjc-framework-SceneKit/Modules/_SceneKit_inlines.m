@@ -1,7 +1,14 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
+
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <SceneKit/SceneKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  * The definitions below can cause warnings when using
@@ -85,10 +92,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__inlines(void);
+PyObject* _Nullable PyInit__inlines(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__inlines(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

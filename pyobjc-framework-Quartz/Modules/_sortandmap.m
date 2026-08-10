@@ -5,7 +5,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static void
 m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _info)
@@ -42,9 +48,8 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGPDFDictionaryApplyFunction(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                               size_t    nargs)
+static PyObject* _Nullable m_CGPDFDictionaryApplyFunction(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CGPDFDictionaryRef dictionary;
 
@@ -105,8 +110,8 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
     PyGILState_Release(state);
 }
 
-static PyObject*
-setCGPathElement(PyObject* meth __attribute__((__unused__)), PyObject* arg)
+static PyObject* _Nullable setCGPathElement(PyObject* meth __attribute__((__unused__)),
+                                            PyObject* arg)
 {
     /* This function is only called during import, therefore it
      * is not necessary to use a lock to protect access to gCGPathElement.
@@ -119,8 +124,9 @@ setCGPathElement(PyObject* meth __attribute__((__unused__)), PyObject* arg)
     return Py_None;
 }
 
-static PyObject*
-m_CGPathApply(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGPathApply(PyObject* meth,
+                                         PyObject* _Nonnull const* _Nonnull args,
+                                         size_t nargs)
 {
     CGPathRef path;
 
@@ -222,10 +228,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__sortandmap(void);
+PyObject* _Nullable PyInit__sortandmap(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__sortandmap(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

@@ -7,8 +7,14 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
 #import <CoreGraphics/CoreGraphics.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  *
@@ -66,9 +72,9 @@ static CGDataConsumerCallbacks m_CGDataConsumerCallbacks = {
     m_CGDataConsumerReleaseInfoCallback /* releaseConsumer */
 };
 
-static PyObject*
-m_CGDataConsumerCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                       size_t    nargs)
+static PyObject* _Nullable m_CGDataConsumerCreate(PyObject* meth,
+                                                  PyObject* _Nonnull const* _Nonnull args,
+                                                  size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -282,9 +288,8 @@ static CGDataProviderSequentialCallbacks m_CGDataProviderSequentialCallbacks = {
 
 };
 
-static PyObject*
-m_CGDataProviderCreateSequential(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                 size_t    nargs)
+static PyObject* _Nullable m_CGDataProviderCreateSequential(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -389,9 +394,8 @@ m_releaseData(void* _info, const void* data, size_t size)
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGDataProviderCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                               size_t    nargs)
+static PyObject* _Nullable m_CGDataProviderCreateWithData(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     long size;
 
@@ -514,8 +518,9 @@ static CGFunctionCallbacks m_CGFunctionCallbacks = {
     m_CGFunctionReleaseInfoCallback /* releaseInfo */
 };
 
-static PyObject*
-m_CGFunctionCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGFunctionCreate(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
     size_t        domainDimension;
     size_t        rangeDimension;
@@ -634,13 +639,13 @@ m_CGFunctionCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
  */
 
 struct callback_struct {
-    PyObject* callback;
-    PyObject* user_info;
-    PyObject* real_info;
+    PyObject* _Nullable callback;
+    PyObject* _Nullable user_info;
+    PyObject* _Nullable real_info;
 };
 struct callback_info {
-    struct callback_struct* list;
-    size_t                  count;
+    struct callback_struct* _Nullable list;
+    size_t count;
 };
 
 #if PY_VERSION_HEX >= 0x030d0000
@@ -730,8 +735,8 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
     return 0;
 }
 
-static PyObject*
-find_callback_info(struct callback_info* info, PyObject* callback, PyObject* user_info)
+static PyObject* _Nullable find_callback_info(struct callback_info* info,
+                                              PyObject* callback, PyObject* user_info)
 {
     size_t i;
 
@@ -826,10 +831,8 @@ m_CGDisplayReconfigurationCallBack(CGDirectDisplayID           display,
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGDisplayRegisterReconfigurationCallback(PyObject* meth,
-                                           PyObject* _Nonnull const* _Nonnull args,
-                                           size_t nargs)
+static PyObject* _Nullable m_CGDisplayRegisterReconfigurationCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CGError err;
 
@@ -876,10 +879,8 @@ m_CGDisplayRegisterReconfigurationCallback(PyObject* meth,
     return PyObjC_ObjCToPython(@encode(CGError), &err);
 }
 
-static PyObject*
-m_CGDisplayRemoveReconfigurationCallback(PyObject* meth,
-                                         PyObject* _Nonnull const* _Nonnull args,
-                                         size_t nargs)
+static PyObject* _Nullable m_CGDisplayRemoveReconfigurationCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -951,9 +952,8 @@ m_CGScreenUpdateMoveCallback(CGScreenUpdateMoveDelta delta, size_t count,
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGScreenRegisterMoveCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                               size_t    nargs)
+static PyObject* _Nullable m_CGScreenRegisterMoveCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -995,9 +995,8 @@ m_CGScreenRegisterMoveCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnul
     return Py_None;
 }
 
-static PyObject*
-m_CGScreenUnregisterMoveCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                 size_t    nargs)
+static PyObject* _Nullable m_CGScreenUnregisterMoveCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -1058,9 +1057,8 @@ m_CGScreenRefreshCallback(CGRectCount count, const CGRect* rectArray, void* _use
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGRegisterScreenRefreshCallback(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                  size_t    nargs)
+static PyObject* _Nullable m_CGRegisterScreenRefreshCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -1102,9 +1100,8 @@ m_CGRegisterScreenRefreshCallback(PyObject* meth, PyObject* _Nonnull const* _Non
     return PyObjC_ObjCToPython(@encode(CGError), &err);
 }
 
-static PyObject*
-m_CGUnregisterScreenRefreshCallback(PyObject* meth,
-                                    PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGUnregisterScreenRefreshCallback(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
@@ -1193,8 +1190,9 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     return event;
 }
 
-static PyObject*
-m_CGEventTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGEventTapCreate(PyObject* meth,
+                                              PyObject* _Nonnull const* _Nonnull args,
+                                              size_t nargs)
 {
     CGEventTapLocation  tap;
     CGEventTapPlacement place;
@@ -1247,9 +1245,8 @@ m_CGEventTapCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size
     return retval;
 }
 
-static PyObject*
-m_CGEventTapCreateForPSN(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                         size_t    nargs)
+static PyObject* _Nullable m_CGEventTapCreateForPSN(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     ProcessSerialNumber psn;
     CGEventTapPlacement place;
@@ -1303,9 +1300,8 @@ m_CGEventTapCreateForPSN(PyObject* meth, PyObject* _Nonnull const* _Nonnull args
 }
 
 #if PyObjC_BUILD_RELEASE >= 1011
-static PyObject*
-m_CGEventTapCreateForPid(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                         size_t    nargs)
+static PyObject* _Nullable m_CGEventTapCreateForPid(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     pid_t               pid;
     CGEventTapPlacement place;
@@ -1402,8 +1398,9 @@ static CGPatternCallbacks m_CGPatternCallbacks = {
     m_CGPatternReleaseInfoCallback, /* releaseInfo */
 };
 
-static PyObject*
-m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGPatternCreate(PyObject* meth,
+                                             PyObject* _Nonnull const* _Nonnull args,
+                                             size_t nargs)
 {
     CGFloat           xStep, yStep;
     CGRect            bounds;
@@ -1441,7 +1438,7 @@ m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
     case 1:
         isColored = true;
         break;
-    case -1:
+    default: /* -1 */
         return NULL;
     }
 
@@ -1470,7 +1467,8 @@ m_CGPatternCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_
 
     if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
-        Py_DECREF(real_info);
+        assert(result == NULL);
+        Py_XDECREF(real_info);
         return NULL;
         // LCOV_EXCL_STOP
     }
@@ -1631,9 +1629,9 @@ static CGPSConverterCallbacks m_CGPSConverterCallbacks = {
     m_CGPSConverterReleaseInfoCallback    /* releaseInfo */
 };
 
-static PyObject*
-m_CGPSConverterCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                      size_t    nargs)
+static PyObject* _Nullable m_CGPSConverterCreate(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     CFDictionaryRef        options;
     CGPSConverterRef       result    = NULL;
@@ -1847,10 +1845,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__callbacks(void);
+PyObject* _Nullable PyInit__callbacks(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__callbacks(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

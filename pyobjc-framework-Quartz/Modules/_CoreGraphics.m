@@ -5,11 +5,17 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
 
-static PyObject*
-m_CGFontCopyTableTags(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                      size_t    nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable m_CGFontCopyTableTags(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     CGFontRef  font = NULL;
     CFArrayRef tags = NULL;
@@ -66,9 +72,9 @@ m_CGFontCopyTableTags(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     return result;
 }
 
-static PyObject*
-m_CGWindowListCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                     size_t    nargs)
+static PyObject* _Nullable m_CGWindowListCreate(PyObject* meth,
+                                                PyObject* _Nonnull const* _Nonnull args,
+                                                size_t nargs)
 {
     CGWindowListOption option;
     CGWindowID         relativeToWindow;
@@ -133,8 +139,7 @@ m_CGWindowListCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     return result;
 }
 
-static CFArrayRef
-createWindowList(PyObject* items)
+static CFArrayRef _Nullable createWindowList(PyObject* items)
 {
     PyObject* seq = PySequence_Tuple(items);
     if (seq == NULL) {
@@ -167,10 +172,8 @@ createWindowList(PyObject* items)
     return (CFArrayRef)array;
 }
 
-static PyObject*
-m_CGWindowListCreateDescriptionFromArray(PyObject* meth,
-                                         PyObject* _Nonnull const* _Nonnull args,
-                                         size_t nargs)
+static PyObject* _Nullable m_CGWindowListCreateDescriptionFromArray(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CFArrayRef windowArray;
 
@@ -213,9 +216,8 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* meth,
 }
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < 150000
-static PyObject*
-m_CGWindowListCreateImageFromArray(PyObject* meth,
-                                   PyObject* _Nonnull const* _Nonnull args, size_t nargs)
+static PyObject* _Nullable m_CGWindowListCreateImageFromArray(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     CGRect              screenBounds;
     CFArrayRef          windowArray;
@@ -272,9 +274,8 @@ m_CGWindowListCreateImageFromArray(PyObject* meth,
 }
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED < 150000 */
 
-static PyObject*
-m_CGBitmapContextCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                        size_t    nargs)
+static PyObject* _Nullable m_CGBitmapContextCreate(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     size_t          width;
     size_t          height;
@@ -282,7 +283,7 @@ m_CGBitmapContextCreate(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
     size_t          bytesPerRow;
     CGColorSpaceRef colorSpace;
     CGBitmapInfo    bitmapInfo;
-    Py_buffer       view;
+    Py_buffer       view = {0};
 
     if (PyObjC_CheckArgCount(meth, 7, 7, nargs) == -1) {
         return NULL;
@@ -386,9 +387,8 @@ m_releasecallback(void* releaseInfo, void* data)
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                                size_t    nargs)
+static PyObject* _Nullable m_CGBitmapContextCreateWithData(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     PyObject*       view = NULL;
     size_t          width;
@@ -461,7 +461,7 @@ m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnu
     if (ctx == NULL && PyErr_Occurred()) { // LCOV_EXCL_LINE
         // LCOV_EXCL_START
         PyBuffer_Release(PyObjCMemView_GetBuffer(view));
-        Py_DECREF(view);
+        Py_XDECREF(view);
         Py_DECREF(releaseInfo);
         return NULL;
         // LCOV_EXCL_STOP
@@ -470,20 +470,20 @@ m_CGBitmapContextCreateWithData(PyObject* meth, PyObject* _Nonnull const* _Nonnu
     if (ctx == NULL) {
         PyBuffer_Release(PyObjCMemView_GetBuffer(view));
         Py_DECREF(releaseInfo);
-        Py_DECREF(view);
+        Py_XDECREF(view);
         Py_INCREF(Py_None);
         return Py_None;
     }
 
-    Py_DECREF(view);
+    Py_XDECREF(view);
     PyObject* rv = PyObjC_ObjCToPython(@encode(CGContextRef), &ctx);
     CFRelease(ctx);
     return rv;
 }
 
-static PyObject*
-m_CGPDFObjectGetValue(PyObject* meth, PyObject* _Nonnull const* _Nonnull args,
-                      size_t    nargs)
+static PyObject* _Nullable m_CGPDFObjectGetValue(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     bool            res;
     CGPDFObjectRef  obj;
@@ -646,10 +646,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreGraphics(void);
+PyObject* _Nullable PyInit__CoreGraphics(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreGraphics(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END
