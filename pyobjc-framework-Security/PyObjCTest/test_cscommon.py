@@ -121,8 +121,14 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCSApplyEmbeddedPolicy, 1 << 25)
         self.assertEqual(Security.kSecCSStripDisallowedXattrs, 1 << 24)
         self.assertEqual(Security.kSecCSMatchGuestRequirementInKernel, 1 << 23)
-        self.assertEqual(Security.kSecCSUseSignature1, 1 << 22)
-        self.assertEqual(Security.kSecCSUseSignature2, 1 << 21)
+        self.assertEqual(Security.kSecCSUsePostQuantumSignature, 1 << 21)
+        self.assertEqual(Security.kSecCSUseClassicalSignature, 1 << 22)
+        self.assertEqual(
+            Security.kSecCSUseSignature1, Security.kSecCSUseClassicalSignature
+        )
+        self.assertEqual(
+            Security.kSecCSUseSignature2, Security.kSecCSUsePostQuantumSignature
+        )
 
         self.assertEqual(Security.kSecCodeSignatureHost, 0x0001)
         self.assertEqual(Security.kSecCodeSignatureAdhoc, 0x0002)
@@ -157,6 +163,8 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCodeSignatureHashSHA256Truncated, 3)
         self.assertEqual(Security.kSecCodeSignatureHashSHA384, 4)
         self.assertEqual(Security.kSecCodeSignatureHashSHA512, 5)
+
+        self.assertEqual(Security.kSecCSMaxSignatures, 2)
 
     @min_os_level("10.12")
     def test_constants_10_12(self):

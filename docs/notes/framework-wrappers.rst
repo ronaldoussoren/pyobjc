@@ -272,8 +272,6 @@ The framework name links to API notes for that framework, the python packages li
      |                                                                                      |                                                      |                                         |
      |                                                                                      |                                                      | Removed in macOS 10.15                  |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-     | :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`                         | `pyobjc-framework-EnhancedLinkSecurity`_             |                                         |
-     +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`EventKit </apinotes/EventKit>`                                                 | `pyobjc-framework-EventKit`_                         |                                         |
      +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
      | :doc:`ExceptionHandling </apinotes/ExceptionHandling>`                               | `pyobjc-framework-ExceptionHandling`_                |                                         |

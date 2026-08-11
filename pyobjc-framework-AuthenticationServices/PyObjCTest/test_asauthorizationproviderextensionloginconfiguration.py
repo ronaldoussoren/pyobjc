@@ -190,3 +190,13 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestBodyClaims_returningError_,
             1,
         )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.includePlatformSSOAuthorizationScopes
+        )
+        self.assertArgIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setIncludePlatformSSOAuthorizationScopes_,
+            0,
+        )

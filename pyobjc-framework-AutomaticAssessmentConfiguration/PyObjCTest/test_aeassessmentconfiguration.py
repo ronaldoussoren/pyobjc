@@ -200,3 +200,19 @@ class TestAEAssessmentConfiguration(TestCase):
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsAccessibilityFullKeyboardAccess_,
             0,
         )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsForceQuit
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsForceQuit_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowVirtualMachine
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowVirtualMachine_,
+            0,
+        )

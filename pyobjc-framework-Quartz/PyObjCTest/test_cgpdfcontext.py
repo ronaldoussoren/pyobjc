@@ -99,6 +99,11 @@ class TestCGPDFContext(TestCase):
         self.assertIsInstance(Quartz.kCGPDFContextCreateLinearizedPDF, str)
         self.assertIsInstance(Quartz.kCGPDFContextCreatePDFA, str)
 
+    @min_os_level("27.0")
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGPDFMarkedContentItemRef)
+        self.assertIsCFType(Quartz.CGPDFStructureElementRef)
+
     def test_functions(self):
         data = NSMutableData.data()
         self.assertIsInstance(data, Quartz.CFMutableDataRef)
@@ -165,3 +170,13 @@ class TestCGPDFContext(TestCase):
         Quartz.CGPDFContextSetParentTree
         Quartz.CGPDFContextSetIDTree
         Quartz.CGPDFContextSetPageTagStructureTree
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        self.assertResultIsCFRetained(Quartz.CGPDFContextBeginMarkedContentSequence)
+        Quartz.CGPDFContextBeginNonStructuralMarkedContentSequence
+        Quartz.CGPDFContextEndMarkedContentSequence
+
+        self.assertResultIsCFRetained(Quartz.CGPDFContextBeginObjectReference)
+        Quartz.CGPDFContextEndObjectReference
+        Quartz.CGPDFContextAddStructureTreeRootChild

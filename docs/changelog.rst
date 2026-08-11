@@ -8,11 +8,9 @@ Version 13.0a0
 
 * Main features
 
-  * Framework bindings updated for macOS 27 SDK (beta 4)
+  * Framework bindings updated for macOS 27 SDK (beta 5)
 
   * Add support for the following frameworks (all new in macOS 27):
-
-    * :doc:`EnhancedLinkSecurity </apinotes/EnhancedLinkSecurity>`
 
     * :doc:`LinkSecurity </apinotes/LinkSecurity>`
 
@@ -175,11 +173,6 @@ Version 13.0a0
   * :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
 
   * :doc:`AVRouting </apinotes/AVRouting>`
-
-* The ``DVDPlayback`` framework is not available on macOS 27.
-
-  .. note:: to be removed, headers are no longer available
-
 
 * All formal protocols (``@protocol ...`` in Objective-C) are exposed
   as attributes on module that implements the binding for the framework
@@ -692,6 +685,9 @@ Version 13.0a0
 * Any exception raised in the callback for :func:`AuthorizationCopyRightsAsync`
   is now reported as an unraisable exception because the application will crash
   hard when raising Objective-C exceptions in this context.
+
+* Port 'scan-build' target from pyobjc-core to the framework bindings and
+  fix issues found by the Clang static analyzer.
 
 Version 12.2.2
 --------------

@@ -49,6 +49,7 @@ class TestCGImageSource(TestCase):
     @min_os_level("27.0")
     def test_constants27_0(self):
         self.assertIsInstance(Quartz.kCGImageSourceAllowableTypes, str)
+        self.assertIsInstance(Quartz.kCGImageSourcePrioritizeQuality, str)
 
     def test_types(self):
         self.assertIsCFType(Quartz.CGImageSourceRef)

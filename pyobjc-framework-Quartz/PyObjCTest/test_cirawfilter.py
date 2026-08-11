@@ -95,3 +95,7 @@ class TestCIRAWFilter(TestCase):
     def test_methods27_0(self):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isDespeckleSupported)
         self.assertArgIsBOOL(Quartz.CIRAWFilter.setDespeckleSupported_, 0)
+
+        self.assertArgIsBlock(
+            Quartz.CIRAWFilter.downloadResourcesWithTimeout_completionHandler_, 1, b"v@"
+        )

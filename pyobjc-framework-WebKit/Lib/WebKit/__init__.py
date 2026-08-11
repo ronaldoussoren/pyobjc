@@ -64,8 +64,8 @@ def _setup():
         ("WKWebExtensionWindowConfiguration", b"new"),
         ("WKJSHandle", b"init"),
         ("WKJSHandle", b"new"),
-        ("WKJSSerializedNode", b"init"),
-        ("WKJSSerializedNode", b"new"),
+        ("WKDOMNodeSnapshot", b"init"),
+        ("WKDOMNodeSnapshot", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

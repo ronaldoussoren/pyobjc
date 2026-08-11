@@ -36,6 +36,10 @@ def _setup():
         ("AEAssessmentApplication", b"new"),
         ("AEAssessmentSession", b"init"),
         ("AEAssessmentSession", b"new"),
+        ("AEAssessmentBinaryExecutable", b"init"),
+        ("AEAssessmentBinaryExecutable", b"new"),
+        ("AEAssessmentBinaryExecutableConfiguration", b"init"),
+        ("AEAssessmentBinaryExecutableConfiguration", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -143,3 +143,6 @@ class TestPKConstants(TestCase):
         self.assertIsInstance(PassKit.PKPaymentNetworkVerve, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkHumo, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkUzCard, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkPayPak, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkMaal, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkElcard, str)

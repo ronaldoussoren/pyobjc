@@ -750,6 +750,13 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionLogTransferFunction_AppleLog2, str
         )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionKey_HumanReadableString, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionMetadataSpecificationKey_HumanReadableString,
+            str,
+        )
 
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()

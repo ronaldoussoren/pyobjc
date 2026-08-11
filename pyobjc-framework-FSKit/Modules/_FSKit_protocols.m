@@ -35,6 +35,8 @@ use_protocols(void)
     Py_XDECREF(p);
 #endif /* PyObjC_BUILD_RELEASE >= 1501 */
 #if PyObjC_BUILD_RELEASE >= 2700
+    p = PyObjC_IdToPython(@protocol(FSVolumeCommonOperations));
+    Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSVolumeHandler));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(FSVolumeXattrHandler));

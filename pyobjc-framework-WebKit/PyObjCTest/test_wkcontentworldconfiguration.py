@@ -6,13 +6,13 @@ class TestWKContentWorldConfiguration(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.openClosedShadowRootsEnabled
+            WebKit.WKContentWorldConfiguration.allowAccessingClosedShadowRoots
         )
         self.assertArgIsBOOL(
-            WebKit.WKContentWorldConfiguration.setOpenClosedShadowRootsEnabled_, 0
+            WebKit.WKContentWorldConfiguration.setAllowAccessingClosedShadowRoots_, 0
         )
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.autofillScriptingEnabled
+            WebKit.WKContentWorldConfiguration.isAutofillScriptingEnabled
         )
         self.assertArgIsBOOL(
             WebKit.WKContentWorldConfiguration.setAutofillScriptingEnabled_, 0
@@ -24,19 +24,19 @@ class TestWKContentWorldConfiguration(TestCase):
             WebKit.WKContentWorldConfiguration.setElementUserInfoEnabled_, 0
         )
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.legacyBuiltinOverridesEnabled
+            WebKit.WKContentWorldConfiguration.isLegacyBuiltinOverridesEnabled
         )
         self.assertArgIsBOOL(
             WebKit.WKContentWorldConfiguration.setLegacyBuiltinOverridesEnabled_, 0
         )
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.nodeSerializationEnabled
+            WebKit.WKContentWorldConfiguration.isNodeSnapshotCreationEnabled
         )
         self.assertArgIsBOOL(
             WebKit.WKContentWorldConfiguration.setNodeSerializationEnabled_, 0
         )
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.jsHandleCreationEnabled
+            WebKit.WKContentWorldConfiguration.isJSHandleCreationEnabled
         )
         self.assertArgIsBOOL(
             WebKit.WKContentWorldConfiguration.setJSHandleCreationEnabled_, 0

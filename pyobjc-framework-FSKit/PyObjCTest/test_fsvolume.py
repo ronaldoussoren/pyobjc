@@ -129,10 +129,10 @@ class TestFSVolumeHelper(FSKit.NSObject):
     ):
         pass
 
-    def activateWithOptions_replyHandler_(self, a, b):
+    def activateVolumeWithOptions_replyHandler_(self, a, b):
         pass
 
-    def deactivateWithOptions_replyHandler_(self, a, b):
+    def deactivateVolumeWithOptions_replyHandler_(self, a, b):
         pass
 
     # FSVolumeXattrOperations
@@ -167,14 +167,8 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def enableOpenUnlinkEmulation(self):
         return 1
 
-    def setEnableOpenUnlinkEmulation_(self, a):
-        pass
-
     def requestedMountOptions(self):
         return 1
-
-    def setRequestedMountOptions_(self, a):
-        pass
 
     # FSVolumeReadWriteOperations
     def readFromFile_offset_length_intoBuffer_replyHandler_(self, a, b, c, d, e):
@@ -370,6 +364,7 @@ class TestFSVolume(TestCase):
 
     @min_sdk_level("27.0")
     def test_protocols27_0(self):
+        self.assertProtocolExists("FSVolumeCommonOperations", FSKit)
         self.assertProtocolExists("FSVolumeHandler", FSKit)
         self.assertProtocolExists("FSVolumeXattrHandler", FSKit)
         self.assertProtocolExists("FSVolumeOpenCloseHandler", FSKit)
@@ -543,21 +538,17 @@ class TestFSVolume(TestCase):
             )
 
             self.assertArgIsBlock(
-                TestFSVolumeHelper.activateWithOptions_replyHandler_, 1, b"v@@"
+                TestFSVolumeHelper.activateVolumeWithOptions_replyHandler_, 1, b"v@@"
             )
 
             self.assertArgIsBlock(
-                TestFSVolumeHelper.deactivateWithOptions_replyHandler_, 1, b"v@"
+                TestFSVolumeHelper.deactivateVolumeWithOptions_replyHandler_, 1, b"v@"
             )
 
             self.assertResultIsBOOL(TestFSVolumeHelper.enableOpenUnlinkEmulation)
-            self.assertArgIsBOOL(TestFSVolumeHelper.setEnableOpenUnlinkEmulation_, 0)
 
             self.assertResultHasType(
                 TestFSVolumeHelper.requestedMountOptions, objc._C_NSUInteger
-            )
-            self.assertArgHasType(
-                TestFSVolumeHelper.setRequestedMountOptions_, 0, objc._C_NSUInteger
             )
 
         with self.subTest("FSVolumeXattrOperations"):
