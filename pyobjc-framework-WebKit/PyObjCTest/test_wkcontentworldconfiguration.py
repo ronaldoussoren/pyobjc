@@ -18,7 +18,7 @@ class TestWKContentWorldConfiguration(TestCase):
             WebKit.WKContentWorldConfiguration.setAutofillScriptingEnabled_, 0
         )
         self.assertResultIsBOOL(
-            WebKit.WKContentWorldConfiguration.elementUserInfoEnabled
+            WebKit.WKContentWorldConfiguration.isElementUserInfoEnabled
         )
         self.assertArgIsBOOL(
             WebKit.WKContentWorldConfiguration.setElementUserInfoEnabled_, 0
@@ -33,7 +33,7 @@ class TestWKContentWorldConfiguration(TestCase):
             WebKit.WKContentWorldConfiguration.isNodeSnapshotCreationEnabled
         )
         self.assertArgIsBOOL(
-            WebKit.WKContentWorldConfiguration.setNodeSerializationEnabled_, 0
+            WebKit.WKContentWorldConfiguration.setNodeSnapshotCreationEnabled_, 0
         )
         self.assertResultIsBOOL(
             WebKit.WKContentWorldConfiguration.isJSHandleCreationEnabled

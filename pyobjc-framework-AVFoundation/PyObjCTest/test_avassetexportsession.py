@@ -108,10 +108,6 @@ class TestAVAssetExportSession(TestCase):
     @min_os_level("27.0")
     def test_constants27_0(self):
         self.assertIsInstance(
-            AVFoundation.AVAssetExportSessionResumptionFailureReasonIncompatiblePreset,
-            str,
-        )
-        self.assertIsInstance(
             AVFoundation.AVAssetExportSessionResumptionFailureReasonUnsupportedForPresetOnPlatform,
             str,
         )

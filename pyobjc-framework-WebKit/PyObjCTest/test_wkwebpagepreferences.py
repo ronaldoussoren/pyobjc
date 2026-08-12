@@ -47,7 +47,7 @@ class TestWebPagePreferences(TestCase):
             WebKit.WKWebpagePreferences.setAllowsJSHandleCreationInPageWorld_, 0
         )
 
-        self.assertResultIsBOOL(WebKit.WKWebpagePreferences.globalPrivacyControlStatus)
+        self.assertResultIsBOOL(WebKit.WKWebpagePreferences.globalPrivacyControlEnabled)
         self.assertArgIsBOOL(
-            WebKit.WKWebpagePreferences.setGlobalPrivacyControlStatus_, 0
+            WebKit.WKWebpagePreferences.setGlobalPrivacyControlEnabled_, 0
         )
