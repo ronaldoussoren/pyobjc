@@ -1,5 +1,7 @@
 import os
 import tempfile
+import sys
+import io
 
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 import Quartz
@@ -21,6 +23,21 @@ def saved_system_stderr():
 
     finally:
         os.dup2(saved_stderr, 2)
+
+
+@contextlib.contextmanager
+def saved_python_stderr():
+    result = []
+    saved_stderr = sys.stderr
+
+    try:
+        sys.stderr = io.StringIO()
+
+        yield result
+
+    finally:
+        result.append(sys.stderr.getvalue())
+        sys.stderr = saved_stderr
 
 
 class TestCGDataProvider(TestCase):
@@ -202,8 +219,12 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes, skipForward, rewind_raises, None)
             )
-            with self.assertRaisesRegex(RuntimeError, "cannot rewind"):
+
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn("RuntimeError: cannot rewind", stderr[0])
 
             context.seek(0)
 
@@ -213,8 +234,11 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes, skipForward_raises, rewind, None)
             )
-            with self.assertRaisesRegex(RuntimeError, "cannot skip"):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn("RuntimeError: cannot skip", stderr[0])
 
             context.seek(0)
 
@@ -224,10 +248,12 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes, skipForward_raises, rewind, None)
             )
-            with self.assertRaisesRegex(
-                ValueError, "depythonifying 'long long', got 'str'"
-            ):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn(
+                "ValueError: depythonifying 'long long', got 'str'", stderr[0]
+            )
 
             context.seek(0)
 
@@ -237,8 +263,11 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes_raises, skipForward, rewind, None)
             )
-            with self.assertRaisesRegex(RuntimeError, "cannot read"):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn("RuntimeError: cannot read", stderr[0])
 
             context.seek(0)
 
@@ -248,10 +277,14 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes_raises, skipForward, rewind, None)
             )
-            with self.assertRaisesRegex(
-                TypeError, "Expecting result of type tuple of 2, got NoneType"
-            ):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn(
+                "TypeError: Expecting result of type tuple of 2, got NoneType",
+                stderr[0],
+            )
 
             context.seek(0)
 
@@ -262,10 +295,13 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes_raises, skipForward, rewind, None)
             )
-            with self.assertRaisesRegex(
-                ValueError, "depythonifying 'unsigned long long', got 'str'"
-            ):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn(
+                "ValueError: depythonifying 'unsigned long long', got 'str'", stderr[0]
+            )
 
             context.seek(0)
 
@@ -276,10 +312,13 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes_raises, skipForward, rewind, None)
             )
-            with self.assertRaisesRegex(
-                TypeError, "a bytes-like object is required, not 'int'"
-            ):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn(
+                "TypeError: a bytes-like object is required, not 'int'", stderr[0]
+            )
 
             context.seek(0)
 
@@ -290,8 +329,10 @@ class TestCGDataProvider(TestCase):
             p = Quartz.CGDataProviderCreateSequential(
                 context, (getBytes_raises, skipForward, rewind, None)
             )
-            with self.assertRaisesRegex(ValueError, "Inconsistent size"):
+            with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn("ValueError: Inconsistent size", stderr[0])
 
             def release_raises(info):
                 raise RuntimeError("release fails")
@@ -300,13 +341,11 @@ class TestCGDataProvider(TestCase):
                 context, (getBytes, skipForward, rewind, release_raises)
             )
 
-            with saved_system_stderr() as stderr:
+            with saved_python_stderr() as stderr:
                 del p
 
-            self.assertIn(
-                "PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: release fails",
-                stderr[0],
-            )
+            self.assertIn("Exception ignored in:", stderr[0])
+            self.assertIn("RuntimeError: release fails", stderr[0])
 
     @expectedFailure
     def test_missing(self):

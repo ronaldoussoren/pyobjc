@@ -151,19 +151,19 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
 
     Py_buffer view;
     if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE)
-        < 0) {                                // LCOV_BR_EXCL_LINE
-        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
+        < 0) {      // LCOV_BR_EXCL_LINE
+        goto error; // LCOV_EXCL_LINE
     }
     buf = PyMemoryView_FromBuffer(&view);
-    if (buf == NULL) {                        // LCOV_BR_EXCL_LINE
-        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
+    if (buf == NULL) { // LCOV_BR_EXCL_LINE
+        goto error;    // LCOV_EXCL_LINE
     }
 
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 1), "OOl",
                                              PyTuple_GET_ITEM(info, 0), buf, count);
     if (result == NULL) {
         Py_DECREF(buf);
-        PyObjCErr_ToObjCWithGILState(&state);
+        goto error;
     }
 
     if (!PyTuple_Check(result) || PyTuple_GET_SIZE(result) != 2) {
@@ -171,7 +171,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
                      result->ob_type->tp_name);
         Py_DECREF(result);
         Py_DECREF(buf);
-        PyObjCErr_ToObjCWithGILState(&state);
+        goto error;
     }
 
     size_t c_result;
@@ -179,7 +179,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
         < 0) {
         Py_DECREF(result);
         Py_DECREF(buf);
-        PyObjCErr_ToObjCWithGILState(&state);
+        goto error;
     }
 
     if (PyTuple_GET_ITEM(result, 1) != buf) {
@@ -189,7 +189,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
             == -1) {
             Py_DECREF(result);
             Py_DECREF(buf);
-            PyObjCErr_ToObjCWithGILState(&state);
+            goto error;
         }
 
         if ((size_t)view.len < c_result || (size_t)view.len > count) {
@@ -197,7 +197,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
             PyBuffer_Release(&view);
             Py_DECREF(result);
             Py_DECREF(buf);
-            PyObjCErr_ToObjCWithGILState(&state);
+            goto error;
         }
         memcpy(buffer, view.buf, c_result);
         PyBuffer_Release(&view);
@@ -212,6 +212,11 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
 
     PyGILState_Release(state);
     return c_result;
+
+error:
+    PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 1));
+    PyGILState_Release(state);
+    return 0;
 }
 
 static void
@@ -225,12 +230,15 @@ m_CGDataProviderRewindCallback(void* _info)
         PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3), "O",
                                                  PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
-            PyObjCErr_ToObjCWithGILState(&state);
+            PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 3));
+            PyGILState_Release(state);
+            return;
         }
         Py_DECREF(result);
     }
 
     PyGILState_Release(state);
+    return;
 }
 
 static void
@@ -244,7 +252,10 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
         PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 4), "O",
                                                  PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
-            PyObjCErr_ToObjCWithGILState(&state);
+            PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 4));
+            Py_DECREF(info);
+            PyGILState_Release(state);
+            return;
         }
         Py_DECREF(result);
     }
@@ -266,17 +277,22 @@ m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
     PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 2), "Ol",
                                              PyTuple_GET_ITEM(info, 0), count);
     if (result == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+        goto error;
     }
 
     if (PyObjC_PythonToObjC(@encode(off_t), result, &retval) < 0) {
         Py_DECREF(result);
-        PyObjCErr_ToObjCWithGILState(&state);
+        goto error;
     }
     Py_DECREF(result);
     PyGILState_Release(state);
 
     return retval;
+
+error:
+    PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 2));
+    PyGILState_Release(state);
+    return 0;
 }
 
 static CGDataProviderSequentialCallbacks m_CGDataProviderSequentialCallbacks = {
@@ -853,14 +869,16 @@ static PyObject* _Nullable m_CGDisplayRegisterReconfigurationCallback(
             err = CGDisplayRegisterReconfigurationCallback(
                 m_CGDisplayReconfigurationCallBack, real_info);
 
-        } @catch (NSException* localException) { // LCOV_EXCL_LINE
-            err = -1;                            // LCOV_EXCL_LINE
-            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
+        } @catch (NSException* localException) { // LxCOV_EXCL_LINE
+            err = -1;                            // LxCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LxCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
+        (void)CGDisplayRemoveReconfigurationCallback(m_CGDisplayReconfigurationCallBack,
+                                                     real_info);
         Py_DECREF(real_info);
         return NULL;
         // LCOV_EXCL_STOP

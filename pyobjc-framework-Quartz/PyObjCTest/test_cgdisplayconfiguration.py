@@ -124,11 +124,11 @@ class TestCGDisplayConfigurationUsage(TestCase):
                     ):
                         Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
 
+                    err = Quartz.CGDisplayRemoveReconfigurationCallback(
+                        callback, myInfo
+                    )
+                    self.assertEqual(err, 0)
                     if callback == reconfig:
-                        err = Quartz.CGDisplayRemoveReconfigurationCallback(
-                            reconfig, myInfo
-                        )
-                        self.assertEqual(err, 0)
                         self.assertGreater(len(info), 0)
                         for item in info:
                             self.assertIsInstance(item[0], int)
