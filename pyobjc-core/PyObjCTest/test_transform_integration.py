@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NotBool
 
 import contextlib
 import objc
@@ -249,10 +249,6 @@ class TestTransformerIntegrationErrors(TestCase):
                         pass
 
     def test_generic_new_invalid(self):
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("bool")
-
         def helper(
             class_name,
             class_dict,
@@ -265,7 +261,7 @@ class TestTransformerIntegrationErrors(TestCase):
             return (), (), (), NotBool()  # noqa: B023
 
         with patch(helper):
-            with self.assertRaisesRegex(RuntimeError, "bool"):
+            with self.assertRaisesRegex(TypeError, "this is not a bool"):
                 name = "OC_TransformIntegrationErrorNN1"
 
                 type(name, (NSObject,), {})

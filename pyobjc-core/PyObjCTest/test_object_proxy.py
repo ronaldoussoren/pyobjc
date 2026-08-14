@@ -1,4 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, pyobjc_options, cast_ulonglong
+from PyObjCTools.TestSupport import (
+    TestCase,
+    pyobjc_options,
+    cast_ulonglong,
+    NoObjCClass,
+)
 from PyObjCTest.objectint import OC_ObjectInt
 import copy
 import types
@@ -43,13 +48,6 @@ class SomeObject:
         if not isinstance(other, SomeObject):
             return False
         return (self.a, self.b) == (other.a, other.b)
-
-
-class NoObjectiveC(str):
-    # XXX: Move to utility module
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
 
 
 class TestPythonProxy(TestCase):
@@ -324,11 +322,11 @@ class TestPlainPythonMethods(TestCase):
     def test_method_result_not_objc(self):
         class Forwarder:
             def idSelector(self):
-                return NoObjectiveC()
+                return NoObjCClass()
 
         value = Forwarder()
         result = value.idSelector()
-        self.assertIsInstance(result, NoObjectiveC)
+        self.assertIsInstance(result, NoObjCClass)
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_ObjectInt.idSelectorOf_(value)
@@ -616,11 +614,11 @@ class TestPythonMisc(TestCase):
     def test_cannot_depythonify_copy(self):
         class Helper:
             def __copy__(self):
-                return NoObjectiveC()
+                return NoObjCClass()
 
         value = Helper()
         result = copy.copy(value)
-        self.assertIsInstance(result, NoObjectiveC)
+        self.assertIsInstance(result, NoObjCClass)
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_ObjectInt.copyObject_withZone_(value, None)
@@ -641,10 +639,10 @@ class TestPythonMisc(TestCase):
     def test_cannot_depythonify_description(self):
         class Helper:
             def __repr__(self):
-                return NoObjectiveC()
+                return NoObjCClass()
 
         value = Helper()
-        self.assertIsInstance(repr(value), NoObjectiveC)
+        self.assertIsInstance(repr(value), NoObjCClass)
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_ObjectInt.descriptionOf_(value)

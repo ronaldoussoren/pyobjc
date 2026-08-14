@@ -3,14 +3,13 @@ import os
 import tempfile
 
 # from objc import super
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from PyObjCTest.helpernsobject import (
     OC_AllocRaises,
     OC_RefcountRaises,
     OC_CustomMethods,
 )
 from objc import super  # noqa: A004
-from .test_metadata import NoObjCClass
 
 NSObject = objc.lookUpClass("NSObject")
 

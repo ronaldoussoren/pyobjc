@@ -5,9 +5,8 @@
 import objc
 from PyObjCTest.block import OCTestBlock
 from PyObjCTest.block2 import OCTestBlock2
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 from .fnd import NSMutableArray, NSException
-from .test_metadata import NoObjCClass
 import functools
 
 NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"

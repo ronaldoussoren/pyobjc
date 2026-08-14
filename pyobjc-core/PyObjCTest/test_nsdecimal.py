@@ -7,7 +7,7 @@ import decimal
 import objc
 from objc import super  # noqa: A004
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import TestCase, skipUnless
+from PyObjCTools.TestSupport import TestCase, skipUnless, NotBool
 
 
 class TestNSDecimalWrapper(TestCase):
@@ -61,11 +61,7 @@ class TestNSDecimalWrapper(TestCase):
         ):
             objc.NSDecimal(500, -6, True, False)
 
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("no bool")
-
-        with self.assertRaisesRegex(RuntimeError, "no bool"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             objc.NSDecimal(500, -6, NotBool())
 
         with self.assertRaisesRegex(

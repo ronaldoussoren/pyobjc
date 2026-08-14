@@ -15,9 +15,9 @@ from PyObjCTest import testbndl  # noqa: F401
 from PyObjCTest.fnd import NSAutoreleasePool, NSObject
 from PyObjCTest.testbndl import OC_TestClass1
 from PyObjCTest.properties import OCPropertyDefinitions
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from .objectint import OC_ObjectInt
-from .test_metadata import NoObjCClass, OC_MetaDataTest
+from .test_metadata import OC_MetaDataTest
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 

@@ -4,7 +4,7 @@
 #     ** DO NOT EDIT **
 #
 from functools import partial  # noqa: F401
-from PyObjCTools.TestSupport import TestCase, min_os_level  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass  # noqa: F401
 import objc
 from objc import simd
 
@@ -21,12 +21,6 @@ except ImportError:
     )
 
 from .vectorfunccall import function_list
-
-
-class NoObjCClass:
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
 
 
 class NoBool:

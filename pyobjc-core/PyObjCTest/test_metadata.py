@@ -15,7 +15,7 @@ import sys
 
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase, expectedFailureIf
+from PyObjCTools.TestSupport import TestCase, expectedFailureIf, NoObjCClass, NotBool
 from .fnd import NSArray, NSString, NSPredicate, NSObject
 from PyObjCTest.classes import OCTestClasses
 from objc import super  # noqa: A004
@@ -27,17 +27,6 @@ if sys.version_info[:2] >= (3, 15):
     META_DICT = frozendict  # noqa: F821
 else:
     META_DICT = dict
-
-
-class NotBool:
-    def __bool__(self):
-        raise RuntimeError("not bool")
-
-
-class NoObjCClass:
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
 
 
 deallocated = 0
@@ -3883,7 +3872,7 @@ class TestMisc(TestCase):
             "deref_result_pointer",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"Class", b"selector", {"arguments": {2: {key: NotBool()}}}
                     )
@@ -3894,7 +3883,7 @@ class TestMisc(TestCase):
             "c_array_delimited_by_null",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"Class", b"selector", {key: NotBool()}
                     )
@@ -3905,7 +3894,7 @@ class TestMisc(TestCase):
                     b"Class", b"selector", {"arguments": {2: {"callable": 42}}}
                 )
 
-            with self.assertRaisesRegex(RuntimeError, "not bool"):
+            with self.assertRaisesRegex(TypeError, "this is not a bool"):
                 objc.registerMetaDataForSelector(
                     b"Class",
                     b"selector",
@@ -4338,7 +4327,7 @@ class TestInvalidMetadata(TestCase):
             "deref_result_pointer",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"OC_MetaDataTest",
                         b"invalid%s" % (key.encode()),
@@ -4347,7 +4336,7 @@ class TestInvalidMetadata(TestCase):
 
         for key in ("free_result", "c_array_delimited_by_null", "variadic"):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"OC_MetaDataTest",
                         b"invalid%s" % (key.encode()),

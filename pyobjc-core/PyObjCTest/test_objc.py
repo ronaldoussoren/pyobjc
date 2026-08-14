@@ -4,7 +4,7 @@ import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
 from PyObjCTools.TestSupport import TestCase
 
-from .fnd import NSArray, NSAttributedString, NSObject
+from .fnd import NSArray, NSAttributedString, NSObject, NotBool
 
 
 class TestConstants(TestCase):
@@ -147,11 +147,7 @@ class TestLoadBundle(TestCase):
         with self.assertRaisesRegex(TypeError, "bundle_identifier is not a string"):
             objc.loadBundle("foo", {}, bundle_identifier=42)
 
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("foo")
-
-        with self.assertRaisesRegex(RuntimeError, "foo"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             objc.loadBundle(
                 "foo",
                 {},

@@ -1,7 +1,6 @@
 import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
-from PyObjCTools.TestSupport import TestCase
-from .test_metadata import NoObjCClass
+from PyObjCTools.TestSupport import TestCase, NoObjCClass, NotBool
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
@@ -379,13 +378,9 @@ class TestAllInstanceVariables(TestCase):
         ):
             setter(obj, "objValue", o)
 
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("no bool")
-
         with self.assertRaisesRegex(
-            RuntimeError,
-            "no bool",
+            TypeError,
+            "this is not a bool",
         ):
             setter(obj, "objValue", o, NotBool())
 
@@ -399,13 +394,8 @@ class TestAllInstanceVariables(TestCase):
         setter(obj, "objValue", o2, False)
         self.assertIs(getter(obj, "objValue"), o2)
 
-        class Fake:
-            @property
-            def __pyobjc_object__(self):
-                raise TypeError("Cannot proxy")
-
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            setter(obj, "objValue", Fake(), True)
+            setter(obj, "objValue", NoObjCClass(), True)
         self.assertIs(getter(obj, "objValue"), o2)
 
         self.assertEqual(getter(obj, "pyValue"), slice(1, 10, 4))

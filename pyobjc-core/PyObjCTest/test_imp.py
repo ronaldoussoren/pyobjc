@@ -1,9 +1,8 @@
 import objc
 import inspect
 import warnings
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from PyObjCTest.test_metadata import OC_MetaDataTest
-from .test_metadata import NoObjCClass
 
 NSObject = objc.lookUpClass("NSObject")
 NSMutableArray = objc.lookUpClass("NSMutableArray")

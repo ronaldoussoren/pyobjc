@@ -490,10 +490,23 @@ class TestTestSupport(TestCase):
         ):
             self.assertIsCFType(int)
         with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not a CFTypeRef type"
+        ):
+            self.assertIsCFType(int, unique=False)
+        with self.assertRaisesRegex(
+            self.failureException, "<class 'int'> is not a CFTypeRef type"
+        ):
+            self.assertIsCFType(int, unique=True)
+        with self.assertRaisesRegex(
             self.failureException,
             "<core-foundation class NSCFType at 0x[0-9a-f]+> is not a unique CFTypeRef type",
         ):
             self.assertIsCFType(objc.lookUpClass("NSCFType"))
+
+        try:
+            self.assertIsCFType(objc.lookUpClass("NSCFType"), unique=False)
+        except self.failureException:
+            self.fail("NSCFType not recognized as a not-unique CFType")
 
         # 'assertIsCFType' primarily tests that a type is either tollfree bridged, or
         # has a distinct type that is different from the default NSCFType 'placeholder' type.

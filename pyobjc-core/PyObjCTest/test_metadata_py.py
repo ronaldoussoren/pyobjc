@@ -18,10 +18,9 @@ import gc
 # To ensure we have the right metadata
 import PyObjCTest.test_metadata  # noqa: F401
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from .fnd import NSArray, NSObject
 from objc import super  # noqa: A004
-from .test_metadata import NoObjCClass
 from . import test_metadata, objectint
 
 

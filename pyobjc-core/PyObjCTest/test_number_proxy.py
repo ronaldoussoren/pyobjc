@@ -17,8 +17,13 @@ from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.misc import OC_Misc
 from PyObjCTest.pythonnumber import OC_NumberInt
 from PyObjCTest.objectint import OC_ObjectInt
-from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
-from PyObjCTest.test_object_proxy import NoObjectiveC
+from PyObjCTools.TestSupport import (
+    TestCase,
+    os_level_key,
+    os_release,
+    NotBool,
+    NoObjCClass,
+)
 
 from .coding import PyObjC_TestCodingClass
 
@@ -239,17 +244,11 @@ class TestNSNumber(TestCase):
         self.assertEqual(OC_NumberInt.numberAsFloat_(v), 42.0)
         self.assertEqual(OC_NumberInt.numberAsDouble_(v), 42.0)
 
-        class NotBool(int):
-            __slots__ = ()
-
-            def __bool__(self):
-                raise RuntimeError("don't judge me")
-
         value = NotBool()
-        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             bool(value)
 
-        with self.assertRaisesRegex(RuntimeError, "don't judge me"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             OC_NumberInt.numberAsBOOL_(value)
 
     def testIntConversions(self):
@@ -501,7 +500,7 @@ class TestNSNumber(TestCase):
 
         class num(int):
             def __repr__(self):
-                return NoObjectiveC()
+                return NoObjCClass()
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_NumberInt.numberDescription_(num())
@@ -1329,7 +1328,7 @@ class TestComparsionMethods(TestCase):
 
             class CopyNonObjC(int):
                 def __copy__(self):
-                    return NoObjectiveC()
+                    return NoObjCClass()
 
             v = CopyNonObjC(92)
             with self.assertRaisesRegex(TypeError, "Cannot proxy"):

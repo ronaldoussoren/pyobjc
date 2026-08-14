@@ -27,13 +27,13 @@ __unittest = False
 _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
 
 
-class NoObjCClass:
+class NoObjCClass(str):
     @property
     def __pyobjc_object__(self):
         raise TypeError("Cannot proxy")
 
 
-class NotBool:
+class NotBool(int):
     def __bool__(self):
         raise TypeError("this is not a bool")
 

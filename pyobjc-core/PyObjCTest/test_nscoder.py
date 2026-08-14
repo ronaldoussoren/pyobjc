@@ -1,6 +1,5 @@
 from PyObjCTest.coding import PyObjC_TestCodingClass, OC_RaisingCoder, OC_NilBytes
-from PyObjCTools.TestSupport import TestCase
-from .test_metadata import NoObjCClass
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import objc
 from objc import super  # noqa: A004
 import warnings

@@ -1,15 +1,9 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from .objectint import OC_NoPythonRepresentation
 import objc
 
 NSInvocation = objc.lookUpClass("NSInvocation")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
-
-
-class NoObjCClass:
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
 
 
 class TestNSInvocation(TestCase):
