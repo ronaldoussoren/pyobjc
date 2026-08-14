@@ -45,6 +45,10 @@ class TestAVAssetImageGenerator(TestCase):
             AVFoundation.AVAssetImageGenerator.setAppliesPreferredTrackTransform_,
             0,  # noqa: B950
         )
+
+        self.assertResultIsCFRetained(
+            AVFoundation.AVAssetImageGenerator.copyCGImageAtTime_actualTime_error_,
+        )
         self.assertArgIsOut(
             AVFoundation.AVAssetImageGenerator.copyCGImageAtTime_actualTime_error_,
             2,  # noqa: B950

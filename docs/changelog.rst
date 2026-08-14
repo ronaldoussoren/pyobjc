@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 12.2.3
+--------------
+
+* :issue:`686`: A number of methods in :mod:`AVFoundation` return a
+  value with a +1 retain count, but PyObjC's metadata did not reflect this
+  and that results in memory leaks.
+
 Version 12.2.2
 --------------
 

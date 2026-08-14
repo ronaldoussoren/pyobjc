@@ -119,6 +119,7 @@
      {
       "selector": "coordinateUsingCoordinationMedium:error:",
       "class_method": false,
+      "retval": { "already_cfretained": true },
       "args": {
        "1": { "type_modifier": "o" }
       }
@@ -250,7 +251,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyCGImageAtTime:actualTime:error:"
      },
      {
@@ -311,7 +312,16 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
+      "selector": "copyNextSampleBuffer"
+     }
+    ]
+   },
+   "AVPlayerItemSampleBufferOutput": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "already_cfretained": true },
       "selector": "copyNextSampleBuffer"
      }
     ]
@@ -1901,7 +1911,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "textColorAtIndex:range:"
      },
      {
@@ -1911,7 +1921,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "backgroundColorAtIndex:range:"
      }
     ]
@@ -3651,7 +3661,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyTaggedBufferGroupForHostTime:presentationTimeStamp:activeConfiguration:"
      }
     ]
@@ -3867,7 +3877,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:"
      },
      {
@@ -3877,7 +3887,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:error:"
      },
      {
@@ -3887,7 +3897,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:addingToBatch:error:"
      },
      {
@@ -4014,7 +4024,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyCurrentSampleFormatDescription"
      }
     ]
@@ -4275,7 +4285,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyFormatDescription"
      }
     ]
@@ -4384,7 +4394,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "newPixelBuffer"
      }
     ]
