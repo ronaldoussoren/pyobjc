@@ -693,6 +693,9 @@ Version 13.0a0
   is now reported as an unraisable exception because the application will crash
   hard when raising Objective-C exceptions in this context.
 
+Version 12.2.3
+--------------
+
 * :issue:`686`: A number of methods in :mod:`AVFoundation` return a
   value with a +1 retain count, but PyObjC's metadata did not reflect this
   and that results in memory leaks.
