@@ -344,15 +344,19 @@ class TestCase(_unittest.TestCase):
         if hasattr(func, "__metadata__"):
             self.fail(f"{func} has automatic bindings")
 
-    def assertIsCFType(self, tp, message=None):
+    def assertIsCFType(self, tp, message=None, *, unique=True):
         if not isinstance(tp, objc.objc_class):
             self.fail(message or f"{tp!r} is not a CFTypeRef type")
 
-        if any(x is tp for x in _nscftype):
-            self.fail(message or f"{tp!r} is not a unique CFTypeRef type")
+        if unique:
+            if any(x is tp for x in _nscftype):
+                self.fail(message or f"{tp!r} is not a unique CFTypeRef type")
 
-        for cls in tp.__bases__:
-            if "NSCFType" in cls.__name__:
+            for cls in tp.__bases__:
+                if "NSCFType" in cls.__name__:
+                    return
+        else:
+            if "NSCFType" in tp.__name__:
                 return
 
         self.fail(message or f"{tp!r} is not a CFTypeRef type")

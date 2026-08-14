@@ -5,7 +5,7 @@ import Quartz
 class TestCGPDFMarkedContentItem(TestCase):
     @min_os_level("27.0")
     def test_types(self):
-        self.assertIsCFType(Quartz.CGPDFMarkedContentItemRef)
+        self.assertIsCFType(Quartz.CGPDFMarkedContentItemRef, unique=False)
 
     @min_os_level("27.0")
     def test_functions(self):

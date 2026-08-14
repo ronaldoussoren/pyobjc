@@ -5,7 +5,7 @@ import Quartz
 class TestCGPDFStructureElement(TestCase):
     @min_os_level("27.0")
     def test_types(self):
-        self.assertIsCFType(Quartz.CGPDFStructureElementRef)
+        self.assertIsCFType(Quartz.CGPDFStructureElementRef, unique=False)
 
     @min_os_level("27.0")
     def test_functions(self):

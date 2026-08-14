@@ -76,6 +76,7 @@ class TestCGDisplayConfigurationUsage(TestCase):
             info.append((display, flags, userInfo))
 
         def reconfig_raises(display, flags, userInfo):
+            print("reconfig_raises called")
             raise RuntimeError("reconfig raises")
 
         with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
@@ -84,7 +85,7 @@ class TestCGDisplayConfigurationUsage(TestCase):
         with self.assertRaisesRegex(TypeError, "callback not callable"):
             Quartz.CGDisplayRegisterReconfigurationCallback(42, myInfo)
 
-        for callback in (reconfig, reconfig_raises):
+        for callback in (reconfig_raises, reconfig):
             with self.subTest(callback=callback):
                 info[:] = []
 
@@ -115,33 +116,32 @@ class TestCGDisplayConfigurationUsage(TestCase):
                         )
 
                 finally:
-                    with self.assertRaisesRegex(
-                        TypeError, "expected 2 arguments, got 0"
-                    ):
-                        Quartz.CGDisplayRemoveReconfigurationCallback()
-                    with self.assertRaisesRegex(
-                        ValueError, "Cannot find callback info"
-                    ):
-                        Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
-
                     err = Quartz.CGDisplayRemoveReconfigurationCallback(
                         callback, myInfo
                     )
-                    self.assertEqual(err, 0)
-                    if callback == reconfig:
-                        self.assertGreater(len(info), 0)
-                        for item in info:
-                            self.assertIsInstance(item[0], int)
-                            self.assertIsInstance(item[1], int)
-                            self.assertIs(item[2], myInfo)
+                    try:
+                        with self.assertRaisesRegex(
+                            TypeError, "expected 2 arguments, got 0"
+                        ):
+                            Quartz.CGDisplayRemoveReconfigurationCallback()
+                        with self.assertRaisesRegex(
+                            ValueError, "Cannot find callback info"
+                        ):
+                            Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
 
-                    else:
-                        self.assertEqual(info, [])
-                    ln = len(info)
+                        self.assertEqual(err, 0)
+                        if callback == reconfig:
+                            self.assertGreater(len(info), 0)
+                            for item in info:
+                                self.assertIsInstance(item[0], int)
+                                self.assertIsInstance(item[1], int)
+                                self.assertIs(item[2], myInfo)
 
-                    Quartz.CGRestorePermanentDisplayConfiguration()
-
-                    self.assertEqual(len(info), ln)
+                        else:
+                            self.assertEqual(info, [])
+                    finally:
+                        # Quartz.CGCancelDisplayConfiguration(config)
+                        Quartz.CGRestorePermanentDisplayConfiguration()
 
         err = Quartz.CGDisplaySetStereoOperation(
             Quartz.CGMainDisplayID(), False, False, Quartz.kCGConfigureForAppOnly

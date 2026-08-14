@@ -52,6 +52,6 @@ class TestCIRenderDestination(TestCase):
     @min_os_level("27.0")
     def test_methods27_0(self):
         self.assertArgIsOut(
-            Quartz.CIRenderDestination.estimateRender_fromRect_toDestination_atPoint_error_,
+            Quartz.CIContext.estimateRender_fromRect_toDestination_atPoint_error_,
             4,
         )

@@ -97,7 +97,6 @@ class TestCGDataConsumer(TestCase):
             return str(bufsize)
 
         def release_raises(info):
-            print("release raises")
             raise RuntimeError("release error")
 
         output = []

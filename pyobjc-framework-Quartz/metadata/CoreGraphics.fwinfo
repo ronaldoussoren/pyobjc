@@ -15,6 +15,12 @@
    }
   },
   "cftypes": {
+   "CGPDFMarkedContentItemRef": {
+    "typestr": "^{CGPDFMarkedContentItem=}"
+   },
+   "CGPDFStructureElementRef": {
+    "typestr": "^{^{CGPDFStructureElement=}"
+   },
    "CGColorConversionInfoRef": {
     "gettypeid_func": "CGColorConversionInfoGetTypeID",
     "typestr": "^{CGColorConversionInfo=}"
@@ -308,6 +314,12 @@
    "kCIImageToneMapHDRtoSDR": {
     "typestr": "@"
    },
+   "kCIImageTypeIdentifierHint": {
+    "typestr": "@"
+   },
+   "kCIImageUseHardwareAcceleration": {
+    "typestr": "@"
+   },
    "kCIImageAuxiliarySemanticSegmentationGlassesMatte": {
     "typestr": "@"
    },
@@ -392,6 +404,12 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGPDFContextBeginMarkedContentSequence": {
+    "retval": { "already_cfretained": true }
+   },
+   "CGPDFContextBeginObjectReference": {
+    "retval": { "already_cfretained": true }
+   },
    "CGRenderingBufferLockBytePtr": {
     "retval": { "c_array_of_variable_length": true }
    },

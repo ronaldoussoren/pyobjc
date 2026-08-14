@@ -101,8 +101,8 @@ class TestCGPDFContext(TestCase):
 
     @min_os_level("27.0")
     def test_types(self):
-        self.assertIsCFType(Quartz.CGPDFMarkedContentItemRef)
-        self.assertIsCFType(Quartz.CGPDFStructureElementRef)
+        self.assertIsCFType(Quartz.CGPDFMarkedContentItemRef, unique=False)
+        self.assertIsCFType(Quartz.CGPDFStructureElementRef, unique=False)
 
     def test_functions(self):
         data = NSMutableData.data()

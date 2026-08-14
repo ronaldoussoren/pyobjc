@@ -136,6 +136,7 @@
    "kCIFormatRGBA16": { "typestr": "i" },
    "kCIFormatRGBAf": { "typestr": "i" },
    "kCIFormatRGBAh": { "typestr": "i" },
+   "kCIImageSubsampleFactor": { "typestr": "@" },
    "kCIImageAutoAdjustCrop": { "typestr": "@" },
    "kCIImageAutoAdjustEnhance": { "typestr": "@" },
    "kCIImageAutoAdjustFeatures": { "typestr": "@" },
@@ -372,6 +373,21 @@
    },
    "CIRAWFilter": {
     "methods": [
+     {
+      "selector": "downloadResourcesWithTimeout:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "isLocalToneMapSupported",
       "class_method": true,
@@ -972,6 +988,13 @@
     "methods": [
      {
       "class_method": true,
+      "selector": "applyWithTiledExtent:inputs:arguments:error:",
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": true,
       "selector": "applyWithExtents:inputs:arguments:error:",
       "args": {
        "3": { "type_modifier": "o" }
@@ -1008,6 +1031,13 @@
    },
    "CIContext": {
     "methods": [
+     {
+      "selector": "estimateRender:fromRect:toDestination:atPoint:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "createCGImage:fromRect:format:colorSpace:deferred:calculateHDRStats:",
       "class_method": false,

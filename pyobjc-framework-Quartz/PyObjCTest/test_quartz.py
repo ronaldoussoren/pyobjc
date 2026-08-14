@@ -22,6 +22,10 @@ class TestCallableMetadata(TestCase):
                 "AGXG13GFamilyCommandBuffer",
                 "_MTLDevice",
                 "RC_EspressoWrapper",
+                "AppleParavirtDevice",
+                "AppleParavirtCommandBuffer",
+                "AppleParavirtAllocator",
+                "PGSerializer",
             },
         )
 

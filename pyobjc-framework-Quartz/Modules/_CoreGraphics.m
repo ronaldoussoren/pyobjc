@@ -462,14 +462,12 @@ static PyObject* _Nullable m_CGBitmapContextCreateWithData(
         // LCOV_EXCL_START
         PyBuffer_Release(PyObjCMemView_GetBuffer(view));
         Py_XDECREF(view);
-        Py_DECREF(releaseInfo);
         return NULL;
         // LCOV_EXCL_STOP
     }
 
     if (ctx == NULL) {
         PyBuffer_Release(PyObjCMemView_GetBuffer(view));
-        Py_DECREF(releaseInfo);
         Py_XDECREF(view);
         Py_INCREF(Py_None);
         return Py_None;
