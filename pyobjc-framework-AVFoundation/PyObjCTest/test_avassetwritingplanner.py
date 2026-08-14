@@ -33,6 +33,9 @@ class TestAVAssetWritingPlanner(TestCase):
             3,
         )
 
+        self.assertResultIsCFRetained(
+            AVFoundation.AVPlannedVideoSegmentWritingRequest.createResumableCompressionSessionWithAllocator_width_height_codecType_encoderSpecification_sourceImageBufferAttributes_compressedDataAllocator_outputCallback_outputCallbackRefCon_returningError_,
+        )
         self.assertArgIsFunction(
             AVFoundation.AVPlannedVideoSegmentWritingRequest.createResumableCompressionSessionWithAllocator_width_height_codecType_encoderSpecification_sourceImageBufferAttributes_compressedDataAllocator_outputCallback_outputCallbackRefCon_returningError_,
             7,

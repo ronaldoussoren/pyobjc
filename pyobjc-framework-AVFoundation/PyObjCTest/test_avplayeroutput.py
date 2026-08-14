@@ -10,6 +10,9 @@ class TestAVPlayerOutput(TestCase):
 
     @min_os_level("14.2")
     def test_methods(self):
+        self.assertResultIsCFRetained(
+            AVFoundation.AVPlayerVideoOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_
+        )
         self.assertArgIsOut(
             AVFoundation.AVPlayerVideoOutput.copyTaggedBufferGroupForHostTime_presentationTimeStamp_activeConfiguration_,
             1,

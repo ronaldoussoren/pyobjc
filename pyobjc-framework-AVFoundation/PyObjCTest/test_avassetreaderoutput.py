@@ -15,6 +15,10 @@ class TestAVAssetReaderOutput(TestCase):
             AVFoundation.AVAssetReaderOutput.setAlwaysCopiesSampleData_, 0
         )
 
+        self.assertResultIsCFRetained(
+            AVFoundation.AVAssetReaderOutput.copyNextSampleBuffer
+        )
+
     @min_os_level("10.10")
     def test_methods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetReaderOutput.supportsRandomAccess)

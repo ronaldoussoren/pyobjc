@@ -21,6 +21,10 @@ class TestAVSampleCursor(TestCase):
             AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_  # noqa: B950
         )
 
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleCursor.copyCurrentSampleFormatDescription
+        )
+
     def test_structs(self):
         v = AVFoundation.AVSampleCursorSyncInfo()
         self.assertIsInstance(v.sampleIsFullSync, bool)

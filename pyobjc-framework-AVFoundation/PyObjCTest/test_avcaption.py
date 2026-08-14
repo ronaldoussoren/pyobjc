@@ -89,8 +89,14 @@ class TestAVCaption(TestCase):
 
     @min_os_level("12.0")
     def test_methods(self):
+        self.assertResultIsCFRetained(AVFoundation.AVCaption.textColorAtIndex_range_)
         self.assertArgIsOut(AVFoundation.AVCaption.textColorAtIndex_range_, 1)
+
+        self.assertResultIsCFRetained(
+            AVFoundation.AVCaption.backgroundColorAtIndex_range_
+        )
         self.assertArgIsOut(AVFoundation.AVCaption.backgroundColorAtIndex_range_, 1)
+
         self.assertArgIsOut(AVFoundation.AVCaption.fontWeightAtIndex_range_, 1)
         self.assertArgIsOut(AVFoundation.AVCaption.fontStyleAtIndex_range_, 1)
         self.assertArgIsOut(AVFoundation.AVCaption.decorationAtIndex_range_, 1)

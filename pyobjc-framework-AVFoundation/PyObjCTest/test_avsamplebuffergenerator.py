@@ -23,10 +23,20 @@ class TestAVSampleBufferGenerator(TestCase):
 
     @min_os_level("13.0")
     def test_methods13_0(self):
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_
+        )
+
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_error_
+        )
         self.assertArgIsOut(
             AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_error_, 1
         )
 
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_addingToBatch_error_
+        )
         self.assertArgIsOut(
             AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_addingToBatch_error_,
             2,

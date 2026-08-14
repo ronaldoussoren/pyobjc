@@ -70,6 +70,7 @@
      {
       "selector": "createResumableCompressionSessionWithAllocator:width:height:codecType:encoderSpecification:sourceImageBufferAttributes:compressedDataAllocator:outputCallback:outputCallbackRefCon:returningError:",
       "class_method": false,
+      "retval": { "already_cfretained": true },
       "args": {
        "7": {
         "callable_retained": true,
@@ -121,13 +122,6 @@
        "type_override": "Z"
       },
       "selector": "isCompatibleWithAirPlayVideo"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "copyCGImageAtTime:actualTime:error:"
      },
      {
       "class_method": false,
@@ -281,7 +275,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyCGImageAtTime:actualTime:error:"
      },
      {
@@ -342,7 +336,16 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
+      "selector": "copyNextSampleBuffer"
+     }
+    ]
+   },
+   "AVPlayerItemSampleBufferOutput": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "already_cfretained": true },
       "selector": "copyNextSampleBuffer"
      }
     ]
@@ -2059,7 +2062,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "textColorAtIndex:range:"
      },
      {
@@ -2069,7 +2072,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "backgroundColorAtIndex:range:"
      }
     ]
@@ -3809,7 +3812,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyTaggedBufferGroupForHostTime:presentationTimeStamp:activeConfiguration:"
      }
     ]
@@ -4025,7 +4028,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:"
      },
      {
@@ -4035,7 +4038,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:error:"
      },
      {
@@ -4045,7 +4048,7 @@
        }
       },
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "createSampleBufferForRequest:addingToBatch:error:"
      },
      {
@@ -4172,7 +4175,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyCurrentSampleFormatDescription"
      }
     ]
@@ -4433,7 +4436,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "copyFormatDescription"
      }
     ]
@@ -4542,7 +4545,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "already_cfretained": true },
       "selector": "newPixelBuffer"
      }
     ]
