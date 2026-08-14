@@ -223,7 +223,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider rewind callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn("RuntimeError: cannot rewind", stderr[0])
 
             context.seek(0)
@@ -237,7 +242,13 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider skipForward callback",
+                    stderr[0],
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn("RuntimeError: cannot skip", stderr[0])
 
             context.seek(0)
@@ -250,7 +261,14 @@ class TestCGDataProvider(TestCase):
             )
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
-            self.assertIn("Exception ignored in:", stderr[0])
+
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider skipForward callback",
+                    stderr[0],
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn(
                 "ValueError: depythonifying 'long long', got 'str'", stderr[0]
             )
@@ -266,7 +284,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider getBytes callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn("RuntimeError: cannot read", stderr[0])
 
             context.seek(0)
@@ -280,7 +303,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider getBytes callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn(
                 "TypeError: Expecting result of type tuple of 2, got NoneType",
                 stderr[0],
@@ -298,7 +326,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider getBytes callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn(
                 "ValueError: depythonifying 'unsigned long long', got 'str'", stderr[0]
             )
@@ -315,7 +348,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider getBytes callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn(
                 "TypeError: a bytes-like object is required, not 'int'", stderr[0]
             )
@@ -331,7 +369,12 @@ class TestCGDataProvider(TestCase):
             )
             with saved_python_stderr() as stderr:
                 Quartz.CGPDFDocumentCreateWithProvider(p)
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider getBytes callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn("ValueError: Inconsistent size", stderr[0])
 
             def release_raises(info):
@@ -344,7 +387,12 @@ class TestCGDataProvider(TestCase):
             with saved_python_stderr() as stderr:
                 del p
 
-            self.assertIn("Exception ignored in:", stderr[0])
+            if sys.version_info[:2] >= (3, 13):
+                self.assertIn(
+                    "Exception ignored in CGDataProvider release callback", stderr[0]
+                )
+            else:
+                self.assertIn("Exception ignored in:", stderr[0])
             self.assertIn("RuntimeError: release fails", stderr[0])
 
     @expectedFailure

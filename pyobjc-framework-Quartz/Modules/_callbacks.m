@@ -214,7 +214,12 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     return c_result;
 
 error:
+#if PY_VERSION_HEX >= 0x030d00a0
+    PyErr_FormatUnraisable("Exception ignored in CGDataProvider getBytes callback: %R",
+                           PyTuple_GET_ITEM(info, 1));
+#else
     PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 1));
+#endif
     PyGILState_Release(state);
     return 0;
 }
@@ -230,7 +235,13 @@ m_CGDataProviderRewindCallback(void* _info)
         PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 3), "O",
                                                  PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
+#if PY_VERSION_HEX >= 0x030d00a0
+            PyErr_FormatUnraisable(
+                "Exception ignored in CGDataProvider rewind callback: %R",
+                PyTuple_GET_ITEM(info, 3));
+#else
             PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 3));
+#endif
             PyGILState_Release(state);
             return;
         }
@@ -252,7 +263,13 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
         PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 4), "O",
                                                  PyTuple_GET_ITEM(info, 0));
         if (result == NULL) {
+#if PY_VERSION_HEX >= 0x030d00a0
+            PyErr_FormatUnraisable(
+                "Exception ignored in CGDataProvider release callback: %R",
+                PyTuple_GET_ITEM(info, 4));
+#else
             PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 4));
+#endif
             Py_DECREF(info);
             PyGILState_Release(state);
             return;
@@ -290,7 +307,12 @@ m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
     return retval;
 
 error:
+#if PY_VERSION_HEX >= 0x030d00a0
+    PyErr_FormatUnraisable("Exception ignored in CGDataProvider skipForward callback: %R",
+                           PyTuple_GET_ITEM(info, 2));
+#else
     PyErr_WriteUnraisable(PyTuple_GET_ITEM(info, 2));
+#endif
     PyGILState_Release(state);
     return 0;
 }

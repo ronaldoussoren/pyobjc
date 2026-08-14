@@ -957,14 +957,28 @@ static PyObject* _Nullable m_AuthorizationCopyRightsAsync(
                       py_result = PyObject_CallFunction(py_callback, "iO", err,
                                                         py_authorizedRights);
                       if (py_result == NULL) {
-                          /* Don't raise as ObjC exception, will cause hard crash */
+                        /* Don't raise as ObjC exception, will cause hard crash */
+#if PY_VERSION_HEX >= 0x030d00a0
+                          PyErr_FormatUnraisable(
+                              "Exception ignored in AuthorizationCopyRightsAsync "
+                              "callback: %R",
+                              py_callback);
+#else
                           PyErr_WriteUnraisable(py_callback);
+#endif
                       } else if (py_result != Py_None) {
                           Py_DECREF(py_result);
                           PyErr_SetString(PyExc_TypeError,
                                           "callbackBlock returned value");
-                          /* Don't raise as ObjC exception, will cause hard crash */
+                        /* Don't raise as ObjC exception, will cause hard crash */
+#if PY_VERSION_HEX >= 0x030d00a0
+                          PyErr_FormatUnraisable(
+                              "Exception ignored in AuthorizationCopyRightsAsync "
+                              "callback: %R",
+                              py_callback);
+#else
                           PyErr_WriteUnraisable(py_callback);
+#endif
                       } else {
                           Py_DECREF(py_result);
                       }

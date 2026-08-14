@@ -418,7 +418,12 @@ m_CTRunDelegateGetAscentCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable(
+            "Exception ignored in CTRunDelegate getAscent callback: %R", cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;
@@ -429,7 +434,12 @@ m_CTRunDelegateGetAscentCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable(
+            "Exception ignored in CTRunDelegate getAscent callback: %R", cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;
@@ -454,7 +464,12 @@ m_CTRunDelegateGetDescentCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable(
+            "Exception ignored in CTRunDelegate getDescent callback: %R", cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;
@@ -465,7 +480,12 @@ m_CTRunDelegateGetDescentCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable(
+            "Exception ignored in CTRunDelegate getDescent callback: %R", cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;
@@ -490,7 +510,12 @@ m_CTRunDelegateGetWidthCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable("Exception ignored in CTRunDelegate getWidth callback: %R",
+                               cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;
@@ -501,7 +526,12 @@ m_CTRunDelegateGetWidthCallback(void* refCon)
         /* This callback is invoked in a context where exceptions
          * cannot be raised
          */
+#if PY_VERSION_HEX >= 0x030d00a0
+        PyErr_FormatUnraisable("Exception ignored in CTRunDelegate getWidth callback: %R",
+                               cb);
+#else
         PyErr_WriteUnraisable(cb);
+#endif
         // PyObjCErr_ToObjCWithGILState(&state);
         PyGILState_Release(state);
         return 42.0;

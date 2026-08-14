@@ -396,7 +396,13 @@ class TestAuthorization(TestCase):
             )
             self.assertEqual(len(items), 0)
 
-        self.assertIn("Exception ignored in:", stderr[0])
+        if sys.version_info[:2] >= (3, 13):
+            self.assertIn(
+                "Exception ignored in AuthorizationCopyRightsAsync callback:", stderr[0]
+            )
+
+        else:
+            self.assertIn("Exception ignored in:", stderr[0])
         self.assertIn("TypeError: callbackBlock returned value", stderr[0])
 
         Security.AuthorizationCopyRightsAsync(
@@ -409,7 +415,12 @@ class TestAuthorization(TestCase):
             )
             self.assertEqual(len(items), 0)
 
-        self.assertIn("Exception ignored in:", stderr[0])
+        if sys.version_info[:2] >= (3, 13):
+            self.assertIn(
+                "Exception ignored in AuthorizationCopyRightsAsync callback:", stderr[0]
+            )
+        else:
+            self.assertIn("Exception ignored in:", stderr[0])
         self.assertIn("ZeroDivisionError: division by zero", stderr[0])
 
         # Execute
