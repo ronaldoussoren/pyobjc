@@ -226,7 +226,6 @@ Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3 :: Only
-Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
 Programming Language :: Python :: 3.13
@@ -677,7 +676,7 @@ def setup(
         zip_safe=False,
         license="MIT",
         classifiers=CLASSIFIERS,
-        python_requires=">=3.10",
+        python_requires=">=3.11",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         options=options,
         **k,
