@@ -315,9 +315,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         PyObject* item = PyTuple_GET_ITEM(seq, i);
         void*     value;
         char*     signature;
-#if defined(USE_CFBundleGetFunctionPointerForName)
         NSString* name;
-#endif
         char*     c_name;
         PyObject* doc;
         PyObject* meta = NULL;
@@ -333,8 +331,17 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
         }
 
         doc = NULL;
-#if defined(USE_CFBundleGetFunctionPointerForName)
-        if (cfBundle != NULL) {
+        if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
+                              &meta)) {
+            Py_DECREF(seq);
+            if (cfBundle != NULL) {
+                CFRelease(cfBundle);
+            }
+            return NULL;
+        }
+
+        value = dlsym(RTLD_DEFAULT, c_name);
+        if (value == NULL && cfBundle != NULL) {
             if (!PyArg_ParseTuple(item, "O&y|UO:functionInfo", PyObjCObject_Convert,
                                   &name, &signature, &doc, &meta)) {
                 Py_DECREF(seq);
@@ -354,23 +361,6 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             }
 
             value = CFBundleGetFunctionPointerForName(cfBundle, (CFStringRef)name);
-        } else
-#endif
-        {
-            if (!PyArg_ParseTuple(item, "sy|UO:functionInfo", &c_name, &signature, &doc,
-                                  &meta)) {
-                Py_DECREF(seq);
-#if defined(USE_CFBundleGetFunctionPointerForName)
-                assert(cfBundle == NULL);
-#else
-                if (cfBundle != NULL) {
-                    CFRelease(cfBundle);
-                }
-#endif
-                return NULL;
-            }
-
-            value = dlsym(RTLD_DEFAULT, c_name);
         }
 
         if (value == NULL) {
