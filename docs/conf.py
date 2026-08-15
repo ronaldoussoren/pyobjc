@@ -35,7 +35,6 @@ extensions = [
     "sphinx.ext.extlinks",
     "examples",
     "available",
-    "sphinxcontrib.blockdiag",
     "sphinx_sitemap",
     "sphinx_copybutton",
     "sphinx_design",
