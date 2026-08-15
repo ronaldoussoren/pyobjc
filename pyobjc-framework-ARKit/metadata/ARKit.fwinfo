@@ -546,7 +546,7 @@
      "2": {},
      "3": {
       "callable": {
-       "argsuments": {
+       "arguments": {
         "0": {
          "type": "^v"
         },
