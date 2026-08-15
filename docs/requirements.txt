@@ -1,8 +1,7 @@
-setuptools<82
+setuptools
 sphinx-sitemap
-sphinxcontrib.blockdiag
 sphinxcontrib.spelling
-sphinx>=7.3,<9
+sphinx
 shibuya
 sphinx-copybutton
 sphinx-design

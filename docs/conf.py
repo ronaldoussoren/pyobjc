@@ -35,7 +35,6 @@ extensions = [
     "sphinx.ext.extlinks",
     "examples",
     "available",
-    "sphinxcontrib.blockdiag",
     "sphinx_sitemap",
     "sphinx_copybutton",
     "sphinx_design",
@@ -74,7 +73,7 @@ copyright = "2017-2025, Ronald Oussoren"  # noqa: A001
 # built documents.
 #
 # The short X.Y version.
-version = "12.2.1"
+version = "13.0a0"
 
 # The full version, including alpha/beta/rc tags.
 release = version
