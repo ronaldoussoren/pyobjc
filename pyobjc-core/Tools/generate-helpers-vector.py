@@ -873,7 +873,7 @@ TEST_PREFIX_START = """\
 #     ** DO NOT EDIT **
 #
 from functools import partial  # noqa: F401
-from PyObjCTools.TestSupport import TestCase, min_os_level  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass  # noqa: F401
 import objc
 from objc import simd
 
@@ -891,11 +891,6 @@ except ImportError:
 """
 
 TEST_PREFIX_STOP = """
-class NoObjCClass:
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
-
 class NoBool:
     def __bool__(self):
         raise TypeError("no valid in boolean context")
