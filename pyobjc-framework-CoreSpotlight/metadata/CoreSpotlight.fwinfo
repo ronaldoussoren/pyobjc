@@ -16,7 +16,6 @@
   },
   "externs": {
    "CSSearchQueryErrorDomain": { "typestr": "@" },
-   "CSSearchQueryErrorDomain": { "typestr": "@" },
    "CoreSpotlightVersionNumber": { "typestr": "d" },
    "CoreSpotlightVersionString": { "type_override": "*" },
    "CSMailboxInbox": { "typestr": "@" },

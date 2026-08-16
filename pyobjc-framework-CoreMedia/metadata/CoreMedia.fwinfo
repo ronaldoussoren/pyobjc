@@ -183,6 +183,11 @@
     "2": { "type_modifier": "o", "already_cfretained": true }
    }
   },
+  "CMTagCollectionCreateMutable": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
   "CMTaggedBufferGroupGetCMSampleBufferForTagCollection": {
    "args": {
     "2": { "type_modifier": "o", "already_cfretained": true }
@@ -208,11 +213,6 @@
     "2": { "type_modifier": "o", "already_cfretained": true }
    }
   },
-  "CMTagCollectionCreateMutable": {
-   "args": {
-    "2": { "type_modifier": "o", "already_cfretained": true }
-   }
-  },
   "CMTaggedBufferGroupGetCVPixelBufferForTag": {
    "args": {
     "2": { "type_modifier": "o" }
@@ -221,11 +221,6 @@
   "CMTaggedBufferGroupGetCVPixelBufferForTagCollection": {
    "args": {
     "2": { "type_modifier": "o" }
-   }
-  },
-  "CMTagCollectionCreateMutable": {
-   "args": {
-    "2": { "type_modifier": "o", "already_cfretained": true }
    }
   },
   "CMVideoFormatDescriptionCopyTagCollectionArray": {

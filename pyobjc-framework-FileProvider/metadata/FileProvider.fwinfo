@@ -274,13 +274,6 @@
       }
      },
      {
-      "selector": "supportedServiceSourcesForItemIdentifier:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
       "selector": "itemForIdentifier:error:",
       "class_method": false,
       "args": {
@@ -289,22 +282,6 @@
      },
      {
       "selector": "untrashItemWithIdentifier:toParentItemIdentifier:completionHandler:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-         "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
-      "selector": "performActionWithIdentifier:onItemsWithIdentifiers:completionHandler:",
       "class_method": false,
       "args": {
        "2": {
@@ -587,13 +564,6 @@
 	}
        }
       }
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o"}
-      },
-      "class_method": false,
-      "selector": "itemForIdentifier:error:"
      },
      {
       "args": {

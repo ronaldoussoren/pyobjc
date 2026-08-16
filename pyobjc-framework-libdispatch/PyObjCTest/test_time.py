@@ -10,8 +10,6 @@ class TestTime(TestCase):
         self.assertEqual(dispatch.USEC_PER_SEC, 1_000_000)
         self.assertEqual(dispatch.NSEC_PER_USEC, 1000)
 
-        self.assertEqual(dispatch.DISPATCH_TIME_FOREVER, 18446744073709551615)
-
         self.assertEqual(dispatch.DISPATCH_TIME_NOW, 0)
         self.assertEqual(dispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 

@@ -230,11 +230,6 @@
      },
      {
       "class_method": false,
-      "selector": "canUpdateRecordForManagedObjectWithID:",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
       "selector": "fetchSharesMatchingObjectIDs:error:",
       "args": {
        "1": { "type_modifier": "o" }

@@ -197,17 +197,6 @@
      "typestr": "I"
     }
    },
-   "LSSharedFileListGetTypeID": {
-    "args": [
-     {
-      "name": null,
-      "typestr": "v"
-     }
-    ],
-    "retval": {
-     "typestr": "Q"
-    }
-   },
    "LSSharedFileListCreate": {
     "args": {
      "0": {

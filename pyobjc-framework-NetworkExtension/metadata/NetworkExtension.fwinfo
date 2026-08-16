@@ -85,13 +85,6 @@
       },
       "class_method": false,
       "selector": "stopProxyWithReason:completionHandler:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "stopProxyWithReason:completionHandler:"
      }
     ]
    },

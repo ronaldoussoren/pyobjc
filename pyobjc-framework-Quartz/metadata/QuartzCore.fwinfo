@@ -1101,14 +1101,6 @@
       "retval": { "type_override": "Z" }
      },
      {
-      "selector": "writeHEIFRepresentationOfImage:toURL:format:colorSpace:options:error:",
-      "class_method": false,
-      "args": {
-       "5": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" }
-     },
-     {
       "selector": "startTaskToRender:fromRect:toDestination:atPoint:error:",
       "class_method": false,
       "args": {
@@ -2785,30 +2777,6 @@
       }
      },
      {
-      "selector": "softmaxNormalization",
-      "class_method": false,
-      "retval": { "type_override": "f" }
-     },
-     {
-      "selector": "setSftmaxNormalization:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "f" }
-      }
-     },
-     {
-      "selector": "saturation",
-      "class_method": false,
-      "retval": { "type_override": "f" }
-     },
-     {
-      "selector": "setSaturation:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "f" }
-      }
-     },
-     {
       "selector": "unsharpMaskRadius",
       "class_method": false,
       "retval": { "type_override": "f" }
@@ -3247,18 +3215,6 @@
      },
      {
       "selector": "setSpatialSigma:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "f" }
-      }
-     },
-     {
-      "selector": "focalLength",
-      "class_method": false,
-      "retval": { "type_override": "f" }
-     },
-     {
-      "selector": "setFocalLength:",
       "class_method": false,
       "args": {
        "0": { "type_override": "f" }

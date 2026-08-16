@@ -1,6 +1,5 @@
 {
  "definitions": {
-  "classes": {},
   "formal_protocols": {},
   "opaque": {
    "AudioHardwarePlugInRef": {

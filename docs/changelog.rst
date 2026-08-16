@@ -693,6 +693,14 @@ Version 13.0a0
   is now reported as an unraisable exception because the application will crash
   hard when raising Objective-C exceptions in this context.
 
+* Correct metadata for :func:`Security.sec_protocol_options_set_tls_tickets_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_ocsp_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_false_start_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_resumption_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_is_fallback_attempt`,
+  :func:`Security.sec_protocol_options_set_tls_sct_enabled`, and
+  :func:`Security.sec_protocol_options_set_tls_renegotiation_enabled`,
+
 Version 12.2.3
 --------------
 

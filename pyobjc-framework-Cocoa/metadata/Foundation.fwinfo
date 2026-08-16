@@ -164,10 +164,6 @@
     "NSNumberFormatterCurrencyISOCodeStyle": { "alias": "kCFNumberFormatterCurrencyISOCodeStyle" },
     "NSNumberFormatterCurrencyPluralStyle": { "alias": "kCFNumberFormatterCurrencyPluralStyle" },
     "NSNumberFormatterCurrencyAccountingStyle": { "alias": "kCFNumberFormatterCurrencyAccountingStyle" },
-    "NSNumberFormatterOrdinalStyle": { "alias": "kCFNumberFormatterOrdinalStyle" },
-    "NSNumberFormatterCurrencyISOCodeStyle": { "alias": "kCFNumberFormatterCurrencyISOCodeStyle" },
-    "NSNumberFormatterCurrencyPluralStyle": { "alias": "kCFNumberFormatterCurrencyPluralStyle" },
-    "NSNumberFormatterCurrencyAccountingStyle": { "alias": "kCFNumberFormatterCurrencyAccountingStyle" },
     "NSRectEdgeMinX": { "alias": "NSMinXEdge" },
     "NSRectEdgeMinY": { "alias": "NSMinYEdge" },
     "NSRectEdgeMaxX": { "alias": "NSMaxXEdge" },
@@ -299,7 +295,6 @@
     "NSAppleEventSendDontRecord": { "value": 4096 },
     "NSAppleEventSendDontExecute": { "value": 8192 },
     "NSAppleEventSendDontAnnotate": { "value": 65536 },
-    "NSFileManagerUnmountUnknownError": { "value": 768 },
     "NSURLErrorClientCertificateRequired": { "value": -1206 },
     "NSURLErrorDataLengthExceedsMaximum": { "value": -1103 },
     "NSURLErrorFileOutsideSafeArea": { "value": -1104 },
@@ -339,8 +334,6 @@
     "NSURLErrorCannotMoveFile": { "value":-3005 },
     "NSURLErrorDownloadDecodingFailedMidStream": { "value":-3006 },
     "NSURLErrorDownloadDecodingFailedToComplete": { "value":-3007 },
-    "NSURLErrorDataLengthExceedsMaximum": { "value":-1103 },
-    "NSURLErrorClientCertificateRequired": { "value":-1206 },
     "NSURLErrorInternationalRoamingOff": { "value":-1018 },
     "NSURLErrorCallIsActive": { "value": -1019 },
     "NSURLErrorDataNotAllowed": { "value": -1020 },
@@ -5067,22 +5060,6 @@
       }
      },
      {
-      "selector": "loadDataRepresentationForTypeIdentifier:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
       "selector": "loadFileRepresentationForTypeIdentifier:completionHandler:",
       "class_method": false,
       "args": {
@@ -7267,11 +7244,6 @@
       "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
       "class_method": false,
       "retval": { "type_override": "q" }
-     },
-     {
-      "selector": "itemProviderVisibilityForRepresentationWithTypeIdentifier:",
-      "class_method": false,
-      "retval": { "type_override": "q"}
      },
      {
       "selector": "objectWithItemProviderData:typeIdentifier:error:",

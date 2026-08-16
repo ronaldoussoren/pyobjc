@@ -152,14 +152,6 @@
     },
     "retval": { "typestr": "i" }
    },
-   "IOSurfaceGetTypeOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "i" }
-   },
    "IOSurfaceGetRangeOfComponentOfPlane": {
     "args": {
      "0": { "typestr": "^{__IOSurface=}" },

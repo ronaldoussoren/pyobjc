@@ -154,18 +154,6 @@
       "args": {
        "0": { "type_override": "Z" }
       }
-     },
-     {
-      "selector": "reverse",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReverse:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
      }
     ]
    },

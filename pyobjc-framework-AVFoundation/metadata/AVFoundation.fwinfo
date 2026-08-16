@@ -3047,13 +3047,6 @@
       },
       "class_method": false,
       "selector": "insertTimeRange:ofAsset:atTime:error:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "insertTimeRange:ofTracks:atTime:error:"
      }
     ]
    },
@@ -4655,13 +4648,6 @@
       "selector": "isAssociatedWithFragmentMinder"
      },
      {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isAssociatedWithFragmentMinder"
-     },
-     {
       "args": {
        "1": {
         "type_modifier": "o",
@@ -4687,13 +4673,6 @@
        }
       },
       "class_method": false,
-      "selector": "setRenderingAlgorithm:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "q"
-      },
       "selector": "setRenderingAlgorithm:"
      }
     ]

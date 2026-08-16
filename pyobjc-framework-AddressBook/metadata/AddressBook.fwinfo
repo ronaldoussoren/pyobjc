@@ -431,22 +431,6 @@
       "callable": {
        "arguments": {
         "0": {
-         "type": "@"
-        },
-        "1": {
-         "type": "q"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "^v"
-       }
-      },
-      "callable": {
-       "arguments": {
-        "0": {
          "type": "^{__CFData=}"
         },
         "1": {

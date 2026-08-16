@@ -8,12 +8,9 @@
   "aliases": {
    "kPMDontWantData": { "alias": "objc.NULL" },
    "kPMNoData": { "alias": "objc.NULL" },
-   "kPMDontWantData": { "alias": "objc.NULL" },
    "kPMDontWantBoolean": { "alias": "objc.NULL" },
    "kPMNoReference": { "alias": "objc.NULL" },
-   "kPMDontWantSize": { "alias": "objc.NULL" },
-   "kPMDontWantData": { "alias": "objc.NULL" },
-   "kPMDontWantBoolean": { "alias": "objc.NULL" }
+   "kPMDontWantSize": { "alias": "objc.NULL" }
   },
   "enum": {
    "kPMLockIgnored": { "value": -30878 }
@@ -233,12 +230,9 @@
    "kPMErrorHandlingDetailedEnum": { "ignore": true },
    "kPMDontWantData": { "ignore": true },
    "kPMNoData": { "ignore": true },
-   "kPMDontWantData": { "ignore": true },
    "kPMDontWantBoolean": { "ignore": true },
    "kPMNoReference": { "ignore": true },
-   "kPMDontWantSize": { "ignore": true },
-   "kPMDontWantData": { "ignore": true },
-   "kPMDontWantBoolean": { "ignore": true }
+   "kPMDontWantSize": { "ignore": true }
   },
   "cftypes": {
    "PMPaper": {

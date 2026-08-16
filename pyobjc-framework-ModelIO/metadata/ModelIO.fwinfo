@@ -244,13 +244,11 @@
       "args": {
        "0": {
         "c_array_length_in_arg": 2,
-        "type_modifier": "n",
-        "type_name": "const float *"
+        "type_modifier": "n"
        },
        "1": {
         "c_array_length_in_arg": 2,
-        "type_modifier": "n",
-        "type_name": "const NSTimeInterval *"
+        "type_modifier": "n"
        }
       },
       "class_method": false,
@@ -342,36 +340,6 @@
       "args": {
        "0": {
         "c_array_length_in_arg": 1,
-        "type_modifier": "n",
-        "type_name": "const double *"
-       },
-       "2": {
-        "c_array_length_in_arg": 3,
-        "type_modifier": "n",
-        "type_name": "const NSTimeInterval *"
-       }
-      },
-      "class_method": false,
-      "selector": "resetWithDoubleArray:count:atTimes:count:"
-     },
-     {
-      "args": {
-       "0": {
-        "c_array_length_in_arg": 1,
-        "type_modifier": "n"
-       },
-       "2": {
-        "c_array_length_in_arg": 3,
-        "type_modifier": "n"
-       }
-      },
-      "class_method": false,
-      "selector": "resetWithFloatArray:atTimes:count:"
-     },
-     {
-      "args": {
-       "0": {
-        "c_array_length_in_arg": 1,
         "type_modifier": "n"
        },
        "2": {
@@ -417,20 +385,6 @@
       },
       "class_method": false,
       "selector": "resetWithFloatArray:atTimes:count:"
-     },
-     {
-      "args": {
-       "0": {
-        "c_array_length_in_arg": 2,
-        "type_modifier": "n"
-       },
-       "1": {
-        "c_array_length_in_arg": 2,
-        "type_modifier": "n"
-       }
-      },
-      "class_method": false,
-      "selector": "resetWithDoubleArray:count:atTimes:count:"
      },
      {
       "args": {

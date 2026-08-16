@@ -1714,22 +1714,6 @@
       }
      },
      {
-      "selector": "rematchWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
       "selector": "declineInviteWithCompletionHandler:",
       "class_method": true,
       "args": {

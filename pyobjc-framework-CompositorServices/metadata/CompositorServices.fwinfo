@@ -22,10 +22,8 @@
    "cp_texture_topology_t": { "opaque": true, "typestr": "^{cp_texture_topology=}" },
    "cp_frame_timing_t": { "opaque": true, "typestr": "^{cp_frame_timing=}" },
    "cp_view_texture_map_t": { "opaque": true, "typestr": "^{cp_view_texture_map=}" },
-   "cp_frame_timing_t": { "opaque": true, "typestr": "^{cp_frame_timing=}" },
    "cp_frame_t": { "opaque": true, "typestr": "^{cp_frame=}" },
    "cp_layer_renderer_capabilities_t": { "opaque": true, "typestr": "^{cp_layer_renderer_capabilities=}" },
-   "cp_drawable_render_context_t": { "opaque": true, "typestr": "^{cp_drawable_render_context=}" },
    "cp_tracking_area_t": { "opaque": true, "typestr": "^{cp_tracking_area=}" }
   },
   "functions": {

@@ -93,21 +93,6 @@
       }
      },
      {
-      "selector": "requestDeleteFiles:deleteFailed:completion:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
       "selector": "requestSendPTPCommand:outData:sendCommandDelegate:didSendCommandSelector:contextInfo:",
       "class_method": false,
       "args": {
@@ -187,22 +172,6 @@
      },
      {
       "selector": "requestDownloadWithOptions:completion:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
-      "selector": "requestMetadataDictionaryWithOptions:completion:",
       "class_method": false,
       "args": {
        "1": {

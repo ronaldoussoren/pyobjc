@@ -4,7 +4,6 @@
  "definitions": {
   "literals": {
     "kSCNetworkConnectionBytesIn": { "unicode": true },
-    "kSCNetworkConnectionBytesIn": { "unicode": true },
     "kSCNetworkConnectionBytesOut": { "unicode": true },
     "kSCNetworkConnectionErrorsIn": { "unicode": true },
     "kSCNetworkConnectionErrorsOut": { "unicode": true },
@@ -1767,12 +1766,6 @@
       "type_override": "^{__SCPreferences=}"
      },
      "1": {
-      "callable": {
-       "arguments": {},
-       "retval": {
-        "type": "v"
-       }
-      },
       "callable": {
        "arguments": {
         "0": {

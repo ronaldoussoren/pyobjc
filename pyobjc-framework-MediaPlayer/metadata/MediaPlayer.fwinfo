@@ -41,8 +41,6 @@
    "MPMediaItemPropertyArtistPersistentID": { "typestr": "@" },
    "MPMediaItemPropertyAlbumArtist": { "typestr": "@" },
    "MPMediaItemPropertyAlbumArtistPersistentID": { "typestr": "@" },
-   "MPMediaItemPropertyAlbumArtist": { "typestr": "@" },
-   "MPMediaItemPropertyAlbumArtistPersistentID": { "typestr": "@" },
    "MPMediaItemPropertyGenre": { "typestr": "@" },
    "MPMediaItemPropertyGenrePersistentID": { "typestr": "@" },
    "MPMediaItemPropertyComposer": { "typestr": "@" },

@@ -2,7 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
   "formal_protocols": {
    "QLPreviewPanelDelegate": {
     "methods": [

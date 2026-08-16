@@ -58,11 +58,7 @@
       "args": {
        "0": { "type_override" : "Z" }
       }
-     }
-    ]
-   },
-   "IKFilterBrowserPanel": {
-    "methods": [
+     },
      {
       "args": {
        "2": {
@@ -259,7 +255,6 @@
    "CIHoleDistortion": { "rename": "CIHoleDistortionProtocol" },
    "CIHueAdjust": { "rename": "CIHueAdjustProtocol" },
    "CIHueSaturationValueGradient": { "rename": "CIHueSaturationValueGradientProtocol" },
-   "CIImageProcessorInput": { "rename": "CIImageProcessorInputProtocol" },
    "CIKMeans": { "rename": "CIKMeansProtocol" },
    "CIKaleidoscope": { "rename": "CIKaleidoscopeProtocol" },
    "CIKeystoneCorrectionCombined": { "rename": "CIKeystoneCorrectionCombinedProtocol" },

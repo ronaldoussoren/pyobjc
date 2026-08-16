@@ -482,38 +482,6 @@
      "already_cfretained": true
     }
    },
-   "CGBitmapContextCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGBitmapContextCreateWithData": {
-    "args": {
-     "7": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorConversionInfoCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorConversionInfoCreateFromList": {
     "ignore": true,
     "retval": {
@@ -562,35 +530,12 @@
      "type_override": "^{CGColorConversionInfo=}"
     }
    },
-   "CGColorCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorCreateCopy": {
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGColorCreateCopyByMatchingToColorSpace": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorCreateCopyWithAlpha": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericCMYK": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericGray": {
     "retval": {
      "already_cfretained": true
     }
@@ -600,17 +545,7 @@
      "already_cfretained": true
     }
    },
-   "CGColorCreateGenericRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorCreateSRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCopyICCData": {
     "retval": {
      "already_cfretained": true
     }
@@ -672,56 +607,6 @@
      "already_cfretained": true
     }
    },
-   "CGColorSpaceCreateDeviceCMYK": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateDeviceGray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateDeviceRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateICCBased": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateIndexed": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateLab": {
-    "args": {
-     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "2": { "type_override": "^d", "c_array_of_fixed_length": 4, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreatePattern": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithICCData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithICCProfile": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceCreateWithName": {
     "retval": {
      "already_cfretained": true
@@ -750,19 +635,9 @@
      "already_cfretained": true
     }
    },
-   "CGDataConsumerCreateWithCFData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDataConsumerCreateWithURL": {
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGDataConsumerRelease": {
-    "args": {
-     "0": {}
     }
    },
    "CGDataProviderCopyData": {
@@ -796,46 +671,6 @@
      "already_cfretained": true
     }
    },
-   "CGDataProviderCreateWithCFData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateWithData": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^v"
-        },
-        "2": {
-         "type": "Q"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateWithFilename": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateWithURL": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDirectDisplayCopyCurrentMetalDevice": {
     "args": {
      "0": {
@@ -845,11 +680,6 @@
     "retval": {
      "already_cfretained": true,
      "typestr": "@"
-    }
-   },
-   "CGDisplayAddressForPosition": {
-    "retval": {
-     "c_array_of_variable_length": true
     }
    },
    "CGDisplayBaseAddress": {
@@ -866,25 +696,7 @@
      "4": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
    },
-   "CGDisplayCopyAllDisplayModes": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCopyColorSpace": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDisplayCopyDisplayMode": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCreateImage": {
     "retval": {
      "already_cfretained": true
     }
@@ -892,94 +704,6 @@
    "CGDisplayCreateImageForRect": {
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGDisplayCurrentMode": {
-    "retval": {}
-   },
-   "CGDisplayGetDrawingContext": {
-    "retval": {}
-   },
-   "CGDisplayModeCopyPixelEncoding": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayModeGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetIODisplayModeID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetIOFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetPixelHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetPixelWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetRefreshRate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeIsUsableForDesktopGUI": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGDisplayRegisterReconfigurationCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "I"
-        },
-        "1": {
-         "type": "I"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
     }
    },
    "CGDisplayRemoveReconfigurationCallback": {
@@ -1001,313 +725,18 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
-    }
-   },
-   "CGDisplaySetDisplayMode": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGDisplaySetPalette": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CGDisplayStreamCreate": {
-    "args": {
-     "4": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayStreamCreateWithDispatchQueue": {
-    "args": {
-     "4": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayStreamGetRunLoopSource": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGDisplayStreamStart": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayStreamStop": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayStreamUpdateCreateMergedUpdate": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayStreamUpdateGetDropCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayStreamUpdateGetMovedRectsDelta": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGDisplaySwitchToMode": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CGEventCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateData": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateFromData": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateKeyboardEvent": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateMouseEvent": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateScrollWheelEvent": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    },
-    "variadic": true
-   },
-   "CGEventCreateScrollWheelEvent2": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
+     }
     }
    },
    "CGEventCreateSourceFromEvent": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGEventGetDoubleValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetIntegerValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetLocation": {
-    "args": {
-     "0": {}
     }
    },
    "CGEventGetTimestamp": {
     "retval": { "type_override": "Q" },
     "args": {
      "0": { "type_override": "^{__CGEvent=}"}
-    }
-   },
-   "CGEventGetType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetUnflippedLocation": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventKeyboardGetUnicodeString": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {}
-    }
-   },
-   "CGEventKeyboardSetUnicodeString": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGEventPost": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CGEventPostToPSN": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGEventPostToPid": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CGEventSetDoubleValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetIntegerValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetLocation": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetSource": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGEventSetTimestamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventSourceGetKeyboardType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetLocalEventsFilterDuringSuppressionState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetLocalEventsSuppressionInterval": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetPixelsPerLine": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetSourceStateID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetUserData": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetKeyboardType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetLocalEventsFilterDuringSuppressionState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetLocalEventsSuppressionInterval": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetPixelsPerLine": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetUserData": {
-    "args": {
-     "0": {}
     }
    },
    "CGEventTapCreate": {
@@ -1332,8 +761,7 @@
         "type": "^{__CGEvent=}"
        }
       }
-     },
-     "5": {}
+     }
     },
     "retval": {
      "already_cfretained": true
@@ -1341,7 +769,6 @@
    },
    "CGEventTapCreateForPSN": {
     "args": {
-     "0": {},
      "4": {
       "callable": {
        "arguments": {
@@ -1362,8 +789,7 @@
         "type": "^{__CGEvent=}"
        }
       }
-     },
-     "5": {}
+     }
     },
     "retval": {
      "already_cfretained": true
@@ -1391,224 +817,24 @@
         "type": "^{__CGEvent=}"
        }
       }
-     },
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventTapEnable": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventTapIsEnabled": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventTapPostEvent": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGFontCanCreatePostScriptSubset": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontCopyFullName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyGlyphNameForGlyph": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyPostScriptName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyTableForTag": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyTableTags": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyVariationAxes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyVariations": {
-    "args": {
-     "0": {}
+     }
     },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCreateCopyWithVariations": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCreatePostScriptEncoding": {
     "args": {
-     "0": {},
      "1": { "type_override": "^d", "c_array_of_fixed_length": 256, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGFontCreatePostScriptSubset": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {},
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithDataProvider": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithFontName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithPlatformFont": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontGetAscent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetCapHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetDescent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetFontBBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetGlyphAdvances": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
-    }
-   },
-   "CGFontGetGlyphBBoxes": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
-    }
-   },
-   "CGFontGetGlyphWithGlyphName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGFontGetItalicAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetLeading": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetNumberOfGlyphs": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetStemV": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetUnitsPerEm": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetXHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGFunctionCreate": {
     "args": {
@@ -1620,17 +846,6 @@
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGFunctionRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFunctionRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGGLContextCreate": {
     "args": {
@@ -1652,936 +867,56 @@
      "typestr": "^{CGContext=}"
     }
    },
-   "CGGLContextUpdateViewportSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGGetActiveDisplayList": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGGetDisplayTransferByFormula": {
-    "args": {
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {},
-     "6": {},
-     "7": {},
-     "8": {},
-     "9": {}
-    }
-   },
-   "CGGetDisplayTransferByTable": {
-    "args": {
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {}
-    }
-   },
-   "CGGetDisplaysWithOpenGLDisplayMask": {
-    "args": {
-     "2": { "type_modifier": "o", "c_array_length_in_arg": 3 },
-     "3": { "type_modifier": "N" }
-    }
-   },
-   "CGGetDisplaysWithPoint": {
-    "args": {
-     "2": { "type_modifier": "o", "c_array_length_in_arg": 3 },
-     "3": { "type_modifier": "N" }
-    }
-   },
-   "CGGetDisplaysWithRect": {
-    "args": {
-     "2": { "type_modifier": "o", "c_array_length_in_arg": 3 },
-     "3": { "type_modifier": "N" }
-    }
-   },
-   "CGGetEventTapList": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGGetLastMouseDelta": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGGetOnlineDisplayList": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGGradientCreateWithColorComponents": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGGradientCreateWithColors": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGGradientRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGGradientRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageCreate": {
-    "args": {
-     "5": {},
-     "7": {},
-     "8": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGImageCreateCopyWithColorSpace": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGImageCreateWithImageInRect": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGImageCreateWithMask": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithMaskingColors": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGImageCreateWithPNGDataProvider": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_of_variable_length": true}
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGImageGetAlphaInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitmapInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitsPerComponent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitsPerPixel": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetByteOrderInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBytesPerRow": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageGetDataProvider": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageGetDecode": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetPixelFormatInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetRenderingIntent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetShouldInterpolate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetUTType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageIsMask": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGImageMaskCreate": {
     "args": {
-     "5": {},
      "6": { "type_modifier": "n", "c_array_of_variable_length": true }
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGImageRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGLayerCreateWithContext": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGLayerGetContext": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGLayerGetSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGLayerRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGLayerRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFArrayApplyBlock": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetArray": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetBoolean": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFArrayGetDictionary": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetInteger": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetName": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetNull": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFArrayGetNumber": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetObject": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetStream": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFArrayGetString": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFContentStreamCreateWithPage": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFContentStreamCreateWithStream": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFContentStreamGetResource": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {}
-   },
-   "CGPDFContentStreamGetStreams": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFContentStreamRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContentStreamRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFContextAddDestinationAtPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextAddDocumentMetadata": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextBeginPage": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextBeginTag": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFContextClose": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContextCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFContextCreateWithURL": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFContextEndPage": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContextEndTag": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContextSetDestinationForRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextSetOutline": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextSetURLForRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFDictionaryApplyBlock": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryApplyFunction": {
-    "args": {
-     "0": {},
-     "1": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^c"
-        },
-        "1": {
-         "type": "^{CGPDFObject=}"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetArray": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetBoolean": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDictionaryGetDictionary": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetInteger": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetName": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetNumber": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetObject": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetStream": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDictionaryGetString": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDocumentAllowsPrinting": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentCreateWithProvider": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFDocumentCreateWithURL": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFDocumentGetAccessPermissions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetArtBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetBleedBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetCatalog": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetCropBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetID": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetInfo": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetMediaBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetNumberOfPages": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetOutline": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetPage": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetRotationAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetTrimBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetVersion": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGPDFDocumentIsEncrypted": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentIsUnlocked": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentUnlockWithPassword": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFObjectGetType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFOperatorTableCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFOperatorTableRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFOperatorTableRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFPageGetBoxRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetDictionary": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFPageGetDocument": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFPageGetDrawingTransform": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetPageNumber": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetRotationAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFScannerCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFScannerGetContentStream": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFScannerPopArray": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopBoolean": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopDictionary": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopInteger": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopNumber": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopObject": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopStream": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerPopString": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFScannerRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFScannerRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFScannerScan": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFStreamCopyData": {
-    "args": {
-     "0": {},
-     "1": { "type_modifier": "o" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFStreamGetDictionary": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGPDFStringCopyDate": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPDFStringCopyTextString": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGPDFStringGetBytePtr": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFStringGetLength": {
-    "args": {
-     "0": {}
     }
    },
    "CGPDFTagTypeGetName": {
     "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
    },
-   "CGPSConverterAbort": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPSConverterConvert": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
-   },
    "CGPSConverterCreate": {
     "args": {
-     "0": {},
-     "1": { "type_override": "@", "doc": "tuple (beginDocument, endDocument, beginPage, endPage, noteProgress, noteMessage), each of those either a callable or None" },
-     "2": {}
+     "1": { "type_override": "@", "doc": "tuple (beginDocument, endDocument, beginPage, endPage, noteProgress, noteMessage), each of those either a callable or None" }
     },
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGPSConverterIsConverting": {
-    "args": {
-     "0": {}
     }
    },
    "CGPaletteCreateDefaultColorPalette": {
@@ -2667,8 +1002,6 @@
    },
    "CGPathApply": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -2686,204 +1019,22 @@
      }
     }
    },
-   "CGPathApplyWithBlock": {
-    "args": {
-     "0": {
-      "type_override": "@?",
-      "callable": {
-       "arguments": {
-        "0": { "type": "^v" },
-        "1": { "type": "^{CGPathElement=}" }
-       },
-       "retval": { "type": "v" }
-      }
-     }
-    },
-    "retval": { "type_override": "v" }
-   },
    "CGPathCreateCopy": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGPathCreateCopyByDashingPath": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateCopyByStrokingPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateCopyByTransformingPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateMutable": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateMutableCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateMutableCopyByTransformingPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateWithEllipseInRect": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateWithRect": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateWithRoundedRect": {
-    "args": {
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathEqualToPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathGetBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathGetCurrentPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathGetPathBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathIsEmpty": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathIsRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathMoveToPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGPatternCreate": {
     "args": {
-     "0": {},
      "7": { "type_override": "@", "doc": "None, or a 2-tuple ``(drawPattern, releaseInfo)`` (either one can be None)" }
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGPatternRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPatternRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPointCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPointMakeWithDictionaryRepresentation": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPostMouseEvent": {
-    "variadic": true
-   },
-   "CGPostScrollWheelEvent": {
-    "variadic": true
-   },
    "CGRectCreateDictionaryRepresentation": {
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGRectDivide": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "CGRectMakeWithDictionaryRepresentation": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CGRegisterScreenRefreshCallback": {
@@ -2905,8 +1056,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
+     }
     }
    },
    "CGScreenRegisterMoveCallback": {
@@ -2931,8 +1081,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
+     }
     }
    },
    "CGScreenUnregisterMoveCallback": {
@@ -2957,8 +1106,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
+     }
     }
    },
    "CGSessionCopyCurrentDictionary": {
@@ -2966,58 +1114,14 @@
      "already_cfretained": true
     }
    },
-   "CGSetDisplayTransferByByteTable": {
-    "args": {
-     "2": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "CGSetDisplayTransferByTable": {
-    "args": {
-     "2": {},
-     "3": {},
-     "4": {}
-    }
-   },
    "CGShadingCreateAxial": {
-    "args": {
-     "0": {},
-     "3": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGShadingCreateRadial": {
-    "args": {
-     "0": {},
-     "5": {}
-    },
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGShadingRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGShadingRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGSizeCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGSizeMakeWithDictionaryRepresentation": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CGUnregisterScreenRefreshCallback": {
@@ -3039,8 +1143,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
+     }
     }
    },
    "CGWaitForScreenRefreshRects": {
@@ -3064,34 +1167,10 @@
      "already_cfretained": true
     }
    },
-   "CGWindowListCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateDescriptionFromArray": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGWindowListCreateImageFromArray": {
-    "args": {
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGWindowServerCFMachPort": {
-    "retval": {}
    },
    "CGWindowServerCreateServerPort": {
     "retval": {
@@ -3196,49 +1275,13 @@
      "type_override": "^{CGColorConversionInfo=}"
     }
    },
-   "CGColorConverterCreateSimple": {
-    "args": {
-     "0": { "type_override": "^{CGColorSpace=}" },
-     "1": { "type_override": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{CGColorConversionInfo=}"
-    }
-   },
-   "CGColorConverterRetain": {
-    "args": {
-     "0": { "type_override": "^{CGColorConversionInfo=}" }
-    },
-    "retval": { "type_override": "^{CGColorConversionInfo=}" }
-   },
-   "CGColorConverterRelease": {
-    "args": {
-     "0": { "type_override": "^{CGColorConversionInfo=}" }
-    },
-    "retval": { "type_override": "v" }
-   },
-   "CGBitmapContextCreate": {
-    "args": {
-     "0": {},
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGBitmapContextCreateImage": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGBitmapContextCreateWithData": {
     "args": {
-     "0": {},
-     "5": {},
      "7": {
       "callable": {
        "arguments": {
@@ -3253,85 +1296,18 @@
         "type": "v"
        }
       }
-     },
-     "8": {}
+     }
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGBitmapContextGetAlphaInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetBitmapInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetBitsPerComponent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetBitsPerPixel": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetBytesPerRow": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGBitmapContextGetData": {
-    "args": {
-     "0": {}
-    },
     "retval": { "c_array_of_variable_length": true }
-   },
-   "CGBitmapContextGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGBitmapContextGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGCancelDisplayConfiguration": {
-    "args": {
-     "0": {}
-    }
    },
    "CGColorCreate": {
     "args": {
-     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateCopyWithAlpha": {
-    "args": {
-     "0": {}
     },
     "retval": {
      "already_cfretained": true
@@ -3358,69 +1334,10 @@
      "0": { "type_override": "^{CGColorSpace=}" },
      "1": { "type_override": "^{CGPattern=}" },
      "2": { "type_modifier": "n", "c_array_of_variable_length": true, "type_override": "^d" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
-   },
-   "CGColorEqualToColor": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGColorGetAlpha": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorGetColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGColorGetComponents": {
-    "args": {
-     "0": {}
-    },
     "retval": { "c_array_of_variable_length": true }
-   },
-   "CGColorGetConstantColor": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGColorGetNumberOfComponents": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorGetPattern": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGColorRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGColorSpaceCopyICCProfile": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
    },
    "CGColorSpaceCopyICCData": {
     "args": {
@@ -3447,25 +1364,6 @@
      "typestr": "B"
     }
    },
-   "CGColorSpaceCopyName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateCalibratedRGB": {
-    "args": {
-     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "2": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "3": { "type_override": "^d", "c_array_of_fixed_length": 9, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceCreateDeviceCMYK": {
     "retval": {
      "already_cfretained": true
@@ -3483,9 +1381,7 @@
    },
    "CGColorSpaceCreateICCBased": {
     "args": {
-     "1": { "type_modifier": "n", "c_array_of_variable_length": true },
-     "2": {},
-     "3": {}
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true }
     },
     "retval": {
      "already_cfretained": true
@@ -3493,7 +1389,6 @@
    },
    "CGColorSpaceCreateIndexed": {
     "args": {
-     "0": {},
      "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
     },
     "retval": {
@@ -3511,17 +1406,11 @@
     }
    },
    "CGColorSpaceCreatePattern": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGColorSpaceCreateWithICCProfile": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
@@ -3535,102 +1424,15 @@
      "already_cfretained": true
     }
    },
-   "CGColorSpaceCreateWithName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithPlatformColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceGetName": {
     "args": {
      "0": { "typestr":"^{CGColorSpace=}" }
     },
     "retval": { "typestr": "^{__CFString=}" }
    },
-   "CGColorSpaceGetBaseColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGColorSpaceGetColorTable": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "c_array_of_variable_length": true }
-    }
-   },
-   "CGColorSpaceGetColorTableCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorSpaceGetModel": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorSpaceGetNumberOfComponents": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorSpaceRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGColorSpaceRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGCompleteDisplayConfiguration": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGConfigureDisplayFadeEffect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGConfigureDisplayMirrorOfDisplay": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGConfigureDisplayMode": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGConfigureDisplayOrigin": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGConfigureDisplayStereoOperation": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGConfigureDisplayWithDisplayMode": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {}
     }
    },
    "CGDataProviderGetInfo": {
@@ -3645,698 +1447,111 @@
      "0": { "typestr": "^{CGContext=}" }
     }
    },
-   "CGContextAddArc": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextAddArcToPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextAddCurveToPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextAddEllipseInRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextAddLineToPoint": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGContextAddLines": {
     "args": {
      "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
-   "CGContextAddPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextAddQuadCurveToPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextAddRect": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGContextAddRects": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2}
     }
    },
    "CGContextBeginPage": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
-    }
-   },
-   "CGContextBeginPath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextBeginTransparencyLayer": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextBeginTransparencyLayerWithRect": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextClearRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextClip": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextClipToMask": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextClipToRect": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextClipToRects": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
-    }
-   },
-   "CGContextClosePath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConcatCTM": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertPointToDeviceSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertPointToUserSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertRectToDeviceSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertRectToUserSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertSizeToDeviceSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextConvertSizeToUserSpace": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextCopyPath": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGContextDrawImage": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextDrawLayerAtPoint": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextDrawLayerInRect": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextDrawLinearGradient": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextDrawPDFDocument": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextDrawPDFPage": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextDrawPath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextDrawRadialGradient": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextDrawShading": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextDrawTiledImage": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "CGContextEOClip": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextEOFillPath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextEndPage": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextEndTransparencyLayer": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextFillEllipseInRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextFillPath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextFillRect": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextFillRects": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
-    }
-   },
-   "CGContextFlush": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetCTM": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetClipBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetInterpolationQuality": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetPathBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetPathCurrentPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetTextMatrix": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetTextPosition": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextGetUserSpaceToDeviceSpaceTransform": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextIsPathEmpty": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextMoveToPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextPathContainsPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextReplacePathWithStrokedPath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextRestoreGState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGContextRotateCTM": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSaveGState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextScaleCTM": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextSelectFont": {
     "args": {
-     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t"  }
-    }
-   },
-   "CGContextSetAllowsAntialiasing": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetAllowsFontSmoothing": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetAllowsFontSubpixelPositioning": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetAllowsFontSubpixelQuantization": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetAlpha": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetBlendMode": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetCMYKFillColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetCMYKStrokeColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetCharacterSpacing": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextSetFillColor": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_of_variable_length": true }
-    }
-   },
-   "CGContextSetFillColorSpace": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextSetFillColorWithColor": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CGContextSetFillPattern": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "n", "c_array_of_variable_length": true }
-    }
-   },
-   "CGContextSetFlatness": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetFont": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextSetFontSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetGrayFillColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetGrayStrokeColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetInterpolationQuality": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetLineCap": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextSetLineDash": {
     "args": {
-     "0": {},
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
-    }
-   },
-   "CGContextSetLineJoin": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetLineWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetMiterLimit": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetPatternPhase": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetRGBFillColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetRGBStrokeColor": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetRenderingIntent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetShadow": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetShadowWithColor": {
-    "args": {
-     "0": {},
-     "3": {}
-    }
-   },
-   "CGContextSetShouldAntialias": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetShouldSmoothFonts": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetShouldSubpixelPositionFonts": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetShouldSubpixelQuantizeFonts": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextSetStrokeColor": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_of_variable_length": true }
-    }
-   },
-   "CGContextSetStrokeColorSpace": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGContextSetStrokeColorWithColor": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CGContextSetStrokePattern": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    }
-   },
-   "CGContextSetTextDrawingMode": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetTextMatrix": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSetTextPosition": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextShowGlyphs": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
    "CGContextShowGlyphsAtPoint": {
     "args": {
-     "0": {},
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
     }
    },
    "CGContextShowGlyphsAtPositions": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    },
    "CGContextShowGlyphsWithAdvances": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" , "c_array_length_in_arg": 3 },
      "2": { "type_modifier": "n" , "c_array_length_in_arg": 3 }
     }
    },
    "CGContextShowText": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t" }
     }
    },
    "CGContextShowTextAtPoint": {
     "args": {
-     "0": {},
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n", "type_override": "^t" }
-    }
-   },
-   "CGContextStrokeEllipseInRect": {
-    "args": {
-     "0": {}
     }
    },
    "CGContextStrokeLineSegments": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
-   "CGContextStrokePath": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextStrokeRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextStrokeRectWithWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextSynchronize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGContextTranslateCTM": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGDataConsumerCreateWithCFData": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataConsumerCreateWithURL": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataConsumerRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDataConsumerRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGDataProviderCopyData": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGDataProviderCreateWithCFData": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGDataProviderCreateWithData": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable": {
        "arguments": {
@@ -4379,23 +1594,9 @@
     }
    },
    "CGDataProviderCreateWithURL": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGDataProviderRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDataProviderRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGDisplayAddressForPosition": {
     "args": {
@@ -4407,20 +1608,15 @@
      "c_array_of_variable_length": true, "type_override": "^v"
     }
    },
-   "CGDisplayAvailableModes": {
-    "retval": {}
-   },
    "CGDisplayBestModeForParameters": {
     "args": {
      "4": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "CGDisplayBestModeForParametersAndRefreshRate": {
     "args": {
      "5": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
     "retval": { "type_override": "^{__CFDictionary=}" },
@@ -4435,9 +1631,6 @@
     }
    },
    "CGDisplayCopyAllDisplayModes": {
-    "args": {
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
@@ -4447,85 +1640,10 @@
      "already_cfretained": true
     }
    },
-   "CGDisplayCopyDisplayMode": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCreateImageForRect": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCurrentMode": {
-    "retval": {}
-   },
-   "CGDisplayGetDrawingContext": {
-    "retval": {}
-   },
    "CGDisplayModeCopyPixelEncoding": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGDisplayModeGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetIODisplayModeID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetIOFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetPixelHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetPixelWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetRefreshRate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeIsUsableForDesktopGUI": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayModeRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGDisplayRegisterReconfigurationCallback": {
     "args": {
@@ -4546,37 +1664,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
-    }
-   },
-   "CGDisplayRemoveReconfigurationCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "I"
-        },
-        "1": {
-         "type": "I"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
-    }
-   },
-   "CGDisplaySetDisplayMode": {
-    "args": {
-     "1": {},
-     "2": {}
+     }
     }
    },
    "CGDisplaySetPalette": {
@@ -4620,34 +1708,9 @@
      "already_cfretained": true
     }
    },
-   "CGDisplayStreamGetRunLoopSource": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGDisplayStreamStart": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGDisplayStreamStop": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGDisplayStreamUpdateCreateMergedUpdate": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
-    }
-   },
-   "CGDisplayStreamUpdateGetDropCount": {
-    "args": {
-     "0": {}
     }
    },
    "CGDisplayStreamUpdateGetMovedRectsDelta": {
@@ -4659,62 +1722,36 @@
    },
    "CGDisplayStreamUpdateGetRects": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     },
     "retval": { "c_array_length_in_arg": 2 }
    },
-   "CGDisplaySwitchToMode": {
-    "args": {
-     "1": {}
-    }
-   },
    "CGEventCreate": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGEventCreateCopy": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGEventCreateData": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGEventCreateFromData": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGEventCreateKeyboardEvent": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGEventCreateMouseEvent": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
@@ -4735,57 +1772,16 @@
     "c_array_length_in_arg": 2
    },
    "CGEventCreateScrollWheelEvent": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     },
     "variadic": true,
     "c_array_length_in_arg": 2
    },
-   "CGEventCreateSourceFromEvent": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventGetDoubleValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetIntegerValueField": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGEventGetLocation": {
     "retval": { "type_override": "{CGPoint=dd}" },
     "args": {
      "0": { "type_override": "^{__CGEvent=}"}
-    }
-   },
-   "CGEventGetTimestamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventGetUnflippedLocation": {
-    "args": {
-     "0": {}
     }
    },
    "CGEventKeyboardGetUnicodeString": {
@@ -4801,51 +1797,9 @@
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1}
     }
    },
-   "CGEventPost": {
-    "args": {
-     "1": {}
-    }
-   },
    "CGEventPostToPSN": {
     "args": {
-     "0": { "type_override": "^{ProcessSerialNumber=II}", "type_modifier": "n"  },
-     "1": {}
-    }
-   },
-   "CGEventSetDoubleValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetIntegerValueField": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetLocation": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetSource": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGEventSetTimestamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSetType": {
-    "args": {
-     "0": {}
+     "0": { "type_override": "^{ProcessSerialNumber=II}", "type_modifier": "n"  }
     }
    },
    "CGEventSourceCreate": {
@@ -4853,219 +1807,43 @@
      "already_cfretained": true
     }
    },
-   "CGEventSourceGetKeyboardType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetLocalEventsFilterDuringSuppressionState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetLocalEventsSuppressionInterval": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetPixelsPerLine": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetSourceStateID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceGetUserData": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetKeyboardType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetLocalEventsFilterDuringSuppressionState": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetLocalEventsSuppressionInterval": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetPixelsPerLine": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventSourceSetUserData": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventTapCreate": {
-    "args": {
-     "4": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^{__CGEventTapProxy=}"
-        },
-        "1": {
-         "type": "I"
-        },
-        "2": {
-         "type": "^{__CGEvent=}"
-        },
-        "3": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "^{__CGEvent=}"
-       }
-      }
-     },
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventTapCreateForPSN": {
-    "args": {
-     "0": {},
-     "4": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^{__CGEventTapProxy=}"
-        },
-        "1": {
-         "type": "I"
-        },
-        "2": {
-         "type": "^{__CGEvent=}"
-        },
-        "3": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "^{__CGEvent=}"
-       }
-      }
-     },
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventTapEnable": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventTapIsEnabled": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGEventTapPostEvent": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGFontCanCreatePostScriptSubset": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGFontCopyFullName": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyGlyphNameForGlyph": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyPostScriptName": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyTableForTag": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyTableTags": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyVariationAxes": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCopyVariations": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateCopyWithVariations": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreatePostScriptEncoding": {
-    "args": {
-     "0": {},
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 256, "type_modifier": "n" }
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCreatePostScriptSubset": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" },
      "5": { "type_modifier": "n" }
     },
@@ -5074,120 +1852,31 @@
     }
    },
    "CGFontCreateWithDataProvider": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCreateWithFontName": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGFontCreateWithPlatformFont": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGFontGetAscent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetCapHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetDescent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetFontBBox": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGFontGetGlyphAdvances": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
    },
    "CGFontGetGlyphBBoxes": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
-   },
-   "CGFontGetGlyphWithGlyphName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGFontGetItalicAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetLeading": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetNumberOfGlyphs": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetStemV": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetUnitsPerEm": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontGetXHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFontRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGFunctionRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGFunctionRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGGLContextUpdateViewportSize": {
     "retval": { "type_override": "v" },
@@ -5281,29 +1970,14 @@
    },
    "CGGradientCreateWithColors": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "c_array_length_in_arg": 1, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGGradientRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGGradientRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGImageCreate": {
     "args": {
-     "5": {},
-     "7": {},
      "8": { "c_array_of_variable_length": true, "type_modifier": "n" }
     },
     "retval": {
@@ -5311,43 +1985,13 @@
     }
    },
    "CGImageCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateCopyWithColorSpace": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithImageInRect": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGImageCreateWithJPEGDataProvider": {
     "args": {
-     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithMask": {
-    "args": {
-     "0": {},
-     "1": {}
     },
     "retval": {
      "already_cfretained": true
@@ -5355,49 +1999,11 @@
    },
    "CGImageCreateWithMaskingColors": {
     "args": {
-     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGImageGetAlphaInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitmapInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitsPerComponent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBitsPerPixel": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetBytesPerRow": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGImageGetDataProvider": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGImageGetDecode": {
     "args": {
@@ -5405,72 +2011,10 @@
     },
     "retval": { "c_array_of_variable_length": true, "type_override": "^d"  }
    },
-   "CGImageGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetRenderingIntent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetShouldInterpolate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageIsMask": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGImageRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGLayerCreateWithContext": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGLayerGetContext": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGLayerGetSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGLayerRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGLayerRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGPDFDictionaryApplyBlock": {
     "retval": { "typestr": "v" },
@@ -5510,139 +2054,69 @@
    },
    "CGPDFArrayGetArray": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetBoolean": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "CGPDFArrayGetCount": {
-    "args": {
-     "0": {}
     }
    },
    "CGPDFArrayGetDictionary": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetInteger": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetName": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "type_override": "^^t" }
-    }
-   },
-   "CGPDFArrayGetNull": {
-    "args": {
-     "0": {}
     }
    },
    "CGPDFArrayGetNumber": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetObject": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "type_override": "^^{CGPDFObject=}" }
     }
    },
    "CGPDFArrayGetStream": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetString": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFContentStreamCreateWithPage": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPDFContentStreamCreateWithStream": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPDFContentStreamGetResource": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     },
     "retval": { "type_override": "^{CGPDFObject=}" }
    },
-   "CGPDFContentStreamGetStreams": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFContentStreamRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContentStreamRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFContextAddDestinationAtPoint": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextAddDocumentMetadata": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextBeginPage": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextClose": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPDFContextCreate": {
     "args": {
-     "0": {},
-     "1": { "type_modifier": "n" },
-     "2": {}
+     "1": { "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
@@ -5650,34 +2124,14 @@
    },
    "CGPDFContextCreateWithURL": {
     "args": {
-     "0": {},
-     "1": { "type_modifier": "n" },
-     "2": {}
+     "1": { "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGPDFContextEndPage": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFContextSetDestinationForRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPDFContextSetURLForRect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CGPDFDictionaryApplyFunction": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -5697,74 +2151,59 @@
         "type": "v"
        }
       }
-     },
-     "2": {}
+     }
     }
    },
    "CGPDFDictionaryGetArray": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetBoolean": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
-   "CGPDFDictionaryGetCount": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPDFDictionaryGetDictionary": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetInteger": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o", "type_override": "^^t" }
     }
    },
    "CGPDFDictionaryGetNumber": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetObject": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_override": "^^{CGPDFObject=}", "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetStream": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetString": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "o" }
     }
@@ -5775,117 +2214,24 @@
      "0": { "type_override": "^{CGPDFDocument=}" }
     }
    },
-   "CGPDFDocumentAllowsPrinting": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPDFDocumentCreateWithProvider": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPDFDocumentCreateWithURL": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CGPDFDocumentGetArtBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetBleedBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetCatalog": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetCropBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetID": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetInfo": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetMediaBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetNumberOfPages": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetPage": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFDocumentGetRotationAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentGetTrimBox": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPDFDocumentGetVersion": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    },
-   "CGPDFDocumentIsEncrypted": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentIsUnlocked": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFDocumentRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGPDFDocumentUnlockWithPassword": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
@@ -5904,17 +2250,6 @@
     "retval": {
      "already_cfretained": true
     }
-   },
-   "CGPDFOperatorTableRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFOperatorTableRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGPDFOperatorTableSetCallback": {
     "args": {
@@ -5938,192 +2273,66 @@
      }
     }
    },
-   "CGPDFPageGetBoxRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetDictionary": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFPageGetDocument": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFPageGetDrawingTransform": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetPageNumber": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageGetRotationAngle": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFPageRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGPDFScannerCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
     "retval": {
       "already_cfretained": false
     }
    },
-   "CGPDFScannerGetContentStream": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGPDFScannerPopArray": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopBoolean": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopDictionary": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopInteger": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "type_override": "^^t" }
     }
    },
    "CGPDFScannerPopNumber": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopObject": {
     "args": {
-     "0": {},
      "1": { "type_override": "^^{CGPDFObject=}", "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopStream": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopString": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CGPDFScannerRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPDFScannerRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFScannerScan": {
-    "args": {
-     "0": {}
     }
    },
    "CGPDFStreamCopyData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDirectDisplayCopyCurrentMetalDevice": {
-    "retval": { "already_cfretained": true, "typestr": "@" },
-    "args": {
-      "0": { "typestr": "I" }
-    }
-   },
-   "CGPDFStreamGetDictionary": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPDFStringCopyDate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFStringCopyTextString": {
-    "args": {
-     "0": {}
     },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPDFStringGetBytePtr": {
-    "args": {
-     "0": {}
-    },
     "retval": { "c_array_of_variable_length": true }
-   },
-   "CGPDFStringGetLength": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPSConverterAbort": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPSConverterIsConverting": {
-    "args": {
-     "0": {}
-    }
    },
    "CGPaletteCreateCopy": {
     "args": {
@@ -6190,110 +2399,63 @@
    },
    "CGPathAddArcToPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
    },
    "CGPathAddCurveToPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
    },
    "CGPathAddEllipseInRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
    },
    "CGPathAddLineToPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" }
     }
    },
    "CGPathAddLines": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
      "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    },
    "CGPathAddPath": {
     "args": {
-     "0": {},
-     "1": { "type_modifier": "n" },
-     "2": {}
+     "1": { "type_modifier": "n" }
     }
    },
    "CGPathAddQuadCurveToPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
    },
    "CGPathAddRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" }
     }
    },
    "CGPathAddRects": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"},
      "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    },
    "CGPathAddRelativeArc": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
-    }
-   },
-   "CGPathApply": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^{CGPathElement=i^{CGPoint=dd}}"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "CGPathCloseSubpath": {
-    "args": {
-     "0": {}
     }
    },
    "CGPathContainsPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
-    }
-   },
-   "CGPathCreateCopy": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateCopyByDashingPath": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
     },
@@ -6303,7 +2465,6 @@
    },
    "CGPathCreateCopyByStrokingPath": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     },
     "retval": {
@@ -6312,7 +2473,6 @@
    },
    "CGPathCreateCopyByTransformingPath": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     },
     "retval": {
@@ -6325,16 +2485,12 @@
     }
    },
    "CGPathCreateMutableCopy": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGPathCreateMutableCopyByTransformingPath": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     },
     "retval": {
@@ -6357,65 +2513,15 @@
      "already_cfretained": true
     }
    },
-   "CGPathEqualToPath": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CGPathGetBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathGetCurrentPoint": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathGetPathBoundingBox": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathIsEmpty": {
-    "args": {
-     "0": {}
-    }
-   },
    "CGPathIsRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPathMoveToPoint": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
-   },
-   "CGPathRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPathRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CGPatternRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGPatternRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CGPointCreateDictionaryRepresentation": {
     "retval": {
@@ -6436,11 +2542,6 @@
     "variadic": true,
     "c_array_length_in_arg": 0
    },
-   "CGRectCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGRectDivide": {
     "args": {
      "1": { "type_modifier": "o" },
@@ -6449,42 +2550,13 @@
    },
    "CGRectMakeWithDictionaryRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CGRegisterScreenRefreshCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "I"
-        },
-        "1": {
-         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
     }
    },
    "CGReleaseScreenRefreshRects": {
     "suggestion": "function is not functional since macOS 10.8",
     "args": {
      "0": { "type_modifier": "n" }
-    }
-   },
-   "CGSessionCopyCurrentDictionary": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGSetDisplayTransferByByteTable": {
@@ -6501,35 +2573,6 @@
      "4": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     }
    },
-   "CGShadingCreateAxial": {
-    "args": {
-     "0": {},
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGShadingCreateRadial": {
-    "args": {
-     "0": {},
-     "5": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGShadingRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CGShadingRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CGSizeCreateDictionaryRepresentation": {
     "retval": {
      "already_cfretained": true
@@ -6537,36 +2580,7 @@
    },
    "CGSizeMakeWithDictionaryRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o"}
-    }
-   },
-   "CGUnregisterScreenRefreshCallback": {
-    "args": {
-     "0": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "I"
-        },
-        "1": {
-         "type": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-        },
-        "2": {
-         "type": "^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "1": {}
-    }
-   },
-   "CGWindowListCopyWindowInfo": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGWindowListCreate": {
@@ -6575,30 +2589,11 @@
     }
    },
    "CGWindowListCreateDescriptionFromArray": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CGWindowListCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateImageFromArray": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowServerCFMachPort": {
-    "retval": {}
-   },
-   "CGWindowServerCreateServerPort": {
     "retval": {
      "already_cfretained": true
     }

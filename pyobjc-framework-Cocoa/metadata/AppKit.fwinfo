@@ -6020,27 +6020,6 @@
       "selector": "saveToFile:saveOperation:delegate:didSaveSelector:contextInfo:"
      },
      {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "checkAutosavingSafetyAndReturnError:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "duplicateDocumentWithDelegate:didDuplicateSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "duplicateAndReturnError:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -7517,15 +7496,6 @@
     "methods": [
      {
       "args": {
-       "1": {
-        "sel_of_type": "v@:@"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithTarget:action:"
-     },
-     {
-      "args": {
        "0": {
         "sel_of_type": "v@:@"
        }
@@ -7536,19 +7506,7 @@
      {
       "args": {
        "1": {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          },
-          "1": {
-           "type": "@"
-          }
-         },
-         "retval": {
-          "type": "v"
-         }
-        }
+        "sel_of_type": "v@:@"
        }
       },
       "class_method": false,
@@ -7983,21 +7941,6 @@
       },
       "class_method": false,
       "selector": "bestRepresentationForRect:context:hints:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       },
-       "1": {
-        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "hitTestRect:withImageDestinationRect:context:hints:flipped:"
      },
      {
       "class_method": false,
@@ -11620,21 +11563,6 @@
      {
       "args": {
        "2": {
-        "type_override": "q"
-       },
-       "3": {
-        "type_override": "q"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "collectionView:acceptDrop:index:dropOperation:"
-     },
-     {
-      "args": {
-       "2": {
         "type_override": "{CGPoint=dd}"
        }
       },
@@ -11687,18 +11615,6 @@
       "class_method": false,
       "retval": {
        "type_override": "d"
-      },
-      "selector": "collectionView:layout:minimumInteritemSpacingForSectionAtIndex:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_override": "q"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "{CGSize=dd}"
       },
       "selector": "collectionView:layout:minimumInteritemSpacingForSectionAtIndex:"
      },
@@ -11817,52 +11733,6 @@
      },
      {
       "args": {
-       "2": {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          },
-          "1": {
-           "type": "@"
-          },
-          "2": {
-           "type": "@"
-          }
-         },
-         "retval": {
-          "type": "v"
-         }
-        },
-        "type_override": "@?"
-       }
-      },
-      "class_method": false,
-      "selector": "restoreWindowWithIdentifier:state:completionHandler:"
-     },
-     {
-      "args": {
-       "5": {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          },
-          "1": {
-           "type": "@"
-          }
-         },
-         "retval": {
-          "type": "v"
-         }
-        }
-       }
-      },
-      "class_method": false,
-      "selector": "application:continueUserActivity:restorationHandler:"
-     },
-     {
-      "args": {
        "4": {
         "type_override": "N^{CGPoint=dd}"
        }
@@ -11925,15 +11795,6 @@
       },
       "class_method": false,
       "selector": "stringAtIndex:effectiveRange:endswithSearchBoundary:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "o^{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "contentViewAtIndex:effectiveCharacterRange:"
      },
      {
       "class_method": false,
@@ -12329,15 +12190,6 @@
       "selector": "isContentDiscarded"
      },
      {
-      "args": {
-       "0": {
-        "type_override": "{CGPoint=dd}"
-       }
-      },
-      "class_method": false,
-      "selector": "accessibilityHitTest:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -12680,21 +12532,6 @@
        "type_override": "Z"
       },
       "selector": "browser:canDragRowsWithIndexes:inColumn:withEvent:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_override": "q"
-       },
-       "4": {
-        "type_modifier": "N"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "@"
-      },
-      "selector": "browser:draggingImageForRowsWithIndexes:inColumn:withEvent:offset:"
      },
      {
       "args": {
@@ -15370,15 +15207,6 @@
      {
       "args": {
        "0": {
-        "c_array_delimited_by_null": true
-       }
-      },
-      "class_method": false,
-      "selector": "setValues:forParameter:"
-     },
-     {
-      "args": {
-       "0": {
         "type_override": "^i"
        }
       },
@@ -17274,18 +17102,6 @@
        "type_override": "Z"
       },
       "selector": "showsHiddenFiles"
-     },
-     {
-      "args": {
-       "5": {
-        "sel_of_type": "v@:@q^v"
-       },
-       "6": {
-        "type_override": "^v"
-       }
-      },
-      "class_method": false,
-      "selector": "beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
      },
      {
       "args": {

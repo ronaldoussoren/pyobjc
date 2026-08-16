@@ -302,13 +302,6 @@
        "1": { "type_modifier": "o" }
       },
       "class_method": false,
-      "selector": "setPolicies:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
       "selector": "setAccountPolicies:error:"
      },
      {

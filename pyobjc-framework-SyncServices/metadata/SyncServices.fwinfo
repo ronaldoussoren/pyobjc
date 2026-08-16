@@ -587,9 +587,6 @@
    "ISyncConflictPropertyType": {
     "rename": "ISyncConflictPropertyType"
    },
-   "ISyncSessionDriverDataSource": {
-    "rename": "ISyncSessionDriverDataSource"
-   },
    "ISyncFiltering": {
     "rename": "ISyncFiltering"
    },
