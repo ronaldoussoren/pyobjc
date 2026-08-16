@@ -28601,24 +28601,21 @@
      "6": {"sel_of_type": "v@:@q^v"},
      "7": {"sel_of_type": "v@:@q^v"},
      "9": {"printf_format": true}
-    },
-    "variadic": true
+    }
    },
    "NSBeginCriticalAlertSheet": {
     "args": {
      "6": {"sel_of_type": "v@:@q^v"},
      "7": {"sel_of_type": "v@:@q^v"},
      "9": {"printf_format": true}
-    },
-    "variadic": true
+    }
    },
    "NSBeginInformationalAlertSheet": {
     "args": {
      "6": {"sel_of_type": "v@:@q^v"},
      "7": {"sel_of_type": "v@:@q^v"},
      "9": {"printf_format": true}
-    },
-    "variadic": true
+    }
    },
    "NSBestDepth": {
     "args": {
@@ -28659,19 +28656,16 @@
     }
    },
    "NSGetAlertPanel": {
-    "variadic": true,
     "args": {
        "1": { "printf_format": true }
     }
    },
    "NSGetCriticalAlertPanel": {
-    "variadic": true,
     "args": {
        "1": { "printf_format": true }
     }
    },
    "NSGetInformationalAlertPanel": {
-    "variadic": true,
     "args": {
        "1": { "printf_format": true }
     }
@@ -28728,37 +28722,31 @@
     }
    },
    "NSRunAlertPanel": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
    },
    "NSRunAlertPanelRelativeToWindow": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
    },
    "NSRunCriticalAlertPanel": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
    },
    "NSRunCriticalAlertPanelRelativeToWindow": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
    },
    "NSRunInformationalAlertPanel": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
    },
    "NSRunInformationalAlertPanelRelativeToWindow": {
-    "variadic": true,
     "args": {
       "1": { "printf_format": 1 }
     }
@@ -28775,10 +28763,7 @@
       "typestr": "Q"
      }
     },
-    "inline": true,
-    "retval": {
-     "typestr": "Q"
-    }
+    "inline": true
    },
    "NSWindowList": {
     "args": {

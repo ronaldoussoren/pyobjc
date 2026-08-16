@@ -15107,11 +15107,6 @@
      "3": {}
     }
    },
-   "NSCreateZone": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "NSDeallocateMemoryPages": {
     "ignore": true
    },
@@ -15261,7 +15256,6 @@
     }
    },
    "NSLog": {
-    "variadic": true,
     "args": {
        "0": { "printf_format": true }
     }
