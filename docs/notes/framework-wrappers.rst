@@ -1,3 +1,6 @@
+.. |nbsp| unicode:: 0xA0
+   :trim:
+
 Overview of macOS frameworks and their wrappers
 ===============================================
 
@@ -16,15 +19,15 @@ The framework name links to API notes for that framework, the python packages li
      - Notes
 
    * - :doc:`dispatch </apinotes/libdispatch>`
-     -  :pypi:`pyobjc-framework-libdispatch`
+     -  :iconify:`devicon:pypi` :pypi:`pyobjc-framework-libdispatch`
      -
 
    * - :doc:`AccessoryAccess </apinotes/AccessoryAccess>`
-     - :pypi:`pyobjc-framework-AccessoryAccess`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AccessoryAccess`
      -
 
    * - :doc:`Accessibility </apinotes/Accessibility>`
-     - :pypi:`pyobjc-framework-Accessibility`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Accessibility`
      -
 
    * - AccessorySetupKit
@@ -36,7 +39,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped.
 
    * - :doc:`Accounts </apinotes/Accounts>`
-     - :pypi:`pyobjc-framework-Accounts`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Accounts`
      -
 
    * - ActivityKit
@@ -44,15 +47,15 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS, :iconify:`devicon:swift` Swift-only.
 
    * - :doc:`AddressBook </apinotes/AddressBook>`
-     - :pypi:`pyobjc-framework-AddressBook`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AddressBook`
      -
 
    * - :doc:`AdServices </apinotes/AdServices>`
-     - :pypi:`pyobjc-framework-AdServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AdServices`
      -
 
    * - :doc:`AdSupport </apinotes/AdSupport>`
-     - :pypi:`pyobjc-framework-AdSupport`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AdSupport`
      -
 
    * - AGL
@@ -70,7 +73,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`AppKit </apinotes/AppKit>`
-     -  :pypi:`pyobjc-framework-Cocoa`
+     -  :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Cocoa`
      -
 
    * - AppleShareClientCore
@@ -78,7 +81,7 @@ The framework name links to API notes for that framework, the python packages li
      -  No public API
 
    * - :doc:`AppTrackingTransparency </apinotes/AppTrackingTransparency>`
-     - :pypi:`pyobjc-framework-AppTrackingTransparency`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AppTrackingTransparency`
      -
 
    * - AppKitScripting
@@ -88,15 +91,15 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved: 10.15
 
    * - :doc:`AppleScriptKit </apinotes/AppleScriptKit>`
-     - :pypi:`pyobjc-framework-AppleScriptKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AppleScriptKit`
      -
 
    * - :doc:`AppleScriptObjC </apinotes/AppleScriptObjC>`
-     - :pypi:`pyobjc-framework-AppleScriptObjC`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AppleScriptObjC`
      -
 
    * - :doc:`ApplicationServices </apinotes/ApplicationServices>`
-     - :pypi:`pyobjc-framework-ApplicationServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ApplicationServices`
      -
 
    * - AppSSO
@@ -104,12 +107,12 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`ARKit </apinotes/ARKit>`
-     - :pypi:`pyobjc-framework-ARKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ARKit`
      -
 
    * - AudioAccessoryKit
      -
-     - :iconify:`devicon:swift` Swift-only framework
+     - :iconify:`devicon:pypi` :iconify:`devicon:swift` Swift-only framework
 
    * - AudioToolbox
      -
@@ -120,37 +123,37 @@ The framework name links to API notes for that framework, the python packages li
      -
 
    * - :doc:`AudioVideoBridging </apinotes/AudioVideoBridging>`
-     - :pypi:`pyobjc-framework-AudioVideoBridging`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AudioVideoBridging`
      -
 
    * - :doc:`AuthenticationServices </apinotes/AuthenticationServices>`
-     - :pypi:`pyobjc-framework-AuthenticationServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AuthenticationServices`
      -
 
    * - :doc:`Automator </apinotes/Automator>`
-     - :pypi:`pyobjc-framework-Automator`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Automator`
      -
 
    * - :doc:`AutomaticAssessmentConfiguration </apinotes/AutomaticAssessmentConfiguration>`
-     - :pypi:`pyobjc-framework-AutomaticAssessmentConfiguration`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AutomaticAssessmentConfiguration`
      -
 
    * - :doc:`AVFoundation </apinotes/AVFoundation>`
-     - :pypi:`pyobjc-framework-AVFoundation`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AVFoundation`
      -
 
    * - AVFAudio
-     - :pypi:`pyobjc-framework-AVFoundation`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AVFoundation`
      - Use ``import AVFoundation`` to use these APIs.
 
        .. macosadded:: 11.3
 
    * - :doc:`AVKit </apinotes/AVKit>`
-     - :pypi:`pyobjc-framework-AVKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AVKit`
      -
 
    * - :doc:`AVRouting </apinotes/AVRouting>`
-     - :pypi:`pyobjc-framework-AVRouting`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-AVRouting`
      -
 
    * - :doc:`BackgroundAssets </apinotes/BackgroundAssets>`
@@ -166,11 +169,11 @@ The framework name links to API notes for that framework, the python packages li
      - Very low-level API, will not be wrapped
 
    * - :doc:`BrowserEngineKit  </apinotes/BrowserEngineKit>`
-     - :pypi:'pyobjc-framework-BrowserEgineKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-BrowserEgineKit`
      -
 
    * - :doc:`BusinessChat </apinotes/BusinessChat>`
-     - :pypi:`pyobjc-framework-BusinessChat`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-BusinessChat`
      -
 
    * - ByteMatrixVerification
@@ -178,11 +181,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS
 
    * - :doc:`CalendarStore </apinotes/CalendarStore>`
-     - :pypi:`pyobjc-framework-CalendarStore`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CalendarStore`
      -
 
    * - :doc:`CallKit </apinotes/CallKit>`
-     - :pypi:`pyobjc-framework-CallKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CallKit`
      -
 
    * - CarKey
@@ -190,16 +193,16 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS
 
    * - :doc:`Carbon </apinotes/Carbon>`
-     - :pypi:`pyobjc-framework-Carbon`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Carbon`
      -
 
    * - :doc:`CFNetwork </apinotes/CFNetwork>`
-     - :pypi:`pyobjc-framework-CFNetwork`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CFNetwork`
      -
 
    * - CrashReportExtension
      -
-     - :iconify:`devicon:swift` Swift-only framework.
+     - :iconify:`devicon:pypi` :iconify:`devicon:swift` Swift-only framework.
 
    * - Charts
      -
@@ -212,11 +215,11 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 14
 
    * - :doc:`Cinematic </apinotes/Cinematic>`
-     - :pypi:`pyobjc-framework-Cinematic`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Cinematic`
      -
 
    * - :doc:`ClassKit </apinotes/ClassKit>`
-     - :pypi:`pyobjc-framework-ClassKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ClassKit`
      -
 
    * - ClassKitUI
@@ -232,19 +235,19 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS
 
    * - :doc:`CloudKit </apinotes/CloudKit>`
-     - :pypi:`pyobjc-framework-CloudKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CloudKit`
      -
 
    * - :doc:`Cocoa </apinotes/Cocoa>`
-     - :pypi:`pyobjc-framework-Cocoa`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Cocoa`
      -
 
    * - :doc:`Collaboration </apinotes/Collaboration>`
-     - :pypi:`pyobjc-framework-Collaboration`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Collaboration`
      -
 
    * - :doc:`ColorSync </apinotes/ColorSync>`
-     - :pypi:`pyobjc-framework-ColorSync`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ColorSync`
      -
 
    * - Combine
@@ -252,7 +255,7 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`CompositorServices </apinotes/CompositorServices>`
-     - :pypi:`pyobjc-framework-CompositorServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CompositorServices`
      -
 
    * - ComputeGraph
@@ -264,11 +267,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API
 
    * - :doc:`Contacts </apinotes/Contacts>`  `
-     - :pypi:`pyobjc-framework-Contacts`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Contacts`
      -
 
    * - :doc:`ContactsUI </apinotes/ContactsUI>`
-     - :pypi:`pyobjc-framework-ContactsUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ContactsUI`
      -
 
    * - ContextualActionsClient
@@ -280,15 +283,15 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`CoreAudio </apinotes/CoreAudio>`
-     - :pypi:`pyobjc-framework-CoreAudio`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreAudio`
      -
 
    * - :doc:`CoreAudioKit </apinotes/CoreAudioKit>`
-     - :pypi:`pyobjc-framework-CoreAudioKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreAudioKit`
      -
 
    * - CoreAudioTypes
-     - :pypi:`pyobjc-framework-CoreAudio`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreAudio`
      - These constants and types are exposed in the CoreAudio bindings. Use ``import CoreAudio``.
 
    * - CoreAuthentication
@@ -298,11 +301,11 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 10.13
 
    * - :doc:`CoreBluetooth </apinotes/CoreBluetooth>`
-     - :pypi:`pyobjc-framework-CoreBluetooth`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreBluetooth`
      -
 
    * - :doc:`CoreData </apinotes/CoreData>`
-     - :pypi:`pyobjc-framework-CoreData`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreData`
      -
 
    * - CoreDisplay
@@ -310,15 +313,15 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`CoreFoundation </apinotes/CoreFoundation>`
-     - :pypi:`pyobjc-framework-Cocoa`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Cocoa`
      -
 
    * - :doc:`CoreGraphics </apinotes/CoreGraphics>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`CoreHaptics </apinotes/CoreHaptics>`
-     - :pypi:`pyobjc-framework-CoreHaptics`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreHaptics`
      -
 
    * - CoreHID
@@ -328,23 +331,23 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 14
 
    * - :doc:`CoreImage </apinotes/CoreImage>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`CoreLocation </apinotes/CoreLocation>`
-     - :pypi:`pyobjc-framework-CoreLocation`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreLocation`
      -
 
    * - :doc:`CoreMedia </apinotes/CoreMedia>`
-     - :pypi:`pyobjc-framework-CoreMedia`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreMedia`
      -
 
    * - :doc:`CoreMediaIO </apinotes/CoreMediaIO>`
-     - :pypi:`pyobjc-framework-CoreMediaIO`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreMediaIO`
      -
 
    * - :doc:`CoreMIDI </apinotes/CoreMIDI>`
-     - :pypi:`pyobjc-framework-CoreMIDI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreMIDI`
      -
 
    * - CoreMIDIServer
@@ -352,50 +355,50 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`CoreML </apinotes/CoreML>`
-     - :pypi:`pyobjc-framework-CoreML`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreML`
      -
 
    * - :doc:`CoreMotion </apinotes/CoreMotion>`
-     - :pypi:`pyobjc-framework-CoreMotion`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreMotion`
      -
 
    * - :doc:`CoreServices </apinotes/CoreServices>`
-     - :pypi:`pyobjc-framework-CoreServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreServices`
      - Various subframeworks are wrapped
 
    * - :doc:`CoreServices/LauchServices </apinotes/LaunchServices>`
-     - :pypi:`pyobjc-framework-LaunchServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LaunchServices`
      -
 
    * - :doc:`CoreServices/SharedFileList </apinotes/LaunchServices>`
-     - :pypi:`pyobjc-framework-CoreServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreServices`
      - Use ``import CoreServices``.
 
-       ``import LaunchServices`` can be used when :pypi:`pyobjc-framework-LaunchServices`,
+       ``import LaunchServices`` can be used when :iconify:`devicon:pypi` |nbsp| :pypi:`pyobjc-framework-LaunchServices`,
        is installed, but that's for backward compatibility only.
 
    * - :doc:`CoreServices/FSEvents </apinotes/FSEvents>`
-     - :pypi:`pyobjc-framework-FSEvents`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FSEvents`
      -
 
    * - CoreServices/AE
      -
-     - Not wrapped, use the `appscript <https://appscript.sourceforge.io/>`_ package.
+     - Not wrapped, use :iconify:`devicon:github` |nbsp| `appscript <https://appscript.sourceforge.io/>`_.
 
    * - :doc:`CoreServices/CarbonCore </apinotes/CarbonCore>`
-     - :pypi:`pyobjc-framework-CoreServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreServices`
      - Use ``import CoreServices``
 
    * - CoreServices/Metadata
-     - :pypi:`pyobjc-framework-CoreServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreServices`
      - Use ``import CoreServices``
 
    * - :doc:`CoreServices/OSServices </apinotes/OSServices>`
-     - :pypi:`pyobjc-framework-CoreServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreServices`
      - Use ``import CoreServices``
 
    * - :doc:`CoreSpotlight </apinotes/CoreSpotlight>`
-     - :pypi:`pyobjc-framework-CoreSpotlight`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreSpotlight`
      -
 
    * - CoreTelephony
@@ -407,11 +410,11 @@ The framework name links to API notes for that framework, the python packages li
      - Framework has no public API on macOS
 
    * - :doc:`CoreText </apinotes/CoreText>`
-     - :pypi:`pyobjc-framework-CoreText`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreText`
      -
 
    * - :doc:`CoreVideo </apinotes/CoreVideo>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - CoreWiFi
@@ -419,7 +422,7 @@ The framework name links to API notes for that framework, the python packages li
      - Framework has no public API
 
    * - :doc:`CoreWLAN </apinotes/CoreWLAN>`
-     - :pypi:`pyobjc-framework-CoreWLAN`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CoreWLAN`
      -
 
    * - CoreXR
@@ -439,11 +442,11 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`CryptoTokenKit </apinotes/CryptoTokenKit>`
-     - :pypi:`pyobjc-framework-CryptoTokenKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-CryptoTokenKit`
      -
 
    * - :doc:`DataDetection </apinotes/DataDetection>`
-     - :pypi:`pyobjc-framework-DataDetection`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DataDetection`
      -
 
    * - DeclaredAgeRange
@@ -463,11 +466,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`DeviceCheck </apinotes/DeviceCheck>`
-     - :pypi:`pyobjc-framework-DeviceCheck`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DeviceCheck`
      -
 
    * - :doc:`DeviceDiscoveryExtension </apinotes/DeviceDiscoveryExtension>`
-     - :pypi:`pyobjc-framework-DeviceDiscoveryExtension`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DeviceDiscoveryExtension`
      -
 
    * - DirectoryService
@@ -475,15 +478,15 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, deprecated framework.
 
    * - :doc:`DiscRecording </apinotes/DiscRecording>`
-     - :pypi:`pyobjc-framework-DiscRecording`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DiscRecording`
      -
 
    * - :doc:`DiscRecordingUI </apinotes/DiscRecording>`
-     - :pypi:`pyobjc-framework-DiscRecording`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DiscRecording`
      -
 
    * - :doc:`DiskArbitration </apinotes/DiskArbitration>`
-     - :pypi:`pyobjc-framework-DiskArbitration`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DiskArbitration`
      -
    * - DiskImageKit
      -
@@ -504,7 +507,7 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 10.15
 
    * - :doc:`DVDPlayback </apinotes/DVDPlayback>`
-     - :pypi:`pyobjc-framework-DVDPlayback`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-DVDPlayback`
      -
 
    * - DrawSprocket
@@ -514,11 +517,11 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 10.15
 
    * - :doc:`EventKit </apinotes/EventKit>`
-     - :pypi:`pyobjc-framework-EventKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-EventKit`
      -
 
    * - :doc:`ExceptionHandling </apinotes/ExceptionHandling>`
-     - :pypi:`pyobjc-framework-ExceptionHandling`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ExceptionHandling`
      -
 
    * - ExposureNotification
@@ -530,15 +533,15 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`ExecutionPolicy </apinotes/ExecutionPolicy>`
-     - :pypi:`pyobjc-framework-ExecutionPolicy`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ExecutionPolicy`
      -
 
    * - :doc:`ExtensionKit </apinotes/ExtensionKit>`
-     - :pypi:`pyobjc-framework-ExtensionKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ExtensionKit`
      -
 
    * - :doc:`ExternalAccessory </apinotes/ExternalAccessory>`
-     - :pypi:`pyobjc-framework-ExternalAccessory`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ExternalAccessory`
      -
 
    * - FamilyControls
@@ -546,11 +549,11 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`FileProvider </apinotes/FileProvider>`
-     - :pypi:`pyobjc-framework-FileProvider`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FileProvider`
      -
 
    * - :doc:`FileProviderUI </apinotes/FileProviderUI>`
-     - :pypi:`pyobjc-framework-FileProviderUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FileProviderUI`
      -
 
    * - FinanceKit
@@ -562,7 +565,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`FinderSync </apinotes/FinderSync>`
-     - :pypi:`pyobjc-framework-FinderSync`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FinderSync`
      -
 
    * - ForceFeedback
@@ -570,7 +573,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, low-level API
 
    * - :doc:`Foundation </apinotes/Foundation>`
-     - :pypi:`pyobjc-framework-Cocoa`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Cocoa`
      -
 
    * - FoundationModels
@@ -578,7 +581,7 @@ The framework name links to API notes for that framework, the python packages li
      -
 
    * - :doc:`FSKit </apinotes/FSKit>`
-     - :pypi:`pyobjc-framework-FSKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FSKit`
      -
 
    * - FWAUserLib
@@ -590,25 +593,25 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 13
 
    * - :doc:`GameController </apinotes/GameController>`
-     - :pypi:`pyobjc-framework-GameController`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-GameController`
      -
 
    * - :doc:`GameCenter </apinotes/GameCenter>`
-     - :pypi:`pyobjc-framework-GameCenter`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-GameCenter`
      -
 
        .. macosremoved:: 10.13
 
    * - :doc:`GameKit </apinotes/GameKit>`
-     - :pypi:`pyobjc-framework-GameKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-GameKit`
      -
 
    * - :doc:`GameplayKit </apinotes/GameplayKit>`
-     - :pypi:`pyobjc-framework-GameplayKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-GameplayKit`
      -
 
    * - GameSave
-     - :pypi:`pyobjc-framework-GameSave`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-GameSave`
      -
         .. macosadded:: 25
 
@@ -624,7 +627,7 @@ The framework name links to API notes for that framework, the python packages li
 
    * - GLUT
      -
-     - Will not be wrapped. Use :pypi:`PyOpenGL` instead.
+     - Will not be wrapped. Use :iconify:`devicon:pypi` :pypi:`PyOpenGL`.
 
    * - GroupActivities
      -
@@ -632,10 +635,10 @@ The framework name links to API notes for that framework, the python packages li
 
    * - GSS
      -
-     - Will not be wrapped. Use :pypi:`gssapi` instead.
+     - Will not be wrapped. Use :iconify:`devicon:pypi` :pypi:`gssapi`.
 
    * - :doc:`HealthKit </apinotes/HealthKit>`
-     - :pypi:`pyobjc-framework-HealthKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-HealthKit`
      -
 
    * - HIDDriverKit
@@ -668,11 +671,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`
-     - :pypi:`pyobjc-framework-ImageCaptureCore`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ImageCaptureCore`
      -
 
    * - :doc:`ImageIO </apinotes/ImageIO>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - ImagePlayground
@@ -704,31 +707,31 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 10.15
 
    * - :doc:`InputMethodKit </apinotes/InputMethodKit>`
-     - :pypi:`pyobjc-framework-InputMethodKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-InputMethodKit`
      -
 
    * - :doc:`InstallerPlugins </apinotes/InstallerPlugins>`
-     - :pypi:`pyobjc-framework-InstallerPlugins`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-InstallerPlugins`
      -
 
    * - :doc:`InstantMessage </apinotes/InstantMessage>`
-     - :pypi:`pyobjc-framework-InstantMessage`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-InstantMessage`
      -
 
    * - :doc:`Intents </apinotes/Intents>`
-     - :pypi:`pyobjc-framework-Intents`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Intents`
      -
 
    * - :doc:`IntentsUI </apinotes/IntentsUI>`
-     - :pypi:`pyobjc-framework-IntentsUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-IntentsUI`
      -
 
    * - :doc:`IOBluetooth </apinotes/IOBluetooth>`
-     - :pypi:`pyobjc-framework-IOBluetooth`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-IOBluetooth`
      -
 
    * - :doc:`IOBluetoothUI </apinotes/IOBluetoothUI>`
-     - :pypi:`pyobjc-framework-IOBluetoothUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-IOBluetoothUI`
      -
 
    * - IOKit
@@ -736,7 +739,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped.
 
    * - :doc:`IOSurface </apinotes/IOSurface>`
-     - :pypi:`pyobjc-framework-IOSurface`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-IOSurface`
      -
 
    * - IOUSBHost
@@ -744,11 +747,11 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped.
 
    * - :doc:`iTunesLibrary </apinotes/iTunesLibrary>`
-     - :pypi:`pyobjc-framework-iTunesLibrary`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-iTunesLibrary`
      -
 
    * - :doc:`JavaScriptCore </apinotes/JavaScriptCore>`
-     - :pypi:`pyobjc-framework-WebKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-WebKit`
      -
 
    * - JavaFrameEmbedding
@@ -776,27 +779,27 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped.
 
    * - :doc:`KernelManagement </apinotes/KernelManagement>`
-     - :pypi:`pyobjc-framework-KernelManagement`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-KernelManagement`
      -
 
    * - :doc:`LatentSemanticMapping </apinotes/LatentSemanticMapping>`
-     - :pypi:`pyobjc-framework-LatentSemanticMapping`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LatentSemanticMapping`
      -
 
    * - LDAP
      -
-     - Will not be wrapped.  Use :pypi:`python-ldap` instead.
+     - Will not be wrapped.  Use :iconify:`devicon:pypi` :pypi:`python-ldap`.
 
    * - LightweightCodeRequirements
      -
      - No public API.
 
    * - :doc:`LinkPresentation </apinotes/LinkPresentation>`
-     - :pypi:`pyobjc-framework-LinkPresentation`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LinkPresentation`
      -
 
    * - :doc:`LinkSecurity </apinotes/LinkSecurity>`
-     - :pypi:`pyobjc-framework-LinkSecurity`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LinkSecurity`
      -
 
    * - LiveCommunicationKit
@@ -804,11 +807,11 @@ The framework name links to API notes for that framework, the python packages li
      -
 
    * - :doc:`LocalAuthentication </apinotes/LocalAuthentication>`
-     - :pypi:`pyobjc-framework-LocalAuthentication`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LocalAuthentication`
      -
 
    * - :doc:`LocalAuthenticationEmbeddedUI </apinotes/LocalAuthenticationEmbeddedUI>`
-     - :pypi:`pyobjc-framework-LocalAuthenticationEmbeddedUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-LocalAuthenticationEmbeddedUI`
      -
 
    * - ManagedSettings
@@ -820,11 +823,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`MapKit </apinotes/MapKit>`
-     - :pypi:`pyobjc-framework-MapKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MapKit`
      -
 
    * - :doc:`MailKit </apinotes/MailKit>`
-     - :pypi:`pyobjc-framework-MailKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MailKit`
      -
 
    * - ManagedApp
@@ -840,11 +843,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`MediaAccessibility </apinotes/MediaAccessibility>`
-     - :pypi:`pyobjc-framework-MediaAccessibility`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MediaAccessibility`
      -
 
    * - :doc:`MediaExtension </apinotes/MediaExtension>`
-     - :pypi:`pyobjc-framework-MediaExtension`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MediaExtension`
      -
 
    * - MediaIntelligence
@@ -856,15 +859,15 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`MediaLibrary </apinotes/MediaLibrary>`
-     - :pypi:`pyobjc-framework-MediaLibrary`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MediaLibrary`
      -
 
    * - :doc:`MediaPlayer </apinotes/MediaPlayer>`
-     - :pypi:`pyobjc-framework-MediaPlayer`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MediaPlayer`
      -
 
    * - :doc:`MediaToolbox </apinotes/MediaToolbox>`
-     - :pypi:`pyobjc-framework-MediaToolbox`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MediaToolbox`
      -
 
    * - MeshNetFramework
@@ -876,15 +879,15 @@ The framework name links to API notes for that framework, the python packages li
      - No longer available.
 
    * - :doc:`Metal </apinotes/Metal>`
-     - :pypi:`pyobjc-framework-Metal`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Metal`
      -
 
    * - :doc:`MetalFX </apinotes/MetalFX>`
-     - :pypi:`pyobjc-framework-MetalFX`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MetalFX`
      -
 
    * - :doc:`MetalKit </apinotes/MetalKit>`
-     - :pypi:`pyobjc-framework-MetalKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MetalKit`
      -
 
    * - MetalPerformancePrimitives
@@ -892,23 +895,23 @@ The framework name links to API notes for that framework, the python packages li
      - Low-level C++ API
 
    * - :doc:`MetalPerformanceShaders </apinotes/MetalPerformanceShaders>`
-     - :pypi:`pyobjc-framework-MetalPerformanceShaders`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MetalPerformanceShaders`
      -
 
    * - :doc:`MetalPerformanceShadersGraph </apinotes/MetalPerformanceShadersGraph>`
-     - :pypi:`pyobjc-framework-MetalPerformanceShadersGraph`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MetalPerformanceShadersGraph`
      -
 
    * - :doc:`MetricKit </apinotes/MetricKit>`
-     - :pypi:`pyobjc-framework-MetricKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MetricKit`
      -
 
    * - :doc:`MLCompute </apinotes/MLCompute>`
-     - :pypi:`pyobjc-framework-MLCompute`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MLCompute`
      -
 
    * - :doc:`ModelIO </apinotes/ModelIO>`
-     - :pypi:`pyobjc-framework-ModelIO`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ModelIO`
      -
 
    * - MorphunAssetsUpdater
@@ -916,7 +919,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
-     - :pypi:`pyobjc-framework-MultipeerConnectivity`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-MultipeerConnectivity`
      -
 
    * - MusicKit
@@ -928,19 +931,19 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`NaturalLanguage </apinotes/NaturalLanguage>`
-     - :pypi:`pyobjc-framework-NaturalLanguage`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-NaturalLanguage`
      -
 
    * - :doc:`NetFS </apinotes/NetFS>`
-     - :pypi:`pyobjc-framework-NetFS`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-NetFS`
      -
 
    * - :doc:`Network </apinotes/Network>`
-     - :pypi:`pyobjc-framework-Network`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Network`
      -
 
    * - :doc:`NetworkExtension </apinotes/NetworkExtension>`
-     - :pypi:`pyobjc-framework-NetworkExtension`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-NetworkExtension`
      -
 
    * - NearbyInteraction
@@ -952,7 +955,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, too low level.
 
    * - :doc:`NotificationCenter </apinotes/NotificationCenter>`
-     - :pypi:`pyobjc-framework-NotificationCenter`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-NotificationCenter`
      -
 
    * - NowPlaying
@@ -961,24 +964,24 @@ The framework name links to API notes for that framework, the python packages li
 
    * - OpenAL
      -
-     - Will not be wrapped,  use :pypi:`PyAL` instead.
+     - Will not be wrapped,  use :iconify:`devicon:pypi` |nbsp| :pypi:`PyAL`.
 
         .. macosdeprecated:: 10.15
 
    * - OpenCL
      -
-     - Will not be wrapped.  Use :pypi:`pyopencl` instead.
+     - Will not be wrapped.  Use :iconify:`devicon:pypi` |nbsp| :pypi:`pyopencl`.
 
    * - :doc:`OpenDirectory </apinotes/OpenDirectory>`
-     - :pypi:`pyobjc-framework-OpenDirectory`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-OpenDirectory`
      -
 
    * - OpenGL
      -
-     - Will not be wrapped.  Use :pypi:`PyOpenGL` instead.
+     - Will not be wrapped.  Use :iconify:`devicon:pypi` |nbsp| :pypi:`PyOpenGL`.
 
    * - :doc:`OSAKit </apinotes/OSAKit>`
-     - :pypi:`pyobjc-framework-OSAKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-OSAKit`
      -
 
    * - OSAnalytics
@@ -986,7 +989,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS
 
    * - :doc:`OSLog </apinotes/OSLog>`
-     - :pypi:`pyobjc-framework-OSLog`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-OSLog`
      -
 
    * - PaperKit
@@ -998,7 +1001,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped.
 
    * - :doc:`PassKit </apinotes/PassKit>`
-     - :pypi:`pyobjc-framework-PassKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PassKit`
      -
 
    * - PCIDriverKit
@@ -1007,14 +1010,14 @@ The framework name links to API notes for that framework, the python packages li
 
    * - PCSC
      -
-     - Use :pypi:`pyscard` instead.
+     - Use :iconify:`devicon:pypi` :pypi:`pyscard`.
 
    * - :doc:`PDFKit </apinotes/PDFKit>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`PencilKit </apinotes/PencilKit>`
-     - :pypi:`pyobjc-framework-PencilKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PencilKit`
      -
 
    * - PermissionKit
@@ -1022,19 +1025,19 @@ The framework name links to API notes for that framework, the python packages li
      -
 
    * - :doc:`PHASE </apinotes/PHASE>`
-     - :pypi:`pyobjc-framework-PHASE`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PHASE`
      -
 
    * - :doc:`Photos </apinotes/Photos>`
-     - :pypi:`pyobjc-framework-Photos`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Photos`
      -
 
    * - :doc:`PhotosUI </apinotes/PhotosUI>`
-     - :pypi:`pyobjc-framework-PhotosUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PhotosUI`
      -
 
    * - :doc:`PreferencePanes </apinotes/PreferencePanes>`
-     - :pypi:`pyobjc-framework-PreferencePanes`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PreferencePanes`
      -
 
    * - ProximityReaderStub
@@ -1042,11 +1045,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`PubSub </apinotes/PubSub>`
-     - :pypi:`pyobjc-framework-PubSub`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PubSub`
      - .. macosremoved:: 10.15
 
    * - :doc:`PushKit </apinotes/PushKit>`
-     - :pypi:`pyobjc-framework-PushKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-PushKit`
      -
 
    * - PushToTalk
@@ -1064,35 +1067,35 @@ The framework name links to API notes for that framework, the python packages li
        .. macosremoved:: 10.15
 
    * - :doc:`Quartz </apinotes/Quartz>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      -
 
    * - Quartz / :doc:`ImageKit </apinotes/ImageKit>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - Quartz / :doc:`QuartzComposer </apinotes/QuartzComposer>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - Quartz / :doc:`QuartzFilters </apinotes/QuartzFilters>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - Quartz / :doc:`QuickLookUI </apinotes/QuickLookUI>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`QuartzCore </apinotes/QuartzCore>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`QuickLook </apinotes/QuickLook>`
-     - :pypi:`pyobjc-framework-Quartz`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Quartz`
      - Use ``import Quartz`` to access these APIs.
 
    * - :doc:`QuickLookThumbnailing </apinotes/QuickLookThumbnailing>`
-     - :pypi:`pyobjc-framework-QuickLookThumbnailing`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-QuickLookThumbnailing`
      -
 
    * - QuickTime
@@ -1114,7 +1117,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS
 
    * - :doc:`ReplayKit </apinotes/ReplayKit>`
-     - :pypi:`pyobjc-framework-ReplayKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ReplayKit`
      -
 
    * - Ruby
@@ -1126,61 +1129,61 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, use Python
 
    * - :doc:`SafetyKit </apinotes/SafetyKit>`
-     - :pypi:`pyobjc-framework-SafetyKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SafetyKit`
      -
 
    * - :doc:`SafariServices </apinotes/SafariServices>`
-     - :pypi:`pyobjc-framework-SafariServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SafariServices`
      -
 
    * - :doc:`SceneKit </apinotes/SceneKit>`
-     - :pypi:`pyobjc-framework-SceneKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SceneKit`
      -
 
    * - :doc:`ScreenCaptureKit </apinotes/ScreenCaptureKit>`
-     - :pypi:`pyobjc-framework-ScreenCaptureKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ScreenCaptureKit`
      -
 
    * - :doc:`ScreenSaver </apinotes/ScreenSaver>`
-     - :pypi:`pyobjc-framework-ScreenSaver`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ScreenSaver`
      -
 
    * - :doc:`ScreenTime </apinotes/ScreenTime>`
-     - :pypi:`pyobjc-framework-ScreenTime`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ScreenTime`
      -
 
    * - Scripting
      -
-     - This framework is (long) deprecated, use ``import Foundation`` instead.
+     - This framework is (long) deprecated, use ``import Foundation``.
 
        .. macosremoved:: 10.15
 
    * - :doc:`ScriptingBridge </apinotes/ScriptingBridge>`
-     - :pypi:`pyobjc-framework-ScriptingBridge`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ScriptingBridge`
      -
 
    * - SecureConfigDB
      -
-     - No public API on macOS. Use ``import Foundation`` instead.
+     - No public API on macOS. Use ``import Foundation``.
 
    * - :doc:`Security </apinotes/Security>`
-     - :pypi:`pyobjc-framework-Security`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Security`
      -
 
    * - :doc:`SecurityFoundation </apinotes/SecurityFoundation>`
-     - :pypi:`pyobjc-framework-SecurityFoundation`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SecurityFoundation`
      -
 
    * - :doc:`SecurityInterface </apinotes/SecurityInterface>`
-     - :pypi:`pyobjc-framework-SecurityInterface`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SecurityInterface`
      -
 
    * - :doc:`SecurityUI </apinotes/SecurityUI>`
-     - :pypi:`pyobjc-framework-SecurityUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SecurityUI`
      -
 
    * - :doc:`SensitiveContentAnalysis </apinotes/SensitiveContentAnalysis>`
-     - :pypi:`pyobjc-framework-SensitiveContentAnalysis`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SensitiveContentAnalysis`
      -
 
    * - SiriAudioIntentUtils
@@ -1200,27 +1203,27 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`ServiceManagement </apinotes/ServiceManagement>`
-     - :pypi:`pyobjc-framework-ServiceManagement`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ServiceManagement`
      -
 
    * - :doc:`SharedWithYouCore </apinotes/SharedWithYouCore>`
-     - :pypi:`pyobjc-framework-SharedWithYouCore`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SharedWithYouCore`
      -
 
    * - :doc:`SharedWithYou </apinotes/SharedWithYou>`
-     - :pypi:`pyobjc-framework-SharedWithYou`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SharedWithYou`
      -
 
    * - :doc:`ShazamKit </apinotes/ShazamKit>`
-     - :pypi:`pyobjc-framework-ShazamKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ShazamKit`
      -
 
    * - :doc:`Social </apinotes/Social>`
-     - :pypi:`pyobjc-framework-Social`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Social`
      -
 
    * - :doc:`SoundAnalysis </apinotes/SoundAnalysis>`
-     - :pypi:`pyobjc-framework-SoundAnalysis`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SoundAnalysis`
      -
 
    * - SpatialPreview
@@ -1228,15 +1231,15 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`Speech </apinotes/Speech>`
-     - :pypi:`pyobjc-framework-Speech`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Speech`
      -
 
    * - :doc:`SpriteKit </apinotes/SpriteKit>`
-     - :pypi:`pyobjc-framework-SpriteKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SpriteKit`
      -
 
    * - :doc:`StateReporting </apinotes/StateReporting>`
-     - :pypi:`pyobjc-framework-StateReporting`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-StateReporting`
      -
 
    * - StickerFoundation
@@ -1248,7 +1251,7 @@ The framework name links to API notes for that framework, the python packages li
      - No public API on macOS.
 
    * - :doc:`StoreKit </apinotes/StoreKit>`
-     - :pypi:`pyobjc-framework-StoreKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-StoreKit`
      -
 
    * - SuggestedActions
@@ -1268,11 +1271,11 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`SyncServices </apinotes/SyncServices>`
-     - :pypi:`pyobjc-framework-SyncServices`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SyncServices`
      -
 
    * - :doc:`Symbols </apinotes/Symbols>`
-     - :pypi:`pyobjc-framework-Symbols`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Symbols`
      -
 
    * - System
@@ -1280,11 +1283,11 @@ The framework name links to API notes for that framework, the python packages li
      - No public API.
 
    * - :doc:`SystemConfiguration </apinotes/SystemConfiguration>`
-     - :pypi:`pyobjc-framework-SystemConfiguration`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SystemConfiguration`
      -
 
    * - :doc:`SystemExtensions </apinotes/SystemExtensions>`
-     - :pypi:`pyobjc-framework-SystemExtensions`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-SystemExtensions`
      -
 
    * - TabularData
@@ -1308,7 +1311,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, use :mod:`tkinter`.
 
    * - :doc:`ThreadNetwork </apinotes/ThreadNetwork>`
-     - :pypi:`pyobjc-framework-ThreadNetwork`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-ThreadNetwork`
      -
 
    * - TipsNext
@@ -1321,7 +1324,7 @@ The framework name links to API notes for that framework, the python packages li
 
    * - TWAIN
      -
-     - Will not be wrapped. Use :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>` instead.
+     - Will not be wrapped. Use :doc:`ImageCaptureCore </apinotes/ImageCaptureCore>`.
 
    * - USBDriverKit
      -
@@ -1332,15 +1335,15 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`UserNotifications </apinotes/UserNotifications>`
-     - :pypi:`pyobjc-framework-UserNotifications`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-UserNotifications`
      -
 
    * - :doc:`UserNotificationsUI </apinotes/UserNotificationsUI>`
-     - :pypi:`pyobjc-framework-UserNotificationsUI`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-UserNotificationsUI`
      -
 
    * - :doc:`UniformTypeIdentifiers </apinotes/UniformTypeIdentifiers>`
-     - :pypi:`pyobjc-framework-UniformTypeIdentifiers`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-UniformTypeIdentifiers`
      -
 
    * - vecLib
@@ -1354,15 +1357,15 @@ The framework name links to API notes for that framework, the python packages li
        .. macosdeprecated:: 10.11
 
    * - :doc:`VideoSubscriberAccount </apinotes/VideoSubscriberAccount>`
-     - :pypi:`pyobjc-framework-VideoSubscriberAccount`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-VideoSubscriberAccount`
      -
 
    * - :doc:`VideoToolbox </apinotes/VideoToolbox>`
-     - :pypi:`pyobjc-framework-VideoToolbox`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-VideoToolbox`
      -
 
    * - :doc:`Virtualization </apinotes/Virtualization>`
-     - :pypi:`pyobjc-framework-Virtualization`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Virtualization`
      -
 
    * - VisualIntelligence
@@ -1370,7 +1373,7 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`Vision </apinotes/Vision>`
-     - :pypi:`pyobjc-framework-Vision`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-Vision`
      -
 
    * - VisionKit
@@ -1382,7 +1385,7 @@ The framework name links to API notes for that framework, the python packages li
      - Will not be wrapped, too low level.
 
    * - :doc:`WebKit </apinotes/WebKit>`
-     - :pypi:`pyobjc-framework-WebKit`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-WebKit`
      -
 
    * - WidgetKit
@@ -1406,7 +1409,7 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`xpc </apinotes/xpc>`
-     - :pypi:`pyobjc-framework-libxpc`
+     - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-libxpc`
      -
 
    * - _AppIntents_SwiftUI

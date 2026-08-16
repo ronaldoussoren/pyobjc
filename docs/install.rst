@@ -1,3 +1,6 @@
+.. |nbsp| unicode:: 0xA0
+   :trim:
+
 Installing PyObjC
 =================
 
@@ -5,16 +8,16 @@ Preferred way to install PyObjC
 -------------------------------
 
 PyObjC is distributed as a collection of Python packages and can be installed
-using `pip`_.  Manual installation is also supported, but is a lot more work and is
+using :iconify:`devicon:pypi` |nbsp| :pypi:`pip`.  Manual installation is also supported, but is a lot more work and is
 therefore more of a power-user feature.
 
-Installing or upgrading PyObjC using `pip`_ is easy:
+Installing or upgrading PyObjC using :iconify:`devicon:pypi` |nbsp| :pypi:`pip` is easy:
 
 .. sourcecode:: console
 
    $ python3 -mpip install -U pyobjc
 
-For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
+For most users this will install PyObjC using :iconify:`devicon:pypi` |nbsp| :pypi:`wheel` binary
 archives, which means you don't have to have a compiler on your machine.
 
 Some use cases require installation of all framework bindings, not just those that are
@@ -74,5 +77,3 @@ be used to build application distributions that target any version of macOS betw
 Note that other extension modules, both on PyPI and those for your own code might
 cause problems when running on older versions of macOS due to hard linking to
 symbols that aren't available on those versions of macOS.
-
-.. _pip: https://pypi.org/project/pip/
