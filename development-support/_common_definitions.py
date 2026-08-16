@@ -167,6 +167,12 @@ def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
             [interpreter, "-mpip", "install", "-U", "wheel"],
             stdout=subprocess.DEVNULL,
         )
+        # XXX: Temporarily use old version of readme renderer to avoid
+        #      requiring a rust dependency without a binary 3.15 wheel.
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "readme-renderer<42"],
+            stdout=subprocess.DEVNULL,
+        )
         subprocess.run(
             [interpreter, "-mpip", "install", "-U", "twine"],
             stdout=subprocess.DEVNULL,
@@ -180,6 +186,12 @@ def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
         )
         subprocess.check_call(
             [interpreter, "-mpip", "install", "-U", "wheel"],
+        )
+
+        # XXX: Temporarily use old version of readme renderer to avoid
+        #      requiring a rust dependency without a binary 3.15 wheel.
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "readme-renderer<42"],
         )
         subprocess.run(
             [interpreter, "-mpip", "install", "-U", "twine"],
