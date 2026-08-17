@@ -11,30 +11,10 @@
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
-   "ar_trackable_anchor_is_tracked": {
-    "args": {
-     "0": { "type_override": "@"}
-    },
-    "retval": { "type_override": "B" }
-   },
-   "ar_error_get_error_code": {
-    "args": {
-     "0": { "type_override": "@"}
-    },
-    "retval": { "type_override": "q" }
-   },
-   "ar_anchor_get_timestamp": {
-    "args": {
-     "0": { "type_override": "@"}
-    },
-    "retval": { "type_override": "d" }
-   },
    "ar_anchor_get_identifier": {
     "args": {
-     "0": { "type_override": "@"},
-     "1": { "type_modifier": "o", "type_override": "^@"}
-    },
-    "retval": { "type_override": "v" }
+     "1": { "type_modifier": "o", "c_array_of_fixed_length": 16}
+    }
    },
    "ar_authorization_results_enumerate_results": {
     "args": {
@@ -189,6 +169,9 @@
    "ar_data_get_bytes": {
     "retval": {}
    },
+   "ar_error_copy_cf_error": {
+    "retval": {  "already_cfretained": true }
+   },
    "ar_device_anchor_create": {
     "retval": {  "already_retained": true }
    },
@@ -202,7 +185,6 @@
     "retval": {  "already_retained": true }
    },
    "ar_data_providers_create_with_data_providers": {
-    "variadic": true,
     "c_array_delimited_by_null": true,
     "retval": {  "already_retained": true }
    },
@@ -295,15 +277,9 @@
      }
     }
    },
-   "ar_error_copy_cf_error": {
-    "retval": { "already_cfretained": true, "type_override": "@" },
-    "args": {
-     "0": { "type_override": "@" }
-    }
-   },
    "ar_hand_anchor_get_identifier": {
     "args": {
-     "1": { "c_array_of_fixed_size": 16, "type_modifier": "o" }
+     "1": { "c_array_of_fixed_length": 16, "type_modifier": "o" }
     }
    },
    "ar_hand_skeleton_enumerate_joints_f": {
@@ -568,13 +544,13 @@
     }
    },
    "ar_reference_image_create_from_cgimage": {
-    "retval": {  "already_retained": true, "type_override": "@" },
+    "retval": {  "already_retained": true },
     "args": {
      "0": { "type_override": "@"}
     }
    },
    "ar_reference_image_create_from_pixel_buffer": {
-    "retval": {  "already_retained": true, "type_override": "@" },
+    "retval": {  "already_retained": true },
     "args": {
      "0": { "type_override": "@"}
     }

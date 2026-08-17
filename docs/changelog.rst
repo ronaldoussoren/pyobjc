@@ -701,6 +701,12 @@ Version 13.0a0
   :func:`Security.sec_protocol_options_set_tls_sct_enabled`, and
   :func:`Security.sec_protocol_options_set_tls_renegotiation_enabled`,
 
+* Correct metadata for :func:`ARKit.ar_anchor_get_identifier`.
+
+* Cleanup the metadata overrides for framework metadata, which should make
+  it easier to maintain these overrides going forward.
+
+
 Version 12.2.3
 --------------
 
