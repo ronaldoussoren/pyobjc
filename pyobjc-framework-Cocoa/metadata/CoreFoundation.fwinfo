@@ -1222,7 +1222,6 @@
    },
    "CFPropertyListCreateData": {
     "args": {
-     "1": { "type_override": "@" },
      "4": {
       "already_cfretained": true,
       "null_accepted": true,
@@ -1269,7 +1268,6 @@
    },
    "CFPropertyListWrite": {
     "args": {
-     "0": { "type_override": "@" },
      "4": {
       "already_cfretained": true,
       "null_accepted": true,
@@ -1277,14 +1275,8 @@
      }
     }
    },
-   "CFPropertyListIsValid": {
-     "args": {
-       "0": { "type_override": "@" }
-     }
-   },
    "CFPropertyListWriteToStream": {
     "args": {
-     "0": { "type_override": "@" },
      "3": { "type_modifier": "o" }
     }
    },
@@ -1671,7 +1663,7 @@
    },
    "CFStringAppendCharacters": {
     "args": {
-     "1": { "c_array_length_in_arg": 2, "type_override": "^T", "type_modifier": "n" }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
    "CFStringAppendFormat": {
@@ -1692,7 +1684,7 @@
    },
    "CFStringCreateMutableWithExternalCharactersNoCopy": {
     "args": {
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^T"  }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
    "CFStringCreateWithBytes": {
@@ -1717,12 +1709,12 @@
    },
    "CFStringCreateWithCharacters": {
     "args": {
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n" }
     }
    },
    "CFStringCreateWithCharactersNoCopy": {
     "args": {
-     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n" }
     }
    },
    "CFStringCreateWithFileSystemRepresentation": {
@@ -1786,7 +1778,7 @@
    },
    "CFStringGetCharacters": {
     "args": {
-     "2": { "type_modifier": "o", "c_array_length_in_arg": 1, "type_override": "^T" }
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 1 }
     }
    },
    "CFStringGetCharactersPtr": {
@@ -1835,7 +1827,7 @@
    },
    "CFStringSetExternalCharactersNoCopy": {
     "args": {
-     "1": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^T" }
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" }
     }
    },
    "CFStringTokenizerGetCurrentSubTokens": {

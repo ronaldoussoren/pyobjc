@@ -971,25 +971,6 @@
       "selector": "restoreWindowWithIdentifier:state:completionHandler:"
      },
      {
-      "class_method": false,
-      "retval": {},
-      "selector": "beginModalSessionForWindow:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "runModalSession:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "endModalSession:"
-     },
-     {
       "args": {
        "3": {
         "sel_of_type": "v@:@q^v"
@@ -1000,11 +981,6 @@
       },
       "class_method": false,
       "selector": "beginSheet:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "beginModalSessionForWindow:relativeToWindow:"
      },
      {
       "args": {
@@ -2014,13 +1990,6 @@
       },
       "class_method": true,
       "selector": "strokeRect:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "appendBezierPathWithCGGlyphs:count:inFont:"
      }
     ]
    },
@@ -2222,30 +2191,6 @@
    },
    "NSBrowser": {
     "methods": [
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "cellClass"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setMatrixClass:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "matrixClass"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setCellClass:"
-     },
      {
       "args": {
        "0": {
@@ -4481,18 +4426,6 @@
       },
       "class_method": true,
       "selector": "setIgnoresAlpha:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "colorWithCGColor:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "CGColor"
      }
     ]
    },
@@ -4908,18 +4841,6 @@
    },
    "NSControl": {
     "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "setCellClass:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "cellClass"
-     },
      {
       "class_method": false,
       "retval": {
@@ -6420,11 +6341,6 @@
       "selector": "typeForContentsOfURL:error:"
      },
      {
-      "class_method": false,
-      "retval": {},
-      "selector": "documentClassForType:"
-     },
-     {
       "args": {
        "3": {
         "type_modifier": "o"
@@ -7278,20 +7194,6 @@
    "NSFontManager": {
     "methods": [
      {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "setFontPanelFactory:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "setFontManagerFactory:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -7708,18 +7610,6 @@
        "type_override": "^v"
       },
       "selector": "focusStack"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "graphicsContextWithCGContext:flipped:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "CGContext"
      }
     ]
    },
@@ -7869,7 +7759,6 @@
      },
      {
       "args": {
-       "0": {},
        "1": {
         "type_override": "{CGSize=dd}"
        }
@@ -7885,7 +7774,6 @@
        }
       },
       "class_method": false,
-      "retval": {},
       "selector": "CGImageForProposedRect:context:hints:"
      },
      {
@@ -8253,47 +8141,12 @@
     "methods": [
      {
       "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "registerImageRepClass:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "unregisterImageRepClass:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "imageRepClassForFileType:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "imageRepClassForPasteboardType:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "imageRepClassForType:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "imageRepClassForData:"
-     },
-     {
-      "args": {
        "0": {
         "type_modifier": "N",
         "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
        }
       },
       "class_method": false,
-      "retval": {},
       "selector": "CGImageForProposedRect:context:hints:"
      },
      {
@@ -8619,8 +8472,7 @@
        "1": {
         "c_array_length_in_arg": 2,
         "type_modifier": "n"
-       },
-       "6": {}
+       }
       },
       "class_method": false,
       "selector": "showCGGlyphs:positions:count:font:textMatrix:attributes:inContext:"
@@ -9143,14 +8995,6 @@
       },
       "class_method": false,
       "selector": "fillBackgroundRectArray:count:forCharacterRange:color:"
-     },
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "showCGGlyphs:positions:count:font:matrix:attributes:inContext:"
      },
      {
       "args": {
@@ -9880,23 +9724,10 @@
       "args": {
        "0": {
         "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       },
-       "2": {}
+       }
       },
       "class_method": false,
       "selector": "initWithFrame:mode:cellClass:numberOfRows:numberOfColumns:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setCellClass:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "cellClass"
      },
      {
       "args": {
@@ -11874,13 +11705,6 @@
        "type_override": "v"
       },
       "selector": "commitEditingWithDelegate:didCommitSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "commitEditingAndReturnError:"
      },
      {
       "args": {
@@ -15076,18 +14900,6 @@
     "methods": [
      {
       "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setObjectClass:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "objectClass"
-     },
-     {
-      "args": {
        "1": {
         "type_override": "Z"
        },
@@ -15189,13 +15001,6 @@
      },
      {
       "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithCGLContextObj:"
-     },
-     {
-      "args": {
        "0": {
         "c_array_of_variable_length": true,
         "type_modifier": "n"
@@ -15243,22 +15048,6 @@
      }
     ]
    },
-   "NSOpenGLPixelBuffer": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithCGLPBufferObj:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "CGLPBufferObj"
-     }
-    ]
-   },
    "NSOpenGLPixelFormat": {
     "methods": [
      {
@@ -15271,13 +15060,6 @@
       },
       "class_method": false,
       "selector": "initWithAttributes:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithCGLPixelFormatObj:"
      },
      {
       "args": {
@@ -15775,11 +15557,6 @@
    },
    "NSPathCell": {
     "methods": [
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "pathComponentCellClass"
-     },
      {
       "args": {
        "1": {
@@ -16750,18 +16527,6 @@
    "NSRuleEditor": {
     "methods": [
      {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setRowClass:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "rowClass"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -17251,34 +17016,6 @@
    },
    "NSScrollView": {
     "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "setRulerViewClass:"
-     },
-     {
-      "class_method": true,
-      "retval": {},
-      "selector": "rulerViewClass"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": true,
-      "selector": "frameSizeForContentSize:horizontalScrollerClass:verticalScrollerClass:borderType:controlSize:scrollerStyle:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": true,
-      "selector": "contentSizeForFrameSize:horizontalScrollerClass:verticalScrollerClass:borderType:controlSize:scrollerStyle:"
-     },
      {
       "class_method": false,
       "retval": {
@@ -18087,11 +17824,6 @@
       },
       "class_method": false,
       "selector": "typesetterLaidOneGlyph:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "baseOfTypesetterGlyphInfo"
      }
     ]
    },
@@ -20332,17 +20064,6 @@
        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
       },
       "selector": "rectForLayoutAtPoint:inRect:textContainer:characterRange:"
-     }
-    ]
-   },
-   "NSTextCheckingController": {
-    "methods": [
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "menuAtIndex:clickedOnSelection:effectiveRange:"
      }
     ]
    },
@@ -23889,18 +23610,6 @@
        "type_override": "^{OpaqueWindowPtr=}"
       },
       "selector": "windowRef"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setRestorationClass:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "restorationClass"
      },
      {
       "args": {
@@ -28167,21 +27876,6 @@
        "type_override": "q"
       },
       "selector": "collectionView:validateDrop:proposedIndex:dropOperation:"
-     },
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "collectionView:draggingImageForItemsAtIndexPaths:withEvent:offset:"
-     },
-     {
-      "args": {
-       "2": {},
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "collectionView:validateDrop:proposedIndexPath:dropOperation:"
      }
     ]
    },
@@ -28223,13 +27917,6 @@
    },
    "NSEditor": {
     "methods": [
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "commitEditingWithDelegate:didCommitSelector:contextInfo:"
-     },
      {
       "args": {
        "0": {
@@ -28282,24 +27969,6 @@
       },
       "class_method": false,
       "selector": "layoutManager:shouldUseTemporaryAttributes:forDrawingToScreen:atCharacterIndex:effectiveRange:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {},
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "layoutManager:shouldGenerateGlyphs:properties:characterIndexes:font:forGlyphRange:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {},
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "layoutManager:shouldSetLineFragmentRect:lineFragmentUsedRect:baselineOffset:inTextContainer:forGlyphRange:"
      }
     ]
    },
@@ -28358,32 +28027,6 @@
      }
     ]
    },
-   "NSSharingServiceDelegate": {
-    "methods": [
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "sharingService:transitionImageForShareItem:contentRect:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "sharingService:sourceWindowForShareItems:sharingContentScope:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "anchoringViewForSharingService:showRelativeToRect:preferredEdge:"
-     }
-    ]
-   },
    "NSTableViewDelegate": {
     "methods": [
      {
@@ -28400,44 +28043,6 @@
       },
       "class_method": false,
       "selector": "tableView:toolTipForCell:rect:tableColumn:row:mouseLocation:"
-     }
-    ]
-   },
-   "NSTextCheckingClient": {
-    "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "annotatedSubstringForProposedRange:actualRange:"
-     },
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "viewForRange:firstRect:actualRange:"
-     }
-    ]
-   },
-   "NSTextFinderClient": {
-    "methods": [
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "stringAtIndex:effectiveRange:endsWithSearchBoundary:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "contentViewAtIndex:effectiveCharacterRange:"
      }
     ]
    },
@@ -28535,17 +28140,6 @@
       },
       "class_method": false,
       "selector": "tokenField:completionsForSubstring:indexOfToken:indexOfSelectedItem:"
-     }
-    ]
-   },
-   "NSViewToolTipOwner": {
-    "methods": [
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "view:stringForToolTip:point:userData:"
      }
     ]
    },
@@ -28753,8 +28347,7 @@
    },
    "NSShowAnimationEffect": {
     "args": {
-     "4": { "sel_of_type": "v@:^v" },
-     "5": {}
+     "4": { "sel_of_type": "v@:^v" }
     }
    },
    "NSTouchTypeMaskFromType": {
@@ -28798,13 +28391,6 @@
        "type_override": "v"
       },
       "selector": "commitEditingWithDelegate:didCommitSelector:contextInfo:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "commitEditingAndReturnError:"
      }
     ]
    },
