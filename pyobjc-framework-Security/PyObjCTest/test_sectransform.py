@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestSecTransform(TestCase):
@@ -39,71 +38,37 @@ class TestSecTransform(TestCase):
         self.assertIsInstance(Security.kSecTransformAbortAttributeName, str)
 
     def test_functions(self):
-        self.assertResultHasType(
-            Security.SecTransformCreateFromExternalRepresentation, objc._C_ID
-        )
         self.assertResultIsCFRetained(
             Security.SecTransformCreateFromExternalRepresentation
         )
-        self.assertArgHasType(
-            Security.SecTransformCreateFromExternalRepresentation, 0, objc._C_ID
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTransformCreateFromExternalRepresentation,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(
-            Security.SecTransformCopyExternalRepresentation, objc._C_ID
-        )
         self.assertResultIsCFRetained(Security.SecTransformCopyExternalRepresentation)
-        self.assertArgHasType(
-            Security.SecTransformCopyExternalRepresentation, 0, objc._C_ID
-        )
 
-        self.assertResultHasType(Security.SecTransformCreateGroupTransform, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTransformCreateGroupTransform)
 
-        self.assertResultHasType(Security.SecTransformConnectTransforms, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 3, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 4, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTransformConnectTransforms,
             5,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
+        self.assertArgIsCFRetained(
+            Security.SecTransformConnectTransforms,
+            5,
         )
 
-        self.assertResultHasType(Security.SecTransformSetAttribute, objc._C_NSBOOL)
-        self.assertArgHasType(Security.SecTransformSetAttribute, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformSetAttribute, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformSetAttribute, 2, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTransformSetAttribute, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertResultIsBOOL(Security.SecTransformSetAttribute)
+        self.assertArgIsOut(Security.SecTransformSetAttribute, 3)
+        self.assertArgIsCFRetained(Security.SecTransformSetAttribute, 3)
 
-        self.assertResultHasType(Security.SecTransformGetAttribute, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformGetAttribute, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformGetAttribute, 1, objc._C_ID)
+        Security.SecTransformGetAttribute
 
-        self.assertResultHasType(Security.SecTransformFindByName, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformFindByName, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformFindByName, 1, objc._C_ID)
+        Security.SecTransformFindByName
 
-        self.assertResultHasType(Security.SecTransformExecute, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTransformExecute)
-        self.assertArgHasType(Security.SecTransformExecute, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTransformExecute, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecTransformExecute, 1)
 
         SecMessageBlock = b"v@@Z"
-        self.assertResultHasType(Security.SecTransformExecuteAsync, objc._C_VOID)
-        self.assertArgHasType(Security.SecTransformExecuteAsync, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTransformExecuteAsync, 1, b"^{dispatch_queue_s=}"
-        )
         self.assertArgIsBlock(Security.SecTransformExecuteAsync, 2, SecMessageBlock)

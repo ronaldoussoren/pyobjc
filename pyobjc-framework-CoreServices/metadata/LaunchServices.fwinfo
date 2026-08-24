@@ -2,8 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "enum_type": {
    "LSSharedFileListResolutionFlags": { "typestr": "I" }
   },
@@ -256,15 +254,8 @@
          "0": { "typestr": "^@", "already_retained": true, "type_modifier": "o"  }
       }
    },
-   "AcquireIconRef": {
-    "args": {
-     "0": {}
-    }
-   },
    "CompositeIconRef": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
@@ -279,16 +270,10 @@
     }
    },
    "GetIconRefFromComponent": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": { "type_modifier": "o" }
-    }
+    "ignore": true
    },
    "GetIconRefFromFile": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
@@ -314,32 +299,18 @@
    },
    "GetIconRefFromTypeInfo": {
     "args": {
-     "2": {},
-     "3": {},
      "5": { "type_modifier": "o" }
     }
    },
    "GetIconRefOwners": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "IsDataAvailableInIconRef": {
-    "args": {
-     "1": {}
     }
    },
    "IsIconRefComposite": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
-    }
-   },
-   "IsValidIconRef": {
-    "args": {
-     "0": {}
     }
    },
    "LSCanRefAcceptItem": {
@@ -351,55 +322,12 @@
    },
    "LSCanURLAcceptURL": {
     "args": {
-     "0": {},
-     "1": {},
      "4": { "type_modifier": "o" }
-    }
-   },
-   "LSCopyAllHandlersForURLScheme": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "LSCopyAllRoleHandlersForContentType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "LSCopyApplicationForMIMEType": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "LSCopyApplicationURLsForURL": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "LSCopyDefaultHandlerForURLScheme": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "LSCopyDefaultRoleHandlerForContentType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "LSCopyDisplayNameForRef": {
@@ -410,21 +338,18 @@
    },
    "LSCopyDisplayNameForURL": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSCopyItemAttribute": {
     "args": {
      "0": { "type_modifier": "n" },
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSCopyItemAttributes": {
     "args": {
      "0": { "type_modifier": "n" },
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
@@ -444,21 +369,15 @@
       "type_modifier": "o",
       "typestr": "^{LSItemInfoRecord=III^{__CFString=}}"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "i"
     }
    },
    "LSCopyItemInfoForURL": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "LSCopyKindStringForMIMEType": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -470,27 +389,22 @@
    },
    "LSCopyKindStringForTypeInfo": {
     "args": {
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSCopyKindStringForURL": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSFindApplicationForInfo": {
     "args": {
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSGetApplicationForInfo": {
     "args": {
-     "2": {},
      "4": { "type_modifier": "o" },
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
@@ -504,20 +418,14 @@
    },
    "LSGetApplicationForURL": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "LSGetExtensionInfo": {
     "args": {
-     "1": { "type_override": "^T", "type_modifier": "n", "c_array_length_in_arg": 0 },
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 0 },
      "2": { "type_modifier": "o" }
-    }
-   },
-   "LSGetHandlerOptionsForContentType": {
-    "args": {
-     "0": {}
     }
    },
    "LSOpenApplication": {
@@ -528,7 +436,6 @@
    },
    "LSOpenCFURLRef": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -560,7 +467,6 @@
    },
    "LSOpenURLsWithRole": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "n" },
      "3": { "type_modifier": "n" },
      "4": { "type_modifier": "o", "c_array_length_in_arg": 5 }
@@ -571,43 +477,14 @@
      "0": { "type_modifier": "n" }
     }
    },
-   "LSRegisterURL": {
-    "args": {
-     "0": {}
-    }
-   },
-   "LSSetDefaultHandlerForURLScheme": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "LSSetDefaultRoleHandlerForContentType": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
    "LSSetExtensionHiddenForRef": {
     "args": {
      "0": { "type_modifier": "n" }
     }
    },
-   "LSSetExtensionHiddenForURL": {
-    "args": {
-     "0": {}
-    }
-   },
-   "LSSetHandlerOptionsForContentType": {
-    "args": {
-     "0": {}
-    }
-   },
    "LSSetItemAttribute": {
     "args": {
-     "0": { "type_modifier": "n" },
-     "2": {},
-     "3": { "type_override": "@" }
+     "0": { "type_modifier": "n" }
     }
    },
    "LSSharedFileListAddObserver": {
@@ -881,89 +758,24 @@
      "typestr": "i"
     }
    },
-   "OverrideIconRef": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "OverrideIconRefFromResource": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "ReadIconFile": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "ReadIconFromFSRef": {
     "ignore": true,
     "args": {
-     "0": { "type_modifier": "n" },
-     "1": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "RegisterIconRefFromFSRef": {
     "ignore": true,
     "args": {
-     "2": { "type_modifier": "n" },
-     "3": {}
+     "2": { "type_modifier": "n" }
     }
    },
    "RegisterIconRefFromIconFamily": {
-    "ignore": true,
-    "args": {
-     "2": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "RegisterIconRefFromIconFile": {
     "args": {
-     "2": {},
      "3": { "type_modifier": "o" }
-    }
-   },
-   "RegisterIconRefFromResource": {
-    "args": {
-     "2": {},
-     "4": {}
-    }
-   },
-   "ReleaseIconRef": {
-    "args": {
-     "0": {}
-    }
-   },
-   "RemoveIconRefOverride": {
-    "args": {
-     "0": {}
-    }
-   },
-   "UTCreateStringForOSType": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "UTGetOSTypeFromString": {
-    "args": {
-     "0": {}
-    }
-   },
-   "UTTypeConformsTo": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "UTTypeCopyDeclaration": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "UTTypeCopyDeclaringBundleURL": {
@@ -972,67 +784,8 @@
       "name": "inUTI",
       "typestr": "^{__CFString=}"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{__CFURL=}"
-    }
-   },
-   "UTTypeCopyDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "UTTypeCopyPreferredTagWithClass": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "UTTypeCreateAllIdentifiersForTag": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "UTTypeCreatePreferredIdentifierForTag": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "UTTypeEqual": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "UpdateIconRef": {
-    "args": {
-     "0": {}
-    }
-   },
-   "WriteIconFile": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

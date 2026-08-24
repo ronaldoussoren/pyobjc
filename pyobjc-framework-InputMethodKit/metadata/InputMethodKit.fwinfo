@@ -65,18 +65,6 @@
      }
     ]
    },
-   "IMKServer": {
-    "methods": [
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "initWithName:controllerClass:delegateClass:"
-     }
-    ]
-   },
    "NSObject": {
     "methods": [
      {
@@ -200,8 +188,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "DVDClearLastPlayBookmark": {
     "variadic": false
@@ -363,19 +361,9 @@
      "0": { "type_modifier": "n" }
     }
    },
-   "DVDOpenMediaFileWithURL": {
-    "args": {
-     "0": {}
-    }
-   },
    "DVDOpenMediaVolume": {
     "args": {
      "0": { "type_modifier": "n" }
-    }
-   },
-   "DVDOpenMediaVolumeWithURL": {
-    "args": {
-     "0": {}
     }
    },
    "DVDPause": {
@@ -412,7 +400,6 @@
       }
      },
      "1": { "type_modifier": "n" },
-     "3": {},
      "4": { "type_modifier": "o", "type_override": "^I"}
     }
    },
@@ -421,11 +408,6 @@
    },
    "DVDReturnToTitle": {
     "variadic": false
-   },
-   "DVDSetDriveRegionCode": {
-    "args": {
-     "1": {}
-    }
    },
    "DVDSetFatalErrorCallBack": {
     "args": {
@@ -444,8 +426,7 @@
         "type": "v"
        }
       }
-     },
-     "1": {}
+     }
     }
    },
    "DVDSetLastPlayBookmark": {
@@ -458,11 +439,6 @@
      "0": { "type_modifier": "n" }
     }
    },
-   "DVDSetVideoWindowRef": {
-    "args": {
-     "0": {}
-    }
-   },
    "DVDStop": {
     "variadic": false
    },
@@ -471,15 +447,9 @@
      "1": { "type_modifier": "o" }
     }
    },
-   "DVDUnregisterEventCallBack": {
-    "args": {
-     "0": {}
-    }
-   },
    "DVDUpdateVideo": {
     "variadic": false
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

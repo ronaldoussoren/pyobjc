@@ -118,10 +118,10 @@ class TestMTL4ComputeCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTL4ComputeCommandEncoderHelper.setImageblockWidth_height_, 0, b"q"
+            TestMTL4ComputeCommandEncoderHelper.setImageblockWidth_height_, 0, b"Q"
         )
         self.assertArgHasType(
-            TestMTL4ComputeCommandEncoderHelper.setImageblockWidth_height_, 1, b"q"
+            TestMTL4ComputeCommandEncoderHelper.setImageblockWidth_height_, 1, b"Q"
         )
 
         self.assertArgHasType(

@@ -6,42 +6,6 @@
    "SNClassifierIdentifier": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
-   "SNTimeDurationConstraint": {
-    "methods": [
-     {
-      "retval": {
-       "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
-      },
-      "class_method": false,
-      "selector": "durationRange"
-     },
-     {
-      "args": {
-       "0": { "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}" }
-      },
-      "class_method": false,
-      "selector": "initWithDurationRange:"
-     }
-    ]
-   },
-   "SNClassificationResult": {
-    "methods": [
-     {
-      "retval": {
-       "type_override": "{_CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
-      },
-      "class_method": false,
-      "selector": "analyzeWithCompletionHandler:"
-     },
-     {
-      "retval": {
-       "type_override": "{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"
-      },
-      "class_method": false,
-      "selector": "timeRange"
-     }
-    ]
-   },
    "SNAudioFileAnalyzer": {
     "methods": [
      {
@@ -58,62 +22,9 @@
       },
       "class_method": false,
       "selector": "analyzeWithCompletionHandler:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "initWithURL:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addRequest:withObserver:error:"
-     }
-    ]
-   },
-   "SNAudioStreamAnalyzer": {
-    "methods": [
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addRequest:withObserver:error:"
-     }
-    ]
-   },
-   "SNClassifySoundRequest": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "initWithMLModel:error:"
-     },
-     {
-      "args": {
-       "0": { "type_override": "{CMTime=qiIq}" }
-      },
-      "class_method": false,
-      "selector": "setWindowDuration:"
-     },
-     {
-      "retval": {
-       "type_override": "{CMTime=qiIq}"
-      },
-      "class_method": false,
-      "selector": "windowDuration"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class TestAuthorizationDB(TestCase):
@@ -195,23 +194,12 @@ class TestAuthorizationDB(TestCase):
         self.assertIsInstance(Security.kSecMatchHostOrSubdomainOfHost, str)
 
     def test_functions(self):
-        self.assertResultHasType(Security.SecItemCopyMatching, objc._C_INT)
-        self.assertArgHasType(Security.SecItemCopyMatching, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecItemCopyMatching, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecItemCopyMatching, 1)
         self.assertArgIsCFRetained(Security.SecItemCopyMatching, 1)
 
-        self.assertResultHasType(Security.SecItemAdd, objc._C_INT)
-        self.assertArgHasType(Security.SecItemAdd, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecItemAdd, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecItemAdd, 1)
         self.assertArgIsCFRetained(Security.SecItemAdd, 1)
 
-        self.assertResultHasType(Security.SecItemUpdate, objc._C_INT)
-        self.assertArgHasType(Security.SecItemUpdate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecItemUpdate, 1, objc._C_ID)
+        Security.SecItemUpdate
 
-        self.assertResultHasType(Security.SecItemDelete, objc._C_INT)
-        self.assertArgHasType(Security.SecItemDelete, 0, objc._C_ID)
+        Security.SecItemDelete

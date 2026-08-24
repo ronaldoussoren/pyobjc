@@ -1618,17 +1618,6 @@
      }
     ]
    },
-   "SCNRenderer": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "rendererWithContext:options:"
-     }
-    ]
-   },
    "SCNReplicatorConstraint": {
     "methods": [
      {
@@ -1709,15 +1698,6 @@
       },
       "class_method": false,
       "selector": "writeToURL:options:delegate:progressHandler:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "sceneWithURL:options:error:"
      }
     ]
    },
@@ -1779,15 +1759,6 @@
       },
       "class_method": false,
       "selector": "sceneWithOptions:statusHandler:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "sceneWithOptions:error:"
      }
     ]
    },
@@ -2267,35 +2238,6 @@
       "selector": "setBoundingBoxMin:max:"
      }
     ]
-   },
-   "SCNBufferStream": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "writeBytes:length:"
-     }
-    ]
-   },
-   "SCNSceneRenderer": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "context"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic",
-       "readonly"
-      ],
-      "name": "context"
-     }
-    ]
    }
   },
   "functions": {
@@ -2328,28 +2270,8 @@
     "args": {
       "0": { "type_override": "[16f]" }
     }
-   },
-   "SCNMatrix4Translate": {
-    "retval": {
-     "type_override": "{CATransform3D=dddddddddddddddd}"
-    },
-    "args": {
-      "0": { "type_override": "{CATransform3D=dddddddddddddddd}" }
-    }
-   },
-   "SCNExportJavaScriptModule": {
-    "args": {
-     "0": {
-      "name": "context",
-      "typestr": "@"
-     }
-    },
-    "retval": {
-     "typestr": "v"
-    }
    }
   },
-  "informal_protocols": {},
   "structs": {
    "SCNMatrix4": {
     "ignore": true

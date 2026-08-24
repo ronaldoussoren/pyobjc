@@ -3,30 +3,6 @@
 {
  "definitions": {
   "classes": {
-   "NLContextualEmbedding": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "loadWithError:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "embeddingResultForString:language:error:"
-     }
-    ]
-   },
    "NLContextualEmbeddingResult": {
     "methods": [
      {
@@ -52,16 +28,6 @@
       },
       "class_method": false,
       "selector": "getVector:forString:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "writeEmbeddingForDictionary:language:revision:toURL:error:"
      },
      {
       "args": {
@@ -170,31 +136,11 @@
       },
       "class_method": true,
       "selector": "enumerateNeighborsForString:maximumCount:distanceType:usingBlock:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "embeddingWithContentsOfURL:error:"
      }
     ]
    },
    "NLGazetteer": {
     "methods": [
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "gazetteerWithContentsOfURL:error:"
-     },
      {
       "args": {
        "3": {
@@ -207,60 +153,6 @@
        "type_override": "Z"
       },
       "selector": "writeGazetteerForDictionary:language:toURL:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithDictionary:language:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithData:error:"
-     }
-    ]
-   },
-   "NLModel": {
-    "methods": [
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "modelWithContentsOfURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "modelWithMLModel:error:"
      }
     ]
    },

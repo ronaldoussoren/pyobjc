@@ -154,264 +154,181 @@ class TestSecKeychain(TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.SecKeychainGetTypeID(), int)
 
-        self.assertResultHasType(Security.SecKeychainGetVersion, objc._C_INT)
-        self.assertArgHasType(
-            Security.SecKeychainGetVersion, 0, objc._C_OUT + objc._C_PTR + objc._C_UINT
-        )
+        Security.SecKeychainGetVersion
 
-        self.assertResultHasType(Security.SecKeychainOpen, objc._C_INT)
         self.assertArgHasType(
             Security.SecKeychainOpen, 0, objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT
         )
         self.assertArgIsNullTerminated(Security.SecKeychainOpen, 0)
-        self.assertArgHasType(
-            Security.SecKeychainOpen, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeychainOpen, 1)
         self.assertArgIsCFRetained(Security.SecKeychainOpen, 1)
 
-        self.assertResultHasType(Security.SecKeychainCreate, objc._C_INT)
         self.assertArgHasType(
             Security.SecKeychainCreate,
             0,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgIsNullTerminated(Security.SecKeychainCreate, 0)
-        self.assertArgHasType(Security.SecKeychainCreate, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainCreate, 2, objc._C_IN + objc._C_PTR + objc._C_VOID
         )
         self.assertArgSizeInArg(Security.SecKeychainCreate, 2, 1)
-        self.assertArgHasType(Security.SecKeychainCreate, 3, objc._C_NSBOOL)
-        self.assertArgHasType(Security.SecKeychainCreate, 4, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeychainCreate, 5, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsBOOL(Security.SecKeychainCreate, 3)
+        self.assertArgIsOut(Security.SecKeychainCreate, 5)
         self.assertArgIsCFRetained(Security.SecKeychainCreate, 5)
 
-        self.assertResultHasType(Security.SecKeychainDelete, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainDelete, 0, objc._C_ID)
+        Security.SecKeychainDelete
 
-        self.assertResultHasType(Security.SecKeychainSetSettings, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetSettings, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecKeychainSetSettings,
             1,
             objc._C_IN + objc._C_PTR + Security.SecKeychainSettings.__typestr__,
         )
 
-        self.assertResultHasType(Security.SecKeychainCopySettings, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainCopySettings, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecKeychainCopySettings,
             1,
             objc._C_OUT + objc._C_PTR + Security.SecKeychainSettings.__typestr__,
         )
 
-        self.assertResultHasType(Security.SecKeychainUnlock, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainUnlock, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainUnlock, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainUnlock, 2, objc._C_IN + objc._C_PTR + objc._C_VOID
         )
         self.assertArgSizeInArg(Security.SecKeychainUnlock, 2, 1)
-        self.assertArgHasType(Security.SecKeychainUnlock, 3, objc._C_NSBOOL)
+        self.assertArgIsBOOL(Security.SecKeychainUnlock, 3)
 
-        self.assertResultHasType(Security.SecKeychainLock, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainLock, 0, objc._C_ID)
+        Security.SecKeychainLock
 
-        self.assertResultHasType(Security.SecKeychainLockAll, objc._C_INT)
+        Security.SecKeychainLockAll
 
-        self.assertResultHasType(Security.SecKeychainCopyDefault, objc._C_INT)
-        self.assertArgHasType(
-            Security.SecKeychainCopyDefault, 0, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeychainCopyDefault, 0)
         self.assertArgIsCFRetained(Security.SecKeychainCopyDefault, 0)
 
-        self.assertResultHasType(Security.SecKeychainSetDefault, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetDefault, 0, objc._C_ID)
+        Security.SecKeychainSetDefault
 
-        self.assertResultHasType(Security.SecKeychainCopySearchList, objc._C_INT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainCopySearchList,
             0,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainCopySearchList, 0)
 
-        self.assertResultHasType(Security.SecKeychainSetSearchList, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetSearchList, 0, objc._C_ID)
+        Security.SecKeychainSetSearchList
 
-        self.assertResultHasType(Security.SecKeychainCopyDomainDefault, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainCopyDomainDefault, 0, objc._C_INT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainCopyDomainDefault,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainCopyDomainDefault, 1)
 
-        self.assertResultHasType(Security.SecKeychainSetDomainDefault, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetDomainDefault, 0, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetDomainDefault, 1, objc._C_ID)
+        Security.SecKeychainSetDomainDefault
 
-        self.assertResultHasType(Security.SecKeychainCopyDomainSearchList, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainCopyDomainSearchList, 0, objc._C_INT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainCopyDomainSearchList,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainCopyDomainSearchList, 1)
 
-        self.assertResultHasType(Security.SecKeychainSetDomainSearchList, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetDomainSearchList, 0, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetDomainSearchList, 1, objc._C_ID)
+        Security.SecKeychainSetDomainSearchList
 
-        self.assertResultHasType(Security.SecKeychainSetPreferenceDomain, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetPreferenceDomain, 0, objc._C_INT)
+        Security.SecKeychainSetPreferenceDomain
 
-        self.assertResultHasType(Security.SecKeychainGetPreferenceDomain, objc._C_INT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainGetPreferenceDomain,
             0,
-            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
-        self.assertResultHasType(Security.SecKeychainGetStatus, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainGetStatus, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeychainGetStatus, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT
-        )
+        self.assertArgIsOut(Security.SecKeychainGetStatus, 1)
 
-        self.assertResultHasType(Security.SecKeychainGetPath, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainGetPath, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeychainGetPath, 1, objc._C_INOUT + objc._C_PTR + objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsInOut(Security.SecKeychainGetPath, 1)
+        self.assertArgIsOut(
             Security.SecKeychainGetPath,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainGetPath, 2, 1)
 
-        self.assertResultHasType(Security.SecKeychainAddCallback, objc._C_INT)
         self.assertArgIsFunction(
             Security.SecKeychainAddCallback, 0, SecKeychainCallback, True
         )
-        self.assertArgHasType(Security.SecKeychainAddCallback, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddCallback, 2, objc._C_PTR + objc._C_VOID
         )
 
-        self.assertResultHasType(Security.SecKeychainRemoveCallback, objc._C_INT)
         self.assertArgIsFunction(
             Security.SecKeychainRemoveCallback, 0, SecKeychainCallback, True
         )
 
-        self.assertResultHasType(Security.SecKeychainAddInternetPassword, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddInternetPassword,
             2,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddInternetPassword, 2, 1)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 3, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddInternetPassword,
             4,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddInternetPassword, 4, 3)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 5, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddInternetPassword,
             6,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddInternetPassword, 6, 5)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 7, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddInternetPassword,
             8,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddInternetPassword, 8, 7)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 9, objc._C_USHT)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 10, objc._C_UINT)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 11, objc._C_UINT)
-        self.assertArgHasType(Security.SecKeychainAddInternetPassword, 12, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddInternetPassword,
             13,
             objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddInternetPassword, 13, 12)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainAddInternetPassword,
             14,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainAddInternetPassword, 14)
 
-        self.assertResultHasType(Security.SecKeychainAddGenericPassword, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainAddGenericPassword, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainAddGenericPassword, 1, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddGenericPassword,
             2,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddGenericPassword, 2, 1)
-        self.assertArgHasType(Security.SecKeychainAddGenericPassword, 3, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddGenericPassword,
             4,
             objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddGenericPassword, 4, 3)
-        self.assertArgHasType(Security.SecKeychainAddGenericPassword, 5, objc._C_UINT)
         self.assertArgHasType(
             Security.SecKeychainAddGenericPassword,
             6,
             objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SecKeychainAddGenericPassword, 6, 5)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainAddGenericPassword,
             7,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainAddGenericPassword, 7)
 
-        self.assertResultHasType(
-            Security.SecKeychainSetUserInteractionAllowed, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecKeychainSetUserInteractionAllowed, 0, objc._C_NSBOOL
-        )
+        self.assertArgIsBOOL(Security.SecKeychainSetUserInteractionAllowed, 0)
 
-        self.assertResultHasType(
-            Security.SecKeychainGetUserInteractionAllowed, objc._C_INT
-        )
         self.assertArgHasType(
             Security.SecKeychainGetUserInteractionAllowed,
             0,
             objc._C_OUT + objc._C_PTR + objc._C_NSBOOL,
         )
 
-        self.assertResultHasType(Security.SecKeychainCopyAccess, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainCopyAccess, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeychainCopyAccess, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeychainCopyAccess, 1)
         self.assertArgIsCFRetained(Security.SecKeychainCopyAccess, 1)
 
-        self.assertResultHasType(Security.SecKeychainSetAccess, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainSetAccess, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainSetAccess, 1, objc._C_ID)
+        Security.SecKeychainSetAccess
 
     def test_functions_manual_internet_password(self):
         server_name = b"invalid.python.org"

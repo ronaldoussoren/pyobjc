@@ -1021,12 +1021,12 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             1,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             2,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
@@ -1047,7 +1047,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             1,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
@@ -1057,7 +1057,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             2,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
@@ -2231,12 +2231,12 @@ class TestMTLRenderCommandEncoder2(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             1,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
             2,
-            objc._C_NSUInteger,
+            objc._C_FLT,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
@@ -2257,7 +2257,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             1,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
@@ -2267,7 +2267,7 @@ class TestMTLRenderCommandEncoder2(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
             2,
-            b"n^" + objc._C_NSUInteger,
+            b"n^" + objc._C_FLT,
         )
         self.assertArgSizeInArg(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,

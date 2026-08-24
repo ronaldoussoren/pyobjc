@@ -151,6 +151,21 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "setVertexAmplificationCount:viewMapping:",
+     "class_method": false,
+      "args": {
+       "0": { "type_override": "Q" },
+       "1": { "type_override": "{MTLVertexAmplificationViewMapping=II}" }
+      }
+     },
+     {
+      "selector": "executeCommandsInBuffer:inDirectBuffer:indirectBufferOffset:",
+      "class_method": false,
+      "args": {
+       "2":  { "type_override": "Q" }
+      }
+     },
+     {
       "selector": "setDepthStencilStates:withRange:",
       "class_method": false,
       "args": {
@@ -425,325 +440,66 @@
       }
      },
      {
-      "selector": "newRenderPipelineStateWithAdditionalBinaryFunctions:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "o^@" }
-      }
-     },
-     {
-      "selector": "sparseTileSizeInBytes",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "tileWidth",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "tileHeight",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "tailSizeInBytes",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "firstMipmapInTail",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "setThreadgroupMemoryLength:offset:atIndex:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Q" },
-       "1": { "type_override": "Q" },
-       "2": { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "dispatchThreadsPerTile:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "{MTLSize=QQQ}" }
-      }
-     },
-     {
-      "selector": "imageblockMemoryLengthForDimensions:",
-      "class_method": false,
-      "retval": { "type_override": "q" },
-      "args": {
-       "0": { "type_override": "{MTLSize=QQQ}" }
-      }
-     },
-     {
-      "selector": "newRenderPipelineStateWithTileDescriptor:options:reflection:error:",
-      "class_method": false,
-      "retval": { "type_override": "q" },
-      "args": {
-       "1": { "type_override": "Q" },
-       "3": { "type_override": "^@", "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "imageblockSampleLength",
-      "class_method": false,
-      "retval": { "type_override": "q" }
-     },
-     {
-      "selector": "supportsBCTextureCompression",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "supports32BitFloatFiltering",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "isSparse",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "supportsQueryTextureLOD",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "supports32BitMSAA",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "threadgroupSizeMatchesTileSize",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "parseTileSizeInBytes",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "sparseTileSizeWithTextureType_pixelFormat:sampleCount:",
-      "class_method": false,
-      "args": {
-       "0":  { "type_override": "Q" },
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setTileBufferOffset:atIndex:",
-      "class_method": false,
-      "args": {
-       "0":  { "type_override": "Q" },
-       "1":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setTileBuffer:offset:atIndex:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
       "selector": "setTileBytes:length:atIndex:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "resetTextureAccessCounters:region:mipLevel:slice:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
-       "2":  { "type_override": "Q" },
-       "3":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "updateTextureMapping:mode:region:mipLevel:slice:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
-       "3":  { "type_override": "Q" },
-       "4":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "getTextureAccessCounters:region:mipLevel:slice:resetCounters:countersBuffer:countersBufferOffset:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}" },
-       "2":  { "type_override": "Q" },
-       "3":  { "type_override": "Q" },
-       "4":  { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "addTileRenderPipelineFunctionsWithDescriptor:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1":  { "type_override": "^@", "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "concurrentDispatchThreads:threadsPerThreadgroup:",
-      "class_method": false,
-      "args": {
-       "0":  { "type_override": "q" },
-       "1":  { "type_override": "q" }
-      }
-     },
-     {
-      "selector": "concurrentDispatchThreadgroups:threadsPerThreadgroup:",
-      "class_method": false,
-      "args": {
-       "0":  { "type_override": "q" },
-       "1":  { "type_override": "q" }
-      }
-     },
-     {
-      "selector": "executeCommandsInBuffer:inDirectBuffer:indirectBufferOffset:",
-      "class_method": false,
-      "args": {
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setTileSamplerState:atIndex:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setKernelBuffer:offset:atIndex:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "q" },
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setTileSamplerState:lodMinClamp:lodMaxClamp:atIndex:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" },
-       "3":  { "type_override": "Q" }
+       "0":  { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
      },
      {
       "selector": "convertSparsePixelRegions:toTileRegions:withTileSize:alignmentMode:numRegions:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
-       "1":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 4 },
-       "2": { "type_override": "{MTLSize=QQQ}" },
-       "3":  { "type_override": "Q" },
-       "4":  { "type_override": "Q" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 4 },
+       "1":  { "type_modifier": "n", "c_array_length_in_arg": 4 }
       }
      },
      {
       "selector": "updateTextureMappings:mode:regions:mipLevels:slices:numRegions:",
       "class_method": false,
       "args": {
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 5 },
-       "3":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 5 },
-       "4":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 5 },
-       "5":  { "type_override": "Q" }
+       "2":  { "type_modifier": "n", "c_array_length_in_arg": 5 },
+       "3":  { "type_modifier": "n", "c_array_length_in_arg": 5 },
+       "4":  { "type_modifier": "n", "c_array_length_in_arg": 5 }
       }
      },
      {
       "selector": "setTileSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^@", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "1":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "2":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "3": { "type_override": "{_NSRange=QQ}" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1":  { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2":  { "type_modifier": "n", "c_array_length_in_arg": 3 }
       }
      },
      {
       "selector": "setTileSamplerStates:withRange:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^@", "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "1": { "type_override": "{_NSRange=QQ}" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
      },
      {
       "selector": "setTileTextures:withRange:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^@", "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "1": { "type_override": "{_NSRange=QQ}" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
      },
      {
       "selector": "setTileBuffers:offsets:withRange:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^@", "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "1":  { "type_override": "^Q", "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "2": { "type_override": "{_NSRange=QQ}" }
-      }
-     },
-     {
-      "selector": "setTileTexture:atIndex:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "sparseTileSizeWithTextureType:pixelFormat:sampleCount:",
-      "class_method": true,
-      "args": {
-       "0":  { "type_override": "Q" },
-       "1":  { "type_override": "Q" },
-       "2":  { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "updateTextureMapping:mode:indirectBuffer:indirectBufferOffset:",
-      "class_method": false,
-      "args": {
-       "1":  { "type_override": "Q" },
-       "3":  { "type_override": "Q" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1":  { "type_modifier": "n", "c_array_length_in_arg": 2 }
       }
      },
      {
       "selector": "convertSparseTileRegions:toPixelRegions:withTileSize:numRegions:",
       "class_method": false,
       "args": {
-       "0":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "1":  { "type_override": "^{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}", "type_modifier": "n", "c_array_length_in_arg": 3 },
-       "2": { "type_override": "{MTLSize=QQQ}" },
-       "3": { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "setImageblockWidth:height:",
-      "class_method": false,
-      "args": {
-       "0":  { "type_override": "q" },
-       "1":  { "type_override": "q" }
+       "0":  { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1":  { "type_modifier": "n", "c_array_length_in_arg": 3 }
       }
      },
      {
@@ -782,20 +538,10 @@
       }
      },
      {
-      "selector": "setVertexAmplificationCount:viewMapping:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Q" },
-       "1": { "type_override": "{MTLVertexAmplificationViewMapping=II}" }
-      }
-     },
-     {
       "selector": "newRenderPipelineStateWithTileDescriptor:options:completionHandler:",
       "class_method": false,
       "args": {
-       "1": { "type_override": "Q" },
        "2": {
-        "type_override": "@?",
         "callable": {
          "arguments": {
           "0": { "type": "^v" },
@@ -821,39 +567,6 @@
          "retval": { "type": "v" }
 	}
        }
-      }
-     },
-     {
-      "selector": "presentAfterMinimumDuration:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "d" }
-      }
-     },
-     {
-      "selector": "drawableID",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "presentedTime",
-      "class_method": false,
-      "retval": { "type_override": "d" }
-     },
-     {
-      "selector": "supportsVertexAmplificationCount:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_override": "Q" }
-      }
-     },
-     {
-      "selector": "supportsRasterizationRateMapWithLayerCount:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_override": "Q" }
       }
      },
      {
@@ -960,13 +673,6 @@
       },
       "class_method": false,
       "selector": "sampleTimestamps:gpuTimestamp:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newCounterSampleBufferWithDescriptor:error:"
      },
      {
       "args": {
@@ -1091,79 +797,6 @@
       },
       "selector": "newLibraryWithSource:options:completionHandler:",
       "class_method": false
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newDefaultLibraryWithBundle:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithFile:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithURL:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithData:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithSource:options:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newRenderPipelineStateWithDescriptor:error:"
-     },
-     {
-      "args": {
-       "2": {},
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newRenderPipelineStateWithDescriptor:options:reflection:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newComputePipelineStateWithFunction:error:"
-     },
-     {
-      "args": {
-       "2": {},
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newComputePipelineStateWithFunction:options:reflection:error:"
-     },
-     {
-      "args": {
-       "2": {},
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newComputePipelineStateWithDescriptor:options:reflection:error:"
      },
      {
       "args": {
@@ -1349,49 +982,6 @@
       },
       "class_method": false,
       "selector": "setVertexBytes:length:atIndex:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newFunctionWithName:constantValues:error:"
-     }
-    ]
-   },
-   "MTLCaptureManager": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "startCaptureWithDescriptor:error:"
-     }
-    ]
-   },
-   "MTLFunctionConstantValues": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setConstantValue:type:atIndex:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setConstantValues:type:withRange:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setConstantValue:type:withName:"
      }
     ]
    },
@@ -1442,7 +1032,6 @@
      },
      {
       "class_method": false,
-      "retval": {},
       "selector": "constantDataAtIndex:"
      },
      {
@@ -1561,41 +1150,6 @@
      },
      {
       "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "newTextureWithDescriptor:iosurface:plane:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newDefaultLibraryWithBundle:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithFile:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithURL:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newLibraryWithData:error:"
-     },
-     {
-      "args": {
        "2": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -1603,14 +1157,6 @@
      },
      {
       "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newRenderPipelineStateWithDescriptor:error:"
-     },
-     {
-      "args": {
-       "2": {},
        "3": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -1625,7 +1171,6 @@
      },
      {
       "args": {
-       "2": {},
        "3": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -1633,7 +1178,6 @@
      },
      {
       "args": {
-       "2": {},
        "3": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -1648,40 +1192,11 @@
      },
      {
       "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newCounterSampleBufferWithDescriptor:error:"
-     },
-     {
-      "args": {
        "0": { "type_modifier": "o" },
        "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "sampleTimestamps:gpuTimestamp:"
-     }
-    ]
-   },
-   "MTLFunction": {
-    "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "newArgumentEncoderWithBufferIndex:reflection:"
-     }
-    ]
-   },
-   "MTLLibrary": {
-    "methods": [
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "newFunctionWithName:constantValues:error:"
      }
     ]
    },
@@ -1846,16 +1361,7 @@
      },
      {
       "class_method": false,
-      "retval": {},
       "selector": "iosurface"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "iosurface"
      }
     ]
    }
@@ -1863,20 +1369,13 @@
   "functions": {
    "MTLIOCompressionContextAppendData": {
     "args": {
-     "1": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 2 }
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
     }
    },
    "MTLIOCreateCompressionContext": {
     "args": { "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }}
    },
-   "MTLCreateSystemDefaultDevice": {
-    "retval": { "already_cfretained": true }
-   },
-   "MTLCopyAllDevices": {
-    "retval": { "already_cfretained": true }
-   },
    "MTLCopyAllDevicesWithObserver": {
-    "retval": { "already_cfretained": true },
     "args": {
      "0": { "type_modifier": "o" },
      "1": {
@@ -1891,7 +1390,6 @@
      }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

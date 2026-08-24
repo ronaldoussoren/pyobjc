@@ -153,90 +153,10 @@
      },
      {
       "args": {
-       "1": { "type_override": "Z" },
-       "2": { "type_modifier": "o" }
+       "1": { "type_override": "Z" }
       },
       "class_method": false,
       "selector": "scanForNetworksWithName:includeHidden:error:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "Z" },
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithSSID:includeHidden:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPower:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setWLANChannel:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPairwiseMasterKey:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setWEPKey:flags:index:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithSSID:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithName:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "associateToNetwork:password:error:"
-     },
-     {
-      "args": {
-       "1": {},
-       "4": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "associateToEnterpriseNetwork:identity:username:password:error:"
-     },
-     {
-      "args": {
-       "4": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "startIBSSModeWithSSID:security:channel:password:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "commitConfiguration:authorization:error:"
      },
      {
       "args": {
@@ -276,30 +196,25 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "CWKeychainCopyWiFiEAPIdentity": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CWKeychainFindWiFiPassword": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CWKeychainFindWiFiEAPUsernameAndPassword": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
    },
    "CWKeychainCopyEAPIdentity": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -310,47 +225,15 @@
    },
    "CWKeychainCopyEAPUsernameAndPassword": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true },
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CWKeychainCopyPassword": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CWKeychainDeleteEAPUsernameAndPassword": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CWKeychainDeletePassword": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CWKeychainSetEAPIdentity": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CWKeychainSetEAPUsernameAndPassword": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CWKeychainSetPassword": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

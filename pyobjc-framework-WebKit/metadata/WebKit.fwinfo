@@ -1921,18 +1921,6 @@
       "selector": "webView:doCommandBySelector:"
      },
      {
-      "args": {
-       "1": {
-        "type_override": ":"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "webView:shouldPerformAction:fromSender:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "s"
@@ -1963,22 +1951,6 @@
        "type_override": "Z"
       },
       "selector": "canProvideDocumentSource"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "dispatchEvent:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "removeEventListener:listener:useCapture:"
      },
      {
       "args": {
@@ -2053,23 +2025,7 @@
       "retval": {
        "type_override": "Z"
       },
-      "selector": "webView:runBeforeUnloadConfirmPanelWithMessage:initiatedByFrame:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "webView:setResizable:"
      },
      {
       "args": {
@@ -2104,25 +2060,6 @@
       "selector": "webView:shouldBeginEditingInDOMRange:"
      },
      {
-      "args": {
-       "4": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "webView:shouldChangeSelectedDOMRange:toDOMRange:affinity:stillSelecting:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "webView:shouldChangeTypingStyle:toStyle:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -2134,33 +2071,7 @@
       "retval": {
        "type_override": "Z"
       },
-      "selector": "webView:shouldEndEditingInDOMRange:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "webView:shouldInsertNode:replacingDOMRange:givenAction:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "webView:shouldInsertText:replacingDOMRange:givenAction:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "webView:validateUserInterfaceItem:defaultValidation:"
      },
      {
       "class_method": false,
@@ -2459,95 +2370,8 @@
      }
     ]
    },
-   "WKPreferences": {
-    "methods": [
-     {
-       "selector": "isSafeBrowsingEnabled",
-       "class_method": false,
-       "arguments": {},
-       "retval": {
-        "type_override": "Z"
-       },
-       "deprecated": 1015
-     },
-     {
-       "selector": "setSafeBrowsingEnabled:",
-       "class_method": false,
-       "arguments": {
-        "0": { "type_override": "Z" }
-       },
-       "deprecated": 1015
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setTextInteractionEnabled:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "textInteractionEnabled"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setTabFocusesLinks:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "tabFocusesLinks"
-     }
-    ]
-   },
-   "WKUserScript": {
-    "methods": [
-     {
-      "args": {
-       "2": { "type_override": "Z" }
-      },
-      "class_method": false,
-      "selector": "initWithSource:injectionTime:forMainFrameOnly:inContentWorld:"
-     }
-    ]
-   },
    "WKWebView": {
     "methods": [
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setAllowsLinkPreview:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "allowsLinkPreview"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "handlesURLScheme:"
-     },
      {
       "args": {
        "0": {
@@ -2847,11 +2671,6 @@
       },
       "class_method": false,
       "selector": "evaluateJavaScript:completionHandler:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "serverTrust"
      }
     ]
    },
@@ -3045,11 +2864,6 @@
    "WebHistory": {
     "methods": [
      {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -3057,11 +2871,6 @@
       "selector": "loadFromURL:error:"
      },
      {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -3313,232 +3122,6 @@
        "type_override": "Z"
       },
       "selector": "throwException:"
-     }
-    ]
-   },
-   "WebView": {
-    "methods": [
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": true,
-      "selector": "registerViewClass:representationClass:forMIMEType:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canGoBack"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canGoForward"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canMakeTextLarger"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canMakeTextSmaller"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canMakeTextStandardSize"
-     },
-     {
-      "class_method": true,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canShowMIMEType:"
-     },
-     {
-      "class_method": true,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "canShowMIMETypeAsHTML:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "drawsBackground"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "goBack"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "goForward"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "goToBackForwardItem:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isContinuousSpellCheckingEnabled"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isEditable"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "isLoading"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "maintainsInactiveSelection"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "shouldUpdateWhileOffscreen"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "2": {
-        "type_override": "Z"
-       },
-       "3": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "searchFor:direction:caseSensitive:wrap:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setShouldUpdateWhileOffscreen:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setContinuousSpellCheckingEnabled:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setDrawsBackground:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setEditable:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setMaintainsBackForwardList:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setShouldCloseWithWindow:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "setSmartInsertDeleteEnabled:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "shouldCloseWithWindow"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "smartInsertDeleteEnabled"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "supportsTextEncoding"
      }
     ]
    }

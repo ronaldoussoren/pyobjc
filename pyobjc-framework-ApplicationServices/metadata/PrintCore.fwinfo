@@ -107,23 +107,16 @@
      {
       "selector": "saveValuesAndReturnError:",
       "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_modifier": "o", "type_override": "^@" }
-      }
+      "retval": { "type_override": "Z" }
      },
      {
       "selector": "restoreValuesAndReturnError:",
       "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "0": { "type_modifier": "o", "type_override": "^@" }
-      }
+      "retval": { "type_override": "Z" }
      }
     ]
    }
   },
-  "formal_protocols": {},
   "literals": {
    "kDialogExtensionIntfIDStr": { "unicode": true, "value": "A996FD7E-B738-11D3-8519-0050E4603277" },
    "kGeneralPageSetupDialogTypeIDStr": { "unicode": true, "value": "6E6ED964-B738-11D3-952F-0050E4603277" },
@@ -265,15 +258,6 @@
    }
   },
   "functions": {
-   "PMCGImageCreateWithEPSDataProvider": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "PMCopyAvailablePPDs": {
     "args": {
      "1": { "type_modifier": "o", "already_cfretained": true }
@@ -281,26 +265,12 @@
    },
    "PMCopyLocalizedPPD": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMCopyPPDData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "PMCopyPageFormat": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMCopyPrintSettings": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "PMCreateGenericPrinter": {
@@ -315,8 +285,7 @@
    },
    "PMCreatePageFormatWithPMPaper": {
     "args": {
-     "0": { "type_modifier": "o" },
-     "1": {}
+     "0": { "type_modifier": "o" }
     }
    },
    "PMCreatePrintSettings": {
@@ -331,657 +300,349 @@
    },
    "PMGetAdjustedPageRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetAdjustedPaperRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetCollate": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetCopies": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetDuplex": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetFirstPage": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetLastPage": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetOrientation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetPageFormatExtendedData": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "N" },
      "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
    },
    "PMGetPageFormatPaper": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetPageRange": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    },
    "PMGetScale": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetUnadjustedPageRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMGetUnadjustedPaperRect": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPageFormatCreateDataRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPageFormatCreateWithDataRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPageFormatGetPrinterID": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperCreateCustom": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "5": { "type_modifier": "n" },
      "6": { "type_modifier": "o" }
     }
    },
    "PMPaperCreateLocalizedName": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPaperGetHeight": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperGetID": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperGetMargins": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperGetPPDPaperName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperGetPrinterID": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPaperGetWidth": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "PMPaperIsCustom": {
-    "args": {
-     "0": {}
     }
    },
    "PMPresetCopyName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPresetCreatePrintSettings": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "PMPresetGetAttributes": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrintSettingsCopyAsDictionary": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrintSettingsCopyKeys": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrintSettingsCreateDataRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrintSettingsCreateWithDataRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrintSettingsGetJobName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrintSettingsGetValue": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
-   "PMPrintSettingsSetJobName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMPrintSettingsSetValue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "PMPrintSettingsToOptions": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "PMPrintSettingsToOptionsWithPrinterAndPageFormat": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "PMPrinterCopyDescriptionURL": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrinterCopyDeviceURI": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrinterCopyHostName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrinterCopyPresets": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMPrinterCopyState": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "PMPrinterCreateFromPrinterID": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "PMPrinterGetCommInfo": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetDriverCreator": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetDriverReleaseInfo": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
-   "PMPrinterGetID": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "PMPrinterGetIndexedPrinterResolution": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetLanguageInfo": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
-   "PMPrinterGetLocation": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "PMPrinterGetMakeAndModelName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetMimeTypes": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
-   "PMPrinterGetName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "PMPrinterGetOutputResolution": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetPaperList": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetPrinterResolutionCount": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrinterGetState": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "PMPrinterIsDefault": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMPrinterIsFavorite": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMPrinterIsPostScriptCapable": {
-    "args": {
-     "0": {}
     }
    },
    "PMPrinterIsPostScriptPrinter": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMPrinterIsRemote": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "PMPrinterPrintWithFile": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "PMPrinterPrintWithProvider": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "PMPrinterSendCommand": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
-   },
-   "PMPrinterSetDefault": {
-    "args": {
-     "0": {}
     }
    },
    "PMPrinterSetOutputResolution": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "n" }
-    }
-   },
-   "PMPrinterWritePostScriptToURL": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
-     "5": {}
-    }
-   },
-   "PMRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMRetain": {
-    "args": {
-     "0": {}
     }
    },
    "PMServerCreatePrinterList": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "PMServerLaunchPrinterBrowser": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMSessionBeginCGDocumentNoDialog": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "PMSessionBeginPageNoDialog": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "n"}
     }
    },
    "PMSessionCopyDestinationFormat": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMSessionCopyDestinationLocation": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMSessionCopyOutputFormatList": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMSessionCreatePageFormatList": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PMSessionCreatePrinterList": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true },
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
    },
-   "PMSessionDefaultPageFormat": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMSessionDefaultPrintSettings": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMSessionEndDocumentNoDialog": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSessionEndPageNoDialog": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSessionError": {
-    "args": {
-     "0": {}
-    }
-   },
    "PMSessionGetCGGraphicsContext": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMSessionGetCurrentPrinter": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PMSessionGetDataFromSession": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "PMSessionGetDestinationType": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "PMSessionSetCurrentPMPrinter": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMSessionSetDataInSession": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PMSessionSetDestination": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "PMSessionSetError": {
-    "args": {
-     "0": {}
     }
    },
    "PMSessionValidatePageFormat": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "PMSessionValidatePrintSettings": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "PMSetCollate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetCopies": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetDuplex": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetFirstPage": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetLastPage": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetOrientation": {
-    "args": {
-     "0": {}
     }
    },
    "PMSetPageFormatExtendedData": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-    }
-   },
-   "PMSetPageRange": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PMSetScale": {
-    "args": {
-     "0": {}
     }
    },
    "PMWorkflowCopyItems": {
@@ -991,20 +652,9 @@
    },
    "PMWorkflowSubmitPDFWithOptions": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
-     "3": {}
-    }
-   },
-   "PMWorkflowSubmitPDFWithSettings": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

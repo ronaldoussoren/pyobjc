@@ -459,8 +459,6 @@
    "MPSGraphScatterModeSub": {
     "value": 1
    }
-  },
-  "formal_protocols": {},
-  "informal_protocols": {}
+  }
  }
 }

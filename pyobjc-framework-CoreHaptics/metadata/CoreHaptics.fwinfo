@@ -136,20 +136,6 @@
       }
      },
      {
-      "selector": "setResetHandler:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "type": "^v" }
-	 },
-         "retval": { "type": "v" }
-        }
-       }
-      }
-     },
-     {
       "selector": "stoppedHandler",
       "class_method": false,
       "retval": {
@@ -221,20 +207,6 @@
         }
        }
       }
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "initAndReturnError:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "initWithAudioSession:error:"
      },
      {
       "args": {
@@ -328,31 +300,6 @@
    }
   },
   "formal_protocols": {
-   "CHHapticAdvancedPatternPlayer": {
-    "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "pauseAtTime:error:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "resumeAtTime:error:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "seekToOffset:error:"
-     }
-    ]
-   },
    "CHHapticDeviceCapability": {
     "methods": [
      {
@@ -410,8 +357,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

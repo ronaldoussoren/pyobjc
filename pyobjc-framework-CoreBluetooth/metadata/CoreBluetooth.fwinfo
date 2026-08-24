@@ -3,24 +3,6 @@
 {
  "definitions": {
   "classes": {
-   "CBCentral": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "UUID"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic",
-       "readonly"
-      ],
-      "name": "UUID"
-     }
-    ]
-   },
    "CBService": {
     "methods": [
      {
@@ -42,20 +24,6 @@
        "type_override": "Z"
       },
       "selector": "isScanning"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "initWithDelegate:queue:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "initWithDelegate:queue:options:"
      }
     ]
    },
@@ -74,39 +42,11 @@
        "type_override": "Z"
       },
       "selector": "canSendWriteWithoutResponse"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "UUID"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic",
-       "readonly"
-      ],
-      "name": "UUID"
      }
     ]
    },
    "CBPeripheralManager": {
     "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "initWithDelegate:queue:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "initWithDelegate:queue:options:"
-     },
      {
       "args": {
        "0": {
@@ -115,17 +55,6 @@
       },
       "class_method": false,
       "selector": "publishL2CAPChannelWithEncryption:"
-     }
-    ]
-   },
-   "CBUUID": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "UUIDWithCFUUID:"
      }
     ]
    },
@@ -267,9 +196,6 @@
     "typestr": "@"
    }
   },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {},
   "typed_enum": {
    "CBConnectionEventMatchingOption": {
     "type": "@",

@@ -139,13 +139,6 @@
      },
      {
       "args": {
-       "1": {}
-      },
-      "class_method": true,
-      "selector": "runBlock:queue:"
-     },
-     {
-      "args": {
        "0": {
         "sel_of_type": "v@:"
        }
@@ -227,18 +220,6 @@
    },
    "SKNode": {
     "methods": [
-     {
-      "args": {
-       "2": {
-        "name": "error",
-        "null_accepted": true,
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": true,
-      "selector": "nodeWithFileNamed:securelyWithClasses:andError:"
-     },
      {
       "args": {
        "1": {

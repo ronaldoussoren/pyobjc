@@ -2,7 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
   "literals": {
    "kFSEventStreamEventExtendedDataPathKey": {
     "unicode": true,
@@ -33,7 +32,6 @@
 	"typestr": "^{__FSEventStream=}"
     }
   },
-  "formal_protocols": {},
   "functions": {
    "FSEventStreamSetExclusionPaths": {
     "args": {
@@ -42,32 +40,8 @@
     },
     "retval": { "type": "Z" }
    },
-   "FSEventStreamCopyDescription": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "FSEventStreamCopyPathsBeingWatched": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
    "FSEventStreamCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
       "callable": {
        "arguments": {
@@ -90,30 +64,17 @@
          "type": "^Q"
         }
        },
-       "retval": {
-        "type": "v"
-       }
-      },
-      "type_override": "^?"
+       "retval": { "type": "v" }
+      }
      },
      "2": {
       "type_override": "@",
       "doc": "An arbitrary object can be used for the context, the context structure is managed automatically"
-     },
-     "3": {
-      "type_override": "^{__CFArray=}"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__FSEventStream=}"
     }
    },
    "FSEventStreamCreateRelativeToDevice": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
       "callable": {
        "arguments": {
@@ -139,130 +100,14 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "2": {
       "type_override": "@",
       "doc": "An arbitrary object can be used for the context, the context structure is managed automatically"
-     },
-     "4": {
-      "type_override": "^{__CFArray=}"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__FSEventStream=}"
-    }
-   },
-   "FSEventStreamFlushAsync": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamFlushSync": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamGetDeviceBeingWatched": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamGetLatestEventId": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamInvalidate": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamRelease": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamRetain": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamScheduleWithRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "FSEventStreamSetDispatchQueue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "FSEventStreamShow": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamStart": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamStop": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     }
-    }
-   },
-   "FSEventStreamUnscheduleFromRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__FSEventStream=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "FSEventsCopyUUIDForDevice": {
-    "retval": {
-     "type_override": "^{__CFUUID=}"
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

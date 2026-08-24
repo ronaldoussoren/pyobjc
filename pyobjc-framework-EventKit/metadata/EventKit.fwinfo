@@ -106,75 +106,9 @@
        },
        "class_method": false,
        "selector": "enumerateEventsMatchingPredicate:usingBlock:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "saveCalendar:commit:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeCalendar:commit:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "saveEvent:span:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "saveEvent:span:commit:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeEvent:span:commit:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeEvent:span:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "saveReminder:commit:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeReminder:commit:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o"}
-      },
-      "class_method": false,
-      "selector": "commit:"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -2,19 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "formal_protocols": {
-   "QLPreviewPanelDelegate": {
-    "methods": [
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "previewPanel:transitionImageForPreviewItem:contentRect:"
-     }
-    ]
-   }
-  },
   "classes": {
    "NSObject": {
     "methods": [
@@ -61,8 +48,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

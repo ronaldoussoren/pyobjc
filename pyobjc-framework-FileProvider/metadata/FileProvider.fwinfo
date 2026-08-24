@@ -274,13 +274,6 @@
       }
      },
      {
-      "selector": "itemForIdentifier:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
       "selector": "untrashItemWithIdentifier:toParentItemIdentifier:completionHandler:",
       "class_method": false,
       "args": {
@@ -567,31 +560,10 @@
      },
      {
       "args": {
-       "2": { "type_modifier": "o"}
-      },
-      "class_method": true,
-      "selector": "writePlaceholderAtURL:withMetadata:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o"}
-      },
-      "class_method": false,
-      "selector": "enumeratorForContainerItemIdentifier:error:"
-     },
-     {
-      "args": {
        "1": { "type_modifier": "o"}
       },
       "class_method": false,
       "selector": "enumeratorForSearchQuery:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o"}
-      },
-      "class_method": false,
-      "selector": "supportedServiceSourcesForItemIdentifier:error:"
      }
     ]
    },
@@ -606,27 +578,6 @@
        "3": { "type_modifier": "o" }
       },
       "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "runTestingOperations:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "listAvailableTestingOperationsWithError:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "temporaryDirectoryURLWithError:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
      },
      {
       "selector": "lookupRequestingApplicationIdentifier:reason:completionHandler:",
@@ -842,13 +793,6 @@
 	}
        }
       }
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o"}
-      },
-      "class_method": true,
-      "selector": "writePlaceholderAtURL:withMetadata:error:"
      }
     ]
    }
@@ -865,8 +809,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

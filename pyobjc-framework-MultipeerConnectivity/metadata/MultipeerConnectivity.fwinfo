@@ -49,26 +49,6 @@
       },
       "class_method": false,
       "selector": "sendResourceAtURL:withName:toPeer:withCompletionHandler:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "sendData:toPeers:withMode:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "startStreamWithName:toPeer:error:"
      }
     ]
    },
@@ -132,9 +112,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

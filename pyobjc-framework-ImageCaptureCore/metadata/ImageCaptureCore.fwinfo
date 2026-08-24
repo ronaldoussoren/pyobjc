@@ -224,30 +224,6 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
-      "selector": "thumbnailIfAvailable"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setThumbnailIfAvailable:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "largeThumbnailIfAvailable"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setLargeThumbnailIfAvailable:"
-     },
-     {
-      "class_method": false,
       "retval": {
        "type_override": "Z"
       },
@@ -342,11 +318,6 @@
      },
      {
       "class_method": false,
-      "retval": {},
-      "selector": "icon"
-     },
-     {
-      "class_method": false,
       "retval": {
        "type_override": "Z"
       },
@@ -427,11 +398,6 @@
    },
    "ICScannerFunctionalUnit": {
     "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "overviewImage"
-     },
      {
       "class_method": false,
       "retval": {
@@ -570,9 +536,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

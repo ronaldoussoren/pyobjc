@@ -44,34 +44,7 @@
       }
      }
     ]
-   },
-   "CLSContext": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "thumbnail"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setThumbnail:"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic"
-      ],
-      "name": "thumbnail"
-     }
-    ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

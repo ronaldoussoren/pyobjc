@@ -10,115 +10,8 @@
     "ODSessionRef": { "ignore": true }
   },
   "classes": {
-   "ODConfiguration": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "saveUsingAuthorization:error:"
-     },
-     {
-      "args": {
-       "6": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addTrustType:trustAccount:trustPassword:username:password:joinExisting:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeTrustUsingUsername:password:deleteTrustAccount:error:"
-     }
-    ]
-   },
    "ODNode": {
     "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removePolicy:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPolicy:value:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "passwordContentCheck:forRecordName:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "accountPoliciesAndReturnError:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "setAccountPolicies:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "setPolicies:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "customFunction:payload:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "addAccountPolicy:toCategory:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "removeAccountPolicy:fromCategory:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": true,
-      "selector": "supportedPoliciesAndReturnError:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": true,
-      "selector": "policiesAndReturnError:"
-     },
      {
       "args": {
        "2": { "type_modifier": "o" }
@@ -257,90 +150,6 @@
     "methods": [
      {
       "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removePolicy:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPolicies:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "passwordChangeAllowed:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "authenticationAllowedAndReturnError:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "accountPoliciesAndReturnError:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPolicy:value:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setAccountPolicies:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "supportedPoliciesAndReturnError:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "effectivePoliciesAndReturnError:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addAccountPolicy:toCategory:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "removeAccountPolicy:fromCategory:error:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "policiesAndReturnError:"
-     },
-     {
-      "args": {
        "2": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -475,36 +284,6 @@
     "methods": [
      {
       "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "deleteConfigurationWithNodename:authorization:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" },
-      "class_method": false,
-      "selector": "deleteConfiguration:authorization:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addConfiguration:authorization:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "configurationAuthorizationAllowingUserInteraction:error:"
-     },
-     {
-      "args": {
        "1": { "type_modifier": "o" }
       },
       "class_method": true,
@@ -527,7 +306,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "ODNodeAddAccountPolicy": { "ignore": true },
    "ODNodeCopyAccountPolicies": { "ignore": true },
@@ -1081,7 +859,6 @@
    "kODPolicyTypePasswordRequiresNumeric": { "ignore": true },
    "kODPolicyTypePasswordRequiresSymbol": { "ignore": true },
    "kODPolicyTypePasswordSelfModification": { "ignore": true }
-  },
-  "informal_protocols": {}
+  }
  }
 }

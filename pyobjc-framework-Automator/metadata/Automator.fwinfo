@@ -8,19 +8,6 @@
    "AMActionThirdPartyActionsNotAllowedError": { "value": -222 }
   },
   "classes": {
-   "AMWorkspace": {
-    "methods": [
-     {
-      "selector": "runWorkflowAtPath:withInput:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      }
-     }
-    ]
-   },
    "AMAction": {
     "methods": [
      {
@@ -40,15 +27,6 @@
       },
       "class_method": false,
       "selector": "runWithInput:fromAction:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "runWithInput:error:"
      },
      {
       "args": {
@@ -118,15 +96,6 @@
    },
    "AMWorkflow": {
     "methods": [
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "runWorkflowAtURL:withInput:error:"
-     },
      {
       "args": {
        "1": {
@@ -202,9 +171,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -882,19 +882,6 @@
       "selector": "initWithURL:bufferAllocator:preserveIndexing:error:"
      },
      {
-      "args": {
-       "3": {
-        "type_override": "Z"
-       },
-       "4": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -914,19 +901,6 @@
        "type_override": "Z"
       },
       "selector": "exportAssetToURL:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "exportAssetToURL:error:"
      }
     ]
    },
@@ -1201,19 +1175,6 @@
    },
    "MDLMesh": {
     "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "makeVerticesUniqueAndReturnError:"
-     },
      {
       "args": {
        "2": {

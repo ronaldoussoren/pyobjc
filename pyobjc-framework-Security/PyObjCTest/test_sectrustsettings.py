@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestSecTrustSettings(TestCase):
@@ -41,85 +40,34 @@ class TestSecTrustSettings(TestCase):
         self.assertEqual(Security.kSecTrustSettingsDefaultRootCertSetting, -1)
 
     def test_functions(self):
-        self.assertResultHasType(
-            Security.SecTrustSettingsCopyTrustSettings, objc._C_INT
-        )
-        self.assertArgHasType(Security.SecTrustSettingsCopyTrustSettings, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyTrustSettings, 1, objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTrustSettingsCopyTrustSettings,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecTrustSettingsCopyTrustSettings, 2)
 
-        self.assertResultHasType(Security.SecTrustSettingsSetTrustSettings, objc._C_INT)
-        self.assertArgHasType(Security.SecTrustSettingsSetTrustSettings, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecTrustSettingsSetTrustSettings, 1, objc._C_UINT
-        )
-        self.assertArgHasType(Security.SecTrustSettingsSetTrustSettings, 2, objc._C_ID)
+        Security.SecTrustSettingsSetTrustSettings
 
-        self.assertResultHasType(
-            Security.SecTrustSettingsRemoveTrustSettings, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsRemoveTrustSettings, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsRemoveTrustSettings, 1, objc._C_UINT
-        )
+        Security.SecTrustSettingsRemoveTrustSettings
 
-        self.assertResultHasType(Security.SecTrustSettingsCopyCertificates, objc._C_INT)
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyCertificates, 0, objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTrustSettingsCopyCertificates,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecTrustSettingsCopyCertificates, 1)
 
-        self.assertResultHasType(
-            Security.SecTrustSettingsCopyModificationDate, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyModificationDate, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsCopyModificationDate, 1, objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTrustSettingsCopyModificationDate,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecTrustSettingsCopyModificationDate, 2)
 
-        self.assertResultHasType(
-            Security.SecTrustSettingsCreateExternalRepresentation, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsCreateExternalRepresentation, 0, objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecTrustSettingsCreateExternalRepresentation,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(
             Security.SecTrustSettingsCreateExternalRepresentation, 1
         )
 
-        self.assertResultHasType(
-            Security.SecTrustSettingsImportExternalRepresentation, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsImportExternalRepresentation, 0, objc._C_UINT
-        )
-        self.assertArgHasType(
-            Security.SecTrustSettingsImportExternalRepresentation, 1, objc._C_ID
-        )
+        Security.SecTrustSettingsImportExternalRepresentation

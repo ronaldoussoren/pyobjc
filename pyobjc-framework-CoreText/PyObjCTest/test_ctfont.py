@@ -209,6 +209,7 @@ class TestCTFont(TestCase):
         self.assertIsInstance(CoreText.CTFontRef, objc.objc_class)
 
     def test_functions(self):
+        self.assertArgIsIn(CoreText.CTFontCreateWithName, 2)
         font = CoreText.CTFontCreateWithName("Optima Bold", 14, None)
         self.assertIsInstance(font, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithName)
@@ -443,6 +444,7 @@ class TestCTFont(TestCase):
         self.assertEqual(len(a), 5)
         self.assertTrue(all(isinstance(x, float) for x in a))
 
+        self.assertArgIsIn(CoreText.CTFontCreateWithNameAndOptions, 2)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithNameAndOptions)
         v = CoreText.CTFontCreateWithNameAndOptions("Times", 15, None, 0)
         self.assertIsInstance(v, CoreText.CTFontRef)

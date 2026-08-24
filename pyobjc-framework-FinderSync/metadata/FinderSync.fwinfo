@@ -61,16 +61,6 @@
      {
       "args": {
        "2": {
-        "type_modifier": "o",
-        "type_override": "^@"
-       }
-      },
-      "class_method": false,
-      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:"
-     },
-     {
-      "args": {
-       "2": {
         "callable": {
          "arguments": {
           "0": {
@@ -97,25 +87,7 @@
    }
   },
   "formal_protocols": {
-   "FIFinderSync": {
-    "methods": [
-     {
-      "args": {
-       "2": {
-        "name": "error",
-        "null_accepted": true,
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "selector": "makeListenerEndpointForServiceName:itemURL:andReturnError:"
-     }
-    ],
-    "rename": "FIFinderSyncProtocol"
-   }
-  },
-  "functions": {},
-  "informal_protocols": {}
+   "FIFinderSync": { "rename": "FIFinderSyncProtocol" }
+  }
  }
 }

@@ -3,17 +3,6 @@
 {
  "definitions": {
   "classes": {
-   "SFSpeechAudioBufferRecognitionRequest": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "appendAudioSampleBuffer:"
-     }
-    ]
-   },
    "SFSpeechRecognizer": {
     "methods": [
      {
@@ -49,9 +38,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -135,13 +135,6 @@
       "selector": "synchronizeOptimizerData",
       "class_method": false,
       "retval": { "type_override": "Z" }
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "copyDataFromDeviceMemoryToBytes:length:synchronizeWithDevice:"
      }
     ]
    },
@@ -194,22 +187,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {
-   "MLCLSTMResultModeDebugDescription": {
-    "retval": { "type_override": "@" },
-    "args": {
-     "0": { "type_override": "Q" }
-    }
-   },
-   "MLCComparisonOperationDebugDescription": {
-    "retval": { "type_override": "@" },
-    "args": {
-     "0": { "type_override": "i" }
-    }
-   }
-  },
-  "informal_protocols": {}
+  }
  }
 }

@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "opaque": {
    "EventHotKeyRef": { "typestr": "^{OpaqueEventHotKeyRef=}" }
   },
@@ -809,14 +807,8 @@
      "0": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "UnregisterEventHotKey": {
-    "args": {
-     "0": {}
-    }
-   },
    "RegisterEventHotKey": {
     "args": {
-     "3": {},
      "5": { "type_modifier": "o" }
     }
    },
@@ -825,7 +817,6 @@
      "0": { "type_modifier": "n" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

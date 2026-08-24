@@ -56,59 +56,39 @@ class TestSecAccess(TestCase):
         self.assertIsInstance(Security.SecAccessGetTypeID(), int)
 
         self.assertResultHasType(Security.SecAccessCreate, objc._C_INT)
-        self.assertArgHasType(Security.SecAccessCreate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecAccessCreate, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecAccessCreate, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecAccessCreate, 2)
         self.assertArgIsCFRetained(Security.SecAccessCreate, 2)
 
         self.assertFalse(hasattr(Security, "SecAccessCreateFromOwnerAndACL"))
 
-        self.assertResultHasType(Security.SecAccessCreateWithOwnerAndACL, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecAccessCreateWithOwnerAndACL)
-        self.assertArgHasType(Security.SecAccessCreateWithOwnerAndACL, 0, objc._C_UINT)
-        self.assertArgHasType(Security.SecAccessCreateWithOwnerAndACL, 1, objc._C_UINT)
-        self.assertArgHasType(Security.SecAccessCreateWithOwnerAndACL, 2, objc._C_UINT)
-        self.assertArgHasType(Security.SecAccessCreateWithOwnerAndACL, 3, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecAccessCreateWithOwnerAndACL,
             4,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
+        self.assertArgIsCFRetained(
+            Security.SecAccessCreateWithOwnerAndACL,
+            4,
         )
 
         self.assertFalse(hasattr(Security, "SecAccessGetOwnerAndACL"))
 
-        self.assertResultHasType(Security.SecAccessCopyOwnerAndACL, objc._C_INT)
-        self.assertArgHasType(Security.SecAccessCopyOwnerAndACL, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecAccessCopyOwnerAndACL,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecAccessCopyOwnerAndACL,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecAccessCopyOwnerAndACL,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
-        self.assertArgHasType(
-            Security.SecAccessCopyOwnerAndACL, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecAccessCopyOwnerAndACL, 4)
         self.assertArgIsCFRetained(Security.SecAccessCopyOwnerAndACL, 4)
 
-        self.assertResultHasType(Security.SecAccessCopyACLList, objc._C_INT)
-        self.assertArgHasType(Security.SecAccessCopyACLList, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecAccessCopyACLList, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecAccessCopyACLList, 1)
         self.assertArgIsCFRetained(Security.SecAccessCopyACLList, 1)
 
-        self.assertResultHasType(Security.SecAccessCopyMatchingACLList, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecAccessCopyMatchingACLList)
-        self.assertArgHasType(Security.SecAccessCopyMatchingACLList, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecAccessCopyMatchingACLList, 1, objc._C_ID)

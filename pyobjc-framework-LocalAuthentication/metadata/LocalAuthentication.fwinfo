@@ -149,91 +149,6 @@
        "type_override": "Z"
       },
       "selector": "isFallbackButtonVisible"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "evaluateAccessControl:operation:localizedReason:reply:"
-     }
-    ]
-   },
-   "LAPrivateKey": {
-    "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "signData:secKeyAlgorithm:completion:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canSignUsingSecKeyAlgorithm:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "decryptData:secKeyAlgorithm:completion:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canDecryptUsingSecKeyAlgorithm:"
-     },
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "exchangeKeysWithPublicKey:secKeyAlgorithm:secKeyParameters:completion:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canExchangeKeysUsingSecKeyAlgorithm:"
-     }
-    ]
-   },
-   "LAPublicKey": {
-    "methods": [
-     {
-      "args": {
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "encryptData:secKeyAlgorithm:completion:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canEncryptUsingSecKeyAlgorithm:"
-     },
-     {
-      "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "verifyData:signature:secKeyAlgorithm:completion:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canVerifyUsingSecKeyAlgorithm:"
      }
     ]
    }
@@ -356,9 +271,6 @@
     "typestr": "d"
    }
   },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {},
   "literals": {
    "kLAErrorDomain": {
     "unicode": true

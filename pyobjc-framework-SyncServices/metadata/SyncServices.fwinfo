@@ -722,7 +722,6 @@
     ]
    }
   },
-  "functions": {},
   "informal_protocols": {
    "ISyncSessionDriverDataSourceOptionalMethods": {
     "methods": [

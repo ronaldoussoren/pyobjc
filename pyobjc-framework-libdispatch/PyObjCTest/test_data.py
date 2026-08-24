@@ -59,7 +59,7 @@ class TestDataAPI(TestCase):
         self.assertArgHasType(
             dispatch.dispatch_data_copy_region,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
+            objc._C_OUT + objc._C_PTR + objc._C_ULNG_LNG,
         )
 
 

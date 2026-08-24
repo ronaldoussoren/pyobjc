@@ -13,8 +13,7 @@
       "selector": "getSecureBootEnabled:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o"},
-       "1": { "type_modifier": "o"}
+       "0": { "type_modifier": "o"}
       }
      }
     ]
@@ -25,16 +24,14 @@
       "selector": "readBytesIntoBuffer:exactLength:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "o"}
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
       }
      },
      {
       "selector": "writeBuffer:exactLength:error:",
       "class_method": false,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "o"}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
      }
     ]
@@ -49,78 +46,7 @@
       }
      }
     ]
-   },
-   "VZMacAuxiliaryStorage": {
-    "methods": [
-     {
-      "selector": "initCreatingStorageAtURL:hardwareModel:options:error:",
-      "class_method": false,
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VZDiskImageStorageDeviceAttachment": {
-    "methods": [
-     {
-      "selector": "isReadOnly",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithURL:readOnly:error:"
-     }
-    ]
-   },
-   "VZFileSerialPortAttachment": {
-    "methods": [
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithURL:append:error:"
-     }
-    ]
-   },
-   "VZVirtualMachine": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "requestStopWithError:"
-     }
-    ]
-   },
-   "VZVirtualMachineConfiguration": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "validateWithError:"
-     }
-    ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

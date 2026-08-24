@@ -132,43 +132,13 @@
    "VNGenerateObjectnessBasedSaliencyImageRequestRevision2": { "value": 2 }
   },
   "classes": {
-    "VNDetectTrajectoriesRequest": {
-     "methods": [
-      {
-       "selector": "targetFrameTime",
-       "class_method": false,
-       "retval": {
-        "type_override": "{CMTime=qiIq}"
-       }
-      },
-      {
-       "selector": "setTargetFrameTime:",
-       "class_method": false,
-       "args": {
-        "0": {"type_override": "{CMTime=qiIq}" }
-       }
-      }
-     ]
-    },
-    "VNStatefulRequest": {
-     "methods": [
-      {
-       "selector": "initWithFrameAnalysisSpacing:completionHandler:",
-       "class_method": false,
-       "args": {
-        "0": {"type_override": "{CMTime=qiIq}" }
-       }
-      }
-     ]
-    },
     "VNHumanBodyPose3DObservation": {
      "methods": [
       {
        "selector": "getCameraRelativePosition:forJointName:error:",
        "class_method": false,
        "args": {
-        "0": { "type_modifier": "o" },
-        "2": { "type_modifier": "o" }
+        "0": { "type_modifier": "o" }
        }
       }
      ]
@@ -184,17 +154,6 @@
      }
      ]
    },
-   "VNRecognizedPointsObservation": {
-    "methods": [
-     {
-      "selector": "identifiedPointsForGroupKey_error_",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
    "VNGeometryUtils": {
     "methods": [
      {
@@ -208,24 +167,21 @@
       "selector": "calculateArea:forContour:orientedArea:error:",
       "class_method": true,
       "args": {
-       "0": { "type_modifier": "n" },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "n" }
       }
      },
      {
       "selector": "calculatePerimeter:forContour:error:",
       "class_method": true,
       "args": {
-       "0": { "type_modifier": "n" },
-       "2": { "type_modifier": "o" }
+       "0": { "type_modifier": "n" }
       }
      },
      {
       "selector": "boundingCircleForSIMDPoints:pointCount:error:",
       "class_method": true,
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
-       "2": { "type_modifier": "o" }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       }
      }
     ]
@@ -233,20 +189,9 @@
    "NSObject": {
     "methods": [
      {
-      "selector": "requestRevision",
-      "class_method": false,
-      "retval": { "type_override": "Q" }
-     },
-     {
-      "selector": "indeterminate",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
       "selector": "progressHandler",
       "class_method": false,
       "retval": {
-       "type_override": "@?",
        "callable": {
 	"arguments": {
 	 "0": { "type": "^v" },
@@ -263,7 +208,6 @@
       "class_method": false,
       "args": {
        "0": {
-        "type_override": "@?",
         "callable": {
 	 "arguments": {
 	  "0": { "type": "^v" },
@@ -274,88 +218,6 @@
 	 "retval": { "type": "v" }
 	}
        }
-      }
-     }
-    ]
-   },
-   "VNRecognizeAnimalsRequest": {
-    "methods": [
-     {
-      "selector": "knownAnimalIdentifiersForRevision:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VNFeaturePrintObservation": {
-    "methods": [
-     {
-      "selector": "computeDistance:toFeaturePrintObservation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VNRecognizeTextRequest": {
-    "methods": [
-     {
-      "selector": "supportedRecognitionLanguagesForTextRecognitionLevel:revision:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "usesLanguageCorrection",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUsesLanguageCorrection:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "VNRecognizedText": {
-    "methods": [
-     {
-      "selector": "boundingBoxForRange:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VNClassificationObservation": {
-    "methods": [
-     {
-      "selector": "hasMinimumRecall:forPrecision:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "hasMinimumPrecision:forRecall:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "VNClassifyImageRequest": {
-    "methods": [
-     {
-      "selector": "knownClassificationsForRevision:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
       }
      }
     ]
@@ -381,18 +243,6 @@
    "VNTrackingRequest": {
     "methods": [
      {
-      "selector": "isLastFrame",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setLastFrame:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
       "selector": "initWithCompletionHandler:",
       "class_method": false,
       "args": {
@@ -406,129 +256,6 @@
 	 "retval": { "type": "v" }
 	}
        }
-      }
-     }
-    ]
-   },
-   "VNCoreMLModel": {
-    "methods": [
-     {
-      "selector": "modelForMLModel:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VNDetectTextRectanglesRequest": {
-    "methods": [
-     {
-      "selector": "reportCharacterBoxes",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReportCharacterBoxes:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "VNSequenceRequestHandler": {
-    "methods": [
-     {
-      "selector": "performRequests:onImageData:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onImageData:orientation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onImageURL:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onImageURL:orientation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCIImage:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCIImage:orientation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCGImage:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCGImage:orientation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCVPixelBuffer:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "performRequests:onCVPixelBuffer:orientation:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "VNImageRequestHandler": {
-    "methods": [
-     {
-      "selector": "performRequests:error:",
-      "class_method": false,
-      "retval": { "type_override": "Z" },
-      "args": {
-       "1": { "type_modifier": "o" }
       }
      }
     ]
@@ -547,30 +274,6 @@
         },
         "retval": { "type": "v" }
        }
-      }
-     },
-     {
-      "selector": "usesCPUOnly",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUsesCPUOnly:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "preferBackgroundProcessing",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setPreferBackgroundProcessing:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
       }
      },
      {
@@ -999,44 +702,6 @@
       }
      }
     ]
-   }
-  },
-  "functions": {
-   "VNElementTypeSize": {
-    "args": {
-     "0": { "type_override": "Q" }
-    },
-    "retval": { "type_override": "Q" }
-   },
-   "VNNormalizedRectIsIdentityRect": {
-    "args": {
-     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
-    },
-    "retval": { "typestr": "B" }
-   },
-   "VNImagePointForNormalizedPoint": {
-    "args": {
-     "0": { "typestr": "{CGPoint=dd}" },
-     "1": { "typestr": "L" },
-     "2": { "typestr": "L" }
-    },
-    "retval": { "typestr": "{CGPoint=dd}" }
-   },
-   "VNImageRectForNormalizedRect": {
-    "args": {
-     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
-     "1": { "typestr": "L" },
-     "2": { "typestr": "L" }
-    },
-    "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
-   },
-   "VNNormalizedRectForImageRect": {
-    "args": {
-     "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
-     "1": { "typestr": "L" },
-     "2": { "typestr": "L" }
-    },
-    "retval": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }
    }
   }
  }

@@ -1,6 +1,5 @@
 {
  "definitions": {
-  "formal_protocols": {},
   "opaque": {
    "AudioHardwarePlugInRef": {
      "typestr": "^{AudioHardwarePlugInInterface=}"
@@ -784,8 +783,7 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
+     }
     }
    },
    "AudioDeviceAddPropertyListener": {
@@ -814,8 +812,7 @@
         "type": "i"
        }
       }
-     },
-     "5": {}
+     }
     }
    },
    "AudioDeviceCreateIOProcID": {
@@ -851,7 +848,6 @@
        }
       }
      },
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
@@ -871,11 +867,6 @@
        "retval": { "type": "v" }
       }
      }
-    }
-   },
-   "AudioDeviceDestroyIOProcID": {
-    "args": {
-     "1": {}
     }
    },
    "AudioDeviceGetCurrentTime": {
@@ -976,20 +967,9 @@
      "6": { "type_modifier": "n", "c_array_length_in_arg": 5 }
     }
    },
-   "AudioDeviceStart": {
-    "args": {
-     "1": {}
-    }
-   },
    "AudioDeviceStartAtTime": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "N" }
-    }
-   },
-   "AudioDeviceStop": {
-    "args": {
-     "1": {}
     }
    },
    "AudioDeviceTranslateTime": {
@@ -1024,18 +1004,11 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "AudioHardwareAddRunLoopSource": {
-    "args": {
-     "0": {}
+     }
     }
    },
    "AudioHardwareCreateAggregateDevice": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
@@ -1071,11 +1044,6 @@
      }
     }
    },
-   "AudioHardwareRemoveRunLoopSource": {
-    "args": {
-     "0": {}
-    }
-   },
    "AudioHardwareSetProperty": {
     "args": {
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
@@ -1108,8 +1076,7 @@
         "type": "i"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "AudioHardwareClaimAudioStreamID": {
@@ -1223,8 +1190,7 @@
         "type": "i"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "AudioObjectRemovePropertyListenerBlock": {
@@ -1272,8 +1238,7 @@
         "type": "i"
        }
       }
-     },
-     "4": {}
+     }
     }
    },
    "AudioStreamGetProperty": {
@@ -1437,7 +1402,6 @@
       }
      ]
     }
-   },
-  "informal_protocols": {}
+   }
  }
 }

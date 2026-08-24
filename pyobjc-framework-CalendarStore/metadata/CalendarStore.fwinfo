@@ -25,82 +25,6 @@
      }
     ]
    },
-   "CalCalendarStore": {
-    "methods": [
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "saveCalendar:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeCalendar:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "saveEvent:span:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeEvent:span:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "saveTask:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeTask:error:"
-     }
-    ]
-   },
    "CalEvent": {
     "methods": [
      {
@@ -159,9 +83,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -163,7 +163,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "enum": {
    "kCMIOZoomRelativeControlClassID": { "value": 2054122866 },
    "kCMIOInvalidSequenceNumber": { "value": 18446744073709551615 },
@@ -224,8 +223,7 @@
         "type": "i"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "CMIOObjectAddPropertyListenerBlock": {
@@ -244,11 +242,7 @@
     }
    },
    "CMIOObjectCreate": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "CMIOObjectGetPropertyData": {
     "args": {
@@ -277,11 +271,7 @@
     }
    },
    "CMIOObjectPropertiesChanged": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "CMIOObjectRemovePropertyListener": {
     "args": {
@@ -307,8 +297,7 @@
         "type": "i"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "CMIOObjectRemovePropertyListenerBlock": {
@@ -334,30 +323,10 @@
     }
    },
    "CMIOObjectsPublishedAndDied": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "3": {},
-     "5": {}
-    }
-   },
-   "CMIOSampleBufferCopyNonRequiredAttachments": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMIOSampleBufferCopySampleAttachments": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "CMIOSampleBufferCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
      "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
      "10": { "type_modifier": "o", "already_cfretained": true }
@@ -365,47 +334,17 @@
    },
    "CMIOSampleBufferCreateForImageBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "n" },
      "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMIOSampleBufferCreateNoDataMarker": {
     "args": {
-     "0": {},
-     "2": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMIOSampleBufferGetDiscontinuityFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMIOSampleBufferGetSequenceNumber": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMIOSampleBufferSetDiscontinuityFlags": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMIOSampleBufferSetSequenceNumber": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CMIOStreamClockCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -429,11 +368,9 @@
        }
       }
      },
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

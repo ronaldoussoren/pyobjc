@@ -118,7 +118,6 @@
     "typestr": "^{CGShading=}"
    }
   },
-  "classes": {},
   "typed_enum": {
    "CIDynamicRangeOption": { "type": "@", "type_name": "NSString" },
    "CIContextOption": { "type": "@", "type_name": "NSString" },
@@ -402,7 +401,6 @@
     "typestr": "@"
    }
   },
-  "formal_protocols": {},
   "functions": {
    "CGPDFContextBeginMarkedContentSequence": {
     "retval": { "already_cfretained": true }
@@ -435,8 +433,7 @@
    "CGRenderingBufferProviderCreate": {
     "args": {
      "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
-    },
-    "retval": { "already_cfretained": true }
+    }
    },
    "CGColorConversionInfoConvertData": {
     "args": {
@@ -449,45 +446,8 @@
       "9":  { "c_array_of_variable_length": true, "type_modifier": "n" }
      }
    },
-   "CGColorSpaceUsesITUR_2100TF": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGPreflightListenEventAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGRequestListenEventAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGPreflightPostEventAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGRequestPostEventAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGPreflightScreenCaptureAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGRequestScreenCaptureAccess": {
-    "args": {},
-    "retval": { "type_override": "B" }
-   },
-   "CGBitmapContextCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorConversionInfoCreateFromList": {
-    "ignore": true,
-    "retval": {
-     "already_cfretained": true
-    },
-    "variadic": true
+    "ignore": true
    },
    "CGColorConversionInfoCreateFromListWithArguments": {
     "ignore": true,
@@ -495,12 +455,9 @@
      "already_cfretained": true
     }
    },
-   "CGColorConversionInfoCreateWithOptions": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorConverterCreateSimple": {
+    "deprecated": 1009,
+    "removed": 1012,
     "args": {
      "0": { "type_override": "^{CGColorSpace=}" },
      "1": { "type_override": "^{CGColorSpace=}" }
@@ -510,182 +467,40 @@
      "type_override": "^{CGColorConversionInfo=}"
     }
    },
-   "CGColorConverterRelease": {
-    "args": {
-     "0": {
-      "type_override": "^{CGColorConversionInfo=}"
-     }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "CGColorConverterRetain": {
-    "args": {
-     "0": {
-      "type_override": "^{CGColorConversionInfo=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{CGColorConversionInfo=}"
-    }
-   },
-   "CGColorCreateCopy": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateCopyWithAlpha": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericGrayGamma2_2": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateSRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCopyICCProfile": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCopyName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceCreateCalibratedGray": {
     "args": {
-     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateExtended": {
-    "args":{
-     "0": { "type_override": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{CGColorSpace=}"
-    }
-   },
-   "CGColorSpaceCreateExtendedLinearized": {
-    "args":{
-     "0": { "type_override": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{CGColorSpace=}"
-    }
-   },
-   "CGColorSpaceCreateLinearized": {
-    "args":{
-     "0": { "type_override": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{CGColorSpace=}"
+     "0": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "c_array_of_fixed_length": 3, "type_modifier": "n" }
     }
    },
    "CGColorSpaceCreateCalibratedRGB": {
     "args": {
-     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "2": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "3": { "type_override": "^d", "c_array_of_fixed_length": 9, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithPlatformColorSpace": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithPropertyList": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGContextCopyPath": {
-    "retval": {
-     "already_cfretained": true
+     "0": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "3": { "c_array_of_fixed_length": 9, "type_modifier": "n" }
     }
    },
    "CGDataConsumerCreate": {
     "args": {
      "1": { "type_override": "@", "doc": "Tuple (putBytes, release); release can be None" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataConsumerCreateWithURL": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCopyData": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGDataProviderCreate": {
-    "ignore": true,
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    },
    "CGDataProviderCreateDirect": {
-    "ignore": true,
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    },
    "CGDataProviderCreateDirectAccess": {
-    "ignore": true,
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    },
    "CGDataProviderCreateSequential": {
     "args": {
      "1": { "type_override": "@", "doc": "Tuple(getBytes, skipForward, rewind, release); release can be None" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDirectDisplayCopyCurrentMetalDevice": {
-    "args": {
-     "0": {
-      "typestr": "I"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "@"
     }
    },
    "CGDisplayBaseAddress": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
     "retval": {
      "c_array_of_variable_length": true, "type_override": "^v"
     }
@@ -694,16 +509,6 @@
     "args": {
      "2": { "type_modifier": "o", "c_array_of_variable_length": true },
      "4": { "type_modifier": "n", "c_array_of_variable_length": true }
-    }
-   },
-   "CGDisplayCopyDisplayMode": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCreateImageForRect": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGDisplayRemoveReconfigurationCallback": {
@@ -726,17 +531,6 @@
        }
       }
      }
-    }
-   },
-   "CGEventCreateSourceFromEvent": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventGetTimestamp": {
-    "retval": { "type_override": "Q" },
-    "args": {
-     "0": { "type_override": "^{__CGEvent=}"}
     }
    },
    "CGEventTapCreate": {
@@ -762,9 +556,6 @@
        }
       }
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGEventTapCreateForPSN": {
@@ -790,9 +581,6 @@
        }
       }
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGEventTapCreateForPid": {
@@ -818,66 +606,21 @@
        }
       }
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateCopyWithVariations": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGFontCreatePostScriptEncoding": {
     "args": {
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 256, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
+     "1": { "c_array_of_fixed_length": 256, "type_modifier": "n" }
     }
    },
    "CGFunctionCreate": {
     "args": {
-     "0": { "type_modifier": "@" },
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "4": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "5": { "type_override": "@", "doc": "callable to evaluate the function" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGGLContextCreate": {
-    "args": {
-     "0": {
-      "name": "glContext",
-      "typestr": "^v"
-     },
-     "1": {
-      "name": "size",
-      "typestr": "{CGSize=dd}"
-     },
-     "2": {
-      "name": "colorspace",
-      "typestr": "^{CGColorSpace=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{CGContext=}"
-    }
-   },
-   "CGImageCreateCopyWithColorSpace": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithImageInRect": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateWithMask": {
     "retval": {
      "already_cfretained": true
     }
@@ -885,27 +628,11 @@
    "CGImageCreateWithPNGDataProvider": {
     "args": {
      "1": { "type_modifier": "n", "c_array_of_variable_length": true}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageMaskCreate": {
     "args": {
      "6": { "type_modifier": "n", "c_array_of_variable_length": true }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFStringCopyDate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFStringCopyTextString": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPDFTagTypeGetName": {
@@ -914,90 +641,6 @@
    "CGPSConverterCreate": {
     "args": {
      "1": { "type_override": "@", "doc": "tuple (beginDocument, endDocument, beginPage, endPage, noteProgress, noteMessage), each of those either a callable or None" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPaletteCreateDefaultColorPalette": {
-    "args": {
-    },
-    "retval": {
-     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteCreateWithByteSamples": {
-    "args": {
-     "0": {
-      "name": "samples",
-      "typestr": "^{CGDeviceByteColor=CCC}",
-      "c_array_length_in_arg": 1,
-      "type_modifier": "n"
-     },
-     "1": {
-      "name": "count",
-      "typestr": "I"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteCreateWithCapacity": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteCreateWithDisplay": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "already_cfretained": true, "type_override": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteCreateWithSamples": {
-    "args": {
-     "0": {
-      "name": "samples",
-      "c_array_length_in_arg": 1,
-      "type_modifier": "n",
-      "typestr": "^{CGDeviceColor=fff}"
-     },
-     "1": {
-      "name": "count",
-      "typestr": "I"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteGetColorAtIndex": {
-    "retval": { "type_override": "{CGDeviceColor=fff}" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}" },
-     "1": { "type_override": "I" }
-    }
-   },
-   "CGPaletteGetIndexForColor": {
-    "retval": { "type_override": "I" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}" },
-     "1": { "type_override": "{CGDeviceColor=fff}" }
-    }
-   },
-   "CGPaletteSetColorAtIndex": {
-    "retval": { "type_override": "v" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}"},
-     "1": { "type_override": "{CGDeviceColor=fff}"},
-     "2": { "type_override": "I"}
     }
    },
    "CGPathApply": {
@@ -1019,22 +662,9 @@
      }
     }
    },
-   "CGPathCreateCopy": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPatternCreate": {
     "args": {
      "7": { "type_override": "@", "doc": "None, or a 2-tuple ``(drawPattern, releaseInfo)`` (either one can be None)" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGRectCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGRegisterScreenRefreshCallback": {
@@ -1109,21 +739,6 @@
      }
     }
    },
-   "CGSessionCopyCurrentDictionary": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGShadingCreateAxial": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGShadingCreateRadial": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGUnregisterScreenRefreshCallback": {
     "args": {
      "0": {
@@ -1162,39 +777,9 @@
      "4": { "type_modifier": "o" }
     }
    },
-   "CGWindowListCopyWindowInfo": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateImageFromArray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowServerCreateServerPort": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageGetByteOrderInfo": {
-    "retval": { "typestr": "I" },
-    "args": {
-     "0": { "typestr": "^{CGImage=}" }
-    }
-   },
-   "CGImageGetPixelFormatInfo": {
-    "retval": { "typestr": "I" },
-    "args": {
-     "0": { "typestr": "^{CGImage=}" }
-    }
-   },
    "CGPathApplyWithBlock": {
-    "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "^{CGPath=}" },
      "1": {
-      "typestr": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1204,46 +789,6 @@
       }
      }
     }
-   },
-   "CGPDFDocumentGetAccessPermissions": {
-    "retval": { "typestr": "I" },
-    "args": {
-     "0": { "typestr": "^{CGPDFDocument=}" }
-    }
-   },
-   "CGPDFDocumentGetOutline": {
-    "retval": { "typestr": "^{__CFDictionary=}" },
-    "args": {
-     "0": { "typestr": "^{CGPDFDocument=}" }
-    }
-   },
-   "CGPDFContextSetOutline": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "^{CGContext=}" },
-     "1": { "typestr": "^{__CFDictionary=}" }
-    }
-   },
-   "CGColorConversionInfoGetTypeID": {
-    "retval": { "type_override": "Q" },
-    "args": {
-    }
-   },
-   "CGEventPostToPid": {
-    "args": {
-     "0": { "typestr": "i" },
-     "1": { "typestr": "^{__CGEvent=}" }
-    },
-    "retval": { "typestr": "v" }
-   },
-   "CGColorCreateCopyByMatchingToColorSpace": {
-    "args": {
-     "0": { "typestr": "^{CGColorSpace=}" },
-     "1": { "typestr": "i" },
-     "2": { "typestr": "^{CGColor=}" },
-     "3": { "typestr": "^{__CFDictionary=}" }
-    },
-    "retval": { "typestr": "^{CGColor=}", "already_cfretained": true }
    },
    "CGPathCreateWithRoundedRect": {
     "args": {
@@ -1265,21 +810,6 @@
      "0": { "type_modifier": "o" }
     }
    },
-   "CGColorConversionInfoCreate": {
-    "args": {
-     "0": { "type_override": "^{CGColorSpace=}" },
-     "1": { "type_override": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{CGColorConversionInfo=}"
-    }
-   },
-   "CGBitmapContextCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGBitmapContextCreateWithData": {
     "args": {
      "7": {
@@ -1297,9 +827,6 @@
        }
       }
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGBitmapContextGetData": {
@@ -1308,127 +835,32 @@
    "CGColorCreate": {
     "args": {
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericCMYK": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericGray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorCreateGenericRGB": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGColorCreateWithPattern": {
-    "retval": { "type_override": "^{CGColor=}", "already_cfretained": true },
     "args": {
-     "0": { "type_override": "^{CGColorSpace=}" },
-     "1": { "type_override": "^{CGPattern=}" },
-     "2": { "type_modifier": "n", "c_array_of_variable_length": true, "type_override": "^d" }
+     "2": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
    },
    "CGColorGetComponents": {
     "retval": { "c_array_of_variable_length": true }
    },
-   "CGColorSpaceCopyICCData": {
-    "args": {
-     "0": { "typestr": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{__CFData=}"
-    }
-   },
-   "CGColorSpaceIsWideGamutRGB": {
-    "args": {
-     "0": { "typestr": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "typestr": "B"
-    }
-   },
-   "CGColorSpaceSupportsOutput": {
-    "args": {
-     "0": { "typestr": "^{CGColorSpace=}" }
-    },
-    "retval": {
-     "typestr": "B"
-    }
-   },
-   "CGColorSpaceCreateDeviceCMYK": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateDeviceGray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateDeviceRGB": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGColorSpaceCreateICCBased": {
     "args": {
      "1": { "type_modifier": "n", "c_array_of_variable_length": true }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGColorSpaceCreateIndexed": {
     "args": {
      "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGColorSpaceCreateLab": {
     "args": {
-     "0": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "1": { "type_override": "^d", "c_array_of_fixed_length": 3, "type_modifier": "n" },
-     "2": { "type_override": "^d", "c_array_of_fixed_length": 4, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
+     "0": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "1": { "c_array_of_fixed_length": 3, "type_modifier": "n" },
+     "2": { "c_array_of_fixed_length": 4, "type_modifier": "n" }
     }
-   },
-   "CGColorSpaceCreatePattern": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithICCProfile": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceCreateWithICCData": {
-    "args": {
-     "0": { "typestr": "@" }
-    },
-    "retval": {
-     "typestr": "@",
-     "already_cfretained": true
-    }
-   },
-   "CGColorSpaceGetName": {
-    "args": {
-     "0": { "typestr":"^{CGColorSpace=}" }
-    },
-    "retval": { "typestr": "^{__CFString=}" }
    },
    "CGColorSpaceGetColorTable": {
     "args": {
@@ -1436,20 +868,10 @@
     }
    },
    "CGDataProviderGetInfo": {
-    "retval": { "typestr": "^v", "doc": "This returns an internal pointer, *not* the context passed into the creation functions." },
-    "args": {
-     "0": { "typestr": "^{CGDataProvider=}" }
-    }
-   },
-   "CGContextResetClip": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "^{CGContext=}" }
-    }
+    "retval": { "doc": "This returns an internal pointer, *not* the context passed into the creation functions." }
    },
    "CGContextAddLines": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
@@ -1540,16 +962,6 @@
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    },
-   "CGDataConsumerCreateWithCFData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateWithCFData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGDataProviderCreateWithData": {
     "args": {
      "3": {
@@ -1570,40 +982,14 @@
        }
       }
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
-   },
-   "CGImageGetUTType": {
-     "retval": {
-       "typestr": "@"
-     },
-     "args": {
-      "0": {
-        "typestr": "@"
-      }
-     }
    },
    "CGDataProviderCreateWithFilename": {
     "args": {
      "0": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDataProviderCreateWithURL": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGDisplayAddressForPosition": {
-    "args": {
-     "0": { "type_override": "I" },
-     "1": { "type_override": "i" },
-     "2": { "type_override": "i" }
-    },
     "retval": {
      "c_array_of_variable_length": true, "type_override": "^v"
     }
@@ -1619,8 +1005,15 @@
     }
    },
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
-    "retval": { "type_override": "^{__CFDictionary=}" },
     "args": {
+     "6": { "type_modifier": "o" }
+    }
+   },
+    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
+     "deprecated": "1006",
+     "removed": "1014",
+     "retval": { "type_override": "^{__CFDictionary=}" },
+     "args": {
      "0": { "type_override": "I" },
      "1": { "type_override": "Q" },
      "2": { "type_override": "Q" },
@@ -1628,21 +1021,6 @@
      "4": { "type_override": "d" },
      "5": { "type_override": "^{__CFString=}" },
      "6": { "type_modifier": "o", "type_override": "^I" }
-    }
-   },
-   "CGDisplayCopyAllDisplayModes": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayCopyColorSpace": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayModeCopyPixelEncoding": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGDisplayRegisterReconfigurationCallback": {
@@ -1667,16 +1045,10 @@
      }
     }
    },
-   "CGDisplaySetPalette": {
-    "retval": { "type_override": "i" },
-    "args": {
-     "0": { "type_override": "I" },
-     "1": { "type_override": "^{_CGDirectPaletteRef=}"}
-    }
-   },
    "CGDisplayStreamCreate": {
     "args": {
-     "5": { "callable": {
+     "5": {
+      "callable": {
        "arguments": {
          "0": {"type": "^v" },
          "1": {"type": "I" },
@@ -1685,15 +1057,14 @@
          "4": {"type": "@" }
        },
        "retval": { "type": "v" }
-     }}
-    },
-    "retval": {
-     "already_cfretained": true
+      }
+     }
     }
    },
    "CGDisplayStreamCreateWithDispatchQueue": {
     "args": {
-     "6": { "callable": {
+     "6": {
+      "callable": {
        "arguments": {
          "0": {"type": "^v" },
          "1": {"type": "I" },
@@ -1702,20 +1073,12 @@
          "4": {"type": "@" }
        },
        "retval": { "type": "v" }
-     }}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayStreamUpdateCreateMergedUpdate": {
-    "retval": {
-     "already_cfretained": true
+      }
+     }
     }
    },
    "CGDisplayStreamUpdateGetMovedRectsDelta": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
@@ -1726,144 +1089,32 @@
     },
     "retval": { "c_array_length_in_arg": 2 }
    },
-   "CGEventCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateCopy": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateFromData": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateKeyboardEvent": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGEventCreateMouseEvent": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGEventCreateScrollWheelEvent2": {
-    "args": {
-     "0": { "typestr": "^{__CGEventSource=}" },
-     "1": { "typestr": "i" },
-     "2": { "typestr": "I" },
-     "3": { "typestr": "i" },
-     "4": { "typestr": "i" },
-     "5": { "typestr": "i" }
-    },
-    "retval": {
-     "already_cfretained": true
-    },
-    "variadic": true,
     "c_array_length_in_arg": 2
    },
    "CGEventCreateScrollWheelEvent": {
-    "retval": {
-     "already_cfretained": true
-    },
-    "variadic": true,
     "c_array_length_in_arg": 2
-   },
-   "CGEventGetLocation": {
-    "retval": { "type_override": "{CGPoint=dd}" },
-    "args": {
-     "0": { "type_override": "^{__CGEvent=}"}
-    }
    },
    "CGEventKeyboardGetUnicodeString": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o"},
      "3": { "type_modifier": "o", "c_array_length_in_arg": [1,2] }
     }
    },
    "CGEventKeyboardSetUnicodeString": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1}
     }
    },
    "CGEventPostToPSN": {
     "args": {
-     "0": { "type_override": "^{ProcessSerialNumber=II}", "type_modifier": "n"  }
-    }
-   },
-   "CGEventSourceCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyFullName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyGlyphNameForGlyph": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyPostScriptName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyTableForTag": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyTableTags": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyVariationAxes": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCopyVariations": {
-    "retval": {
-     "already_cfretained": true
+     "0": { "type_modifier": "n", "type_override": "^{ProcessSerialNumber=II}"  }
     }
    },
    "CGFontCreatePostScriptSubset": {
     "args": {
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" },
      "5": { "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithDataProvider": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithFontName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGFontCreateWithPlatformFont": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGFontGetGlyphAdvances": {
@@ -1876,13 +1127,6 @@
     "args": {
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
-    }
-   },
-   "CGGLContextUpdateViewportSize": {
-    "retval": { "type_override": "v" },
-    "args": {
-     "0": { "type_override": "^{CGContext=}" },
-     "1": { "type_override": "{CGSize=dd}" }
     }
    },
    "CGGetActiveDisplayList": {
@@ -1950,78 +1194,42 @@
    },
    "CGGradientCreateWithColorComponents": {
     "args": {
-     "0": {},
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" },
      "2": { "c_array_length_in_arg": 3, "type_modifier": "n"  }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGGradientCreateWithContentHeadroom": {
     "args": {
-     "0": {},
      "2": { "c_array_of_variable_length": true, "type_modifier": "n" },
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n"  }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGGradientCreateWithColors": {
     "args": {
      "2": { "c_array_length_in_arg": 1, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageCreate": {
     "args": {
      "8": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGImageCreateCopy": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageCreateWithJPEGDataProvider": {
     "args": {
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageCreateWithMaskingColors": {
     "args": {
      "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGImageGetDecode": {
-    "args": {
-     "0": { "type_override": "^{CGImage=}"}
-    },
-    "retval": { "c_array_of_variable_length": true, "type_override": "^d"  }
-   },
-   "CGLayerCreateWithContext": {
-    "retval": {
-     "already_cfretained": true
-    }
+    "retval": { "c_array_of_variable_length": true }
    },
    "CGPDFDictionaryApplyBlock": {
-    "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "^{CGPDFDictionary=}" },
      "1": {
-      "typestr": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -2035,11 +1243,8 @@
     }
    },
    "CGPDFArrayApplyBlock": {
-    "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "^{CGPDFArray=}" },
      "1": {
-      "typestr": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -2084,7 +1289,7 @@
    },
    "CGPDFArrayGetObject": {
     "args": {
-     "2": { "type_modifier": "o", "type_override": "^^{CGPDFObject=}" }
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFArrayGetStream": {
@@ -2097,37 +1302,20 @@
      "2": { "type_modifier": "o" }
     }
    },
-   "CGPDFContentStreamCreateWithPage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFContentStreamCreateWithStream": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPDFContentStreamGetResource": {
     "args": {
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
-    },
-    "retval": { "type_override": "^{CGPDFObject=}" }
-   },
-   "CGPDFContextCreate": {
-    "args": {
-     "1": { "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPDFContextCreateWithURL": {
     "args": {
      "1": { "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
+    }
+   },
+   "CGPDFContextCreate": {
+    "args": {
+     "1": { "type_modifier": "n" }
     }
    },
    "CGPDFDictionaryApplyFunction": {
@@ -2193,7 +1381,7 @@
    "CGPDFDictionaryGetObject": {
     "args": {
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
-     "2": { "type_override": "^^{CGPDFObject=}", "type_modifier": "o" }
+     "2": { "type_modifier": "o" }
     }
    },
    "CGPDFDictionaryGetStream": {
@@ -2208,22 +1396,6 @@
      "2": { "type_modifier": "o" }
     }
    },
-   "CGPDFDocumentAllowsCopying": {
-    "retval": { "type_override": "B" },
-    "args": {
-     "0": { "type_override": "^{CGPDFDocument=}" }
-    }
-   },
-   "CGPDFDocumentCreateWithProvider": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPDFDocumentCreateWithURL": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPDFDocumentGetVersion": {
     "args": {
      "1": { "type_modifier": "o" },
@@ -2235,25 +1407,13 @@
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
-   "CGPDFObjectGetType": {
-    "args": {
-     "0": { "type_override": "^{CGPDFObject=}" }
-    }
-   },
    "CGPDFObjectGetValue": {
     "args": {
-     "0": { "type_override": "^{CGPDFObject=}" },
      "2": { "type_modifier": "o", "c_array_of_variable_length": true }
-    }
-   },
-   "CGPDFOperatorTableCreate": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPDFOperatorTableSetCallback": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" },
      "2": {
       "callable_retained": true,
@@ -2310,7 +1470,7 @@
    },
    "CGPDFScannerPopObject": {
     "args": {
-     "1": { "type_override": "^^{CGPDFObject=}", "type_modifier": "o" }
+     "1": { "type_modifier": "o" }
     }
    },
    "CGPDFScannerPopStream": {
@@ -2326,74 +1486,13 @@
    "CGPDFStreamCopyData": {
     "args": {
      "1": { "type_modifier": "o" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPDFStringGetBytePtr": {
     "retval": { "c_array_of_variable_length": true }
    },
-   "CGPaletteCreateCopy": {
-    "args": {
-     "0": {
-      "name": "palette",
-      "typestr": "^{_CGDirectPaletteRef=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteCreateFromPaletteBlendedWithColor": {
-    "args": {
-     "0": {
-      "name": "palette",
-      "typestr": "^{_CGDirectPaletteRef=}"
-     },
-     "1": {
-      "name": "fraction",
-      "typestr": "f"
-     },
-     "2": {
-      "name": "color",
-      "typestr": "{CGDeviceColor=fff}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "typestr": "^{_CGDirectPaletteRef=}"
-    }
-   },
-   "CGPaletteGetNumberOfSamples": {
-    "retval": { "type_override": "I" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}" }
-    }
-   },
-   "CGPaletteIsEqualToPalette": {
-    "retval": { "type_override": "B" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}"},
-     "1": { "type_override": "^{_CGDirectPaletteRef=}"}
-    }
-   },
-   "CGDisplayCanSetPalette": {
-    "retval": { "type_override": "I" },
-    "args": {
-     "0": { "type_override": "I" }
-    }
-   },
-   "CGPaletteRelease": {
-    "retval": {"type_override": "v" },
-    "args": {
-     "0": { "type_override": "^{_CGDirectPaletteRef=}"}
-    }
-   },
    "CGPathAddArc": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n"}
     }
    },
@@ -2458,59 +1557,31 @@
     "args": {
      "1": { "type_modifier": "n" },
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateCopyByStrokingPath": {
     "args": {
      "1": { "type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateCopyByTransformingPath": {
     "args": {
      "1": { "type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateMutable": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGPathCreateMutableCopy": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateMutableCopyByTransformingPath": {
     "args": {
      "1": { "type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateWithEllipseInRect": {
     "args": {
      "1": { "type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathCreateWithRect": {
     "args": {
      "1": { "type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CGPathIsRect": {
@@ -2523,23 +1594,15 @@
      "1": { "type_modifier": "n"}
     }
    },
-   "CGPointCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGPointMakeWithDictionaryRepresentation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CGPostMouseEvent": {
-    "variadic": true,
     "c_array_length_in_arg": 2
    },
    "CGPostScrollWheelEvent": {
-    "variadic": true,
     "c_array_length_in_arg": 0
    },
    "CGRectDivide": {
@@ -2573,92 +1636,12 @@
      "4": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     }
    },
-   "CGSizeCreateDictionaryRepresentation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CGSizeMakeWithDictionaryRepresentation": {
     "args": {
      "1": { "type_modifier": "o"}
     }
-   },
-   "CGWindowListCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateDescriptionFromArray": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGWindowListCreateImage": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CGDisplayBitsPerPixel": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "Q"
-    }
-   },
-   "CGDisplaySamplesPerPixel": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "Q"
-    }
-   },
-   "CGAffineTransformEqualToTransform": {
-    "args": {
-     "0": { "type_override": "{CGAffineTransform=dddddd}" },
-     "1": { "type_override": "{CGAffineTransform=dddddd}" }
-    },
-    "retval": {
-     "type_override": "B"
-    }
-   },
-   "CGDisplayWaitForBeamPositionOutsideLines": {
-    "args": {
-     "0": { "type_override": "I" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "i"
-    }
-   },
-   "CGDisplayBeamPosition": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "I"
-    }
-   },
-   "CGDisplayBitsPerSample": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "Q"
-    }
-   },
-   "CGDisplayBytesPerRow": {
-    "args": {
-     "0": { "type_override": "I" }
-    },
-    "retval": {
-     "type_override": "Q"
-    }
    }
   },
-  "informal_protocols": {},
   "literals": {
    "kCGDisplayBitsPerPixel": {
     "unicode": true
@@ -2734,9 +1717,6 @@
    }
   },
   "opaque": {
-   "CGDirectPaletteRef": {
-    "typestr": "^{_CGDirectPaletteRef=}"
-   },
    "CGDisplayConfigRef": {
     "typestr": "^{_CGDisplayConfigRef=}"
    },
@@ -2777,21 +1757,6 @@
    },
    "CGDataProviderDirectCallbacks": {
     "ignore": true
-   },
-   "CGDeviceByteColor": {
-    "typestr": "{CGDeviceByteColor=CCC}",
-    "fieldnames": [
-     "red",
-     "green",
-     "blue"
-    ]
-   },
-   "CGDeviceColor": {
-    "fieldnames": [
-     "red",
-     "green",
-     "blue"
-    ]
    },
    "CGEventTapInformation": {
     "fieldnames": [

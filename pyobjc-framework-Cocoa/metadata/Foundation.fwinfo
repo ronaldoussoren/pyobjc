@@ -1168,28 +1168,6 @@
    "NSArray": {
     "methods": [
      {
-      "selector": "arrayWithContentsOfURL:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithContentsOfURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "writeToURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" }
-     },
-     {
       "args": {
        "0": {
         "c_array_length_in_arg": 1,
@@ -2028,30 +2006,6 @@
    "NSBundle": {
     "methods": [
      {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "preflightAndReturnError:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "loadAndReturnError:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -2244,20 +2198,6 @@
    },
    "NSCoder": {
     "methods": [
-     {
-      "selector": "decodeTopLevelObjectAndReturnError:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "decodeTopLevelObjectOfClass:forKey:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
      {
       "args": {
        "0": {
@@ -2676,6 +2616,13 @@
    "NSData": {
     "methods": [
      {
+      "selector": "initWithContentsOfURL:options:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "initWithBytesNoCopy:length:deallocator:",
       "class_method": false,
       "args": {
@@ -2887,15 +2834,6 @@
      },
      {
       "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfURL:options:error:"
-     },
-     {
-      "args": {
        "0": {
         "type_override": "^v"
        }
@@ -2958,28 +2896,6 @@
      }
     ]
    },
-   "NSDataDetector": {
-    "methods": [
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "dataDetectorWithTypes:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithTypes:error:"
-     }
-    ]
-   },
    "NSDate": {
     "methods": [
      {
@@ -2999,17 +2915,10 @@
         "type_modifier": "o"
        },
        "2": {
-        "type_modifier": "N",
-        "type_override": "^{_NSRange=QQ}"
-       },
-       "3": {
-        "type_modifier": "o"
+        "type_modifier": "N"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "getObjectValue:forString:range:error:"
      },
      {
@@ -3168,28 +3077,6 @@
    },
    "NSDictionary": {
     "methods": [
-     {
-      "selector": "dictionaryWithContentsOfURL:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "initWithContentsOfURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "writeToURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" }
-     },
      {
       "args": {
        "0": {
@@ -3985,9 +3872,6 @@
       "args": {
        "0": {
         "type_modifier": "o"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "selector": "getRelationship:ofDirectoryAtURL:toItemAtURL:error:",
@@ -3996,9 +3880,6 @@
      {
       "args": {
        "0": {
-        "type_modifier": "o"
-       },
-       "4": {
         "type_modifier": "o"
        }
       },
@@ -4009,9 +3890,6 @@
       "args": {
        "1": {
         "type_modifier": "o"
-       },
-       "2": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
@@ -4019,216 +3897,11 @@
      },
      {
       "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "contentsOfDirectoryAtURL:includingPropertiesForKeys:options:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_override": "Z"
-       },
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "URLForDirectory:inDomain:appropriateForURL:create:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "setAttributes:ofItemAtPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "createDirectoryAtPath:withIntermediateDirectories:attributes:error:"
-     },
-     {
-      "args": {
        "1": {
         "type_modifier": "o"
        }
       },
       "class_method": false,
-      "selector": "contentsOfDirectoryAtPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "subpathsOfDirectoryAtPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "attributesOfItemAtPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "attributesOfFileSystemForPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "createSymbolicLinkAtPath:withDestinationPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "destinationOfSymbolicLinkAtPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "copyItemAtPath:toPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "moveItemAtPath:toPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "linkItemAtPath:toPath:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeItemAtPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "copyItemAtURL:toURL:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "moveItemAtURL:toURL:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "linkItemAtURL:toURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeItemAtURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_override": "^Z"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "fileExistsAtPath:isDirectory:"
      },
      {
@@ -4254,89 +3927,23 @@
       "args": {
        "4": {
         "type_modifier": "o"
-       },
-       "5": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "replaceItemAtURL:withItemAtURL:backupItemName:options:resultingItemURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "createDirectoryAtURL:withIntermediateDirectories:attributes:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "createSymbolicLinkAtURL:withDestinationURL:error:"
      },
      {
       "args": {
        "0": {
         "type_override": "Z"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "setUbiquitous:itemAtURL:destinationURL:error:"
      },
      {
       "args": {
        "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "startDownloadingUbiquitousItemAtURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "evictUbiquitousItemAtURL:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
@@ -4541,13 +4148,6 @@
      },
      {
       "args": {
-       "2": {"type_modifier": "o"}
-      },
-      "class_method": false,
-      "selector": "replaceItemAtURL:options:error:"
-     },
-     {
-      "args": {
        "0": {"type_modifier": "o"}
       },
       "class_method": false,
@@ -4659,22 +4259,6 @@
    "NSPersonNameComponentsFormatter": {
     "methods": [
      {
-      "args": {
-       "0": {
-        "null_accepted": false,
-        "type_modifier": "o"
-       },
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "getObjectValue:forString:errorDescription:"
-     },
-     {
       "selector": "setPhonetic:",
       "class_method": false,
       "args": {
@@ -4697,15 +4281,9 @@
        "0": {
         "null_accepted": false,
         "type_modifier": "o"
-       },
-       "2": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "getObjectValue:forString:errorDescription:"
      },
      {
@@ -4713,15 +4291,9 @@
        "1": {
         "null_accepted": false,
         "type_modifier": "N"
-       },
-       "2": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "isPartialStringValid:newEditingString:errorDescription:"
      },
      {
@@ -4733,18 +4305,9 @@
        "1": {
         "null_accepted": false,
         "type_modifier": "N"
-       },
-       "3": {
-        "type_override": "{_NSRange=QQ}"
-       },
-       "4": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription:"
      }
     ]
@@ -5661,42 +5224,6 @@
    "NSJSONSerialization": {
     "methods": [
      {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "dataWithJSONObject:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "JSONObjectWithData:options:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "writeJSONObject:toStream:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "JSONObjectWithStream:options:error:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -5729,9 +5256,6 @@
       "args": {
        "1": {
         "type_override": "Z"
-       },
-       "2": {
-        "type_modifier": "o"
        }
       },
       "class_method": true,
@@ -5776,15 +5300,6 @@
       },
       "class_method": false,
       "selector": "unarchivedObjectOfClass:fromData:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initForReadingFromData:error:"
      },
      {
       "args": {
@@ -6402,20 +5917,6 @@
    "NSMutableData": {
     "methods": [
      {
-      "selector": "compressUsingAlgorithm:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "decompressUsingAlgorithm:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "^v"
@@ -6861,15 +6362,9 @@
        },
        "2": {
         "type_modifier": "N"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "getObjectValue:forString:range:error:"
      },
      {
@@ -10468,35 +9963,6 @@
     "methods": [
      {
       "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "dataWithPropertyList:format:options:error:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "writePropertyList:toStream:format:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"},
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "propertyListWithData:options:format:error:"
-     },
-     {
-      "args": {
        "2": {
         "type_modifier": "o"
        }
@@ -10522,7 +9988,17 @@
        "type_override": "Z"
       },
       "selector": "propertyList:isValidForFormat:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "propertyListWithData:options:format:error:"
      }
+
     ]
    },
    "NSProxy": {
@@ -10584,24 +10060,6 @@
    },
    "NSRegularExpression": {
     "methods": [
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "regularExpressionWithPattern:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithPattern:options:error:"
-     },
      {
       "args": {
        "3": {
@@ -11504,8 +10962,7 @@
       "selector": "initWithValidatedFormat:validFormatSpecifiers:error:",
       "class_method": false,
       "args": {
-       "0": { "printf_format": true },
-       "2": { "type_modifier": "o" }
+       "0": { "printf_format": true }
       }
      },
      {
@@ -11520,8 +10977,7 @@
       "selector": "initWithValidatedFormat:validFormatSpecifiers:locale:error:",
       "class_method": false,
       "args": {
-       "0": { "printf_format": true },
-       "3": { "type_modifier": "o" }
+       "0": { "printf_format": true }
       }
      },
      {
@@ -11552,8 +11008,7 @@
       "selector": "stringWithValidatedFormat:validFormatSpecifiers:error:",
       "class_method": true,
       "args": {
-       "0": { "printf_format": true },
-       "2": { "type_modifier": "o" }
+       "0": { "printf_format": true }
       }
      },
      {
@@ -11938,47 +11393,7 @@
      },
      {
       "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfURL:encoding:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfFile:encoding:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "stringWithContentsOfURL:encoding:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "stringWithContentsOfFile:encoding:error:"
-     },
-     {
-      "args": {
        "1": {
-        "type_modifier": "o",
-        "type_override": "r^Q"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
@@ -11988,10 +11403,6 @@
      {
       "args": {
        "1": {
-        "type_modifier": "o",
-        "type_override": "r^Q"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
@@ -12001,10 +11412,6 @@
      {
       "args": {
        "1": {
-        "type_modifier": "o",
-        "type_override": "r^Q"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
@@ -12014,45 +11421,11 @@
      {
       "args": {
        "1": {
-        "type_modifier": "o",
-        "type_override": "r^Q"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
       "class_method": true,
       "selector": "stringWithContentsOfFile:usedEncoding:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "writeToURL:atomically:encoding:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "writeToFile:atomically:encoding:error:"
      },
      {
       "class_method": false,
@@ -12611,7 +11984,6 @@
       "selector": "launchedTaskWithExecutableURL:arguments:error:terminationHandler:",
       "class_method": true,
       "args": {
-       "2": { "type_modifier": "o" },
        "3": {
         "callable": {
          "arguments": {
@@ -13082,21 +12454,6 @@
    "NSURL": {
     "methods": [
      {
-      "selector": "initWithContentsOfURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "writeToURL:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" }
-     },
-     {
       "args": {
        "0": {
         "c_array_length_in_arg": 1,
@@ -13139,95 +12496,17 @@
       }
      },
      {
-      "selector": "promisedItemResourceValuesForKeys:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "checkPromisedItemIsReachableAndReturnError:",
-      "class_method": false,
-      "args": {
-       "0": { "type_modifier": "o" }
-      }
-     },
-     {
       "args": {
        "0": {
-        "type_modifier": "o"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "getResourceValue:forKey:error:"
      },
      {
       "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "resourceValuesForKeys:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "setResourceValue:forKey:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "setResourceValues:error:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "checkResourceIsReachableAndReturnError:"
-     },
-     {
-      "args": {
        "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "bookmarkDataWithOptions:includingResourceValuesForKeys:relativeToURL:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o",
-        "type_override": "^Z"
-       },
-       "4": {
         "type_modifier": "o"
        }
       },
@@ -13237,36 +12516,11 @@
      {
       "args": {
        "3": {
-        "type_modifier": "o",
-        "type_override": "^Z"
-       },
-       "4": {
         "type_modifier": "o"
        }
       },
       "class_method": true,
       "selector": "URLByResolvingBookmarkData:options:relativeToURL:bookmarkDataIsStale:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "writeBookmarkData:toURL:options:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "bookmarkDataWithContentsOfURL:error:"
      },
      {
       "args": {
@@ -13394,9 +12648,6 @@
      {
       "args": {
        "1": {
-        "type_modifier": "o"
-       },
-       "2": {
         "type_modifier": "o"
        }
       },
@@ -13852,13 +13103,6 @@
     "methods": [
      {
       "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "initWithURL:error:"
-     },
-     {
-      "args": {
        "0": {
         "callable": {
 	 "arguments": {
@@ -14098,28 +13342,6 @@
      }
     ]
    },
-   "NSXMLDTD": {
-    "methods": [
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfURL:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithData:options:error:"
-     }
-    ]
-   },
    "NSXMLDTDNode": {
     "methods": [
      {
@@ -14133,72 +13355,6 @@
    },
    "NSXMLDocument": {
     "methods": [
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithXMLString:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithContentsOfURL:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithData:options:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "objectByApplyingXSLT:arguments:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "objectByApplyingXSLTString:arguments:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "objectByApplyingXSLTAtURL:arguments:error:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "validateAndReturnError:"
-     },
      {
       "class_method": false,
       "retval": {
@@ -14221,15 +13377,6 @@
     "methods": [
      {
       "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "initWithXMLString:error:"
-     },
-     {
-      "args": {
        "0": {
         "type_override": "Z"
        }
@@ -14241,33 +13388,6 @@
    },
    "NSXMLNode": {
     "methods": [
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "nodesForXPath:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "objectsForXQuery:constants:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "objectsForXQuery:error:"
-     },
      {
       "args": {
        "0": {

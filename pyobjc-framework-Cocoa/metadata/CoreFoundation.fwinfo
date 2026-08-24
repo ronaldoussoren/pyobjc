@@ -284,8 +284,6 @@
     "gettypeid_func": "CFXMLParserGetTypeID"
    }
   },
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "CFStringCreateStringWithValidatedFormat": {
     "args": {
@@ -431,9 +429,6 @@
     }
    },
    "CFArrayGetValueAtIndex": {
-    "args": {
-     "0": {}
-    },
     "retval": { "type_override": "@"}
    },
    "CFArrayGetValues": {
@@ -743,7 +738,6 @@
    },
    "CFDataCreate": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }
    },
@@ -999,7 +993,6 @@
    },
    "CFMachPortSetInvalidationCallBack": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -1087,7 +1080,6 @@
    },
    "CFNotificationCenterAddObserver": {
     "args": {
-     "0": {},
      "1": { "type_override": "@"},
      "2": {
       "callable_retained": true,
@@ -1248,9 +1240,6 @@
       "null_accepted": true,
       "type_modifier": "o"
      }
-    },
-    "retval": {
-       "type_override": "@"
     }
    },
    "CFPropertyListCreateWithStream": {
@@ -1261,9 +1250,6 @@
       "null_accepted": true,
       "type_modifier": "o"
      }
-    },
-    "retval": {
-       "type_override": "@"
     }
    },
    "CFPropertyListWrite": {
@@ -1782,7 +1768,7 @@
     }
    },
    "CFStringGetCharactersPtr": {
-    "retval": { "c_array_delimited_by_null": true, "type_override": "^T" }
+    "retval": { "c_array_delimited_by_null": true }
    },
    "CFStringGetFileSystemRepresentation": {
     "args": {
@@ -2181,7 +2167,6 @@
      "5": { "type_modifier": "o" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

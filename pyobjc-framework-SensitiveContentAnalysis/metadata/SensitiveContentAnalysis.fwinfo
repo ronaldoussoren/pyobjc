@@ -6,17 +6,6 @@
    "SCSensitiveContentType": { "type": "@", "type_name": "NSString" }
   },
   "classes": {
-   "SCSensitivityAnalyzer": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "analyzeCGImage:completionHandler:"
-     }
-    ]
-   },
    "SCVideoStreamAnalyzer": {
     "methods": [
      {
@@ -51,9 +40,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

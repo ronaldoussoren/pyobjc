@@ -60,8 +60,6 @@
    "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
    "kColorSyncTranformInfo": { "typestr": "@" },
    "kColorSyncTransformCreator": { "typestr": "@" },
-   "kColorSyncTransformSrcSpace": { "typestr": "@" },
-   "kColorSyncTransformDstSpace": { "typestr": "@" },
    "kColorSyncConversionMatrix": { "typestr": "@" },
    "kCMMInitializeLinkProfileProcName": { "typestr": "@" },
    "kCMMInitializeTransformProcName": { "typestr": "@" },
@@ -179,9 +177,7 @@
    "kColorSyncDraftQuality": { "typestr": "@" },
    "kColorSyncConvertThreadCount": { "typestr": "@" },
    "kColorSyncConvertUseVectorUnit": { "typestr": "@" },
-   "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
    "kColorSyncTransformInfo": { "typestr": "@" },
-   "kColorSyncTransformCreator": { "typestr": "@" },
    "kColorSyncTransformSrcSpace": { "typestr": "@" },
    "kColorSyncTransformDstSpace": { "typestr": "@" },
    "kColorSyncTransformCodeFragmentType": { "typestr": "@" },
@@ -210,50 +206,9 @@
      "1": { "type_modifier": "N" }
     }
    },
-   "ColorSyncCMMGetTypeID": {
-    "args": {
-    },
-    "retval": { "typestr": "Q"}
-   },
-   "ColorSyncProfileGetTypeID": {
-    "args": {
-    },
-    "retval": { "typestr": "Q"}
-   },
-   "ColorSyncTransformGetTypeID": {
-    "args": {
-    },
-    "retval": { "typestr": "Q"}
-   },
-   "ColorSyncCMMCreate": {
-    "retval": { "typestr": "^{ColorSyncCMM=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFBundle=}" }
-    }
-   },
-   "ColorSyncCMMGetBundle": {
-    "retval": { "typestr": "^{__CFBundle=}" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncCMM=}" }
-    }
-   },
-   "ColorSyncCMMCopyLocalizedName": {
-    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncCMM=}" }
-    }
-   },
-   "ColorSyncCMMCopyCMMIdentifier": {
-    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncCMM=}" }
-    }
-   },
    "ColorSyncIterateInstalledCMMs": {
-    "retval": { "typestr": "v" },
     "args": {
      "0": {
-      "typestr": "^?",
       "callable_retained": false,
       "callable": {
        "arguments": {
@@ -262,37 +217,12 @@
        },
        "retval": { "type": "B" }
       }
-     },
-     "1": { "typestr": "^v" }
-    }
-   },
-   "ColorSyncRegisterDevice": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{__CFString=}" },
-     "1": { "typestr": "^{__CFUUID=}" },
-     "2": { "typestr": "^{__CFDictionary=}" }
-    }
-   },
-   "ColorSyncUnregisterDevice": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{__CFString=}" },
-     "1": { "typestr": "^{__CFUUID=}" }
-    }
-   },
-   "ColorSyncDeviceCopyDeviceInfo": {
-    "retval": { "typestr": "^{__CFDictionary=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFString=}" },
-     "1": { "typestr": "^{__CFUUID=}" }
+     }
     }
    },
    "ColorSyncIterateDeviceProfiles": {
-    "retval": { "typestr": "v" },
     "args": {
      "0": {
-      "typestr": "^?",
       "callable_retained": false,
       "callable": {
        "arguments": {
@@ -301,207 +231,33 @@
        },
        "retval": { "type": "B" }
       }
-     },
-     "1": { "typestr": "^v" }
-    }
-   },
-   "CGDisplayCreateUUIDFromDisplayID": {
-    "retval": { "typestr": "^{__CFUUID=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "I" }
-    }
-   },
-   "CGDisplayGetDisplayIDFromUUID": {
-    "retval": { "typestr": "I"  },
-    "args": {
-     "0": { "typestr": "^{__CFUUID=}" }
-    }
-   },
-   "ColorSyncProfileCreate": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFData=}" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileCreateWithURL": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFURL=}" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileCreateWithName": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFString=}" }
-    }
-   },
-   "ColorSyncProfileCreateWithDisplayID": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "I" }
+     }
     }
    },
    "ColorSyncProfileCreateDeviceProfile": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
     "args": {
-     "0": { "typestr": "^{__CFString=}" },
-     "1": { "typestr": "^{__CFUUID=}" },
      "2": { "typestr": "@", "comment": "CFTypeRef" }
     }
    },
-   "ColorSyncProfileCreateMutable": {
-    "args": {
-    },
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true }
-   },
-   "ColorSyncProfileCreateMutableCopy": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" }
-    }
-   },
-   "ColorSyncProfileCreateLink": {
-    "retval": { "typestr": "^{ColorSyncProfile=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFArray=}" },
-     "1": { "typestr": "^{__CFDictionary=}" }
-    }
-   },
-   "ColorSyncProfileVerify": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^{__CFError=}" },
-     "2": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileEstimateGammaWithDisplayID": {
-    "retval": { "typestr": "f" },
-    "args": {
-     "0": { "typestr": "I" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileEstimateGamma": {
-    "retval": { "typestr": "f" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileGetMD5": {
-    "retval": { "typestr": "{ColorSyncMD5=[8C]}" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" }
-    }
-   },
-   "ColorSyncProfileCopyData": {
-    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileGetURL": {
-    "retval": { "typestr": "^{__CFData=}" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileCopyHeader": {
-    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" }
-    }
-   },
-   "ColorSyncProfileSetHeader": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFData=}" }
-    }
-   },
-   "ColorSyncProfileCopyDescriptionString": {
-    "retval": { "typestr": "^{__CFString=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" }
-    }
-   },
-   "ColorSyncProfileCopyTag": {
-    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true  },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" }
-    }
-   },
-   "ColorSyncTransformGetProfileSequence": {
-    "retval": { "typestr": "^{__CFArray=}" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncTransform=}" }
-    }
-   },
-   "ColorSyncProfileCopyTagSignatures": {
-    "retval": { "typestr": "^{__CFArray=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" }
-    }
-   },
-   "ColorSyncProfileContainsTag": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" }
-    }
-   },
-   "ColorSyncProfileContainsTag": {
-    "retval": { "typestr": "^{__CFData=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" }
-    }
-   },
-   "ColorSyncProfileSetTag": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" },
-     "2": { "typestr": "^{__CFData=}" }
-    }
-   },
-   "ColorSyncProfileRemoveTag": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" }
-    }
-   },
    "ColorSyncProfileGetDisplayTransferFormulaFromVCGT": {
-    "retval": { "typestr": "B" },
     "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "type_override": "o^f" },
-     "2": { "type_override": "o^f" },
-     "3": { "type_override": "o^f" },
-     "4": { "type_override": "o^f" },
-     "5": { "type_override": "o^f" },
-     "6": { "type_override": "o^f" },
-     "7": { "type_override": "o^f" },
-     "8": { "type_override": "o^f" },
-     "9": { "type_override": "o^f" }
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" },
+     "4": { "type_modifier": "o" },
+     "5": { "type_modifier": "o" },
+     "6": { "type_modifier": "o" },
+     "7": { "type_modifier": "o" },
+     "8": { "type_modifier": "o" },
+     "9": { "type_modifier": "o" }
     }
    },
    "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": {
-    "retval": { "typestr": "B" },
     "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
      "1": { "type_override": "n^L", "comment": "Unclear if this is correct" }
     }
    },
    "ColorSyncIterateInstalledProfiles": {
-    "retval": { "typestr": "v" },
     "args": {
      "0": {
       "typestr": "^?",
@@ -514,77 +270,24 @@
        "retval": { "type": "B" }
       }
      },
-     "1": { "type_override": "N^I" },
-     "2": { "typestr": "^v" },
-     "3": { "typestr": "^^{__CFError=}", "type_modifier": "o" }
-    }
-   },
-   "ColorSyncProfileInstall": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "^{__CFString=}" },
-     "2": { "typestr": "^{__CFString=}" },
-     "3": { "typestr": "o^^{__CFError=}" }
-    }
-   },
-   "ColorSyncProfileUninstall": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^^{__CFError=}" }
-    }
-   },
-   "ColorSyncTransformCreate": {
-    "retval": { "typestr": "^{ColorSyncTransform=}", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "^{__CFArray=}" },
-     "1": { "typestr": "^{__CFDictionary=}" }
+     "1": { "type_modifier": "N" }
     }
    },
    "ColorSyncTransformCopyProperty": {
-    "retval": { "typestr": "@", "already_cfretained": true },
     "args": {
-     "0": { "typestr": "^{ColorSyncTransform=}" },
-     "1": { "typestr": "@" },
-     "2": { "typestr": "^{__CFDictionary=}" }
+     "1": { "typestr": "@" }
     }
    },
    "ColorSyncTransformSetProperty": {
-    "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "^{ColorSyncTransform=}" },
      "1": { "typestr": "@" },
      "2": { "typestr": "@" }
     }
    },
-   "ColorSyncProfileIsPQBased": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" }
-    }
-   },
-   "ColorSyncProfileIsHLGBased": {
-    "retval": { "typestr": "B" },
-    "args": {
-     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" }
-    }
-   },
    "ColorSyncTransformConvert": {
-    "retval": { "typestr": "B" },
     "args": {
-     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
-     "1": { "name": "widht", "typestr": "L" },
-     "2": { "name": "height", "typestr": "L" },
-     "3": { "name": "dst", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "o" },
-     "4": { "name": "dstDepth", "typestr": "i" },
-     "5": { "name": "dstLayout", "typestr": "i" },
-     "6": { "name": "dstBytesPerRow", "typestr": "L" },
-     "7": { "name": "src", "typestr": "^v", "c_array_of_variable_length": true, "type_modifier": "n" },
-     "8": { "name": "srcDepth", "typestr": "i" },
-     "9": { "name": "srcLayout", "typestr": "i" },
-     "10": { "name": "srcBytesPerRow", "typestr": "L" },
-     "11": { "name": "options", "typestr": "^{__CFDictionary=}" }
+     "3": { "c_array_of_variable_length": true, "type_modifier": "o" },
+     "7": { "c_array_of_variable_length": true, "type_modifier": "n" }
     }
    }
   }

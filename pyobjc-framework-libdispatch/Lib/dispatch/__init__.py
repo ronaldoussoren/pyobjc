@@ -12,6 +12,7 @@ def _setup():
     import Foundation
     import objc
     from . import _metadata
+    from . import _manual
     from . import _dispatch
     from ._inlines import _inline_list_
 
@@ -21,7 +22,7 @@ def _setup():
         frameworkPath=None,
         globals_dict=globals(),
         inline_list=_inline_list_,
-        parents=(_dispatch, Foundation),
+        parents=(_dispatch, _manual, Foundation),
         metadict=_metadata.__dict__,
     )
 

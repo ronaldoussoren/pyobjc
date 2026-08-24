@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "cftypes": {
    "AreaID": { "ignore": true }
   },
@@ -6852,34 +6850,16 @@
    "x80tod": { "ignore": true },
    "CSBackupIsItemExcluded": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CSBackupSetItemExcluded": {
-    "args": {
-     "0": {}
     }
    },
    "TickCount": { "ignore": true },
    "CSCopyMachineName": { "ignore": true },
    "CSCopyUserName": { "ignore": true },
-   "CSDiskSpaceCancelRecovery": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CSDiskSpaceGetRecoveryEstimate": {
-    "args": {
-     "0": {}
-    }
-   },
    "CSDiskSpaceStartRecovery": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o" },
      "5": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -7390,7 +7370,6 @@
    },
    "LocaleRefGetPartString": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o", "c_array_delimited_by_null": true, "type_override": "^t" }
     }
    },
@@ -7679,19 +7658,8 @@
    "SetThreadScheduler": { "ignore": true },
    "SetThreadSwitcher": { "ignore": true },
    "SetThreadTerminator": { "ignore": true },
-   "TECClearConverterContextInfo": {
-    "args": {
-     "0": {}
-    }
-   },
-   "TECClearSnifferContextInfo": {
-    "args": {
-     "0": {}
-    }
-   },
    "TECConvertText": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o", "c_array_length_in_arg": [ 5, 6] },
@@ -7700,7 +7668,6 @@
    },
    "TECConvertTextToMultipleEncodings": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2},
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o", "c_array_length_in_arg": [5, 6] },
@@ -7778,19 +7745,8 @@
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
     }
    },
-   "TECDisposeConverter": {
-    "args": {
-     "0": {}
-    }
-   },
-   "TECDisposeSniffer": {
-    "args": {
-     "0": {}
-    }
-   },
    "TECFlushMultipleEncodings": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "c_array_length_in_arg": [2, 3]},
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o", "c_array_length_in_arg": [5, 6] },
@@ -7799,7 +7755,6 @@
    },
    "TECFlushText": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "c_array_length_in_arg": [2, 3] },
      "3": { "type_modifier": "o" }
     }
@@ -7866,14 +7821,8 @@
      "3": { "type_modifier": "o" }
     }
    },
-   "TECSetBasicOptions": {
-    "args": {
-     "0": {}
-    }
-   },
    "TECSniffTextEncoding": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "c_array_length_in_arg": 4 },
      "5": { "type_modifier": "o", "c_array_length_in_arg": 6 },
@@ -8000,7 +7949,6 @@
    "_MPLibraryVersion": { "ignore": true },
    "numtostring": { "ignore": true },
    "x80told": { "ignore": true }
-  },
-  "informal_protocols": {}
+  }
  }
 }

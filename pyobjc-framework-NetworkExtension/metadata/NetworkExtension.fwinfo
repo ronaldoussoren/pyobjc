@@ -1015,23 +1015,6 @@
     "methods": [
      {
       "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "startTunnelWithOptions:andReturnError:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       },
        "2": {
         "callable": {
          "arguments": {
@@ -1054,36 +1037,6 @@
        "type_override": "Z"
       },
       "selector": "sendProviderMessage:returnError:responseHandler:"
-     }
-    ]
-   },
-   "NEVPNConnection": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "startVPNTunnelAndReturnError:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o",
-        "type_name": "NSError * _Nullable *"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "startVPNTunnelWithOptions:andReturnError:"
      }
     ]
    },

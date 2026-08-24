@@ -7,17 +7,6 @@
    "AXFeatureOverrideSessionOptions": { "type": "Q" }
   },
   "classes": {
-   "AXBrailleMap": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "presentImage:"
-     }
-    ]
-   },
    "NSObject": {
     "methods": [
      {
@@ -56,15 +45,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {
-   "AXNameFromColor": {
-    "args": {
-     "0": {}
-    }
-   }
-  },
-  "informal_protocols": {}
+  }
  }
 }

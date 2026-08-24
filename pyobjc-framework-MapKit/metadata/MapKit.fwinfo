@@ -519,7 +519,6 @@
      ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "MKMapRectDivide": {
     "args": {
@@ -527,7 +526,6 @@
      "2": { "type_modifier": "o" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

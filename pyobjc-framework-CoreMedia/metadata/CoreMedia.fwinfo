@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "opaque": {
    "CMBufferQueueTriggerToken": { "typestr": "^{opaqueCMBufferQueueTriggerToken=}" }
   },
@@ -228,11 +226,6 @@
     "1": { "type_modifier": "o", "already_cfretained": true }
    }
   },
-  "CMVideoFormatDescriptionCopyTagCollectionArray": {
-   "args": {
-    "1": { "type_modifier": "o", "already_cfretained": true }
-   }
-  },
   "CMAudioClockCreate": {
    "args": {
     "1": { "type_modifier": "o", "already_cfretained": true }
@@ -334,14 +327,7 @@
   },
   "CMSampleBufferCreateWithMakeDataReadyHandler": {
    "args": {
-    "0": { "type_override": "^{__CFAllocator=}" },
-    "1": { "type_override": "^{OpaqueCMBlockBuffer=}" },
-    "2": { "type_override": "Z" },
-    "3": { "type_override": "^{OpaqueCMFormatDescription=}" },
-    "4": { "type_override": "l" },
-    "5": { "type_override": "l" },
-    "6": { "type_modifier": "n", "c_array_length_in_arg": 5, "type_override": "^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}" },
-    "7": { "type_override": "l" },
+    "6": { "type_modifier": "n", "c_array_length_in_arg": 5 },
     "8": { "type_modifier": "n", "c_array_length_in_arg": 7 },
     "9": {
      "type_override": "@?",
@@ -353,14 +339,11 @@
       "retval": { "type": "i" }
      }
     }
-   },
-   "retval": { "type_override": "i" }
+   }
   },
   "CMBufferQueueSetValidationHandler": {
    "args": {
-    "0": { "type_override": "@" },
     "1": {
-     "type_override": "@?",
      "callable": {
       "arguments": {
        "0": { "type": "^v" },
@@ -374,12 +357,8 @@
   },
   "CMBufferQueueInstallTriggerHandlerWithIntegerThreshold": {
    "args": {
-    "0": { "type_override": "@" },
-    "1": { "type_override": "I" },
-    "2": { "type_override": "q" },
-    "3": { "type_modifier": "o", "type_override": "^^{opaqueCMBufferQueueTriggerToken=}" },
+    "3": { "type_modifier": "o" },
     "4": {
-     "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -390,17 +369,12 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "i" }
+    }
    },
    "CMBufferQueueInstallTriggerHandler": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "{CMTime=qiIq}" },
-     "3": { "type_modifier": "o", "type_override": "^^{opaqueCMBufferQueueTriggerToken=}" },
+     "3": { "type_modifier": "o" },
      "4": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -411,141 +385,94 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "i" }
+    }
    },
    "CMAudioDeviceClockCreate": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioDeviceClockCreateFromAudioDeviceID": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioDeviceClockGetAudioDevice": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
    },
-   "CMAudioDeviceClockSetAudioDeviceID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMAudioDeviceClockSetAudioDeviceUID": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CMAudioFormatDescriptionCopyAsBigEndianSoundDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionCreate": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
      "3": { "type_modifier": "n" },
      "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
-     "6": {},
      "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionData": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "type_modifier": "n" },
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionCreateSummary": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioFormatDescriptionEqual": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o" }
     }
    },
    "CMAudioFormatDescriptionGetChannelLayout": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     },
     "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetFormatList": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     },
     "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetMagicCookie": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     },
     "retval": { "c_array_length_in_arg": 1 }
    },
    "CMAudioFormatDescriptionGetMostCompatibleFormat": {
-    "args": {
-     "0": {}
-    },
     "retval": { "deref_result_pointer": true }
    },
    "CMAudioFormatDescriptionGetRichestDecodableFormat": {
-    "args": {
-     "0": {}
-    },
     "retval": { "deref_result_pointer": true }
    },
    "CMAudioFormatDescriptionGetStreamBasicDescription": {
-    "args": {
-     "0": {}
-    },
     "retval": { "deref_result_pointer": true }
    },
    "CMAudioSampleBufferCreateReadyWithPacketDescriptions": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "5": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMAudioSampleBufferCreateWithPacketDescriptions": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -562,8 +489,6 @@
        }
       }
      },
-     "4": {},
-     "5": {},
      "8": { "type_modifier": "n", "c_array_length_in_arg": 6 },
      "9": { "type_modifier": "o", "already_cfretained": true }
     }
@@ -571,104 +496,57 @@
    "CMBlockBufferAccessDataBytes": {
     "suggestion": "Use CMBlockBufferCopyDataBytes",
     "args": {
-     "0": {},
-     "3": {},
      "4": { "type_override": "^^v", "type_modifier": "o" }
-    }
-   },
-   "CMBlockBufferAppendBufferReference": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CMBlockBufferAppendMemoryBlock": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-     "3": {},
      "4": { "type_modifier": "n" }
-    }
-   },
-   "CMBlockBufferAssureBlockMemory": {
-    "args": {
-     "0": {}
     }
    },
    "CMBlockBufferCopyDataBytes": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
    },
    "CMBlockBufferCreateContiguous": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "n" },
      "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMBlockBufferCreateEmpty": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMBlockBufferCreateWithBufferReference": {
     "args": {
-     "0": {},
-     "1": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMBlockBufferCreateWithMemoryBlock": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-     "3": {},
      "4": { "type_modifier": "n" },
      "8": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CMBlockBufferFillDataBytes": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CMBlockBufferGetDataLength": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMBlockBufferGetDataPointer": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" },
      "4": { "type_override": "^^v", "type_modifier": "o", "c_array_length_in_arg": 2 }
     }
    },
-   "CMBlockBufferIsEmpty": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBlockBufferIsRangeContiguous": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMBlockBufferReplaceDataBytes": {
     "args": {
-     "0": { "type_modifier": "n", "c_array_length_in_arg": 3},
-     "1": {}
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 3}
     }
    },
    "CMBufferQueueCallForEachBuffer": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -684,105 +562,30 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "CMBufferQueueContainsEndOfData": {
-    "args": {
-     "0": {}
+     }
     }
    },
    "CMBufferQueueCreate": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "CMBufferQueueDequeueAndRetain": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
    "CMBufferQueueDequeueIfDataReadyAndRetain": {
-    "args": {
-     "0": {}
-    },
     "retval": {
      "already_cfretained": true
     }
    },
-   "CMBufferQueueEnqueue": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetBufferCount": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMBufferQueueGetCallbacksForSampleBuffersSortedByOutputPTS": {
-    "ignore": true,
-    "retval": {}
+    "ignore": true
    },
    "CMBufferQueueGetCallbacksForUnsortedSampleBuffers": {
-    "ignore": true,
-    "retval": {}
-   },
-   "CMBufferQueueGetDuration": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetEndPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetFirstDecodeTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetFirstPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetHead": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetMaxPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetMinDecodeTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetMinPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueGetTotalSize": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "CMBufferQueueInstallTrigger": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -799,13 +602,11 @@
        }
       }
      },
-     "2": {},
      "5": { "type_modifier": "o" }
     }
    },
    "CMBufferQueueInstallTriggerWithIntegerThreshold": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -822,39 +623,11 @@
        }
       }
      },
-     "2": {},
      "5": { "type_modifier": "o" }
-    }
-   },
-   "CMBufferQueueIsAtEndOfData": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueIsEmpty": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueMarkEndOfData": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMBufferQueueRemoveTrigger": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMBufferQueueReset": {
-    "args": {
-     "0": {}
     }
    },
    "CMBufferQueueResetWithCallback": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": false,
       "callable": {
@@ -870,13 +643,11 @@
         "type": "v"
        }
       }
-     },
-     "2": {}
+     }
     }
    },
    "CMBufferQueueSetValidationCallback": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -895,304 +666,104 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "CMBufferQueueTestTrigger": {
-    "args": {
-     "0": {},
-     "1": {}
+     }
     }
    },
    "CMClockGetAnchorTime": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    },
-   "CMClockGetHostTimeClock": {
-    "retval": {}
-   },
-   "CMClockGetTime": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMClockInvalidate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMClockMightDrift": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CMClosedCaptionFormatDescriptionCopyAsBigEndianClosedCaptionDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMCopyDictionaryOfAttachments": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMDoesBigEndianSoundDescriptionRequireLegacyCBRSampleTableLayout": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CMFormatDescriptionCreate": {
     "args": {
-     "0": {},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMFormatDescriptionEqual": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMFormatDescriptionEqualIgnoringExtensionKeys": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMFormatDescriptionGetExtension": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMFormatDescriptionGetExtensions": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMFormatDescriptionGetMediaSubType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMFormatDescriptionGetMediaType": {
-    "args": {
-     "0": {}
     }
    },
    "CMGetAttachment": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "CMMemoryPoolCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMMemoryPoolFlush": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMMemoryPoolGetAllocator": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMMemoryPoolInvalidate": {
-    "args": {
-     "0": {}
     }
    },
    "CMMetadataCreateIdentifierForKeyAndKeySpace": {
     "args": {
-     "0": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeyFromIdentifier": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeyFromIdentifierAsCFData": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataCreateKeySpaceFromIdentifier": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMMetadataDataTypeRegistryDataTypeConformsToDataType": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMMetadataDataTypeRegistryDataTypeIsBaseDataType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMMetadataDataTypeRegistryDataTypeIsRegistered": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMMetadataDataTypeRegistryGetBaseDataTypeForConformingDataType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMMetadataDataTypeRegistryGetBaseDataTypes": {
-    "retval": {}
-   },
-   "CMMetadataDataTypeRegistryGetConformingDataTypes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMMetadataDataTypeRegistryGetDataTypeDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMMetadataDataTypeRegistryRegisterDataType": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CMMetadataFormatDescriptionCopyAsBigEndianMetadataDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithKeys": {
     "args": {
-     "0": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithMetadataFormatDescriptionAndMetadataSpecifications": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMMetadataFormatDescriptionCreateWithMetadataSpecifications": {
     "args": {
-     "0": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CMMetadataFormatDescriptionGetIdentifiers": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMMetadataFormatDescriptionGetKeyWithLocalID": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CMMuxedFormatDescriptionCreate": {
     "args": {
-     "0": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMRemoveAttachment": {
-    "args": {
-     "1": {}
     }
    },
    "CMSampleBufferCallBlockForEachSample": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -1207,7 +778,6 @@
    },
    "CMSampleBufferCallForEachSample": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": false,
       "callable": {
@@ -1226,27 +796,16 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "CMSampleBufferCopyPCMDataIntoAudioBufferList": {
-    "args": {
-     "0": {},
-     "3": {}
+     }
     }
    },
    "CMSampleBufferCopySampleBufferForRange": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreate": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -1263,8 +822,6 @@
        }
       }
      },
-     "4": {},
-     "5": {},
      "8": { "type_modifier": "n", "c_array_length_in_arg": 7 },
      "10": { "type_modifier": "n", "c_array_length_in_arg": 9 },
      "11": { "type_modifier": "o", "already_cfretained": true }
@@ -1272,23 +829,17 @@
    },
    "CMSampleBufferCreateCopy": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "CMSampleBufferCreateCopyWithNewTiming": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "4": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "CMSampleBufferCreateForImageBuffer": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -1305,17 +856,12 @@
        }
       }
      },
-     "4": {},
-     "5": {},
      "6": { "type_modifier": "n" },
      "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferCreateReady": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "5": { "type_modifier": "n", "c_array_length_in_arg": 4 },
      "7": { "type_modifier": "n", "c_array_length_in_arg": 6 },
      "8": { "type_modifier": "o", "already_cfretained": true }
@@ -1323,180 +869,53 @@
    },
    "CMSampleBufferCreateReadyWithImageBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "n" },
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CMSampleBufferDataIsReady": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
-     "2": {},
-     "4": {},
-     "5": {},
      "7": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSampleBufferGetAudioStreamPacketDescriptions": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
     }
    },
    "CMSampleBufferGetAudioStreamPacketDescriptionsPtr": { "ignore": true },
-   "CMSampleBufferGetDataBuffer": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMSampleBufferGetDecodeTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetDuration": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetFormatDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMSampleBufferGetImageBuffer": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMSampleBufferGetNumSamples": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetOutputDecodeTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetOutputDuration": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetOutputPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMSampleBufferGetOutputSampleTimingInfoArray": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
     }
    },
-   "CMSampleBufferGetPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferGetSampleAttachmentsArray": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMSampleBufferGetSampleSize": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMSampleBufferGetSampleSizeArray": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
     }
    },
    "CMSampleBufferGetSampleTimingInfo": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CMSampleBufferGetSampleTimingInfoArray": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
     }
    },
-   "CMSampleBufferGetTotalSampleSize": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMSampleBufferHasDataFailed": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CMSampleBufferInvalidate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferIsValid": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferMakeDataReady": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferSetDataBuffer": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMSampleBufferSetDataBufferFromAudioBufferList": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "4": {}
-    }
-   },
-   "CMSampleBufferSetDataFailed": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferSetDataReady": {
-    "args": {
-     "0": {}
     }
    },
    "CMSampleBufferSetInvalidateCallback": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -1517,7 +936,6 @@
    },
    "CMSampleBufferSetInvalidateHandler": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -1529,65 +947,21 @@
      }
     }
    },
-   "CMSampleBufferSetOutputPresentationTimeStamp": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSampleBufferTrackDataReadiness": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMSetAttachment": {
-    "args": {
-     "1": {}
-    }
-   },
-   "CMSetAttachments": {
-    "args": {
-     "1": {}
-    }
-   },
    "CMSimpleQueueCreate": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMSimpleQueueDequeue": {
-    "args": {
-     "0": {}
-    },
     "retval": { "type_override": "@" }
    },
    "CMSimpleQueueEnqueue": {
     "args": {
-     "0": {},
      "1": { "type_override": "@" }
     }
    },
-   "CMSimpleQueueGetCapacity": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMSimpleQueueGetCount": {
-    "args": {
-     "0": {}
-    }
-   },
    "CMSimpleQueueGetHead": {
-    "args": {
-     "0": {}
-    },
     "retval": { "type_override": "@" }
-   },
-   "CMSimpleQueueReset": {
-    "args": {
-     "0": {}
-    }
    },
    "CMSwapBigEndianClosedCaptionDescriptionToHost": {
     "args": {
@@ -1658,31 +1032,22 @@
    },
    "CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2},
-     "3": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionGetDefaultStyle": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" },
@@ -1693,384 +1058,94 @@
    },
    "CMTextFormatDescriptionGetDefaultTextBox": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o" }
     }
    },
    "CMTextFormatDescriptionGetDisplayFlags": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CMTextFormatDescriptionGetFontName": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTextFormatDescriptionGetJustification": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "type_override": "^z" },
      "2": { "type_modifier": "o", "type_override": "^z" }
     }
    },
    "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreate": {
     "args": {
-     "0": {},
-     "5": {},
      "6": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMTimeCodeFormatDescriptionGetFrameDuration": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimeCodeFormatDescriptionGetFrameQuanta": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimeCodeFormatDescriptionGetTimeCodeFlags": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimeCopyAsDictionary": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeCopyDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeMakeFromDictionary": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimeMappingCopyAsDictionary": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeMappingCopyDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeMappingMakeFromDictionary": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimeRangeCopyAsDictionary": {
-    "args": {
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeRangeCopyDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimeRangeMakeFromDictionary": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseAddTimer": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CMTimebaseAddTimerDispatchSource": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseCopyMaster": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseCopyMasterClock": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimebaseCopyMasterTimebase": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CMTimebaseCopyUltimateMasterClock": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CMTimebaseCreateWithMasterClock": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMTimebaseCreateWithMasterTimebase": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CMTimebaseGetEffectiveRate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseGetMaster": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseGetMasterClock": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMTimebaseGetMasterTimebase": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMTimebaseGetRate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseGetTime": {
-    "args": {
-     "0": {}
     }
    },
    "CMTimebaseGetTimeAndRate": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" }
     }
    },
-   "CMTimebaseGetTimeWithTimeScale": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseGetUltimateMasterClock": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CMTimebaseNotificationBarrier": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseRemoveTimer": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMTimebaseRemoveTimerDispatchSource": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetAnchorTime": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetRate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetRateAndAnchorTime": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetTime": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetTimerDispatchSourceNextFireTime": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetTimerDispatchSourceToFireImmediately": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMTimebaseSetTimerNextFireTime": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CMTimebaseSetTimerToFireImmediately": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CMVideoFormatDescriptionCopyAsBigEndianImageDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreate": {
     "args": {
-     "0": {},
-     "4": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateForImageBuffer": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionBlockBuffer": {
     "args": {
-     "0": {},
-     "1": {},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-     "4": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CMVideoFormatDescriptionGetCleanAperture": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMVideoFormatDescriptionGetDimensions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMVideoFormatDescriptionGetExtensionKeysCommonWithImageBuffers": {
-    "retval": {}
-   },
    "CMVideoFormatDescriptionGetH264ParameterSetAtIndex": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": { "type_modifier": "o" },
-     "3": { "type_modifier": "o" },
-     "4": { "type_modifier": "o" },
-     "5": { "type_modifier": "o" }
-    }
+    "ignore": true
    },
    "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": { "type_modifier": "o" },
-     "3": { "type_modifier": "o" },
-     "4": { "type_modifier": "o" },
-     "5": { "type_modifier": "o" }
-    }
-   },
-   "CMVideoFormatDescriptionGetPresentationDimensions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CMVideoFormatDescriptionMatchesImageBuffer": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

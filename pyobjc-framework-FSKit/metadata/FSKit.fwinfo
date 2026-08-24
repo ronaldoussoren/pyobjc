@@ -122,32 +122,28 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "selector": "delayedMetadataWriteFrom:startingAt:length:error:",
       "class_method": false
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "selector": "metadataWriteFrom:startingAt:length:error:",
       "class_method": false
      },
      {
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 }
       },
       "selector": "metadataReadInto:startingAt:length:error:",
       "class_method": false
      },
      {
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "readInto:startingAt:length:error:"
@@ -175,8 +171,7 @@
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" }
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "writeFrom:startingAt:length:error:"
@@ -396,9 +391,6 @@
       }
      },
      {
-      "args": {
-       "3": {}
-      },
       "class_method": false,
       "selector": "logLocalizedMessage:table:bundle:arguments:",
       "suggestion": "Use one of the other log methods"
@@ -428,21 +420,7 @@
       "selector": "withMutableBytes:"
      }
     ]
-   },
-   "FSTaskOptionsBundle": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "bundleForArguments:count:extension:operationType:errorHandler:"
-     }
-    ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

@@ -371,7 +371,7 @@ class TestMTLRenderPipeline(TestCase):
             TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize
         )
         self.assertResultHasType(
-            TestMTLRenderPipelineHelper.imageblockSampleLength, b"q"
+            TestMTLRenderPipelineHelper.imageblockSampleLength, b"Q"
         )
         self.assertResultIsBOOL(
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers

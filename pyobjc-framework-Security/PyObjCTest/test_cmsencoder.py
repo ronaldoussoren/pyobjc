@@ -31,42 +31,21 @@ class TestCMSEncoder(TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.CMSEncoderGetTypeID(), int)
 
-        self.assertResultHasType(Security.CMSEncoderCreate, objc._C_INT)
-        self.assertArgHasType(
-            Security.CMSEncoderCreate, 0, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.CMSEncoderCreate, 0)
         self.assertArgIsCFRetained(Security.CMSEncoderCreate, 0)
 
-        self.assertResultHasType(Security.CMSEncoderAddSigners, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderAddSigners, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderAddSigners, 1, objc._C_ID)
+        Security.CMSEncoderAddSigners
 
-        self.assertResultHasType(Security.CMSEncoderCopySigners, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderCopySigners, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.CMSEncoderCopySigners, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.CMSEncoderCopySigners, 1)
         self.assertArgIsCFRetained(Security.CMSEncoderCopySigners, 1)
 
-        self.assertResultHasType(Security.CMSEncoderAddRecipients, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderAddRecipients, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderAddRecipients, 1, objc._C_ID)
+        Security.CMSEncoderAddRecipients
 
-        self.assertResultHasType(Security.CMSEncoderCopyRecipients, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderCopyRecipients, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.CMSEncoderCopyRecipients, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.CMSEncoderCopyRecipients, 1)
         self.assertArgIsCFRetained(Security.CMSEncoderCopyRecipients, 1)
 
-        self.assertResultHasType(Security.CMSEncoderSetHasDetachedContent, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderSetHasDetachedContent, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.CMSEncoderSetHasDetachedContent, 1, objc._C_NSBOOL
-        )
+        self.assertArgIsBOOL(Security.CMSEncoderSetHasDetachedContent, 1)
 
-        self.assertResultHasType(Security.CMSEncoderGetHasDetachedContent, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderGetHasDetachedContent, 0, objc._C_ID)
         self.assertArgHasType(
             Security.CMSEncoderGetHasDetachedContent,
             1,
@@ -75,130 +54,64 @@ class TestCMSEncoder(TestCase):
 
         self.assertFalse(hasattr(Security, "CMSEncoderSetEncapsulatedContentType"))
 
-        self.assertResultHasType(
-            Security.CMSEncoderSetEncapsulatedContentTypeOID, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderSetEncapsulatedContentTypeOID, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderSetEncapsulatedContentTypeOID, 1, objc._C_ID
-        )
+        Security.CMSEncoderSetEncapsulatedContentTypeOID
 
-        self.assertResultHasType(
-            Security.CMSEncoderCopyEncapsulatedContentType, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderCopyEncapsulatedContentType, 0, objc._C_ID
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderCopyEncapsulatedContentType,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.CMSEncoderCopyEncapsulatedContentType, 1)
 
-        self.assertResultHasType(Security.CMSEncoderAddSupportingCerts, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderAddSupportingCerts, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderAddSupportingCerts, 1, objc._C_ID)
+        Security.CMSEncoderAddSupportingCerts
 
-        self.assertResultHasType(Security.CMSEncoderCopySupportingCerts, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderCopySupportingCerts, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderCopySupportingCerts,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.CMSEncoderCopySupportingCerts, 1)
 
-        self.assertResultHasType(Security.CMSEncoderAddSignedAttributes, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderAddSignedAttributes, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderAddSignedAttributes, 1, objc._C_UINT)
+        Security.CMSEncoderAddSignedAttributes
 
-        self.assertResultHasType(
-            Security.CMSEncoderSetCertificateChainMode, objc._C_INT
-        )
-        self.assertArgHasType(Security.CMSEncoderSetCertificateChainMode, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.CMSEncoderSetCertificateChainMode, 1, objc._C_UINT
-        )
+        Security.CMSEncoderSetCertificateChainMode
 
-        self.assertResultHasType(
-            Security.CMSEncoderGetCertificateChainMode, objc._C_INT
-        )
-        self.assertArgHasType(Security.CMSEncoderGetCertificateChainMode, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderGetCertificateChainMode,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
 
-        self.assertResultHasType(Security.CMSEncoderUpdateContent, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderUpdateContent, 0, objc._C_ID)
         self.assertArgHasType(
             Security.CMSEncoderUpdateContent, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
         )
         self.assertArgSizeInArg(Security.CMSEncoderUpdateContent, 1, 2)
-        self.assertArgHasType(Security.CMSEncoderUpdateContent, 2, objc._C_ULNG)
 
-        self.assertResultHasType(Security.CMSEncoderCopyEncodedContent, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderCopyEncodedContent, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderCopyEncodedContent,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.CMSEncoderCopyEncodedContent, 1)
 
         self.assertFalse(hasattr(Security, "CMSEncode"))
 
-        self.assertResultHasType(Security.CMSEncodeContent, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncodeContent, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncodeContent, 1, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncodeContent, 2, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncodeContent, 3, objc._C_NSBOOL)
-        self.assertArgHasType(Security.CMSEncodeContent, 4, objc._C_UINT)
+        self.assertArgIsBOOL(Security.CMSEncodeContent, 3)
         self.assertArgHasType(
             Security.CMSEncodeContent, 5, objc._C_IN + objc._C_PTR + objc._C_VOID
         )
         self.assertArgSizeInArg(Security.CMSEncodeContent, 5, 6)
-        self.assertArgHasType(Security.CMSEncodeContent, 6, objc._C_ULNG)
-        self.assertArgHasType(
-            Security.CMSEncodeContent, 7, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.CMSEncodeContent, 7)
         self.assertArgIsCFRetained(Security.CMSEncodeContent, 7)
 
-        self.assertResultHasType(Security.CMSEncoderCopySignerTimestamp, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderCopySignerTimestamp, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderCopySignerTimestamp, 1, objc._C_ULNG)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderCopySignerTimestamp,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_DBL,
         )
 
     @min_os_level("10.10")
     def test_functions_10_10(self):
-        self.assertResultHasType(
-            Security.CMSEncoderCopySignerTimestampWithPolicy, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderCopySignerTimestampWithPolicy, 0, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderCopySignerTimestampWithPolicy, 1, objc._C_ID
-        )
-        self.assertArgHasType(
-            Security.CMSEncoderCopySignerTimestampWithPolicy, 2, objc._C_ULNG
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.CMSEncoderCopySignerTimestampWithPolicy,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_DBL,
         )
 
     @min_os_level("10.11")
     def test_functions_10_11(self):
-        self.assertResultHasType(Security.CMSEncoderSetSignerAlgorithm, objc._C_INT)
-        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderSetSignerAlgorithm, 1, objc._C_ID)
+        Security.CMSEncoderSetSignerAlgorithm

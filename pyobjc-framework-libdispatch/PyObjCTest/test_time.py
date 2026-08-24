@@ -32,5 +32,5 @@ class TestTime(TestCase):
         self.assertArgHasType(dispatch.dispatch_time, 1, objc._C_LNGLNG)
 
         self.assertResultHasType(dispatch.dispatch_walltime, objc._C_ULNGLNG)
-        self.assertArgHasType(dispatch.dispatch_walltime, 0, b"n^{timespec=ll}")
+        self.assertArgHasType(dispatch.dispatch_walltime, 0, b"n^{timespec=qq}")
         self.assertArgHasType(dispatch.dispatch_walltime, 1, objc._C_LNGLNG)

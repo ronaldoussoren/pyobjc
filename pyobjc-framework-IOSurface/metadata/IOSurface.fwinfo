@@ -122,399 +122,51 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "IOSurfaceSetPurgeable": {
     "args": {
      "2": { "type_modifier": "o" }
     }
    },
-   "IOSurfaceGetNumberOfComponentsOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" }
-    },
-    "retval": { "typestr": "I" }
-   },
-   "IOSurfaceGetNameOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "IOSurfaceGetTypeOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "IOSurfaceGetRangeOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "IOSurfaceGetBitDepthOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "I" }
-   },
-   "IOSurfaceGetBitOffsetOfComponentOfPlane": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "I" }
-    },
-    "retval": { "typestr": "I" }
-   },
-   "IOSurfaceGetSubsampling": {
-    "args": {
-     "0": { "typestr": "^{__IOSurface=}" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "IOSurfaceAlignProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "IOSurfaceCopyValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "IOSurfaceCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__IOSurface=}"
-    }
-   },
-   "IOSurfaceCreateMachPort": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceCreateXPCObject": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "@"
-    }
-   },
-   "IOSurfaceDecrementUseCount": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetAllocSize": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
    "IOSurfaceGetBaseAddress": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
     "retval": {
-     "c_array_of_variable_length": true,
-     "type_override": "^v"
-    }
-   },
-   "IOSurfaceSetValues": {
-    "args": {
-     "0": { "type_override": "^{__IOSurface=}" },
-     "1": { "type_override": "^{__CFDictionary=}" }
-    },
-    "retval": { "type_override": "v" }
-   },
-   "IOSurfaceCopyAllValues": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}",
-     "already_cfretained": true
-    }
-   },
-   "IOSurfaceRemoveAllValues": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
-    "retval": {
-     "type_override": "v"
+     "c_array_of_variable_length": true
     }
    },
    "IOSurfaceGetBaseAddressOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
     "retval": {
-     "c_array_of_variable_length": true,
-     "type_override": "^v"
-    }
-   },
-   "IOSurfaceGetBytesPerElement": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetBytesPerElementOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetBytesPerRow": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetBytesPerRowOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetElementHeight": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetElementHeightOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetElementWidth": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetElementWidthOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetHeight": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetHeightOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetID": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetPixelFormat": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetPlaneCount": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetPropertyAlignment": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "IOSurfaceGetPropertyMaximum": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "IOSurfaceGetSeed": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetUseCount": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetWidth": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceGetWidthOfPlane": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceIncrementUseCount": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    }
-   },
-   "IOSurfaceIsInUse": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
+     "c_array_of_variable_length": true
     }
    },
    "IOSurfaceLock": {
     "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     },
      "2": {
-      "type_override": "^I",
       "type_modifier": "o"
      }
     }
    },
    "IOSurfaceLookup": {
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__IOSurface=}"
+     "already_cfretained": true
     }
    },
    "IOSurfaceLookupFromMachPort": {
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__IOSurface=}"
+     "already_cfretained": true
     }
    },
    "IOSurfaceLookupFromXPCObject": {
-    "args": {
-     "0": {
-      "type_override": "@"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__IOSurface=}"
-    }
-   },
-   "IOSurfaceRemoveValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "IOSurfaceSetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "IOSurfaceUnlock": {
     "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     },
      "2": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      }
-    }
-   },
-   "IOSurfaceAllowsPixelSizeCasting": {
-    "args": {
-     "0": {
-      "type_override": "^{__IOSurface=}"
-     }
-    },
-    "retval": {
-     "type_override": "Z"
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

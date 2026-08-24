@@ -8,13 +8,9 @@
     "gettypeid_func": "MTAudioProcessingTapGetTypeID"
    }
   },
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "MTAudioProcessingTapGetSourceAudio": {
     "args": {
-     "0": {},
-     "2": {},
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" },
      "5": { "type_modifier": "o" }
@@ -34,18 +30,7 @@
      "1": { "type_override": "@", "doc": "tuple with callback information" },
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "MTCopyLocalizedNameForMediaSubType": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "MTCopyLocalizedNameForMediaType": {
-    "retval": {
-     "already_cfretained": true
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

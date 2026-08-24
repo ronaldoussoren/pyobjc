@@ -83,8 +83,7 @@
    "_dispatch_source_type_timer": { "ignore": true },
    "_dispatch_source_type_vnode": { "ignore": true },
    "_dispatch_source_type_write": { "ignore": true },
-   "_dispatch_data_destructor_free": { "ignore": true },
-   "": { "ignore": true }
+   "_dispatch_data_destructor_free": { "ignore": true }
   },
   "aliases": {
   },
@@ -100,20 +99,6 @@
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
   },
   "functions": {
-   "dispatch_workloop_set_autorelease_frequency": {
-    "retval": { "type_override": "v" },
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    }
-   },
-   "dispatch_workloop_set_os_workgroup": {
-    "retval": { "type_override": "v" },
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" }
-    }
-   },
    "dispatch_retain": { "ignore": true },
    "dispatch_release": { "ignore": true },
    "dispatch_debug": { "ignore": true },
@@ -230,19 +215,9 @@
     },
     "retval": { "type_override": "@", "already_retained": true }
    },
-   "dispatch_set_qos_class_floor": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "i" }
-    },
-    "retval": { "type_override": "v" }
-   },
    "dispatch_source_set_registration_handler": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -252,16 +227,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_source_set_registration_handler_f": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -272,88 +242,16 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_source_set_timer": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "Q" },
-     "2": { "type_override": "Q" },
-     "3": { "type_override": "Q" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_source_merge_data": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_source_get_data": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "L"
-    }
-   },
-   "dispatch_source_get_mask": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "L"
-    }
-   },
-   "dispatch_source_get_handle": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "L"
-    }
-   },
-   "dispatch_source_testcancel": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "l"
-    }
-   },
-   "dispatch_source_cancel": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_source_create": {
-    "args": {
-     "0": { "type_override": "^{dispatch_source_type_s=}" },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "L" },
-     "3": { "type_override": "@" }
-    },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_source_set_cancel_handler": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -363,16 +261,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_source_set_cancel_handler_f": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -383,16 +276,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_source_set_event_handler": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -402,16 +290,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_source_set_event_handler_f": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -422,29 +305,20 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_data_copy_region": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "o^L" }
+     "2": { "type_modifier": "o" }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_data_create": {
     "args": {
-     "0": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 1 },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "@" },
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -456,55 +330,31 @@
      }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
-    }
-   },
-   "dispatch_data_get_size": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "L"
     }
    },
    "dispatch_data_create_map": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "o^^v", "c_array_length_in_arg": 2 },
-     "2": { "type_override": "o^L" }
+     "1": { "type_modifier": "o", "c_array_length_in_arg": 2 },
+     "2": { "type_modifier": "o" }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_data_create_concat": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" }
-    },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_data_create_subrange": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "L" }
-    },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_data_apply": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -518,52 +368,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "B"
-    }
-   },
-   "dispatch_io_set_interval": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "Q" },
-     "2": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_io_set_low_water": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_io_set_high_water": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_io_get_descriptor": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "i"
     }
    },
    "dispatch_io_barrier": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -573,28 +382,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_io_close": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_io_write": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "q" },
-     "2": { "type_override": "@" },
-     "3": { "type_override": "@" },
      "4": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -607,19 +399,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_io_read": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "q" },
-     "2": { "type_override": "L" },
-     "3": { "type_override": "@" },
      "4": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -632,18 +416,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_io_create_with_io": {
     "args": {
-     "0": { "type_override": "L" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "@" },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -656,19 +433,13 @@
      }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_io_create_with_path": {
     "args": {
-     "0": { "type_override": "L" },
      "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
-     "2": { "type_override": "i" },
-     "3": { "type_override": "S" },
-     "4": { "type_override": "@" },
      "5": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -681,17 +452,12 @@
      }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_io_create": {
     "args": {
-     "0": { "type_override": "L" },
-     "1": { "type_override": "i" },
-     "2": { "type_override": "@" },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -704,59 +470,12 @@
      }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
-    }
-   },
-   "dispatch_assert_queue_not": {
-    "comment": "XXX: V2 API",
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_assert_queue_barrier": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_assert_queue": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_get_specific": {
-    "args": {
-     "0": { "type_override": "^v" }
-    },
-    "retval": {
-     "type_override": "^v"
-    }
-   },
-   "dispatch_queue_get_specific": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" }
-    },
-    "retval": {
-     "type_override": "^v"
     }
    },
    "dispatch_queue_set_specific": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
-     "2": { "type_override": "^v" },
      "3": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -767,16 +486,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_barrier_sync": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -786,15 +500,11 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_barrier_sync_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -805,14 +515,11 @@
       },
       "callable_retained": false
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_barrier_async_and_wait": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -822,14 +529,11 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_barrier_async": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -839,15 +543,11 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_barrier_async_and_wait_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -858,15 +558,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_barrier_async_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -877,16 +573,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_after_f": {
     "args": {
-     "0": { "type_override": "Q" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "^v" },
      "3": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -897,15 +588,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_after": {
     "args": {
-     "0": { "type_override": "Q" },
-     "1": { "type_override": "@" },
      "2": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -915,32 +602,14 @@
        }
       }
      }
-    },
-    "retval": { "type_override": "v" }
-   },
-   "dispatch_main": {
-    "args": {
-    },
-    "retval": { "type_override": "v" }
-   },
-   "dispatch_set_target_queue": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" }
-    },
-    "retval": { "type_override": "v" }
+    }
    },
    "dispatch_queue_get_qos_class": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^i", "type_modifier": "o" }
-    },
-    "retval": { "type_override": "I" }
+     "1": { "type_modifier": "o" }
+    }
    },
    "dispatch_queue_get_label": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
     "retval": {
      "type_override": "^t",
      "c_array_delimited_by_null": true
@@ -948,82 +617,23 @@
    },
    "dispatch_queue_create": {
     "args": {
-     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
-     "1": { "type_override": "@" }
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_queue_create_with_target": {
-    "comment": "XXX: V2 API",
     "args": {
-     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "@" }
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     },
     "retval": {
-     "type_override": "@",
      "already_retained": true
-    }
-   },
-   "dispatch_queue_attr_make_with_autorelease_frequency": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "@"
-    }
-   },
-   "dispatch_queue_attr_make_with_qos_class": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "i" }
-    },
-    "retval": {
-     "type_override": "@"
-    }
-   },
-   "dispatch_queue_attr_make_initially_inactive": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "@"
-    }
-   },
-   "dispatch_get_global_queue": {
-    "args": {
-     "0": { "type_override": "l" },
-     "1": { "type_override": "L" }
-    },
-    "retval": {
-     "type_override": "@"
-    }
-   },
-   "dispatch_get_main_queue": {
-    "args": {
-    },
-    "retval": {
-     "type_override": "@"
-    }
-   },
-   "dispatch_get_current_queue": {
-    "args": {
-    },
-    "retval": {
-     "type_override": "@"
     }
    },
    "dispatch_apply": {
     "args": {
-     "0": { "type_override": "L" },
-     "1": { "type_override": "@" },
      "2": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1034,9 +644,6 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_apply_f": {
@@ -1048,9 +655,7 @@
    },
    "dispatch_sync": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1060,17 +665,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_sync_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1081,16 +680,11 @@
       },
       "callable_retained": false
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_async_and_wait": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1100,16 +694,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_async": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1119,17 +708,11 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_async_and_wait_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1140,17 +723,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_async_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1161,42 +738,17 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_semaphore_create": {
-    "args": {
-     "0": { "type_override": "l" }
-    },
     "retval": {
-     "type_override": "@",
      "already_retained": true
-    }
-   },
-   "dispatch_semaphore_wait": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "Q" }
-    },
-    "retval": {
-     "type_override": "l"
-    }
-   },
-   "dispatch_semaphore_signal": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "l"
     }
    },
    "dispatch_once": {
     "args": {
-     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
+     "0": { "type_modifier": "N", "c_array_of_fixed_length": 1 },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1206,17 +758,12 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_once_f": {
     "args": {
-     "0": { "type_override": "N^l", "c_array_of_fixed_length": 1 },
-     "1": { "type_override": "^v" },
+     "0": { "type_modifier": "N", "c_array_of_fixed_length": 1 },
      "2": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1227,33 +774,11 @@
       },
       "callable_retained": false
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_get_context": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "^v"
-    }
-   },
-   "dispatch_set_context": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "^v" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_set_finalizer_f": {
     "args": {
-     "0": { "type_override": "@" },
      "1": {
-      "type_override": "^?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1264,41 +789,11 @@
       },
       "callable_retained": true
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_activate": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_suspend": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_resume": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_cancel": {
     "args": {
      "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_testcancel": {
@@ -1309,64 +804,17 @@
      "type_override": "l"
     }
    },
-   "dispatch_wait": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "Q" }
-    },
-    "retval": {
-     "type_override": "l"
-    }
-   },
    "dispatch_notify": {
-    "args": {
-     "0": {
-      "type_override": "@?",
-      "callable": {
-       "arguments": {
-        "0": { "type": "^v" }
-       },
-       "retval": { "type": "v" }
-      }
-     },
-     "1": { "type_override": "@" },
-     "2": {
-      "type_override": "@?",
-      "callable": {
-       "arguments": {
-        "0": { "type": "^v" }
-       },
-       "retval": { "type": "v" }
-      }
-     }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_time": {
-    "args": {
-     "0": { "type_override": "Q" },
-     "1": { "type_override": "q" }
-    },
-    "retval": {
-     "type_override": "Q"
-    }
+    "ignore": true
    },
    "dispatch_walltime": {
     "args": {
-     "0": { "type_override": "n^{timespec=ll}" },
-     "1": { "type_override": "q" }
-    },
-    "retval": {
-     "type_override": "Q"
+     "0": { "type_modifier": "n" }
     }
    },
    "dispatch_block_create": {
     "args": {
-     "0": { "type_override": "L" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1376,7 +824,6 @@
      }
     },
     "retval": {
-     "type_override": "@?",
      "already_retained": true,
      "callable": {
       "arguments": {
@@ -1388,9 +835,7 @@
    },
    "dispatch_block_perform": {
     "args": {
-     "0": { "type_override": "L" },
      "1": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1398,18 +843,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_block_create_with_qos_class": {
     "args": {
-     "0": { "type_override": "L" },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "i" },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1419,7 +857,6 @@
      }
     },
     "retval": {
-     "type_override": "@?",
      "already_retained": true,
      "callable": {
       "arguments": {
@@ -1432,24 +869,18 @@
    "dispatch_block_wait": {
     "args": {
      "0": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
        },
        "retval": { "type": "v" }
       }
-     },
-     "1": { "type_override": "Q" }
-    },
-    "retval": {
-     "type_override": "l"
+     }
     }
    },
    "dispatch_block_notify": {
     "args": {
      "0": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1457,9 +888,7 @@
        "retval": { "type": "v" }
       }
      },
-     "1": { "type_override": "@" },
      "2": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1467,15 +896,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_block_cancel": {
     "args": {
      "0": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1483,15 +908,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_block_testcancel": {
     "args": {
      "0": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1499,25 +920,16 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "l"
     }
    },
    "dispatch_group_create": {
-    "args": {
-    },
     "retval": {
-     "type_override": "@",
      "already_retained": true
     }
    },
    "dispatch_group_async": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" },
      "2": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1525,18 +937,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_group_async_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "^v" },
      "3": {
-      "type_override": "^?",
       "callable_retained": true,
       "callable": {
        "arguments": {
@@ -1545,26 +950,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_group_wait": {
-    "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "Q" }
-    },
-    "retval": {
-     "type_override": "l"
     }
    },
    "dispatch_group_notify": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" },
      "2": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" }
@@ -1572,18 +962,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_group_notify_f": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "^v" },
      "3": {
-      "type_override": "^?",
       "callable_retained": true,
       "callable": {
        "arguments": {
@@ -1592,34 +975,11 @@
        "retval": { "type": "v" }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_group_enter": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
-    }
-   },
-   "dispatch_group_leave": {
-    "args": {
-     "0": { "type_override": "@" }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_read": {
     "args": {
-     "0": { "type_override": "i" },
-     "1": { "type_override": "L" },
-     "2": { "type_override": "@" },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1631,26 +991,23 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    },
    "dispatch_workloop_create": {
-     "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
-     "retval": { "type_override": "@", "already_retained": true }
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
    },
    "dispatch_workloop_create_inactive": {
-     "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
-     "retval": { "type_override": "@", "already_retained": true }
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    },
+    "retval": { "already_retained": true }
    },
    "dispatch_write": {
     "args": {
-     "0": { "type_override": "i" },
-     "1": { "type_override": "@", "comment": "dispatch_data_t" },
-     "2": { "type_override": "@" },
      "3": {
-      "type_override": "@?",
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
@@ -1662,9 +1019,6 @@
        }
       }
      }
-    },
-    "retval": {
-     "type_override": "v"
     }
    }
   }

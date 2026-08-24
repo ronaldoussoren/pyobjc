@@ -146,18 +146,6 @@ class TestCGDirectDisplay(TestCase):
         v = Quartz.CGDisplaySwitchToMode(Quartz.CGMainDisplayID(), cur)
         self.assertEqual(v, 0)
 
-        v = Quartz.CGDisplayBitsPerPixel(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplayBitsPerSample(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplaySamplesPerPixel(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplayBytesPerRow(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
         self.assertArgIsOut(Quartz.CGGetDisplayTransferByFormula, 1)
         self.assertArgIsOut(Quartz.CGGetDisplayTransferByFormula, 2)
         self.assertArgIsOut(Quartz.CGGetDisplayTransferByFormula, 3)
@@ -261,16 +249,6 @@ class TestCGDirectDisplay(TestCase):
         v = Quartz.CGShieldingWindowLevel()
         self.assertIsInstance(v, int)
 
-        v = Quartz.CGDisplayBaseAddress(Quartz.CGMainDisplayID())
-        if v is not objc.NULL:
-            self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], bytes)
-
-        v = Quartz.CGDisplayAddressForPosition(Quartz.CGMainDisplayID(), 100, 100)
-        if v is not objc.NULL:
-            self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], bytes)
-
         err = Quartz.CGDisplayHideCursor(Quartz.CGMainDisplayID())
         self.assertEqual(err, 0)
 
@@ -282,23 +260,6 @@ class TestCGDirectDisplay(TestCase):
         dX, dY = Quartz.CGGetLastMouseDelta(None, None)
         self.assertIsInstance(dX, int)
         self.assertIsInstance(dY, int)
-
-        v = Quartz.CGDisplayCanSetPalette(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        err = Quartz.CGDisplayWaitForBeamPositionOutsideLines(
-            Quartz.CGMainDisplayID(), 200, 400
-        )
-        self.assertEqual(err, 0)
-
-        v = Quartz.CGDisplayBeamPosition(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        palette = Quartz.CGPaletteCreateDefaultColorPalette()
-        self.assertIsInstance(palette, Quartz.CGDirectPaletteRef)
-
-        err = Quartz.CGDisplaySetPalette(Quartz.CGMainDisplayID(), palette)
-        self.assertIsInstance(err, int)
 
         # Don't actually call Quartz.CGSetDisplayTransferByByteTable, it might have
         # permanent effects.

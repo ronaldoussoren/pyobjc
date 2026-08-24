@@ -31,42 +31,6 @@
    "ABAddressBook": {
     "methods": [
      {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "saveAndReturnError:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "addRecord:error:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "removeRecord:error:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -282,18 +246,6 @@
    "ABRecord": {
     "methods": [
      {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "setValue:forProperty:error:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -399,853 +351,84 @@
    "ABPersonPickerDelegate": { "rename": "ABPersonPickerDelegate" }
   },
   "functions": {
-   "ABAddPropertiesAndTypes": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
    "ABAddRecord": {
     "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
      "1": {
       "type_override": "@"
      }
     }
    },
    "ABBeginLoadingImageDataForClient": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "1": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^{__CFData=}"
-        },
-        "1": {
-         "type": "q"
-        },
-        "2": {
-         "type": "^v"
-        }
+    "1": {
+     "callable": {
+      "arguments": {
+       "0": {
+        "type": "^{__CFData=}"
        },
-       "retval": {
-        "type": "v"
+       "1": {
+        "type": "q"
+      },
+       "2": {
+        "type": "^v"
        }
       },
-      "type_override": "^?"
-     },
-     "2": {
-      "type_override": "^v"
+      "retval": {
+       "type": "v"
+      }
      }
-    }
-   },
-   "ABCopyArrayOfAllGroups": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABCopyArrayOfAllPeople": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABCopyArrayOfMatchingRecords": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__ABSearchElementRef=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABCopyArrayOfPropertiesForRecordType": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABCopyDefaultCountryCode": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABCopyLocalizedPropertyOrLabel": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
     }
    },
    "ABCopyRecordForUniqueId": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
      "type_override": "@"
-    }
-   },
-   "ABCopyRecordTypeFromUniqueId": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABCreateFormattedAddressFromDictionary": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABGetMe": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__ABPerson=}"
-    }
-   },
-   "ABGetSharedAddressBook": {
-    "retval": {
-     "type_override": "^{__ABAddressBookRef=}"
-    }
-   },
-   "ABGroupAddGroup": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABGroup=}"
-     }
-    }
-   },
-   "ABGroupAddMember": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     }
-    }
-   },
-   "ABGroupCopyArrayOfAllMembers": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABGroupCopyArrayOfAllSubgroups": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABGroupCopyDistributionIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABGroupCopyParentGroups": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABGroupCreate": {
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABGroup=}"
-    }
-   },
-   "ABGroupCreateSearchElement": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABSearchElementRef=}"
-    }
-   },
-   "ABGroupRemoveGroup": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABGroup=}"
-     }
-    }
-   },
-   "ABGroupRemoveMember": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     }
-    }
-   },
-   "ABGroupSetDistributionIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABGroup=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
-     "3": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABHasUnsavedChanges": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
     }
    },
    "ABMultiValueAdd": {
     "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
      "3": {
-      "type_modifier": "o",
-      "type_override": "^^{__CFString}"
-     }
-    }
-   },
-   "ABMultiValueCopyIdentifierAtIndex": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABMultiValueCopyLabelAtIndex": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABMultiValueCopyPrimaryIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABMultiValueCopyValueAtIndex": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    }
-   },
-   "ABMultiValueCount": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    }
-   },
-   "ABMultiValueCreate": {
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABMultiValue=}"
-    }
-   },
-   "ABMultiValueCreateCopy": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABMultiValue=}"
-    }
-   },
-   "ABMultiValueCreateMutable": {
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABMultiValue=}"
-    }
-   },
-   "ABMultiValueCreateMutableCopy": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABMultiValue=}"
-    }
-   },
-   "ABMultiValueIndexForIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
+      "type_modifier": "o"
      }
     }
    },
    "ABMultiValueInsert": {
     "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
      "4": {
-      "type_modifier": "o",
-      "type_override": "^^{__CFString}"
-     }
-    }
-   },
-   "ABMultiValuePropertyType": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    }
-   },
-   "ABMultiValueRemove": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    }
-   },
-   "ABMultiValueReplaceLabel": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABMultiValueReplaceValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     }
-    }
-   },
-   "ABMultiValueSetPrimaryIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABMultiValue=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABPersonCopyImageData": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABPerson=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFData=}"
-    }
-   },
-   "ABPersonCopyParentGroups": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABPerson=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPersonCopyVCardRepresentation": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABPerson=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFData=}"
-    }
-   },
-   "ABPersonCreate": {
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABPerson=}"
-    }
-   },
-   "ABPersonCreateSearchElement": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABSearchElementRef=}"
-    }
-   },
-   "ABPersonCreateWithVCardRepresentation": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFData=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABPerson=}"
-    }
-   },
-   "ABPersonSetImageData": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "1": {
-      "type_override": "^{__CFData=}"
-     }
-    }
-   },
-   "ABPickerAddProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABPickerChangeAttributes": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerClearSearchField": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerCopyColumnTitle": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABPickerCopyDisplayedProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "ABPickerCopyProperties": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPickerCopySelectedGroups": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPickerCopySelectedIdentifiers": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPickerCopySelectedRecords": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPickerCopySelectedValues": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "ABPickerCreate": {
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{OpaqueABPicker=}"
-    }
-   },
-   "ABPickerDeselectAll": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerDeselectGroup": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__ABGroup=}"
-     }
-    }
-   },
-   "ABPickerDeselectIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
+      "type_modifier": "o"
      }
     }
    },
    "ABPickerDeselectRecord": {
     "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
      "1": {
       "type_override": "@"
      }
     }
    },
-   "ABPickerEditInAddressBook": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerGetAttributes": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerGetDelegate": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{OpaqueHIObjectRef=}"
-    }
-   },
    "ABPickerGetFrame": {
     "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-     }
-    }
-   },
-   "ABPickerIsVisible": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     }
-    }
-   },
-   "ABPickerRemoveProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABPickerSelectGroup": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__ABGroup=}"
-     }
-    }
-   },
-   "ABPickerSelectIdentifier": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABPickerSelectInAddressBook": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
+      "type_modifier": "o"
      }
     }
    },
    "ABPickerSelectRecord": {
     "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
      "1": {
       "type_override": "@"
      }
     }
    },
-   "ABPickerSetColumnTitle": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
    "ABPickerSetDelegate": {
     "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
      "1": {
       "type_override": "^{OpaqueHIObjectRef=}"
      }
     }
    },
-   "ABPickerSetDisplayedProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
    "ABPickerSetFrame": {
     "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
-     },
      "1": {
-      "type_modifier": "n",
-      "type_override": "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-     }
-    }
-   },
-   "ABPickerSetVisibility": {
-    "args": {
-     "0": {
-      "type_override": "^{OpaqueABPicker=}"
+      "type_modifier": "n"
      }
     }
    },
@@ -1254,10 +437,6 @@
      "0": {
       "type_override": "@"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
     }
    },
    "ABRecordCopyUniqueId": {
@@ -1265,19 +444,12 @@
      "0": {
       "type_override": "@"
      }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
     }
    },
    "ABRecordCopyValue": {
     "args": {
      "0": {
       "type_override": "@"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
      }
     }
    },
@@ -1288,7 +460,6 @@
      }
     },
     "retval": {
-     "already_cfretained": true,
      "type_override": "@"
     }
    },
@@ -1303,9 +474,6 @@
     "args": {
      "0": {
       "type_override": "@"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
      }
     }
    },
@@ -1313,87 +481,23 @@
     "args": {
      "0": {
       "type_override": "@"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "ABRemoveProperties": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFArray=}"
      }
     }
    },
    "ABRemoveRecord": {
     "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
      "1": {
       "type_override": "@"
      }
-    }
-   },
-   "ABSave": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     }
-    }
-   },
-   "ABSearchElementCreateWithConjunction": {
-    "args": {
-     "1": {
-      "type_override": "^{__CFArray=}"
-     }
-    },
-    "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__ABSearchElementRef=}"
     }
    },
    "ABSearchElementMatchesRecord": {
     "args": {
-     "0": {
-      "type_override": "^{__ABSearchElementRef=}"
-     },
      "1": {
       "type_override": "@"
      }
     }
-   },
-   "ABSetMe": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__ABPerson=}"
-     }
-    }
-   },
-   "ABTypeOfProperty": {
-    "args": {
-     "0": {
-      "type_override": "^{__ABAddressBookRef=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

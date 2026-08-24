@@ -71,29 +71,6 @@
     "methods": [
      {
       "class_method": false,
-      "selector": "valueWithNewPromiseInContext:fromExecutor:",
-      "args": {
-       "1": {
-        "callable": {
-         "retval": { "typestr": "v" },
-         "arguments": {
-          "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-         }
-        }
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "valueWithBool:inContext:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
       "selector": "toBool",
       "retval": {
        "type_override": "Z"
@@ -374,9 +351,6 @@
       "name": "value",
       "typestr": "^{OpaqueJSValue=}"
      }
-    },
-    "retval": {
-     "typestr": "B"
     }
    },
    "JSValueIsDate": {
@@ -389,127 +363,36 @@
       "name": "value",
       "typestr": "^{OpaqueJSValue=}"
      }
-    },
-    "retval": {
-     "typestr": "B"
     }
    },
 
    "JSCheckScriptSyntax": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "4": { "type_modifier": "o"}
     }
    },
    "JSClassCreate": {
     "ignore": true
    },
-   "JSContextGetGlobalObject": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSContextGetGroup": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSContextGroupCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSContextGroupRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSContextGroupRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "JSEvaluateScript": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
      "5": { "type_modifier": "o" }
-    },
-    "retval": {}
-   },
-   "JSGarbageCollect": {
-    "args": {
-     "0": {}
     }
-   },
-   "JSGlobalContextCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSGlobalContextCreateInGroup": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSGlobalContextRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSGlobalContextRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "JSObjectCallAsConstructor": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "4": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectCallAsFunction": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "4": { "type_modifier": "n", "c_array_length_in_arg": 3 },
      "5": { "type_modifier": "o" }
-    },
-    "retval": {}
-   },
-   "JSObjectCopyPropertyNames": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "JSObjectDeleteProperty": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
@@ -519,7 +402,7 @@
      "1": { "typestr": "^{OpaqueJSValue=}" },
      "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
     },
-    "retval": { "typestr": "^v", "c_array_of_variable_length": true }
+    "retval": { "c_array_of_variable_length": true }
    },
    "JSObjectGetArrayBufferByteLength": {
     "args": {
@@ -535,7 +418,7 @@
      "1": { "typestr": "^{OpaqueJSValue=}" },
      "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
     },
-    "retval": { "typestr": "^v", "c_array_of_variable_length": true }
+    "retval": { "c_array_of_variable_length": true }
    },
    "JSObjectGetTypedArrayLength": {
     "args": {
@@ -566,8 +449,7 @@
      "0": { "typestr": "^{OpaqueJSContext=}" },
      "1": { "typestr": "^{OpaqueJSValue=}" },
      "2": { "typestr": "^^{OpaqueJSValue=}", "type_modifier": "o" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+    }
    },
    "JSObjectMakeArrayBufferWithBytesNoCopy": {
     "args": {
@@ -578,35 +460,15 @@
      "5":  { "type_modifier": "o" }
     }
    },
-   "JSObjectGetPrivate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "JSObjectGetProperty": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectGetPropertyAtIndex": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
-   },
-   "JSObjectGetPrototype": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {}
+    }
    },
    "JSObjectDeletePropertyForKey": {
     "args": {
@@ -628,40 +490,11 @@
      "3": { "type_modifier": "o" }
     }
    },
-   "JSObjectHasProperty": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "JSObjectIsConstructor": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSObjectIsFunction": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSObjectMake": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {}
-   },
    "JSObjectMakeArray": {
     "args": {
-     "0": {},
      "2": { "c_array_length_in_arg": 1, "type_modifier": "n"},
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeTypedArray": {
     "args": {
@@ -669,8 +502,7 @@
      "1": { "typestr": "i" },
      "2": { "type_override": "L" },
      "3": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+    }
    },
    "JSObjectMakeTypedArrayWithArrayBuffer": {
     "args": {
@@ -678,14 +510,12 @@
      "1": { "typestr": "i" },
      "2": { "typestr": "^{OpaqueJSValue=}" },
      "3": { "type_modifier": "o", "typestr": "^^{OpaqueJSValue=}" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+    }
    },
    "JSObjectMakeTypedArrayWithArrayBufferAndOffset": {
     "args": {
      "5": { "type_modifier": "o" }
-    },
-    "retval": { "typestr": "^{OpaqueJSValue=}" }
+    }
    },
    "JSObjectMakeTypedArrayWithBytesNoCopy": {
     "args": {
@@ -697,8 +527,6 @@
    },
    "JSObjectMakeConstructor": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -727,8 +555,7 @@
        }
       }
      }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeDeferredPromise": {
     "args": {
@@ -739,35 +566,24 @@
    },
    "JSObjectMakeDate": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeError": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeFunction": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "c_array_length_in_arg": 2, "type_modifier": "n" },
-     "4": {},
-     "5": {},
      "7": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeFunctionWithCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -799,314 +615,77 @@
        }
       }
      }
-    },
-    "retval": {}
+    }
    },
    "JSObjectMakeRegExp": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
      "3": { "type_modifier": "o" }
-    },
-    "retval": {}
-   },
-   "JSObjectSetPrivate": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "JSObjectSetProperty": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
      "5": { "type_modifier": "o" }
     }
    },
    "JSObjectSetPropertyAtIndex": {
     "args": {
-     "0": {},
-     "1": {},
-     "3": {},
      "4": { "type_modifier": "o" }
-    }
-   },
-   "JSObjectSetPrototype": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "JSPropertyNameAccumulatorAddName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSPropertyNameArrayGetCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSPropertyNameArrayGetNameAtIndex": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSPropertyNameArrayRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSPropertyNameArrayRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSStringCopyCFString": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSStringCreateWithCFString": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "JSStringCreateWithCharacters": {
     "args": {
      "0": { "type_override": "^T", "c_array_length_in_arg": 1, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "JSStringCreateWithUTF8CString": {
     "args": {
      "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "JSStringGetCharactersPtr": {
     "ignore": true
    },
-   "JSStringGetLength": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSStringGetMaximumUTF8CStringSize": {
-    "args": {
-     "0": {}
-    }
-   },
    "JSStringGetUTF8CString": {
     "args": {
-     "0": {},
      "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o", "type_override": "^t" }
-    }
-   },
-   "JSStringIsEqual": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "JSStringIsEqualToUTF8CString": {
     "args": {
-     "0": {},
      "1": { "c_array_delimited_by_null": true, "type_override": "^t", "type_modifier": "n" }
     }
    },
-   "JSStringRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "JSStringRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "JSValueCreateJSONString": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSValueGetType": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueIsBoolean": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "JSValueIsEqual": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
    "JSValueIsInstanceOfConstructor": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
-    }
-   },
-   "JSValueIsNull": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueIsNumber": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueIsObject": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueIsObjectOfClass": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "JSValueIsStrictEqual": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "JSValueIsString": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueIsUndefined": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueMakeBoolean": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSValueMakeFromJSONString": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {}
-   },
-   "JSValueMakeNull": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSValueMakeNumber": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSValueMakeString": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {}
-   },
-   "JSValueMakeUndefined": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "JSValueProtect": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "JSValueToBoolean": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "JSValueToNumber": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "JSValueToObject": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "JSValueToStringCopy": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "JSValueUnprotect": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

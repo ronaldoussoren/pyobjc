@@ -414,46 +414,6 @@
       "class_method": false,
       "retval": { "type_override": "Z" },
       "selector": "allowsFormFieldEntry"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "documentRef"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "pageClass"
-     }
-    ]
-   },
-   "PDFPage": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "pageRef"
-     }
-    ]
-   }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {
-   "PDFDocumentDelegate": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "classForPage"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "retval": {},
-      "selector": "classForAnnotationClass:"
      }
     ]
    }

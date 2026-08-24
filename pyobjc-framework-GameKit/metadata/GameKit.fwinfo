@@ -97,27 +97,6 @@
 	}
        }
       }
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPlayers:dataMode:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendDataToAllPlayers:withDataMode:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPlayers:withDataMode:error:"
      }
     ]
    },
@@ -1781,55 +1760,13 @@
     "methods": [
      {
       "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPeers:withDataMode:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendDataToAllPeers:withDataMode:error:"
-     },
-     {
-      "args": {
        "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "setDataReceiveHandler:withContext:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "acceptConnectionFromPeer:error:"
-     }
-    ]
-   },
-   "GKVoiceChatService": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "startVoiceChatWithParticipantID:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "acceptCallID:error:"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

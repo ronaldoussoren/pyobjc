@@ -1,41 +1,19 @@
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "AXTextMarkerRangeCreateWithBytes": {
     "args": {
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "n", "c_array_length_in_arg": 4 }
-    },
-    "retval": { "already_cfretained": true }
+    }
    },
    "AXTextMarkerCreate": {
     "args":{
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
-    },
-    "retval": { "already_cfretained": true }
+    }
    },
    "AXTextMarkerGetBytePtr": {
     "retval": { "c_array_of_variable_length": true }
-   },
-   "AXIsProcessTrustedWithOptions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "AXMakeProcessTrusted": {
-    "args": {
-     "0": {}
-    }
-   },
-   "AXObserverAddNotification": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
    },
    "AXObserverCreate": {
     "args": {
@@ -94,141 +72,69 @@
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "AXObserverGetRunLoopSource": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "AXObserverRemoveNotification": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
    "AXUIElementCopyActionDescription": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyActionNames": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyAttributeNames": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyAttributeValue": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyAttributeValues": {
     "args": {
-     "0": {},
-     "1": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyElementAtPosition": {
     "args": {
-     "0": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyMultipleAttributeValues": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyParameterizedAttributeNames": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "AXUIElementCopyParameterizedAttributeValue": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "AXUIElementCreateApplication": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "AXUIElementCreateSystemWide": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "AXUIElementGetAttributeValueCount": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "AXUIElementGetPid": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "AXUIElementIsAttributeSettable": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "AXUIElementPerformAction": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "AXUIElementPostKeyboardEvent": {
-    "args": {
-     "0": {}
-    }
-   },
-   "AXUIElementSetAttributeValue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "AXUIElementSetMessagingTimeout": {
-    "args": {
-     "0": {}
     }
    },
    "AXValueCreate": {
     "args": {
      "1": { "type_modifier": "n", "type_override": "^@"}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "AXValueGetType": {
-    "args": {
-     "0": {}
     }
    },
    "AXValueGetTypeID": {
@@ -236,16 +142,11 @@
    },
    "AXValueGetValue": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "null_accepted": false, "type_override": "^@"}
     }
    },
    "AddIconToSuite": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "CopyProcessName": {
     "args": {
@@ -254,38 +155,16 @@
     }
    },
    "DisposeCIcon": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "DisposeIconActionUPP": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "DisposeIconGetterUPP": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "DisposeIconSuite": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
-   },
-   "ForEachIconDo": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {}
-    }
-   },
-   "GetCIcon": {
-    "retval": {}
+    "ignore": true
    },
    "GetCurrentProcess": {
     "args": {
@@ -298,62 +177,28 @@
     }
    },
    "GetIcon": {
-    "ignore": true,
-    "retval": {}
+    "ignore": true
    },
    "GetIconCacheData": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "GetIconCacheProc": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "GetIconFamilyData": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {}
-    }
+    "ignore": true
    },
    "GetIconFromSuite": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "GetIconRefVariant": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "GetIconSizesFromIconRef": {
-    "ignore": true,
-    "args": {
-     "1": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "GetIconSuite": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
-   },
-   "GetLabel": {
-    "args": {
-     "1": {}
-    }
+    "ignore": true
    },
    "GetNextProcess": {
     "args": {
@@ -381,11 +226,6 @@
     "args": {
      "0": { "type_modifier": "n"},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "GetSuiteLabel": {
-    "args": {
-     "0": {}
     }
    },
    "HIShapeContainsPoint": {
@@ -492,93 +332,26 @@
    "ICSetProfileName": { "ignore": true },
    "ICStart": { "ignore": true },
    "ICStop": { "ignore": true },
-   "IconFamilyToIconSuite": {},
-   "IconIDToRgn": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "IconMethodToRgn": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {},
-     "4": {}
-    }
-   },
    "IconRefContainsCGPoint": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {},
-     "4": {}
-    }
+    "ignore": true
    },
    "IconRefIntersectsCGRect": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {},
-     "4": {}
-    }
+    "ignore": true
    },
    "IconRefToHIShape": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "3": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "IconRefToIconFamily": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {}
-    }
+    "ignore": true
    },
    "IconRefToRgn": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "1": {},
-     "4": {}
-    }
-   },
-   "IconSuiteToIconFamily": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "IconSuiteToRgn": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "InvokeIconActionUPP": {
-    "ignore": true,
-    "args": {
-     "1": {},
-     "2": {},
-     "3": {}
-    }
+    "ignore": true
    },
    "InvokeIconGetterUPP": {
-    "ignore": true,
-    "args": {
-     "1": {},
-     "2": {}
-    },
-    "retval": {}
-   },
-   "IsIconRefMaskEmpty": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "IsProcessVisible": {
     "args": {
@@ -591,19 +364,6 @@
     }
    },
    "LaunchApplication": { "ignore": true },
-   "LoadIconCache": {
-    "args": {
-     "0": {},
-     "3": {}
-    }
-   },
-   "MakeIconCache": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
    "NewIconActionUPP": {
     "args": {
      "0": {
@@ -624,8 +384,7 @@
        }
       }
      }
-    },
-    "retval": {}
+    }
    },
    "NewIconGetterUPP": {
     "args": {
@@ -644,94 +403,50 @@
        }
       }
      }
-    },
-    "retval": {}
-   },
-   "NewIconSuite": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PasteboardClear": {
-    "args": {
-     "0": {}
     }
    },
    "PasteboardCopyItemFlavorData": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCopyItemFlavors": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true}
     }
    },
    "PasteboardCopyName": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCopyPasteLocation": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardCreate": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "PasteboardGetItemCount": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "PasteboardGetItemFlavorFlags": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
    "PasteboardGetItemIdentifier": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "PasteboardPutItemFlavor": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    }
-   },
-   "PasteboardResolvePromises": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PasteboardSetPasteLocation": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "PasteboardSetPromiseKeeper": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -752,136 +467,18 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "PasteboardSynchronize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PlotCIcon": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PlotCIconHandle": {
-    "args": {
-     "0": {},
-     "3": {}
-    }
-   },
-   "PlotIcon": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "PlotIconHandle": {
-    "args": {
-     "0": {},
-     "3": {}
-    }
-   },
-   "PlotIconID": {
-    "args": {
-     "0": {}
-    }
-   },
-   "PlotIconMethod": {
-    "args": {
-     "0": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "PlotIconRef": {
-    "args": {
-     "0": {},
-     "4": {}
+     }
     }
    },
    "PlotIconRefInContext": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
-     "4": { "type_modifier": "n" },
-     "6": {}
-    }
-   },
-   "PlotIconSuite": {
-    "args": {
-     "0": {},
-     "3": {}
-    }
-   },
-   "PlotSICNHandle": {
-    "args": {
-     "0": {},
-     "3": {}
+     "4": { "type_modifier": "n" }
     }
    },
    "ProcessInformationCopyDictionary": {
     "args": {
      "0": {"type_modifier": "n"}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "PtInIconID": {
-    "args": {
-     "1": {}
-    }
-   },
-   "PtInIconMethod": {
-    "args": {
-     "1": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "PtInIconRef": {
-    "args": {
-     "0": {},
-     "1": {},
-     "4": {}
-    }
-   },
-   "PtInIconSuite": {
-    "args": {
-     "1": {},
-     "3": {}
-    }
-   },
-   "RectInIconID": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "RectInIconMethod": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {},
-     "4": {}
-    }
-   },
-   "RectInIconRef": {
-    "args": {
-     "0": {},
-     "1": {},
-     "4": {}
-    }
-   },
-   "RectInIconSuite": {
-    "args": {
-     "0": {},
-     "1": {},
-     "3": {}
     }
    },
    "SameProcess": {
@@ -901,29 +498,6 @@
      "0": { "type_modifier": "n" }
     }
    },
-   "SetIconCacheData": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SetIconCacheProc": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SetIconFamilyData": {
-    "args": {
-     "0": {},
-     "2": {}
-    }
-   },
-   "SetSuiteLabel": {
-    "args": {
-     "0": {}
-    }
-   },
    "ShowHideProcess": {
     "args": {
      "0": { "type_modifier": "n"}
@@ -936,57 +510,44 @@
    },
    "TranslationCopyDestinationType": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "TranslationCopySourceType": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "TranslationCreate": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "TranslationCreateWithSourceArray": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true },
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "TranslationGetTranslationFlags": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "TranslationPerformForData": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "TranslationPerformForFile": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
      "2": { "type_modifier": "n" },
-     "3": {},
      "4": { "type_modifier": "o" }
     }
    },
    "TranslationPerformForURL": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true}
     }
    },
@@ -1002,7 +563,6 @@
     }
    }
   },
-  "informal_protocols": {},
   "structs": {
    "ProcessSerialNumber": {
     "typestr": "{ProcessSerialNumber=II}",

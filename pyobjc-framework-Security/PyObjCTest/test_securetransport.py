@@ -169,32 +169,32 @@ class TestSecureTransport(TestCase):
         self.assertFalse(hasattr(Security, "SSLDisposeContext"))
 
         self.assertResultHasType(Security.SSLGetSessionState, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetSessionState, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLGetSessionState, 0, b"^{SSLContext=}")
         self.assertArgHasType(
             Security.SSLGetSessionState, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
         )
 
         self.assertResultHasType(Security.SSLSetIOFuncs, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetIOFuncs, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetIOFuncs, 0, b"^{SSLContext=}")
         self.assertArgIsFunction(Security.SSLSetIOFuncs, 1, SSLReadFunc, True)
         self.assertArgIsFunction(Security.SSLSetIOFuncs, 2, SSLWriteFunc, True)
 
         self.assertResultHasType(Security.SSLSetCertificate, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetCertificate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetCertificate, 1, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetCertificate, 0, b"^{SSLContext=}")
+        self.assertArgHasType(Security.SSLSetCertificate, 1, b"^{__CFArray=}")
 
         self.assertResultHasType(Security.SSLSetConnection, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetConnection, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetConnection, 0, b"^{SSLContext=}")
         self.assertArgHasType(Security.SSLSetConnection, 1, objc._C_ID)
 
         self.assertResultHasType(Security.SSLGetConnection, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetConnection, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLGetConnection, 0, b"^{SSLContext=}")
         self.assertArgHasType(
             Security.SSLGetConnection, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
         )
 
         self.assertResultHasType(Security.SSLSetPeerDomainName, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetPeerDomainName, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetPeerDomainName, 0, b"^{SSLContext=}")
         self.assertArgHasType(
             Security.SSLSetPeerDomainName,
             1,
@@ -204,27 +204,25 @@ class TestSecureTransport(TestCase):
         self.assertArgHasType(Security.SSLSetPeerDomainName, 2, objc._C_ULNG)
 
         self.assertResultHasType(Security.SSLGetPeerDomainNameLength, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetPeerDomainNameLength, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetPeerDomainNameLength, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetPeerDomainNameLength,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLGetPeerDomainName, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetPeerDomainName, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetPeerDomainName, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetPeerDomainName,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SSLGetPeerDomainName, 1, 2)
-        self.assertArgHasType(
-            Security.SSLGetPeerDomainName, 2, objc._C_INOUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsInOut(Security.SSLGetPeerDomainName, 2)
 
         self.assertResultHasType(Security.SSLGetNegotiatedProtocolVersion, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetNegotiatedProtocolVersion, 0, objc._C_ID)
+        self.assertArgHasType(
+            Security.SSLGetNegotiatedProtocolVersion, 0, b"^{SSLContext=}"
+        )
         self.assertArgHasType(
             Security.SSLGetNegotiatedProtocolVersion,
             1,
@@ -232,50 +230,42 @@ class TestSecureTransport(TestCase):
         )
 
         self.assertResultHasType(Security.SSLGetNumberSupportedCiphers, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetNumberSupportedCiphers, 0, objc._C_ID)
         self.assertArgHasType(
+            Security.SSLGetNumberSupportedCiphers, 0, b"^{SSLContext=}"
+        )
+        self.assertArgIsOut(
             Security.SSLGetNumberSupportedCiphers,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLGetSupportedCiphers, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetSupportedCiphers, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLGetSupportedCiphers, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
-        )
+        self.assertArgHasType(Security.SSLGetSupportedCiphers, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLGetSupportedCiphers, 1)
         self.assertArgSizeInArg(Security.SSLGetSupportedCiphers, 1, 2)
-        self.assertArgHasType(
+        self.assertArgIsInOut(
             Security.SSLGetSupportedCiphers,
             2,
-            objc._C_INOUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLSetEnabledCiphers, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetEnabledCiphers, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLSetEnabledCiphers, 0, b"^{SSLContext=}")
+        self.assertArgIsIn(
             Security.SSLSetEnabledCiphers, 1, objc._C_IN + objc._C_PTR + objc._C_INT
         )
         self.assertArgSizeInArg(Security.SSLSetEnabledCiphers, 1, 2)
-        self.assertArgHasType(Security.SSLSetEnabledCiphers, 2, objc._C_ULNG)
 
         self.assertResultHasType(Security.SSLGetNumberEnabledCiphers, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetNumberEnabledCiphers, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetNumberEnabledCiphers, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetNumberEnabledCiphers,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLGetEnabledCiphers, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetEnabledCiphers, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLGetEnabledCiphers, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
-        )
+        self.assertArgHasType(Security.SSLGetEnabledCiphers, 0, b"@")
+        self.assertArgIsOut(Security.SSLGetEnabledCiphers, 1)
         self.assertArgSizeInArg(Security.SSLGetEnabledCiphers, 1, 2)
-        self.assertArgHasType(
-            Security.SSLGetEnabledCiphers, 2, objc._C_INOUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsInOut(Security.SSLGetEnabledCiphers, 2)
 
         self.assertFalse(hasattr(Security, "SSLSetProtocolVersionEnabled"))
         self.assertFalse(hasattr(Security, "SSLGetProtocolVersionEnabled"))
@@ -294,35 +284,29 @@ class TestSecureTransport(TestCase):
         self.assertFalse(hasattr(Security, "SSLCopyPeerCertificates"))
 
         self.assertResultHasType(Security.SSLSetPeerID, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetPeerID, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLSetPeerID, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
-        )
+        self.assertArgHasType(Security.SSLSetPeerID, 0, b"^{SSLContext=}")
+        self.assertArgIsIn(Security.SSLSetPeerID, 1)
         self.assertArgSizeInArg(Security.SSLSetPeerID, 1, 2)
         self.assertArgHasType(Security.SSLSetPeerID, 2, objc._C_ULNG)
 
         self.assertResultHasType(Security.SSLGetPeerID, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetPeerID, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLGetPeerID, 1, objc._C_OUT + objc._C_PTR + objc._C_VOID
-        )
+        self.assertArgHasType(Security.SSLGetPeerID, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLGetPeerID, 1)
         self.assertArgSizeInArg(Security.SSLGetPeerID, 1, 2)
-        self.assertArgHasType(
-            Security.SSLGetPeerID, 2, objc._C_INOUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsInOut(Security.SSLGetPeerID, 2)
 
         self.assertResultHasType(Security.SSLGetNegotiatedCipher, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetNegotiatedCipher, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLGetNegotiatedCipher, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
-        )
+        self.assertArgHasType(Security.SSLGetNegotiatedCipher, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLGetNegotiatedCipher, 1)
 
         self.assertResultHasType(Security.SSLSetClientSideAuthenticate, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetClientSideAuthenticate, 0, objc._C_ID)
+        self.assertArgHasType(
+            Security.SSLSetClientSideAuthenticate, 0, b"^{SSLContext=}"
+        )
         self.assertArgHasType(Security.SSLSetClientSideAuthenticate, 1, objc._C_INT)
 
         self.assertResultHasType(Security.SSLAddDistinguishedName, objc._C_INT)
-        self.assertArgHasType(Security.SSLAddDistinguishedName, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLAddDistinguishedName, 0, b"^{SSLContext=}")
         self.assertArgHasType(
             Security.SSLAddDistinguishedName, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
         )
@@ -330,234 +314,201 @@ class TestSecureTransport(TestCase):
         self.assertArgHasType(Security.SSLAddDistinguishedName, 2, objc._C_ULNG)
 
         self.assertResultHasType(Security.SSLSetCertificateAuthorities, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetCertificateAuthorities, 0, objc._C_ID)
+        self.assertArgHasType(
+            Security.SSLSetCertificateAuthorities, 0, b"^{SSLContext=}"
+        )
         self.assertArgHasType(Security.SSLSetCertificateAuthorities, 1, objc._C_ID)
         self.assertArgHasType(Security.SSLSetCertificateAuthorities, 2, objc._C_NSBOOL)
 
         self.assertResultHasType(Security.SSLCopyCertificateAuthorities, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyCertificateAuthorities, 0, objc._C_ID)
         self.assertArgHasType(
+            Security.SSLCopyCertificateAuthorities, 0, b"^{SSLContext=}"
+        )
+        self.assertArgIsOut(
             Security.SSLCopyCertificateAuthorities,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SSLCopyCertificateAuthorities, 1)
 
         self.assertResultHasType(Security.SSLCopyDistinguishedNames, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyDistinguishedNames, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLCopyDistinguishedNames, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLCopyDistinguishedNames,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SSLCopyDistinguishedNames, 1)
 
         self.assertResultHasType(Security.SSLGetClientCertificateState, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetClientCertificateState, 0, objc._C_ID)
         self.assertArgHasType(
+            Security.SSLGetClientCertificateState, 0, b"^{SSLContext=}"
+        )
+        self.assertArgIsOut(
             Security.SSLGetClientCertificateState,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
         self.assertResultHasType(Security.SSLSetDiffieHellmanParams, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetDiffieHellmanParams, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLSetDiffieHellmanParams, 0, b"^{SSLContext=}")
+        self.assertArgIsIn(
             Security.SSLSetDiffieHellmanParams,
             1,
-            objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SSLSetDiffieHellmanParams, 1, 2)
-        self.assertArgHasType(Security.SSLSetDiffieHellmanParams, 2, objc._C_ULNG)
 
         self.assertResultHasType(Security.SSLGetDiffieHellmanParams, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetDiffieHellmanParams, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetDiffieHellmanParams, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetDiffieHellmanParams,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SSLGetDiffieHellmanParams, 1, 2)
-        self.assertArgHasType(
+        self.assertArgIsInOut(
             Security.SSLGetDiffieHellmanParams,
             2,
-            objc._C_INOUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertFalse(hasattr(Security, "SSLSetRsaBlinding"))
         self.assertFalse(hasattr(Security, "SSLGetRsaBlinding"))
 
         self.assertResultHasType(Security.SSLHandshake, objc._C_INT)
-        self.assertArgHasType(Security.SSLHandshake, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLHandshake, 0, b"^{SSLContext=}")
 
         self.assertResultHasType(Security.SSLWrite, objc._C_INT)
-        self.assertArgHasType(Security.SSLWrite, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLWrite, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
-        )
+        self.assertArgHasType(Security.SSLWrite, 0, b"^{SSLContext=}")
+        self.assertArgIsIn(Security.SSLWrite, 1)
         self.assertArgSizeInArg(Security.SSLWrite, 1, 2)
-        self.assertArgHasType(Security.SSLWrite, 2, objc._C_ULNG)
-        self.assertArgHasType(
-            Security.SSLWrite, 3, objc._C_OUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsOut(Security.SSLWrite, 3)
 
         self.assertResultHasType(Security.SSLRead, objc._C_INT)
-        self.assertArgHasType(Security.SSLRead, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLRead, 1, objc._C_OUT + objc._C_PTR + objc._C_VOID
-        )
+        self.assertArgHasType(Security.SSLRead, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLRead, 1)
         self.assertArgSizeInArg(Security.SSLRead, 1, (2, 3))
-        self.assertArgHasType(Security.SSLRead, 2, objc._C_ULNG)
-        self.assertArgHasType(
-            Security.SSLRead, 3, objc._C_OUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsOut(Security.SSLRead, 3)
 
         self.assertResultHasType(Security.SSLGetBufferedReadSize, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetBufferedReadSize, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLGetBufferedReadSize, 1, objc._C_OUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgHasType(Security.SSLGetBufferedReadSize, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLGetBufferedReadSize, 1)
 
         self.assertResultHasType(Security.SSLClose, objc._C_INT)
-        self.assertArgHasType(Security.SSLClose, 0, objc._C_ID)
 
         self.assertResultHasType(Security.SSLSetSessionOption, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetSessionOption, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetSessionOption, 1, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetSessionOption, 2, objc._C_NSBOOL)
+        self.assertArgHasType(Security.SSLSetSessionOption, 0, b"^{SSLContext=}")
+        self.assertArgIsBOOL(Security.SSLSetSessionOption, 2)
 
         self.assertResultHasType(Security.SSLGetSessionOption, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetSessionOption, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLGetSessionOption, 1, objc._C_INT)
-        self.assertArgHasType(
-            Security.SSLGetSessionOption, 2, objc._C_OUT + objc._C_PTR + objc._C_NSBOOL
-        )
+        self.assertArgHasType(Security.SSLGetSessionOption, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLGetSessionOption, 2)
 
         self.assertResultHasType(Security.SSLCopyPeerTrust, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyPeerTrust, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLCopyPeerTrust, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgHasType(Security.SSLCopyPeerTrust, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLCopyPeerTrust, 1)
         self.assertArgIsCFRetained(Security.SSLCopyPeerTrust, 1)
 
-        self.assertResultHasType(Security.SSLCreateContext, objc._C_ID)
+        self.assertResultHasType(Security.SSLCreateContext, b"^{SSLContext=}")
         self.assertResultIsCFRetained(Security.SSLCreateContext)
-        self.assertArgHasType(Security.SSLCreateContext, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLCreateContext, 1, objc._C_INT)
-        self.assertArgHasType(Security.SSLCreateContext, 2, objc._C_INT)
+        self.assertArgHasType(Security.SSLCreateContext, 0, b"^{__CFAllocator=}")
 
-        self.assertResultHasType(Security.SSLSetProtocolVersionMin, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetProtocolVersionMin, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetProtocolVersionMin, 1, objc._C_INT)
+        self.assertArgHasType(Security.SSLSetProtocolVersionMin, 0, b"^{SSLContext=}")
 
-        self.assertResultHasType(Security.SSLGetProtocolVersionMin, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetProtocolVersionMin, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetProtocolVersionMin, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetProtocolVersionMin,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
-        self.assertResultHasType(Security.SSLSetProtocolVersionMax, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetProtocolVersionMax, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetProtocolVersionMax, 1, objc._C_INT)
+        self.assertArgHasType(Security.SSLSetProtocolVersionMax, 0, b"^{SSLContext=}")
 
-        self.assertResultHasType(Security.SSLGetProtocolVersionMax, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetProtocolVersionMax, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetProtocolVersionMax, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetProtocolVersionMax,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
-        self.assertResultHasType(Security.SSLSetDatagramHelloCookie, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetDatagramHelloCookie, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLSetDatagramHelloCookie, 0, b"^{SSLContext=}")
+        self.assertArgIsIn(
             Security.SSLSetDatagramHelloCookie,
             1,
-            objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SSLSetDatagramHelloCookie, 1, 2)
-        self.assertArgHasType(Security.SSLSetDatagramHelloCookie, 2, objc._C_ULNG)
 
-        self.assertResultHasType(Security.SSLSetMaxDatagramRecordSize, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetMaxDatagramRecordSize, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetMaxDatagramRecordSize, 1, objc._C_ULNG)
-
-        self.assertResultHasType(Security.SSLGetMaxDatagramRecordSize, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetMaxDatagramRecordSize, 0, objc._C_ID)
         self.assertArgHasType(
+            Security.SSLSetMaxDatagramRecordSize, 0, b"^{SSLContext=}"
+        )
+
+        self.assertArgHasType(
+            Security.SSLGetMaxDatagramRecordSize, 0, b"^{SSLContext=}"
+        )
+        self.assertArgIsOut(
             Security.SSLGetMaxDatagramRecordSize,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLGetDatagramWriteSize, objc._C_INT)
-        self.assertArgHasType(Security.SSLGetDatagramWriteSize, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgHasType(Security.SSLGetDatagramWriteSize, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(
             Security.SSLGetDatagramWriteSize,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
     @min_os_level("10.11")
     def test_functions_10_11(self):
         self.assertResultHasType(Security.SSLCopyRequestedPeerName, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyRequestedPeerName, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLCopyRequestedPeerName, 0, b"^{SSLContext=}")
         self.assertArgHasType(
             Security.SSLCopyRequestedPeerName,
             1,
             objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(Security.SSLCopyRequestedPeerName, 1, 2)
-        self.assertArgHasType(
-            Security.SSLGetPeerDomainName, 2, objc._C_INOUT + objc._C_PTR + objc._C_ULNG
-        )
+        self.assertArgIsInOut(Security.SSLGetPeerDomainName, 2)
 
         self.assertResultHasType(Security.SSLCopyRequestedPeerNameLength, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyRequestedPeerNameLength, 0, objc._C_ID)
         self.assertArgHasType(
+            Security.SSLCopyRequestedPeerNameLength, 0, b"^{SSLContext=}"
+        )
+        self.assertArgIsOut(
             Security.SSLCopyRequestedPeerNameLength,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
     @min_os_level("10.12")
     def test_functions10_12(self):
         self.assertResultHasType(Security.SSLSetSessionConfig, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetSessionConfig, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetSessionConfig, 1, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetSessionConfig, 0, b"^{SSLContext=}")
+        self.assertArgHasType(Security.SSLSetSessionConfig, 1, b"^{__CFString=}")
 
         self.assertResultHasType(Security.SSLReHandshake, objc._C_INT)
-        self.assertArgHasType(Security.SSLReHandshake, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLReHandshake, 0, b"^{SSLContext=}")
 
     @min_os_level("10.13")
     def test_functions10_13(self):
         self.assertResultHasType(Security.SSLSetSessionTicketsEnabled, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetSessionTicketsEnabled, 0, objc._C_ID)
+        self.assertArgHasType(
+            Security.SSLSetSessionTicketsEnabled, 0, b"^{SSLContext=}"
+        )
         self.assertArgHasType(Security.SSLSetSessionTicketsEnabled, 1, objc._C_NSBOOL)
 
         self.assertResultHasType(Security.SSLSetOCSPResponse, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetOCSPResponse, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetOCSPResponse, 1, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetOCSPResponse, 0, b"^{SSLContext=}")
+        self.assertArgHasType(Security.SSLSetOCSPResponse, 1, b"^{__CFData=}")
 
         self.assertResultHasType(Security.SSLSetEncryptionCertificate, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetEncryptionCertificate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetEncryptionCertificate, 1, objc._C_ID)
+        self.assertArgHasType(
+            Security.SSLSetEncryptionCertificate, 0, b"^{SSLContext=}"
+        )
+        self.assertArgHasType(Security.SSLSetEncryptionCertificate, 1, b"^{__CFArray=}")
 
         self.assertResultHasType(Security.SSLSetError, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetError, 0, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetError, 0, b"^{SSLContext=}")
         self.assertArgHasType(Security.SSLSetError, 1, objc._C_INT)
 
     @min_os_level("10.13")
     def test_functions10_13_missing(self):
         self.assertResultHasType(Security.SSLSetALPNProtocols, objc._C_INT)
-        self.assertArgHasType(Security.SSLSetALPNProtocols, 0, objc._C_ID)
-        self.assertArgHasType(Security.SSLSetALPNProtocols, 1, objc._C_ID)
+        self.assertArgHasType(Security.SSLSetALPNProtocols, 0, b"^{SSLContext=}")
+        self.assertArgHasType(Security.SSLSetALPNProtocols, 1, b"^{__CFArray=}")
 
         self.assertResultHasType(Security.SSLCopyALPNProtocols, objc._C_INT)
-        self.assertArgHasType(Security.SSLCopyALPNProtocols, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SSLCopyALPNProtocols, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgHasType(Security.SSLCopyALPNProtocols, 0, b"^{SSLContext=}")
+        self.assertArgIsOut(Security.SSLCopyALPNProtocols, 1)
         self.assertArgIsCFRetained(Security.SSLCopyALPNProtocols, 1)

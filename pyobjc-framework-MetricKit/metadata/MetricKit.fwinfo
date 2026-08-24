@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "typed_enum": {
    "MXLaunchTaskID": { "type": "@", "type_name": "NSString" }
   },
@@ -12,12 +10,6 @@
     "value": "\n%{public, signpost:metrics}@",
     "unicode": false
    }
-  },
-  "functions": {
-   "_MXSignpostMetricsSnapshot": {
-    "retval": {}
-   }
-  },
-  "informal_protocols": {}
+  }
  }
 }

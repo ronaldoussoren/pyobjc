@@ -1347,9 +1347,6 @@
       "args": {
        "2": {
         "type_modifier": "o"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
@@ -1358,9 +1355,6 @@
      {
       "args": {
        "2": {
-        "type_modifier": "o"
-       },
-       "3": {
         "type_modifier": "o"
        }
       },
@@ -1447,199 +1441,6 @@
       },
       "class_method": false,
       "selector": "initWithRTFDFileWrapper:documentAttributes:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       },
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "dataFromRange:documentAttributes:error:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       },
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "fileWrapperFromRange:documentAttributes:error:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "RTFDFileWrapperFromRange:documentAttributes:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "RTFDFromRange:documentAttributes:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "RTFFromRange:documentAttributes:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{CGSize=dd}"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-      },
-      "selector": "boundingRectWithSize:options:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "containsAttachmentsInRange:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "containsAttachments"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "docFormatFromRange:documentAttributes:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "{_NSRange=QQ}"
-      },
-      "selector": "doubleClickAtIndex:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{CGPoint=dd}"
-       }
-      },
-      "class_method": false,
-      "selector": "drawAtPoint:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       }
-      },
-      "class_method": false,
-      "selector": "drawInRect:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       }
-      },
-      "class_method": false,
-      "selector": "drawWithRect:options:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "fontAttributesInRange:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "lineBreakBeforeIndex:withinRange:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "lineBreakByHyphenatingBeforeIndex:withinRange:"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       }
-      },
-      "class_method": false,
-      "selector": "nextWordFromIndex:forward:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "{_NSRange=QQ}"
-      },
-      "selector": "rangeOfTextBlock:atIndex:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "{_NSRange=QQ}"
-      },
-      "selector": "rangeOfTextList:atIndex:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "{_NSRange=QQ}"
-      },
-      "selector": "rangeOfTextTable:atIndex:"
-     },
-     {
-      "args": {
-       "0": {
-        "type_override": "{_NSRange=QQ}"
-       }
-      },
-      "class_method": false,
-      "selector": "rulerAttributesInRange:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "{CGSize=dd}"
-      },
-      "selector": "size"
      }
     ]
    },
@@ -5758,18 +5559,6 @@
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "writeToURL:ofType:forSaveOperation:originalContentsURL:error:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
       "selector": "fileAttributesToWriteToURL:ofType:forSaveOperation:originalContentsURL:error:"
      },
      {
@@ -6111,6 +5900,18 @@
        "type_override": "Z"
       },
       "selector": "writeToURL:ofType:"
+     },
+     {
+      "args": {
+       "4": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "writeToURL:ofType:forSaveOperation:originalContentsURL:error:"
      },
      {
       "class_method": false,
@@ -7142,24 +6943,6 @@
    },
    "NSFontCollection": {
     "methods": [
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "showFontCollection:withName:visibility:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "hideFontCollectionWithName:visibility:error:"
-     },
      {
       "args": {
        "3": {
@@ -10810,30 +10593,18 @@
       "args": {
        "2": {
         "type_modifier": "o"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "readFromURL:options:documentAttributes:error:"
      },
      {
       "args": {
        "2": {
         "type_modifier": "o"
-       },
-       "3": {
-        "type_modifier": "o"
        }
       },
       "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
       "selector": "readFromData:options:documentAttributes:error:"
      },
      {
@@ -11289,24 +11060,6 @@
        "type_override": "Z"
       },
       "selector": "isAccessibilityRequired"
-     },
-     {
-      "args": {
-       "1": {
-        "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-       },
-       "2": {
-        "type_override": "{CGPoint=dd}"
-       },
-       "3": {
-        "type_override": "Q"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "{CGRect={CGPoint=dd}{CGSize=dd}}"
-      },
-      "selector": "attachmentBoundsForTextContainer:proposedLineFragment:glyphPosition:characterIndex:"
      },
      {
       "args": {
@@ -12641,13 +12394,6 @@
        "type_override": "v"
       },
       "selector": "control:didFailToValidatePartialString:errorDescription:"
-     },
-     {
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "control:isValidObject:"
      },
      {
       "class_method": false,
@@ -14899,21 +14645,6 @@
    "NSObjectController": {
     "methods": [
      {
-      "args": {
-       "1": {
-        "type_override": "Z"
-       },
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "fetchWithRequest:merge:error:"
-     },
-     {
       "class_method": false,
       "retval": {
        "type_override": "Z"
@@ -15639,42 +15370,6 @@
     "methods": [
      {
       "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "configurePersistentStoreCoordinatorForURL:ofType:modelConfiguration:storeOptions:error:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "writeToURL:ofType:forSaveOperation:originalContentsURL:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "readFromURL:ofType:error:"
-     },
-     {
-      "args": {
        "2": {
         "type_modifier": "o"
        }
@@ -15684,18 +15379,6 @@
        "type_override": "Z"
       },
       "selector": "revertToContentsOfURL:ofType:error:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "configurePersistentStoreCoordinatorForURL:ofType:error:"
      }
     ]
    },
@@ -24905,33 +24588,6 @@
      },
      {
       "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "openURL:options:configuration:error:"
-     },
-     {
-      "args": {
-       "4": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "openURLs:withApplicationAtURL:options:configuration:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "launchApplicationAtURL:options:configuration:error:"
-     },
-     {
-      "args": {
        "1": {
         "type_modifier": "o"
        },
@@ -24986,18 +24642,6 @@
      },
      {
       "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "unmountAndEjectDeviceAtURL:error:"
-     },
-     {
-      "args": {
        "3": {
         "type_modifier": "o"
        }
@@ -25028,18 +24672,6 @@
       },
       "class_method": false,
       "selector": "typeOfFile:error:"
-     },
-     {
-      "args": {
-       "3": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {
-       "type_override": "Z"
-      },
-      "selector": "setDesktopImageURL:forScreen:options:error:"
      },
      {
       "class_method": false,

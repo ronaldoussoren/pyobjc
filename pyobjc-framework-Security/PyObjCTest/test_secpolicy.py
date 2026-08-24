@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 
 class TestSecPolicy(TestCase):
@@ -67,17 +66,12 @@ class TestSecPolicy(TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.SecPolicyGetTypeID(), int)
 
-        self.assertResultHasType(Security.SecPolicyCopyProperties, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecPolicyCopyProperties)
-        self.assertArgHasType(Security.SecPolicyCopyProperties, 0, objc._C_ID)
-
-        self.assertResultHasType(Security.SecPolicyCreateBasicX509, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecPolicyCopyProperties)
 
-        self.assertResultHasType(Security.SecPolicyCreateSSL, objc._C_ID)
+        self.assertResultIsCFRetained(Security.SecPolicyCopyProperties)
+
         self.assertResultIsCFRetained(Security.SecPolicyCreateSSL)
-        self.assertArgHasType(Security.SecPolicyCreateSSL, 0, objc._C_NSBOOL)
-        self.assertArgHasType(Security.SecPolicyCreateSSL, 1, objc._C_ID)
+        self.assertArgIsBOOL(Security.SecPolicyCreateSSL, 0)
 
         self.assertFalse(hasattr(Security, "SecPolicyCreateWithOID"))
         self.assertFalse(hasattr(Security, "SecPolicyGetOID"))
@@ -86,11 +80,6 @@ class TestSecPolicy(TestCase):
         self.assertFalse(hasattr(Security, "SecPolicySetProperties"))
         self.assertFalse(hasattr(Security, "SecPolicyGetTPHandle"))
 
-        self.assertResultHasType(Security.SecPolicyCreateRevocation, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecPolicyCreateRevocation)
-        self.assertArgHasType(Security.SecPolicyCreateRevocation, 0, objc._C_NSUInteger)
 
-        self.assertResultHasType(Security.SecPolicyCreateWithProperties, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecPolicyCreateWithProperties)
-        self.assertArgHasType(Security.SecPolicyCreateWithProperties, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecPolicyCreateWithProperties, 1, objc._C_ID)

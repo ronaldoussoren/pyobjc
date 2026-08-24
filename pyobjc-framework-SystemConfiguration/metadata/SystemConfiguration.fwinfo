@@ -46,349 +46,112 @@
     "gettypeid_func": "SCPreferencesGetTypeID"
    }
   },
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "DHCPClientPreferencesCopyApplicationOptions": {
     "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^i"
+      "type_modifier": "o"
      }
     },
     "retval": {
      "already_cfretained": true,
      "c_array_length_in_arg": 1,
-     "free_result": true,
-     "type_override": "^C"
+     "free_result": true
     }
    },
    "DHCPClientPreferencesSetApplicationOptions": {
     "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     },
      "1": {
       "c_array_length_in_arg": 2,
-      "type_modifier": "n",
-      "type_override": "^C"
+      "type_modifier": "n"
      }
-    }
-   },
-   "DHCPInfoGetLeaseStartTime": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDate=}"
-    }
-   },
-   "DHCPInfoGetOptionData": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFData=}"
     }
    },
    "SCBondInterfaceCopyAll": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCBondInterfaceCopyAvailableMemberInterfaces": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCBondInterfaceCopyStatus": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCBondStatus=}"
+     "already_cfretained": true
     }
    },
    "SCBondInterfaceCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCBondInterfaceGetMemberInterfaces": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "SCBondInterfaceGetOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCBondInterfaceRemove": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    }
-   },
-   "SCBondInterfaceSetLocalizedDisplayName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCBondInterfaceSetMemberInterfaces": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFArray=}"
-     }
-    }
-   },
-   "SCBondInterfaceSetOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCBondStatusGetInterfaceStatus": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCBondStatus=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCBondStatusGetMemberInterfaces": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCBondStatus=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCCopyLastError": {
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFError=}"
-    }
-   },
-   "SCDynamicStoreAddTemporaryValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCDynamicStoreAddValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyComputerName": {
     "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyConsoleUser": {
     "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      },
      "2": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyDHCPInfo": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyKeyList": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyLocalHostName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyLocation": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyMultiple": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFArray=}"
-     },
-     "2": {
-      "type_override": "^{__CFArray=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyNotifiedKeys": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyProxies": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCDynamicStoreCopyValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
      "2": {
       "callable": {
        "arguments": {
@@ -405,43 +168,23 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "3": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCDynamicStore=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCreateRunLoopSource": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__SCDynamicStore=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFRunLoopSource=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreCreateWithOptions": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFDictionary=}"
-     },
      "3": {
       "callable": {
        "arguments": {
@@ -458,223 +201,71 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "4": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCDynamicStore=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
       "printf_format": true,
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     },
     "variadic": true
    },
    "SCDynamicStoreKeyCreateComputerName": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateConsoleUser": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateHostNames": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateLocation": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateNetworkGlobalEntity": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateNetworkInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateNetworkInterfaceEntity": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
-     "3": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateNetworkServiceEntity": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
-     "3": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreateProxies": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCDynamicStoreNotifyValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCDynamicStoreRemoveValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCDynamicStoreSetDispatchQueue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SCDynamicStoreSetMultiple": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     },
-     "2": {
-      "type_override": "^{__CFArray=}"
-     },
-     "3": {
-      "type_override": "^{__CFArray=}"
-     }
-    }
-   },
-   "SCDynamicStoreSetNotificationKeys": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFArray=}"
-     },
-     "2": {
-      "type_override": "^{__CFArray=}"
-     }
-    }
-   },
-   "SCDynamicStoreSetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCDynamicStore=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCErrorString": {
@@ -703,80 +294,44 @@
       "type_modifier": "n"
      },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      }
     }
    },
    "SCNetworkConnectionCopyExtendedStatus": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkConnectionCopyServiceID": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkConnectionCopyStatistics": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkConnectionCopyUserOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFDictionary=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkConnectionCopyUserPreferences": {
     "args": {
-     "0": {
-      "type_override": "^{__CFDictionary=}"
-     },
      "1": {
       "already_cfretained": true,
-      "type_modifier": "o",
-      "type_override": "^^{__CFString}"
+      "type_modifier": "o"
      },
      "2": {
       "already_cfretained": true,
-      "type_modifier": "o",
-      "type_override": "^^{__CFDictionary}"
+      "type_modifier": "o"
      }
     }
    },
    "SCNetworkConnectionCreateWithServiceID": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
      "2": {
       "callable": {
        "arguments": {
@@ -793,374 +348,77 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "3": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkConnection=}"
-    }
-   },
-   "SCNetworkConnectionGetStatus": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    }
-   },
-   "SCNetworkConnectionScheduleWithRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkConnectionSetDispatchQueue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SCNetworkConnectionStart": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCNetworkConnectionStop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     }
-    }
-   },
-   "SCNetworkConnectionUnscheduleFromRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkConnection=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCNetworkInterfaceCopyAll": {
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkInterfaceCopyMTU": {
     "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^i"
+      "type_modifier": "o"
      },
      "2": {
-      "type_modifier": "o",
-      "type_override": "^i"
+      "type_modifier": "o"
      },
      "3": {
-      "type_modifier": "o",
-      "type_override": "^i"
+      "type_modifier": "o"
      }
     }
    },
    "SCNetworkInterfaceCopyMediaOptions": {
     "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
      "1": {
-      "type_modifier": "o",
-      "type_override": "^^{__CFDictionary}"
+      "type_modifier": "o"
      },
      "2": {
-      "type_modifier": "o",
-      "type_override": "^^{__CFDictionary}"
+      "type_modifier": "o"
      },
      "3": {
-      "type_modifier": "o",
-      "type_override": "^^{__CFArray}"
+      "type_modifier": "o"
      }
     }
    },
    "SCNetworkInterfaceCopyMediaSubTypeOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFArray=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkInterfaceCopyMediaSubTypes": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFArray=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkInterfaceCreateWithInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCNetworkInterfaceForceConfigurationRefresh": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    }
-   },
-   "SCNetworkInterfaceGetBSDName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkInterfaceGetConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCNetworkInterfaceGetExtendedConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCNetworkInterfaceGetHardwareAddressString": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkInterfaceGetInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCNetworkInterfaceGetInterfaceType": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkInterfaceGetLocalizedDisplayName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkInterfaceGetSupportedInterfaceTypes": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "SCNetworkInterfaceGetSupportedProtocolTypes": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "SCNetworkInterfaceRefreshConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkInterfaceSetConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCNetworkInterfaceSetExtendedConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCNetworkInterfaceSetMTU": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    }
-   },
-   "SCNetworkInterfaceSetMediaOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFArray=}"
-     }
-    }
-   },
-   "SCNetworkProtocolGetConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkProtocol=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCNetworkProtocolGetEnabled": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkProtocol=}"
-     }
-    }
-   },
-   "SCNetworkProtocolGetProtocolType": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkProtocol=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkProtocolSetConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkProtocol=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCNetworkProtocolSetEnabled": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkProtocol=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCNetworkReachabilityCreateWithAddress": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
       "type_modifier": "n",
       "type_override": "^{sockaddr=CC[14c]}"
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkReachability=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkReachabilityCreateWithAddressPair": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
-      "type_modifier": "n",
-      "type_override": "^{sockaddr=CC[14c]}"
+      "type_modifier": "n"
      },
      "2": {
       "type_modifier": "n",
@@ -1168,53 +426,21 @@
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkReachability=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkReachabilityCreateWithName": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
      "1": {
       "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true
      }
     },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkReachability=}"
-    }
-   },
-   "SCNetworkReachabilityGetFlags": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkReachability=}"
-     },
-     "1": {
-      "type_modifier": "o",
-      "type_override": "^I"
-     }
-    }
-   },
-   "SCNetworkReachabilityScheduleWithRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkReachability=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCNetworkReachabilitySetCallback": {
     "args": {
-     "0": {
-      "type_override": "^{__SCNetworkReachability=}"
-     },
      "1": {
       "callable": {
        "arguments": {
@@ -1231,540 +457,85 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "2": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     }
    },
-   "SCNetworkReachabilitySetDispatchQueue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SCNetworkReachabilityUnscheduleFromRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkReachability=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkServiceAddProtocolType": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
    "SCNetworkServiceCopy": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkService=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkServiceCopyAll": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkServiceCopyProtocol": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkProtocol=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkServiceCopyProtocols": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkServiceCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkService=}"
-    }
-   },
-   "SCNetworkServiceEstablishDefaultConfiguration": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkServiceGetEnabled": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkServiceGetInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCNetworkServiceGetName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkServiceGetServiceID": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkServiceRemove": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkServiceRemoveProtocolType": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkServiceSetEnabled": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkServiceSetName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkService=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkSetAddService": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkSetContainsInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCNetworkSetCopy": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkSet=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkSetCopyAll": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkSetCopyCurrent": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkSet=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkSetCopyServices": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCNetworkSetCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkSet=}"
-    }
-   },
-   "SCNetworkSetGetName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkSetGetServiceOrder": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFArray=}"
-    }
-   },
-   "SCNetworkSetGetSetID": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCNetworkSetRemove": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    }
-   },
-   "SCNetworkSetRemoveService": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkService=}"
-     }
-    }
-   },
-   "SCNetworkSetSetCurrent": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     }
-    }
-   },
-   "SCNetworkSetSetName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCNetworkSetSetServiceOrder": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkSet=}"
-     },
-     "1": {
-      "type_override": "^{__CFArray=}"
-     }
-    }
-   },
-   "SCPreferencesAddValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesApplyChanges": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    }
-   },
-   "SCPreferencesCommitChanges": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCPreferencesCopyKeyList": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCPreferencesCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCPreferences=}"
+     "already_cfretained": true
     }
    },
    "SCPreferencesCreateWithAuthorization": {
-    "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     },
-     "3": {
-      "type_override": "^{AuthorizationOpaqueRef=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCPreferences=}"
-    }
-   },
-   "SCPreferencesGetSignature": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFData=}"
-    }
-   },
-   "SCPreferencesGetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesLock": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCPreferencesPathCreateUniqueChild": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCPreferencesPathGetLink": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFString=}"
-    }
-   },
-   "SCPreferencesPathGetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCPreferencesPathRemoveValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesPathSetLink": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesPathSetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     },
-     "2": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCPreferencesRemoveValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesScheduleWithRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
+     "already_cfretained": true
     }
    },
    "SCPreferencesSetCallback": {
     "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
      "1": {
       "callable": {
        "arguments": {
@@ -1781,182 +552,35 @@
        "retval": {
         "type": "v"
        }
-      },
-      "type_override": "^?"
+      }
      },
      "2": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
     }
    },
-   "SCPreferencesSetComputerName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesSetDispatchQueue": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "SCPreferencesSetLocalHostName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesSetValue": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCPreferencesSynchronize": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    }
-   },
-   "SCPreferencesUnlock": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    }
-   },
-   "SCPreferencesUnscheduleFromRunLoop": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__CFRunLoop=}"
-     },
-     "2": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
    "SCVLANInterfaceCopyAll": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    },
    "SCVLANInterfaceCopyAvailablePhysicalInterfaces": {
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
+    }
+   },
+   "SCNetworkReachabilityGetFlags": {
+    "args": {
+     "1": {
+      "type_modifier": "o"
+     }
     }
    },
    "SCVLANInterfaceCreate": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCPreferences=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "2": {
-      "type_override": "^{__CFNumber=}"
-     }
-    },
     "retval": {
-     "already_cfretained": true,
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCVLANInterfaceGetOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
-   },
-   "SCVLANInterfaceGetPhysicalInterface": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__SCNetworkInterface=}"
-    }
-   },
-   "SCVLANInterfaceGetTag": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    },
-    "retval": {
-     "type_override": "^{__CFNumber=}"
-    }
-   },
-   "SCVLANInterfaceRemove": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     }
-    }
-   },
-   "SCVLANInterfaceSetLocalizedDisplayName": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
-    }
-   },
-   "SCVLANInterfaceSetOptions": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
-    }
-   },
-   "SCVLANInterfaceSetPhysicalInterfaceAndTag": {
-    "args": {
-     "0": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "1": {
-      "type_override": "^{__SCNetworkInterface=}"
-     },
-     "2": {
-      "type_override": "^{__CFNumber=}"
-     }
+     "already_cfretained": true
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

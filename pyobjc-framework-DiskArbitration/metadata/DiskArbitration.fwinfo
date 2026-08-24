@@ -2,8 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "cftypes": {
    "DAApprovalSessionRef": {
     "gettypeid_func": "DAApprovalSessionGetTypeID"
@@ -35,31 +33,8 @@
      "typestr": "Q"
     }
    },
-   "DAApprovalSessionCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DAApprovalSessionScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "DAApprovalSessionUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
    "DADiskClaim": {
     "args": {
-     "0": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -76,7 +51,6 @@
        }
       }
      },
-     "3": {},
      "4": {
       "callable_retained": true,
       "callable": {
@@ -95,63 +69,16 @@
         "type": "v"
        }
       }
-     },
-     "5": {}
-    }
-   },
-   "DADiskCopyDescription": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DADiskCopyIOMedia": {
-    "args": {
-     "0": {}
-    }
-   },
-   "DADiskCopyWholeDisk": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
+     }
     }
    },
    "DADiskCreateFromBSDName": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "c_array_delimited_by_null": true, "type_override": "^t", "type_modifier": "n" }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DADiskCreateFromIOMedia": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DADiskCreateFromVolumePath": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "DADiskEject": {
     "args": {
-     "0": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -170,30 +97,14 @@
         "type": "v"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "DADiskGetBSDName": {
-    "args": {
-     "0": {}
-    },
     "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
-   },
-   "DADiskGetOptions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "DADiskIsClaimed": {
-    "args": {
-     "0": {}
-    }
    },
    "DADiskMount": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -212,14 +123,11 @@
         "type": "v"
        }
       }
-     },
-     "4": {}
+     }
     }
    },
    "DADiskMountWithArguments": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -239,14 +147,11 @@
        }
       }
      },
-     "4": {},
      "5": { "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    },
    "DADiskRename": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -265,23 +170,11 @@
         "type": "v"
        }
       }
-     },
-     "4": {}
-    }
-   },
-   "DADiskSetOptions": {
-    "args": {
-     "0": {}
-    }
-   },
-   "DADiskUnclaim": {
-    "args": {
-     "0": {}
+     }
     }
    },
    "DADiskUnmount": {
     "args": {
-     "0": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -300,34 +193,11 @@
         "type": "v"
        }
       }
-     },
-     "3": {}
+     }
     }
-   },
-   "DADissenterCreate": {
-    "args": {
-     "0": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DADissenterGetStatus": {
-    "args": {
-     "0": {}
-    }
-   },
-   "DADissenterGetStatusString": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "DARegisterDiskAppearedCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -343,15 +213,11 @@
         "type": "v"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "DARegisterDiskDescriptionChangedCallback": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -370,14 +236,11 @@
         "type": "v"
        }
       }
-     },
-     "4": {}
+     }
     }
    },
    "DARegisterDiskDisappearedCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -393,14 +256,11 @@
         "type": "v"
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "DARegisterDiskEjectApprovalCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -417,14 +277,11 @@
         "already_cfretained": true
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "DARegisterDiskMountApprovalCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -441,14 +298,11 @@
         "already_cfretained": true
        }
       }
-     },
-     "3": {}
+     }
     }
    },
    "DARegisterDiskPeekCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "3": {
       "callable_retained": true,
       "callable": {
@@ -464,14 +318,11 @@
         "type": "v"
        }
       }
-     },
-     "4": {}
+     }
     }
    },
    "DARegisterDiskUnmountApprovalCallback": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable_retained": true,
       "callable": {
@@ -488,52 +339,9 @@
         "already_cfretained": true
        }
       }
-     },
-     "3": {}
-    }
-   },
-   "DASessionCreate": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "DASessionScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "DASessionSetDispatchQueue": {
-    "args": {
-     "0": {}
-    }
-   },
-   "DASessionUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "DAUnregisterApprovalCallback": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "DAUnregisterCallback": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

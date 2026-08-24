@@ -1,7 +1,5 @@
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "externs": {
    "ar_error_domain": { "typestr": "@" }
   },
@@ -31,7 +29,6 @@
    },
    "ar_authorization_results_enumerate_results_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -49,17 +46,8 @@
      }
     }
    },
-   "ar_barcode_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
-   "ar_barcode_anchor_get_payload_string_value": {
-    "retval": {}
-   },
    "ar_barcode_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -79,7 +67,6 @@
    },
    "ar_barcode_detection_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -105,7 +92,6 @@
    },
    "ar_camera_frame_provider_set_update_handler_f": {
     "args": {
-     "3": {},
      "4": {
       "callable": {
        "arguments": {
@@ -123,12 +109,8 @@
      }
     }
    },
-   "ar_camera_frame_sample_get_pixel_buffer": {
-    "retval": {}
-   },
    "ar_camera_frame_samples_enumerate_frame_samples_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -148,7 +130,6 @@
    },
    "ar_camera_video_formats_enumerate_video_formats_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -165,9 +146,6 @@
       }
      }
     }
-   },
-   "ar_data_get_bytes": {
-    "retval": {}
    },
    "ar_error_copy_cf_error": {
     "retval": {  "already_cfretained": true }
@@ -203,7 +181,6 @@
    },
    "ar_data_providers_enumerate_data_providers_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -228,7 +205,6 @@
    },
    "ar_environment_light_estimation_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -252,14 +228,8 @@
      }
     }
    },
-   "ar_environment_probe_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_environment_probe_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -284,7 +254,6 @@
    },
    "ar_hand_skeleton_enumerate_joints_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -304,7 +273,6 @@
    },
    "ar_hand_tracking_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -327,7 +295,6 @@
    },
    "ar_identifiers_enumerate_identifiers_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -345,14 +312,8 @@
      }
     }
    },
-   "ar_image_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_image_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -372,7 +333,6 @@
    },
    "ar_image_tracking_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -396,14 +356,8 @@
      }
     }
    },
-   "ar_mesh_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_mesh_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -423,7 +377,6 @@
    },
    "ar_mesh_geometries_enumerate_geometries_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -441,14 +394,8 @@
      }
     }
    },
-   "ar_object_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_object_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -468,7 +415,6 @@
    },
    "ar_object_tracking_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -492,14 +438,8 @@
      }
     }
    },
-   "ar_plane_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_plane_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -519,7 +459,6 @@
    },
    "ar_plane_detection_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -555,20 +494,8 @@
      "0": { "type_override": "@"}
     }
    },
-   "ar_reference_image_get_name": {
-    "retval": {}
-   },
-   "ar_reference_image_get_resource_group_name": {
-    "retval": {}
-   },
-   "ar_reference_image_set_name": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_reference_images_enumerate_images_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -586,35 +513,8 @@
      }
     }
    },
-   "ar_reference_images_load_reference_images_in_group": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "ar_reference_object_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
-   "ar_reference_object_get_input_file_path": {
-    "retval": {}
-   },
-   "ar_reference_object_get_name": {
-    "retval": {}
-   },
-   "ar_reference_object_get_usdz_file_path": {
-    "retval": {}
-   },
-   "ar_reference_object_load_from_url": {
-    "args": {
-     "0": {}
-    }
-   },
    "ar_reference_object_load_from_url_f": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -641,17 +541,8 @@
      }
     }
    },
-   "ar_reference_object_load_with_name": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "ar_reference_object_load_with_name_f": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -683,7 +574,6 @@
    },
    "ar_reference_objects_enumerate_objects_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -701,25 +591,8 @@
      }
     }
    },
-   "ar_release": {
-    "args": {
-     "0": {}
-    }
-   },
-   "ar_retain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "ar_room_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_room_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -739,7 +612,6 @@
    },
    "ar_room_tracking_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -765,7 +637,6 @@
    },
    "ar_scene_reconstruction_provider_set_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -791,7 +662,6 @@
    },
    "ar_session_query_authorization_results_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -814,7 +684,6 @@
    },
    "ar_session_request_authorization_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -837,7 +706,6 @@
    },
    "ar_session_set_authorization_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -857,7 +725,6 @@
    },
    "ar_session_set_data_provider_state_change_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -886,7 +753,6 @@
    },
    "ar_strings_enumerate_strings_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -904,14 +770,8 @@
      }
     }
    },
-   "ar_world_anchor_get_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_world_anchors_enumerate_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -931,7 +791,6 @@
    },
    "ar_world_tracking_provider_add_anchor_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -957,7 +816,6 @@
    },
    "ar_world_tracking_provider_copy_all_world_anchors_f": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -975,14 +833,8 @@
      }
     }
    },
-   "ar_world_tracking_provider_remove_all_anchors_f": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_world_tracking_provider_remove_anchor_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -1006,15 +858,8 @@
      }
     }
    },
-   "ar_world_tracking_provider_remove_anchor_with_identifier": {
-    "args": {
-     "1": {}
-    }
-   },
    "ar_world_tracking_provider_remove_anchor_with_identifier_f": {
     "args": {
-     "1": {},
-     "2": {},
      "3": {
       "callable": {
        "arguments": {
@@ -1040,7 +885,6 @@
    },
    "ar_world_tracking_provider_set_anchor_update_handler_f": {
     "args": {
-     "2": {},
      "3": {
       "callable": {
        "args": {
@@ -1064,7 +908,6 @@
      }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

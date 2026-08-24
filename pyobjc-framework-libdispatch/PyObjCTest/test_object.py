@@ -35,7 +35,6 @@ class TestObjectAPI(TestCase):
         # self.assertArgHasType(dispatch.dispatch_wait, 0, objc._C_ID)
         # self.assertArgHasType(dispatch.dispatch_wait, 1, objc._C_ULNGLNG)
 
-        self.assertFalse(hasattr(dispatch, "dispatch_notify"))
         # Generic function macro, not available as C function
         # self.assertResultHasType(dispatch.dispatch_notify, objc._C_VOID)
         # self.assertArgHasType(dispatch.dispatch_notify, 0, objc._C_ID)

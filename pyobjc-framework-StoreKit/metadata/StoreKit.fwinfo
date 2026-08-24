@@ -83,9 +83,6 @@
    "SKDownloadTimeRemainingUnknown": {
     "typestr": "d"
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

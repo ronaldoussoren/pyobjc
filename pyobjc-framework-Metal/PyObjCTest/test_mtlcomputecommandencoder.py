@@ -440,12 +440,12 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             0,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(

@@ -82,88 +82,47 @@ class TestSecCode(TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.SecCodeGetTypeID(), int)
 
-        self.assertResultHasType(Security.SecCodeCopySelf, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopySelf, 0, objc._C_UINT)
-        self.assertArgHasType(
-            Security.SecCodeCopySelf, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecCodeCopySelf, 1)
         self.assertArgIsCFRetained(Security.SecCodeCopySelf, 1)
 
-        self.assertResultHasType(Security.SecCodeCopyStaticCode, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopyStaticCode, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyStaticCode, 1, objc._C_UINT)
-        self.assertArgHasType(
-            Security.SecCodeCopyStaticCode, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecCodeCopyStaticCode, 2)
         self.assertArgIsCFRetained(Security.SecCodeCopyStaticCode, 2)
 
-        self.assertResultHasType(Security.SecCodeCopyHost, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopyHost, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyHost, 1, objc._C_UINT)
-        self.assertArgHasType(
-            Security.SecCodeCopyHost, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecCodeCopyHost, 2)
         self.assertArgIsCFRetained(Security.SecCodeCopyHost, 2)
 
-        self.assertResultHasType(Security.SecCodeCopyGuestWithAttributes, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopyGuestWithAttributes, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyGuestWithAttributes, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyGuestWithAttributes, 2, objc._C_UINT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecCodeCopyGuestWithAttributes,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecCodeCopyGuestWithAttributes, 3)
 
-        self.assertResultHasType(Security.SecCodeCheckValidity, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCheckValidity, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCheckValidity, 1, objc._C_UINT)
-        self.assertArgHasType(Security.SecCodeCheckValidity, 2, objc._C_ID)
+        Security.SecCodeCheckValidity
 
-        self.assertResultHasType(Security.SecCodeCheckValidityWithErrors, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCheckValidityWithErrors, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCheckValidityWithErrors, 1, objc._C_UINT)
-        self.assertArgHasType(Security.SecCodeCheckValidityWithErrors, 2, objc._C_ID)
-        self.assertArgHasType(
+        Security.SecCodeCheckValidityWithErrors
+        self.assertArgIsOut(
             Security.SecCodeCheckValidityWithErrors,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(Security.SecCodeCopyPath, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopyPath, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyPath, 1, objc._C_UINT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecCodeCopyPath, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
         )
         self.assertArgIsCFRetained(Security.SecCodeCopyPath, 2)
 
-        self.assertResultHasType(Security.SecCodeCopyDesignatedRequirement, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopyDesignatedRequirement, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecCodeCopyDesignatedRequirement, 1, objc._C_UINT
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecCodeCopyDesignatedRequirement,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecCodeCopyDesignatedRequirement, 2)
 
-        self.assertResultHasType(Security.SecCodeCopySigningInformation, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeCopySigningInformation, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopySigningInformation, 1, objc._C_UINT)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecCodeCopySigningInformation,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecCodeCopySigningInformation, 2)
 
-        self.assertResultHasType(Security.SecCodeMapMemory, objc._C_INT)
-        self.assertArgHasType(Security.SecCodeMapMemory, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeMapMemory, 1, objc._C_UINT)
+        Security.SecCodeMapMemory
 
     @min_os_level("10.13")
     def test_functions10_13(self):

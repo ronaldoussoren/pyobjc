@@ -1,6 +1,5 @@
 import Security
-from PyObjCTools.TestSupport import TestCase, expectedFailure
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSecEncryptTransform(TestCase):
@@ -28,28 +27,20 @@ class TestSecEncryptTransform(TestCase):
         self.assertIsInstance(Security.kSecOAEPMGF1DigestAlgorithmAttributeName, str)
 
     def test_functions(self):
-        self.assertResultHasType(Security.SecEncryptTransformCreate, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecEncryptTransformCreate)
-        self.assertArgHasType(Security.SecEncryptTransformCreate, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecEncryptTransformCreate,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
+        self.assertArgIsCFRetained(Security.SecEncryptTransformCreate, 1)
 
-        self.assertResultHasType(Security.SecDecryptTransformCreate, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecDecryptTransformCreate)
-        self.assertArgHasType(Security.SecDecryptTransformCreate, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecDecryptTransformCreate,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
+        self.assertArgIsCFRetained(Security.SecDecryptTransformCreate, 1)
 
-    @expectedFailure
-    def test_functions_missing(self):
-        # On 10.13.4 (beta) both functions are found, but crash...
-        self.fail("Hard crash")
-        return
-        self.assertIsInstance(Security.SecDecryptTransformGetTypeID(), int)
-        self.assertIsInstance(Security.SecEncryptTransformGetTypeID(), int)
+        # XXX: Calling either one of these causes a hard crash
+        Security.SecDecryptTransformGetTypeID
+        Security.SecEncryptTransformGetTypeID

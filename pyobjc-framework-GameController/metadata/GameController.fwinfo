@@ -144,13 +144,6 @@
       },
       "class_method": false,
       "selector": "setControllerPausedHandler:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "supportsHIDDevice:"
      }
     ]
    },
@@ -1095,19 +1088,6 @@
      }
     ]
    },
-   "GCRacingWheel": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "acquireDeviceWithError:"
-     }
-    ]
-   },
    "NSObject": {
     "methods": [
      {
@@ -1459,7 +1439,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "GCExtendedGamepadSnapShotDataV100FromNSData": {
     "args": {
@@ -1532,7 +1511,6 @@
     }
    }
   },
-  "informal_protocols": {},
   "structs": {
    "GCExtendedGamepadSnapShotDataV100": {
     "pack": 1

@@ -29,6 +29,4 @@ class TestCFODNode(TestCase):
         CFOpenDirectory.ODQueryScheduleWithRunLoop
         CFOpenDirectory.ODQueryUnscheduleFromRunLoop
 
-        self.assertArgHasType(
-            CFOpenDirectory.ODQuerySetDispatchQueue, 1, b"^{dispatch_queue_s=}"
-        )
+        self.assertArgHasType(CFOpenDirectory.ODQuerySetDispatchQueue, 1, objc._C_ID)

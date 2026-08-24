@@ -110,18 +110,8 @@
     "methods": [
      {
       "args": {
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "readDataOfLength:fromOffset:toDestination:completionHandler:"
-     },
-     {
-      "args": {
        "2": { "type_modifier": "o", "c_array_length_in_arg": 0 },
-       "3": { "type_modifier": "o" },
-       "4": {
-        "type_modifier": "o"
-       }
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "readDataOfLength:fromOffset:toDestination:bytesRead:error:"
@@ -132,34 +122,6 @@
       },
       "class_method": false,
       "selector": "byteSourceForRelatedFileName:error:"
-     }
-    ]
-   },
-   "MERAWProcessorPixelBufferManager": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {},
-      "selector": "createPixelBufferAndReturnError:"
-     }
-    ]
-   },
-   "MEVideoDecoderPixelBufferManager": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "retval": {},
-      "selector": "createPixelBufferAndReturnError:"
      }
     ]
    }
@@ -178,22 +140,10 @@
      }
     ]
    },
-   "MERAWProcessor": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "processFrameFromImageBuffer:completionHandler:"
-     }
-    ]
-   },
    "MERAWProcessorExtension": {
     "methods": [
      {
       "args": {
-       "0": {},
        "2": {
         "type_modifier": "o"
        }
@@ -235,45 +185,14 @@
      {
       "args": {
        "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" },
-       "4": {
-        "type_modifier": "o"
-       }
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "refineSampleLocation:refinementData:refinementDataLength:refinedLocation:error:"
      },
      {
       "class_method": false,
-      "retval": {},
       "selector": "currentSampleFormatDescription"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "nonatomic",
-       "readonly"
-      ],
-      "name": "currentSampleFormatDescription"
-     }
-    ]
-   },
-   "MEVideoDecoder": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "decodeFrameFromSampleBuffer:options:completionHandler:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "canAcceptFormatDescription:"
      }
     ]
    },
@@ -281,7 +200,6 @@
     "methods": [
      {
       "args": {
-       "1": {},
        "4": {
         "type_modifier": "o"
        }
@@ -291,8 +209,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

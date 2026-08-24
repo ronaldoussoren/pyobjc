@@ -225,46 +225,9 @@
    "CNContactStore": {
     "methods": [
      {
-      "selector": "enumeratorForChangeHistoryFetchRequest:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "enumeratorForContactFetchRequest:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "groupsMatchingPredicate:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "containersMatchingPredicate:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "executeSaveRequest:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "retval": { "type_override": "Z" }
-     },
-     {
       "selector": "enumerateContactsWithFetchRequest:error:usingBlock:",
       "class_method": false,
       "args": {
-       "1": { "type_modifier": "o" },
        "2": {
         "callable": {
          "arguments": {
@@ -275,28 +238,6 @@
 	 "retval": { "type": "v" }
 	}
        }
-      },
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "unifiedContactsMatchingPredicate:keysToFetch:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "unifiedContactWithIdentifier:keysToFetch:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "unifiedMeContactWithKeysToFetch:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
       }
      },
      {
@@ -313,24 +254,6 @@
          "retval": { "type": "v" }
 	}
        }
-      }
-     }
-    ]
-   },
-   "CNContactVCardSerialization": {
-    "methods": [
-     {
-      "selector": "dataWithContacts:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "contactsWithData:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
       }
      }
     ]
