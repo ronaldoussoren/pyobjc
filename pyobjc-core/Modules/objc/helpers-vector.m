@@ -33,6 +33,11 @@
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
+
 NS_ASSUME_NONNULL_BEGIN
 
 static inline int

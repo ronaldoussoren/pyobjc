@@ -1,8 +1,7 @@
 import os
 
 import objc
-from PyObjCTools.TestSupport import TestCase
-from PyObjCTest.test_object_proxy import NoObjectiveC
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from PyObjCTest.metadatafunction import function_list
 
 
@@ -89,7 +88,7 @@ class TestBundleFunctions(TestCase):
             objc.loadBundleFunctions()
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            objc.loadBundleFunctions(NoObjectiveC(), {}, [])
+            objc.loadBundleFunctions(NoObjCClass(), {}, [])
 
         with self.assertRaisesRegex(
             objc.error,
@@ -124,7 +123,7 @@ class TestBundleFunctions(TestCase):
             objc.loadBundleFunctions(None, {}, [()])
 
         # with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-        #    objc.loadBundleFunctions(self.bundle, {}, [(NoObjectiveC(), b"@")])
+        #    objc.loadBundleFunctions(self.bundle, {}, [(NoObjCClass(), b"@")])
 
         with self.assertRaisesRegex(
             TypeError, r"functionInfo\(\) argument 1 must be str, not int"

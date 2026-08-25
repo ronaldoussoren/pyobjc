@@ -625,7 +625,7 @@ class oc_test(Command):
                     print(f"Framework {fwk} not in framework-wrappers.rst")
                     failures += 1
 
-        print(" scanning for undeclared framework dependencies...")
+        print("  scanning for undeclared framework dependencies...")
         frameworks = sorted(
             nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-")
         )
@@ -648,7 +648,7 @@ class oc_test(Command):
                     print(f"* {fw} depends on {r} but doesn't require it")
                     failures += 1
 
-        print("  Scanning for case sensitivity issues")
+        print("  scanning for case sensitivity issues")
         for ln in subprocess.check_output(
             ["git", "ls-files"], cwd="..", text=True
         ).splitlines():

@@ -273,6 +273,12 @@ FUNC_SIGNATURES = [
     b"{SCNVector4=dddd}<4f>",
     b"{simd_float4x4=[4<4f>]}{CATransform3D=dddddddddddddddd}",
     b"{CATransform3D=dddddddddddddddd}{simd_float4x4=[4<4f>]}",
+    b"{simd_float4x4=[4<4f>]}^{cp_frame=}C<4f><2f>",
+    b"{simd_float4x4=[4<4f>]}^{cp_drawable=}CQ",
+    b"<4f>^{cp_view=}",
+    b"{simd_float4x4=[4<4f>]}^{cp_frame=}IC<4f><2f>",
+    b"v^{cp_drawable=}<2f>",
+    b"<2f>^{cp_drawable=}",
 ]
 FUNC_SIGNATURES = [item for item in FUNC_SIGNATURES if needs_wrapper(item)]
 
@@ -311,6 +317,11 @@ HELPER_PREFIX = """\
 #define simd_float4x4 matrix_float4x4
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
+
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -490,6 +501,10 @@ HELPER2_PREFIX = """\
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -565,6 +580,11 @@ TESTEXT_PREFIX = """\
 #define simd_float4x4 matrix_float4x4
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
+
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
 
 @interface OC_VectorCall : NSObject {
     PyObject* values;
@@ -751,6 +771,11 @@ TESTEXT2_PREFIX = """\
 #define simd_float4x4 matrix_float4x4
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
+
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
 
 static PyObject* values   = NULL;
 static BOOL      shouldRaise = NO;
@@ -1766,6 +1791,7 @@ class LiteralRepr:
 VALUES = {
     # typestr : (valid, invalid)
     objc._C_ID: ("hello", LiteralRepr("NoObjCValueObject")),
+    objc._C_UCHR: (21, None),
     objc._C_INT: (-42, None),
     objc._C_UINT: (42, None),
     objc._C_SHT: (-5, None),
@@ -1858,6 +1884,9 @@ VALUES = {
         ),
         None,
     ),
+    b"^{cp_frame=}": (LiteralRepr("None", "NULL"), None),
+    b"^{cp_drawable=}": (LiteralRepr("None", "NULL"), None),
+    b"^{cp_view=}": (LiteralRepr("None", "NULL"), None),
 }
 
 SIMD_TYPES = {

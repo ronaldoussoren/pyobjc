@@ -63,6 +63,18 @@ objc.loadFunctionList(
             "CATransform3Dsimdfloat4x4_",
             b"{CATransform3D=dddddddddddddddd}{simd_float4x4=[4<4f>]}",
         ),
+        (
+            "simdfloat4x4cp_frame_C_v4f_v2f_",
+            b"{simd_float4x4=[4<4f>]}^{cp_frame=}C<4f><2f>",
+        ),
+        ("simdfloat4x4cp_drawable_C_Q_", b"{simd_float4x4=[4<4f>]}^{cp_drawable=}CQ"),
+        ("v4fcp_view_", b"<4f>^{cp_view=}"),
+        (
+            "simdfloat4x4cp_frame_I_C_v4f_v2f_",
+            b"{simd_float4x4=[4<4f>]}^{cp_frame=}IC<4f><2f>",
+        ),
+        ("vcp_drawable_v2f_", b"v^{cp_drawable=}<2f>"),
+        ("v2fcp_drawable_", b"<2f>^{cp_drawable=}"),
     ],
 )
 
@@ -1116,3 +1128,395 @@ class TestVectorCall(TestCase):
                     )
                 )
             )
+
+    def test_simdfloat4x4cp_frame_C_v4f_v2f_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            simdfloat4x4cp_frame_C_v4f_v2f_, b"{simd_float4x4=[4<4f>]}"  # noqa: F821
+        )  # noqa: F821
+        self.assertArgHasType(
+            simdfloat4x4cp_frame_C_v4f_v2f_, 0, b"^{cp_frame=}"  # noqa: F821
+        )
+        self.assertArgHasType(simdfloat4x4cp_frame_C_v4f_v2f_, 1, b"C")  # noqa: F821
+        self.assertArgHasType(simdfloat4x4cp_frame_C_v4f_v2f_, 2, b"<4f>")  # noqa: F821
+        self.assertArgHasType(simdfloat4x4cp_frame_C_v4f_v2f_, 3, b"<2f>")  # noqa: F821
+
+        caller = simdfloat4x4cp_frame_C_v4f_v2f_  # noqa: F821
+
+        # Valid call
+        rv = caller(
+            None,
+            21,
+            objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 4)
+        self.assertEqual(stored[0], None)
+        self.assertEqual(stored[1], 21)
+        self.assertEqual(stored[2], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(stored[3], objc.simd.vector_float2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, 21, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                None,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                None,
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                None,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                None,
+                None,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 21, None, objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 21, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                None,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(
+                arg0=None,
+                arg1=21,
+                arg2=objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                arg3=objc.simd.vector_float2(0.0, 1.5),
+            )
+
+    def test_simdfloat4x4cp_drawable_C_Q_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            simdfloat4x4cp_drawable_C_Q_, b"{simd_float4x4=[4<4f>]}"  # noqa: F821
+        )  # noqa: F821
+        self.assertArgHasType(
+            simdfloat4x4cp_drawable_C_Q_, 0, b"^{cp_drawable=}"  # noqa: F821
+        )
+        self.assertArgHasType(simdfloat4x4cp_drawable_C_Q_, 1, b"C")  # noqa: F821
+        self.assertArgHasType(simdfloat4x4cp_drawable_C_Q_, 2, b"Q")  # noqa: F821
+
+        caller = simdfloat4x4cp_drawable_C_Q_  # noqa: F821
+
+        # Valid call
+        rv = caller(None, 21, 35184372088832)
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 3)
+        self.assertEqual(stored[0], None)
+        self.assertEqual(stored[1], 21)
+        self.assertEqual(stored[2], 35184372088832)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, 21)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, 21, 35184372088832, None)
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 21, 35184372088832)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, None, 35184372088832)
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 21, None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(None, 21, 35184372088832)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0=None, arg1=21, arg2=35184372088832)
+
+    def test_v4fcp_view_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(v4fcp_view_, b"<4f>")  # noqa: F821  # noqa: F821
+        self.assertArgHasType(v4fcp_view_, 0, b"^{cp_view=}")  # noqa: F821
+
+        caller = v4fcp_view_  # noqa: F821
+
+        # Valid call
+        rv = caller(None)
+        self.assertEqual(rv, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], None)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, None)
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(None)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0=None)
+
+    def test_simdfloat4x4cp_frame_I_C_v4f_v2f_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(
+            simdfloat4x4cp_frame_I_C_v4f_v2f_, b"{simd_float4x4=[4<4f>]}"  # noqa: F821
+        )  # noqa: F821
+        self.assertArgHasType(
+            simdfloat4x4cp_frame_I_C_v4f_v2f_, 0, b"^{cp_frame=}"  # noqa: F821
+        )
+        self.assertArgHasType(simdfloat4x4cp_frame_I_C_v4f_v2f_, 1, b"I")  # noqa: F821
+        self.assertArgHasType(simdfloat4x4cp_frame_I_C_v4f_v2f_, 2, b"C")  # noqa: F821
+        self.assertArgHasType(
+            simdfloat4x4cp_frame_I_C_v4f_v2f_, 3, b"<4f>"  # noqa: F821
+        )
+        self.assertArgHasType(
+            simdfloat4x4cp_frame_I_C_v4f_v2f_, 4, b"<2f>"  # noqa: F821
+        )
+
+        caller = simdfloat4x4cp_frame_I_C_v4f_v2f_  # noqa: F821
+
+        # Valid call
+        rv = caller(
+            None,
+            42,
+            21,
+            objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+            objc.simd.vector_float2(0.0, 1.5),
+        )
+        self.assertEqual(
+            rv,
+            simd.simd_float4x4(
+                (
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                    objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                )
+            ),
+        )
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 5)
+        self.assertEqual(stored[0], None)
+        self.assertEqual(stored[1], 42)
+        self.assertEqual(stored[2], 21)
+        self.assertEqual(stored[3], objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+        self.assertEqual(stored[4], objc.simd.vector_float2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, 42, 21, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5))
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(
+                None,
+                42,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+                None,
+            )
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                None,
+                42,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                None,
+                None,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(
+                None,
+                42,
+                None,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 42, 21, None, objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, 42, 21, objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5), None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(
+                None,
+                42,
+                21,
+                objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                objc.simd.vector_float2(0.0, 1.5),
+            )
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(
+                arg0=None,
+                arg1=42,
+                arg2=21,
+                arg3=objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
+                arg4=objc.simd.vector_float2(0.0, 1.5),
+            )
+
+    def test_vcp_drawable_v2f_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(vcp_drawable_v2f_, b"v")  # noqa: F821  # noqa: F821
+        self.assertArgHasType(vcp_drawable_v2f_, 0, b"^{cp_drawable=}")  # noqa: F821
+        self.assertArgHasType(vcp_drawable_v2f_, 1, b"<2f>")  # noqa: F821
+
+        caller = vcp_drawable_v2f_  # noqa: F821
+
+        # Valid call
+        rv = caller(None, objc.simd.vector_float2(0.0, 1.5))
+        self.assertIs(rv, None)
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 2)
+        self.assertEqual(stored[0], None)
+        self.assertEqual(stored[1], objc.simd.vector_float2(0.0, 1.5))
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None)
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, objc.simd.vector_float2(0.0, 1.5), None)
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None, None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(None, objc.simd.vector_float2(0.0, 1.5))
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0=None, arg1=objc.simd.vector_float2(0.0, 1.5))
+
+    def test_v2fcp_drawable_(self):
+        clearRaise()  # noqa: F821
+        # Check that the signature is as expected
+        self.assertResultHasType(v2fcp_drawable_, b"<2f>")  # noqa: F821  # noqa: F821
+        self.assertArgHasType(v2fcp_drawable_, 0, b"^{cp_drawable=}")  # noqa: F821
+
+        caller = v2fcp_drawable_  # noqa: F821
+
+        # Valid call
+        rv = caller(None)
+        self.assertEqual(rv, objc.simd.vector_float2(0.0, 1.5))
+
+        stored = storedvalue()  # noqa: F821
+        self.assertIsInstance(stored, (list, tuple))
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0], None)
+
+        # Too few arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller()
+
+        # Too many arguments call
+        with self.assertRaisesRegex(TypeError, "expected.*arguments.*got"):
+            caller(None, None)
+
+        # Bad value for arguments
+        with self.assertRaises((TypeError, ValueError)):
+            caller(None)
+
+        # Exception handling
+        setRaise()  # noqa: F821
+        with self.assertRaisesRegex(objc.error, "SimpleException"):
+            caller(None)
+
+        with self.assertRaisesRegex(TypeError, "does not accept keyword arguments"):
+            caller(arg0=None)

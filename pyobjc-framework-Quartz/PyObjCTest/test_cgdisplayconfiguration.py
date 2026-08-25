@@ -66,10 +66,10 @@ class TestCGDisplayConfigurationUsage(TestCase):
         self.assertEqual(err, 0)
         config = None
 
-        myInfo = object()
         info = []
 
         def reconfig(display, flags, userInfo):
+            print("reconfig called")
             self.assertIsInstance(display, int)
             self.assertIsInstance(flags, int)
             self.assertTrue(userInfo is myInfo)
@@ -83,9 +83,10 @@ class TestCGDisplayConfigurationUsage(TestCase):
             Quartz.CGDisplayRegisterReconfigurationCallback()
 
         with self.assertRaisesRegex(TypeError, "callback not callable"):
-            Quartz.CGDisplayRegisterReconfigurationCallback(42, myInfo)
+            Quartz.CGDisplayRegisterReconfigurationCallback(42, object())
 
-        for callback in (reconfig_raises, reconfig):
+        for callback in (reconfig, reconfig_raises):
+            myInfo = object()
             with self.subTest(callback=callback):
                 info[:] = []
 
@@ -140,7 +141,7 @@ class TestCGDisplayConfigurationUsage(TestCase):
                         else:
                             self.assertEqual(info, [])
                     finally:
-                        # Quartz.CGCancelDisplayConfiguration(config)
+                        Quartz.CGCancelDisplayConfiguration(config)
                         Quartz.CGRestorePermanentDisplayConfiguration()
 
         err = Quartz.CGDisplaySetStereoOperation(

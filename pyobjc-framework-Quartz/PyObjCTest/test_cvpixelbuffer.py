@@ -523,15 +523,16 @@ class TestCVPixelBuffer(TestCase):
                     {},
                 )
 
+        data = bytearray(640 * 480 * 4)
         with warnings.catch_warnings(record=True) as wrn:
             warnings.simplefilter("always", category=DeprecationWarning)
             buf = Quartz.CVPixelBufferCreateWithBytes(
                 None,
-                200,
-                100,
-                Quartz.kCVPixelFormatType_Lossy_32BGRA,
-                bytearray(200 * 100 * 10),
-                400,
+                640,
+                480,
+                Quartz.kCVPixelFormatType_32BGRA,
+                data,
+                640 * 4,
                 None,
                 context,
                 {},
@@ -559,7 +560,7 @@ class TestCVPixelBuffer(TestCase):
             None,
             200,
             100,
-            Quartz.kCVPixelFormatType_Lossy_32BGRA,
+            Quartz.kCVPixelFormatType_32BGRA,
             bytearray(200 * 100 * 10),
             400,
             release,
@@ -576,7 +577,7 @@ class TestCVPixelBuffer(TestCase):
             None,
             200,
             100,
-            Quartz.kCVPixelFormatType_Lossy_32BGRA,
+            Quartz.kCVPixelFormatType_32BGRA,
             bytearray(200 * 100 * 10),
             400,
             release_raises,

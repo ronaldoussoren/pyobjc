@@ -151,24 +151,24 @@ class TestAEAssessmentConfiguration(TestCase):
             0,
         )
         self.assertResultIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowOnlyParticipantsToRun
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsOnlyParticipantsToRun
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowOnlyParticipantsToRun_,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsOnlyParticipantsToRun_,
             0,
         )
         self.assertResultIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowLockdownMode
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsLockdownMode
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowLockdownMode_,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsLockdownMode_,
             0,
         )
         self.assertResultIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowPrivateRelay
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsPrivateRelay
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowPrivateRelay_,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsPrivateRelay_,
             0,
         )
         self.assertResultIsBOOL(
@@ -202,18 +202,18 @@ class TestAEAssessmentConfiguration(TestCase):
         )
 
         self.assertResultIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsForceQuit
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsForceQuitKeyboardShortcuts
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsForceQuit_,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsForceQuitKeyboardShortcuts_,
             0,
         )
 
         self.assertResultIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowVirtualMachine
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.allowsVirtualMachine
         )
         self.assertArgIsBOOL(
-            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowVirtualMachine_,
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowsVirtualMachine_,
             0,
         )
 

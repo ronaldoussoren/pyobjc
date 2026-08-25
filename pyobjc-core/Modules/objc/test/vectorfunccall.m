@@ -39,6 +39,11 @@
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
+
 static PyObject* values      = NULL;
 static BOOL      shouldRaise = NO;
 
@@ -460,30 +465,239 @@ CATransform3Dsimdfloat4x4_(simd_float4x4 arg0)
                            9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0};
 }
 
+static simd_float4x4
+simdfloat4x4cp_frame_C_v4f_v2f_(cp_frame* arg0, unsigned char arg1, simd_float4 arg2,
+                                simd_float2 arg3)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_frame=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("C", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<4f>", &arg2);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2f>", &arg3);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
+static simd_float4x4
+simdfloat4x4cp_drawable_C_Q_(cp_drawable* arg0, unsigned char arg1,
+                             unsigned long long arg2)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_drawable=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("C", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("Q", &arg2);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
+static simd_float4
+v4fcp_view_(cp_view* arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_view=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_float4){0.0, 1.5, 3.0, 4.5};
+}
+
+static simd_float4x4
+simdfloat4x4cp_frame_I_C_v4f_v2f_(cp_frame* arg0, unsigned int arg1, unsigned char arg2,
+                                  simd_float4 arg3, simd_float2 arg4)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_frame=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("I", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("C", &arg2);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<4f>", &arg3);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2f>", &arg4);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (simd_float4x4){
+        {(vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5},
+         (vector_float4){0.0, 1.5, 3.0, 4.5}, (vector_float4){0.0, 1.5, 3.0, 4.5}}};
+}
+
+static void
+vcp_drawable_v2f_(cp_drawable* arg0, simd_float2 arg1)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_drawable=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("<2f>", &arg1);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+}
+
+static simd_float2
+v2fcp_drawable_(cp_drawable* arg0)
+{
+    PyObject* items;
+    PyObject* tmp;
+
+    if (shouldRaise) {
+        shouldRaise = NO;
+        [NSException raise:@"SimpleException" format:@"hello world"];
+    }
+
+    PyObjC_BEGIN_WITH_GIL
+        items = values = PyList_New(0);
+        if (items == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        tmp = PyObjC_ObjCToPython("^{cp_drawable=}", &arg0);
+        if (tmp == NULL)
+            PyObjC_GIL_FORWARD_EXC();
+        if (PyList_Append(items, tmp) == -1)
+            PyObjC_GIL_FORWARD_EXC();
+    PyObjC_END_WITH_GIL
+    return (vector_float2){0.0, 1.5};
+}
+
 typedef void (*F)(void);
 static struct function {
     char* name;
     F     function;
-} gFunctionMap[] = {{"shouldRaise", (F)f_shouldRaise},
-                    {"clearRaise", (F)f_clearRaise},
-                    {"setRaise", (F)f_setRaise},
-                    {"storedvalue", (F)f_storedvalue},
+} gFunctionMap[] = {
+    {"shouldRaise", (F)f_shouldRaise},
+    {"clearRaise", (F)f_clearRaise},
+    {"setRaise", (F)f_setRaise},
+    {"storedvalue", (F)f_storedvalue},
 
-                    {"v3fid_", (F)v3fid_},
-                    {"idsimdfloat4x4_", (F)idsimdfloat4x4_},
-                    {"idsimdfloat4x4_f_f_q_", (F)idsimdfloat4x4_f_f_q_},
-                    {"Bid_v3f_", (F)Bid_v3f_},
-                    {"simdfloat3x3id_", (F)simdfloat3x3id_},
-                    {"simdfloat4x4id_", (F)simdfloat4x4id_},
-                    {"simdfloat4x4id_q_", (F)simdfloat4x4id_q_},
-                    {"CGPointv2f_CGRect_Q_Q_", (F)CGPointv2f_CGRect_Q_Q_},
-                    {"v3fSCNVector3_", (F)v3fSCNVector3_},
-                    {"SCNVector3v3f_", (F)SCNVector3v3f_},
-                    {"v4fSCNVector4_", (F)v4fSCNVector4_},
-                    {"SCNVector4v4f_", (F)SCNVector4v4f_},
-                    {"simdfloat4x4CATransform3D_", (F)simdfloat4x4CATransform3D_},
-                    {"CATransform3Dsimdfloat4x4_", (F)CATransform3Dsimdfloat4x4_},
-                    {NULL, NULL}};
+    {"v3fid_", (F)v3fid_},
+    {"idsimdfloat4x4_", (F)idsimdfloat4x4_},
+    {"idsimdfloat4x4_f_f_q_", (F)idsimdfloat4x4_f_f_q_},
+    {"Bid_v3f_", (F)Bid_v3f_},
+    {"simdfloat3x3id_", (F)simdfloat3x3id_},
+    {"simdfloat4x4id_", (F)simdfloat4x4id_},
+    {"simdfloat4x4id_q_", (F)simdfloat4x4id_q_},
+    {"CGPointv2f_CGRect_Q_Q_", (F)CGPointv2f_CGRect_Q_Q_},
+    {"v3fSCNVector3_", (F)v3fSCNVector3_},
+    {"SCNVector3v3f_", (F)SCNVector3v3f_},
+    {"v4fSCNVector4_", (F)v4fSCNVector4_},
+    {"SCNVector4v4f_", (F)SCNVector4v4f_},
+    {"simdfloat4x4CATransform3D_", (F)simdfloat4x4CATransform3D_},
+    {"CATransform3Dsimdfloat4x4_", (F)CATransform3Dsimdfloat4x4_},
+    {"simdfloat4x4cp_frame_C_v4f_v2f_", (F)simdfloat4x4cp_frame_C_v4f_v2f_},
+    {"simdfloat4x4cp_drawable_C_Q_", (F)simdfloat4x4cp_drawable_C_Q_},
+    {"v4fcp_view_", (F)v4fcp_view_},
+    {"simdfloat4x4cp_frame_I_C_v4f_v2f_", (F)simdfloat4x4cp_frame_I_C_v4f_v2f_},
+    {"vcp_drawable_v2f_", (F)vcp_drawable_v2f_},
+    {"v2fcp_drawable_", (F)v2fcp_drawable_},
+    {NULL, NULL}};
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 

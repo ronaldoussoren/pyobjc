@@ -15,7 +15,6 @@ import typing
 from _topsort import topological_sort
 
 PY_VERSIONS = [
-    "3.10",
     "3.11",
     "3.12",
     "3.13",

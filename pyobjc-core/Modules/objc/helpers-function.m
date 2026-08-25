@@ -33,6 +33,11 @@
 #define simd_double4x4 matrix_double4x4
 #endif /*  PyObjC_BULD_RELEASE < 1013 */
 
+/* Compositor services pointer types */
+typedef void cp_drawable;
+typedef void cp_frame;
+typedef void cp_view;
+
 NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* _Nullable adjust_retval(PyObjCMethodSignature* methinfo,
@@ -568,6 +573,247 @@ static PyObject* _Nullable call_CATransform3D_simd_float4x4(PyObject*        met
     Py_CLEAR(methinfo);
     return pythonify_c_value("{CATransform3D=dddddddddddddddd}", &rv);
 }
+
+static PyObject* _Nullable call_simd_float4x4_cp_frame_C_v4f_v2f(
+    PyObject* method, PyObject* const* arguments, size_t nargs)
+{
+    simd_float4x4 rv;
+    cp_frame*     arg0;
+    unsigned char arg1;
+    simd_float4   arg2;
+    simd_float2   arg3;
+
+    if (PyObjC_CheckArgCount(method, 4, 4, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_frame=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("C", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("<4f>", arguments[2], &arg2) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("<2f>", arguments[3], &arg3) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4x4 (*)(cp_frame*, unsigned char, simd_float4,
+                                     simd_float2))function)(arg0, arg1, arg2, arg3);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static PyObject* _Nullable call_simd_float4x4_cp_drawable_C_Q(PyObject*        method,
+                                                              PyObject* const* arguments,
+                                                              size_t           nargs)
+{
+    simd_float4x4      rv;
+    cp_drawable*       arg0;
+    unsigned char      arg1;
+    unsigned long long arg2;
+
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_drawable=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("C", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("Q", arguments[2], &arg2) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4x4 (*)(cp_drawable*, unsigned char,
+                                     unsigned long long))function)(arg0, arg1, arg2);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static PyObject* _Nullable call_v4f_cp_view(PyObject* method, PyObject* const* arguments,
+                                            size_t nargs)
+{
+    simd_float4 rv;
+    cp_view*    arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_view=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4 (*)(cp_view*))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<4f>", &rv);
+}
+
+static PyObject* _Nullable call_simd_float4x4_cp_frame_I_C_v4f_v2f(
+    PyObject* method, PyObject* const* arguments, size_t nargs)
+{
+    simd_float4x4 rv;
+    cp_frame*     arg0;
+    unsigned int  arg1;
+    unsigned char arg2;
+    simd_float4   arg3;
+    simd_float2   arg4;
+
+    if (PyObjC_CheckArgCount(method, 5, 5, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_frame=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("I", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("C", arguments[2], &arg2) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("<4f>", arguments[3], &arg3) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("<2f>", arguments[4], &arg4) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float4x4 (*)(cp_frame*, unsigned int, unsigned char, simd_float4,
+                                     simd_float2))function)(arg0, arg1, arg2, arg3, arg4);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("{simd_float4x4=[4<4f>]}", &rv);
+}
+
+static PyObject* _Nullable call_v_cp_drawable_v2f(PyObject*        method,
+                                                  PyObject* const* arguments,
+                                                  size_t           nargs)
+{
+    cp_drawable* arg0;
+    simd_float2  arg1;
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_drawable=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value("<2f>", arguments[1], &arg1) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ((void (*)(cp_drawable*, simd_float2))function)(arg0, arg1);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_RETURN_NONE;
+}
+
+static PyObject* _Nullable call_v2f_cp_drawable(PyObject*        method,
+                                                PyObject* const* arguments, size_t nargs)
+{
+    simd_float2  rv;
+    cp_drawable* arg0;
+
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
+
+    if (depythonify_c_value("^{cp_drawable=}", arguments[0], &arg0) == -1) {
+        return NULL;
+    }
+
+    void*                  function = PyObjCFunc_GetCallable(method);
+    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = ((simd_float2 (*)(cp_drawable*))function)(arg0);
+        } @catch (NSObject* localException) {   // LCOV_BR_EXCL_LINE
+            PyObjCErr_FromObjC(localException); // LCOV_BR_EXCL_LINE
+        }
+    Py_END_ALLOW_THREADS
+
+    if (PyErr_Occurred()) {
+        Py_CLEAR(methinfo);
+        return NULL;
+    }
+
+    Py_CLEAR(methinfo);
+    return pythonify_c_value("<2f>", &rv);
+}
 int
 PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
 {
@@ -654,6 +900,44 @@ PyObjC_setup_simd_functions(PyObject* module __attribute__((__unused__)))
     if (PyObjC_RegisterFunctionSignatureMapping(
             "{CATransform3D=dddddddddddddddd}{simd_float4x4=[4<4f>]}",
             call_CATransform3D_simd_float4x4)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{simd_float4x4=[4<4f>]}^{cp_frame=}C<4f><2f>",
+            call_simd_float4x4_cp_frame_C_v4f_v2f)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{simd_float4x4=[4<4f>]}^{cp_drawable=}CQ",
+            call_simd_float4x4_cp_drawable_C_Q)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("<4f>^{cp_view=}", call_v4f_cp_view)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping(
+            "{simd_float4x4=[4<4f>]}^{cp_frame=}IC<4f><2f>",
+            call_simd_float4x4_cp_frame_I_C_v4f_v2f)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("v^{cp_drawable=}<2f>",
+                                                call_v_cp_drawable_v2f)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
+    if (PyObjC_RegisterFunctionSignatureMapping("<2f>^{cp_drawable=}",
+                                                call_v2f_cp_drawable)
         == -1) {   // LCOV_BR_EXCL_LINE
         return -1; // LCOV_EXCL_LINE
     }

@@ -1,6 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
-from PyObjCTest.test_object_proxy import NoObjectiveC
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 
 from . import fnd as Foundation
 
@@ -78,7 +77,7 @@ class TestBundleVariables(TestCase):
             objc.loadBundleVariables()
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            objc.loadBundleVariables(NoObjectiveC(), {}, [])
+            objc.loadBundleVariables(NoObjCClass(), {}, [])
 
         with self.assertRaisesRegex(
             objc.error,
@@ -108,7 +107,7 @@ class TestBundleVariables(TestCase):
             objc.loadBundleVariables(self.bundle, {}, [()])
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            objc.loadBundleVariables(self.bundle, {}, [(NoObjectiveC(), b"@")])
+            objc.loadBundleVariables(self.bundle, {}, [(NoObjCClass(), b"@")])
 
     @min_os_level("10.15")
     def test_charptr_variable(self):
@@ -154,7 +153,7 @@ class TestSpecialVariables(TestCase):
             objc.loadSpecialVar()
 
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
-            objc.loadSpecialVar(NoObjectiveC(), {}, 42, "hello")
+            objc.loadSpecialVar(NoObjCClass(), {}, 42, "hello")
 
         with self.assertRaisesRegex(
             objc.error,

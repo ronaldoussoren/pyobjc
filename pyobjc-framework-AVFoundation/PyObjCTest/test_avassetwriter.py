@@ -63,7 +63,7 @@ class TestAVAssetWriter(TestCase):
         )
 
     @min_os_level("27.0")
-    @expectedFailureIf(_build_version() == "26A5406e")
+    @expectedFailureIf(_build_version() == "26A5421a")
     def test_methods27_0(self):
         # XXX: These methods aren't present on macOS 27 beta 5, checked with ObjC program.
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
