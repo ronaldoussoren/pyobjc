@@ -8,7 +8,7 @@ Version 13.0a0
 
 * Main features
 
-  * Framework bindings updated for macOS 27 SDK (beta 5)
+  * Framework bindings updated for macOS 27 SDK (beta 6)
 
   * Add support for the following frameworks (all new in macOS 27):
 
@@ -152,6 +152,9 @@ Version 13.0a0
     The first two had manual bindings that were removed because
     the system API hangs forever since at least macOS 10.9. The latter
     two required, dit not have, manual bindings.
+
+  * The metadata for a number of functions in the Quartz bindings were dropped,
+    in particular those for functions that were dropped in or before macOS 10.9.
 
 * Deprecations:
 
@@ -702,6 +705,14 @@ Version 13.0a0
   :func:`Security.sec_protocol_options_set_tls_renegotiation_enabled`,
 
 * Correct metadata for :func:`ARKit.ar_anchor_get_identifier`.
+
+* Correct metadata for :mod:`CFOpenDirectory`, a number of functions
+  had incorrect type encodings for CoreFoundation object types defined
+  by the framework.
+
+* Correct metadata for :func:`Quartz.CGFontCreatePostScriptEncoding`.
+
+* Correct metadata for various functions in the :mod:`Security` bindings.
 
 * Cleanup the metadata overrides for framework metadata, which should make
   it easier to maintain these overrides going forward.

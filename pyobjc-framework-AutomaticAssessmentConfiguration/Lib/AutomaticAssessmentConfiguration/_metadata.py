@@ -87,14 +87,6 @@ try:
         b"setRequired:",
         {"arguments": {2: {"type": b"Z"}}},
     )
-    r(b"AEAssessmentConfiguration", b"allowLockdownMode", {"retval": {"type": b"Z"}})
-    r(
-        b"AEAssessmentConfiguration",
-        b"allowOnlyParticipantsToRun",
-        {"retval": {"type": b"Z"}},
-    )
-    r(b"AEAssessmentConfiguration", b"allowPrivateRelay", {"retval": {"type": b"Z"}})
-    r(b"AEAssessmentConfiguration", b"allowVirtualMachine", {"retval": {"type": b"Z"}})
     r(
         b"AEAssessmentConfiguration",
         b"allowsAccessibilityAlternativeInputMethods",
@@ -184,13 +176,23 @@ try:
     r(b"AEAssessmentConfiguration", b"allowsDictation", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"allowsDock", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"allowsEmojiKeyboard", {"retval": {"type": b"Z"}})
-    r(b"AEAssessmentConfiguration", b"allowsForceQuit", {"retval": {"type": b"Z"}})
+    r(
+        b"AEAssessmentConfiguration",
+        b"allowsForceQuitKeyboardShortcuts",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"AEAssessmentConfiguration",
         b"allowsKeyboardShortcuts",
         {"retval": {"type": b"Z"}},
     )
+    r(b"AEAssessmentConfiguration", b"allowsLockdownMode", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"allowsMenuBar", {"retval": {"type": b"Z"}})
+    r(
+        b"AEAssessmentConfiguration",
+        b"allowsOnlyParticipantsToRun",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"AEAssessmentConfiguration",
         b"allowsPasswordAutoFill",
@@ -201,6 +203,7 @@ try:
         b"allowsPredictiveKeyboard",
         {"retval": {"type": b"Z"}},
     )
+    r(b"AEAssessmentConfiguration", b"allowsPrivateRelay", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"allowsScreenshots", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"allowsSpellCheck", {"retval": {"type": b"Z"}})
     r(
@@ -213,33 +216,15 @@ try:
         b"allowsUserScriptExecution",
         {"retval": {"type": b"Z"}},
     )
+    r(b"AEAssessmentConfiguration", b"allowsVirtualMachine", {"retval": {"type": b"Z"}})
     r(
         b"AEAssessmentConfiguration",
         b"requiresManagedDevice",
         {"retval": {"type": b"Z"}},
     )
+    r(b"AEAssessmentConfiguration", b"requiresReleaseOS", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"requiresSIP", {"retval": {"type": b"Z"}})
     r(b"AEAssessmentConfiguration", b"requiresSingleUser", {"retval": {"type": b"Z"}})
-    r(
-        b"AEAssessmentConfiguration",
-        b"setAllowLockdownMode:",
-        {"arguments": {2: {"type": b"Z"}}},
-    )
-    r(
-        b"AEAssessmentConfiguration",
-        b"setAllowOnlyParticipantsToRun:",
-        {"arguments": {2: {"type": b"Z"}}},
-    )
-    r(
-        b"AEAssessmentConfiguration",
-        b"setAllowPrivateRelay:",
-        {"arguments": {2: {"type": b"Z"}}},
-    )
-    r(
-        b"AEAssessmentConfiguration",
-        b"setAllowVirtualMachine:",
-        {"arguments": {2: {"type": b"Z"}}},
-    )
     r(
         b"AEAssessmentConfiguration",
         b"setAllowsAccessibilityAlternativeInputMethods:",
@@ -347,7 +332,7 @@ try:
     )
     r(
         b"AEAssessmentConfiguration",
-        b"setAllowsForceQuit:",
+        b"setAllowsForceQuitKeyboardShortcuts:",
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(
@@ -357,7 +342,17 @@ try:
     )
     r(
         b"AEAssessmentConfiguration",
+        b"setAllowsLockdownMode:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"AEAssessmentConfiguration",
         b"setAllowsMenuBar:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"AEAssessmentConfiguration",
+        b"setAllowsOnlyParticipantsToRun:",
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(
@@ -368,6 +363,11 @@ try:
     r(
         b"AEAssessmentConfiguration",
         b"setAllowsPredictiveKeyboard:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"AEAssessmentConfiguration",
+        b"setAllowsPrivateRelay:",
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(
@@ -392,7 +392,17 @@ try:
     )
     r(
         b"AEAssessmentConfiguration",
+        b"setAllowsVirtualMachine:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"AEAssessmentConfiguration",
         b"setRequiresManagedDevice:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"AEAssessmentConfiguration",
+        b"setRequiresReleaseOS:",
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(

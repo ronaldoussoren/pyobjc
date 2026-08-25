@@ -216,3 +216,11 @@ class TestAEAssessmentConfiguration(TestCase):
             AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setAllowVirtualMachine_,
             0,
         )
+
+        self.assertResultIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.requiresReleaseOS
+        )
+        self.assertArgIsBOOL(
+            AutomaticAssessmentConfiguration.AEAssessmentConfiguration.setRequiresReleaseOS_,
+            0,
+        )
