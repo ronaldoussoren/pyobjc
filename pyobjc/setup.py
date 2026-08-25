@@ -685,32 +685,17 @@ class oc_test(Command):
 
 def frameworks_in_table(filename):
     result = {}
-    in_table = False
     with open(filename) as stream:
         for line in stream:
             line = line.lstrip()
-            if not in_table:
-                if line.startswith("+--") or line.startswith("+=="):
-                    in_table = True
-                    continue
+            if line.startswith("* - "):
+                rest = line[4:]
+                if "`" in rest:
+                    result[rest.split("`")[1].split()[0]] = True
 
-            else:
-                if line.startswith("+--") or line.startswith("+=="):
-                    continue
-                elif not line.startswith("|"):
-                    break
-
-                cell = line.split("|")[1].strip()
-                if not cell:
-                    continue
-
-                if "`" in cell:
-                    cell = cell.split("`")[1].split()[0]
-                    linked = True
                 else:
-                    linked = False
+                    result[rest.strip()] = False
 
-                result[cell] = linked
     return result
 
 
