@@ -501,6 +501,7 @@ try:
         },
     )
     r(b"GKLocalPlayer", b"isAuthenticated", {"retval": {"type": "Z"}})
+    r(b"GKLocalPlayer", b"isUnderage", {"retval": {"type": "Z"}})
     r(
         b"GKLocalPlayer",
         b"loadDefaultLeaderboardCategoryIDWithCompletionHandler:",
@@ -1070,6 +1071,7 @@ try:
             }
         },
     )
+    r(b"GKPlayer", b"isFriend", {"retval": {"type": "Z"}})
     r(
         b"GKPlayer",
         b"loadPhotoForSize:withCompletionHandler:",

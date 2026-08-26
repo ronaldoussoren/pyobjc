@@ -1033,7 +1033,7 @@ try:
     r(
         b"NSPersistentStoreCoordinator",
         b"destroyPersistentStoreAtURL:withType:options:error:",
-        {"arguments": {5: {"type_modifier": b"o"}}},
+        {"retval": {"type": b"Z"}, "arguments": {5: {"type_modifier": b"o"}}},
     )
     r(
         b"NSPersistentStoreCoordinator",

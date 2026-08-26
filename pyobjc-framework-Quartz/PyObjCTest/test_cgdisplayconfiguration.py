@@ -69,14 +69,12 @@ class TestCGDisplayConfigurationUsage(TestCase):
         info = []
 
         def reconfig(display, flags, userInfo):
-            print("reconfig called")
             self.assertIsInstance(display, int)
             self.assertIsInstance(flags, int)
             self.assertTrue(userInfo is myInfo)
             info.append((display, flags, userInfo))
 
         def reconfig_raises(display, flags, userInfo):
-            print("reconfig_raises called")
             raise RuntimeError("reconfig raises")
 
         with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
@@ -143,6 +141,9 @@ class TestCGDisplayConfigurationUsage(TestCase):
                     finally:
                         Quartz.CGCancelDisplayConfiguration(config)
                         Quartz.CGRestorePermanentDisplayConfiguration()
+                        Quartz.CGCompleteDisplayConfiguration(
+                            config, Quartz.kCGConfigureForAppOnly
+                        )
 
         err = Quartz.CGDisplaySetStereoOperation(
             Quartz.CGMainDisplayID(), False, False, Quartz.kCGConfigureForAppOnly

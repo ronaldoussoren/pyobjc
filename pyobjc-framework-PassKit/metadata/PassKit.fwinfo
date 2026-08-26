@@ -15,6 +15,17 @@
   "enum": {
    "PKDisbursementRequestScheduleOneTime": { "value": 0, "deprecated": 1500 },
    "PKDisbursementRequestScheduleFuture": { "value": 1, "deprecated": 1500 }
+  },
+  "classes": {
+   "PKStoredValuePassProperties": {
+    "methods": [
+     {
+      "selector": "isInStation",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   }
   }
  }
 }

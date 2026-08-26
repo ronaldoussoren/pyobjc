@@ -1400,6 +1400,13 @@
    "GKLocalPlayer": {
     "methods": [
      {
+      "selector": "isUnderage",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
       "selector": "isAuthenticated",
       "class_method": false,
       "retval": {
@@ -1692,6 +1699,13 @@
    },
    "GKPlayer": {
     "methods": [
+     {
+      "selector": "isFriend",
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      }
+     },
      {
       "selector": "loadPhotoForSize:withCompletionHandler:",
       "class_method": false,

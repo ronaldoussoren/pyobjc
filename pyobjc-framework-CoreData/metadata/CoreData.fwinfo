@@ -569,6 +569,7 @@
       "args": {
        "3": { "type_modifier": "o" }
       },
+      "retval": { "type_override": "Z" },
       "class_method": true,
       "selector": "destroyPersistentStoreAtURL:withType:options:error:"
      }
