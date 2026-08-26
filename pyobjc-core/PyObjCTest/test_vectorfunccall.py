@@ -1188,7 +1188,7 @@ class TestVectorCall(TestCase):
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                None,
+                3.5,
                 21,
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
                 objc.simd.vector_float2(0.0, 1.5),
@@ -1271,7 +1271,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(None, 21, 35184372088832)
+            caller(3.5, 21, 35184372088832)
 
         with self.assertRaises((TypeError, ValueError)):
             caller(None, None, 35184372088832)
@@ -1314,7 +1314,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(None)
+            caller(3.5)
 
         # Exception handling
         setRaise()  # noqa: F821
@@ -1391,7 +1391,7 @@ class TestVectorCall(TestCase):
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
             caller(
-                None,
+                3.5,
                 42,
                 21,
                 objc.simd.vector_float4(0.0, 1.5, 3.0, 4.5),
@@ -1471,7 +1471,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(None, objc.simd.vector_float2(0.0, 1.5))
+            caller(3.5, objc.simd.vector_float2(0.0, 1.5))
 
         with self.assertRaises((TypeError, ValueError)):
             caller(None, None)
@@ -1511,7 +1511,7 @@ class TestVectorCall(TestCase):
 
         # Bad value for arguments
         with self.assertRaises((TypeError, ValueError)):
-            caller(None)
+            caller(3.5)
 
         # Exception handling
         setRaise()  # noqa: F821

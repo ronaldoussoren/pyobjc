@@ -1884,9 +1884,9 @@ VALUES = {
         ),
         None,
     ),
-    b"^{cp_frame=}": (LiteralRepr("None", "NULL"), None),
-    b"^{cp_drawable=}": (LiteralRepr("None", "NULL"), None),
-    b"^{cp_view=}": (LiteralRepr("None", "NULL"), None),
+    b"^{cp_frame=}": (LiteralRepr("None", "NULL"), 3.5),
+    b"^{cp_drawable=}": (LiteralRepr("None", "NULL"), 3.5),
+    b"^{cp_view=}": (LiteralRepr("None", "NULL"), 3.5),
 }
 
 SIMD_TYPES = {
