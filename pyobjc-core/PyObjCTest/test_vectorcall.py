@@ -302,28 +302,31 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsidid:q:v2i:f:f:f:f:f:", {"full_signature": b"@@:@q<2i>fffff"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"idid:MDLAxisAlignedBoundingBox:f:",
-    {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsidid:MDLAxisAlignedBoundingBox:f:",
-    {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
-)
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidid:GKBox:", {"full_signature": b"@@:@{GKBox=<3f><3f>}"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidid:GKQuad:", {"full_signature": b"@@:@{GKQuad=<2f><2f>}"}
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"idid:MDLAxisAlignedBoundingBox:f:",
+        {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsidid:MDLAxisAlignedBoundingBox:f:",
+        {"full_signature": b"@@:@{MDLAxisAlignedBoundingBox=<3f><3f>}f"},
+    )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"idid:simdfloat2x2:",
@@ -354,18 +357,24 @@ objc.registerMetaDataForSelector(
     b"clsidid:simdfloat4x4:",
     {"full_signature": b"@@:@{simd_float4x4=[4<4f>]}"},
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idid:simdquatf:id:", {"full_signature": b"@@:@{simd_quatf=<4f>}@"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidid:simdquatf:id:", {"full_signature": b"@@:@{simd_quatf=<4f>}@"}
-)
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidid:simdquatf:", {"full_signature": b"@@:@{simd_quatf=<4f>}"}
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"idid:simdquatf:id:",
+        {"full_signature": b"@@:@{simd_quatf=<4f>}@"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsidid:simdquatf:id:",
+        {"full_signature": b"@@:@{simd_quatf=<4f>}@"},
+    )
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"idCGColor:CGColor:id:v2i:",
@@ -428,40 +437,45 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsidf:f:id:v2i:", {"full_signature": b"@@:ff@<2i>"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"idGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsidGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"idMDLVoxelIndexExtent:",
-    {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsidMDLVoxelIndexExtent:",
-    {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
-)
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidGKBox:", {"full_signature": b"@@:{GKBox=<3f><3f>}"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidGKBox:f:", {"full_signature": b"@@:{GKBox=<3f><3f>}f"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidGKQuad:", {"full_signature": b"@@:{GKQuad=<2f><2f>}"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"idGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsidGKQuad:f:", {"full_signature": b"@@:{GKQuad=<2f><2f>}f"}
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"idMDLVoxelIndexExtent:",
+        {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsidMDLVoxelIndexExtent:",
+        {"full_signature": b"@@:{MDLVoxelIndexExtent=<4i><4i>}"},
+    )
 objc.registerMetaDataForSelector(
     b"NSObject", b"idsimdfloat4x4:", {"full_signature": b"@@:{simd_float4x4=[4<4f>]}"}
 )
@@ -612,26 +626,28 @@ objc.registerMetaDataForSelector(
 objc.registerMetaDataForSelector(
     b"NSObject", b"clsvf:v2i:", {"full_signature": b"v@:f<2i>"}
 )
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vMDLAxisAlignedBoundingBox:",
-    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvMDLAxisAlignedBoundingBox:",
-    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"vMDLAxisAlignedBoundingBox:Z:",
-    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsvMDLAxisAlignedBoundingBox:Z:",
-    {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
-)
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"vMDLAxisAlignedBoundingBox:",
+        {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsvMDLAxisAlignedBoundingBox:",
+        {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}"},
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"vMDLAxisAlignedBoundingBox:Z:",
+        {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsvMDLAxisAlignedBoundingBox:Z:",
+        {"full_signature": b"v@:{MDLAxisAlignedBoundingBox=<3f><3f>}Z"},
+    )
 objc.registerMetaDataForSelector(
     b"NSObject", b"vsimddouble4x4:", {"full_signature": b"v@:{simd_double4x4=[4<4d>]}"}
 )
@@ -676,118 +692,138 @@ objc.registerMetaDataForSelector(
     b"clsvsimdfloat4x4:d:",
     {"full_signature": b"v@:{simd_float4x4=[4<4f>]}d"},
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:v3f:", {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:v3f:", {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"vsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsvsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsGKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"GKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsGKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"GKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clsGKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MDLAxisAlignedBoundingBox",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMDLAxisAlignedBoundingBox",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MDLAxisAlignedBoundingBoxv4i:",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMDLAxisAlignedBoundingBoxv4i:",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MDLAxisAlignedBoundingBoxd:",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMDLAxisAlignedBoundingBoxd:",
-    {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MDLVoxelIndexExtent",
-    {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMDLVoxelIndexExtent",
-    {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MPSFunctionsAABBMPSFunctionsAABB:",
-    {"full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMPSFunctionsAABBMPSFunctionsAABB:",
-    {"full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MPSImageHistogramInfo",
-    {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMPSImageHistogramInfo",
-    {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"MPSAxisAlignedBoundingBox",
-    {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
-)
-objc.registerMetaDataForSelector(
-    b"NSObject",
-    b"clsMPSAxisAlignedBoundingBox",
-    {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
-)
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"vsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsvsimdquatd:d:", {"full_signature": b"v@:{simd_quatd=<4d>}d"}
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"vsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsvsimdquatf:", {"full_signature": b"v@:{simd_quatf=<4f>}"}
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"vsimdquatf:v3f:", {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsvsimdquatf:v3f:",
+        {"full_signature": b"v@:{simd_quatf=<4f>}<3f>"},
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"vsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsvsimdquatf:d:", {"full_signature": b"v@:{simd_quatf=<4f>}d"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"GKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsGKBox", {"full_signature": b"{GKBox=<3f><3f>}@:"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"GKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsGKQuad", {"full_signature": b"{GKQuad=<2f><2f>}@:"}
+    )
+if objc.macos_available(10, 12):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"GKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clsGKTriangleQ:", {"full_signature": b"{GKTriangle=[3<3f>]}@:Q"}
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MDLAxisAlignedBoundingBox",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMDLAxisAlignedBoundingBox",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:"},
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MDLAxisAlignedBoundingBoxv4i:",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMDLAxisAlignedBoundingBoxv4i:",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:<4i>"},
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MDLAxisAlignedBoundingBoxd:",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMDLAxisAlignedBoundingBoxd:",
+        {"full_signature": b"{MDLAxisAlignedBoundingBox=<3f><3f>}@:d"},
+    )
+if objc.macos_available(10, 11):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MDLVoxelIndexExtent",
+        {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMDLVoxelIndexExtent",
+        {"full_signature": b"{MDLVoxelIndexExtent=<4i><4i>}@:"},
+    )
+if objc.macos_available(27, 0):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MPSFunctionsAABBMPSFunctionsAABB:",
+        {
+            "full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"
+        },
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMPSFunctionsAABBMPSFunctionsAABB:",
+        {
+            "full_signature": b"{MPSFunctions_AABB=<4f><4f>}@:{MPSFunctions_AABB=<4f><4f>}"
+        },
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MPSImageHistogramInfo",
+        {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMPSImageHistogramInfo",
+        {"full_signature": b"{MPSImageHistogramInfo=QZ<4f><4f>}@:"},
+    )
+if objc.macos_available(10, 14):
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"MPSAxisAlignedBoundingBox",
+        {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject",
+        b"clsMPSAxisAlignedBoundingBox",
+        {"full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:"},
+    )
 objc.registerMetaDataForSelector(
     b"NSObject", b"simddouble4x4", {"full_signature": b"{simd_double4x4=[4<4d>]}@:"}
 )
@@ -852,24 +888,27 @@ objc.registerMetaDataForSelector(
     b"clssimdfloat4x4simdfloat4x4:id:",
     {"full_signature": b"{simd_float4x4=[4<4f>]}@:{simd_float4x4=[4<4f>]}@"},
 )
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"simdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
-)
-objc.registerMetaDataForSelector(
-    b"NSObject", b"clssimdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
-)
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"simdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clssimdquatdd:", {"full_signature": b"{simd_quatd=<4d>}@:d"}
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"simdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clssimdquatf", {"full_signature": b"{simd_quatf=<4f>}@:"}
+    )
+if objc.macos_available(10, 13):
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"simdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
+    )
+    objc.registerMetaDataForSelector(
+        b"NSObject", b"clssimdquatfd:", {"full_signature": b"{simd_quatf=<4f>}@:d"}
+    )
 
 
 class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
@@ -2191,7 +2230,7 @@ class OC_VectorCallInstance(objc.lookUpClass("NSObject")):
                 objc.simd.vector_int4(-20, -21, -22, -23),
             )
 
-    if objc.macos_available(10, 13):
+    if objc.macos_available(27, 0):
 
         def MPSFunctionsAABBMPSFunctionsAABB_(self, arg0):
             self.argvalues = (arg0,)
@@ -3836,7 +3875,7 @@ class OC_VectorCallClass(objc.lookUpClass("NSObject")):
                 objc.simd.vector_int4(-20, -21, -22, -23),
             )
 
-    if objc.macos_available(10, 13):
+    if objc.macos_available(27, 0):
 
         @classmethod
         def MPSFunctionsAABBMPSFunctionsAABB_(self, arg0):

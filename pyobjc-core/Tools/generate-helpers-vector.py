@@ -1336,21 +1336,21 @@ def BOOL_to_bool(signature: bytes) -> bytes:
     return b"".join(result)
 
 
-def print_macos_available(stream, signature):
+def print_macos_available(stream, signature, pfx="    "):
     if b"GKBox" in signature or b"GKTriangle" in signature or b"GKQuad" in signature:
-        print("    if objc.macos_available(10, 12):", file=stream)
+        print(f"{pfx}if objc.macos_available(10, 12):", file=stream)
         return "    "
     elif b"MDL" in signature:
-        print("    if objc.macos_available(10, 11):", file=stream)
+        print(f"{pfx}if objc.macos_available(10, 11):", file=stream)
         return "    "
     elif b"MPSAxisAlignedBoundingBox" in signature:
-        print("    if objc.macos_available(10, 14):", file=stream)
+        print(f"{pfx}if objc.macos_available(10, 14):", file=stream)
         return "    "
     elif b"MPSFunctions_AABB" in signature:
-        print("    if objc.macos_available(10, 13):", file=stream)
+        print(f"{pfx}if objc.macos_available(27, 0):", file=stream)
         return "    "
     elif b"MPS" in signature or b"simd_quat" in signature:
-        print("    if objc.macos_available(10, 13):", file=stream)
+        print(f"{pfx}if objc.macos_available(10, 13):", file=stream)
         return "    "
     return ""
 
@@ -1761,14 +1761,15 @@ def generate_register(stream, signature):
     #
     # The selector names are specializedenough to not cause problems here.
 
+    pfx = print_macos_available(stream, signature, pfx="")
     print(
-        f'objc.registerMetaDataForSelector(b"NSObject", '
+        f'{pfx}objc.registerMetaDataForSelector(b"NSObject", '
         f'b"{sel_for_signature(signature)}", '
         f'{{"full_signature": b"{signature.decode()}"}})',
         file=stream,
     )
     print(
-        f'objc.registerMetaDataForSelector(b"NSObject", '
+        f'{pfx}objc.registerMetaDataForSelector(b"NSObject", '
         f'b"cls{sel_for_signature(signature)}", '
         f'{{"full_signature": b"{signature.decode()}"}})',
         file=stream,
