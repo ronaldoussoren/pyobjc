@@ -10,7 +10,6 @@ IGNORE = {
     # Frameworks not present in the latest SDK
     "GameCenter",
     "PubSub",
-    "DVDPlayback",
 }
 
 
