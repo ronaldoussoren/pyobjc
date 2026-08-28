@@ -1,5 +1,5 @@
 import MediaToolbox
-from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass, skipUnless
 import objc
 import AVFoundation
 import CoreFoundation
@@ -8,8 +8,14 @@ import CoreAudio
 import pathlib
 import contextlib
 import tempfile
+import subprocess
 import itertools
 import os
+
+
+def has_audio_device():
+    data = subprocess.check_output(["system_profiler", "SPAudioDataType"], text=True)
+    return "Default Output" in data
 
 
 @contextlib.contextmanager
@@ -410,6 +416,7 @@ class TestMTAudioProcessingTap(TestCase):
 
         self.assertEqual(MediaToolbox.kMTAudioProcessingTapCallbacksVersion_0, 0)
 
+    @skipUnless(has_audio_device(), "need audio device for testing")
     def test_using(self):
         track = pathlib.Path(__file__).parent / "testtrack.m4a"
         self.assertTrue(track.is_file())
@@ -481,7 +488,7 @@ class TestMTAudioProcessingTap(TestCase):
             player.play()
 
             # Avoid actually playing sound:
-            player.setVolume_(0)
+            # player.setVolume_(0)
 
             CoreFoundation.CFRunLoopRunInMode(
                 CoreFoundation.kCFRunLoopDefaultMode, 2, False
@@ -505,6 +512,7 @@ class TestMTAudioProcessingTap(TestCase):
             self.assertEqual(record[-2][0], "unprepare")
             self.assertEqual(record[-1][0], "finalize")
 
+    @skipUnless(has_audio_device(), "need audio device for testing")
     def test_using_failed(self):
         track = pathlib.Path(__file__).parent / "testtrack.m4a"
         self.assertTrue(track.is_file())
