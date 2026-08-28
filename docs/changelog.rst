@@ -4463,6 +4463,10 @@ Version 5.0b1
   optimization that uses alloca instead of PyMem_Malloc to
   allocate memory for now.
 
+* Fix bug in the manual bindings for :func:`Quartz.CGPDFDictionaryApplyFunction`
+  that resulted in passing invalid :class:`CGPDFObjectRef` values
+  to the Python callback.
+
 
 Version 5.0a0
 -------------

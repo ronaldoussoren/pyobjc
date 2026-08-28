@@ -26,7 +26,7 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
         PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
-    args[2] = PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value);
+    args[2] = PyObjC_ObjCToPython(@encode(CGPDFObjectRef), &value);
     if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_CLEAR(args[1]);
