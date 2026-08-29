@@ -52,11 +52,6 @@ class TestCFSocketStream(TestCase):
 
         self.assertIsInstance(CFNetwork.kCFStreamPropertySocketRemoteHost, str)
         self.assertIsInstance(CFNetwork.kCFStreamPropertySocketRemoteNetService, str)
-        self.assertEqual(CFNetwork.kCFStreamSocketSecurityNone, 0)
-        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv2, 1)
-        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv3, 2)
-        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv23, 3)
-        self.assertEqual(CFNetwork.kCFStreamSocketSecurityTLSv1, 4)
 
         self.assertIsInstance(CFNetwork.kCFStreamPropertyProxyLocalBypass, str)
 

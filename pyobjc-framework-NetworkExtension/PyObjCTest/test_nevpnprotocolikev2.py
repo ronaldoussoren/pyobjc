@@ -19,7 +19,6 @@ class TestNEVPNProtocolIKEv2(TestCase):
         self.assertEqual(NetworkExtension.NEVPNIKEv2DeadPeerDetectionRateHigh, 3)
 
         self.assertIsEnumType(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup)
-        self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup0, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroupInvalid, 0)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup1, 1)
         self.assertEqual(NetworkExtension.NEVPNIKEv2DiffieHellmanGroup2, 2)

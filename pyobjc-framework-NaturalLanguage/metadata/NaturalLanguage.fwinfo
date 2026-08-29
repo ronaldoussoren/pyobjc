@@ -271,53 +271,6 @@
     ]
    }
   },
-  "enum": {
-   "NLModelTypeClassifier": {
-    "value": 0
-   },
-   "NLModelTypeSequence": {
-    "value": 1
-   },
-   "NLTaggerJoinContractions": {
-    "value": 32
-   },
-   "NLTaggerJoinNames": {
-    "value": 16
-   },
-   "NLTaggerOmitOther": {
-    "value": 8
-   },
-   "NLTaggerOmitPunctuation": {
-    "value": 2
-   },
-   "NLTaggerOmitWhitespace": {
-    "value": 4
-   },
-   "NLTaggerOmitWords": {
-    "value": 1
-   },
-   "NLTokenUnitDocument": {
-    "value": 3
-   },
-   "NLTokenUnitParagraph": {
-    "value": 2
-   },
-   "NLTokenUnitSentence": {
-    "value": 1
-   },
-   "NLTokenUnitWord": {
-    "value": 0
-   },
-   "NLTokenizerAttributeEmoji": {
-    "value": 4
-   },
-   "NLTokenizerAttributeNumeric": {
-    "value": 1
-   },
-   "NLTokenizerAttributeSymbolic": {
-    "value": 2
-   }
-  },
   "externs": {
    "NLLanguageAmharic": {
     "typestr": "@"

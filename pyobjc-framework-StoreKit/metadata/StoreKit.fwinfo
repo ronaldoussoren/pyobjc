@@ -49,33 +49,6 @@
     ]
    }
   },
-  "enum": {
-   "SKErrorOverlayCancelled": { "value": 15 },
-   "SKErrorOverlayInvalidConfiguration": { "value": 16 },
-   "SKErrorOverlayTimeout": { "value": 17 },
-   "SKErrorIneligibleForOffer": { "value": 18 },
-   "SKProductDiscountPaymentModeFreeTrial": {
-    "value": 2
-   },
-   "SKProductDiscountPaymentModePayAsYouGo": {
-    "value": 0
-   },
-   "SKProductDiscountPaymentModePayUpFront": {
-    "value": 1
-   },
-   "SKProductPeriodUnitDay": {
-    "value": 0
-   },
-   "SKProductPeriodUnitMonth": {
-    "value": 2
-   },
-   "SKProductPeriodUnitWeek": {
-    "value": 1
-   },
-   "SKProductPeriodUnitYear": {
-    "value": 3
-   }
-  },
   "externs": {
    "SKStoreProductParameterCustomProductPageIdentifier": {
     "typestr": "d"

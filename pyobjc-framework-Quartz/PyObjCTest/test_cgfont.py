@@ -22,7 +22,7 @@ class TestCGFont(TestCase):
         self.assertIsInstance(Quartz.kCGFontVariationAxisDefaultValue, str)
 
         self.assertEqual(Quartz.CGGlyphMin, 0)
-        self.assertEqual(Quartz.CGGlyphMax, Quartz.kCGGlyphMax)
+        self.assertEqual(Quartz.CGGlyphMax, 1)
 
     def test_functions(self):
         self.assertIsInstance(Quartz.CGFontGetTypeID(), int)

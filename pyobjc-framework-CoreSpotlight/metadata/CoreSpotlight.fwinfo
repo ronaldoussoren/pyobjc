@@ -1,18 +1,7 @@
 {
  "definitions": {
   "enum": {
-   "CoreSpotlightAPIVersion": { "ignore": true },
-   "CSSearchQueryErrorCodeUnknown": { "value": -2000 },
-   "CSSearchQueryErrorCodeIndexUnreachable": { "value": -2001 },
-   "CSSearchQueryErrorCodeInvalidQuery": { "value": -2002 },
-   "CSSearchQueryErrorCodeCancelled": { "value": -2003 },
-   "CSIndexErrorCodeUnknownError": { "value": -1 },
-   "CSIndexErrorCodeIndexUnavailableError": { "value": -1000 },
-   "CSIndexErrorCodeInvalidItemError": { "value": -1001 },
-   "CSIndexErrorCodeInvalidClientStateError": { "value": -1002 },
-   "CSIndexErrorCodeRemoteConnectionError": { "value": -1003 },
-   "CSIndexErrorCodeQuotaExceeded": { "value": -1004 },
-   "CSIndexErrorCodeIndexingUnsupported": { "value": -1005 }
+   "CoreSpotlightAPIVersion": { "ignore": true }
   },
   "externs": {
    "CSSearchQueryErrorDomain": { "typestr": "@" },

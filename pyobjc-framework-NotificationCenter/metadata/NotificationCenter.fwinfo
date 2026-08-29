@@ -2,11 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "NCUpdateResultNewData": { "value": 0 },
-   "NCUpdateResultNoData": { "value": 1 },
-   "NCUpdateResultFailed": { "value": 2 }
-  },
   "classes": {
    "NSObject": {
     "methods": [

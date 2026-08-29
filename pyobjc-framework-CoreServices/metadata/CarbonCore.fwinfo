@@ -5842,8 +5842,6 @@
    "errItemNotFoundInTree": { "ignore": true },
    "errCanNotInsertWhileWalkProcInProgress": { "ignore": true },
    "errTreeIsLocked": { "ignore": true },
-   "kTextEncodingUnicodeV10_0": { "value": 276 },
-   "kTextEncodingUnicodeV11_0": { "value": 277 },
    "AIFFID": { "ignore": true },
    "AIFCID": { "ignore": true },
    "FormatVersionID": { "ignore": true },

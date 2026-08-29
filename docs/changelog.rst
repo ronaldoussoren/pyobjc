@@ -156,6 +156,110 @@ Version 13.0a0
   * The metadata for a number of functions in the Quartz bindings were dropped,
     in particular those for functions that were dropped in or before macOS 10.9.
 
+  * Dropped
+    :data:`CFNetwork.kCFStreamSocketSecurityNone`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv2`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv3`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv23`, and
+    :data:`CFNetwork.kCFStreamSocketSecurityTLSv1`. All constants were
+    deprecated in macOS 10.5 and removed later.
+
+  * Dropped
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordCreation`,
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion`,
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordUpdate`, and
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnce`, all of them
+    removed in the macOS 10.11 SDK.
+
+  * Dropped
+    :data:`CoreWLAN.kCWScanTypeActive`,
+    :data:`CoreWLAN.kCWScanTypePassive`,
+    :data:`CoreWLAN.kCWScanTypeFast`,
+    :data:`CoreWLAN.kCWInterfaceStateInactive`,
+    :data:`CoreWLAN.kCWInterfaceStateScanning`,
+    :data:`CoreWLAN.kCWInterfaceStateAuthenticating`,
+    :data:`CoreWLAN.kCWInterfaceStateAssociating`,
+    :data:`CoreWLAN.kCWInterfaceStateRunning`,
+    :data:`CoreWLAN.kCWSecurityModeOpen`,
+    :data:`CoreWLAN.kCWSecurityModeWEP`,
+    :data:`CoreWLAN.kCWSecurityModeWPA_PSK`,
+    :data:`CoreWLAN.kCWSecurityModeWPA2_PSK`,
+    :data:`CoreWLAN.kCWSecurityModeDynamicWEP`,
+    :data:`CoreWLAN.kCWSecurityModeWPA_Enterprise`,
+    :data:`CoreWLAN.kCWSecurityModeWPA2_Enterprise`,
+    :data:`CoreWLAN.kCWSecurityModeWPS`,
+    :data:`CoreWLAN.kCWOpModeStation`,
+    :data:`CoreWLAN.kCWOpModeIBSS`,
+    :data:`CoreWLAN.kCWOpModeHostAP`,
+    :data:`CoreWLAN.kCWOpModeMonitorMode`,
+    :data:`CoreWLAN.CoreWLANFrameworkVersionNumber2_0`,
+    :data:`CoreWLAN.CWEventTypeVirtualInterfaceStateChanged`,
+    :data:`CoreWLAN.CWEventTypeRangingReportEvent`,
+    :data:`CoreWLAN.kCWPHYMode11ax`,
+    :data:`CoreWLAN.kCWPHYMode11A`,
+    :data:`CoreWLAN.kCWPHYMode11B`,
+    :data:`CoreWLAN.kCWPHYMode11G`, and
+    :data:`CoreWLAN.kCWPHYMode11N`.
+    All of these were removed in the macOS 10.9 SDK or earlier.
+
+  * Dropped
+    :data:`ImageCaptureCore.ICReturnErrorDeviceEjected`,
+    symbol was removed a log time ago.
+
+  * Dropped
+
+    :data:`Intents.INShortcutAvailabilityOptionSleepPrepareForTomorrow`,
+    :data:`Intents.INChargingConnectorTypeOptionCCS1`,
+    :data:`Intents.INChargingConnectorTypeOptionCCS2`,
+    :data:`Intents.INChargingConnectorTypeOptionCHAdeMO`,
+    :data:`Intents.INChargingConnectorTypeOptionGBTAC`,
+    :data:`Intents.INChargingConnectorTypeOptionGBTDC`,
+    :data:`Intents.INChargingConnectorTypeOptionJ1772`,
+    :data:`Intents.INChargingConnectorTypeOptionMennekes`,
+    :data:`Intents.INChargingConnectorTypeOptionNone`, and
+    :data:`Intents.INChargingConnectorTypeOptionTesla`.
+    All of these were only present in a beta SDK.
+
+    Also dropped
+    :data:`Intents.INSendMessageIntentResponseCodeFailureMessageAttachmentError`    and
+    :data:`Intents.INSendMessageIntentResponseCodeFailureMessageLocationNotAllowed`
+    which aren't present in any recent SDK.
+
+  * Dropped
+    :data:`LocationAuthentication.kLACredentialTypePasscode` and
+    :data:`LocationAutentication.kLACredentialTypePassphrase` which
+    were only present in a beta SDK.
+
+  * Dropped
+    :data:`Metal.MDLPrimitiveTypeCapsule`,
+    :data:`Metal.MDLPrimitiveTypeCone`,
+    :data:`Metal.MDLPrimitiveTypeCube`,
+    :data:`Metal.MDLPrimitiveTypeCylinder`,
+    :data:`Metal.MDLPrimitiveTypeNone`, and
+    :data:`Metal.MDLPrimitiveTypeSphere`,
+    which were only present in a beta SDK.
+
+  * Dropped
+    :data:`NetworkExtension.NEVPNIKEv2DiffieHellmanGroup0`,
+    which was only in a beta SDK.
+
+  * Dropped
+    :data:`SafariServices.SFSafariServicesVersion10_0`,
+    :data:`SafariServices.SFSafariServicesVersion10_1`,
+    :data:`SafariServices.SFSafariServicesVersion11_0`,
+    :data:`SafariServices.SFSafariServicesVersion12_0`,
+    :data:`SafariServices.SFSafariServicesVersion12_1`,
+    :data:`SafariServices.SFSafariServicesVersion13_0`, and
+    :data:`SafariServices.SFSafariServicesVersion27_0`.
+    All of these are not part of the public API, but are
+    present in a separate header used for Swift support.
+
+  * Dropped
+    :data:`UserNotifications.UNNotificationGroupingSettingDefault`,
+    :data:`UserNotifications.UNNotificationGroupingSettingSource`,
+    :data:`UserNotifications.UNNotificationGroupingSettingOff`.
+    All of these were only in a beta SDK.
+
 * Deprecations:
 
   * The attribute :data:`objc.platform` is deprecated and will be removed
@@ -717,6 +821,15 @@ Version 13.0a0
 * Cleanup the metadata overrides for framework metadata, which should make
   it easier to maintain these overrides going forward.
 
+* Fixed metadata for
+  :meth:`CoreData.NSCustomMigrationStage.willMigrateHandler`,
+  :meth:`CoreData.NSCustomMigrationStage.setWillMigrateHandler_`,
+  :meth:`CoreData.NSCustomMigrationStage.didMigrateHandler`, and
+  :meth:`CoreData.NSCustomMigrationStage.setDidMigrateHandler_`.
+
+* Fix value of the (deprecated) constant :data:`Quartz.CGGlyphMax`.
+
+* Fix value of the constant :data:`dispatch.DISPATCH_WALLTIME_NOW`.
 
 Version 12.2.3
 --------------

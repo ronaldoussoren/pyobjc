@@ -26,30 +26,6 @@
     "gettypeid_func": "CFNetServiceGetTypeID"
    }
   },
-  "enum": {
-   "kCFNetServicesErrorMissingRequiredConfiguration": { "value": -72008 },
-   "kCFStreamSocketSecurityNone": {
-    "value": 0
-   },
-   "kCFStreamSocketSecuritySSLv2": {
-    "value": 1
-   },
-   "kCFStreamSocketSecuritySSLv3": {
-    "value": 2
-   },
-   "kCFStreamSocketSecuritySSLv23": {
-    "value": 3
-   },
-   "kCFStreamSocketSecurityTLSv1": {
-    "value": 4
-   },
-   "kCFURLErrorAppTransportSecurityRequiresSecureConnection": {
-    "value": -1022
-   },
-   "kCFURLErrorFileOutsideSafeArea": {
-    "value": -1104
-   }
-  },
   "externs": {
    "kCFHTTPAuthenticationSchemeOAuth1": { "typestr": "@" },
    "kCFStreamErrorDomainSOCKS": { "typestr": "i" },

@@ -243,8 +243,8 @@ functions = {
         {
             "retval": {
                 "c_array_length_in_arg": 1,
-                "already_cfretained": True,
                 "free_result": True,
+                "already_cfretained": True,
             },
             "arguments": {1: {"type_modifier": "o"}},
         },

@@ -8,10 +8,7 @@
      {
       "args": {
        "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
-       "3": { "type_modifier": "o" },
-       "4": {
-        "type_modifier": "o"
-       }
+       "3": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "refineSampleLocation:refinementData:refinementDataLength:refinedLocation:error:"

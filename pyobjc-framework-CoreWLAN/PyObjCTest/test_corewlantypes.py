@@ -103,8 +103,6 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.CWEventTypeScanCacheUpdated, 8)
         self.assertEqual(CoreWLAN.CWEventTypeBtCoexStats, 9)
         self.assertEqual(CoreWLAN.CWEventTypeUnknown, Foundation.NSIntegerMax)
-        self.assertEqual(CoreWLAN.CWEventTypeVirtualInterfaceStateChanged, 9)
-        self.assertEqual(CoreWLAN.CWEventTypeRangingReportEvent, 10)
 
         self.assertIsEnumType(CoreWLAN.CWIBSSModeSecurity)
         self.assertEqual(CoreWLAN.kCWIBSSModeSecurityNone, 0)
@@ -116,12 +114,6 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWInterfaceModeStation, 1)
         self.assertEqual(CoreWLAN.kCWInterfaceModeIBSS, 2)
         self.assertEqual(CoreWLAN.kCWInterfaceModeHostAP, 3)
-
-        # Old aliases:
-        self.assertEqual(CoreWLAN.kCWOpModeStation, 0)
-        self.assertEqual(CoreWLAN.kCWOpModeIBSS, 1)
-        self.assertEqual(CoreWLAN.kCWOpModeHostAP, 2)
-        self.assertEqual(CoreWLAN.kCWOpModeMonitorMode, 3)
 
         self.assertIsEnumType(CoreWLAN.CWKeychainDomain)
         self.assertEqual(CoreWLAN.kCWKeychainDomainNone, 0)
@@ -137,12 +129,6 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWPHYMode11ac, 5)
         self.assertEqual(CoreWLAN.kCWPHYMode11ax, 6)
         self.assertEqual(CoreWLAN.kCWPHYMode11be, 7)
-
-        # Old aliases:
-        self.assertEqual(CoreWLAN.kCWPHYMode11A, 0)
-        self.assertEqual(CoreWLAN.kCWPHYMode11B, 1)
-        self.assertEqual(CoreWLAN.kCWPHYMode11G, 2)
-        self.assertEqual(CoreWLAN.kCWPHYMode11N, 3)
 
         self.assertIsEnumType(CoreWLAN.CWSecurity)
         self.assertEqual(CoreWLAN.kCWSecurityNone, 0)
@@ -162,25 +148,3 @@ class TestCoreWLANTypes(TestCase):
         self.assertEqual(CoreWLAN.kCWSecurityOWE, 14)
         self.assertEqual(CoreWLAN.kCWSecurityOWETransition, 15)
         self.assertEqual(CoreWLAN.kCWSecurityUnknown, Foundation.NSIntegerMax)
-
-        # Old aliases;
-        self.assertEqual(CoreWLAN.kCWSecurityModeOpen, 0)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWEP, 1)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWPA_PSK, 2)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWPA2_PSK, 3)
-        self.assertEqual(CoreWLAN.kCWSecurityModeDynamicWEP, 4)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWPA_Enterprise, 5)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWPA2_Enterprise, 6)
-        self.assertEqual(CoreWLAN.kCWSecurityModeWPS, 7)
-
-        # Old names (not in macOS 27 SDK):
-        self.assertEqual(CoreWLAN.kCWInterfaceStateInactive, 0)
-        self.assertEqual(CoreWLAN.kCWInterfaceStateScanning, 1)
-        self.assertEqual(CoreWLAN.kCWInterfaceStateAuthenticating, 2)
-        self.assertEqual(CoreWLAN.kCWInterfaceStateAssociating, 3)
-        self.assertEqual(CoreWLAN.kCWInterfaceStateRunning, 4)
-
-        # Old names (not in macOS 27 SDK):
-        self.assertEqual(CoreWLAN.kCWScanTypeActive, 0)
-        self.assertEqual(CoreWLAN.kCWScanTypePassive, 1)
-        self.assertEqual(CoreWLAN.kCWScanTypeFast, 2)

@@ -54,7 +54,6 @@
      }
     },
     "retval": {
-     "already_cfretained": true,
      "c_array_length_in_arg": 1,
      "free_result": true
     }
@@ -67,39 +66,11 @@
      }
     }
    },
-   "SCBondInterfaceCopyAll": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCBondInterfaceCopyAvailableMemberInterfaces": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCBondInterfaceCopyStatus": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCBondInterfaceCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCCopyLastError": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "SCDynamicStoreCopyComputerName": {
     "args": {
      "1": {
       "type_modifier": "o"
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCDynamicStoreCopyConsoleUser": {
@@ -110,44 +81,6 @@
      "2": {
       "type_modifier": "o"
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyDHCPInfo": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyKeyList": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyLocalHostName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyLocation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyMultiple": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyNotifiedKeys": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCopyProxies": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCDynamicStoreCreate": {
@@ -173,14 +106,6 @@
      "3": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreCreateRunLoopSource": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCDynamicStoreCreateWithOptions": {
@@ -206,9 +131,6 @@
      "4": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCDynamicStoreKeyCreate": {
@@ -217,55 +139,6 @@
       "printf_format": true,
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    },
-    "variadic": true
-   },
-   "SCDynamicStoreKeyCreateComputerName": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateConsoleUser": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateHostNames": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateLocation": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateNetworkGlobalEntity": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateNetworkInterface": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateNetworkInterfaceEntity": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateNetworkServiceEntity": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCDynamicStoreKeyCreateProxies": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCErrorString": {
@@ -277,12 +150,10 @@
    "SCNetworkCheckReachabilityByAddress": {
     "args": {
      "0": {
-      "type_modifier": "n",
-      "type_override": "^{sockaddr=CC[14c]}"
+      "type_modifier": "n"
      },
      "2": {
-      "type_modifier": "o",
-      "type_override": "^I"
+      "type_modifier": "o"
      }
     }
    },
@@ -296,26 +167,6 @@
      "1": {
       "type_modifier": "o"
      }
-    }
-   },
-   "SCNetworkConnectionCopyExtendedStatus": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkConnectionCopyServiceID": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkConnectionCopyStatistics": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkConnectionCopyUserOptions": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCNetworkConnectionCopyUserPreferences": {
@@ -353,14 +204,6 @@
      "3": {
       "type_override": "@", "doc": "Value can be an arbitrary value, the Objective-C context struct is managed automatically"
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkInterfaceCopyAll": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCNetworkInterfaceCopyMTU": {
@@ -389,30 +232,11 @@
      }
     }
    },
-   "SCNetworkInterfaceCopyMediaSubTypeOptions": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkInterfaceCopyMediaSubTypes": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkInterfaceCreateWithInterface": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "SCNetworkReachabilityCreateWithAddress": {
     "args": {
      "1": {
-      "type_modifier": "n",
-      "type_override": "^{sockaddr=CC[14c]}"
+      "type_modifier": "n"
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCNetworkReachabilityCreateWithAddressPair": {
@@ -421,12 +245,8 @@
       "type_modifier": "n"
      },
      "2": {
-      "type_modifier": "n",
-      "type_override": "^{sockaddr=CC[14c]}"
+      "type_modifier": "n"
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCNetworkReachabilityCreateWithName": {
@@ -434,9 +254,6 @@
      "1": {
       "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true
      }
-    },
-    "retval": {
-     "already_cfretained": true
     }
    },
    "SCNetworkReachabilitySetCallback": {
@@ -464,76 +281,6 @@
      }
     }
    },
-   "SCNetworkServiceCopy": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkServiceCopyAll": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkServiceCopyProtocol": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkServiceCopyProtocols": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkServiceCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkSetCopy": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkSetCopyAll": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkSetCopyCurrent": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkSetCopyServices": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCNetworkSetCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCPreferencesCopyKeyList": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCPreferencesCreate": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCPreferencesCreateWithAuthorization": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCPreferencesPathCreateUniqueChild": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "SCPreferencesSetCallback": {
     "args": {
      "1": {
@@ -559,26 +306,11 @@
      }
     }
    },
-   "SCVLANInterfaceCopyAll": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "SCVLANInterfaceCopyAvailablePhysicalInterfaces": {
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "SCNetworkReachabilityGetFlags": {
     "args": {
      "1": {
       "type_modifier": "o"
      }
-    }
-   },
-   "SCVLANInterfaceCreate": {
-    "retval": {
-     "already_cfretained": true
     }
    }
   }

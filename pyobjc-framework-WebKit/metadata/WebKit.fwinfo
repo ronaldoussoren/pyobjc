@@ -3127,84 +3127,17 @@
    }
   },
   "enum": {
-   "WebJNIReturnTypeBoolean": { "value": 3, "deprecated": 1008 },
-   "WebJNIReturnTypeByte": { "value": 4, "deprecated": 1008 },
-   "WebJNIReturnTypeChar": { "value": 5, "deprecated": 1008 },
-   "WebJNIReturnTypeDouble": { "value": 10, "deprecated": 1008 },
-   "WebJNIReturnTypeFloat": { "value": 9, "deprecated": 1008 },
-   "WebJNIReturnTypeInt": { "value": 7, "deprecated": 1008 },
-   "WebJNIReturnTypeInvalid": { "value": 0, "deprecated": 1008 },
-   "WebJNIReturnTypeLong": { "value": 8, "deprecated": 1008 },
-   "WebJNIReturnTypeObject": { "value": 2, "deprecated": 1008 },
-   "WebJNIReturnTypeShort": { "value": 6, "deprecated": 1008 },
-   "WebJNIReturnTypeVoid": { "value": 1, "deprecated": 1008 },
-   "WKDownloadRedirectPolicyCancel": { "value": 0 },
-   "WKDownloadRedirectPolicyAllow": { "value": 1 },
-   "WKNavigationActionPolicyDownload": { "value": 2 },
-   "WKNavigationResponsePolicyDownload": { "value": 2 },
-   "WKErrorJavaScriptInvalidFrameTarget": { "value": 12 },
-   "WKErrorNavigationAppBoundDomain": { "value": 13 },
-   "WKErrorJavaScriptAppBoundDomain": { "value": 14 },
-   "WKContentModeRecommended": { "value": 0 },
-   "WKContentModeMobile": { "value": 1 },
-   "WKContentModeDesktop": { "value": 2 },
-   "WKErrorAttributedStringContentFailedToLoad": {
-    "value": 10
-   },
-   "WKErrorAttributedStringContentLoadTimedOut": {
-    "value": 11
-   },
-   "DOM_KEYFRAMES_RULE": {
-    "value": 7
-   },
-   "DOM_KEYFRAME_RULE": {
-    "value": 8
-   },
-   "DOM_NAMESPACE_RULE": {
-    "value": 10
-   },
-   "DOM_SUPPORTS_RULE": {
-    "value": 12
-   },
-   "DOM_WEBKIT_KEYFRAMES_RULE": {
-    "value": 7
-   },
-   "DOM_WEBKIT_KEYFRAME_RULE": {
-    "value": 8
-   },
-   "DOM_WEBKIT_REGION_RULE": {
-    "value": 16
-   },
-   "WKAudiovisualMediaTypeAudio": {
-    "value": 1
-   },
-   "WKAudiovisualMediaTypeNone": {
-    "value": 0
-   },
-   "WKAudiovisualMediaTypeVideo": {
-    "value": 2
-   },
-   "WKErrorContentRuleListStoreCompileFailed": {
-    "value": 6
-   },
-   "WKErrorContentRuleListStoreLookUpFailed": {
-    "value": 7
-   },
-   "WKErrorContentRuleListStoreRemoveFailed": {
-    "value": 8
-   },
-   "WKErrorContentRuleListStoreVersionMismatch": {
-    "value": 9
-   },
-   "WKErrorJavaScriptResultTypeIsUnsupported": {
-    "value": 5
-   },
-   "WKUserInterfaceDirectionPolicyContent": {
-    "value": 0
-   },
-   "WKUserInterfaceDirectionPolicySystem": {
-    "value": 1
-   }
+   "WebJNIReturnTypeBoolean": { "value": 3, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeByte": { "value": 4, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeChar": { "value": 5, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeDouble": { "value": 10, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeFloat": { "value": 9, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeInt": { "value": 7, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeInvalid": { "value": 0, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeLong": { "value": 8, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeObject": { "value": 2, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeShort": { "value": 6, "deprecated": 1008, "removed": 2600 },
+   "WebJNIReturnTypeVoid": { "value": 1, "deprecated": 1008, "removed": 2600 }
   },
   "externs": {
    "WKWebsiteDataTypeCookies": {

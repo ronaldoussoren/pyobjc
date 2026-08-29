@@ -97,15 +97,6 @@
      },
      {
       "args": {
-       "1": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "canEvaluatePolicy:error:"
-     },
-     {
-      "args": {
        "0": {
         "type_override": "Z"
        }
@@ -155,10 +146,10 @@
   },
   "enum": {
    "kLAOptionUserFallback": {
-    "value": 1
+    "value": 1, "removed": 1015
    },
    "kLAOptionAuthenticationReason": {
-    "value": 2
+    "value": 2, "removed": 1015
    },
    "kLACompanionTypeVision": {
     "value": 4
@@ -167,57 +158,6 @@
     "value": 1
    },
    "kLACompanionTypeMac": {
-    "value": 2
-   },
-   "LAAccessControlOperationCreateItem": {
-    "value": 0
-   },
-   "LAAccessControlOperationCreateKey": {
-    "value": 2
-   },
-   "LAAccessControlOperationUseItem": {
-    "value": 1
-   },
-   "LAAccessControlOperationUseKeyDecrypt": {
-    "value": 4
-   },
-   "LAAccessControlOperationUseKeyKeyExchange": {
-    "value": 5
-   },
-   "LAAccessControlOperationUseKeySign": {
-    "value": 3
-   },
-   "LABiometryNone": {
-    "value": 0
-   },
-   "LABiometryTypeNone": {
-    "value": 0
-   },
-   "LABiometryTypeTouchID": {
-    "value": 1
-   },
-   "LACredentialTypeApplicationPassword": {
-    "value": 0
-   },
-   "LAErrorAppCancel": {
-    "value": -9
-   },
-   "LAErrorBiometryDisconnected": {
-    "value": -13
-   },
-   "LAErrorBiometryNotPaired": {
-    "value": -12
-   },
-   "LAErrorInvalidContext": {
-    "value": -10
-   },
-   "LAErrorNotInteractive": {
-    "value": -1004
-   },
-   "LAErrorTouchIDLockout": {
-    "value": -8
-   },
-   "LAPolicyDeviceOwnerAuthentication": {
     "value": 2
    },
    "kLABiometryTypeFaceID": {
@@ -230,40 +170,7 @@
     "value": 1
    },
    "kLACredentialCTKPIN": {
-    "value": -3
-   },
-   "kLACredentialSmartCardPIN": {
-    "value": -3
-   },
-   "kLACredentialTypeApplicationPassword": {
-    "value": 0
-   },
-   "kLACredentialTypePasscode": {
-    "value": -1
-   },
-   "kLACredentialTypePassphrase": {
-    "value": -2
-   },
-   "kLAErrorAppCancel": {
-    "value": -9
-   },
-   "kLAErrorBiometryDisconnected": {
-    "value": -13
-   },
-   "kLAErrorBiometryNotPaired": {
-    "value": -12
-   },
-   "kLAErrorInvalidContext": {
-    "value": -10
-   },
-   "kLAErrorNotInteractive": {
-    "value": -1004
-   },
-   "kLAErrorTouchIDLockout": {
-    "value": -8
-   },
-   "kLAPolicyDeviceOwnerAuthentication": {
-    "value": 2
+    "value": -3, "removed": 1015
    }
   },
   "externs": {

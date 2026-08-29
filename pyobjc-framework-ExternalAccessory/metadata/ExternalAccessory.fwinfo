@@ -1,22 +1,5 @@
 {
  "definitions": {
-  "enum": {
-   "EAWiFiUnconfiguredAccessoryConfigurationStatusSuccess": { "value": 0 },
-   "EAWiFiUnconfiguredAccessoryConfigurationStatusUserCancelledConfiguration": { "value": 1 },
-   "EAWiFiUnconfiguredAccessoryConfigurationStatusFailed": { "value": 2 },
-   "EAWiFiUnconfiguredAccessoryBrowserStateWiFiUnavailable": { "value": 0 },
-   "EAWiFiUnconfiguredAccessoryBrowserStateStopped": { "value": 1 },
-   "EAWiFiUnconfiguredAccessoryBrowserStateSearching": { "value": 2 },
-   "EAWiFiUnconfiguredAccessoryBrowserStateConfiguring": { "value": 3 },
-   "EAWiFiUnconfiguredAccessoryPropertySupportsAirPlay": { "value": 1 },
-   "EAWiFiUnconfiguredAccessoryPropertySupportsAirPrint": { "value": 2 },
-   "EAWiFiUnconfiguredAccessoryPropertySupportsHomeKit": { "value": 4 },
-   "EABluetoothAccessoryPickerAlreadyConnected": { "value": 0 },
-   "EABluetoothAccessoryPickerResultNotFound": { "value": 1 },
-   "EABluetoothAccessoryPickerResultCancelled": { "value": 2 },
-   "EABluetoothAccessoryPickerResultFailed": { "value": 3 },
-   "EAConnectionIDNone": { "value": 0 }
-  },
   "externs": {
    "EAAccessoryDidConnectNotification": { "typestr": "@" },
    "EAAccessoryDidDisconnectNotification": { "typestr": "@" },

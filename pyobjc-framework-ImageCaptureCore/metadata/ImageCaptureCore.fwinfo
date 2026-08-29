@@ -19,24 +19,6 @@
    "ICSessionOptions": { "type": "@", "type_name": "NSString" },
    "ICDeviceLocationOptions": { "type": "@", "type_name": "NSString" }
   },
-  "enum": {
-   "ICReturnConnectionNotAuthorizedToOpenDevice": { "value": -21343 },
-   "ICReturnCodeObjectOffset": { "value": -21450 },
-   "ICReturnDeviceFailedToCompleteTransfer": { "value": -9956 },
-   "ICReturnDeviceFailedToSendData": { "value": -9957 },
-   "ICReturnSessionNotOpened": { "value": -9958 },
-   "ICReturnThumbnailNotAvailable": { "value": -21000 },
-   "ICReturnErrorDeviceEjected": { "value": -21300 },
-   "ICReturnMultiErrorDictionary": { "value": -30000 },
-   "ICReturnCodeThumbnailOffset": { "value": -21000 },
-   "ICReturnCodeMetadataOffset": { "value": -21050 },
-   "ICReturnCodeDownloadOffset": { "value": -21100 },
-   "ICReturnCodeDeleteOffset": { "value": -21150 },
-   "ICReturnCodePTPOffset": { "value": -21250 },
-   "ICReturnCodeSystemOffset": { "value": -21300 },
-   "ICReturnDeviceIsBusyEnumerating": { "value": -9954 },
-   "ICReturnDeviceCommandGeneralFailure": { "value": -9955 }
-  },
   "aliases": {
    "ICReturnPTPFailedToSendCommand": { "alias": "ICReturnCodeDownloadOffset" },
    "ICReturnDownloadPathInvalid": { "alias": "ICReturnCodeDownloadOffset" },

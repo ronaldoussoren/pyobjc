@@ -94,61 +94,7 @@
    "CBPeripheralAuthorizationStatusAuthorized": { "value": 3, "deprecated": 1009 },
    "CBPeripheralAuthorizationStatusDenied": { "value": 2, "deprecated": 1009 },
    "CBPeripheralAuthorizationStatusNotDetermined": { "value": 0, "deprecated": 1009 },
-   "CBPeripheralAuthorizationStatusRestricted": { "value": 1, "deprecated": 1009 },
-   "CBErrorConnectionFailed": {
-    "value": 10
-   },
-   "CBErrorConnectionLimitReached": {
-    "value": 11
-   },
-   "CBErrorEncryptionTimedOut": {
-    "value": 15
-   },
-   "CBErrorOperationNotSupported": {
-    "value": 13
-   },
-   "CBErrorPeerRemovedPairingInformation": {
-    "value": 14
-   },
-   "CBErrorUnknownDevice": {
-    "value": 12
-   },
-   "CBErrorUnkownDevice": {
-    "value": 12
-   },
-   "CBManagerStatePoweredOff": {
-    "value": 4
-   },
-   "CBManagerStatePoweredOn": {
-    "value": 5
-   },
-   "CBManagerStateResetting": {
-    "value": 1
-   },
-   "CBManagerStateUnauthorized": {
-    "value": 3
-   },
-   "CBManagerStateUnknown": {
-    "value": 0
-   },
-   "CBManagerStateUnsupported": {
-    "value": 2
-   },
-   "CBPeripheralManagerAuthorizationStatusAuthorized": {
-    "value": 3
-   },
-   "CBPeripheralManagerAuthorizationStatusDenied": {
-    "value": 2
-   },
-   "CBPeripheralManagerAuthorizationStatusNotDetermined": {
-    "value": 0
-   },
-   "CBPeripheralManagerAuthorizationStatusRestricted": {
-    "value": 1
-   },
-   "CBPeripheralStateDisconnecting": {
-    "value": 3
-   }
+   "CBPeripheralAuthorizationStatusRestricted": { "value": 1, "deprecated": 1009 }
   },
   "externs": {
    "CBUUIDAppearanceString": { "typestr": "@", "deprecated": 1009 },

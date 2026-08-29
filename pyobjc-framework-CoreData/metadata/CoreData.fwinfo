@@ -1,46 +1,7 @@
 {
  "definitions": {
   "enum": {
-   "NSFetchRequestExpressionType": { "value": 50 },
-   "NSPersistentHistoryResultTypeStatusOnly": { "value": 0 },
-   "NSPersistentHistoryResultTypeObjectIDs": { "value": 1 },
-   "NSPersistentHistoryResultTypeCount": { "value": 2 },
-   "NSPersistentHistoryResultTypeTransactionsOnly": { "value": 3 },
-   "NSPersistentHistoryResultTypeChangesOnly": { "value": 4 },
-   "NSPersistentHistoryResultTypeTransactionsAndChanges": { "value": 5 },
-   "NSPersistentHistoryChangeTypeInsert": { "value": 0 },
-   "NSPersistentHistoryChangeTypeUpdate": { "value": 1 },
-   "NSPersistentHistoryChangeTypeDelete": { "value": 2 },
-   "NSFetchIndexElementTypeBinary": { "value": 0 },
-   "NSFetchIndexElementTypeRTree": { "value": 1 },
-   "NSValidationInvalidURIError": { "value": 1690 },
-   "NSPersistentHistoryTokenExpiredError": { "value": 134301 },
-   "NSUUIDAttributeType": { "value": 1100 },
-   "NSURIAttributeType": { "value": 1200 },
-   "NSFetchedResultsChangeInsert": { "value": 1 },
-   "NSFetchedResultsChangeDelete": { "value": 2 },
-   "NSFetchedResultsChangeMove": { "value": 3 },
-   "NSFetchedResultsChangeUpdate": { "value": 4 },
-   "NSCoreDataVersionNumber10_10": { "value": 526.0 },
-   "NSCoreDataVersionNumber10_10_2": { "value": 526.1 },
-   "NSCoreDataVersionNumber10_10_3": { "value": 526.2 },
-   "NSCoreDataVersionNumber10_11": { "value": 640.0 },
-   "NSCoreDataVersionNumber10_11_3": { "value": 641.3 },
-   "NSBatchDeleteRequestType": { "value": 7 },
-   "NSBatchDeleteResultTypeStatusOnly": { "value": 0 },
-   "NSBatchDeleteResultTypeObjectIDs": { "value": 1 },
-   "NSBatchDeleteResultTypeCount": { "value": 2 },
-   "NSManagedObjectConstraintValidationError": { "value": 1551 },
-   "NSManagedObjectConstraintMergeError": { "value": 133021 },
-   "NSMigrationConstraintViolationError": { "value": 134111 }
-  },
-  "externs": {
-   "NSBinaryStoreSecureDecodingClasses": { "typestr": "@" },
-   "NSBinaryStoreInsecureDecodingCompatibilityOption": { "typestr": "@" },
-   "NSPersistentHistoryTrackingKey": { "typestr": "@" },
-   "NSPersistentStoreForceDestroyOption": { "typestr": "@" },
-   "NSPersistentStoreConnectionPoolMaxSizeKey": { "typestr": "@" },
-   "NSManagedObjectContextQueryGenerationKey": { "typestr": "@" }
+   "NSFetchRequestExpressionType": { "value": 50 }
   },
   "classes": {
    "NSCustomMigrationStage": {
@@ -53,7 +14,7 @@
 	      "0": { "type": "^v" },
 	      "1": { "type": "@" },
 	      "2": { "type": "@" },
-	      "3": { "type": "@" }
+	      "3": { "type": "^@", "type_modifier": "o" }
 	    },
 	    "retval": {
 	      "type": "Z"
@@ -71,7 +32,7 @@
 	      "0": { "type": "^v" },
 	      "1": { "type": "@" },
 	      "2": { "type": "@" },
-	      "3": { "type": "@" }
+	      "3": { "type": "^@", "type_modifier": "o" }
 	    },
 	    "retval": {
 	      "type": "Z"
@@ -89,7 +50,7 @@
 	      "0": { "type": "^v" },
 	      "1": { "type": "@" },
 	      "2": { "type": "@" },
-	      "3": { "type": "@" }
+	      "3": { "type": "^@", "type_modifier": "o" }
 	    },
 	    "retval": {
 	      "type": "Z"
@@ -107,7 +68,7 @@
 	      "0": { "type": "^v" },
 	      "1": { "type": "@" },
 	      "2": { "type": "@" },
-	      "3": { "type": "@" }
+	      "3": { "type": "^@", "type_modifier": "o" }
 	    },
 	    "retval": {
 	      "type": "Z"

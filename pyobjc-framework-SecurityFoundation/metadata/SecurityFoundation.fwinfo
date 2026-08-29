@@ -26,9 +26,6 @@
       "class_method": false,
       "retval": {
        "type_override": "Z"
-      },
-      "args": {
-       "2": { "type_modifier": "o" }
       }
      },
      {

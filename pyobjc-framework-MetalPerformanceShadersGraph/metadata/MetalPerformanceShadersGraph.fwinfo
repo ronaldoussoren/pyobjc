@@ -431,34 +431,6 @@
      }
     ]
    }
-  },
-  "enum": {
-   "MPSGraphRNNActivationNone": { "value": 0 },
-   "MPSGraphRNNActivationRelu": { "value": 1 },
-   "MPSGraphRNNActivationTanh": { "value": 2 },
-   "MPSGraphRNNActivationSigmoid": { "value": 3 },
-   "MPSGraphRNNActivationHardSigmoid": { "value": 4 },
-   "MPSGraphScatterModeAdd": {
-    "value": 0
-   },
-   "MPSGraphScatterModeDiv": {
-    "value": 3
-   },
-   "MPSGraphScatterModeMax": {
-    "value": 5
-   },
-   "MPSGraphScatterModeMin": {
-    "value": 4
-   },
-   "MPSGraphScatterModeMul": {
-    "value": 2
-   },
-   "MPSGraphScatterModeSet": {
-    "value": 6
-   },
-   "MPSGraphScatterModeSub": {
-    "value": 1
-   }
   }
  }
 }

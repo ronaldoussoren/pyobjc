@@ -2,10 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "VZErrorVirtualMachineLimitExceeded": { "value": 6 },
-   "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
-  },
   "classes": {
    "VZEFIVariableStore": {
     "methods": [

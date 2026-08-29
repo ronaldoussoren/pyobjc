@@ -12,16 +12,6 @@
     "value": "fileID"
    }
   },
-  "enum": {
-   "kFSEventStreamEventFlagItemCloned": { "value": 4194304 },
-   "kFSEventStreamCreateFlagUseExtendedData": { "value": 64 },
-   "kFSEventStreamCreateFlagMarkSelf": { "value": 32 },
-   "kFSEventStreamCreateFlagFullHistory": { "value": 128  },
-   "kFSEventStreamEventFlagOwnEvent": { "value": 524288 },
-   "kFSEventStreamEventFlagItemIsHardlink": { "value": 1048576 },
-   "kFSEventStreamEventFlagItemIsLastHardlink": { "value": 2097152 },
-   "kFSEventStreamCreateDeviceState": { "value": 512 }
-  },
   "cftypes": {
     "ConstFSEventStreamRef": {
     	"opaque": true,

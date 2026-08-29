@@ -43,7 +43,7 @@ class TestEKAlarm(TestCase):
         self.assertEqual(EventKit.EKErrorNotificationSavedWithoutCollection, 35)
         self.assertEqual(EventKit.EKErrorReminderAlarmContainsEmailOrUrl, 36)
 
-        self.assertEqual(EventKit.EKErrorLast, 31)
+        self.assertEqual(EventKit.EKErrorLast, 37)
 
     def test_constants(self):
         self.assertIsInstance(EventKit.EKErrorDomain, str)

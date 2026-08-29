@@ -6,10 +6,6 @@ import objc
 class TestCKSubscription(TestCase):
     def test_enums(self):
         self.assertIsEnumType(CloudKit.CKQuerySubscriptionOptions)
-        self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordCreation, 1)
-        self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordUpdate, 2)
-        self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion, 4)
-        self.assertEqual(CloudKit.CKSubscriptionOptionsFiresOnce, 8)
         self.assertEqual(
             CloudKit.CKQuerySubscriptionOptionsFiresOnRecordCreation, 1 << 0
         )

@@ -149,24 +149,6 @@
    "kCGErrorFirst": { "value": 1000 },
    "kCGEventMaskForAllEvents": { "value": 18446744073709551615 },
    "kCGFontIndexMax": { "value": 65534 },
-   "kCGEventUnacceleratedPointerMovementX": {
-    "value": 170
-   },
-   "kCGEventUnacceleratedPointerMovementY": {
-    "value": 171
-   },
-   "CGGlyphMax": {
-    "value": 65534
-   },
-   "kCGColorConversionTransformApplySpace": {
-    "value": 2
-   },
-   "kCGColorConversionTransformFromSpace": {
-    "value": 0
-   },
-   "kCGColorConversionTransformToSpace": {
-    "value": 1
-   },
    "kCGColorConverterTransformApplySpace": {
     "value": 2
    },
@@ -174,69 +156,6 @@
     "value": 0
    },
    "kCGColorConverterTransformToSpace": {
-    "value": 1
-   },
-   "kCGColorSpaceModelXYZ": {
-    "value": 7
-   },
-   "kCGImageByteOrder16Big": {
-    "value": 12288
-   },
-   "kCGImageByteOrder16Little": {
-    "value": 4096
-   },
-   "kCGImageByteOrder32Big": {
-    "value": 16384
-   },
-   "kCGImageByteOrder32Little": {
-    "value": 8192
-   },
-   "kCGImageByteOrderDefault": {
-    "value": 0
-   },
-   "kCGImageByteOrderMask": {
-    "value": 28672
-   },
-   "kCGImagePixelFormatMask": {
-    "value": 983040
-   },
-   "kCGImagePixelFormatPacked": {
-    "value": 0
-   },
-   "kCGImagePixelFormatRGB101010": {
-    "value": 196608
-   },
-   "kCGImagePixelFormatRGB555": {
-    "value": 65536
-   },
-   "kCGImagePixelFormatRGB565": {
-    "value": 131072
-   },
-   "kCGImagePixelFormatRGBCIF10": {
-    "value": 262144
-   },
-   "kCGPDFAllowsCommenting": {
-    "value": 64
-   },
-   "kCGPDFAllowsContentAccessibility": {
-    "value": 32
-   },
-   "kCGPDFAllowsContentCopying": {
-    "value": 16
-   },
-   "kCGPDFAllowsDocumentAssembly": {
-    "value": 8
-   },
-   "kCGPDFAllowsDocumentChanges": {
-    "value": 4
-   },
-   "kCGPDFAllowsFormFieldEntry": {
-    "value": 128
-   },
-   "kCGPDFAllowsHighQualityPrinting": {
-    "value": 2
-   },
-   "kCGPDFAllowsLowQualityPrinting": {
     "value": 1
    }
   },
@@ -1005,15 +924,10 @@
     }
    },
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
+    "deprecated": "1006",
+    "removed": "1014",
+    "retval": { "type_override": "^{__CFDictionary=}" },
     "args": {
-     "6": { "type_modifier": "o" }
-    }
-   },
-    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
-     "deprecated": "1006",
-     "removed": "1014",
-     "retval": { "type_override": "^{__CFDictionary=}" },
-     "args": {
      "0": { "type_override": "I" },
      "1": { "type_override": "Q" },
      "2": { "type_override": "Q" },

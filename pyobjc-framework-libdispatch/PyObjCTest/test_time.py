@@ -11,9 +11,9 @@ class TestTime(TestCase):
         self.assertEqual(dispatch.NSEC_PER_USEC, 1000)
 
         self.assertEqual(dispatch.DISPATCH_TIME_NOW, 0)
-        self.assertEqual(dispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(dispatch.DISPATCH_TIME_FOREVER, cast_ulonglong(~0))
 
-        self.assertEqual(dispatch.DISPATCH_WALLTIME_NOW, cast_ulonglong(-1))
+        self.assertEqual(dispatch.DISPATCH_WALLTIME_NOW, cast_ulonglong(~1))
 
     def test_structs(self):
         tv = dispatch.timespec(50, 100)

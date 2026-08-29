@@ -88,10 +88,6 @@ class TestICCameraDevice(TestCase):
         )
 
         self.assertEqual(
-            ImageCaptureCore.ICReturnErrorDeviceEjected,
-            ImageCaptureCore.ICReturnCodeSystemOffset,
-        )
-        self.assertEqual(
             ImageCaptureCore.ICReturnConnectionDriverExited,
             ImageCaptureCore.ICReturnCodeDeviceOffset,
         )

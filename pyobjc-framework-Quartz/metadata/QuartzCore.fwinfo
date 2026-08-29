@@ -38,10 +38,6 @@
    "CIQRCodeErrorCorrectionLevelM": { "value": 77 },
    "CIQRCodeErrorCorrectionLevelQ": { "value": 81 },
    "CIQRCodeErrorCorrectionLevelH": { "value": 72 },
-   "kCALayerMinXMinYCorner": { "value": 1 },
-   "kCALayerMaxXMinYCorner": { "value": 2 },
-   "kCALayerMinXMaxYCorner": { "value": 4 },
-   "kCALayerMaxXMaxYCorner": { "value": 8 },
    "CIRenderDestinationAlphaNone": { "value": 0 },
    "CIRenderDestinationAlphaPremultiplied": { "value": 1 },
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
@@ -386,6 +382,18 @@
 	 "retval": { "type": "v" }
 	}
        }
+      }
+     },
+     {
+      "selector": "isDespeckleSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setDespeckleSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
       }
      },
      {

@@ -19,7 +19,6 @@
    "ASAuthorizationProviderExtensionFederationType": { "type": "q"}
   },
   "enum": {
-   "ASAuthorizationAppleIDButtonTypeSignUp": { "value": 2 },
    "ASCOSEAlgorithmIdentifierES256": { "value": -7 },
    "ASCOSEEllipticCurveIdentifierP256": { "value": 1 }
   },

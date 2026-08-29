@@ -2,13 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "AVRoutePickerViewButtonStateNormal": { "value": 0 },
-   "AVRoutePickerViewButtonStateNormalHighlighted": { "value": 1 },
-   "AVRoutePickerViewButtonStateActive": { "value": 2 },
-   "AVRoutePickerViewButtonStateActiveHighlighted": { "value": 3 }
-
-  },
   "classes": {
     "NSObject": {
      "methods": [

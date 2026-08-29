@@ -556,6 +556,7 @@ try:
     )
     r(b"CIRAWFilter", b"isColorNoiseReductionSupported", {"retval": {"type": "Z"}})
     r(b"CIRAWFilter", b"isContrastSupported", {"retval": {"type": "Z"}})
+    r(b"CIRAWFilter", b"isDespeckleSupported", {"retval": {"type": "Z"}})
     r(b"CIRAWFilter", b"isDetailSupported", {"retval": {"type": "Z"}})
     r(b"CIRAWFilter", b"isGamutMappingEnabled", {"retval": {"type": "Z"}})
     r(b"CIRAWFilter", b"isLensCorrectionEnabled", {"retval": {"type": "Z"}})
@@ -570,6 +571,7 @@ try:
         {"arguments": {2: {"type": "Z"}}},
     )
     r(b"CIRAWFilter", b"setContrastSupported:", {"arguments": {2: {"type": "Z"}}})
+    r(b"CIRAWFilter", b"setDespeckleSupported:", {"arguments": {2: {"type": "Z"}}})
     r(b"CIRAWFilter", b"setDetailSupported:", {"arguments": {2: {"type": "Z"}}})
     r(b"CIRAWFilter", b"setGamutMappingEnabled:", {"arguments": {2: {"type": "Z"}}})
     r(b"CIRAWFilter", b"setLensCorrectionEnabled:", {"arguments": {2: {"type": "Z"}}})

@@ -23,24 +23,6 @@
   "enum": {
    "IMAGEIO_PNG_ALL_FILTERS": {
     "value": 248
-   },
-   "IMAGEIO_PNG_FILTER_AVG": {
-    "value": 64
-   },
-   "IMAGEIO_PNG_FILTER_NONE": {
-    "value": 8
-   },
-   "IMAGEIO_PNG_FILTER_PAETH": {
-    "value": 128
-   },
-   "IMAGEIO_PNG_FILTER_SUB": {
-    "value": 16
-   },
-   "IMAGEIO_PNG_FILTER_UP": {
-    "value": 32
-   },
-   "IMAGEIO_PNG_NO_FILTERS": {
-    "value": 0
    }
   },
   "externs": {

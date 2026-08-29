@@ -29,7 +29,7 @@ else:
 
 misc = {}
 constants = """$SFErrorDomain$SFExtensionMessageKey$SFExtensionProfileKey$SFSafariSettingsErrorDomain$"""
-enums = """$SFErrorLoadingInterrupted@3$SFErrorNoAttachmentFound@2$SFErrorNoExtensionFound@1$SFSafariServicesVersion10_0@0$SFSafariServicesVersion10_1@1$SFSafariServicesVersion11_0@2$SFSafariServicesVersion12_0@3$SFSafariServicesVersion12_1@4$SFSafariServicesVersion13_0@5$SFSafariServicesVersion27_0@6$SFSafariSettingsErrorFailed@1$SFSafariSettingsErrorNotAllowed@0$"""
+enums = """$SFErrorLoadingInterrupted@3$SFErrorNoAttachmentFound@2$SFErrorNoExtensionFound@1$SFSafariSettingsErrorFailed@1$SFSafariSettingsErrorNotAllowed@0$"""
 misc.update(
     {
         "SFErrorCode": NewType("SFErrorCode", int),

@@ -5,9 +5,6 @@
   "exern": {
    "OSRelatedKernelExtensionKey": { "typestr": "@" }
   },
-  "enum": {
-   "OSSystemExtensionErrorAuthorizationRequired": { "value": 13 }
-  },
   "classes": {
    "OSSystemExtensionProperties": {
     "methods": [
