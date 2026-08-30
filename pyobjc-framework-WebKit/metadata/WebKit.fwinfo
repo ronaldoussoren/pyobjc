@@ -3139,38 +3139,6 @@
    "WebJNIReturnTypeShort": { "value": 6, "deprecated": 1008, "removed": 2600 },
    "WebJNIReturnTypeVoid": { "value": 1, "deprecated": 1008, "removed": 2600 }
   },
-  "externs": {
-   "WKWebsiteDataTypeCookies": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeDiskCache": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeFetchCache": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeIndexedDBDatabases": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeLocalStorage": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeMemoryCache": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeOfflineWebApplicationCache": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeServiceWorkerRegistrations": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeSessionStorage": {
-    "typestr": "@"
-   },
-   "WKWebsiteDataTypeWebSQLDatabases": {
-    "typestr": "@"
-   }
-  },
   "formal_protocols": {
    "DOMNodeFilter": { "rename": "DOMNodeFilterProtocol" },
    "WebPolicyDecisionListener": { "rename": "WebPolicyDecisionListenerProtocol" },

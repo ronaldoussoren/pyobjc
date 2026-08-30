@@ -2,12 +2,6 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-   "kODPolicyKeyContentDescription": { "typestr": "@" },
-   "kODPolicyKeyEvaluationDetails": { "typestr": "@" },
-   "kODPolicyKeyPolicySatisfied": { "typestr": "@" },
-   "kODAuthenticationTypeClearTextReadOnly": { "typestr": "@" }
-  },
   "typed_enum": {
    "ODMatchType": { "type": "I" },
    "ODNodeType": { "type": "I" }

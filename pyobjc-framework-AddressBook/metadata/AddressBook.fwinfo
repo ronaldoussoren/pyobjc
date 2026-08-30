@@ -334,9 +334,6 @@
    "kABMSNWorkLabel": {
     "deprecated": "10.7"
    },
-   "kABOrganizationPhoneticProperty": {
-    "typestr": "@"
-   },
    "kABYahooHomeLabel": {
     "deprecated": "10.7"
    },

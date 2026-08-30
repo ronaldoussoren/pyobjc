@@ -32,9 +32,6 @@
      }
     ]
    }
-  },
-  "externs": {
-   "UTTypeMakefile": { "type": "@" }
   }
  }
 }

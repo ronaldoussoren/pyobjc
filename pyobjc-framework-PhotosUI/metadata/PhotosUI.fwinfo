@@ -196,11 +196,6 @@
      }
     ]
    }
-  },
-  "externs": {
-   "PHProjectTypeUndefined": {
-    "typestr": "@"
-   }
   }
  }
 }

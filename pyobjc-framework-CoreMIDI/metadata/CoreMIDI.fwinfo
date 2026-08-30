@@ -19,11 +19,6 @@
   "structs": {
    "MIDIUniversalMessage": { "ignore": true }
   },
-  "externs": {
-   "MIDINetworkBonjourServiceType": { "typestr": "@" },
-   "MIDINetworkNotificationContactsDidChange": { "typestr": "@" },
-   "MIDINetworkNotificationSessionDidChange": { "typestr": "@" }
-  },
   "classes": {
    "MIDICIDiscoveryManager": {
     "methods": [

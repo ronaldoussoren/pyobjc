@@ -7,39 +7,6 @@
     "gettypeid_func": "IOSurfaceGetTypeID"
    }
   },
-  "externs": {
-   "IOSurfacePropertyKeyName": { "typestr": "@" },
-   "kIOSurfaceColorSpace": { "typestr": "@" },
-   "kIOSurfaceICCProfile": { "typestr": "@" },
-   "IOSurfacePropertyKeyAllocSize": { "typestr": "@" },
-   "kIOSurfaceSubsampling": { "typestr": "@" },
-   "kIOSurfacePlaneComponentNames": { "typestr": "@" },
-   "kIOSurfacePlaneBitsPerElement": { "typestr": "@" },
-   "kIOSurfacePlaneComponentBitDepths": { "typestr": "@" },
-   "kIOSurfacePlaneComponentBitOffsets": { "typestr": "@" },
-   "kIOSurfacePixelSizeCastingAllowed": { "typestr": "@" },
-   "IOSurfacePropertyAllocSizeKey": { "typestr": "@" },
-   "IOSurfacePropertyKeyWidth": { "typestr": "@" },
-   "IOSurfacePropertyKeyHeight": { "typestr": "@" },
-   "IOSurfacePropertyKeyBytesPerRow": { "typestr": "@" },
-   "IOSurfacePropertyKeyBytesPerElement": { "typestr": "@" },
-   "IOSurfacePropertyKeyElementWidth": { "typestr": "@" },
-   "IOSurfacePropertyKeyElementHeight": { "typestr": "@" },
-   "IOSurfacePropertyKeyOffset": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneInfo": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneWidth": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneHeight": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneBytesPerRow": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneOffset": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneSize": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneBase": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneBytesPerElement": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneElementWidth": { "typestr": "@" },
-   "IOSurfacePropertyKeyPlaneElementHeight": { "typestr": "@" },
-   "IOSurfacePropertyKeyCacheMode": { "typestr": "@" },
-   "IOSurfacePropertyKeyPixelFormat": { "typestr": "@" },
-   "IOSurfacePropertyKeyPixelSizeCastingAllowed": { "typestr": "@" }
-  },
   "classes": {
    "IOSurface": {
     "methods": [
@@ -83,6 +50,8 @@
    }
   },
   "functions": {
+   "_IOSurfaceObjToRef": { "ignore": true },
+   "_IOSurfaceRefToObj": { "ignore": true },
    "IOSurfaceSetPurgeable": {
     "args": {
      "2": { "type_modifier": "o" }

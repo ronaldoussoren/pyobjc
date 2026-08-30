@@ -1,8 +1,5 @@
 {
  "definitions": {
-  "externs": {
-   "ar_error_domain": { "typestr": "@" }
-  },
   "functions": {
    "ar_accessory_anchor_get_anchor_from_location_transform_with_correction": {
     "args": {

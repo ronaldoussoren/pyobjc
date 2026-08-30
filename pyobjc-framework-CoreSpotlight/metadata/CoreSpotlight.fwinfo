@@ -4,20 +4,7 @@
    "CoreSpotlightAPIVersion": { "ignore": true }
   },
   "externs": {
-   "CSSearchQueryErrorDomain": { "typestr": "@" },
-   "CoreSpotlightVersionNumber": { "typestr": "d" },
-   "CoreSpotlightVersionString": { "type_override": "*" },
-   "CSMailboxInbox": { "typestr": "@" },
-   "CSMailboxDrafts": { "typestr": "@" },
-   "CSMailboxSent": { "typestr": "@" },
-   "CSMailboxJunk": { "typestr": "@" },
-   "CSMailboxTrash": { "typestr": "@" },
-   "CSMailboxArchive": { "typestr": "@" },
-   "CSQueryContinuationActionType": { "typestr": "@" },
-   "CSSearchQueryString": { "typestr": "@" },
-   "CSSearchableItemActionType": { "typestr": "@" },
-   "CSSearchableItemActivityIdentifier": { "typestr": "@" },
-   "CSIndexErrorDomain": { "typestr": "@" }
+   "CoreSpotlightVersionString": { "type_override": "*" }
   },
   "classes": {
    "CSUserQuery": {

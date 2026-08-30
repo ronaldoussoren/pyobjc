@@ -1,12 +1,5 @@
 {
  "definitions": {
-  "externs": {
-   "EAAccessoryDidConnectNotification": { "typestr": "@" },
-   "EAAccessoryDidDisconnectNotification": { "typestr": "@" },
-   "EAAccessoryKey": { "typestr": "@" },
-   "EAAccessorySelectedKey": { "typestr": "@" },
-   "EABluetoothAccessoryPickerErrorDomain": { "typestr": "@" }
-  },
   "classes": {
    "EAAccessoryManager": {
     "methods": [

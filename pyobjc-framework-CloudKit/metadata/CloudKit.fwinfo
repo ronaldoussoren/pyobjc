@@ -3622,32 +3622,6 @@
      }
     ]
    }
-  },
-  "externs": {
-   "CKAccountChangedNotification": {
-    "typestr": "@"
-   },
-   "CKCurrentUserDefaultName": {
-    "typestr": "@"
-   },
-   "CKRecordParentKey": {
-    "typestr": "@"
-   },
-   "CKRecordShareKey": {
-    "typestr": "@"
-   },
-   "CKRecordTypeShare": {
-    "typestr": "@"
-   },
-   "CKShareThumbnailImageDataKey": {
-    "typestr": "@"
-   },
-   "CKShareTitleKey": {
-    "typestr": "@"
-   },
-   "CKShareTypeKey": {
-    "typestr": "@"
-   }
   }
  }
 }

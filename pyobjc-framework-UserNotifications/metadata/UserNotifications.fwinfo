@@ -6,14 +6,6 @@
    "UNNotificationCategoryOptionNone": { "value": 0 },
    "UNNotificationActionOptionNone": { "value": 0 }
   },
-  "externs": {
-   "UNNotificationDefaultActionIdentifier": { "typestr": "@" },
-   "UNNotificationDismissActionIdentifier": { "typestr": "@" },
-   "UNNotificationAttachmentOptionsTypeHintKey": { "typestr": "@" },
-   "UNNotificationAttachmentOptionsThumbnailHiddenKey": { "typestr": "@" },
-   "UNNotificationAttachmentOptionsThumbnailClippingRectKey": { "typestr": "@" },
-   "UNNotificationAttachmentOptionsThumbnailTimeKey": { "typestr": "@" }
-  },
   "classes": {
    "UNLocationNotificationTrigger": {
     "methods": [

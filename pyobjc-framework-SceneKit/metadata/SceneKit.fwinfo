@@ -1951,47 +1951,6 @@
     ]
    }
   },
-  "externs": {
-   "SCNGeometrySourceSemanticTangent": {
-    "typestr": "@"
-   },
-   "SCNHitTestFirstFoundOnlyKey": {
-    "typestr": "@"
-   },
-   "SCNHitTestOptionCategoryBitMask": {
-    "typestr": "@"
-   },
-   "SCNHitTestOptionSearchMode": {
-    "typestr": "@"
-   },
-   "SCNLightTypeIES": {
-    "typestr": "@"
-   },
-   "SCNLightTypeProbe": {
-    "typestr": "@"
-   },
-   "SCNLightingModelPhysicallyBased": {
-    "typestr": "@"
-   },
-   "SCNPhysicsShapeOptionCollisionMargin": {
-    "typestr": "@"
-   },
-   "SCNPhysicsShapeTypeKey": {
-    "typestr": "@"
-   },
-   "SCNPreferLowPowerDeviceKey": {
-    "typestr": "@"
-   },
-   "SCNPreferredDeviceKey": {
-    "typestr": "@"
-   },
-   "SCNPreferredRenderingAPIKey": {
-    "typestr": "@"
-   },
-   "SCNSceneSourceLoadingOptionPreserveOriginalTopology": {
-    "typestr": "@"
-   }
-  },
   "formal_protocols": {
    "SCNBoundingVolume": {
     "methods": [

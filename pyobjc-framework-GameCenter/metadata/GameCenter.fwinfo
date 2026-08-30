@@ -2,17 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-   "GKErrorDomain": { "typestr": "@" },
-   "GKVoiceChatServiceErrorDomain": { "typestr": "@" },
-   "GKPlayerAuthenticationDidChangeNotificationName": { "typestr": "@" },
-   "GKSessionErrorDomain": { "typestr": "@" },
-   "GKTurnTimeoutDefault": { "typestr": "d" },
-   "GKTurnTimeoutNone": { "typestr": "d" },
-   "GKExchangeTimeoutDefault": { "typestr": "d" },
-   "GKExchangeTimeoutNone": { "typestr": "d" },
-   "GKPlayerDidChangeNotificationName": { "typestr": "@" }
-  },
   "typed_enum": {
    "GKChallengeState": { "type": "q" },
    "GKMatchSendDataMode": { "type": "q" },

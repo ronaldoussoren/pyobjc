@@ -1560,35 +1560,6 @@
    "NEFilterFlowBytesMax": {
     "value": "18446744073709551615"
    }
-  },
-  "externs": {
-   "NEAppProxyErrorDomain": {
-    "typestr": "@"
-   },
-   "NEFilterConfigurationDidChangeNotification": {
-    "typestr": "@"
-   },
-   "NEFilterErrorDomain": {
-    "typestr": "@"
-   },
-   "NETunnelProviderErrorDomain": {
-    "typestr": "@"
-   },
-   "NEVPNConfigurationChangeNotification": {
-    "typestr": "@"
-   },
-   "NEVPNConnectionStartOptionPassword": {
-    "typestr": "@"
-   },
-   "NEVPNConnectionStartOptionUsername": {
-    "typestr": "@"
-   },
-   "NEVPNErrorDomain": {
-    "typestr": "@"
-   },
-   "NEVPNStatusDidChangeNotification": {
-    "typestr": "@"
-   }
   }
  }
 }

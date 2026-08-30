@@ -8,9 +8,6 @@
    "NSFileProviderItemDecorationIdentifier": { "type": "@", "type_name": "NSString" },
    "NSFileProviderUserInfoKey": { "type": "@", "type_name": "NSString" }
   },
-  "externs": {
-   "NSFileProviderErrorCausedByErrorsKey": { "typestr": "@" }
-  },
   "classes": {
    "NSObject": {
     "methods": [

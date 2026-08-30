@@ -5,13 +5,7 @@
  "externs": {
    "kJSClassDefinitionEmpty": {
     "ignore": true
-   },
-   "JSPropertyDescriptorWritableKey": { "typestr": "@" },
-   "JSPropertyDescriptorEnumerableKey": { "typestr": "@" },
-   "JSPropertyDescriptorConfigurableKey": { "typestr": "@" },
-   "JSPropertyDescriptorValueKey": { "typestr": "@" },
-   "JSPropertyDescriptorGetKey": { "typestr": "@" },
-   "JSPropertyDescriptorSetKey": { "typestr": "@" }
+   }
   },
   "classes": {
    "JSContext": {

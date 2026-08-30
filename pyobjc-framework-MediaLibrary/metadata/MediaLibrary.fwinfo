@@ -2,19 +2,5 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-    "MLPhotosLivePhotosGroupTypeIdentifier": { "typestr": "@" },
-    "MLiTunesMusicVideosPlaylistTypeIdentifier": { "typestr": "@" },
-    "MLPhotosLongExposureGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosAnimatedGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosSloMoGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosBurstGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosFacesAlbumTypeIdentifier": { "typestr": "@" },
-    "MLPhotosAllPhotosAlbumTypeIdentifier": { "typestr": "@" },
-    "MLPhotosTimelapseGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosFrontCameraGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosScreenshotGroupTypeIdentifier": { "typestr": "@" },
-    "MLPhotosDepthEffectGroupTypeIdentifier": { "typestr": "@" }
-  }
  }
 }

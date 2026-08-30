@@ -14,13 +14,6 @@
    "MKFeatureDisplayPriorityDefaultHigh": { "value": 750 },
    "MKFeatureDisplayPriorityDefaultLow": { "value": 250 }
   },
-  "externs": {
-   "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" },
-   "MKLaunchOptionsDirectionsModeDefault": { "typestr": "@" },
-   "MKMapItemTypeIdentifier": { "typestr": "@" },
-   "MKMapViewDefaultAnnotationViewReuseIdentifier": { "typestr": "@" },
-   "MKMapViewDefaultClusterAnnotationViewReuseIdentifier": { "typestr": "@" }
-  },
   "classes": {
    "NSValue": {
     "methods": [

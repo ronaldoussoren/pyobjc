@@ -106,16 +106,6 @@
    "TrakTableData": { "ignore": true },
    "TrakTableEntry": { "ignore": true }
   },
-  "externs": {
-   "kCTTypesetterOptionAllowUnboundedLayout": { "typestr": "@" },
-   "kCTFontVariationAxisHiddenKey": { "typestr": "@" },
-   "kCTBaselineOffsetAttributeName": { "typestr": "@" },
-   "kCTRubyAnnotationSizeFactorAttributeName": { "typestr": "@" },
-   "kCTRubyAnnotationScaleToFitAttributeName": { "typestr": "@" },
-   "kCTFontDownloadedAttribute": { "typestr": "@" },
-   "kCTBackgroundColorAttributeName": { "typestr": "@" },
-   "kCTHorizontalInVerticalFormsAttributeName": { "typestr": "@" }
-  },
   "cftypes": {
    "CTFontCollectionRef": {
     "gettypeid_func": "CTFontCollectionGetTypeID",

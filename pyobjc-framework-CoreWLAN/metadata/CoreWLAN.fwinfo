@@ -1,5 +1,3 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
 {
  "definitions": {
   "aliases": {
@@ -18,26 +16,14 @@
    "kCWError":  { "alias": "kCWErr" }
   },
   "externs": {
-   "CWServiceDidChangeNotification": { "typestr": "@" },
-   "CoreWLANFrameworkVersionNumber": { "typestr": "d" },
-   "kCWAssocKey8021XProfile": { "typestr": "@" },
-   "kCWAssocKeyPassphrase": { "typestr": "@" },
-   "kCWBSSIDDidChangeNotification": { "typestr": "@" },
-   "kCWCountryCodeDidChangeNotification": { "typestr": "@" },
-   "kCWErrorDomain": { "typestr": "@" },
-   "kCWIBSSKeyChannel": { "typestr": "@" },
-   "kCWIBSSKeyPassphrase": { "typestr": "@" },
-   "kCWIBSSKeySSID": { "typestr": "@" },
-   "kCWLinkDidChangeNotification": { "typestr": "@" },
-   "kCWModeDidChangeNotification": { "typestr": "@" },
-   "kCWPowerDidChangeNotification": { "typestr": "@" },
-   "kCWSSIDDidChangeNotification": { "typestr": "@" },
-   "kCWScanKeyBSSID": { "typestr": "@" },
-   "kCWScanKeyDwellTime": { "typestr": "@" },
-   "kCWScanKeyMerge": { "typestr": "@" },
-   "kCWScanKeyRestTime": { "typestr": "@" },
-   "kCWScanKeySSID": { "typestr": "@" },
-   "kCWScanKeyScanType": { "typestr": "@" }
+   "kCWAssocKey8021XProfile": { "typestr": "@", "deprecated": 1007, "removed": 1010 },
+   "kCWAssocKeyPassphrase": { "typestr": "@", "deprecated": 1007, "removed": 1010 },
+   "kCWBSSIDDidChangeNotification": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWCountryCodeDidChangeNotification": { "typestr": "@", "deprecated": 1011, "removed": 1400 },
+   "kCWIBSSKeyChannel": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWIBSSKeyPassphrase": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWIBSSKeySSID": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWLinkDidChangeNotification": { "typestr": "@", "deprecated": 1010, "removed": 1100 }
   },
   "classes": {
    "CWNetwork": {

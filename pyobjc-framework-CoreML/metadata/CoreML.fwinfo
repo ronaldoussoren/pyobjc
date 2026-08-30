@@ -4,13 +4,6 @@
    "MLFeatureValueImageOption": { "type": "@", "type_name": "NSString" },
    "MLModelMetadataKey": { "type": "@", "type_name": "NSString" }
   },
-  "externs": {
-   "MLModelCreatorDefinedKey": { "typestr": "@" },
-   "MLModelDescriptionKey": { "typestr": "@" },
-   "MLModelVersionStringKey": { "typestr": "@" },
-   "MLModelAuthorKey": { "typestr": "@" },
-   "MLModelLicenseKey": { "typestr": "@" }
-  },
   "classes": {
    "MLModelAsset": {
     "methods": [

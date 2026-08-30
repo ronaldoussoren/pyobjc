@@ -10,17 +10,6 @@
    "PHImageContentModeDefault": { "alias": "PHImageContentModeAspectFit" },
    "PHAssetCollectionSubtypeAny": { "alias": "NSIntegerMax" }
   },
-  "externs": {
-   "PHLocalIdentifierNotFound": { "typestr": "@" },
-   "PHLivePhotoEditingErrorDomain": { "typestr": "@" },
-   "PHLivePhotoShouldRenderAtPlaybackTime": { "typestr": "@" },
-   "PHImageManagerMaximumSize": { "typestr": "{CGSize=dd}" },
-   "PHImageResultIsInCloudKey": { "typestr": "@" },
-   "PHImageResultIsDegradedKey": { "typestr": "@" },
-   "PHImageResultRequestIDKey": { "typestr": "@" },
-   "PHImageCancelledKey": { "typestr": "@" },
-   "PHImageErrorKey": { "typestr": "@" }
-  },
   "enum": {
    "PHLivePhotoRequestIDInvalid": { "value": 0 },
    "PHInvalidAssetResourceDataRequestID": { "value": 0 },

@@ -3,8 +3,8 @@
 {
  "definitions": {
   "externs": {
-   "kSMInfoKeyPrivilegedExecutables": { "typestr": "@" },
-   "kSMInfoKeyAuthorizedClients": { "typestr": "@" }
+   "kSMInfoKeyPrivilegedExecutables": { "typestr": "@", "removed": 1010 },
+   "kSMInfoKeyAuthorizedClients": { "typestr": "@", "removed": 1010 }
   },
   "functions": {
    "SMJobBless": {

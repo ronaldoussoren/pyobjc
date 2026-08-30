@@ -5,9 +5,6 @@
   "typed_enum": {
    "CLSContextTopic": { "type":"@", "type_name": "NSString" }
   },
-  "externs": {
-   "CLSErrorSuccessfulObjectsKey": { "type": "@" }
-  },
   "classes": {
    "CLSDataStore": {
     "methods": [

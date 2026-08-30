@@ -173,11 +173,6 @@
     "value": -3, "removed": 1015
    }
   },
-  "externs": {
-   "LATouchIDAuthenticationMaximumAllowableReuseDuration": {
-    "typestr": "d"
-   }
-  },
   "literals": {
    "kLAErrorDomain": {
     "unicode": true

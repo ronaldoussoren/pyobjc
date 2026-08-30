@@ -97,50 +97,14 @@
    "CBPeripheralAuthorizationStatusRestricted": { "value": 1, "deprecated": 1009 }
   },
   "externs": {
-   "CBUUIDAppearanceString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDDeviceNameString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDGenericAccessProfileString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDGenericAttributeProfileString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDPeripheralPreferredConnectionParametersString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDPeripheralPrivacyFlagString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDReconnectionAddressString": { "typestr": "@", "deprecated": 1009 },
-   "CBUUIDServiceChangedString": { "typestr": "@", "deprecated": 1009 },
-   "CBCentralManagerOptionRestoreIdentifierKey": {
-    "typestr": "@"
-   },
-   "CBCentralManagerRestoredStatePeripheralsKey": {
-    "typestr": "@"
-   },
-   "CBCentralManagerRestoredStateScanOptionsKey": {
-    "typestr": "@"
-   },
-   "CBCentralManagerRestoredStateScanServicesKey": {
-    "typestr": "@"
-   },
-   "CBConnectPeripheralOptionNotifyOnConnectionKey": {
-    "typestr": "@"
-   },
-   "CBConnectPeripheralOptionNotifyOnNotificationKey": {
-    "typestr": "@"
-   },
-   "CBConnectPeripheralOptionStartDelayKey": {
-    "typestr": "@"
-   },
-   "CBPeripheralManagerOptionRestoreIdentifierKey": {
-    "typestr": "@"
-   },
-   "CBPeripheralManagerRestoredStateAdvertisementDataKey": {
-    "typestr": "@"
-   },
-   "CBPeripheralManagerRestoredStateServicesKey": {
-    "typestr": "@"
-   },
-   "CBUUIDCharacteristicValidRangeString": {
-    "typestr": "@"
-   },
-   "CBUUIDL2CAPPSMCharacteristicString": {
-    "typestr": "@"
-   }
+   "CBUUIDAppearanceString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDDeviceNameString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDGenericAccessProfileString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDGenericAttributeProfileString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDPeripheralPreferredConnectionParametersString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDPeripheralPrivacyFlagString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDReconnectionAddressString": { "typestr": "@", "deprecated": 1009, "removed": 1013 },
+   "CBUUIDServiceChangedString": { "typestr": "@", "deprecated": 1009, "removed": 1013 }
   },
   "typed_enum": {
    "CBConnectionEventMatchingOption": {

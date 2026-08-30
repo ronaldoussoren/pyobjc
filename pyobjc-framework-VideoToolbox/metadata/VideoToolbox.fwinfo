@@ -9,24 +9,6 @@
    "VTExtensionPropertiesKey": {  "type": "@", "type_name": "NSString" },
    "VTHDRPerFrameMetadataGenerationHDRFormatType": {  "type": "@", "type_name": "NSString" }
   },
-  "externs": {
-   "kVTVideoEncoderSpecification_EnableLowLatencyRateControl": { "typestr": "@" },
-   "kVTCompressionPropertyKey_BaseLayerFrameRateFraction": { "typestr": "@" },
-   "kVTVideoEncoderList_IsHardwareAccelerated": { "typestr": "@" },
-   "kVTVideoEncoderList_InstanceLimit": { "typestr": "@" },
-   "kVTVideoEncoderList_QualityRating": { "typestr": "@" },
-   "kVTVideoEncoderList_PerformanceRating": { "typestr": "@" },
-   "kVTVideoEncoderList_SupportedSelectionProperties": { "typestr": "@" },
-   "kVTVideoEncoderList_GPURegistryID": { "typestr": "@" },
-   "kVTPixelTransferPropertyKey_RealTime": { "typestr": "@" },
-   "kVTCompressionPropertyKey_TargetQualityForAlpha": { "typestr": "@" },
-   "kVTVideoEncoderSpecification_RequiredEncoderGPURegistryID": { "typestr": "@" },
-   "kVTVideoEncoderSpecification_PreferredEncoderGPURegistryID": { "typestr": "@" },
-   "kVTCompressionPropertyKey_GammaLevel": { "typestr": "@" },
-   "kVTCompressionPropertyKey_AlphaChannelMode": { "typestr": "@" },
-   "kVTAlphaChannelMode_StraightAlpha": { "typestr": "@" },
-   "kVTAlphaChannelMode_PremultipliedAlpha": { "typestr": "@" }
-  },
   "cftypes": {
    "VTMotionEstimationSessionRef": {
     "typestr": "^{OpaqueVTMotionEstimationSession=}",

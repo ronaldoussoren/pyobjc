@@ -195,12 +195,25 @@ Version 13.0a0
     :data:`CoreWLAN.CoreWLANFrameworkVersionNumber2_0`,
     :data:`CoreWLAN.CWEventTypeVirtualInterfaceStateChanged`,
     :data:`CoreWLAN.CWEventTypeRangingReportEvent`,
+    :data:`CoreWLAN.CWServiceDidChangeNotification`,
+    :data:`CoreWLAN.kCWErrorDomain`,
+    :data:`CoreWLAN.kCWModeDidChangeNotification`,
+    :data:`CoreWLAN.kCWPowerDidChangeNotification`,
+    :data:`CoreWLAN.kCWSSIDDidChangeNotification`,
+    :data:`CoreWLAN.kCWScanKeyBSSID`,
+    :data:`CoreWLAN.CWScanKeyDwellTime`,
+    :data:`CoreWLAN.kCWScanKeyMerge`,
+    :data:`CoreWLAN.kCWScanKeyRestTime`,
+    :data:`CoreWLAN.kCWScanKeySSID`,
+    :data:`CoreWLAN.kCWScanKeyScanType`,
     :data:`CoreWLAN.kCWPHYMode11ax`,
     :data:`CoreWLAN.kCWPHYMode11A`,
     :data:`CoreWLAN.kCWPHYMode11B`,
     :data:`CoreWLAN.kCWPHYMode11G`, and
     :data:`CoreWLAN.kCWPHYMode11N`.
     All of these were removed in the macOS 10.9 SDK or earlier.
+
+
 
   * Dropped
     :data:`ImageCaptureCore.ICReturnErrorDeviceEjected`,
@@ -259,6 +272,21 @@ Version 13.0a0
     :data:`UserNotifications.UNNotificationGroupingSettingSource`,
     :data:`UserNotifications.UNNotificationGroupingSettingOff`.
     All of these were only in a beta SDK.
+
+  * Dropped
+    :data:`DiskArbitration.kDADiskOptionEjectUponLogout`,
+    :data:`DiskArbitration.kDADiskOptionMountAutomatic`,
+    :data:`DiskArbitration.kDADiskOptionMountAutomaticNoDefer`,
+    :data:`DiskArbitration.kDADiskOptionPrivate`, all which were
+    removed before macOS 10.9.
+
+  * Dropped :data:`FileProvider.NSFileProviderErrorCausedByErrorsKey`
+    which was only in a beta SDK.
+
+  * Dropped
+    :data:`Vision.VNAnimalDetectorDog`,
+    :data:`Vision.VNAnimalDetectorCat`, which
+    were only in a beta SDK.
 
 * Deprecations:
 

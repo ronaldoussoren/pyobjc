@@ -8,10 +8,6 @@
    "CHHapticEventParameterID": { "type": "@", "type_name": "NSString" },
    "CHHapticDynamicParameterID": { "type": "@", "type_name": "NSString" }
   },
-  "extern": {
-   "CHHapticPatternKeyEventWaveformUseVolumeEnvelope": { "typestr": "@" },
-   "CHHapticAudioResourceKeyUseVolumeEnvelope": { "typestr": "@" }
-  },
   "enum": {
    "CHHapticTimeImmediate": { "value": 0.0 }
   },
