@@ -105,12 +105,7 @@
    }
   },
   "structs": {
-   "AuthorizationItem": { "typestr": "{_AuthorizationItem=^cL^vI}", "fieldnames": [ "name", "valueLength", "value", "flags" ] },
-   "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" },
-   "AuthorizationExternalForm": { "typestr": "{AuthorizationExternalForm=[32c]}", "fieldnames": ["bytes"] },
-   "SecItemImportExportKeyParameters": { "typestr": "{SecItemImportExportKeyParameters=II@^{__CFString=}^{__CFString=}^{__SecAccess=}^{__CFArray=}^{__CFArray=}}", "fieldnames": [ "version", "flags", "passphrase", "alertTitle", "alertPrompt", "accessRef", "keyUsage", "keyAttributes" ] },
-   "SecKeychainSettings": { "typestr": "{SecKeychainSettings=IZZI}", "fieldnames": [ "version", "lockOnSleep", "useLockInterval", "lockInterval" ] },
-   "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
+   "AuthorizationItemSet": { "comment": "FIXME: requires manual wrapping" }
   },
   "enum": {
    "callerSecuritySession": { "value": -1 },

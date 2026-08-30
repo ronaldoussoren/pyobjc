@@ -17,7 +17,7 @@
      "tv_nsec"
     ],
     "special": false,
-    "typestr": "{timespec=ll}"
+    "typestr": "{timespec=qq}"
    }
   },
   "enum": {

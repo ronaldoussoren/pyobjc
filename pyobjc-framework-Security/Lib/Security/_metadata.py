@@ -66,7 +66,7 @@ misc.update(
         ),
         "AuthorizationItem": objc.createStructType(
             "Security.AuthorizationItem",
-            b"{_AuthorizationItem=^cL^vI}",
+            b"{AuthorizationItem=^cQ^vI}",
             ["name", "valueLength", "value", "flags"],
         ),
         "SecAsn1Template": objc.createStructType(
@@ -138,7 +138,7 @@ misc.update(
         ),
         "SecKeychainCallbackInfo": objc.createStructType(
             "Security.SecKeychainCallbackInfo",
-            b"{SecKeychainCallbackInfo=I@@i}",
+            b"{SecKeychainCallbackInfo=I^{__SecKeychainItem=}^{__SecKeychain=}i}",
             ["version", "item", "keychain", "pid"],
         ),
     }

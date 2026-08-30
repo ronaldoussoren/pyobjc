@@ -301,65 +301,6 @@
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }
-  },
-  "structs": {
-   "CVPlanarPixelBufferInfo_YCbCrBiPlanar": {
-    "fieldnames": ["componentInfoY", "componentInfoCbCr"]
-   },
-   "CVFillExtendedPixelsCallBackData": {
-    "ignore": true
-   },
-   "CVPlanarComponentInfo": {
-    "fieldnames": [
-     "offset",
-     "rowBytes"
-    ]
-   },
-   "CVPlanarPixelBufferInfo": {
-    "fieldnames": [
-     "componentInfo"
-    ]
-   },
-   "CVPlanarPixelBufferInfo_YCbCrPlanar": {
-    "fieldnames": [
-     "componentInfoY",
-     "componentInfoCb",
-     "componentInfoCr"
-    ]
-   },
-   "CVSMPTETime": {
-    "fieldnames": [
-     "subframes",
-     "subframeDivisor",
-     "counter",
-     "type",
-     "flags",
-     "hours",
-     "minutes",
-     "seconds",
-     "frames"
-    ]
-   },
-   "CVTime": {
-    "fieldnames": [
-     "timeValue",
-     "timeScale",
-     "flags"
-    ]
-   },
-   "CVTimestamp": {
-    "fieldnames": [
-     "version",
-     "videoTimeScale",
-     "videoTime",
-     "hostTime",
-     "rateScalar",
-     "videoRefreshPeriod",
-     "smpteTime",
-     "flags",
-     "reserved"
-    ]
-   }
   }
  }
 }

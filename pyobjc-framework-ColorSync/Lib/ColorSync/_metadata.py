@@ -31,7 +31,7 @@ misc = {}
 misc.update(
     {
         "ColorSyncMD5": objc.createStructType(
-            "ColorSync.ColorSyncMD5", b"{ColorSyncMD5=[8C]}", ["digest"]
+            "ColorSync.ColorSyncMD5", b"{ColorSyncMD5=[16C]}", ["digest"]
         )
     }
 )

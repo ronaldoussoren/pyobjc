@@ -3638,27 +3638,6 @@
     }
    }
   },
-  "structs": {
-   "AVAudio3DVector": {
-    "ignore": true
-   },
-   "AVAudioVoiceProcessingOtherAudioDuckingConfiguration": {
-    "fieldnames": [
-     "enableAdvancedDucking",
-     "duckingLevel"
-    ],
-    "special": false,
-    "typestr": "{_AVAudioVoiceProcessingOtherAudioDuckingConfiguration=Zq}"
-   },
-   "AVBeatRange": {
-    "fieldnames": [
-     "start",
-     "length"
-    ],
-    "special": false,
-    "typestr": "{_AVBeatRange=dd}"
-   }
-  },
   "typed_enum": {
    "AVProVideoStorageBusyReason": {
     "type": "@",

@@ -240,9 +240,7 @@ misc.update(
             ],
         ),
         "MPSPackedFloat3": objc.createStructType(
-            "MetalPerformanceShaders.MPSPackedFloat3",
-            b"{_MPSPackedFloat3=fff}",
-            ["x", "y", "z"],
+            "MetalPerformanceShaders.MPSPackedFloat3", b"{_MPSPackedFloat3=fff}", []
         ),
         "MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates": objc.createStructType(
             "MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates",

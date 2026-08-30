@@ -291,7 +291,7 @@ misc.update(
         ),
         "MTLMapIndirectArguments": objc.createStructType(
             "Metal.MTLMapIndirectArguments",
-            b"{_MTLMapIndirectArguments=IIIIIIII}",
+            b"{MTLMapIndirectArguments=IIIIIIII}",
             [
                 "regionOriginX",
                 "regionOriginY",

@@ -45,10 +45,10 @@ misc.update(
             b"{AVCaptureWhiteBalanceChromaticityValues=ff}",
             ["x", "y"],
         ),
-        "AVAudioVoiceProcessingOtherAudioDuckingConfiguration": objc.createStructType(
-            "AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingConfiguration",
-            b"{_AVAudioVoiceProcessingOtherAudioDuckingConfiguration=Zq}",
-            ["enableAdvancedDucking", "duckingLevel"],
+        "AVSampleCursorStorageRange": objc.createStructType(
+            "AVFoundation.AVSampleCursorStorageRange",
+            b"{AVSampleCursorStorageRange=qq}",
+            ["offset", "length"],
         ),
         "AVPixelAspectRatio": objc.createStructType(
             "AVFoundation.AVPixelAspectRatio",
@@ -81,14 +81,6 @@ misc.update(
             "AVFoundation.AVCaptionPoint",
             b"{AVCaptionPoint={AVCaptionDimension=dq}{AVCaptionDimension=dq}}",
             ["x", "y"],
-        ),
-        "AVBeatRange": objc.createStructType(
-            "AVFoundation.AVBeatRange", b"{_AVBeatRange=dd}", ["start", "length"]
-        ),
-        "AVSampleCursorStorageRange": objc.createStructType(
-            "AVFoundation.AVSampleCursorStorageRange",
-            b"{AVSampleCursorStorageRange=qq}",
-            ["offset", "length"],
         ),
         "AVSampleCursorChunkInfo": objc.createStructType(
             "AVFoundation.AVSampleCursorChunkInfo",

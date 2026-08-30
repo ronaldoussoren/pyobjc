@@ -859,6 +859,12 @@ Version 13.0a0
 
 * Fix value of the constant :data:`dispatch.DISPATCH_WALLTIME_NOW`.
 
+* Fix type encoding for :class:`ColorSync.ColorSync.ColorSyncMD5`.
+
+* Fix type encoding for :class:`Metal.MTLMapIndirectArguments`.
+
+* Fix type encoding for :class:`libdispatch.timespec`.
+
 Version 12.2.3
 --------------
 

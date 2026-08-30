@@ -20,14 +20,6 @@
   "literals": {
    "COLORSYNC_PROFILE_INSTALL_ENTITLEMENT": { "value": "com.apple.developer.ColorSync.profile.install", "unicode": false }
   },
-  "structs": {
-   "ColorSyncMD5": {
-    "fieldnames": [
-     "digest"
-    ],
-    "typestr": "{ColorSyncMD5=[8C]}"
-   }
-  },
   "enum": {
     "COLORSYNC_API_VERSION": { "ignore": true }
   },

@@ -1672,37 +1672,11 @@
    "CGDataProviderDirectCallbacks": {
     "ignore": true
    },
-   "CGEventTapInformation": {
-    "fieldnames": [
-     "eventTapID",
-     "tapPoint",
-     "options",
-     "eventsOfInterest",
-     "tappingProcess",
-     "processBeingTapped",
-     "enabled",
-     "minUsecLatency",
-     "avgUsecLatency",
-     "maxUsecLatency"
-    ]
-   },
-   "CGPathElement": {
-    "fieldnames": [
-     "type",
-     "points"
-    ]
-   },
    "CGPoint": {
     "ignore": true
    },
    "CGRect": {
     "ignore": true
-   },
-   "CGScreenUpdateMoveDelta": {
-    "fieldnames": [
-     "dX",
-     "dY"
-    ]
    },
    "CGSize": {
     "ignore": true
