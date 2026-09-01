@@ -8,9 +8,7 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
                                              size_t nargs)
 {
     const void*       bytes;
-    NSUInteger        bytes_len;
     struct objc_super super;
-    Py_buffer         info;
 
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
@@ -21,13 +19,10 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
             super.receiver    = PyObjCObject_GetObject(self);
             bytes             = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
-            bytes_len = ((NSUInteger (*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                &super, @selector(length));
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
-            bytes     = NULL;
-            bytes_len = 0;
+            bytes = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -42,12 +37,14 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
         return PyBytes_FromStringAndSize("", 0);
     }
 
-    if (unlikely(PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
-                     &info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO)
-                 < 0)) {
-        return NULL; // LCOV_EXCL_LINE
+    PyObject* result = PyMemoryView_FromObject(self);
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
+        return NULL;                // LCOV_EXCL_LINE
     }
-    return PyMemoryView_FromBuffer(&info);
+
+    PyObject* readonly = PyObject_CallMethod(result, "toreadonly", NULL);
+    Py_DECREF(result);
+    return readonly;
 }
 
 static IMP
@@ -104,10 +101,7 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
                                                            size_t nargs)
 {
     void*             bytes;
-    NSUInteger        bytes_len;
-    PyObject*         result;
     struct objc_super super;
-    Py_buffer         info;
 
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
@@ -119,14 +113,10 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
 
             bytes = ((void* (*)(struct objc_super*, SEL))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method));
-            bytes_len = ((NSUInteger (*)(struct objc_super*, SEL))objc_msgSendSuper)(
-                &super, @selector(length));
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
-            result    = NULL;
-            bytes     = NULL;
-            bytes_len = 0;
+            bytes = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -145,14 +135,7 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
         return PyMemoryView_FromMemory("", 0, PyBUF_WRITE);
     }
 
-    if (unlikely(PyBuffer_FillInfo( // LCOV_BR_EXCL_LINE
-                     &info, self, bytes, bytes_len, 0, PyBUF_FULL)
-                 < 0)) {
-        return NULL; // LCOV_EXCL_LINE
-    }
-    result = PyMemoryView_FromBuffer(&info);
-
-    return result;
+    return PyMemoryView_FromObject(self);
 }
 
 static IMP
