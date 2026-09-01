@@ -28,8 +28,8 @@ else:
 
 
 misc = {}
-constants = """$ar_accessory_location_name_aim@^c$ar_accessory_location_name_grip@^c$ar_accessory_location_name_grip_surface@^c$ar_error_domain$"""
-enums = """$ar_accessory_anchor_tracking_state_orientation_tracked@1$ar_accessory_anchor_tracking_state_position_orientation_tracked@2$ar_accessory_anchor_tracking_state_position_orientation_tracked_low_accuracy@3$ar_accessory_anchor_tracking_state_untracked@0$ar_accessory_chirality_left@1$ar_accessory_chirality_right@2$ar_accessory_chirality_unspecified@0$ar_accessory_source_type_device@1$ar_accessory_tracking_error_code_accessory_loading_failed@1200$ar_accessory_tracking_error_code_update_accessories_failed@1201$ar_authorization_status_allowed@1$ar_authorization_status_denied@2$ar_authorization_status_not_determined@0$ar_authorization_type_accessory_tracking@32$ar_authorization_type_camera_access@8$ar_authorization_type_hand_tracking@1$ar_authorization_type_none@0$ar_authorization_type_world_sensing@2$ar_barcode_detection_symbology_aztec@1$ar_barcode_detection_symbology_codabar@2$ar_barcode_detection_symbology_code_128@256$ar_barcode_detection_symbology_code_39@4$ar_barcode_detection_symbology_code_39_checksum@8$ar_barcode_detection_symbology_code_39_full_ascii@16$ar_barcode_detection_symbology_code_39_full_ascii_checksum@32$ar_barcode_detection_symbology_code_93@64$ar_barcode_detection_symbology_code_93i@128$ar_barcode_detection_symbology_data_matrix@512$ar_barcode_detection_symbology_ean_13@2048$ar_barcode_detection_symbology_ean_8@1024$ar_barcode_detection_symbology_gs1_databar@4096$ar_barcode_detection_symbology_gs1_databar_expanded@8192$ar_barcode_detection_symbology_gs1_databar_limited@16384$ar_barcode_detection_symbology_itf@32768$ar_barcode_detection_symbology_itf_14@65536$ar_barcode_detection_symbology_itf_checksum@131072$ar_barcode_detection_symbology_micropdf417@262144$ar_barcode_detection_symbology_microqr@524288$ar_barcode_detection_symbology_msi_plessey@1048576$ar_barcode_detection_symbology_none@0$ar_barcode_detection_symbology_pdf417@2097152$ar_barcode_detection_symbology_qr@4194304$ar_barcode_detection_symbology_upce@8388608$ar_camera_position_left@1$ar_camera_position_right@2$ar_camera_rectification_type_mono@0$ar_camera_rectification_type_stereo_corrected@1$ar_camera_region_contrast_and_vibrancy@1$ar_camera_region_error_code_add_anchor_failed@1300$ar_camera_region_error_code_anchor_max_limit_reached@1301$ar_camera_region_error_code_remove_anchor_failed@1302$ar_camera_region_stabilization@0$ar_camera_type_main@0$ar_data_provider_state_initialized@0$ar_data_provider_state_paused@2$ar_data_provider_state_running@1$ar_data_provider_state_stopped@3$ar_device_anchor_query_status_failure@1$ar_device_anchor_query_status_success@0$ar_device_anchor_tracking_state_orientation_tracked@1$ar_device_anchor_tracking_state_tracked@2$ar_device_anchor_tracking_state_untracked@0$ar_geometry_primitive_type_line@0$ar_geometry_primitive_type_triangle@1$ar_hand_anchor_query_status_failure@1$ar_hand_anchor_query_status_success@0$ar_hand_chirality_left@1$ar_hand_chirality_right@0$ar_hand_fidelity_high@1$ar_hand_fidelity_nominal@0$ar_hand_skeleton_joint_name_forearm_arm@26$ar_hand_skeleton_joint_name_forearm_wrist@25$ar_hand_skeleton_joint_name_index_finger_intermediate_base@7$ar_hand_skeleton_joint_name_index_finger_intermediate_tip@8$ar_hand_skeleton_joint_name_index_finger_knuckle@6$ar_hand_skeleton_joint_name_index_finger_metacarpal@5$ar_hand_skeleton_joint_name_index_finger_tip@9$ar_hand_skeleton_joint_name_little_finger_intermediate_base@22$ar_hand_skeleton_joint_name_little_finger_intermediate_tip@23$ar_hand_skeleton_joint_name_little_finger_knuckle@21$ar_hand_skeleton_joint_name_little_finger_metacarpal@20$ar_hand_skeleton_joint_name_little_finger_tip@24$ar_hand_skeleton_joint_name_middle_finger_intermediate_base@12$ar_hand_skeleton_joint_name_middle_finger_intermediate_tip@13$ar_hand_skeleton_joint_name_middle_finger_knuckle@11$ar_hand_skeleton_joint_name_middle_finger_metacarpal@10$ar_hand_skeleton_joint_name_middle_finger_tip@14$ar_hand_skeleton_joint_name_ring_finger_intermediate_base@17$ar_hand_skeleton_joint_name_ring_finger_intermediate_tip@18$ar_hand_skeleton_joint_name_ring_finger_knuckle@16$ar_hand_skeleton_joint_name_ring_finger_metacarpal@15$ar_hand_skeleton_joint_name_ring_finger_tip@19$ar_hand_skeleton_joint_name_thumb_intermediate_base@2$ar_hand_skeleton_joint_name_thumb_intermediate_tip@3$ar_hand_skeleton_joint_name_thumb_knuckle@1$ar_hand_skeleton_joint_name_thumb_tip@4$ar_hand_skeleton_joint_name_wrist@0$ar_mesh_classification_bed@9$ar_mesh_classification_cabinet@10$ar_mesh_classification_ceiling@3$ar_mesh_classification_door@7$ar_mesh_classification_floor@2$ar_mesh_classification_home_appliance@11$ar_mesh_classification_none@0$ar_mesh_classification_plant@13$ar_mesh_classification_seat@5$ar_mesh_classification_stairs@8$ar_mesh_classification_table@4$ar_mesh_classification_tv@12$ar_mesh_classification_wall@1$ar_mesh_classification_window@6$ar_object_tracking_error_code_reference_object_loading_failed@1101$ar_plane_alignment_horizontal@1$ar_plane_alignment_none@0$ar_plane_alignment_slanted@4$ar_plane_alignment_vertical@2$ar_plane_classification_ceiling@5$ar_plane_classification_door@9$ar_plane_classification_floor@4$ar_plane_classification_seat@7$ar_plane_classification_status_not_available@0$ar_plane_classification_status_undetermined@1$ar_plane_classification_status_unknown@2$ar_plane_classification_table@6$ar_plane_classification_wall@3$ar_plane_classification_window@8$ar_scene_reconstruction_mode_classification@1$ar_scene_reconstruction_mode_default@0$ar_session_error_code_data_provider_failed_to_run@101$ar_session_error_code_data_provider_not_authorized@100$ar_surface_classification_bed@9$ar_surface_classification_cabinet@10$ar_surface_classification_ceiling@3$ar_surface_classification_door@7$ar_surface_classification_floor@2$ar_surface_classification_home_appliance@11$ar_surface_classification_none@0$ar_surface_classification_plant@13$ar_surface_classification_seat@5$ar_surface_classification_stairs@8$ar_surface_classification_table@4$ar_surface_classification_tv@12$ar_surface_classification_wall@1$ar_surface_classification_window@6$ar_transform_correction_none@0$ar_transform_correction_rendered@1$ar_world_anchor_sharing_availability_available@0$ar_world_anchor_sharing_availability_unavailable@1$ar_world_tracking_error_code_add_anchor_failed@200$ar_world_tracking_error_code_anchor_max_limit_reached@201$ar_world_tracking_error_code_remove_anchor_failed@202$"""
+constants = """$ar_error_domain$"""
+enums = """$ar_authorization_status_allowed@1$ar_authorization_status_denied@2$ar_authorization_status_not_determined@0$ar_authorization_type_accessory_tracking@32$ar_authorization_type_camera_access@8$ar_authorization_type_hand_tracking@1$ar_authorization_type_none@0$ar_authorization_type_world_sensing@2$ar_data_provider_state_initialized@0$ar_data_provider_state_paused@2$ar_data_provider_state_running@1$ar_data_provider_state_stopped@3$ar_device_anchor_query_status_failure@1$ar_device_anchor_query_status_success@0$ar_device_anchor_tracking_state_orientation_tracked@1$ar_device_anchor_tracking_state_tracked@2$ar_device_anchor_tracking_state_untracked@0$ar_object_tracking_error_code_reference_object_loading_failed@1101$ar_session_error_code_data_provider_failed_to_run@101$ar_session_error_code_data_provider_not_authorized@100$"""
 misc.update(
     {
         "ar_accessory_anchor_tracking_state_t": NewType(
@@ -89,138 +89,9 @@ misc.update(
 misc.update({})
 misc.update({})
 functions = {
-    "ar_data_get_bytes": (b"^v@",),
-    "ar_accessory_tracking_provider_set_update_handler": (b"v@@@?",),
-    "ar_accessory_anchor_create": (b"@",),
-    "ar_camera_frame_get_primary_frame_sample": (b"@@",),
-    "ar_image_tracking_configuration_add_reference_images": (b"v@@",),
-    "ar_barcode_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_plane_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_accessory_tracking_configuration_set_accessories": (b"v@@",),
-    "ar_camera_frame_samples_get_count": (b"Q@",),
-    "ar_strings_enumerate_strings": (b"v@@?",),
-    "ar_session_stop": (b"v@",),
-    "ar_camera_frame_provider_set_update_handler": (b"v@@@@?",),
-    "ar_object_axis_aligned_bounding_box_is_equal_to_bounding_box": (b"B@@",),
-    "ar_plane_extent_is_equal_to_plane_extent": (b"B@@",),
-    "ar_accessory_load_from_device": (b"v@@?",),
-    "ar_error_copy_cf_error": (
-        b"^{__CFError=}@",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
-    "ar_world_tracking_provider_remove_anchor_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_mesh_anchor_get_timestamp": (b"d@",),
-    "ar_plane_anchor_get_geometry": (b"@@",),
-    "ar_accessory_get_source_type": (b"q@",),
-    "ar_data_providers_enumerate_data_providers_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_tracking_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_mesh_geometries_enumerate_geometries_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_load_from_device_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                            4: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_room_anchor_get_mesh_geometries_for_classification": (b"@@q",),
-    "ar_image_tracking_configuration_create": (b"@",),
-    "ar_authorization_result_get_authorization_type": (b"Q@",),
-    "ar_barcode_anchor_get_origin_from_anchor_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_room_anchor_get_plane_anchor_identifiers": (b"@@",),
+    "ar_authorization_results_get_count": (b"Q@",),
+    "ar_trackable_anchor_is_tracked": (b"B@",),
+    "ar_world_tracking_provider_get_required_authorization_type": (b"Q",),
     "ar_data_providers_create_with_data_providers": (
         b"@@",
         "",
@@ -230,235 +101,47 @@ functions = {
             "variadic": True,
         },
     ),
-    "ar_hand_skeleton_enumerate_joints": (b"v@@?",),
-    "ar_shared_coordinate_space_provider_set_connected_participants_update_handler": (
-        b"v@@@?",
+    "ar_device_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
+    "ar_session_run": (b"v@@",),
+    "ar_release": (b"v^v",),
+    "ar_world_tracking_configuration_create": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
     ),
-    "ar_mesh_anchors_get_count": (b"Q@",),
-    "ar_object_tracking_configuration_set_stationary_object_tracking_rate": (b"v@f",),
-    "ar_object_anchor_is_equal_to_object_anchor": (b"B@@",),
-    "ar_environment_probe_anchor_get_identifier": (b"v@^C",),
-    "ar_room_anchor_get_geometry": (b"@@",),
-    "ar_object_tracking_provider_is_supported": (b"B",),
-    "ar_plane_geometry_get_mesh_faces": (b"@@",),
-    "ar_accessory_anchor_get_angular_velocity": (b"<3f>@",),
-    "ar_device_anchor_get_timestamp": (b"d@",),
-    "ar_skeleton_joint_get_index": (b"Q@",),
-    "ar_reference_object_load_with_name_and_configuration_f": (
-        b"v^c^{__CFBundle=}@^v^?",
+    "ar_data_providers_add_data_provider": (b"v@@",),
+    "ar_authorization_results_enumerate_results": (
+        b"v@@?",
         "",
         {
             "arguments": {
-                4: {
+                1: {
                     "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"^c"},
-                            2: {"type": b"^{__CFBundle=}"},
-                            3: {"type": b"B"},
-                            4: {"type": b"@"},
-                            5: {"type": b"@"},
-                        },
+                        "retval": {"type": b"B"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
                     }
                 }
             }
         },
     ),
-    "ar_camera_video_format_get_camera_type": (b"q@",),
-    "ar_image_tracking_provider_create": (b"@@",),
-    "ar_world_tracking_provider_remove_all_anchors": (b"v@@?",),
-    "ar_reference_objects_get_count": (b"Q@",),
-    "ar_skeleton_joint_get_parent_from_joint_transform_with_correction": (
+    "ar_authorization_result_get_status": (b"q@",),
+    "ar_error_get_error_code": (b"q@",),
+    "ar_retain": (b"^v^v",),
+    "ar_device_anchor_get_origin_from_anchor_transform_with_correction": (
         b"{simd_float4x4=[4<4f>]}@q",
     ),
-    "ar_camera_region_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_geometry_source_get_components_per_vector": (b"Q@",),
-    "ar_stereo_properties_provider_create": (b"@@",),
-    "ar_accessory_anchor_is_equal_to_accessory_anchor": (b"B@@",),
-    "ar_barcode_detection_provider_set_update_handler": (b"v@@@?",),
-    "ar_world_tracking_provider_remove_anchor_with_identifier": (b"v@^C@?",),
-    "ar_world_tracking_provider_set_world_anchor_sharing_availability_update_handler": (
-        b"v@@@?",
-    ),
-    "ar_object_tracking_configuration_add_reference_objects": (b"v@@",),
     "ar_data_provider_get_required_authorization_type": (b"Q@",),
-    "ar_mesh_geometry_get_faces": (b"@@",),
-    "ar_camera_video_format_get_minimum_frame_duration": (b"f@",),
-    "ar_world_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_object_tracking_provider_get_required_authorization_type": (b"Q",),
+    "ar_data_providers_get_count": (b"Q@",),
+    "ar_session_stop": (b"v@",),
+    "ar_session_copy_data_providers": (b"@@",),
     "ar_device_anchor_get_tracking_state": (b"q@",),
     "ar_device_anchor_is_tracked": (b"B@",),
-    "ar_reference_object_load_with_name": (b"v^c^{__CFBundle=}@?",),
-    "ar_camera_frame_parameters_get_mid_exposure_timestamp": (b"d@",),
-    "ar_strings_get_count": (b"Q@",),
-    "ar_data_providers_add_data_providers": (b"v@@",),
-    "ar_scene_reconstruction_provider_copy_all_mesh_anchors": (b"@@",),
-    "ar_camera_region_anchor_get_timestamp": (b"d@",),
-    "ar_accessory_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_plane_anchor_get_timestamp": (b"d@",),
-    "ar_world_anchor_create_with_origin_from_anchor_transform": (
-        b"@{simd_float4x4=[4<4f>]}",
-    ),
-    "ar_camera_video_format_get_camera_rectification_type": (b"q@",),
-    "ar_world_anchor_get_timestamp": (b"d@",),
-    "ar_mesh_geometry_get_vertices": (b"@@",),
-    "ar_plane_detection_provider_set_update_handler_f": (
+    "ar_shared_coordinate_provider_set_connected_participants_update_handler_f": (
         b"v@@^v^?",
         "",
         {
             "arguments": {
                 3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_camera_region_provider_add_camera_region_anchor": (b"v@@@?",),
-    "ar_accessory_anchor_get_identifier": (b"v@^C",),
-    "ar_data_get_length": (b"Q@",),
-    "ar_hand_anchor_get_fidelity": (b"q@",),
-    "ar_data_providers_add_data_provider": (b"v@@",),
-    "ar_image_tracking_provider_is_supported": (b"B",),
-    "ar_room_tracking_provider_copy_all_room_anchors": (b"@@",),
-    "ar_environment_probe_anchor_get_environment_texture": (b"@@",),
-    "ar_hand_tracking_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_image_anchor_get_estimated_scale_factor": (b"f@",),
-    "ar_reference_object_configuration_enable_high_frame_rate_tracking": (b"v@B",),
-    "ar_geometry_element_get_buffer": (b"@@",),
-    "ar_reference_image_get_resource_group_name": (b"^c@",),
-    "ar_scene_reconstruction_configuration_get_scene_reconstruction_mode": (b"Q@",),
-    "ar_reference_object_configuration_create": (b"@",),
-    "ar_plane_detection_configuration_create": (b"@",),
-    "ar_hand_skeleton_is_equal_to_hand_skeleton": (b"B@@",),
-    "ar_environment_light_estimation_provider_set_update_handler": (b"v@@@?",),
-    "ar_plane_anchor_get_alignment": (b"q@",),
-    "ar_mesh_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_reference_object_get_identifier": (b"v@^C",),
-    "ar_camera_frame_parameters_get_extrinsics": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_hand_tracking_provider_is_supported": (b"B",),
-    "ar_room_anchor_get_mesh_geometries_for_surface_classification": (b"@@q",),
-    "ar_geometry_element_get_count": (b"Q@",),
-    "ar_room_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_scene_reconstruction_provider_get_required_authorization_type": (b"Q",),
-    "ar_viewpoint_properties_get_device_from_left_viewpoint_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_camera_region_provider_remove_camera_region_anchor": (b"v@@@?",),
-    "ar_hand_anchor_is_equal_to_hand_anchor": (b"B@@",),
-    "ar_camera_region_anchor_create_with_parameters": (b"@{simd_float4x4=[4<4f>]}ffq",),
-    "ar_anchor_get_timestamp": (b"d@",),
-    "ar_plane_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_plane_detection_configuration_set_alignment": (b"v@q",),
-    "ar_plane_extent_get_height": (b"f@",),
-    "ar_skeleton_joint_get_parent": (b"@@",),
-    "ar_shared_coordinate_space_provider_get_participant_identifier": (b"v@^C",),
-    "ar_camera_frame_parameters_is_equal_to_camera_frame_parameters": (b"B@@",),
-    "ar_hand_tracking_provider_query_anchors_at_timestamp": (b"q@d@@",),
-    "ar_camera_video_format_get_frame_size": (b"{CGSize=dd}@",),
-    "ar_world_tracking_provider_add_anchor_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_barcode_anchor_get_payload_string_value": (b"^c@",),
-    "ar_accessory_tracking_provider_update_accessories": (b"v@@@?",),
-    "ar_object_tracking_configuration_set_maximum_instances_per_reference_object": (
-        b"v@i",
-    ),
-    "ar_image_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_shared_coordinate_space_provider_set_sharing_status_update_handler": (
-        b"v@@@?",
-    ),
-    "ar_reference_object_configuration_is_high_frame_rate_tracking_enabled": (b"B@",),
-    "ar_geometry_element_is_equal_to_geometry_element": (b"B@@",),
-    "ar_reference_image_get_physical_width": (b"f@",),
-    "ar_camera_region_anchor_get_height": (b"f@",),
-    "ar_scene_reconstruction_configuration_create": (b"@",),
-    "ar_object_axis_aligned_bounding_box_get_min": (b"<3f>@",),
-    "ar_camera_region_anchor_get_pixel_buffer": (b"^{__CVBuffer=}@",),
-    "ar_session_create": (b"@",),
-    "ar_shared_coordinate_space_provider_is_sharing_enabled": (b"B@",),
-    "ar_reference_objects_enumerate_objects": (b"v@@?",),
-    "ar_reference_image_set_name": (b"v@^c",),
-    "ar_accessories_enumerate_accessories_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_get_usdz_file_path": (b"^{__CFURL=}@",),
-    "ar_camera_video_format_get_maximum_frame_duration": (b"f@",),
-    "ar_reference_images_add_image": (b"v@@",),
-    "ar_environment_light_estimation_provider_get_required_authorization_type": (b"Q",),
-    "ar_camera_frame_provider_set_update_handler_f": (
-        b"v@@@^v^?",
-        "",
-        {
-            "arguments": {
-                4: {
                     "callable": {
                         "retval": {"type": b"v"},
                         "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
@@ -467,57 +150,20 @@ functions = {
             }
         },
     ),
-    "ar_camera_region_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_object_anchor_get_timestamp": (b"d@",),
-    "ar_reference_objects_enumerate_objects_f": (
-        b"v@^v^?",
+    "ar_anchor_get_identifier": (
+        b"v@^C",
         "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
+        {"arguments": {1: {"c_array_of_fixed_length": 16, "type_modifier": "o"}}},
     ),
-    "ar_barcode_anchor_get_symbology": (b"Q@",),
-    "ar_world_anchor_get_identifier": (b"v@^C",),
-    "ar_scene_reconstruction_provider_set_update_handler_f": (
-        b"v@@^v^?",
+    "ar_room_anchor_is_current_room": (b"B@",),
+    "ar_data_providers_remove_data_provider": (b"v@@",),
+    "ar_error_copy_cf_error": (
+        b"^{__CFError=}@",
         "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
+        {"retval": {"already_cfretained": True}},
     ),
-    "ar_image_anchor_get_reference_image": (b"@@",),
-    "ar_world_tracking_provider_remove_anchor": (b"v@@@?",),
-    "ar_object_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_identifiers_enumerate_identifiers": (b"v@@?",),
-    "ar_shared_coordinate_space_provider_set_sharing_status_update_handler_f": (
-        b"v@@^v@?",
-    ),
-    "ar_environment_probe_anchor_is_equal_to_environment_probe_anchor": (b"B@@",),
-    "ar_stereo_properties_provider_is_supported": (b"B",),
-    "ar_camera_frame_parameters_get_color_temperature": (b"I@",),
-    "ar_reference_image_is_equal_to_reference_image": (b"B@@",),
-    "ar_image_anchor_is_tracked": (b"B@",),
+    "ar_data_providers_remove_data_providers": (b"v@@",),
+    "ar_device_anchor_create": (b"@", "", {"retval": {"already_retained": True}}),
     "ar_session_set_data_provider_state_change_handler_f": (
         b"v@@^v^?",
         "",
@@ -538,330 +184,11 @@ functions = {
             }
         },
     ),
-    "ar_world_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_barcode_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_hand_anchor_get_timestamp": (b"d@",),
-    "ar_accessory_anchor_get_origin_from_anchor_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_room_anchor_contains_point": (b"B@<3f>",),
-    "ar_camera_frame_is_equal_to_camera_frame": (b"B@@",),
-    "ar_mesh_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
+    "ar_data_provider_get_state": (b"q@",),
+    "ar_world_tracking_provider_create": (
+        b"@@",
         "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_mesh_anchor_is_equal_to_mesh_anchor": (b"B@@",),
-    "ar_coordinate_space_data_copy_recipient_identifiers": (b"@@",),
-    "ar_session_set_authorization_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_world_tracking_provider_is_supported": (b"B",),
-    "ar_accessory_is_equal_to_accessory": (b"B@@",),
-    "ar_image_anchor_is_equal_to_image_anchor": (b"B@@",),
-    "ar_accessory_anchor_is_tracked": (b"B@",),
-    "ar_accessory_get_name": (b"^c@",),
-    "ar_image_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_reference_object_configuration_is_equal_to_reference_object_configuration": (
-        b"B@@",
-    ),
-    "ar_mesh_geometry_get_classification": (b"@@",),
-    "ar_hand_skeleton_create": (b"@",),
-    "ar_plane_anchor_is_equal_to_plane_anchor": (b"B@@",),
-    "ar_room_anchor_get_mesh_anchor_identifiers": (b"@@",),
-    "ar_hand_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_stereo_properties_provider_get_viewpoint_properties": (b"B@@",),
-    "ar_camera_frame_provider_get_required_authorization_type": (b"Q",),
-    "ar_camera_video_format_copy_supported_video_formats": (b"@qS",),
-    "ar_error_get_error_code": (b"q@",),
-    "ar_environment_light_estimation_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_environment_probe_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_scene_reconstruction_provider_is_supported": (b"B",),
-    "ar_authorization_results_enumerate_results_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_shared_coordinate_space_provider_create": (b"@@",),
-    "ar_session_request_authorization": (b"v@Q@?",),
-    "ar_image_anchor_get_timestamp": (b"d@",),
-    "ar_geometry_element_get_index_count_per_primitive": (b"Q@",),
-    "ar_camera_video_formats_enumerate_video_formats": (b"v@@?",),
-    "ar_hand_anchor_get_chirality": (b"q@",),
-    "ar_identifiers_is_equal_to_identifiers": (b"B@@",),
-    "ar_object_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_reference_images_add_images": (b"v@@",),
-    "ar_reference_object_get_usdz_file_path": (b"^{__CFURL=}@",),
-    "ar_object_axis_aligned_bounding_box_get_extent": (b"<3f>@",),
-    "ar_camera_video_format_is_equal_to_camera_video_format": (b"B@@",),
-    "ar_environment_probe_anchors_get_count": (b"Q@",),
-    "ar_plane_anchors_get_count": (b"Q@",),
-    "ar_stereo_properties_configuration_create": (b"@",),
-    "ar_image_tracking_provider_get_required_authorization_type": (b"Q",),
-    "ar_mesh_anchor_get_geometry": (b"@@",),
-    "ar_object_tracking_configuration_get_moving_object_tracking_rate": (b"f@",),
-    "ar_world_tracking_provider_get_required_authorization_type": (b"Q",),
-    "ar_object_anchors_get_count": (b"Q@",),
-    "ar_skeleton_joint_is_equal_to_skeleton_joint": (b"B@@",),
-    "ar_image_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_image_anchor_get_identifier": (b"v@^C",),
-    "ar_scene_reconstruction_configuration_set_scene_reconstruction_mode": (b"v@Q",),
-    "ar_object_anchor_get_bounding_box": (b"@@",),
-    "ar_camera_frame_sample_get_camera_frame_parameters": (b"@@",),
-    "ar_identifiers_get_count": (b"Q@",),
-    "ar_room_anchor_is_equal_to_room_anchor": (b"B@@",),
-    "ar_skeleton_joint_get_anchor_from_joint_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_accessory_anchor_get_held_chirality": (b"q@",),
-    "ar_mesh_geometries_enumerate_geometries": (b"v@@?",),
-    "ar_room_tracking_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_world_tracking_provider_copy_all_world_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_anchor_get_velocity": (b"<3f>@",),
-    "ar_room_tracking_provider_get_required_authorization_type": (b"Q",),
-    "ar_plane_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_object_tracking_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_object_tracking_configuration_create": (b"@",),
-    "ar_data_providers_create": (b"@", "", {"retval": {"already_retained": True}}),
-    "ar_trackable_anchor_is_tracked": (b"B@",),
-    "ar_device_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_camera_region_provider_set_update_handler_for_anchor_with_identifier": (
-        b"v@^C@@?",
-    ),
-    "ar_session_query_authorization_results": (b"v@Q@?",),
-    "ar_strings_enumerate_strings_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"^c"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_barcode_anchor_get_identifier": (b"v@^C",),
-    "ar_hand_anchor_get_hand_skeleton": (b"@@",),
-    "ar_accessories_remove_accessories": (b"v@@",),
-    "ar_barcode_anchor_get_timestamp": (b"d@",),
-    "ar_device_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_camera_frame_get_frame_samples": (b"@@",),
-    "ar_room_anchor_get_timestamp": (b"d@",),
-    "ar_barcode_detection_provider_get_required_authorization_type": (b"Q",),
-    "ar_mesh_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_environment_probe_anchor_get_camera_scale_reference": (b"f@",),
-    "ar_plane_detection_provider_create": (b"@@",),
-    "ar_hand_tracking_provider_get_latest_anchors": (b"B@@@",),
-    "ar_accessories_create": (b"@",),
-    "ar_session_create_with_device": (b"@@",),
-    "ar_geometry_source_get_count": (b"Q@",),
-    "ar_plane_extent_get_width": (b"f@",),
-    "ar_hand_anchor_create": (b"@",),
-    "ar_viewpoint_properties_get_device_from_right_viewpoint_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_accessory_tracking_provider_create": (b"@@",),
-    "ar_accessory_tracking_configuration_create": (b"@",),
-    "ar_camera_region_provider_create": (b"@@",),
-    "ar_camera_video_formats_enumerate_video_formats_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_room_tracking_provider_is_supported": (b"B",),
-    "ar_geometry_source_get_buffer": (b"@@",),
-    "ar_reference_object_load_with_name_and_configuration": (b"v^c^{__CFBundle=}@@?",),
-    "ar_world_tracking_provider_set_anchor_update_handler": (b"v@@@?",),
-    "ar_accessory_get_identifier": (b"v@^C",),
-    "ar_accessory_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_hand_anchor_is_tracked": (b"B@",),
-    "ar_accessories_get_count": (b"Q@",),
-    "ar_reference_object_load_from_url_with_configuration_f": (
-        b"v^{__CFURL=}@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"^{__CFURL=}"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                            4: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_get_source_device": (b"@@",),
-    "ar_session_request_authorization_f": (
-        b"v@Q^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_reference_objects_add_object": (b"v@@",),
-    "ar_reference_object_get_name": (b"^c@",),
-    "ar_mesh_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_plane_geometry_is_equal_to_plane_geometry": (b"B@@",),
-    "ar_room_anchor_get_identifier": (b"v@^C",),
-    "ar_camera_region_anchor_get_origin_from_anchor_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
+        {"retval": {"already_retained": True}},
     ),
     "ar_session_query_authorization_results_f": (
         b"v@Q^v^?",
@@ -881,16 +208,11 @@ functions = {
             }
         },
     ),
+    "ar_device_anchor_get_timestamp": (b"d@",),
+    "ar_data_providers_add_data_providers": (b"v@@",),
+    "ar_hand_tracking_provider_is_supported": (b"B",),
     "ar_session_set_data_provider_state_change_handler": (b"v@@@?",),
-    "ar_barcode_anchor_get_extent": (b"<3f>@",),
-    "ar_coordinate_space_data_create_from_cfdata": (b"@^{__CFData=}",),
-    "ar_hand_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_accessories_remove_accessory": (b"v@@",),
-    "ar_camera_video_formats_get_count": (b"Q@",),
-    "ar_plane_anchor_get_plane_classification": (b"q@",),
-    "ar_hand_skeleton_enumerate_joints_f": (
+    "ar_data_providers_enumerate_data_providers_f": (
         b"v@^v^?",
         "",
         {
@@ -904,6 +226,22 @@ functions = {
             }
         },
     ),
+    "ar_session_create_with_device": (b"@@",),
+    "ar_authorization_results_enumerate_results_f": (
+        b"v@^v^?",
+        "",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    ),
+    "ar_world_tracking_provider_query_device_anchor_at_timestamp": (b"q@d@",),
     "ar_data_providers_enumerate_data_providers": (
         b"v@@?",
         "",
@@ -918,583 +256,16 @@ functions = {
             }
         },
     ),
-    "ar_world_anchor_shared_with_nearby_participants_create": (
-        b"@{simd_float4x4=[4<4f>]}",
-    ),
-    "ar_environment_probe_anchor_get_timestamp": (b"d@",),
-    "ar_world_tracking_provider_set_world_anchor_sharing_availability_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"q"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_session_set_authorization_update_handler": (b"v@@@?",),
-    "ar_camera_region_provider_add_camera_region_anchor_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_identifiers_enumerate_identifiers_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"^C"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_plane_geometry_get_mesh_vertices": (b"@@",),
-    "ar_camera_region_provider_set_update_handler_for_anchor_with_identifier_f": (
-        b"v@^C@^v^?",
-        "",
-        {
-            "arguments": {
-                4: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_anchors_get_count": (b"Q@",),
-    "ar_environment_light_estimation_provider_is_supported": (b"B",),
-    "ar_plane_detection_provider_get_required_authorization_type": (b"Q",),
-    "ar_object_tracking_provider_set_update_handler": (b"v@@@?",),
-    "ar_world_tracking_configuration_create": (
-        b"@",
-        "",
-        {"retval": {"already_retained": True}},
-    ),
-    "ar_coordinate_space_data_copy_cfdata": (b"^{__CFData=}@",),
-    "ar_skeleton_joint_is_tracked": (b"B@",),
-    "ar_reference_object_get_input_file_path": (b"^{__CFURL=}@",),
-    "ar_accessory_tracking_provider_get_required_authorization_type": (b"Q",),
-    "ar_geometry_source_get_format": (b"Q@",),
-    "ar_room_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_camera_region_configuration_create": (b"@",),
-    "ar_reference_images_get_count": (b"Q@",),
-    "ar_plane_anchor_get_identifier": (b"v@^C",),
-    "ar_reference_images_load_reference_images_in_group": (b"@^c^{__CFBundle=}",),
-    "ar_world_anchor_is_equal_to_world_anchor": (b"B@@",),
-    "ar_image_tracking_provider_copy_all_image_anchors": (b"@@",),
-    "ar_camera_video_format_get_pixel_format": (b"I@",),
-    "ar_world_tracking_provider_query_device_anchor_at_timestamp": (b"q@d@",),
-    "ar_camera_region_anchor_get_identifier": (b"v@^C",),
-    "ar_geometry_element_get_bytes_per_index": (b"Q@",),
-    "ar_camera_region_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_mesh_geometry_get_normals": (b"@@",),
-    "ar_object_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_reference_object_is_equal_to_reference_object": (b"B@@",),
-    "ar_accessories_add_accessories": (b"v@@",),
-    "ar_camera_frame_parameters_get_camera_type": (b"q@",),
-    "ar_camera_frame_samples_enumerate_frame_samples": (b"v@@?",),
-    "ar_room_anchors_get_count": (b"Q@",),
-    "ar_camera_region_anchor_is_equal_to_camera_region_anchor": (b"B@@",),
-    "ar_room_tracking_provider_copy_current_room_anchor": (b"@@",),
-    "ar_barcode_anchors_get_count": (b"Q@",),
-    "ar_camera_region_anchors_get_count": (b"Q@",),
-    "ar_camera_video_format_get_camera_position": (b"S@",),
-    "ar_reference_objects_create": (b"@",),
-    "ar_camera_frame_parameters_get_intrinsics": (b"{simd_float3x3=[3<3f>]}@",),
-    "ar_reference_image_get_name": (b"^c@",),
-    "ar_plane_anchor_get_surface_classification": (b"q@",),
-    "ar_object_tracking_provider_create": (b"@@",),
-    "ar_data_providers_get_count": (b"Q@",),
-    "ar_session_copy_data_providers": (b"@@",),
-    "ar_reference_objects_add_objects": (b"v@@",),
-    "ar_accessories_enumerate_accessories": (b"v@@?",),
-    "ar_camera_region_anchor_get_width": (b"f@",),
-    "ar_plane_detection_provider_is_supported": (b"B",),
-    "ar_skeleton_joint_get_anchor_from_joint_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_plane_detection_provider_copy_all_plane_anchors": (b"@@",),
-    "ar_stereo_properties_provider_get_required_authorization_type": (b"Q",),
-    "ar_hand_tracking_provider_set_update_handler": (b"v@@@?",),
-    "ar_plane_extent_get_plane_anchor_from_plane_extent_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_camera_region_provider_get_required_authorization_type": (b"Q",),
-    "ar_accessories_add_accessory": (b"v@@",),
-    "ar_world_tracking_provider_copy_all_world_anchors": (b"v@@?",),
-    "ar_geometry_element_get_primitive_type": (b"q@",),
-    "ar_shared_coordinate_space_configuration_create": (b"@",),
-    "ar_camera_frame_parameters_get_capture_timestamp": (b"d@",),
-    "ar_plane_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_world_anchor_is_tracked": (b"B@",),
-    "ar_reference_object_load_from_url_with_configuration": (b"v^{__CFURL=}@@?",),
-    "ar_object_tracking_configuration_set_maximum_trackable_instances": (b"v@i",),
-    "ar_world_tracking_provider_create": (
-        b"@@",
-        "",
-        {"retval": {"already_retained": True}},
-    ),
-    "ar_scene_reconstruction_provider_set_update_handler": (b"v@@@?",),
-    "ar_accessory_tracking_provider_get_latest_anchors": (b"@@",),
-    "ar_mesh_anchor_get_identifier": (b"v@^C",),
-    "ar_geometry_source_get_offset": (b"Q@",),
-    "ar_camera_region_provider_remove_camera_region_anchor_with_identifier": (
-        b"v@^C@?",
-    ),
-    "ar_world_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_hand_tracking_provider_get_required_authorization_type": (b"Q",),
-    "ar_data_providers_remove_data_provider": (b"v@@",),
-    "ar_environment_probe_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_reference_image_create_from_pixel_buffer": (
-        b"@@If",
-        "",
-        {"retval": {"already_retained": True}},
-    ),
-    "ar_barcode_detection_configuration_create": (b"@",),
-    "ar_room_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_reference_images_create": (b"@",),
-    "ar_hand_anchor_get_identifier": (
-        b"v@^C",
-        "",
-        {"arguments": {1: {"c_array_of_fixed_length": 16, "type_modifier": "o"}}},
-    ),
-    "ar_reference_image_create_from_cgimage": (
-        b"@@If",
-        "",
-        {"retval": {"already_retained": True}},
-    ),
-    "ar_accessory_tracking_provider_predict_anchor_at_timestamp": (b"B@@d@",),
-    "ar_world_anchors_get_count": (b"Q@",),
-    "ar_world_tracking_provider_remove_all_anchors_f": (b"v@^v@?",),
-    "ar_hand_skeleton_get_joint_count": (b"Q@",),
-    "ar_geometry_source_is_equal_to_geometry_source": (b"B@@",),
-    "ar_geometry_source_get_stride": (b"Q@",),
-    "ar_viewpoint_properties_create": (b"@",),
-    "ar_object_tracking_configuration_get_maximum_instances_per_reference_object": (
-        b"i@",
-    ),
-    "ar_coordinate_space_data_copy_recipient_identifers": (b"@@",),
-    "ar_environment_probe_anchor_get_origin_from_anchor_transform": (
-        b"{simd_float4x4=[4<4f>]}@",
-    ),
-    "ar_camera_region_provider_remove_camera_region_anchor_with_identifier_f": (
-        b"v@^C^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"^C"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_room_anchors_enumerate_anchors_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_release": (b"v^v",),
-    "ar_environment_light_estimation_configuration_create": (b"@",),
-    "ar_authorization_result_get_status": (b"q@",),
-    "ar_hand_tracking_configuration_create": (b"@",),
-    "ar_accessory_anchor_get_timestamp": (b"d@",),
-    "ar_room_anchor_is_current_room": (b"B@",),
-    "ar_object_tracking_configuration_get_detection_rate": (b"f@",),
-    "ar_accessory_tracking_provider_is_supported": (b"B",),
-    "ar_camera_frame_sample_get_pixel_buffer": (b"^{__CVBuffer=}@",),
-    "ar_barcode_detection_configuration_set_detection_symbology": (b"v@Q",),
-    "ar_mesh_geometry_is_equal_to_mesh_geometry": (b"B@@",),
-    "ar_camera_frame_samples_enumerate_frame_samples_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_plane_detection_provider_set_update_handler": (b"v@@@?",),
-    "ar_shared_coordinate_space_provider_copy_next_coordinate_space_data": (b"@@",),
-    "ar_reference_images_enumerate_images_f": (
-        b"v@^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_object_tracking_configuration_get_stationary_object_tracking_rate": (b"f@",),
-    "ar_scene_reconstruction_provider_create": (b"@@",),
-    "ar_world_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_camera_region_provider_is_supported": (b"B",),
-    "ar_camera_region_provider_remove_camera_region_anchor_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_camera_region_anchor_get_camera_enhancement": (b"q@",),
-    "ar_accessory_anchor_get_anchor_from_location_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@^tq",
-        "",
-        {"arguments": {1: {"c_array_delimited_by_null": True, "type_modifier": "n"}}},
-    ),
-    "ar_object_tracking_provider_copy_all_object_anchors": (b"@@",),
-    "ar_reference_object_load_with_name_f": (
-        b"v^c^{__CFBundle=}^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"^c"},
-                            2: {"type": b"^{__CFBundle=}"},
-                            3: {"type": b"B"},
-                            4: {"type": b"@"},
-                            5: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_shared_coordinate_space_provider_get_required_authorization_type": (b"Q",),
-    "ar_mesh_geometries_get_count": (b"Q@",),
-    "ar_authorization_results_enumerate_results": (
-        b"v@@?",
-        "",
-        {
-            "arguments": {
-                1: {
-                    "callable": {
-                        "retval": {"type": b"B"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
-    "ar_camera_frame_parameters_get_exposure_duration": (b"d@",),
-    "ar_camera_frame_get_frame_sample": (b"@@S",),
-    "ar_world_tracking_provider_remove_anchor_with_identifier_f": (
-        b"v@^C^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_room_tracking_provider_create": (b"@@",),
-    "ar_room_tracking_configuration_create": (b"@",),
-    "ar_barcode_detection_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_reference_object_load_from_url_f": (
-        b"v^{__CFURL=}^v^?",
-        "",
-        {
-            "arguments": {
-                2: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"^{__CFURL=}"},
-                            2: {"type": b"B"},
-                            3: {"type": b"@"},
-                            4: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_data_providers_remove_data_providers": (b"v@@",),
-    "ar_object_anchor_is_tracked": (b"B@",),
-    "ar_image_anchors_get_count": (b"Q@",),
-    "ar_device_anchor_create": (b"@", "", {"retval": {"already_retained": True}}),
-    "ar_camera_frame_provider_create": (b"@",),
-    "ar_image_tracking_provider_set_update_handler": (b"v@@@?",),
-    "ar_accessory_anchor_get_accessory": (b"@@",),
-    "ar_shared_coordinate_space_provider_is_supported": (b"B",),
-    "ar_hand_skeleton_get_joint_named": (b"@@Q",),
-    "ar_barcode_detection_provider_is_supported": (b"B",),
-    "ar_accessory_anchor_is_held": (b"B@",),
-    "ar_barcode_anchor_copy_payload_data": (b"@@",),
-    "ar_reference_images_enumerate_images": (b"v@@?",),
+    "ar_authorization_result_get_authorization_type": (b"Q@",),
     "ar_anchor_get_origin_from_anchor_transform": (b"{simd_float4x4=[4<4f>]}@",),
-    "ar_barcode_detection_provider_create": (b"@@",),
-    "ar_anchor_get_identifier": (
-        b"v@^C",
-        "",
-        {"arguments": {1: {"c_array_of_fixed_length": 16, "type_modifier": "o"}}},
-    ),
-    "ar_session_run": (b"v@@",),
-    "ar_hand_tracking_provider_create": (b"@@",),
-    "ar_reference_object_load_from_url": (b"v^{__CFURL=}@?",),
-    "ar_authorization_results_get_count": (b"Q@",),
-    "ar_object_tracking_configuration_set_detection_rate": (b"v@f",),
-    "ar_environment_probe_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_object_tracking_configuration_get_maximum_trackable_instances": (b"i@",),
-    "ar_environment_light_estimation_provider_create": (b"@@",),
-    "ar_object_tracking_configuration_set_moving_object_tracking_rate": (b"v@f",),
-    "ar_world_anchor_is_shared_with_nearby_participants": (b"B@",),
-    "ar_object_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_object_anchor_get_identifier": (b"v@^C",),
-    "ar_reference_image_get_physical_height": (b"f@",),
-    "ar_world_tracking_provider_add_anchor": (b"v@@@?",),
-    "ar_room_tracking_provider_set_update_handler": (b"v@@@?",),
-    "ar_retain": (b"^v^v",),
-    "ar_image_anchors_enumerate_anchors": (b"v@@?",),
-    "ar_barcode_anchor_get_origin_from_anchor_transform_with_correction": (
-        b"{simd_float4x4=[4<4f>]}@q",
-    ),
-    "ar_camera_frame_sample_is_equal_to_camera_frame_sample": (b"B@@",),
-    "ar_shared_coordinate_provider_set_connected_participants_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
-                    }
-                }
-            }
-        },
-    ),
     "ar_device_anchor_get_identifier": (
         b"v@^C",
         "",
         {"arguments": {1: {"type_modifier": "o"}}},
     ),
-    "ar_object_axis_aligned_bounding_box_get_max": (b"<3f>@",),
-    "ar_camera_frame_provider_is_supported": (b"B",),
-    "ar_object_axis_aligned_bounding_box_get_center": (b"<3f>@",),
-    "ar_shared_coordinate_space_provider_push_data": (b"v@@",),
-    "ar_data_provider_get_state": (b"q@",),
-    "ar_accessory_tracking_provider_update_accessories_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"B"},
-                            2: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_copy_location_names": (b"@@",),
-    "ar_object_anchor_get_reference_object": (b"@@",),
-    "ar_plane_geometry_get_plane_extent": (b"@@",),
-    "ar_accessory_get_inherent_chirality": (b"q@",),
-    "ar_world_tracking_provider_set_anchor_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_camera_frame_parameters_get_camera_position": (b"S@",),
-    "ar_image_tracking_provider_set_update_handler_f": (
-        b"v@@^v^?",
-        "",
-        {
-            "arguments": {
-                3: {
-                    "callable": {
-                        "retval": {"type": b"v"},
-                        "arguments": {
-                            0: {"type": b"^v"},
-                            1: {"type": b"@"},
-                            2: {"type": b"@"},
-                            3: {"type": b"@"},
-                        },
-                    }
-                }
-            }
-        },
-    ),
-    "ar_accessory_anchor_get_tracking_state": (b"q@",),
-    "ar_skeleton_joint_get_parent_from_joint_transform": (b"{simd_float4x4=[4<4f>]}@",),
+    "ar_anchor_get_timestamp": (b"d@",),
+    "ar_data_providers_create": (b"@", "", {"retval": {"already_retained": True}}),
+    "ar_world_tracking_provider_is_supported": (b"B",),
 }
 aliases = {
     "AR_REFINED_FOR_SWIFT": "OS_REFINED_FOR_SWIFT",

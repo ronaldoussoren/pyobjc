@@ -1,11 +1,587 @@
 {
  "definitions": {
+  "enum_type": {
+   "ar_accessory_chirality": { "ignore": true },
+   "ar_accessory_tracking_error_code": { "ignore": true },
+   "ar_accessory_anchor_tracking_state": { "ignore": true },
+   "ar_accessory_source_type": { "ignore": true },
+   "ar_barcode_detection_symbology": { "ignore": true },
+   "ar_camera_position": { "ignore": true },
+   "ar_camera_type": { "ignore": true },
+   "ar_camera_rectification_type": { "ignore": true },
+   "ar_camera_region_error_code": { "ignore": true },
+   "ar_camera_region_camera_enhancement": { "ignore": true },
+   "ar_hand_skeleton_joint_name": { "ignore": true },
+   "ar_hand_anchor_query_status": { "ignore": true },
+   "ar_hand_chirality": { "ignore": true },
+   "ar_hand_fidelity": { "ignore": true },
+   "ar_world_tracking_error_code": { "ignore": true },
+   "ar_world_anchor_sharing_availability": { "ignore": true },
+   "ar_object_tracking_error_code": { "ignore": true },
+   "ar_plane_alignment": { "ignore": true },
+   "ar_plane_classification": { "ignore": true },
+   "ar_geometry_primitive_type": { "ignore": true },
+   "ar_mesh_classification": { "ignore": true },
+   "ar_surface_classification": { "ignore": true },
+   "ar_scene_reconstruction_mode": { "ignore": true },
+   "ar_transform_correction": { "ignore": true }
+  },
+  "enum": {
+   "ar_accessory_chirality_unspecified": { "ignore": true },
+   "ar_accessory_chirality_left": { "ignore": true },
+   "ar_accessory_chirality_right": { "ignore": true },
+   "ar_accessory_tracking_error_code_accessory_loading_failed": { "ignore": true },
+   "ar_accessory_tracking_error_code_update_accessories_failed": { "ignore": true },
+   "ar_accessory_anchor_tracking_state_untracked": { "ignore": true },
+   "ar_accessory_anchor_tracking_state_orientation_tracked": { "ignore": true },
+   "ar_accessory_anchor_tracking_state_position_orientation_tracked": { "ignore": true },
+   "ar_accessory_anchor_tracking_state_position_orientation_tracked_low_accuracy": { "ignore": true },
+   "ar_accessory_source_type_device": { "ignore": true },
+   "ar_barcode_detection_symbology_none": { "ignore": true },
+   "ar_barcode_detection_symbology_aztec": { "ignore": true },
+   "ar_barcode_detection_symbology_codabar": { "ignore": true },
+   "ar_barcode_detection_symbology_code_39": { "ignore": true },
+   "ar_barcode_detection_symbology_code_39_checksum": { "ignore": true },
+   "ar_barcode_detection_symbology_code_39_full_ascii": { "ignore": true },
+   "ar_barcode_detection_symbology_code_39_full_ascii_checksum": { "ignore": true },
+   "ar_barcode_detection_symbology_code_93": { "ignore": true },
+   "ar_barcode_detection_symbology_code_93i": { "ignore": true },
+   "ar_barcode_detection_symbology_code_128": { "ignore": true },
+   "ar_barcode_detection_symbology_data_matrix": { "ignore": true },
+   "ar_barcode_detection_symbology_ean_8": { "ignore": true },
+   "ar_barcode_detection_symbology_ean_13": { "ignore": true },
+   "ar_barcode_detection_symbology_gs1_databar": { "ignore": true },
+   "ar_barcode_detection_symbology_gs1_databar_expanded": { "ignore": true },
+   "ar_barcode_detection_symbology_gs1_databar_limited": { "ignore": true },
+   "ar_barcode_detection_symbology_itf": { "ignore": true },
+   "ar_barcode_detection_symbology_itf_14": { "ignore": true },
+   "ar_barcode_detection_symbology_itf_checksum": { "ignore": true },
+   "ar_barcode_detection_symbology_micropdf417": { "ignore": true },
+   "ar_barcode_detection_symbology_microqr": { "ignore": true },
+   "ar_barcode_detection_symbology_msi_plessey": { "ignore": true },
+   "ar_barcode_detection_symbology_pdf417": { "ignore": true },
+   "ar_barcode_detection_symbology_qr": { "ignore": true },
+   "ar_barcode_detection_symbology_upce": { "ignore": true },
+   "ar_camera_position_left": { "ignore": true },
+   "ar_camera_position_right": { "ignore": true },
+   "ar_camera_type_main": { "ignore": true },
+   "ar_camera_rectification_type_mono": { "ignore": true },
+   "ar_camera_rectification_type_stereo_corrected": { "ignore": true },
+   "ar_camera_region_error_code_add_anchor_failed": { "ignore": true },
+   "ar_camera_region_error_code_anchor_max_limit_reached": { "ignore": true },
+   "ar_camera_region_error_code_remove_anchor_failed": { "ignore": true },
+   "ar_camera_region_stabilization": { "ignore": true },
+   "ar_camera_region_contrast_and_vibrancy": { "ignore": true },
+   "ar_hand_skeleton_joint_name_wrist": { "ignore": true },
+   "ar_hand_skeleton_joint_name_thumb_knuckle": { "ignore": true },
+   "ar_hand_skeleton_joint_name_thumb_intermediate_base": { "ignore": true },
+   "ar_hand_skeleton_joint_name_thumb_intermediate_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_thumb_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_index_finger_metacarpal": { "ignore": true },
+   "ar_hand_skeleton_joint_name_index_finger_knuckle": { "ignore": true },
+   "ar_hand_skeleton_joint_name_index_finger_intermediate_base": { "ignore": true },
+   "ar_hand_skeleton_joint_name_index_finger_intermediate_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_index_finger_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_middle_finger_metacarpal": { "ignore": true },
+   "ar_hand_skeleton_joint_name_middle_finger_knuckle": { "ignore": true },
+   "ar_hand_skeleton_joint_name_middle_finger_intermediate_base": { "ignore": true },
+   "ar_hand_skeleton_joint_name_middle_finger_intermediate_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_middle_finger_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_ring_finger_metacarpal": { "ignore": true },
+   "ar_hand_skeleton_joint_name_ring_finger_knuckle": { "ignore": true },
+   "ar_hand_skeleton_joint_name_ring_finger_intermediate_base": { "ignore": true },
+   "ar_hand_skeleton_joint_name_ring_finger_intermediate_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_ring_finger_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_little_finger_metacarpal": { "ignore": true },
+   "ar_hand_skeleton_joint_name_little_finger_knuckle": { "ignore": true },
+   "ar_hand_skeleton_joint_name_little_finger_intermediate_base": { "ignore": true },
+   "ar_hand_skeleton_joint_name_little_finger_intermediate_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_little_finger_tip": { "ignore": true },
+   "ar_hand_skeleton_joint_name_forearm_wrist": { "ignore": true },
+   "ar_hand_skeleton_joint_name_forearm_arm": { "ignore": true },
+   "ar_hand_anchor_query_status_success": { "ignore": true },
+   "ar_hand_anchor_query_status_failure": { "ignore": true },
+   "ar_hand_chirality_right": { "ignore": true },
+   "ar_hand_chirality_left": { "ignore": true },
+   "ar_hand_fidelity_nominal": { "ignore": true },
+   "ar_hand_fidelity_high": { "ignore": true },
+   "ar_world_tracking_error_code_add_anchor_failed": { "ignore": true },
+   "ar_world_tracking_error_code_anchor_max_limit_reached": { "ignore": true },
+   "ar_world_tracking_error_code_remove_anchor_failed": { "ignore": true },
+   "ar_world_anchor_sharing_availability_available": { "ignore": true },
+   "ar_world_anchor_sharing_availability_unavailable": { "ignore": true },
+   "ar_plane_alignment_none": { "ignore": true },
+   "ar_plane_alignment_horizontal": { "ignore": true },
+   "ar_plane_alignment_vertical": { "ignore": true },
+   "ar_plane_alignment_slanted": { "ignore": true },
+   "ar_plane_classification_status_not_available": { "ignore": true },
+   "ar_plane_classification_status_undetermined": { "ignore": true },
+   "ar_plane_classification_status_unknown": { "ignore": true },
+   "ar_plane_classification_wall": { "ignore": true },
+   "ar_plane_classification_floor": { "ignore": true },
+   "ar_plane_classification_ceiling": { "ignore": true },
+   "ar_plane_classification_table": { "ignore": true },
+   "ar_plane_classification_seat": { "ignore": true },
+   "ar_plane_classification_window": { "ignore": true },
+   "ar_plane_classification_door": { "ignore": true },
+   "ar_geometry_primitive_type_line": { "ignore": true },
+   "ar_geometry_primitive_type_triangle": { "ignore": true },
+   "ar_mesh_classification_none": { "ignore": true },
+   "ar_mesh_classification_wall": { "ignore": true },
+   "ar_mesh_classification_floor": { "ignore": true },
+   "ar_mesh_classification_ceiling": { "ignore": true },
+   "ar_mesh_classification_table": { "ignore": true },
+   "ar_mesh_classification_seat": { "ignore": true },
+   "ar_mesh_classification_window": { "ignore": true },
+   "ar_mesh_classification_door": { "ignore": true },
+   "ar_mesh_classification_stairs": { "ignore": true },
+   "ar_mesh_classification_bed": { "ignore": true },
+   "ar_mesh_classification_cabinet": { "ignore": true },
+   "ar_mesh_classification_home_appliance": { "ignore": true },
+   "ar_mesh_classification_tv": { "ignore": true },
+   "ar_mesh_classification_plant": { "ignore": true },
+   "ar_surface_classification_none": { "ignore": true },
+   "ar_surface_classification_wall": { "ignore": true },
+   "ar_surface_classification_floor": { "ignore": true },
+   "ar_surface_classification_ceiling": { "ignore": true },
+   "ar_surface_classification_table": { "ignore": true },
+   "ar_surface_classification_seat": { "ignore": true },
+   "ar_surface_classification_window": { "ignore": true },
+   "ar_surface_classification_door": { "ignore": true },
+   "ar_surface_classification_stairs": { "ignore": true },
+   "ar_surface_classification_bed": { "ignore": true },
+   "ar_surface_classification_cabinet": { "ignore": true },
+   "ar_surface_classification_home_appliance": { "ignore": true },
+   "ar_surface_classification_tv": { "ignore": true },
+   "ar_surface_classification_plant": { "ignore": true },
+   "ar_scene_reconstruction_mode_default": { "ignore": true },
+   "ar_scene_reconstruction_mode_classification": { "ignore": true },
+   "ar_transform_correction_none": { "ignore": true },
+   "ar_transform_correction_rendered": { "ignore": true }
+  },
+  "externs": {
+   "ar_accessory_location_name_grip_surface": { "ignore": true },
+   "ar_accessory_location_name_grip": { "ignore": true },
+   "ar_accessory_location_name_aim": { "ignore": true }
+  },
   "functions": {
-   "ar_accessory_anchor_get_anchor_from_location_transform_with_correction": {
-    "args": {
-     "1": { "type_modifier": "n", "c_array_delimited_by_null": true, "type_override": "^t" }
-    }
-   },
+   "ar_accessory_is_equal_to_accessory": { "ignore": true },
+   "ar_accessory_get_identifier": { "ignore": true },
+   "ar_accessory_get_inherent_chirality": { "ignore": true },
+   "ar_accessory_get_name": { "ignore": true },
+   "ar_accessory_copy_location_names": { "ignore": true },
+   "ar_accessory_get_usdz_file_path": { "ignore": true },
+   "ar_accessory_load_from_device": { "ignore": true },
+   "ar_accessory_load_from_device_f": { "ignore": true },
+   "ar_accessory_get_source_type": { "ignore": true },
+   "ar_accessory_get_source_device": { "ignore": true },
+   "ar_accessories_create": { "ignore": true },
+   "ar_accessories_add_accessory": { "ignore": true },
+   "ar_accessories_add_accessories": { "ignore": true },
+   "ar_accessories_remove_accessory": { "ignore": true },
+   "ar_accessories_remove_accessories": { "ignore": true },
+   "ar_accessories_get_count": { "ignore": true },
+   "ar_accessories_enumerate_accessories": { "ignore": true },
+   "ar_accessories_enumerate_accessories_f": { "ignore": true },
+   "ar_accessory_anchor_create": { "ignore": true },
+   "ar_accessory_anchor_is_equal_to_accessory_anchor": { "ignore": true },
+   "ar_accessory_anchor_get_accessory": { "ignore": true },
+   "ar_accessory_anchor_get_tracking_state": { "ignore": true },
+   "ar_accessory_anchor_is_held": { "ignore": true },
+   "ar_accessory_anchor_get_held_chirality": { "ignore": true },
+   "ar_accessory_anchor_get_velocity": { "ignore": true },
+   "ar_accessory_anchor_get_angular_velocity": { "ignore": true },
+   "ar_accessory_anchor_get_identifier": { "ignore": true },
+   "ar_accessory_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_accessory_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_accessory_anchor_get_anchor_from_location_transform_with_correction": { "ignore": true },
+   "ar_accessory_anchor_get_timestamp": { "ignore": true },
+   "ar_accessory_anchor_is_tracked": { "ignore": true },
+   "ar_accessory_anchors_get_count": { "ignore": true },
+   "ar_accessory_anchors_enumerate_anchors": { "ignore": true },
+   "ar_accessory_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_accessory_tracking_configuration_create": { "ignore": true },
+   "ar_accessory_tracking_configuration_set_accessories": { "ignore": true },
+   "ar_accessory_tracking_provider_create": { "ignore": true },
+   "ar_accessory_tracking_provider_set_update_handler": { "ignore": true },
+   "ar_accessory_tracking_provider_update_accessories": { "ignore": true },
+   "ar_accessory_tracking_provider_set_update_handler_f": { "ignore": true },
+   "ar_accessory_tracking_provider_update_accessories_f": { "ignore": true },
+   "ar_accessory_tracking_provider_is_supported": { "ignore": true },
+   "ar_accessory_tracking_provider_get_required_authorization_type": { "ignore": true },
+   "ar_accessory_tracking_provider_get_latest_anchors": { "ignore": true },
+   "ar_accessory_tracking_provider_predict_anchor_at_timestamp": { "ignore": true },
+   "ar_barcode_anchor_get_symbology": { "ignore": true },
+   "ar_barcode_anchor_get_payload_string_value": { "ignore": true },
+   "ar_barcode_anchor_copy_payload_data": { "ignore": true },
+   "ar_barcode_anchor_get_extent": { "ignore": true },
+   "ar_barcode_anchor_get_identifier": { "ignore": true },
+   "ar_barcode_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_barcode_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_barcode_anchor_get_timestamp": { "ignore": true },
+   "ar_barcode_anchors_get_count": { "ignore": true },
+   "ar_barcode_anchors_enumerate_anchors": { "ignore": true },
+   "ar_barcode_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_barcode_detection_configuration_create": { "ignore": true },
+   "ar_barcode_detection_configuration_set_detection_symbology": { "ignore": true },
+   "ar_barcode_detection_provider_create": { "ignore": true },
+   "ar_barcode_detection_provider_is_supported": { "ignore": true },
+   "ar_barcode_detection_provider_set_update_handler": { "ignore": true },
+   "ar_barcode_detection_provider_set_update_handler_f": { "ignore": true },
+   "ar_barcode_detection_provider_get_required_authorization_type": { "ignore": true },
+   "ar_camera_video_format_is_equal_to_camera_video_format": { "ignore": true },
+   "ar_camera_video_format_get_minimum_frame_duration": { "ignore": true },
+   "ar_camera_video_format_get_maximum_frame_duration": { "ignore": true },
+   "ar_camera_video_format_get_frame_size": { "ignore": true },
+   "ar_camera_video_format_get_pixel_format": { "ignore": true },
+   "ar_camera_video_format_get_camera_type": { "ignore": true },
+   "ar_camera_video_format_get_camera_position": { "ignore": true },
+   "ar_camera_video_format_get_camera_rectification_type": { "ignore": true },
+   "ar_camera_video_format_copy_supported_video_formats": { "ignore": true },
+   "ar_camera_video_formats_get_count": { "ignore": true },
+   "ar_camera_video_formats_enumerate_video_formats": { "ignore": true },
+   "ar_camera_video_formats_enumerate_video_formats_f": { "ignore": true },
+   "ar_camera_frame_is_equal_to_camera_frame": { "ignore": true },
+   "ar_camera_frame_get_frame_sample": { "ignore": true },
+   "ar_camera_frame_get_primary_frame_sample": { "ignore": true },
+   "ar_camera_frame_get_frame_samples": { "ignore": true },
+   "ar_camera_frame_samples_enumerate_frame_samples": { "ignore": true },
+   "ar_camera_frame_samples_enumerate_frame_samples_f": { "ignore": true },
+   "ar_camera_frame_samples_get_count": { "ignore": true },
+   "ar_camera_frame_sample_is_equal_to_camera_frame_sample": { "ignore": true },
+   "ar_camera_frame_sample_get_pixel_buffer": { "ignore": true },
+   "ar_camera_frame_sample_get_camera_frame_parameters": { "ignore": true },
+   "ar_camera_frame_parameters_is_equal_to_camera_frame_parameters": { "ignore": true },
+   "ar_camera_frame_parameters_get_intrinsics": { "ignore": true },
+   "ar_camera_frame_parameters_get_extrinsics": { "ignore": true },
+   "ar_camera_frame_parameters_get_capture_timestamp": { "ignore": true },
+   "ar_camera_frame_parameters_get_mid_exposure_timestamp": { "ignore": true },
+   "ar_camera_frame_parameters_get_color_temperature": { "ignore": true },
+   "ar_camera_frame_parameters_get_exposure_duration": { "ignore": true },
+   "ar_camera_frame_parameters_get_camera_type": { "ignore": true },
+   "ar_camera_frame_parameters_get_camera_position": { "ignore": true },
+   "ar_camera_frame_provider_create": { "ignore": true },
+   "ar_camera_frame_provider_set_update_handler": { "ignore": true },
+   "ar_camera_frame_provider_set_update_handler_f": { "ignore": true },
+   "ar_camera_frame_provider_is_supported": { "ignore": true },
+   "ar_camera_frame_provider_get_required_authorization_type": { "ignore": true },
+   "ar_camera_region_anchor_is_equal_to_camera_region_anchor": { "ignore": true },
+   "ar_camera_region_anchor_create_with_parameters": { "ignore": true },
+   "ar_camera_region_anchor_get_width": { "ignore": true },
+   "ar_camera_region_anchor_get_height": { "ignore": true },
+   "ar_camera_region_anchor_get_camera_enhancement": { "ignore": true },
+   "ar_camera_region_anchor_get_pixel_buffer": { "ignore": true },
+   "ar_camera_region_anchor_get_identifier": { "ignore": true },
+   "ar_camera_region_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_camera_region_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_camera_region_anchor_get_timestamp": { "ignore": true },
+   "ar_camera_region_anchors_get_count": { "ignore": true },
+   "ar_camera_region_anchors_enumerate_anchors": { "ignore": true },
+   "ar_camera_region_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_camera_region_configuration_create": { "ignore": true },
+   "ar_camera_region_provider_create": { "ignore": true },
+   "ar_camera_region_provider_is_supported": { "ignore": true },
+   "ar_camera_region_provider_get_required_authorization_type": { "ignore": true },
+   "ar_camera_region_provider_set_update_handler_for_anchor_with_identifier": { "ignore": true },
+   "ar_camera_region_provider_set_update_handler_for_anchor_with_identifier_f": { "ignore": true },
+   "ar_camera_region_provider_add_camera_region_anchor": { "ignore": true },
+   "ar_camera_region_provider_add_camera_region_anchor_f": { "ignore": true },
+   "ar_camera_region_provider_remove_camera_region_anchor": { "ignore": true },
+   "ar_camera_region_provider_remove_camera_region_anchor_with_identifier": { "ignore": true },
+   "ar_camera_region_provider_remove_camera_region_anchor_f": { "ignore": true },
+   "ar_camera_region_provider_remove_camera_region_anchor_with_identifier_f": { "ignore": true },
+   "ar_environment_probe_anchor_is_equal_to_environment_probe_anchor": { "ignore": true },
+   "ar_environment_probe_anchor_get_environment_texture": { "ignore": true },
+   "ar_environment_probe_anchor_get_camera_scale_reference": { "ignore": true },
+   "ar_environment_probe_anchor_get_identifier": { "ignore": true },
+   "ar_environment_probe_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_environment_probe_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_environment_probe_anchor_get_timestamp": { "ignore": true },
+   "ar_environment_probe_anchors_get_count": { "ignore": true },
+   "ar_environment_probe_anchors_enumerate_anchors": { "ignore": true },
+   "ar_environment_probe_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_environment_light_estimation_configuration_create": { "ignore": true },
+   "ar_environment_light_estimation_provider_create": { "ignore": true },
+   "ar_environment_light_estimation_provider_is_supported": { "ignore": true },
+   "ar_environment_light_estimation_provider_set_update_handler": { "ignore": true },
+   "ar_environment_light_estimation_provider_set_update_handler_f": { "ignore": true },
+   "ar_environment_light_estimation_provider_get_required_authorization_type": { "ignore": true },
+   "ar_hand_skeleton_create": { "ignore": true },
+   "ar_hand_skeleton_is_equal_to_hand_skeleton": { "ignore": true },
+   "ar_hand_skeleton_get_joint_named": { "ignore": true },
+   "ar_hand_skeleton_get_joint_count": { "ignore": true },
+   "ar_hand_skeleton_enumerate_joints": { "ignore": true },
+   "ar_hand_skeleton_enumerate_joints_f": { "ignore": true },
+   "ar_hand_anchor_create": { "ignore": true },
+   "ar_hand_anchor_is_equal_to_hand_anchor": { "ignore": true },
+   "ar_hand_anchor_get_hand_skeleton": { "ignore": true },
+   "ar_hand_anchor_get_chirality": { "ignore": true },
+   "ar_hand_anchor_get_fidelity": { "ignore": true },
+   "ar_hand_anchor_get_identifier": { "ignore": true },
+   "ar_hand_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_hand_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_hand_anchor_get_timestamp": { "ignore": true },
+   "ar_hand_anchor_is_tracked": { "ignore": true },
+   "ar_hand_tracking_configuration_create": { "ignore": true },
+   "ar_hand_tracking_provider_create": { "ignore": true },
+   "ar_hand_tracking_provider_set_update_handler": { "ignore": true },
+   "ar_hand_tracking_provider_set_update_handler_f": { "ignore": true },
+   "ar_hand_tracking_provider_get_latest_anchors": { "ignore": true },
+   "ar_hand_tracking_provider_query_anchors_at_timestamp": { "ignore": true },
+   "ar_hand_tracking_provider_get_required_authorization_type": { "ignore": true },
+   "ar_data_get_bytes": { "ignore": true },
+   "ar_data_get_length": { "ignore": true },
+   "ar_session_create": { "ignore": true },
+   "ar_session_set_authorization_update_handler": { "ignore": true },
+   "ar_session_set_authorization_update_handler_f": { "ignore": true },
+   "ar_session_query_authorization_results": { "ignore": true },
+   "ar_session_request_authorization": { "ignore": true },
+   "ar_session_request_authorization_f": { "ignore": true },
+   "ar_skeleton_joint_is_equal_to_skeleton_joint": { "ignore": true },
+   "ar_skeleton_joint_get_index": { "ignore": true },
+   "ar_skeleton_joint_get_parent": { "ignore": true },
+   "ar_skeleton_joint_get_parent_from_joint_transform": { "ignore": true },
+   "ar_skeleton_joint_get_parent_from_joint_transform_with_correction": { "ignore": true },
+   "ar_skeleton_joint_get_anchor_from_joint_transform": { "ignore": true },
+   "ar_skeleton_joint_get_anchor_from_joint_transform_with_correction": { "ignore": true },
+   "ar_skeleton_joint_is_tracked": { "ignore": true },
+   "ar_world_anchor_is_equal_to_world_anchor": { "ignore": true },
+   "ar_world_anchor_create_with_origin_from_anchor_transform": { "ignore": true },
+   "ar_world_anchor_get_identifier": { "ignore": true },
+   "ar_world_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_world_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_world_anchor_get_timestamp": { "ignore": true },
+   "ar_world_anchor_is_tracked": { "ignore": true },
+   "ar_world_anchors_get_count": { "ignore": true },
+   "ar_world_anchors_enumerate_anchors": { "ignore": true },
+   "ar_world_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_world_tracking_provider_copy_all_world_anchors": { "ignore": true },
+   "ar_world_tracking_provider_copy_all_world_anchors_f": { "ignore": true },
+   "ar_world_tracking_provider_set_anchor_update_handler": { "ignore": true },
+   "ar_world_tracking_provider_set_anchor_update_handler_f": { "ignore": true },
+   "ar_world_tracking_provider_add_anchor": { "ignore": true },
+   "ar_world_tracking_provider_add_anchor_f": { "ignore": true },
+   "ar_world_tracking_provider_remove_anchor": { "ignore": true },
+   "ar_world_tracking_provider_remove_anchor_with_identifier": { "ignore": true },
+   "ar_world_tracking_provider_remove_anchor_f": { "ignore": true },
+   "ar_world_tracking_provider_remove_anchor_with_identifier_f": { "ignore": true },
+   "ar_world_tracking_provider_remove_all_anchors": { "ignore": true },
+   "ar_world_tracking_provider_remove_all_anchors_f": { "ignore": true },
+   "ar_world_anchor_shared_with_nearby_participants_create": { "ignore": true },
+   "ar_world_anchor_is_shared_with_nearby_participants": { "ignore": true },
+   "ar_world_tracking_provider_set_world_anchor_sharing_availability_update_handler": { "ignore": true },
+   "ar_world_tracking_provider_set_world_anchor_sharing_availability_update_handler_f": { "ignore": true },
+   "ar_identifiers_is_equal_to_identifiers": { "ignore": true },
+   "ar_identifiers_get_count": { "ignore": true },
+   "ar_identifiers_enumerate_identifiers": { "ignore": true },
+   "ar_identifiers_enumerate_identifiers_f": { "ignore": true },
+   "ar_image_anchor_is_equal_to_image_anchor": { "ignore": true },
+   "ar_image_anchor_get_estimated_scale_factor": { "ignore": true },
+   "ar_image_anchor_get_reference_image": { "ignore": true },
+   "ar_image_anchor_get_identifier": { "ignore": true },
+   "ar_image_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_image_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_image_anchor_get_timestamp": { "ignore": true },
+   "ar_image_anchor_is_tracked": { "ignore": true },
+   "ar_image_anchors_get_count": { "ignore": true },
+   "ar_image_anchors_enumerate_anchors": { "ignore": true },
+   "ar_image_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_reference_image_create_from_pixel_buffer": { "ignore": true },
+   "ar_reference_image_create_from_cgimage": { "ignore": true },
+   "ar_reference_image_is_equal_to_reference_image": { "ignore": true },
+   "ar_reference_image_set_name": { "ignore": true },
+   "ar_reference_image_get_name": { "ignore": true },
+   "ar_reference_image_get_resource_group_name": { "ignore": true },
+   "ar_reference_image_get_physical_width": { "ignore": true },
+   "ar_reference_image_get_physical_height": { "ignore": true },
+   "ar_reference_images_create": { "ignore": true },
+   "ar_reference_images_load_reference_images_in_group": { "ignore": true },
+   "ar_reference_images_add_image": { "ignore": true },
+   "ar_reference_images_add_images": { "ignore": true },
+   "ar_reference_images_get_count": { "ignore": true },
+   "ar_reference_images_enumerate_images": { "ignore": true },
+   "ar_reference_images_enumerate_images_f": { "ignore": true },
+   "ar_image_tracking_configuration_create": { "ignore": true },
+   "ar_image_tracking_configuration_add_reference_images": { "ignore": true },
+   "ar_image_tracking_provider_create": { "ignore": true },
+   "ar_image_tracking_provider_set_update_handler": { "ignore": true },
+   "ar_image_tracking_provider_set_update_handler_f": { "ignore": true },
+   "ar_image_tracking_provider_copy_all_image_anchors": { "ignore": true },
+   "ar_image_tracking_provider_is_supported": { "ignore": true },
+   "ar_image_tracking_provider_get_required_authorization_type": { "ignore": true },
+   "ar_object_axis_aligned_bounding_box_is_equal_to_bounding_box": { "ignore": true },
+   "ar_object_axis_aligned_bounding_box_get_min": { "ignore": true },
+   "ar_object_axis_aligned_bounding_box_get_max": { "ignore": true },
+   "ar_object_axis_aligned_bounding_box_get_center": { "ignore": true },
+   "ar_object_axis_aligned_bounding_box_get_extent": { "ignore": true },
+   "ar_object_anchor_is_equal_to_object_anchor": { "ignore": true },
+   "ar_object_anchor_get_bounding_box": { "ignore": true },
+   "ar_object_anchor_get_reference_object": { "ignore": true },
+   "ar_object_anchors_get_count": { "ignore": true },
+   "ar_object_anchor_get_identifier": { "ignore": true },
+   "ar_object_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_object_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_object_anchor_get_timestamp": { "ignore": true },
+   "ar_object_anchor_is_tracked": { "ignore": true },
+   "ar_object_anchors_enumerate_anchors": { "ignore": true },
+   "ar_object_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_reference_object_is_equal_to_reference_object": { "ignore": true },
+   "ar_reference_object_get_identifier": { "ignore": true },
+   "ar_reference_object_get_input_file_path": { "ignore": true },
+   "ar_reference_object_get_usdz_file_path": { "ignore": true },
+   "ar_reference_object_get_name": { "ignore": true },
+   "ar_reference_object_configuration_create": { "ignore": true },
+   "ar_reference_object_configuration_is_equal_to_reference_object_configuration": { "ignore": true },
+   "ar_reference_object_configuration_enable_high_frame_rate_tracking": { "ignore": true },
+   "ar_reference_object_configuration_is_high_frame_rate_tracking_enabled": { "ignore": true },
+   "ar_reference_object_load_from_url": { "ignore": true },
+   "ar_reference_object_load_from_url_with_configuration": { "ignore": true },
+   "ar_reference_object_load_from_url_f": { "ignore": true },
+   "ar_reference_object_load_from_url_with_configuration_f": { "ignore": true },
+   "ar_reference_object_load_with_name": { "ignore": true },
+   "ar_reference_object_load_with_name_and_configuration": { "ignore": true },
+   "ar_reference_object_load_with_name_f": { "ignore": true },
+   "ar_reference_object_load_with_name_and_configuration_f": { "ignore": true },
+   "ar_reference_objects_create": { "ignore": true },
+   "ar_reference_objects_add_object": { "ignore": true },
+   "ar_reference_objects_add_objects": { "ignore": true },
+   "ar_reference_objects_get_count": { "ignore": true },
+   "ar_reference_objects_enumerate_objects": { "ignore": true },
+   "ar_reference_objects_enumerate_objects_f": { "ignore": true },
+   "ar_object_tracking_configuration_create": { "ignore": true },
+   "ar_object_tracking_configuration_add_reference_objects": { "ignore": true },
+   "ar_object_tracking_configuration_set_maximum_trackable_instances": { "ignore": true },
+   "ar_object_tracking_configuration_get_maximum_trackable_instances": { "ignore": true },
+   "ar_object_tracking_configuration_set_maximum_instances_per_reference_object": { "ignore": true },
+   "ar_object_tracking_configuration_get_maximum_instances_per_reference_object": { "ignore": true },
+   "ar_object_tracking_configuration_set_detection_rate": { "ignore": true },
+   "ar_object_tracking_configuration_get_detection_rate": { "ignore": true },
+   "ar_object_tracking_configuration_set_stationary_object_tracking_rate": { "ignore": true },
+   "ar_object_tracking_configuration_get_stationary_object_tracking_rate": { "ignore": true },
+   "ar_object_tracking_configuration_set_moving_object_tracking_rate": { "ignore": true },
+   "ar_object_tracking_configuration_get_moving_object_tracking_rate": { "ignore": true },
+   "ar_object_tracking_provider_create": { "ignore": true },
+   "ar_object_tracking_provider_set_update_handler": { "ignore": true },
+   "ar_object_tracking_provider_set_update_handler_f": { "ignore": true },
+   "ar_object_tracking_provider_copy_all_object_anchors": { "ignore": true },
+   "ar_object_tracking_provider_is_supported": { "ignore": true },
+   "ar_object_tracking_provider_get_required_authorization_type": { "ignore": true },
+   "ar_plane_detection_configuration_create": { "ignore": true },
+   "ar_plane_detection_configuration_set_alignment": { "ignore": true },
+   "ar_plane_anchor_is_equal_to_plane_anchor": { "ignore": true },
+   "ar_plane_anchor_get_alignment": { "ignore": true },
+   "ar_plane_anchor_get_geometry": { "ignore": true },
+   "ar_plane_anchor_get_plane_classification": { "ignore": true },
+   "ar_plane_anchor_get_surface_classification": { "ignore": true },
+   "ar_plane_anchor_get_identifier": { "ignore": true },
+   "ar_plane_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_plane_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_plane_anchor_get_timestamp": { "ignore": true },
+   "ar_plane_geometry_is_equal_to_plane_geometry": { "ignore": true },
+   "ar_plane_geometry_get_mesh_vertices": { "ignore": true },
+   "ar_plane_geometry_get_mesh_faces": { "ignore": true },
+   "ar_plane_geometry_get_plane_extent": { "ignore": true },
+   "ar_plane_extent_is_equal_to_plane_extent": { "ignore": true },
+   "ar_plane_extent_get_width": { "ignore": true },
+   "ar_plane_extent_get_height": { "ignore": true },
+   "ar_plane_extent_get_plane_anchor_from_plane_extent_transform": { "ignore": true },
+   "ar_plane_anchors_get_count": { "ignore": true },
+   "ar_plane_anchors_enumerate_anchors": { "ignore": true },
+   "ar_plane_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_plane_detection_provider_create": { "ignore": true },
+   "ar_plane_detection_provider_set_update_handler": { "ignore": true },
+   "ar_plane_detection_provider_set_update_handler_f": { "ignore": true },
+   "ar_plane_detection_provider_copy_all_plane_anchors": { "ignore": true },
+   "ar_plane_detection_provider_is_supported": { "ignore": true },
+   "ar_plane_detection_provider_get_required_authorization_type": { "ignore": true },
+   "ar_room_anchor_is_equal_to_room_anchor": { "ignore": true },
+   "ar_room_anchor_get_geometry": { "ignore": true },
+   "ar_room_anchor_get_mesh_geometries_for_classification": { "ignore": true },
+   "ar_room_anchor_get_mesh_geometries_for_surface_classification": { "ignore": true },
+   "ar_room_anchor_contains_point": { "ignore": true },
+   "ar_room_anchor_get_identifier": { "ignore": true },
+   "ar_room_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_room_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_room_anchor_get_timestamp": { "ignore": true },
+   "ar_room_anchors_get_count": { "ignore": true },
+   "ar_room_anchors_enumerate_anchors": { "ignore": true },
+   "ar_room_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_room_tracking_configuration_create": { "ignore": true },
+   "ar_room_tracking_provider_create": { "ignore": true },
+   "ar_room_tracking_provider_set_update_handler": { "ignore": true },
+   "ar_room_tracking_provider_set_update_handler_f": { "ignore": true },
+   "ar_room_tracking_provider_copy_current_room_anchor": { "ignore": true },
+   "ar_room_tracking_provider_copy_all_room_anchors": { "ignore": true },
+   "ar_room_anchor_get_plane_anchor_identifiers": { "ignore": true },
+   "ar_room_anchor_get_mesh_anchor_identifiers": { "ignore": true },
+   "ar_room_tracking_provider_is_supported": { "ignore": true },
+   "ar_room_tracking_provider_get_required_authorization_type": { "ignore": true },
+   "ar_geometry_element_is_equal_to_geometry_element": { "ignore": true },
+   "ar_geometry_element_get_buffer": { "ignore": true },
+   "ar_geometry_element_get_count": { "ignore": true },
+   "ar_geometry_element_get_bytes_per_index": { "ignore": true },
+   "ar_geometry_element_get_index_count_per_primitive": { "ignore": true },
+   "ar_geometry_element_get_primitive_type": { "ignore": true },
+   "ar_geometry_source_is_equal_to_geometry_source": { "ignore": true },
+   "ar_geometry_source_get_buffer": { "ignore": true },
+   "ar_geometry_source_get_count": { "ignore": true },
+   "ar_geometry_source_get_format": { "ignore": true },
+   "ar_geometry_source_get_components_per_vector": { "ignore": true },
+   "ar_geometry_source_get_offset": { "ignore": true },
+   "ar_geometry_source_get_stride": { "ignore": true },
+   "ar_mesh_geometry_is_equal_to_mesh_geometry": { "ignore": true },
+   "ar_mesh_geometry_get_vertices": { "ignore": true },
+   "ar_mesh_geometry_get_normals": { "ignore": true },
+   "ar_mesh_geometry_get_faces": { "ignore": true },
+   "ar_mesh_geometry_get_classification": { "ignore": true },
+   "ar_mesh_geometries_get_count": { "ignore": true },
+   "ar_mesh_geometries_enumerate_geometries": { "ignore": true },
+   "ar_mesh_geometries_enumerate_geometries_f": { "ignore": true },
+   "ar_mesh_anchor_is_equal_to_mesh_anchor": { "ignore": true },
+   "ar_mesh_anchor_get_geometry": { "ignore": true },
+   "ar_mesh_anchor_get_identifier": { "ignore": true },
+   "ar_mesh_anchor_get_origin_from_anchor_transform": { "ignore": true },
+   "ar_mesh_anchor_get_origin_from_anchor_transform_with_correction": { "ignore": true },
+   "ar_mesh_anchor_get_timestamp": { "ignore": true },
+   "ar_mesh_anchors_get_count": { "ignore": true },
+   "ar_mesh_anchors_enumerate_anchors": { "ignore": true },
+   "ar_mesh_anchors_enumerate_anchors_f": { "ignore": true },
+   "ar_scene_reconstruction_configuration_create": { "ignore": true },
+   "ar_scene_reconstruction_configuration_get_scene_reconstruction_mode": { "ignore": true },
+   "ar_scene_reconstruction_configuration_set_scene_reconstruction_mode": { "ignore": true },
+   "ar_scene_reconstruction_provider_create": { "ignore": true },
+   "ar_scene_reconstruction_provider_set_update_handler": { "ignore": true },
+   "ar_scene_reconstruction_provider_set_update_handler_f": { "ignore": true },
+   "ar_scene_reconstruction_provider_copy_all_mesh_anchors": { "ignore": true },
+   "ar_scene_reconstruction_provider_is_supported": { "ignore": true },
+   "ar_scene_reconstruction_provider_get_required_authorization_type": { "ignore": true },
+   "ar_coordinate_space_data_copy_recipient_identifers": { "ignore": true },
+   "ar_coordinate_space_data_copy_recipient_identifiers": { "ignore": true },
+   "ar_coordinate_space_data_create_from_cfdata": { "ignore": true },
+   "ar_coordinate_space_data_copy_cfdata": { "ignore": true },
+   "ar_shared_coordinate_space_configuration_create": { "ignore": true },
+   "ar_shared_coordinate_space_provider_create": { "ignore": true },
+   "ar_shared_coordinate_space_provider_get_participant_identifier": { "ignore": true },
+   "ar_shared_coordinate_space_provider_is_sharing_enabled": { "ignore": true },
+   "ar_shared_coordinate_space_provider_push_data": { "ignore": true },
+   "ar_shared_coordinate_space_provider_is_supported": { "ignore": true },
+   "ar_shared_coordinate_space_provider_copy_next_coordinate_space_data": { "ignore": true },
+   "ar_shared_coordinate_space_provider_set_connected_participants_update_handler": { "ignore": true },
+   "ar_shared_coordinate_space_provider_set_connected_participants_update_handler_f": { "ignore": true },
+   "ar_shared_coordinate_space_provider_set_sharing_status_update_handler": { "ignore": true },
+   "ar_shared_coordinate_space_provider_set_sharing_status_update_handler_f": { "ignore": true },
+   "ar_shared_coordinate_space_provider_get_required_authorization_type": { "ignore": true },
+   "ar_viewpoint_properties_create": { "ignore": true },
+   "ar_viewpoint_properties_get_device_from_left_viewpoint_transform": { "ignore": true },
+   "ar_viewpoint_properties_get_device_from_right_viewpoint_transform": { "ignore": true },
+   "ar_stereo_properties_configuration_create": { "ignore": true },
+   "ar_stereo_properties_provider_create": { "ignore": true },
+   "ar_stereo_properties_provider_is_supported": { "ignore": true },
+   "ar_stereo_properties_provider_get_required_authorization_type": { "ignore": true },
+   "ar_stereo_properties_provider_get_viewpoint_properties": { "ignore": true },
+   "ar_strings_get_count": { "ignore": true },
+   "ar_strings_enumerate_strings": { "ignore": true },
+   "ar_strings_enumerate_strings_f": { "ignore": true },
    "ar_anchor_get_identifier": {
     "args": {
      "1": { "type_modifier": "o", "c_array_of_fixed_length": 16}
@@ -25,107 +601,6 @@
     }
    },
    "ar_authorization_results_enumerate_results_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_barcode_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_barcode_detection_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_camera_frame_provider_set_update_handler_f": {
-    "args": {
-     "4": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_camera_frame_samples_enumerate_frame_samples_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_camera_video_formats_enumerate_video_formats_f": {
     "args": {
      "2": {
       "callable": {
@@ -200,463 +675,6 @@
      "1": { "type_modifier": "o" }
     }
    },
-   "ar_environment_light_estimation_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_environment_probe_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_hand_anchor_get_identifier": {
-    "args": {
-     "1": { "c_array_of_fixed_length": 16, "type_modifier": "o" }
-    }
-   },
-   "ar_hand_skeleton_enumerate_joints_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_hand_tracking_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_identifiers_enumerate_identifiers_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^C"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_image_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_image_tracking_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_mesh_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_mesh_geometries_enumerate_geometries_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_object_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_object_tracking_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_plane_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_plane_detection_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_reference_image_create_from_cgimage": {
-    "retval": {  "already_retained": true },
-    "args": {
-     "0": { "type_override": "@"}
-    }
-   },
-   "ar_reference_image_create_from_pixel_buffer": {
-    "retval": {  "already_retained": true },
-    "args": {
-     "0": { "type_override": "@"}
-    }
-   },
-   "ar_reference_images_enumerate_images_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_reference_object_load_from_url_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^{__CFURL=}"
-        },
-        "2": {
-         "type": "B"
-        },
-        "3": {
-         "type": "@"
-        },
-        "4": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_reference_object_load_with_name_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^c"
-        },
-        "2": {
-         "type": "^{__CFBundle=}"
-        },
-        "3": {
-         "type": "B"
-        },
-        "4": {
-         "type": "@"
-        },
-        "5": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_reference_objects_enumerate_objects_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_room_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_room_tracking_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_scene_reconstruction_provider_set_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
    "ar_session_query_authorization_results_f": {
     "args": {
      "3": {
@@ -669,47 +687,6 @@
          "type": "@"
         },
         "2": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_session_request_authorization_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_session_set_authorization_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
          "type": "@"
         }
        },
@@ -738,163 +715,6 @@
          "type": "@"
         },
         "4": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_strings_enumerate_strings_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^c"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_anchors_enumerate_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "B"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_tracking_provider_add_anchor_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "B"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_tracking_provider_copy_all_world_anchors_f": {
-    "args": {
-     "2": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_tracking_provider_remove_anchor_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "B"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_tracking_provider_remove_anchor_with_identifier_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "B"
-        },
-        "3": {
-         "type": "@"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     }
-    }
-   },
-   "ar_world_tracking_provider_set_anchor_update_handler_f": {
-    "args": {
-     "3": {
-      "callable": {
-       "args": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "@"
-        },
-        "2": {
-         "type": "@"
-        },
-        "3": {
          "type": "@"
         }
        },
