@@ -201,6 +201,8 @@ PyAPI_FUNC(int) PyMember_SetOne(char*, struct PyMemberDef*, PyObject*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromBuffer(const Py_buffer* info)
     __attribute__((warn_unused_result));
+PyAPI_FUNC(PyObject* _Nullable) PyMemoryView_FromObject(PyObject* base)
+    __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyMethod_Function(PyObject*)
     __attribute__((warn_unused_result));
 PyAPI_FUNC(PyObject* _Nullable) PyMethod_Self(PyObject*)

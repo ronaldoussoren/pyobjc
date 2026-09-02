@@ -10,6 +10,10 @@ Version 12.2.3
   value with a +1 retain count, but PyObjC's metadata did not reflect this
   and that results in memory leaks.
 
+* Fix a reference leak when calling ``NSData.bytes()`` or
+  ``NSMutableData.mutableBytes()``. Repeatedly creating and discarding the
+  returned memory views no longer keeps the data objects alive.
+
 Version 12.2.2
 --------------
 
