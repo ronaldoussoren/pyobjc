@@ -6,8 +6,8 @@ from PyObjCTest.test_metadata_function import (
     makeVoidPArrayOf_,
 )
 
-# , return2ndPointerArray
 import objc
+import sys
 
 # XXX: Most tests for varlist are curerently in test_metadata.py, to be moved
 
@@ -41,6 +41,14 @@ class TestVarlistVarious(TestCase):
         self.assertEqual(res.__typestr__, objc._C_CHAR_AS_TEXT)
 
         self.assertIsInstance(res[0], bytes)
+
+        initial = sys.getrefcount(res)
+        for _ in range(10):
+            m = res.as_buffer(4)
+            self.assertIsInstance(m, memoryview)
+            self.assertEqual(len(m), 4)
+            del m
+        self.assertEqual(sys.getrefcount(res), initial)
 
     def test_array_of_unknown_pointer(self):
         res = returnPointerArray()

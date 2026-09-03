@@ -49,7 +49,9 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
                  < 0)) {
         return NULL; // LCOV_EXCL_LINE
     }
-    return PyMemoryView_FromBuffer(&info);
+    PyObject* result = PyMemoryView_FromBuffer(&info);
+    PyBuffer_Release(&info);
+    return result;
 }
 
 static IMP
@@ -155,7 +157,7 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
         return NULL; // LCOV_EXCL_LINE
     }
     result = PyMemoryView_FromBuffer(&info);
-
+    PyBuffer_Release(&info);
     return result;
 }
 

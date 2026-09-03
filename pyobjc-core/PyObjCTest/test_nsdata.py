@@ -1130,3 +1130,22 @@ class TestBytearrayInterface(TestBytesInterface):
 
             with self.assertRaises(IndexError):
                 py.take_bytes(-50)
+
+
+class TestRegressions(TestCase):
+    def assert_no_refleak(self, obj, method):
+        initial = sys.getrefcount(obj)
+
+        for _ in range(10):
+            view = getattr(obj, method)()
+            del view
+
+        self.assertEqual(sys.getrefcount(obj), initial)
+
+    def test_refcounts_nsdata(self):
+        data = objc.lookUpClass("NSData").dataWithData_(b"test")
+        self.assert_no_refleak(data, "bytes")
+
+    def test_refcounts_nsmutabledata(self):
+        data = objc.lookUpClass("NSMutableData").dataWithData_(b"test")
+        self.assert_no_refleak(data, "mutableBytes")

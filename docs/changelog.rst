@@ -865,6 +865,10 @@ Version 13.0a0
 
 * Fix type encoding for :class:`libdispatch.timespec`.
 
+* :issue:`689`: Fix reference leak in :meth:`Foundation.NSData.bytes`,
+  :meth:`Foundation.NSData.mutableBytes`, and
+  :meth:`objc.varlist.as_buffer`.
+
 Version 12.2.3
 --------------
 

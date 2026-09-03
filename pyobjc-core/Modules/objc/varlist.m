@@ -103,7 +103,9 @@ static PyObject* _Nullable varlist_as_buffer(PyObject* _self, PyObject* args,
         return NULL; // LCOV_EXCL_LINE
     }
 
-    return PyMemoryView_FromBuffer(&info);
+    PyObject* result = PyMemoryView_FromBuffer(&info);
+    PyBuffer_Release(&info);
+    return result;
 }
 
 static PyObject* _Nullable varlist__getitem__(PyObject* _self, Py_ssize_t idx)
