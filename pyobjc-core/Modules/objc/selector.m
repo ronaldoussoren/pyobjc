@@ -177,17 +177,6 @@ static PyObject* _Nullable sel_metadata(PyObject* self)
         // LCOV_EXCL_STOP
     }
 
-    r = PyDict_SetItemString(
-        result, "_simple_",
-        ((PyObjCSelector*)self)->sel_methinfo->shortcut_signature ? Py_True : Py_False);
-
-    if (unlikely(r == -1)) { // LCOV_BR_EXCL_LINE
-        // LCOV_EXCL_START
-        Py_DECREF(result);
-        return NULL;
-        // LCOV_EXCL_STOP
-    }
-
 #if PY_VERSION_HEX >= 0x030f00a7
     PyObject* tmp = PyFrozenDict_New(result);
     Py_CLEAR(result);

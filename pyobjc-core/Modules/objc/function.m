@@ -40,14 +40,6 @@ static PyObject* _Nullable func_metadata(PyObject* _self)
             return NULL;       // LCOV_EXCL_LINE
         }
     }
-    if (self->invoker) {
-        if (unlikely(PyDict_SetItemString( // LCOV_BR_EXCL_LINE
-                         result, "custom_invoker", Py_True)
-                     == -1)) {
-            Py_DECREF(result); // LCOV_EXCL_LINE
-            return NULL;       // LCOV_EXCL_LINE
-        }
-    }
 #if PY_VERSION_HEX >= 0x030f00a7
     PyObject* tmp = PyFrozenDict_New(result);
     Py_CLEAR(result);

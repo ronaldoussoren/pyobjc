@@ -1143,6 +1143,8 @@ def generate_call(
             "    PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);",
             file=stream,
         )
+        print("    if (methinfo == NULL) // LCOV_BR_EXCL_LINE", file=stream)
+        print("        return NULL; // LCOV_EXCL_LINE", file=stream)
         print("", file=stream)
         print("    Py_BEGIN_ALLOW_THREADS", file=stream)
         print("        @try {", file=stream)

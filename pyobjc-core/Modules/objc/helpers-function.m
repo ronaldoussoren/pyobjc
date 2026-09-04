@@ -84,6 +84,8 @@ static PyObject* _Nullable call_v3f_id(PyObject* method, PyObject* const* argume
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -117,6 +119,8 @@ static PyObject* _Nullable call_id_simd_float4x4(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -164,6 +168,8 @@ static PyObject* _Nullable call_id_simd_float4x4_f_f_q(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -203,6 +209,8 @@ static PyObject* _Nullable call_B_id_v3f(PyObject* method, PyObject* const* argu
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -236,6 +244,8 @@ static PyObject* _Nullable call_simd_float3x3_id(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -269,6 +279,8 @@ static PyObject* _Nullable call_simd_float4x4_id(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -307,6 +319,8 @@ static PyObject* _Nullable call_simd_float4x4_id_q(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -354,6 +368,8 @@ static PyObject* _Nullable call_CGPoint_v2f_CGRect_Q_Q(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -388,6 +404,8 @@ static PyObject* _Nullable call_v3f_SCNVector3(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -421,6 +439,8 @@ static PyObject* _Nullable call_SCNVector3_v3f(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -454,6 +474,8 @@ static PyObject* _Nullable call_v4f_SCNVector4(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -487,6 +509,8 @@ static PyObject* _Nullable call_SCNVector4_v4f(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -522,6 +546,8 @@ static PyObject* _Nullable call_simd_float4x4_CATransform3D(PyObject*        met
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -556,6 +582,8 @@ static PyObject* _Nullable call_CATransform3D_simd_float4x4(PyObject*        met
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -601,6 +629,8 @@ static PyObject* _Nullable call_simd_float4x4_cp_frame_C_v4f_v2f(
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -644,6 +674,8 @@ static PyObject* _Nullable call_simd_float4x4_cp_drawable_C_Q(PyObject*        m
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -678,6 +710,8 @@ static PyObject* _Nullable call_v4f_cp_view(PyObject* method, PyObject* const* a
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -727,6 +761,8 @@ static PyObject* _Nullable call_simd_float4x4_cp_frame_I_C_v4f_v2f(
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -765,6 +801,8 @@ static PyObject* _Nullable call_v_cp_drawable_v2f(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -797,6 +835,8 @@ static PyObject* _Nullable call_v2f_cp_drawable(PyObject*        method,
 
     void*                  function = PyObjCFunc_GetCallable(method);
     PyObjCMethodSignature* methinfo = PyObjCFunc_GetMethodSignature(method);
+    if (methinfo == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_BEGIN_ALLOW_THREADS
         @try {
