@@ -24,7 +24,7 @@ for more information.
    ====== ======
    Python PyObjC
    ====== ======
-   3.10   12.2.1
+   3.10   12.2.3
    3.9    11.1
    3.8    10.3
    3.7    9.2
@@ -46,6 +46,19 @@ Binary wheels will include support for x86_64 as long as it is possible to do so
 latest Apple SDK, and as long as I have access to hardware where I can test such support.  I've
 not yet determined if there will be a separate set of x86_64 wheels
 once Xcode drops support for building for x86_64.
+
+.. note::
+
+   Binary wheels for PyObjC are build using the version of Xcode that supports the latest SDK
+   whose APIs are bound by the various framework bindings.
+
+   Apple's compilers have limited support for older deployment targets, although the binaries
+   tend to work on older releases in practice.
+
+   Binary wheels for PyObjC 13 are build using the latest version Xcode 27, which offers support
+   for deployment to macOS 12 or later. Wheels claim support for older releases than that, but
+   I don't regularly test if wheels actually work on those releases.
+
 
 Objective-C Garbage Collection
 ------------------------------
