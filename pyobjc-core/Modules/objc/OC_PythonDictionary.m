@@ -368,6 +368,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
 
             result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
+            Py_CLEAR(iter);
 
         PyObjC_END_WITH_GIL
         return result;

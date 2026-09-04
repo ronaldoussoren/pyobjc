@@ -869,6 +869,9 @@ Version 13.0a0
   :meth:`Foundation.NSData.mutableBytes`, and
   :meth:`objc.varlist.as_buffer`.
 
+* Fix reference leak in the implementation of Objective-C enumeration
+  for Python mappings (excluding dicts).
+
 Version 12.2.3
 --------------
 
