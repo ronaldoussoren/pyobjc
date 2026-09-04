@@ -7,94 +7,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*
- * OC_PythonDictionaryEnumerator - Enumerator for Python dictionaries
- *
- * This class implements an NSEnumerator for proxied Python dictionaries.
- */
-PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
-    OC_PythonDictionary* value;
-    Py_ssize_t           pos;
-    BOOL                 valid;
-}
-+ (instancetype _Nullable)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
-- (id _Nullable)initWithWrappedDictionary:(OC_PythonDictionary*)value;
-- (void)dealloc;
-- (id _Nullable)nextObject;
-
-@end /* interface OC_PythonDictionaryEnumerator */
-
-@implementation OC_PythonDictionaryEnumerator
-
-+ (instancetype _Nullable)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
-{
-    return [[[self alloc] initWithWrappedDictionary:v] autorelease];
-}
-
-- (id _Nullable)initWithWrappedDictionary:(OC_PythonDictionary*)v
-{
-    self = [super init];
-    if (unlikely(self == nil)) // LCOV_BR_EXCL_LINE
-        return nil;            // LCOV_EXCL_LINE
-
-    value = [v retain];
-    valid = YES;
-    pos   = 0;
-    return self;
-}
-
-- (void)dealloc
-{
-    [value release];
-    [super dealloc];
-}
-
-- (id _Nullable)nextObject
-{
-    id        key = nil;
-    int       rv;
-    PyObject* pykey = NULL;
-
-    PyObjC_BEGIN_WITH_GIL
-        PyObject* dct = [value __pyobjc_PythonObject__];
-
-        Py_BEGIN_CRITICAL_SECTION(dct);
-
-        rv = PyDict_Next(dct, &pos, &pykey, NULL);
-        if (rv) {
-            Py_XINCREF(pykey);
-            valid = YES;
-        } else {
-            valid = NO;
-        }
-
-        Py_END_CRITICAL_SECTION();
-
-        if (!rv) {
-            key = nil;
-
-        } else if (pykey == Py_None) {
-            key = NSNull_null;
-            Py_DECREF(pykey);
-
-        } else {
-            if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
-                Py_DECREF(dct);
-                Py_DECREF(pykey);
-                PyObjC_GIL_FORWARD_EXC();
-            } // LCOV_EXCL_LINE
-            Py_DECREF(pykey);
-        }
-
-        Py_DECREF(dct);
-
-    PyObjC_END_WITH_GIL
-
-    return key;
-}
-
-@end // implementation OC_PythonDictionaryEnumerator
-
 @implementation OC_PythonDictionary
 
 + (instancetype _Nullable)dictionaryWithPythonObject:(PyObject*)v
@@ -347,8 +259,6 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
          * is not possible to invoke arbitrary methods in that state.
          */
         return nil; // LCOV_EXCL_LINE
-    } else if (PyAnyDict_CheckExact(value)) {
-        return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
         NSEnumerator* result = nil;
