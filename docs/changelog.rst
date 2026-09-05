@@ -10,6 +10,14 @@ Version 12.2.3
   value with a +1 retain count, but PyObjC's metadata did not reflect this
   and that results in memory leaks.
 
+* Fix reference leak in the implementation of Objective-C enumeration
+  for Python mappings (excluding dicts).
+
+* :issue:`688`: Fix reference leak in the implementation of
+  ``-[OC_PythonDictionary objectForKey:]``. The side effect of this
+  was leaking memory when Objective-C code looks up values in a
+  Python dictionary.
+
 Version 12.2.2
 --------------
 

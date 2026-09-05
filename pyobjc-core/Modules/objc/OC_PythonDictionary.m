@@ -207,6 +207,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
         if (likely(PyAnyDict_CheckExact(value))) {
             int r = PyDict_GetItemRef(value, k, &v);
+            Py_CLEAR(k);
             switch (r) {
             case -1:
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
@@ -218,6 +219,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
 
         } else {
             v = PyObject_GetItem(value, k);
+            Py_CLEAR(k);
             if (v == nil) {
                 if (PyErr_ExceptionMatches(PyExc_KeyError)) {
                     PyErr_Clear();
@@ -227,7 +229,6 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
         }
 
-        Py_DECREF(k);
 
         if (v == Py_None) {
             result = NSNull_null;
@@ -368,6 +369,7 @@ PyObjC_FINAL_CLASS @interface OC_PythonDictionaryEnumerator : NSEnumerator {
             } // LCOV_EXCL_LINE
 
             result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
+            Py_CLEAR(iter);
 
         PyObjC_END_WITH_GIL
         return result;
