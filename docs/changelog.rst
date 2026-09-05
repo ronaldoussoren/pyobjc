@@ -18,6 +18,13 @@ Version 12.2.3
   was leaking memory when Objective-C code looks up values in a
   Python dictionary.
 
+* issue:`690`: Fix reference count handling for selectors in
+  the "new" category.
+
+  Before this fix calling methods like ``newBufferWithLength_options_``
+  on a Metal device would leak memory due to the result object
+  having a +1 reference count that the bridge didn't account for.
+
 Version 12.2.2
 --------------
 

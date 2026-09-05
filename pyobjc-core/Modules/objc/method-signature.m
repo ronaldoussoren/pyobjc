@@ -1915,7 +1915,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_GetRegistered(Class cls, 
 }
 
 PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
-    Class cls, BOOL isClassMethod, SEL sel, const char* signature,
+    Class cls, BOOL isClassMethod __attribute__((__unused__)), SEL sel, const char* signature,
     BOOL is_native __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo;
@@ -1947,7 +1947,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
         // LCOV_EXCL_STOP
     }
 
-    if (isClassMethod) {
+    {
         const char* nm = sel_getName(sel);
         if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
             if (methinfo->rettype->tmpl) {
