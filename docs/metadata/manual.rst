@@ -253,8 +253,8 @@ Loading frameworks and other bundles
 
 .. function:: loadBundle(module_name, module_globals [, bundle_path [, bundle_identifier[, scan_classes]]])
 
-   Load the bundle specified by *bundle_path* or *bundle_identifier* and add the classes
-   in the bundle to *module_globals*. The classes are not added to the *module_globals* when
+   Load the bundle specified by *bundle_path* or *bundle_identifier* and add all classes
+   in in the process to *module_globals*. The classes are not added to the *module_globals* when
    *scan_classes* is :data:`False` (it defaults to :data:`True`).
 
    If both a *bundle_path* and *bundle_identifier* are specified the function first tries
