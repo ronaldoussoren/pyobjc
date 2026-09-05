@@ -119,6 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (likely(PyAnyDict_CheckExact(value))) {
             int r = PyDict_GetItemRef(value, k, &v);
+            Py_CLEAR(k);
             switch (r) {
             case -1:
                 PyObjC_GIL_FORWARD_EXC(); // LCOV_EXCL_LINE
@@ -130,6 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         } else {
             v = PyObject_GetItem(value, k);
+            Py_CLEAR(k);
             if (v == nil) {
                 if (PyErr_ExceptionMatches(PyExc_KeyError)) {
                     PyErr_Clear();
@@ -138,8 +140,6 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             } // LCOV_EXCL_LINE
         }
-
-        Py_DECREF(k);
 
         if (v == Py_None) {
             result = NSNull_null;

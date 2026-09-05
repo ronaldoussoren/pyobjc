@@ -872,6 +872,11 @@ Version 13.0a0
 * Fix reference leak in the implementation of Objective-C enumeration
   for Python mappings (excluding dicts).
 
+* :issue:`688`: Fix reference leak in the implementation of
+  ``-[OC_PythonDictionary objectForKey:]``. The side effect of this
+  was leaking memory when Objective-C code looks up values in a
+  Python dictionary.
+
 Version 12.2.3
 --------------
 
