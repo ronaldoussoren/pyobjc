@@ -1027,15 +1027,30 @@ class TestTestSupport(TestCase):
         self.assertArgIsNotPrintf(m, 1)
 
     def test_arg_cfretained(self):
+        m = Method(3, {"already_cfretained": True, "type": b"i"}, selector=True)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsCFRetained(m, 1)
 
-        m = Method(3, {"already_cfretained": True}, selector=True)
+        m = Method(1, {"already_cfretained": True, "type": b"i"}, selector=False)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsCFRetained(m, 1)
+
+        m = Method(
+            3, {"already_cfretained": True, "type": b"^{__CFString=}"}, selector=True
+        )
         self.assertArgIsCFRetained(m, 1)
         with self.assertRaisesRegex(
             self.failureException, "Argument 0 of <.*> is not cfretained"
         ):
             self.assertArgIsCFRetained(m, 0)
 
-        m = Method(3, {"already_cfretained": False}, selector=True)
+        m = Method(
+            3, {"already_cfretained": False, "type": b"^{__CFString=}"}, selector=True
+        )
         with self.assertRaisesRegex(
             self.failureException, "Argument 1 of <.*> is not cfretained"
         ):
@@ -1047,14 +1062,18 @@ class TestTestSupport(TestCase):
         ):
             self.assertArgIsCFRetained(m, 1)
 
-        m = Method(3, {"already_cfretained": True}, selector=False)
+        m = Method(
+            3, {"already_cfretained": True, "type": b"^{__CFString=}"}, selector=False
+        )
         self.assertArgIsCFRetained(m, 3)
         with self.assertRaisesRegex(
             self.failureException, "Argument 2 of <.*> is not cfretained"
         ):
             self.assertArgIsCFRetained(m, 2)
 
-        m = Method(3, {"already_cfretained": False}, selector=False)
+        m = Method(
+            3, {"already_cfretained": False, "type": b"^{__CFString=}"}, selector=False
+        )
         with self.assertRaisesRegex(
             self.failureException, "Argument 3 of <.*> is not cfretained"
         ):
@@ -1067,50 +1086,78 @@ class TestTestSupport(TestCase):
             self.assertArgIsCFRetained(m, 3)
 
     def test_arg_not_cfretained(self):
-        m = Method(3, {"already_cfretained": True}, selector=True)
+        m = Method(3, {"already_cfretained": True, "type": b"i"}, selector=True)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(1, {"already_cfretained": True, "type": b"i"}, selector=False)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(
+            3, {"already_cfretained": True, "type": b"^{__CFString=}"}, selector=True
+        )
         self.assertArgIsNotCFRetained(m, 0)
         with self.assertRaisesRegex(
             self.failureException, "Argument 1 of <.*> is cfretained"
         ):
             self.assertArgIsNotCFRetained(m, 1)
 
-        m = Method(3, {"already_cfretained": False}, selector=True)
+        m = Method(
+            3, {"already_cfretained": False, "type": b"^{__CFString=}"}, selector=True
+        )
         self.assertArgIsNotCFRetained(m, 1)
 
         m = Method(3, {}, selector=True)
         self.assertArgIsNotCFRetained(m, 1)
 
-        m = Method(3, {"already_cfretained": True}, selector=False)
+        m = Method(
+            3, {"already_cfretained": True, "type": b"^{__CFString=}"}, selector=False
+        )
         self.assertArgIsCFRetained(m, 3)
         self.assertArgIsNotCFRetained(m, 1)
 
-        m = Method(3, {"already_cfretained": False}, selector=False)
+        m = Method(
+            3, {"already_cfretained": False, "type": b"^{__CFString=}"}, selector=False
+        )
         self.assertArgIsNotCFRetained(m, 1)
 
         m = Method(3, {}, selector=False)
         self.assertArgIsNotCFRetained(m, 1)
 
     def test_result_cfretained(self):
-        m = Method(None, {"already_cfretained": True})
+        m = Method(None, {"already_cfretained": True, "type": b"i"})
+        with self.assertRaisesRegex(self.failureException, "<.*> is not an object"):
+            self.assertResultIsCFRetained(m)
+
+        m = Method(None, {"already_cfretained": True, "type": b"^{__CFString=}"})
         self.assertResultIsCFRetained(m)
 
-        m = Method(None, {"already_cfretained": False})
+        m = Method(None, {"already_cfretained": False, "type": b"^{__CFString=}"})
         with self.assertRaisesRegex(self.failureException, "<.*> is not cfretained"):
             self.assertResultIsCFRetained(m)
 
-        m = Method(None, {})
+        m = Method(None, {"type": b"^{__CFString}"})
         with self.assertRaisesRegex(self.failureException, "<.*> is not cfretained"):
             self.assertResultIsCFRetained(m)
 
     def test_result_not_cfretained(self):
-        m = Method(None, {"already_cfretained": True})
+        m = Method(None, {"already_cfretained": False, "type": b"i"})
+        with self.assertRaisesRegex(self.failureException, "<.*> is not an object"):
+            self.assertResultIsNotCFRetained(m)
+
+        m = Method(None, {"already_cfretained": True, "type": b"^{__CFString=}"})
         with self.assertRaisesRegex(self.failureException, "<.*> is cfretained"):
             self.assertResultIsNotCFRetained(m)
 
-        m = Method(None, {"already_cfretained": False})
+        m = Method(None, {"already_cfretained": False, "type": b"^{__CFString=}"})
         self.assertResultIsNotCFRetained(m)
 
-        m = Method(None, {})
+        m = Method(None, {"type": b"^{__CFString}"})
         self.assertResultIsNotCFRetained(m)
 
     def test_arg_type(self):
@@ -1406,95 +1453,131 @@ class TestTestSupport(TestCase):
             self.assertResultSizeInArg(m, 3)
 
     def test_arg_retained(self):
-        m = Method(3, {"already_retained": True}, selector=True)
+        m = Method(3, {"already_retained": True, "type": b"i"}, selector=True)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsRetained(m, 1)
+
+        m = Method(1, {"already_retained": True, "type": b"i"}, selector=False)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsRetained(m, 1)
+
+        m = Method(3, {"already_retained": True, "type": b"@"}, selector=True)
         self.assertArgIsRetained(m, 1)
         with self.assertRaisesRegex(
             self.failureException, "Argument 0 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 0)
 
-        m = Method(3, {"already_retained": False}, selector=True)
+        m = Method(3, {"already_retained": False, "type": b"@"}, selector=True)
         with self.assertRaisesRegex(
             self.failureException, "Argument 1 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 1)
 
-        m = Method(3, {}, selector=True)
+        m = Method(3, {"type": b"@"}, selector=True)
         with self.assertRaisesRegex(
             self.failureException, "Argument 1 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 1)
 
-        m = Method(3, {"already_retained": True}, selector=False)
+        m = Method(3, {"already_retained": True, "type": b"@"}, selector=False)
         self.assertArgIsRetained(m, 3)
         with self.assertRaisesRegex(
             self.failureException, "Argument 2 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 2)
 
-        m = Method(3, {"already_retained": False}, selector=False)
+        m = Method(3, {"already_retained": False, "type": b"@"}, selector=False)
         with self.assertRaisesRegex(
             self.failureException, "Argument 3 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 3)
 
-        m = Method(3, {}, selector=False)
+        m = Method(3, {"type": b"@"}, selector=False)
         with self.assertRaisesRegex(
             self.failureException, "Argument 3 of <.*> is not retained"
         ):
             self.assertArgIsRetained(m, 3)
 
     def test_arg_not_retained(self):
-        m = Method(3, {"already_retained": True}, selector=True)
+        m = Method(3, {"already_retained": False, "type": b"i"}, selector=True)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsNotRetained(m, 1)
+
+        m = Method(1, {"already_retained": False, "type": b"i"}, selector=False)
+        with self.assertRaisesRegex(
+            self.failureException, "Argument 1 of <.*> is not an object"
+        ):
+            self.assertArgIsNotRetained(m, 1)
+
+        m = Method(3, {"already_retained": True, "type": b"@"}, selector=True)
         self.assertArgIsNotRetained(m, 0)
         with self.assertRaisesRegex(
             self.failureException, "Argument 1 of <.*> is retained"
         ):
             self.assertArgIsNotRetained(m, 1)
 
-        m = Method(3, {"already_retained": False}, selector=True)
+        m = Method(3, {"already_retained": False, "type": b"@"}, selector=True)
         self.assertArgIsNotRetained(m, 1)
 
         m = Method(3, {}, selector=True)
         self.assertArgIsNotRetained(m, 1)
 
-        m = Method(3, {"already_retained": True}, selector=False)
+        m = Method(3, {"already_retained": True, "type": b"@"}, selector=False)
         self.assertArgIsRetained(m, 3)
         self.assertArgIsNotRetained(m, 1)
 
-        m = Method(3, {"already_retained": False}, selector=False)
+        m = Method(3, {"already_retained": False, "type": b"@"}, selector=False)
         self.assertArgIsNotRetained(m, 1)
 
-        m = Method(3, {}, selector=False)
+        m = Method(3, {"type": b"@"}, selector=False)
         self.assertArgIsNotRetained(m, 1)
 
     def test_result_retained(self):
-        m = Method(None, {"already_retained": True})
+        m = Method(None, {"already_retained": True, "type": b"i"})
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is not an object"
+        ):
+            self.assertResultIsRetained(m)
+
+        m = Method(None, {"already_retained": True, "type": b"@"})
         self.assertResultIsRetained(m)
 
-        m = Method(None, {"already_retained": False})
+        m = Method(None, {"already_retained": False, "type": b"@"})
         with self.assertRaisesRegex(
             self.failureException, "Result of <.*> is not retained"
         ):
             self.assertResultIsRetained(m)
 
-        m = Method(None, {})
+        m = Method(None, {"type": b"@"})
         with self.assertRaisesRegex(
             self.failureException, "Result of <.*> is not retained"
         ):
             self.assertResultIsRetained(m)
 
     def test_result_not_retained(self):
-        m = Method(None, {"already_retained": True})
+        m = Method(None, {"already_retained": False, "type": b"i"})
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is not an object"
+        ):
+            self.assertResultIsRetained(m)
+
+        m = Method(None, {"already_retained": True, "type": b"@"})
         with self.assertRaisesRegex(
             self.failureException, "Result of <.*> is retained"
         ):
             self.assertResultIsNotRetained(m)
 
-        m = Method(None, {"already_retained": False})
+        m = Method(None, {"already_retained": False, "type": b"@"})
         self.assertResultIsNotRetained(m)
 
-        m = Method(None, {})
+        m = Method(None, {"type": b"@"})
         self.assertResultIsNotRetained(m)
 
     def test_assert_arg_IN(self):

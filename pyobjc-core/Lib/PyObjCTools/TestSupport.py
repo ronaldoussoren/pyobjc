@@ -631,6 +631,15 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
+
             if not info["arguments"][argno + offset]["already_cfretained"]:
                 self.fail(
                     message or f"Argument {argno} of {method!r} is not cfretained"
@@ -644,7 +653,16 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
+
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
             if info["arguments"][argno + offset]["already_cfretained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is cfretained")
         except (KeyError, IndexError):
@@ -653,11 +671,27 @@ class TestCase(_unittest.TestCase):
     def assertResultIsCFRetained(self, method, message=None):
         info = method.__metadata__()
 
+        if not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval']['type']})"
+            )
+
         if not info.get("retval", {}).get("already_cfretained", False):
             self.fail(message or f"{method!r} is not cfretained")
 
     def assertResultIsNotCFRetained(self, method, message=None):
         info = method.__metadata__()
+        if not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval']['type']})"
+            )
+
         if info.get("retval", {}).get("already_cfretained", False):
             self.fail(message or f"{method!r} is cfretained")
 
@@ -669,6 +703,15 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
+
             if not info["arguments"][argno + offset]["already_retained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is not retained")
         except (KeyError, IndexError):
@@ -712,7 +755,16 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
+
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
             if info["arguments"][argno + offset]["already_retained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is retained")
         except (KeyError, IndexError):
@@ -720,11 +772,29 @@ class TestCase(_unittest.TestCase):
 
     def assertResultIsRetained(self, method, message=None):
         info = method.__metadata__()
+
+        if "type" not in info["retval"] or not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval'].get('type')})"
+            )
+
         if not info.get("retval", {}).get("already_retained", False):
             self.fail(message or f"Result of {method!r} is not retained")
 
     def assertResultIsNotRetained(self, method, message=None):
         info = method.__metadata__()
+
+        if "type" not in info["retval"] or not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval'].get('type')})"
+            )
+
         if info.get("retval", {}).get("already_retained", False):
             self.fail(message or f"Result of {method!r} is retained")
 
