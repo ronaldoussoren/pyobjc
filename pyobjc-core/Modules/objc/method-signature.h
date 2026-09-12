@@ -42,6 +42,7 @@ struct _PyObjC_ArgDescr {
     unsigned int             typeOverride : 1;
     unsigned int             arraySizeInRetval : 1;
     unsigned int             printfFormat : 1;
+    unsigned int             hasAlreadyRetained : 1;
     unsigned int             alreadyRetained : 1;
     unsigned int             alreadyCFRetained : 1;
     unsigned int             callableRetained
