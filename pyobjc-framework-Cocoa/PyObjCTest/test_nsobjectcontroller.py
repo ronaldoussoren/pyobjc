@@ -18,3 +18,5 @@ class TestNSObjectController(TestCase):
         self.assertArgIsOut(AppKit.NSObjectController.fetchWithRequest_merge_error_, 2)
         self.assertResultIsBOOL(AppKit.NSObjectController.usesLazyFetching)
         self.assertArgIsBOOL(AppKit.NSObjectController.setUsesLazyFetching_, 0)
+
+        self.assertResultIsRetained(AppKit.NSObjectController.newObject)

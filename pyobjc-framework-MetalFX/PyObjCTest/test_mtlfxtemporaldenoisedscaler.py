@@ -334,3 +334,10 @@ class TestMTLFXTemporalDenoisedScaler(TestCase):
         self.assertResultIsBOOL(
             MetalFX.MTLFXTemporalDenoisedScalerDescriptor.supportsDevice_
         )
+
+        self.assertResultIsRetained(
+            MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_
+        )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_compiler_
+        )

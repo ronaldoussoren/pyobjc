@@ -49,6 +49,16 @@ try:
     )
     r(
         b"MTLFXFrameInterpolatorDescriptor",
+        b"newFrameInterpolatorWithDevice:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLFXFrameInterpolatorDescriptor",
+        b"newFrameInterpolatorWithDevice:compiler:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLFXFrameInterpolatorDescriptor",
         b"requiresPrevColorTexture",
         {"retval": {"type": b"Z"}},
     )
@@ -71,6 +81,16 @@ try:
         b"MTLFXFrameInterpolatorDescriptor",
         b"supportsMetal4FX:",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLFXSpatialScalerDescriptor",
+        b"newSpatialScalerWithDevice:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLFXSpatialScalerDescriptor",
+        b"newSpatialScalerWithDevice:compiler:",
+        {"retval": {"already_retained": True}},
     )
     r(b"MTLFXSpatialScalerDescriptor", b"supportsDevice:", {"retval": {"type": b"Z"}})
     r(b"MTLFXSpatialScalerDescriptor", b"supportsMetal4FX:", {"retval": {"type": b"Z"}})
@@ -98,6 +118,16 @@ try:
         b"MTLFXTemporalDenoisedScalerDescriptor",
         b"isTransparencyOverlayTextureEnabled",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLFXTemporalDenoisedScalerDescriptor",
+        b"newTemporalDenoisedScalerWithDevice:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLFXTemporalDenoisedScalerDescriptor",
+        b"newTemporalDenoisedScalerWithDevice:compiler:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MTLFXTemporalDenoisedScalerDescriptor",
@@ -168,6 +198,16 @@ try:
         b"MTLFXTemporalScalerDescriptor",
         b"isReactiveMaskTextureEnabled",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLFXTemporalScalerDescriptor",
+        b"newTemporalScalerWithDevice:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLFXTemporalScalerDescriptor",
+        b"newTemporalScalerWithDevice:compiler:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MTLFXTemporalScalerDescriptor",

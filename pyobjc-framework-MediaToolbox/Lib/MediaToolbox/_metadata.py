@@ -49,18 +49,12 @@ functions = {
     "MTAudioProcessingTapCreateWithPreferredFormat": (
         b"i^{__CFAllocator=}@I^{opaqueCMFormatDescription=}^^{opaqueMTAudioProcessingTap=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "MTAudioProcessingTapCreate": (
         b"i^{__CFAllocator=}@I^^{opaqueMTAudioProcessingTap=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "MTRegisterProfessionalVideoWorkflowFormatReaders": (b"v",),
     "MTAudioProcessingTapGetTypeID": (b"Q",),

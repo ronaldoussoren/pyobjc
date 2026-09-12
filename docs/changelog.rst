@@ -869,6 +869,241 @@ Version 13.0a0
   :meth:`Foundation.NSData.mutableBytes`, and
   :meth:`objc.varlist.as_buffer`.
 
+* Create more accurate metadata for selectors
+  in the "copy" category, and for functions with "Copy" or "Create"
+  in their name.
+
+  .. dropdown:: Affected functions and methods
+
+     * :meth:`BackgroundAssets.BADownload.copyAsNonEssential`
+     * :meth:`Foundation.NSObject.copyScriptingObjectOfClass_forValueForKey_withContentsValue_properties_` (informal protocol)
+     * :meth:`MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_group_`
+     * :meth:`MetalPerformanceShaders.MPSFunction.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSKernel.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixBatchNormalization.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixBatchNormalizationGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFindTopK.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFullyConnected.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFullyConnectedGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixNeuron.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixNeuronGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixSoftMax.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixSoftMaxGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSNDArrayMultiaryBase.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNImageInferenceLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNMatrixInferenceLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRayIntersector.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSSVGF.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSTemporalAA.copyWithZone_device_`
+
+* issue:`690`: Fix reference count handling for selectors in
+  the "new" category.
+
+  Before this fix calling methods like ``newBufferWithLength_options_``
+  on a Metal device would leak memory due to the result object
+  having a +1 reference count that the bridge didn't account for.
+
+  In 12.2.3 a minimal fix was added to ``pyobjc-core``, in this release
+  a more comprehensive fix was done, in particular creating and
+  overview of the affected methods. All of these are already fixed
+  in release 12.2.3.
+
+  .. dropdown:: Affected methods
+
+     * :meth:`AVFoundation.AVCaptureSpatialAudioMetadataSampleGenerator.newTimedMetadataSampleBufferAndResetAnalyzer`,
+     * :meth:`AppKit.NSCollectionView.newItemForRepresentedObject`
+     * :meth:`AppKit.NSDictionaryController.newObject`
+     * :meth:`AppKit.NSMenuItemBadge.newItemsWithCount_`
+     * :meth:`AppKit.NSObjectController.newObject`
+     * :meth:`CoreData.NSAtomicStore.newCacheNodeForManagedObject_`
+     * :meth:`CoreData.NSAtomicStore.newReferenceObjectForManagedObject_`
+     * :meth:`CoreData.NSIncrementalStore.newObjectIDForEntity_referenceObject_`
+     * :meth:`CoreData.NSIncrementalStore.newValueForRelationship_forObjectWithID_withContext_error_`
+     * :meth:`CoreData.NSIncrementalStore.newValuesForObjectWithID_withContext_error_`
+     * :meth:`CoreData.NSPersistentContainer.newBackgroundContext`
+     * :meth:`CoreML.MLModel.newState`
+     * :meth:`Foundation.NSObject.newScriptingObjectOfClass_forValueForKey_withContentsValue_properties_` (informal protocol)
+     * :meth:`MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_`
+     * :meth:`Metal.MTL4Archive.newBinaryFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Archive.newComputePipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newBinaryFunctionWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newBinaryFunctionWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibraryWithURL_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibraryWithURL_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibrary_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibrary_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newLibraryWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newLibraryWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newMachineLearningPipelineStateWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newMachineLearningPipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateBySpecializationWithDescriptor_pipeline_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateBySpecializationWithDescriptor_pipeline_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLArgumentEncoder.newArgumentEncoderForBufferAtIndex_` (protocol)
+     * :meth:`Metal.MTLBuffer.newRemoteBufferViewForDevice_` (protocol)
+     * :meth:`Metal.MTLBuffer.newRemoteTextureViewForDevice_` (protocol)
+     * :meth:`Metal.MTLBuffer.newTensorWithDescriptor_offset_error_` (protocol)
+     * :meth:`Metal.MTLBuffer.newTextureWithDescriptor_offset_bytesPerRow_` (protocol)
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithCommandQueue_`
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithDevice_`
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithMTL4CommandQueue_`
+     * :meth:`Metal.MTLComputePipeline.newComputePipelineStateWithAdditionalBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLComputePipeline.newComputePipelineStateWithBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newAccelerationStructureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newArchiveWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentEncoderWithArguments_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentEncoderWithBufferBinding_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentTableWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newBinaryArchiveWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithBytesNoCopy_length_options_deallocator_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithBytes_length_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithLength_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithLength_options_placementSparsePageSize_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandAllocatorWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandAllocator` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandBuffer` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueueWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueueWithMaxCommandBufferCount_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueue` (protocol)
+     * :meth:`Metal.MTLDevice.newCompilerWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCounterHeapWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCounterSampleBufferWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newDefaultLibraryWithBundle_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newDefaultLibrary` (protocol)
+     * :meth:`Metal.MTLDevice.newDepthStencilStateWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newDynamicLibrary_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newEvent` (protocol)
+     * :meth:`Metal.MTLDevice.newFence` (protocol)
+     * :meth:`Metal.MTLDevice.newHeapWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOCommandQueueWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOFileHandleWithURL_compressionMethod_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOFileHandleWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOHandleWithURL_compressionMethod_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOHandleWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithData_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithFile_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithSource_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithSource_options_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithStitchedDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLogStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newMTL4CommandQueueWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newMTL4CommandQueue` (protocol)
+     * :meth:`Metal.MTLDevice.newPipelineDataSetSerializerWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newRasterizationRateMapWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithMeshDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithTileDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithTileDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newResidencySetWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newSamplerStateWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedEventWithHandle_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedEvent` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedTextureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedTextureWithHandle_` (protocol)
+     * :meth:`Metal.MTLDevice.newTensorWithDescriptor_attachments_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTensorWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureViewPoolWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureWithDescriptor_iosurface_plane_` (protocol)
+     * :meth:`Metal.MTLEvent.newSharedEventHandle` (protocol)
+     * :meth:`Metal.MTLFunction.newArgumentEncoderWithBufferIndex_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithDescriptor_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithSize_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithSize_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newBufferWithLength_options_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newTextureWithDescriptor_offset_` (protocol)
+     * :meth:`Metal.MTLIOCommandQueue.newScratchBufferWithMinimumSize_` (protocol)
+     * :meth:`Metal.MTLLibrary.newArgumentEncoderWithBufferIndex_` (protocol)
+     * :meth:`Metal.MTLLibrary.newArgumentEncoderWithBufferIndex_reflection_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_constantValues_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_constantValues_error_` (protocol)
+     * :meth:`Metal.MTLLibrary.newIntersectionFunctionWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newIntersectionFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newIntersectionFunctionTableWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newIntersectionFunctionTableWithDescriptor_stage_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineDescriptorForSpecialization` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineStateWithAdditionalBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineStateWithBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newVisibleFunctionTableWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newVisibleFunctionTableWithDescriptor_stage_` (protocol)
+     * :meth:`Metal.MTLTexture.newSharedTextureHandle` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_textureType_levels_slices_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_` (protocol)
+     * :meth:`MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_`
+     * :meth:`MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_compiler_`
+     * :meth:`MetalKit.MTKMesh.newMeshesFromAsset_device_sourceMeshes_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithCGImage_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithData_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithMDLTexture_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_`
+     * :meth:`MetalPerformanceShaders.MPSHeapProvider.newHeapWithDescriptor_` (protocol)
+     * :meth:`ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newCylinderWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_`
+     * :meth:`ModelIO.MDLMesh.newEllipticalConeWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newIcosahedronWithRadius_inwardNormals_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newPlaneWithDimensions_segments_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newSubdividedMesh_submeshIndex_subdivisionLevels_`
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferFromZone_data_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferFromZone_length_type:` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferWithData_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBuffer_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newZoneForBuffersWithSize_andType_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newZone_` (protocol)
+     * :meth:`NetworkExtension.NETunnelProviderManager.copyAppRules`
+     * :meth:`Quartz.CAOpenGLLayer.copyCGLContextForPixelFormat_`
+     * :meth:`Quartz.CAOpenGLLayer.copyCGLPixelFormatForDisplayMask_`
+     * :meth:`Quartz.IKImageBrowserView.newCellForRepresentedItem_`
+     * :meth:`WebKit.DOMMutationEvent.newValue`
+
+
+
+
+Version 12.2.3
+--------------
+
+* :issue:`686`: A number of methods in :mod:`AVFoundation` return a
+  value with a +1 retain count, but PyObjC's metadata did not reflect this
+  and that results in memory leaks.
+
 * Fix reference leak in the implementation of Objective-C enumeration
   for Python mappings (excluding dicts).
 
@@ -877,12 +1112,13 @@ Version 13.0a0
   was leaking memory when Objective-C code looks up values in a
   Python dictionary.
 
-Version 12.2.3
---------------
+* issue:`690`: Fix reference count handling for selectors in
+  the "new" category.
 
-* :issue:`686`: A number of methods in :mod:`AVFoundation` return a
-  value with a +1 retain count, but PyObjC's metadata did not reflect this
-  and that results in memory leaks.
+  Before this fix calling methods like ``newBufferWithLength_options_``
+  on a Metal device would leak memory due to the result object
+  having a +1 reference count that the bridge didn't account for.
+
 
 Version 12.2.2
 --------------

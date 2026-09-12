@@ -165,6 +165,11 @@ try:
     r(b"IKImageBrowserView", b"isGroupExpandedAtIndex:", {"retval": {"type": b"Z"}})
     r(
         b"IKImageBrowserView",
+        b"newCellForRepresentedItem:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"IKImageBrowserView",
         b"setAllowsDroppingOnItems:",
         {"arguments": {2: {"type": b"Z"}}},
     )

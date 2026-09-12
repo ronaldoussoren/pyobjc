@@ -213,6 +213,9 @@ class TestMTLArgumentEncoder(TestCase):
             Metal.NSRange.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            TestMTLArgumentEncoderHelper.newArgumentEncoderForBufferAtIndex_
+        )
         self.assertArgHasType(
             TestMTLArgumentEncoderHelper.newArgumentEncoderForBufferAtIndex_,
             0,

@@ -152,9 +152,9 @@ class TestNSDragging(TestCase):
 
         self.assertIsEnumType(AppKit.NSSpringLoadingOptions)
         self.assertEqual(AppKit.NSSpringLoadingDisabled, 0)
-        self.assertEqual(AppKit.NSSpringLoadingEnabled, 1)
-        self.assertEqual(AppKit.NSSpringLoadingContinuousActivation, 2)
-        self.assertEqual(AppKit.NSSpringLoadingNoHover, 4)
+        self.assertEqual(AppKit.NSSpringLoadingEnabled, 1 << 0)
+        self.assertEqual(AppKit.NSSpringLoadingContinuousActivation, 1 << 1)
+        self.assertEqual(AppKit.NSSpringLoadingNoHover, 1 << 3)
 
     def test_protocols(self):
         self.assertProtocolExists("NSDraggingDestination", AppKit)

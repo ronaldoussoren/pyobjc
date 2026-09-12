@@ -222,6 +222,7 @@ try:
         b"modelWithContentsOfURL:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},
     )
+    r(b"MLModel", b"newState", {"retval": {"already_retained": True}})
     r(
         b"MLModel",
         b"parameterValueForKey:error:",

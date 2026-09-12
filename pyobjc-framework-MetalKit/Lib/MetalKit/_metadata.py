@@ -68,7 +68,10 @@ try:
     r(
         b"MTKMesh",
         b"newMeshesFromAsset:device:sourceMeshes:error:",
-        {"arguments": {5: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {5: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -91,7 +94,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithCGImage:options:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -114,7 +120,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithContentsOfURL:options:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -137,7 +146,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithData:options:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -160,7 +172,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithMDLTexture:options:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -183,7 +198,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithName:scaleFactor:bundle:options:error:",
-        {"arguments": {6: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {6: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -206,7 +224,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTextureWithName:scaleFactor:displayGamut:bundle:options:error:",
-        {"arguments": {7: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {7: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",
@@ -229,7 +250,10 @@ try:
     r(
         b"MTKTextureLoader",
         b"newTexturesWithContentsOfURLs:options:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"MTKTextureLoader",

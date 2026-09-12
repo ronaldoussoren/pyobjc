@@ -228,6 +228,16 @@ try:
     )
     r(
         b"CAOpenGLLayer",
+        b"copyCGLContextForPixelFormat:",
+        {"retval": {"already_cfretained": True}},
+    )
+    r(
+        b"CAOpenGLLayer",
+        b"copyCGLPixelFormatForDisplayMask:",
+        {"retval": {"already_cfretained": True}},
+    )
+    r(
+        b"CAOpenGLLayer",
         b"drawInCGLContext:pixelFormat:forLayerTime:displayTime:",
         {
             "arguments": {

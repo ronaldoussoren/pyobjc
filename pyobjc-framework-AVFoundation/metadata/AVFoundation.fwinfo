@@ -274,7 +274,6 @@
        }
       },
       "class_method": false,
-      "retval": { "already_cfretained": true },
       "selector": "copyCGImageAtTime:actualTime:error:"
      },
      {
@@ -328,24 +327,6 @@
       },
       "class_method": false,
       "selector": "initWithAsset:error:"
-     }
-    ]
-   },
-   "AVAssetReaderOutput": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": { "already_cfretained": true },
-      "selector": "copyNextSampleBuffer"
-     }
-    ]
-   },
-   "AVPlayerItemSampleBufferOutput": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": { "already_cfretained": true },
-      "selector": "copyNextSampleBuffer"
      }
     ]
    },
@@ -2828,21 +2809,7 @@
        }
       },
       "class_method": false,
-      "retval": {
-       "already_cfretained": true
-      },
       "selector": "copyPixelBufferForItemTime:itemTimeForDisplay:"
-     }
-    ]
-   },
-   "AVPlayerLayer": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "already_cfretained": true
-      },
-      "selector": "copyDisplayedPixelBuffer"
      }
     ]
    },
@@ -2858,7 +2825,6 @@
        }
       },
       "class_method": false,
-      "retval": { "already_cfretained": true },
       "selector": "copyTaggedBufferGroupForHostTime:presentationTimeStamp:activeConfiguration:"
      }
     ]
@@ -3112,17 +3078,6 @@
      }
     ]
    },
-   "AVSampleBufferVideoRenderer": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {
-       "already_cfretained": true
-      },
-      "selector": "copyDisplayedPixelBuffer"
-     }
-    ]
-   },
    "AVSampleCursor": {
     "methods": [
      {
@@ -3142,11 +3097,6 @@
       },
       "class_method": false,
       "selector": "stepByPresentationTime:wasPinned:"
-     },
-     {
-      "class_method": false,
-      "retval": { "already_cfretained": true },
-      "selector": "copyCurrentSampleFormatDescription"
      }
     ]
    },
@@ -3381,15 +3331,6 @@
      }
     ]
    },
-   "AVTimedMetadataGroup": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": { "already_cfretained": true },
-      "selector": "copyFormatDescription"
-     }
-    ]
-   },
    "AVVideoComposition": {
     "methods": [
      {
@@ -3461,15 +3402,6 @@
       },
       "class_method": false,
       "selector": "getCropRectangleRampForTime:startCropRectangle:endCropRectangle:timeRange:"
-     }
-    ]
-   },
-   "AVVideoCompositionRenderContext": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": { "already_cfretained": true },
-      "selector": "newPixelBuffer"
      }
     ]
    },

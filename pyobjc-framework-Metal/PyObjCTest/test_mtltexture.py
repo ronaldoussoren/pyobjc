@@ -83,6 +83,11 @@ class TestMTLTextureHelper(Metal.NSObject):
     def newTextureViewWithPixelFormat_textureType_levels_slices_(self, a, b, c, d):
         pass
 
+    def newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_(
+        self, a, b, c, d, e
+    ):
+        pass
+
     def swizzle(self):
         return 1
 
@@ -93,6 +98,12 @@ class TestMTLTextureHelper(Metal.NSObject):
         return 1
 
     def isSparse(self):
+        return 1
+
+    def newSharedTextureHandle(self):
+        return 1
+
+    def newTextureViewWithDescriptor_(self, a):
         return 1
 
 
@@ -312,10 +323,14 @@ class TestMTLArgument(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(TestMTLTextureHelper.newTextureViewWithPixelFormat_)
         self.assertArgHasType(
             TestMTLTextureHelper.newTextureViewWithPixelFormat_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_
+        )
         self.assertArgHasType(
             TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             0,
@@ -341,25 +356,33 @@ class TestMTLArgument(TestCase):
             TestMTLTextureHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__
         )
 
+        self.assertResultIsRetained(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_
+        )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             2,
             Metal.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             3,
             Metal.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
+            4,
+            Metal.MTLTextureSwizzleChannels.__typestr__,
         )
 
         self.assertResultHasType(
@@ -369,3 +392,7 @@ class TestMTLArgument(TestCase):
             TestMTLTextureHelper.tailSizeInBytes, objc._C_NSUInteger
         )
         self.assertResultIsBOOL(TestMTLTextureHelper.isSparse)
+
+        self.assertResultIsRetained(TestMTLTextureHelper.newSharedTextureHandle)
+
+        self.assertResultIsRetained(TestMTLTextureHelper.newTextureViewWithDescriptor_)

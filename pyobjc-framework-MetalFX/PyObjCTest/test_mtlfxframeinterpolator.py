@@ -230,6 +230,12 @@ class TestMTLFXFrameInterpolator(TestCase):
         self.assertResultIsBOOL(
             MetalFX.MTLFXFrameInterpolatorDescriptor.supportsDevice_
         )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_
+        )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_compiler_
+        )
 
     @min_os_level("27.0")
     def test_methods27_0(self):

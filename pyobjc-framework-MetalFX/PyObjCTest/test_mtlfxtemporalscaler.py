@@ -381,6 +381,13 @@ class TestMTLFXTemporalScaler(TestCase):
             MetalFX.MTLFXTemporalScalerDescriptor.setInputContentPropertiesEnabled_, 0
         )
 
+        self.assertResultIsRetained(
+            MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_,
+        )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_compiler_,
+        )
+
     @min_os_level("14.3")
     def test_methods14_3(self):
         self.assertResultIsBOOL(

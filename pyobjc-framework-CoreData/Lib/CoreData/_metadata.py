@@ -149,6 +149,16 @@ try:
     )
     r(
         b"NSAtomicStore",
+        b"newCacheNodeForManagedObject:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"NSAtomicStore",
+        b"newReferenceObjectForManagedObject:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"NSAtomicStore",
         b"save:",
         {"retval": {"type": b"Z"}, "arguments": {2: {"type_modifier": b"o"}}},
     )
@@ -539,13 +549,24 @@ try:
     )
     r(
         b"NSIncrementalStore",
+        b"newObjectIDForEntity:referenceObject:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"NSIncrementalStore",
         b"newValueForRelationship:forObjectWithID:withContext:error:",
-        {"arguments": {5: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {5: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"NSIncrementalStore",
         b"newValuesForObjectWithID:withContext:error:",
-        {"arguments": {4: {"type_modifier": b"o"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {4: {"type_modifier": b"o"}},
+        },
     )
     r(
         b"NSIncrementalStore",
@@ -965,6 +986,11 @@ try:
                 }
             }
         },
+    )
+    r(
+        b"NSPersistentContainer",
+        b"newBackgroundContext",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"NSPersistentContainer",

@@ -5,6 +5,9 @@ from objc import simd
 
 class TestMDLMesh(TestCase):
     def test_methods(self):
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_,
             0,
@@ -20,6 +23,9 @@ class TestMDLMesh(TestCase):
             3,
         )
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_,
             0,
@@ -30,6 +36,9 @@ class TestMDLMesh(TestCase):
             4,
         )  # noqa: B950
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newCylinderWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newCylinderWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_,
             1,
@@ -40,6 +49,9 @@ class TestMDLMesh(TestCase):
             5,
         )  # noqa: B950
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newEllipticalConeWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newEllipticalConeWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_,
             1,
@@ -50,6 +62,9 @@ class TestMDLMesh(TestCase):
             5,
         )  # noqa: B950
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newPlaneWithDimensions_segments_geometryType_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newPlaneWithDimensions_segments_geometryType_allocator_,
             0,
@@ -61,6 +76,9 @@ class TestMDLMesh(TestCase):
             simd.vector_uint2.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newIcosahedronWithRadius_inwardNormals_allocator_
+        )
         self.assertArgIsBOOL(
             ModelIO.MDLMesh.newIcosahedronWithRadius_inwardNormals_allocator_, 1
         )
@@ -101,6 +119,9 @@ class TestMDLMesh(TestCase):
 
         self.assertResultHasType(
             ModelIO.MDLMesh.boundingBox, ModelIO.MDLAxisAlignedBoundingBox.__typestr__
+        )
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newSubdividedMesh_submeshIndex_subdivisionLevels_
         )
 
     @min_os_level("10.12")
@@ -218,6 +239,9 @@ class TestMDLMesh(TestCase):
             1,
         )
 
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_
+        )
         self.assertArgHasType(
             ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_,
             1,
@@ -228,8 +252,10 @@ class TestMDLMesh(TestCase):
             6,
         )  # noqa: B950
 
-        pass
-
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertArgIsOut(ModelIO.MDLMesh.makeVerticesUniqueAndReturnError_, 0)
+
+        self.assertResultIsRetained(
+            ModelIO.MDLMesh.newIcosahedronWithRadius_inwardNormals_geometryType_allocator_
+        )

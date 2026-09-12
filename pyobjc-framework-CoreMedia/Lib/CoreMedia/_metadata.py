@@ -85,18 +85,12 @@ functions = {
     "CMBlockBufferCreateEmpty": (
         b"i^{__CFAllocator=}II^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseCreateWithMasterTimebase": (
         b"i^{__CFAllocator=}^{OpaqueCMTimebase=}^^{OpaqueCMTimebase=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagCollectionGetCountOfCategory": (b"q^{OpaqueCMTagCollection=}I",),
     "CMBufferQueueMarkEndOfData": (b"i^{opaqueCMBufferQueue=}",),
@@ -107,11 +101,10 @@ functions = {
         b"i^{__CFAllocator=}^{CMTag=IIQ}q^^{OpaqueCMTagCollection=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMBufferQueueInstallTrigger": (
@@ -136,10 +129,7 @@ functions = {
     "CMTaggedBufferGroupCreateCombined": (
         b"i^{__CFAllocator=}^{__CFArray=}^^{OpaqueCMTaggedBufferGroup=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagGetFlagsValue": (b"Q{CMTag=IIQ}",),
     "CMBufferQueueRemoveTrigger": (
@@ -181,10 +171,7 @@ functions = {
     "CMAudioFormatDescriptionCopyAsBigEndianSoundDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagHasFloat64Value": (b"Z{CMTag=IIQ}",),
     "CMSwapHostEndianImageDescriptionToBig": (
@@ -200,10 +187,7 @@ functions = {
     "CMVideoFormatDescriptionCreateForImageBuffer": (
         b"i^{__CFAllocator=}^{__CVBuffer=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagHash": (b"Q{CMTag=IIQ}",),
     "CMSampleBufferHasDataFailed": (
@@ -238,30 +222,23 @@ functions = {
         b"i^{__CFAllocator=}^{__CVBuffer=}^{opaqueCMFormatDescription=}^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {"type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTagMakeWithFloat64Value": (b"{CMTag=IIQ}Id",),
     "CMSampleBufferCreateCopy": (
         b"i^{__CFAllocator=}^{opaqueCMSampleBuffer=}^^{opaqueCMSampleBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagEqualToTag": (b"Z{CMTag=IIQ}{CMTag=IIQ}",),
     "CMMetadataCreateKeyFromIdentifier": (
         b"i^{__CFAllocator=}^{__CFString=}^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTaggedBufferGroupGetCMSampleBufferForTag": (
         b"^{opaqueCMSampleBuffer=}^{OpaqueCMTaggedBufferGroup=}{CMTag=IIQ}^q",
@@ -272,12 +249,11 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{opaqueCMFormatDescription=}qq^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}q^Q^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {"already_cfretained": True, "type_modifier": "o"},
                 5: {"c_array_length_in_arg": 4, "type_modifier": "n"},
                 7: {"c_array_length_in_arg": 6, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "CMTimeRangeShow": (b"v{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",),
@@ -314,11 +290,10 @@ functions = {
         b"i^{__CFAllocator=}^CQ^{__CFString=}I^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 5: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMBufferQueueCopyHead": (
@@ -343,19 +318,13 @@ functions = {
     "CMTagCollectionCreateMutable": (
         b"i^{__CFAllocator=}q^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMMetadataDataTypeRegistryGetBaseDataTypes": (b"^{__CFArray=}",),
     "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}I^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferSetOutputPresentationTimeStamp": (
         b"i^{opaqueCMSampleBuffer=}{CMTime=qiIq}",
@@ -420,10 +389,7 @@ functions = {
     "CMTagCollectionCreateExclusiveOr": (
         b"i^{OpaqueCMTagCollection=}^{OpaqueCMTagCollection=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferGetOutputSampleTimingInfoArray": (
         b"i^{opaqueCMSampleBuffer=}q^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}^q",
@@ -439,11 +405,10 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{opaqueCMFormatDescription=}q{CMTime=qiIq}^{AudioStreamPacketDescription=qII}^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 5: {"c_array_length_in_arg": 3, "type_modifier": "n"},
                 6: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimebaseSetTimerDispatchSourceNextFireTime": (
@@ -453,23 +418,21 @@ functions = {
         b"i^{__CFAllocator=}Q^^C^Qi^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 3: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 5: {"null_accepted": False, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMVideoFormatDescriptionCreateFromBigEndianImageDescriptionData": (
         b"i^{__CFAllocator=}^CQI^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 5: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimeRangeCopyAsDictionary": (
@@ -480,10 +443,7 @@ functions = {
     "CMAudioDeviceClockCreate": (
         b"i^{__CFAllocator=}^{__CFString=}^^{OpaqueCMClock=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeRangeGetUnion": (
         b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
@@ -491,10 +451,7 @@ functions = {
     "CMVideoFormatDescriptionCreate": (
         b"i^{__CFAllocator=}Iii^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeCopyAsDictionary": (
         b"^{__CFDictionary=}{CMTime=qiIq}^{__CFAllocator=}",
@@ -504,10 +461,7 @@ functions = {
     "CMVideoFormatDescriptionCopyAsBigEndianImageDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}I^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMFormatDescriptionEqual": (
         b"Z^{opaqueCMFormatDescription=}^{opaqueCMFormatDescription=}",
@@ -557,10 +511,7 @@ functions = {
     "CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMBufferQueueEnqueue": (b"i^{opaqueCMBufferQueue=}@",),
     "CMBufferQueueGetMaxPresentationTimeStamp": (
@@ -574,10 +525,7 @@ functions = {
     "CMMetadataCreateIdentifierForKeyAndKeySpace": (
         b"i^{__CFAllocator=}@^{__CFString=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMMetadataDataTypeRegistryDataTypeConformsToDataType": (
         b"Z^{__CFString=}^{__CFString=}",
@@ -592,7 +540,6 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}Z^{opaqueCMFormatDescription=}q{CMTime=qiIq}^{AudioStreamPacketDescription=qII}^^{opaqueCMSampleBuffer=}@?",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {
                     "callable": {
@@ -605,7 +552,7 @@ functions = {
                 },
                 6: {"c_array_length_in_arg": 5, "type_modifier": "n"},
                 7: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSampleBufferMakeDataReady": (b"i^{opaqueCMSampleBuffer=}",),
@@ -630,16 +577,12 @@ functions = {
     "CMMuxedFormatDescriptionCreate": (
         b"i^{__CFAllocator=}I^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferCreateForImageBufferWithMakeDataReadyHandler": (
         b"i^{__CFAllocator=}^{__CVBuffer=}Z^{opaqueCMFormatDescription=}^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}^^{opaqueCMSampleBuffer=}@?",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 4: {"type_modifier": "n"},
                 5: {"already_cfretained": True, "type_modifier": "o"},
@@ -652,7 +595,7 @@ functions = {
                         },
                     }
                 },
-            },
+            }
         },
     ),
     "CMClockConvertHostTimeToSystemUnits": (b"Q{CMTime=qiIq}",),
@@ -672,10 +615,7 @@ functions = {
     "CMTextFormatDescriptionCreateFromBigEndianTextDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFString=}I^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTaggedBufferGroupGetCVPixelBufferForTag": (
         b"^{__CVBuffer=}^{OpaqueCMTaggedBufferGroup=}{CMTag=IIQ}^q",
@@ -686,10 +626,7 @@ functions = {
     "CMMetadataFormatDescriptionCreateWithMetadataSpecifications": (
         b"i^{__CFAllocator=}I^{__CFArray=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeRangeMake": (
         b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTime=qiIq}{CMTime=qiIq}",
@@ -709,19 +646,13 @@ functions = {
     "CMMetadataCreateKeySpaceFromIdentifier": (
         b"i^{__CFAllocator=}^{__CFString=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeRangeGetEnd": (b"{CMTime=qiIq}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",),
     "CMTagCollectionCreateCopy": (
         b"i^{OpaqueCMTagCollection=}^{__CFAllocator=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferInvalidate": (b"i^{opaqueCMSampleBuffer=}",),
     "CMTagHasCategory": (b"Z{CMTag=IIQ}I",),
@@ -757,10 +688,7 @@ functions = {
     "CMSampleBufferCreateForTaggedBufferGroup": (
         b"i^{__CFAllocator=}^{OpaqueCMTaggedBufferGroup=}{CMTime=qiIq}{CMTime=qiIq}^{opaqueCMFormatDescription=}^^{opaqueCMSampleBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMVideoFormatDescriptionMatchesImageBuffer": (
         b"Z^{opaqueCMFormatDescription=}^{__CVBuffer=}",
@@ -779,10 +707,7 @@ functions = {
     "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeCompare": (b"i{CMTime=qiIq}{CMTime=qiIq}",),
     "CMBufferQueueInstallTriggerWithIntegerThreshold": (
@@ -821,18 +746,12 @@ functions = {
     "CMMetadataCreateKeyFromIdentifierAsCFData": (
         b"i^{__CFAllocator=}^{__CFString=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMAudioDeviceClockCreateFromAudioDeviceID": (
         b"i^{__CFAllocator=}I^^{OpaqueCMClock=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseAddTimerDispatchSource": (b"i^{OpaqueCMTimebase=}@",),
     "CMClockGetHostTimeClock": (b"^{OpaqueCMClock=}",),
@@ -848,7 +767,6 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}Z^?^v^{opaqueCMFormatDescription=}q{CMTime=qiIq}^{AudioStreamPacketDescription=qII}^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {"c_array_length_in_arg": 6, "type_modifier": "n"},
                 9: {"already_cfretained": True, "type_modifier": "o"},
@@ -862,7 +780,7 @@ functions = {
                     },
                     "callable_retained": True,
                 },
-            },
+            }
         },
     ),
     "CMSampleBufferCallForEachSample": (
@@ -894,10 +812,7 @@ functions = {
     "CMTaggedBufferGroupCreate": (
         b"i^{__CFAllocator=}^{__CFArray=}^{__CFArray=}^^{OpaqueCMTaggedBufferGroup=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeMake": (b"{CMTime=qiIq}qi",),
     "CMClockGetTime": (b"{CMTime=qiIq}^{OpaqueCMClock=}",),
@@ -905,11 +820,10 @@ functions = {
         b"i^{__CFAllocator=}^{opaqueCMSampleBuffer=}q^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSampleBufferGetTotalSampleSize": (b"Q^{opaqueCMSampleBuffer=}",),
@@ -938,10 +852,7 @@ functions = {
     "CMAudioFormatDescriptionCreateSummary": (
         b"i^{__CFAllocator=}^{__CFArray=}I^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSwapBigEndianClosedCaptionDescriptionToHost": (
         b"i^CQ",
@@ -965,45 +876,32 @@ functions = {
         b"i^{__CFAllocator=}^CQ^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimebaseCreateWithSourceTimebase": (
         b"i^{__CFAllocator=}^{OpaqueCMTimebase=}^^{OpaqueCMTimebase=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMClosedCaptionFormatDescriptionCreateFromBigEndianClosedCaptionDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeMaximum": (b"{CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}",),
     "CMTimeCodeFormatDescriptionCreate": (
         b"i^{__CFAllocator=}I{CMTime=qiIq}II^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {6: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {6: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseCreateWithSourceClock": (
         b"i^{__CFAllocator=}^{OpaqueCMClock=}^^{OpaqueCMTimebase=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagCollectionIsEmpty": (b"Z^{OpaqueCMTagCollection=}",),
     "CMTimeRangeEqual": (
@@ -1015,7 +913,6 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}Z^{opaqueCMFormatDescription=}qq^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}q^Q@?@?",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {"c_array_length_in_arg": 7, "type_modifier": "n"},
                 9: {
@@ -1028,14 +925,13 @@ functions = {
                     }
                 },
                 6: {"c_array_length_in_arg": 5, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "CMSampleBufferCreate": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}Z^?^v^{opaqueCMFormatDescription=}qq^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}q^Q^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {"c_array_length_in_arg": 7, "type_modifier": "n"},
                 11: {"already_cfretained": True, "type_modifier": "o"},
@@ -1050,16 +946,13 @@ functions = {
                     },
                     "callable_retained": True,
                 },
-            },
+            }
         },
     ),
     "CMTimeCodeFormatDescriptionCopyAsBigEndianTimeCodeDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSyncGetRelativeRateAndAnchorTime": (
         b"i@@^d^{CMTime=qiIq}^{CMTime=qiIq}",
@@ -1075,21 +968,17 @@ functions = {
     "CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroup": (
         b"i^{__CFAllocator=}^{OpaqueCMTaggedBufferGroup=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMVideoFormatDescriptionCreateFromHEVCParameterSets": (
         b"i^{__CFAllocator=}Q^^C^Qi^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 3: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 6: {"null_accepted": False, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimeClampToRange": (
@@ -1107,10 +996,7 @@ functions = {
     "CMSimpleQueueCreate": (
         b"i^{__CFAllocator=}i^^{opaqueCMSimpleQueue=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferGetImageBuffer": (b"^{__CVBuffer=}^{opaqueCMSampleBuffer=}",),
     "CMTagCollectionGetTagsWithCategory": (
@@ -1129,8 +1015,6 @@ functions = {
     ),
     "CMSampleBufferCopyPCMDataIntoAudioBufferList": (
         b"i^{opaqueCMSampleBuffer=}ii^{AudioBufferList=I[1{AudioBuffer=II^v}]}",
-        "",
-        {"retval": {"already_cfretained": True}},
     ),
     "CMAudioFormatDescriptionGetMostCompatibleFormat": (
         b"^{AudioFormatListItem={AudioStreamBasicDescription=dIIIIIIII}I}^{opaqueCMFormatDescription=}",
@@ -1150,10 +1034,7 @@ functions = {
     "CMMetadataFormatDescriptionCreateWithKeys": (
         b"i^{__CFAllocator=}I^{__CFArray=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferGetAudioStreamPacketDescriptions": (
         b"i^{opaqueCMSampleBuffer=}Q^{AudioStreamPacketDescription=qII}^Q",
@@ -1168,10 +1049,7 @@ functions = {
     "CMTaggedBufferGroupFormatDescriptionCreateForTaggedBufferGroupWithExtensions": (
         b"i^{__CFAllocator=}^{OpaqueCMTaggedBufferGroup=}^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagCategoryEqualToTagCategory": (b"Z{CMTag=IIQ}{CMTag=IIQ}",),
     "CMBufferQueueGetFirstDecodeTimeStamp": (b"{CMTime=qiIq}^{opaqueCMBufferQueue=}",),
@@ -1197,10 +1075,7 @@ functions = {
     "CMMetadataFormatDescriptionCopyAsBigEndianMetadataDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseCopyUltimateMasterClock": (
         b"^{OpaqueCMClock=}^{OpaqueCMTimebase=}",
@@ -1218,10 +1093,7 @@ functions = {
     "CMTagCollectionCreateMutableCopy": (
         b"i^{OpaqueCMTagCollection=}^{__CFAllocator=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMMemoryPoolCreate": (
         b"^{OpaqueCMMemoryPool=}^{__CFDictionary=}",
@@ -1259,22 +1131,20 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFAllocator=}^{CMBlockBufferCustomBlockSource=I^?^?^v}QQI^^{OpaqueCMBlockBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {"type_modifier": "n"},
                 7: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimeCodeFormatDescriptionCreateFromBigEndianTimeCodeDescriptionData": (
         b"i^{__CFAllocator=}^CQ^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimebaseSetRateAndAnchorTime": (
@@ -1355,10 +1225,7 @@ functions = {
     "CMVideoFormatDescriptionCopyTagCollectionArray": (
         b"i^{opaqueCMFormatDescription=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagGetOSTypeValue": (b"I{CMTag=IIQ}",),
     "CMTagGetValueDataType": (b"I{CMTag=IIQ}",),
@@ -1369,11 +1236,10 @@ functions = {
         b"i^{__CFAllocator=}^CQ^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSampleBufferGetOutputDuration": (b"{CMTime=qiIq}^{opaqueCMSampleBuffer=}",),
@@ -1381,10 +1247,7 @@ functions = {
     "CMTagCollectionCreateFromDictionary": (
         b"i^{__CFDictionary=}^{__CFAllocator=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTextFormatDescriptionGetDisplayFlags": (
         b"i^{opaqueCMFormatDescription=}^I",
@@ -1397,16 +1260,12 @@ functions = {
     "CMClosedCaptionFormatDescriptionCopyAsBigEndianClosedCaptionDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferCreateForImageBuffer": (
         b"i^{__CFAllocator=}^{__CVBuffer=}Z^?^v^{opaqueCMFormatDescription=}^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {
                     "callable": {
@@ -1420,7 +1279,7 @@ functions = {
                 },
                 6: {"type_modifier": "n"},
                 7: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimeMultiplyByFloat64": (b"{CMTime=qiIq}{CMTime=qiIq}d",),
@@ -1445,10 +1304,7 @@ functions = {
     "CMFormatDescriptionCreate": (
         b"i^{__CFAllocator=}II^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMBufferQueueIsEmpty": (b"Z^{opaqueCMBufferQueue=}",),
     "CMAudioFormatDescriptionGetStreamBasicDescription": (
@@ -1462,18 +1318,12 @@ functions = {
     "CMTagCollectionCreateDifference": (
         b"i^{OpaqueCMTagCollection=}^{OpaqueCMTagCollection=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseCreateWithMasterClock": (
         b"i^{__CFAllocator=}^{OpaqueCMClock=}^^{OpaqueCMTimebase=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimeRangeFromTimeToTime": (
         b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}{CMTime=qiIq}{CMTime=qiIq}",
@@ -1485,11 +1335,10 @@ functions = {
         b"i^{__CFAllocator=}^CQ^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSampleBufferGetSampleTimingInfoArray": (
@@ -1540,13 +1389,12 @@ functions = {
         b"i^{__CFAllocator=}^{AudioStreamBasicDescription=dIIIIIIII}Q^{AudioChannelLayout=III[1{AudioChannelDescription=II[3f]}]}Q^v^{__CFDictionary=}^^{opaqueCMFormatDescription=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "n"},
                 3: {"type_modifier": "n"},
                 5: {"c_array_length_in_arg": 4, "type_modifier": "n"},
                 7: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSwapHostEndianMetadataDescriptionToBig": (
@@ -1559,10 +1407,7 @@ functions = {
     "CMSampleBufferCopySampleBufferForRange": (
         b"i^{__CFAllocator=}^{opaqueCMSampleBuffer=}{CFRange=qq}^^{opaqueCMSampleBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseGetMasterTimebase": (b"^{OpaqueCMTimebase=}^{OpaqueCMTimebase=}",),
     "CMSimpleQueueGetCapacity": (b"i^{opaqueCMSimpleQueue=}",),
@@ -1596,10 +1441,7 @@ functions = {
     "CMTagCollectionCreateIntersection": (
         b"i^{OpaqueCMTagCollection=}^{OpaqueCMTagCollection=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMBufferQueueGetEndPresentationTimeStamp": (
         b"{CMTime=qiIq}^{opaqueCMBufferQueue=}",
@@ -1619,10 +1461,7 @@ functions = {
     "CMMetadataFormatDescriptionCreateWithMetadataFormatDescriptionAndMetadataSpecifications": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFArray=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSampleBufferGetSampleTimingInfo": (
         b"i^{opaqueCMSampleBuffer=}q^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}",
@@ -1633,10 +1472,7 @@ functions = {
     "CMTagCollectionCreateUnion": (
         b"i^{OpaqueCMTagCollection=}^{OpaqueCMTagCollection=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMDoesBigEndianSoundDescriptionRequireLegacyCBRSampleTableLayout": (
         b"Z^{OpaqueCMBlockBuffer=}^{__CFString=}",
@@ -1662,12 +1498,11 @@ functions = {
         b"i^{__CFAllocator=}^vQ^{__CFAllocator=}^{CMBlockBufferCustomBlockSource=I^?^?^v}QQI^^{OpaqueCMBlockBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 8: {"already_cfretained": True, "type_modifier": "o"},
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
                 4: {"type_modifier": "n"},
-            },
+            }
         },
     ),
     "CMTimeMakeFromDictionary": (b"{CMTime=qiIq}^{__CFDictionary=}",),
@@ -1718,10 +1553,7 @@ functions = {
     "CMAudioClockCreate": (
         b"i^{__CFAllocator=}^^{OpaqueCMClock=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMBlockBufferIsRangeContiguous": (b"Z^{OpaqueCMBlockBuffer=}QQ",),
     "CMTimeRangeContainsTimeRange": (
@@ -1738,20 +1570,16 @@ functions = {
     "CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFString=}^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTagCollectionCopyTagsOfCategories": (
         b"i^{__CFAllocator=}^{OpaqueCMTagCollection=}^Iq^^{OpaqueCMTagCollection=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 3, "type_modifier": "n"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMTimeMapTimeFromRangeToRange": (
@@ -1779,18 +1607,12 @@ functions = {
     "CMBlockBufferCreateWithBufferReference": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}QQI^^{OpaqueCMBlockBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMAudioFormatDescriptionCreateFromBigEndianSoundDescriptionBlockBuffer": (
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{__CFString=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSwapBigEndianTimeCodeDescriptionToHost": (
         b"i^CQ",
@@ -1801,10 +1623,7 @@ functions = {
     "CMMetadataFormatDescriptionCreateByMergingMetadataFormatDescriptions": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{opaqueCMFormatDescription=}^^{opaqueCMFormatDescription=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMTimebaseCopyMasterTimebase": (
         b"^{OpaqueCMTimebase=}^{OpaqueCMTimebase=}",
@@ -1851,10 +1670,7 @@ functions = {
     "CMBlockBufferCopyDataBytes": (
         b"i^{OpaqueCMBlockBuffer=}QQ^v",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"c_array_length_in_arg": 2, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"c_array_length_in_arg": 2, "type_modifier": "o"}}},
     ),
     "CMTagGetValue": (b"Q{CMTag=IIQ}",),
     "CMSampleBufferGetSampleSizeArray": (
@@ -1881,10 +1697,7 @@ functions = {
     "CMTagCollectionCreateFromData": (
         b"i^{__CFData=}^{__CFAllocator=}^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
 }
 aliases = {

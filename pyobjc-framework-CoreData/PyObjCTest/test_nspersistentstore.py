@@ -18,3 +18,5 @@ class TestNSPersistentStore(TestCase):
 
         self.assertResultIsBOOL(CoreData.NSPersistentStore.loadMetadata_)
         self.assertArgIsOut(CoreData.NSPersistentStore.loadMetadata_, 0)
+
+        self.assertResultIsRetained(CoreData.NSPersistentContainer.newBackgroundContext)

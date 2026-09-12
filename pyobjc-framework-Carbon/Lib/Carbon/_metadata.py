@@ -117,10 +117,7 @@ functions = {
     "CopySymbolicHotKeys": (
         b"i^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
 }
 aliases = {

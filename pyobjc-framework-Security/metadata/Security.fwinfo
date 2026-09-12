@@ -1335,7 +1335,8 @@
    "SecEncryptTransformCreate": {
     "args": {
      "1": { "type_modifier": "o" }
-    }
+    },
+    "retval": { "already_retained": false, "already_cfretained": true }
    },
    "SecIdentityCopySystemIdentity": {
     "args": {
@@ -1676,6 +1677,36 @@
     "args": {
      "0": { "callable_retained": true }
     }
+   },
+   "SecDecryptTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecDecodeTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecDigestTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecTransformCreateGroupTransform": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecEncodeTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecVerifyTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecSignTransformCreate": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecTransformCreateReadTransformWithReadStream": {
+    "retval": { "already_retained": false, "already_cfretained": true }
+   },
+   "SecTransformCreateFromExternalRepresentation": {
+    "retval": { "already_retained": false, "already_cfretained": true }
    },
    "sec_protocol_metadata_create_secret": {
     "args": {

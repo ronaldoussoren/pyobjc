@@ -10,3 +10,7 @@ class TestNETunnelProviderManager(TestCase):
             0,
             b"v@@",
         )
+
+        self.assertResultIsRetained(
+            NetworkExtension.NETunnelProviderManager.copyAppRules
+        )

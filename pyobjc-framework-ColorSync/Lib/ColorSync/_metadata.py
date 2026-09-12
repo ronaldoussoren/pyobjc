@@ -68,7 +68,7 @@ functions = {
     "ColorSyncCreateCodeFragment": (
         b"@^{__CFArray=}^{__CFDictionary=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": (
         b"^{__CFData=}^{ColorSyncProfile=}n^L",

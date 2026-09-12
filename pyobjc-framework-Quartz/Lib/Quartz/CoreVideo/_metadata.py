@@ -111,10 +111,7 @@ functions = {
     "CVPixelBufferCreate": (
         b"i^{__CFAllocator=}QQI^{__CFDictionary=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVOpenGLBufferPoolGetTypeID": (b"Q",),
     "CVPixelBufferFillExtendedPixels": (b"i^{__CVBuffer=}",),
@@ -125,10 +122,7 @@ functions = {
     "CVOpenGLBufferPoolCreateOpenGLBuffer": (
         b"i^{__CFAllocator=}^{__CVOpenGLBufferPool=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkSetCurrentCGDisplay": (b"i^{__CVDisplayLink=}I",),
     "CVBufferSetAttachment": (b"v^{__CVBuffer=}^{__CFString=}@I",),
@@ -136,19 +130,13 @@ functions = {
     "CVPixelBufferPoolCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}^{__CFDictionary=}^^{__CVPixelBufferPool=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVPixelBufferGetHeightOfPlane": (b"Q^{__CVBuffer=}Q",),
     "CVPixelBufferPoolCreatePixelBufferWithAuxAttributes": (
         b"i^{__CFAllocator=}^{__CVPixelBufferPool=}^{__CFDictionary=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVBufferRetain": (b"^{__CVBuffer=}^{__CVBuffer=}",),
     "CVMetalBufferCacheFlush": (b"v^{__CVMetalBufferCache=}Q",),
@@ -171,20 +159,14 @@ functions = {
     "CVMetalTextureCacheCreateTextureFromImage": (
         b"i^{__CFAllocator=}^{__CVMetalTextureCache=}^{__CVBuffer=}^{__CFDictionary=}QQQQ^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {8: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {8: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVOpenGLTextureIsFlipped": (b"Z^{__CVBuffer=}",),
     "CVMetalTextureCacheFlush": (b"v^{__CVMetalTextureCache=}Q",),
     "CVPixelBufferPoolCreatePixelBuffer": (
         b"i^{__CFAllocator=}^{__CVPixelBufferPool=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVPixelBufferGetTypeID": (b"Q",),
     "CVDisplayLinkGetActualOutputVideoRefreshPeriod": (b"d^{__CVDisplayLink=}",),
@@ -193,10 +175,7 @@ functions = {
     "CVDisplayLinkCreateWithCGDisplay": (
         b"iI^^{__CVDisplayLink=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVBufferRelease": (b"v^{__CVBuffer=}",),
     "CVBufferCopyAttachments": (
@@ -222,27 +201,18 @@ functions = {
     "CVOpenGLBufferPoolCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}^{__CFDictionary=}^^{__CVOpenGLBufferPool=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkRetain": (b"^{__CVDisplayLink=}^{__CVDisplayLink=}",),
     "CVPixelBufferCreateWithIOSurface": (
         b"i^{__CFAllocator=}^{__IOSurface=}^{__CFDictionary=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkCreateWithOpenGLDisplayMask": (
         b"iI^^{__CVDisplayLink=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkSetOutputHandler": (
         b"i^{__CVDisplayLink=}@?",
@@ -275,10 +245,7 @@ functions = {
     "CVOpenGLBufferCreate": (
         b"i^{__CFAllocator=}QQ^{__CFDictionary=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVPixelBufferIsCompatibleWithAttributes": (b"Z^{__CVBuffer=}^{__CFDictionary=}",),
     "CVDisplayLinkGetTypeID": (b"Q",),
@@ -286,10 +253,7 @@ functions = {
     "CVDisplayLinkCreateWithActiveCGDisplays": (
         b"i^^{__CVDisplayLink=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkGetNominalOutputVideoRefreshPeriod": (
         b"{CVTime=qii}^{__CVDisplayLink=}",
@@ -297,10 +261,7 @@ functions = {
     "CVPixelBufferCreateResolvedAttributesDictionary": (
         b"i^{__CFAllocator=}^{__CFArray=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkSetOutputCallback": (
         b"i^{__CVDisplayLink=}^?^v",
@@ -368,20 +329,16 @@ functions = {
     "CVOpenGLTextureCacheCreateTextureFromImage": (
         b"i^{__CFAllocator=}^{__CVOpenGLTextureCache=}^{__CVBuffer=}^{__CFDictionary=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVDisplayLinkCreateWithCGDisplays": (
         b"i^Iq^^{__CVDisplayLink=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CVPixelBufferPoolGetPixelBufferAttributes": (
@@ -411,7 +368,6 @@ functions = {
         b"i^{__CFAllocator=}QQI^vQ^?^v^{__CFDictionary=}^^{__CVBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 9: {"type_modifier": "o"},
                 6: {
@@ -420,17 +376,14 @@ functions = {
                         "arguments": {0: {"type": b"^v"}, 1: {"type": b"^v"}},
                     }
                 },
-            },
+            }
         },
     ),
     "CVMetalTextureGetTypeID": (b"Q",),
     "CVMetalBufferCacheCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}@^^{__CVMetalBufferCache=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVOpenGLBufferPoolRetain": (b"^{__CVOpenGLBufferPool=}^{__CVOpenGLBufferPool=}",),
     "CVPixelBufferUnlockBaseAddress": (b"i^{__CVBuffer=}Q",),
@@ -469,18 +422,12 @@ functions = {
     "CVMetalBufferCacheCreateBufferFromImage": (
         b"i^{__CFAllocator=}^{__CVMetalBufferCache=}^{__CVBuffer=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVMetalTextureCacheCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}@^{__CFDictionary=}^^{__CVMetalTextureCache=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVMetalBufferGetTypeID": (b"Q",),
     "CVPixelBufferGetExtendedPixels": (
@@ -511,10 +458,7 @@ functions = {
     "CVOpenGLTextureCacheCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}^{_CGLContextObject=}^{_CGLPixelFormatObject=}^{__CFDictionary=}^^{__CVOpenGLTextureCache=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CVMetalBufferGetBuffer": (b"@^{__CVBuffer=}",),
     "CVPixelBufferPoolFlush": (b"v^{__CVPixelBufferPool=}Q",),

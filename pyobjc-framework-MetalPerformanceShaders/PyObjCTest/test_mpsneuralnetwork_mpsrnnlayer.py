@@ -134,6 +134,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
             MetalPerformanceShaders.MPSLSTMDescriptor.setMemoryWeightsAreDiagonal_, 0
         )
 
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNImageInferenceLayer.copyWithZone_device_
+        )
+
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSRNNImageInferenceLayer.recurrentOutputIsTemporary
         )
@@ -148,6 +152,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSRNNImageInferenceLayer.setStoreAllIntermediateStates_,
             0,
+        )
+
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNMatrixInferenceLayer.copyWithZone_device_
         )
 
         self.assertResultIsBOOL(
@@ -168,6 +176,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
 
     @min_os_level("10.14")
     def test_methods10_14(self):
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.copyWithZone_device_
+        )
+
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.storeAllIntermediateStates
         )

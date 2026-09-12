@@ -524,11 +524,7 @@ functions = {
         b"{MTLIndirectCommandBufferExecutionRange=II}II",
     ),
     "MTLClearColorMake": (b"{MTLClearColor=dddd}dddd",),
-    "MTLCreateSystemDefaultDevice": (
-        b"@",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "MTLCreateSystemDefaultDevice": (b"@", "", {"retval": {"already_retained": True}}),
     "MTLCopyAllDevices": (b"@", "", {"retval": {"already_cfretained": True}}),
     "MTLIOCreateCompressionContext": (
         b"^v^tqQ",
@@ -1035,6 +1031,21 @@ try:
     r(b"MTLAttribute", b"isPatchControlPointData", {"retval": {"type": b"Z"}})
     r(b"MTLAttribute", b"isPatchData", {"retval": {"type": b"Z"}})
     r(b"MTLCaptureManager", b"isCapturing", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLCaptureManager",
+        b"newCaptureScopeWithCommandQueue:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLCaptureManager",
+        b"newCaptureScopeWithDevice:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MTLCaptureManager",
+        b"newCaptureScopeWithMTL4CommandQueue:",
+        {"retval": {"already_retained": True}},
+    )
     r(
         b"MTLCaptureManager",
         b"startCaptureWithDescriptor:error:",
@@ -3335,28 +3346,36 @@ try:
     r(
         b"NSObject",
         b"newAccelerationStructureWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newAccelerationStructureWithDescriptor:offset:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
         },
     )
     r(
         b"NSObject",
         b"newAccelerationStructureWithSize:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newAccelerationStructureWithSize:offset:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
         },
     )
@@ -3365,36 +3384,52 @@ try:
         b"newArchiveWithURL:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newArgumentEncoderForBufferAtIndex:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newArgumentEncoderWithArguments:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newArgumentEncoderWithBufferBinding:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newArgumentEncoderWithBufferIndex:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newArgumentEncoderWithBufferIndex:reflection:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"Q"}, 3: {"type": b"^@"}},
         },
     )
@@ -3403,7 +3438,7 @@ try:
         b"newArgumentTableWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3412,7 +3447,7 @@ try:
         b"newBinaryArchiveWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3421,7 +3456,7 @@ try:
         b"newBinaryFunctionWithDescriptor:compilerTaskOptions:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3444,7 +3479,7 @@ try:
         b"newBinaryFunctionWithDescriptor:compilerTaskOptions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3457,7 +3492,7 @@ try:
         b"newBinaryFunctionWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3466,7 +3501,7 @@ try:
         b"newBufferWithBytes:length:options:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
                 3: {"type": b"Q"},
@@ -3479,7 +3514,7 @@ try:
         b"newBufferWithBytesNoCopy:length:options:deallocator:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
                 3: {"type": b"Q"},
@@ -3503,7 +3538,7 @@ try:
         b"newBufferWithLength:options:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
         },
     )
@@ -3512,7 +3547,7 @@ try:
         b"newBufferWithLength:options:offset:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
         },
     )
@@ -3521,38 +3556,58 @@ try:
         b"newBufferWithLength:options:placementSparsePageSize:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}, 4: {"type": b"q"}},
         },
     )
-    r(b"NSObject", b"newCommandAllocator", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newCommandAllocator",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newCommandAllocatorWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
-    r(b"NSObject", b"newCommandBuffer", {"required": True, "retval": {"type": b"@"}})
-    r(b"NSObject", b"newCommandQueue", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newCommandBuffer",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"newCommandQueue",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newCommandQueueWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newCommandQueueWithMaxCommandBufferCount:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newCompilerWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3561,7 +3616,7 @@ try:
         b"newComputePipelineStateWithAdditionalBinaryFunctions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3570,7 +3625,7 @@ try:
         b"newComputePipelineStateWithBinaryFunctions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3579,7 +3634,7 @@ try:
         b"newComputePipelineStateWithDescriptor:compilerTaskOptions:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3602,7 +3657,7 @@ try:
         b"newComputePipelineStateWithDescriptor:compilerTaskOptions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3615,7 +3670,7 @@ try:
         b"newComputePipelineStateWithDescriptor:dynamicLinkingDescriptor:compilerTaskOptions:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3639,7 +3694,7 @@ try:
         b"newComputePipelineStateWithDescriptor:dynamicLinkingDescriptor:compilerTaskOptions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3653,7 +3708,7 @@ try:
         b"newComputePipelineStateWithDescriptor:dynamicLinkingDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3666,7 +3721,7 @@ try:
         b"newComputePipelineStateWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3698,7 +3753,7 @@ try:
         b"newComputePipelineStateWithDescriptor:options:reflection:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -3734,7 +3789,7 @@ try:
         b"newComputePipelineStateWithFunction:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3766,7 +3821,7 @@ try:
         b"newComputePipelineStateWithFunction:options:reflection:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -3780,7 +3835,7 @@ try:
         b"newCounterHeapWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3789,31 +3844,39 @@ try:
         b"newCounterSampleBufferWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
-    r(b"NSObject", b"newDefaultLibrary", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newDefaultLibrary",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newDefaultLibraryWithBundle:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newDepthStencilStateWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newDynamicLibrary:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {
@@ -3835,7 +3898,7 @@ try:
         b"newDynamicLibrary:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3844,7 +3907,7 @@ try:
         b"newDynamicLibraryWithURL:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {
@@ -3866,12 +3929,20 @@ try:
         b"newDynamicLibraryWithURL:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
-    r(b"NSObject", b"newEvent", {"required": True, "retval": {"type": b"@"}})
-    r(b"NSObject", b"newFence", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newEvent",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"newFence",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newFunctionWithDescriptor:completionHandler:",
@@ -3899,14 +3970,18 @@ try:
         b"newFunctionWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newFunctionWithName:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
@@ -3936,7 +4011,7 @@ try:
         b"newFunctionWithName:constantValues:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -3947,14 +4022,18 @@ try:
     r(
         b"NSObject",
         b"newHeapWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newIOCommandQueueWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3963,7 +4042,7 @@ try:
         b"newIOFileHandleWithURL:compressionMethod:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"q"},
@@ -3976,7 +4055,7 @@ try:
         b"newIOFileHandleWithURL:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -3985,7 +4064,7 @@ try:
         b"newIOHandleWithURL:compressionMethod:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"q"},
@@ -3998,7 +4077,7 @@ try:
         b"newIOHandleWithURL:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4007,21 +4086,25 @@ try:
         b"newIndirectCommandBufferWithDescriptor:maxCommandCount:options:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
         },
     )
     r(
         b"NSObject",
         b"newIntersectionFunctionTableWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newIntersectionFunctionTableWithDescriptor:stage:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
         },
     )
@@ -4052,7 +4135,7 @@ try:
         b"newIntersectionFunctionWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4061,7 +4144,7 @@ try:
         b"newLibraryWithData:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4070,7 +4153,7 @@ try:
         b"newLibraryWithDescriptor:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {
@@ -4092,7 +4175,7 @@ try:
         b"newLibraryWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4101,7 +4184,7 @@ try:
         b"newLibraryWithFile:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4133,7 +4216,7 @@ try:
         b"newLibraryWithSource:options:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4168,7 +4251,7 @@ try:
         b"newLibraryWithStitchedDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4177,7 +4260,7 @@ try:
         b"newLibraryWithURL:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4186,17 +4269,21 @@ try:
         b"newLogStateWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
-    r(b"NSObject", b"newMTL4CommandQueue", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newMTL4CommandQueue",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newMTL4CommandQueueWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4205,7 +4292,7 @@ try:
         b"newMachineLearningPipelineStateWithDescriptor:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {
@@ -4227,41 +4314,57 @@ try:
         b"newMachineLearningPipelineStateWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newPipelineDataSetSerializerWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newRasterizationRateMapWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newRemoteBufferViewForDevice:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newRemoteTextureViewForDevice:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newRenderPipelineDescriptorForSpecialization",
-        {"required": True, "retval": {"type": b"@"}},
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
     )
     r(
         b"NSObject",
         b"newRenderPipelineStateBySpecializationWithDescriptor:pipeline:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4284,7 +4387,7 @@ try:
         b"newRenderPipelineStateBySpecializationWithDescriptor:pipeline:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4297,7 +4400,7 @@ try:
         b"newRenderPipelineStateWithAdditionalBinaryFunctions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4306,7 +4409,7 @@ try:
         b"newRenderPipelineStateWithBinaryFunctions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4315,7 +4418,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:compilerTaskOptions:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4338,7 +4441,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:compilerTaskOptions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4373,7 +4476,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:dynamicLinkingDescriptor:compilerTaskOptions:completionHandler:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4397,7 +4500,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:dynamicLinkingDescriptor:compilerTaskOptions:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4411,7 +4514,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:dynamicLinkingDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4424,7 +4527,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4456,7 +4559,7 @@ try:
         b"newRenderPipelineStateWithDescriptor:options:reflection:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -4494,7 +4597,7 @@ try:
         b"newRenderPipelineStateWithMeshDescriptor:options:reflection:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -4532,7 +4635,7 @@ try:
         b"newRenderPipelineStateWithTileDescriptor:options:reflection:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -4546,52 +4649,76 @@ try:
         b"newResidencySetWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newSamplerStateWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newScratchBufferWithMinimumSize:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
-    r(b"NSObject", b"newSharedEvent", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newSharedEvent",
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
+    )
     r(
         b"NSObject",
         b"newSharedEventHandle",
-        {"required": True, "retval": {"type": b"@"}},
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
     )
     r(
         b"NSObject",
         b"newSharedEventWithHandle:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newSharedTextureHandle",
-        {"required": True, "retval": {"type": b"@"}},
+        {"required": True, "retval": {"already_retained": True, "type": b"@"}},
     )
     r(
         b"NSObject",
         b"newSharedTextureWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newSharedTextureWithHandle:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newTensorWithDescriptor:attachments:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"@"},
@@ -4604,7 +4731,7 @@ try:
         b"newTensorWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
@@ -4613,7 +4740,7 @@ try:
         b"newTensorWithDescriptor:offset:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"Q"},
@@ -4626,26 +4753,34 @@ try:
         b"newTextureViewPoolWithDescriptor:error:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
         },
     )
     r(
         b"NSObject",
         b"newTextureViewWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newTextureViewWithPixelFormat:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newTextureViewWithPixelFormat:textureType:levels:slices:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"Q"},
                 3: {"type": b"Q"},
@@ -4659,7 +4794,7 @@ try:
         b"newTextureViewWithPixelFormat:textureType:levels:slices:swizzle:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"Q"},
                 3: {"type": b"Q"},
@@ -4672,14 +4807,18 @@ try:
     r(
         b"NSObject",
         b"newTextureWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newTextureWithDescriptor:iosurface:plane:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": b"@"},
                 3: {"type": b"^{__IOSurface=}"},
@@ -4692,7 +4831,7 @@ try:
         b"newTextureWithDescriptor:offset:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
         },
     )
@@ -4701,21 +4840,25 @@ try:
         b"newTextureWithDescriptor:offset:bytesPerRow:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
         },
     )
     r(
         b"NSObject",
         b"newVisibleFunctionTableWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",
         b"newVisibleFunctionTableWithDescriptor:stage:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
         },
     )

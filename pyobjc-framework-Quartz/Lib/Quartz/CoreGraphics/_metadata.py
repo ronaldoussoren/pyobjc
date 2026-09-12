@@ -266,11 +266,7 @@ functions = {
     "CGPDFPageGetDrawingTransform": (
         b"{CGAffineTransform=dddddd}^{CGPDFPage=}i{CGRect={CGPoint=dd}{CGSize=dd}}iB",
     ),
-    "CGFontCanCreatePostScriptSubset": (
-        b"B^{CGFont=}i",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "CGFontCanCreatePostScriptSubset": (b"B^{CGFont=}i",),
     "CGContextSetStrokeColorSpace": (b"v^{CGContext=}^{CGColorSpace=}",),
     "CGContextPathContainsPoint": (b"B^{CGContext=}{CGPoint=dd}i",),
     "CGAffineTransformRotate": (

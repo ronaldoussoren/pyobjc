@@ -1147,6 +1147,11 @@ try:
     )
     r(
         b"NETunnelProviderManager",
+        b"copyAppRules",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"NETunnelProviderManager",
         b"loadAllFromPreferencesWithCompletionHandler:",
         {
             "arguments": {

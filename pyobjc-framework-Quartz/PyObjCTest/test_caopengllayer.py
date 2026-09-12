@@ -20,6 +20,11 @@ class TestCAOpenGLLayer(TestCase):
             3,
         )
 
+        self.assertResultIsRetained(Quartz.CAOpenGLLayer.copyCGLContextForPixelFormat_)
+        self.assertResultIsRetained(
+            Quartz.CAOpenGLLayer.copyCGLPixelFormatForDisplayMask_
+        )
+
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(Quartz.CAOpenGLLayer.wantsExtendedDynamicRangeContent)

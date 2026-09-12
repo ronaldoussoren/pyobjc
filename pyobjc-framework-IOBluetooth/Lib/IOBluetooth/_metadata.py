@@ -1266,18 +1266,12 @@ functions = {
     "IOBluetoothOBEXSessionCreateWithIOBluetoothSDPServiceRecordRef": (
         b"i^{OpaqueIOBluetoothObjectRef=}^^{OpaqueOBEXSessionRef=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "IOBluetoothOBEXSessionCreateWithIOBluetoothDeviceRefAndChannelNumber": (
         b"i^{OpaqueIOBluetoothObjectRef=}C^^{OpaqueOBEXSessionRef=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "OBEXAddLengthHeader": (b"iI^{__CFDictionary=}",),
     "OBEXAddBodyHeader": (

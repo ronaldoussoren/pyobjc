@@ -156,7 +156,6 @@ functions = {
         b"v^{__MDQuery=}^?^v^{CFArrayCallBacks=q^?^?^?^?}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -179,7 +178,7 @@ functions = {
                     },
                     "callable_retained": True,
                 }
-            },
+            }
         },
     ),
     "MDSchemaCopyDisplayDescriptionForAttribute": (
@@ -232,7 +231,6 @@ functions = {
         b"v^{__MDQuery=}^?^v^{CFArrayCallBacks=q^?^?^?^?}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -253,7 +251,7 @@ functions = {
                     },
                     "callable_retained": True,
                 }
-            },
+            }
         },
     ),
     "MDItemCopyLabels": (

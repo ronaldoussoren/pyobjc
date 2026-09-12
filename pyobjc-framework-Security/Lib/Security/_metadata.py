@@ -265,10 +265,7 @@ functions = {
     "SecCodeCopyPath": (
         b"i^{__SecCode=}I^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecCertificateCopySerialNumber": (
         b"^{__CFData=}^{__SecCertificate=}^^{__CFError=}",
@@ -306,10 +303,7 @@ functions = {
     "SecStaticCodeCreateWithPath": (
         b"i^{__CFURL=}I^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustGetCertificateAtIndex": (b"^{__SecCertificate=}^{__SecTrust=}q",),
     "SecTransformSetTransformAction": (
@@ -397,10 +391,7 @@ functions = {
     "SSLCopyDistinguishedNames": (
         b"i^{SSLContext=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustSetExceptions": (b"B^{__SecTrust=}^{__CFData=}",),
     "SecItemAdd": (
@@ -411,10 +402,7 @@ functions = {
     "SecKeychainItemCopyKeychain": (
         b"i^{__SecKeychainItem=}^^{__SecKeychain=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_metadata_get_server_name": (
         b"^t@",
@@ -471,25 +459,19 @@ functions = {
     "CMSDecoderCreate": (
         b"i^^{_CMSDecoder=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSDecoderCopyAllCerts": (
         b"i^{_CMSDecoder=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_options_add_tls_ciphersuite_group": (b"v@i",),
     "SecDigestTransformCreate": (
         b"@@q^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 2: {
                     "null_accepted": True,
@@ -503,18 +485,12 @@ functions = {
     "SecHostCreateGuest": (
         b"iII^{__CFURL=}^{__CFDictionary=}I^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"type_modifier": "o"}},
-        },
+        {"arguments": {5: {"type_modifier": "o"}}},
     ),
     "SecTrustSettingsCopyCertificates": (
         b"iI^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainUnlock": (
         b"i^{__SecKeychain=}I^vZ",
@@ -526,10 +502,7 @@ functions = {
     "AuthorizationCopyPrivilegedReference": (
         b"i^^{AuthorizationOpaqueRef=}I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "CMSDecoderSetDetachedContent": (b"i^{_CMSDecoder=}^{__CFData=}",),
     "sec_identity_create": (
@@ -540,10 +513,7 @@ functions = {
     "SecKeychainItemCopyFromPersistentReference": (
         b"i^{__CFData=}^^{__SecKeychainItem=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTransformCopyExternalRepresentation": (
         b"^{__CFDictionary=}@",
@@ -607,10 +577,7 @@ functions = {
     "CMSDecoderCopySignerSigningTime": (
         b"i^{_CMSDecoder=}Q^d",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustSetNetworkFetchAllowed": (b"i^{__SecTrust=}Z",),
     "SSLSetCertificate": (b"i^{SSLContext=}^{__CFArray=}",),
@@ -672,7 +639,7 @@ functions = {
     "SecTransformCreateGroupTransform": (
         b"@",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "CMSDecoderSetSearchKeychain": (b"i^{_CMSDecoder=}@",),
     "SecTrustedApplicationSetData": (b"i^{__SecTrustedApplication=}^{__CFData=}",),
@@ -683,7 +650,7 @@ functions = {
         b"@^{__CFDictionary=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -710,7 +677,7 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "SSLContextGetTypeID": (b"Q",),
-    "SessionCreate": (b"iII", "", {"retval": {"already_cfretained": True}}),
+    "SessionCreate": (b"iII",),
     "sec_identity_access_certificates": (
         b"B@@?",
         "",
@@ -729,13 +696,12 @@ functions = {
         b"i^{__SecAccess=}^I^I^I^^{__CFArray=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "o"},
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecPolicyCreateWithProperties": (
@@ -775,30 +741,23 @@ functions = {
         b"i^{__SecACL=}^^{__CFArray=}^^{__CFString=}^S",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"already_cfretained": True, "type_modifier": "o"},
                 2: {"already_cfretained": True, "type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecCodeMapMemory": (b"i^{__SecCode=}I",),
     "CMSDecoderCopyContent": (
         b"i^{_CMSDecoder=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecAccessCreate": (
         b"i^{__CFString=}^{__CFArray=}^^{__SecAccess=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTransformExecute": (
         b"@@^^{__CFError=}",
@@ -817,10 +776,7 @@ functions = {
     "SecCertificateCopyEmailAddresses": (
         b"i^{__SecCertificate=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AuthorizationMakeExternalForm": (
         b"i^{AuthorizationOpaqueRef=}^{AuthorizationExternalForm=[32c]}",
@@ -844,10 +800,7 @@ functions = {
     "SecCodeCopyDesignatedRequirement": (
         b"i^{__SecCode=}I^^{__SecRequirement=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderUpdateContent": (
         b"i^{_CMSEncoder=}^vQ",
@@ -881,21 +834,17 @@ functions = {
     "SecCodeCopyStaticCode": (
         b"i^{__SecCode=}I^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderAddSignedAttributes": (b"i^{_CMSEncoder=}I",),
     "SecIdentityCopySystemIdentity": (
         b"i^{__CFString=}^^{__SecIdentity=}^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"already_cfretained": True, "type_modifier": "o"},
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecureDownloadGetDownloadSize": (b"i^{OpaqueSecureDownload=}o^q",),
@@ -915,10 +864,7 @@ functions = {
     "SecStaticCodeCreateWithPathAndAttributes": (
         b"i^{__CFURL=}I^{__CFDictionary=}^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_identity_create_with_certificates": (
         b"@^{__SecIdentity=}^{__CFArray=}",
@@ -928,10 +874,7 @@ functions = {
     "SSLCopyPeerTrust": (
         b"i^{SSLContext=}^^{__SecTrust=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeyVerifySignature": (
         b"Z^{__SecKey=}^{__CFString=}^{__CFData=}^{__CFData=}^^{__CFError=}",
@@ -961,7 +904,7 @@ functions = {
         b"@^{__SecKey=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -1026,10 +969,7 @@ functions = {
     "CMSEncoderCopySupportingCerts": (
         b"i^{_CMSEncoder=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainItemSetAccess": (b"i^{__SecKeychainItem=}^{__SecAccess=}",),
     "sec_protocol_options_set_tls_resumption_enabled": (b"v@B",),
@@ -1085,10 +1025,7 @@ functions = {
     "AuthorizationCopyRightsAsync": (
         b"v^{AuthorizationOpaqueRef=}^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}I@?",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "n"}, 2: {"type_modifier": "n"}},
-        },
+        {"arguments": {1: {"type_modifier": "n"}, 2: {"type_modifier": "n"}}},
     ),
     "SecKeychainDelete": (b"i^{__SecKeychain=}",),
     "sec_identity_copy_certificates_ref": (
@@ -1105,21 +1042,17 @@ functions = {
     "CMSDecoderCopyDetachedContent": (
         b"i^{_CMSDecoder=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainCreate": (
         b"i^tI^vZ^{__SecAccess=}^^{__SecKeychain=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"c_array_delimited_by_null": True, "type_modifier": "n"},
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 5: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecEncryptTransformGetTypeID": (b"Q",),
@@ -1142,24 +1075,17 @@ functions = {
     "SecRequirementCopyData": (
         b"i^{__SecRequirement=}I^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSDecoderCopyEncapsulatedContentType": (
         b"i^{_CMSDecoder=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecRequirementCreateWithStringAndErrors": (
         b"i^{__CFString=}I^^{__CFError=}^^{__SecRequirement=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {
                     "null_accepted": True,
@@ -1167,7 +1093,7 @@ functions = {
                     "type_modifier": "o",
                 },
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SSLReHandshake": (b"i^{SSLContext=}",),
@@ -1178,20 +1104,16 @@ functions = {
         b"i^{SSLContext=}^t^Q",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "o", "c_array_length_in_arg": 2},
                 2: {"type_modifier": "N"},
-            },
+            }
         },
     ),
     "CMSDecoderCopySignerCert": (
         b"i^{_CMSDecoder=}Q^^{__SecCertificate=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustCopyExceptions": (
         b"^{__CFData=}^{__SecTrust=}",
@@ -1206,18 +1128,12 @@ functions = {
     "SecKeychainItemCreatePersistentReference": (
         b"i^{__SecKeychainItem=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLCopyCertificateAuthorities": (
         b"i^{SSLContext=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTransformConnectTransforms": (
         b"@@^{__CFString=}@^{__CFString=}@^^{__CFError=}",
@@ -1235,10 +1151,7 @@ functions = {
     "SecAccessCopyACLList": (
         b"i^{__SecAccess=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecHostSelectedGuest": (b"iI^I", "", {"arguments": {1: {"type_modifier": "o"}}}),
     "sec_protocol_options_get_default_min_tls_protocol_version": (b"i",),
@@ -1250,10 +1163,7 @@ functions = {
     "SecKeychainItemCreateCopy": (
         b"i^{__SecKeychainItem=}^{__SecKeychain=}^{__SecAccess=}^^{__SecKeychainItem=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeyGeneratePairAsync": (
         b"v^{__CFDictionary=}@@?",
@@ -1301,38 +1211,28 @@ functions = {
         b"i^{_CMSDecoder=}Q@Z^I^^{__SecTrust=}^i",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 4: {"type_modifier": "o"},
                 5: {"type_modifier": "o"},
                 6: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecTrustCopyCustomAnchorCertificates": (
         b"i^{__SecTrust=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderCopySignerTimestampWithPolicy": (
         b"i^{_CMSEncoder=}@Q^d",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "SecTrustSettingsImportExternalRepresentation": (b"iI^{__CFData=}",),
     "SecTrustCreateWithCertificates": (
         b"i@@^^{__SecTrust=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecHostSetHostingPort": (b"iII",),
     "sec_protocol_options_set_tls_sct_enabled": (b"v@B",),
@@ -1403,10 +1303,7 @@ functions = {
     "SecIdentityCreateWithCertificate": (
         b"i@^{__SecCertificate=}^^{__SecIdentity=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTaskCreateWithAuditToken": (
         b"^{__SecTask=}^{__CFAllocator=}{audit_token_t=[8I]}",
@@ -1431,10 +1328,7 @@ functions = {
     "AuthorizationCreateFromExternalForm": (
         b"i^{AuthorizationExternalForm=[32c]}^^{AuthorizationOpaqueRef=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "n"}, 1: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "n"}, 1: {"type_modifier": "o"}}},
     ),
     "CMSDecoderUpdateMessage": (
         b"i^{_CMSDecoder=}^vQ",
@@ -1444,10 +1338,7 @@ functions = {
     "CMSEncoderCopyEncapsulatedContentType": (
         b"i^{_CMSEncoder=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLGetConnection": (
         b"i^{SSLContext=}^@",
@@ -1469,7 +1360,7 @@ functions = {
     "SecTransformCreateReadTransformWithReadStream": (
         b"@^{__CFReadStream=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "sec_protocol_options_set_max_tls_protocol_version": (b"v@S",),
     "SecRequirementGetTypeID": (b"Q",),
@@ -1532,10 +1423,7 @@ functions = {
     "SecCertificateCopyPublicKey": (
         b"i^{__SecCertificate=}^^{__SecKey=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecPolicyCopyProperties": (
         b"^{__CFDictionary=}^{__SecPolicy=}",
@@ -1546,19 +1434,18 @@ functions = {
         b"i^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}I^^{AuthorizationOpaqueRef=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "n"},
                 1: {"type_modifier": "n"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "SecDecodeTransformCreate": (
         b"@@^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -1588,7 +1475,7 @@ functions = {
         b"@^{__SecKey=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -1627,10 +1514,7 @@ functions = {
     "SecCertificateCopyCommonName": (
         b"i^{__SecCertificate=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLGetSupportedCiphers": (
         selAorI(b"i^{SSLContext=}^S^Q", b"i^{SSLContext=}^I^Q"),
@@ -1653,10 +1537,7 @@ functions = {
     "SecIdentityCopyPrivateKey": (
         b"i^{__SecIdentity=}^^{__SecKey=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderAddSupportingCerts": (b"i^{_CMSEncoder=}@",),
     "sec_certificate_create": (
@@ -1668,10 +1549,7 @@ functions = {
     "CMSDecoderCopySignerTimestamp": (
         b"i^{_CMSDecoder=}Q^d",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLSetDatagramHelloCookie": (
         b"i^{SSLContext=}^vQ",
@@ -1729,10 +1607,7 @@ functions = {
     "SecRequirementCreateWithData": (
         b"i^{__CFData=}I^^{__SecRequirement=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_options_set_min_tls_protocol_version": (b"v@S",),
     "SecureDownloadFinished": (b"i^{OpaqueSecureDownload=}",),
@@ -1768,18 +1643,12 @@ functions = {
     "CMSDecoderCopySignerTimestampCertificates": (
         b"i^{_CMSDecoder=}Q^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecCodeCopySigningInformation": (
         b"i^{__SecCode=}I^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderSetCertificateChainMode": (b"i^{_CMSEncoder=}I",),
     "SecAccessControlCreateWithFlags": (
@@ -1822,18 +1691,12 @@ functions = {
     "SSLCopyALPNProtocols": (
         b"i^{SSLContext=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainCopySearchList": (
         b"i^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecDigestTransformGetTypeID": (b"Q",),
     "SecTrustSetOptions": (b"i^{__SecTrust=}I",),
@@ -1851,10 +1714,7 @@ functions = {
     "SecKeychainCopyAccess": (
         b"i^{__SecKeychain=}^^{__SecAccess=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_options_set_tls_pre_shared_key_identity_hint": (b"v@@",),
     "SecKeychainFindGenericPassword": (
@@ -1892,10 +1752,7 @@ functions = {
     "SecRandomCopyBytes": (
         b"i^{__SecRandom=}Q^v",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"c_array_length_in_arg": 1, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"c_array_length_in_arg": 1, "type_modifier": "o"}}},
     ),
     "CMSDecoderFinalizeMessage": (b"i^{_CMSDecoder=}",),
     "SecKeyWrapSymmetric": (
@@ -1916,7 +1773,7 @@ functions = {
         b"@^{__SecKey=}^{__CFData=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 2: {
                     "null_accepted": True,
@@ -1930,10 +1787,7 @@ functions = {
     "CMSEncoderCopyEncodedContent": (
         b"i^{_CMSEncoder=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMSEncoderAddSigners": (b"i^{_CMSEncoder=}@",),
     "sec_protocol_metadata_copy_peer_public_key": (
@@ -1950,10 +1804,7 @@ functions = {
     "CMSEncoderCopySigners": (
         b"i^{_CMSEncoder=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLAddDistinguishedName": (
         b"i^{SSLContext=}^vQ",
@@ -1963,19 +1814,13 @@ functions = {
     "SecTrustSettingsCopyModificationDate": (
         b"i^{__SecCertificate=}I^^{__CFDate=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecureDownloadUpdateWithData": (b"i^{OpaqueSecureDownload=}@",),
     "SecKeychainCopyDomainDefault": (
         b"ii^^{__SecKeychain=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecItemDelete": (b"i^{__CFDictionary=}",),
     "SecStaticCodeCheckValidity": (b"i^{__SecCode=}I^{__SecRequirement=}",),
@@ -1993,10 +1838,7 @@ functions = {
     "SecCodeCopyHost": (
         b"i^{__SecCode=}I^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_metadata_challenge_parameters_are_equal": (b"B@@",),
     "SecTrustedApplicationGetTypeID": (b"Q",),
@@ -2034,18 +1876,12 @@ functions = {
     "CMSDecoderCopySignerTimestampWithPolicy": (
         b"i^{_CMSDecoder=}@Q^d",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecCodeCreateWithXPCMessage": (
         b"i@I^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLRead": (
         b"i^{SSLContext=}^vQ^Q",
@@ -2081,10 +1917,7 @@ functions = {
     "SecTrustCopyAnchorCertificates": (
         b"i^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "sec_protocol_options_add_tls_ciphersuite": (selAorI(b"v@S", b"v@I"),),
     "SecKeychainSetDomainDefault": (b"ii^{__SecKeychain=}",),
@@ -2107,28 +1940,19 @@ functions = {
     "SSLCopyRequestedPeerNameLength": (
         b"i^{SSLContext=}^Q",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "CMSEncoderCopySignerTimestamp": (
         b"i^{_CMSEncoder=}Q^d",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "SSLSetClientSideAuthenticate": (b"i^{SSLContext=}i",),
     "sec_protocol_metadata_get_early_data_accepted": (b"B@",),
     "SecCodeCopySelf": (
         b"iI^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLGetNumberSupportedCiphers": (
         b"i^{SSLContext=}^Q",
@@ -2172,18 +1996,12 @@ functions = {
     "SecKeychainCopySettings": (
         b"i^{__SecKeychain=}^{SecKeychainSettings=IZZI}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "SecTrustSettingsCreateExternalRepresentation": (
         b"iI^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecCertificateCopyKey": (
         b"^{__SecKey=}^{__SecCertificate=}",
@@ -2204,20 +2022,14 @@ functions = {
     "SecRequirementCreateWithString": (
         b"i^{__CFString=}I^^{__SecRequirement=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainSetDomainSearchList": (b"ii^{__CFArray=}",),
     "sec_protocol_options_set_tls_diffie_hellman_parameters": (b"v@@",),
     "SecRequirementCopyString": (
         b"i^{__SecRequirement=}I^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainFindInternetPassword": (
         b"i@I^tI^tI^tI^tSII^I^t^^{__SecKeychainItem=}",
@@ -2254,11 +2066,10 @@ functions = {
         b"i^{AuthorizationOpaqueRef=}^t^^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"c_array_delimited_by_null": True, "type_modifier": "n"},
                 2: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "sec_protocol_options_get_default_min_dtls_protocol_version": (b"i",),
@@ -2266,7 +2077,7 @@ functions = {
         b"@^{__CFString=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -2284,10 +2095,7 @@ functions = {
     "SecKeychainCopyDomainSearchList": (
         b"ii^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeyCreateFromData": (
         b"^{__SecKey=}^{__CFDictionary=}^{__CFData=}^^{__CFError=}",
@@ -2374,10 +2182,7 @@ functions = {
     "CMSEncoderCopyRecipients": (
         b"i^{_CMSEncoder=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecIdentityCreate": (
         b"^{__SecIdentity=}^{__CFAllocator=}^{__SecCertificate=}^{__SecKey=}",
@@ -2477,10 +2282,7 @@ functions = {
     "CMSDecoderCopySignerEmailAddress": (
         b"i^{_CMSDecoder=}Q^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustSetSignedCertificateTimestamps": (b"i^{__SecTrust=}^{__CFArray=}",),
     "SecTrustSetOCSPResponse": (b"i^{__SecTrust=}@",),
@@ -2488,21 +2290,17 @@ functions = {
     "SecACLCreateWithSimpleContents": (
         b"i^{__SecAccess=}^{__CFArray=}^{__CFString=}S^^{__SecACL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustGetTypeID": (b"Q",),
     "SecTrustedApplicationCreateFromPath": (
         b"i^t^^{__SecTrustedApplication=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"c_array_delimited_by_null": True, "type_modifier": "n"},
                 1: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SSLSetOCSPResponse": (b"i^{SSLContext=}^{__CFData=}",),
@@ -2529,10 +2327,7 @@ functions = {
     "SecIdentityCopyCertificate": (
         b"i^{__SecIdentity=}^^{__SecCertificate=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecRequestSharedWebCredential": (
         b"v^{__CFString=}^{__CFString=}@?",
@@ -2577,7 +2372,7 @@ functions = {
         b"@@^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -2603,19 +2398,13 @@ functions = {
     "SecTrustCopyPolicies": (
         b"i^{__SecTrust=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainSetDefault": (b"i^{__SecKeychain=}",),
     "SecCodeCopyGuestWithAttributes": (
         b"i^{__SecCode=}^{__CFDictionary=}I^^{__SecCode=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecTrustSetAnchorCertificates": (b"i^{__SecTrust=}^{__CFArray=}",),
     "SecKeychainGetTypeID": (b"Q",),
@@ -2639,28 +2428,19 @@ functions = {
     "SecItemCopyMatching": (
         b"i^{__CFDictionary=}^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecItemUpdate": (b"i^{__CFDictionary=}^{__CFDictionary=}",),
     "CMSDecoderGetTypeID": (b"Q",),
     "SecTrustedApplicationCopyData": (
         b"i^{__SecTrustedApplication=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeychainItemCopyAccess": (
         b"i^{__SecKeychainItem=}^^{__SecAccess=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecKeyUnwrapSymmetric": (
         b"@n^@@@o^@",
@@ -2741,10 +2521,7 @@ functions = {
     "SecKeychainCopyDefault": (
         b"i^^{__SecKeychain=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SSLSetEnabledCiphers": (
         selAorI(b"i^{SSLContext=}^SQ", b"i^{SSLContext=}^IQ"),
@@ -2795,16 +2572,13 @@ functions = {
     "SecTrustSettingsCopyTrustSettings": (
         b"i^{__SecCertificate=}I^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SecEncryptTransformCreate": (
         b"@^{__SecKey=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 1: {
                     "null_accepted": True,
@@ -2817,21 +2591,17 @@ functions = {
     "CMSEncoderCreate": (
         b"i^^{_CMSEncoder=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AuthorizationCopyRights": (
         b"i^{AuthorizationOpaqueRef=}^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}I^^{AuthorizationItemSet=I^{AuthorizationItem=^cQ^vI}}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "n"},
                 2: {"type_modifier": "n"},
                 4: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMSEncodeContent": (

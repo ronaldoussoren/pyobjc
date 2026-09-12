@@ -354,6 +354,7 @@ try:
         b"initMutationEvent:canBubble:cancelable:relatedNode:prevValue:newValue:attrName:attrChange:",
         {"arguments": {3: {"type": "Z"}, 4: {"type": "Z"}}},
     )
+    r(b"DOMMutationEvent", b"newValue", {"retval": {"already_retained": True}})
     r(b"DOMNode", b"cloneNode:", {"arguments": {2: {"type": "Z"}}})
     r(b"DOMNode", b"contains:", {"retval": {"type": "Z"}})
     r(b"DOMNode", b"hasAttributes", {"retval": {"type": "Z"}})

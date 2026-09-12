@@ -109,6 +109,10 @@ class TestIKImageBrowserView(TestCase):
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.allowsDroppingOnItems)
         self.assertArgIsBOOL(Quartz.IKImageBrowserView.setAllowsDroppingOnItems_, 0)
 
+        self.assertResultIsRetained(
+            Quartz.IKImageBrowserView.newCellForRepresentedItem_
+        )
+
     @min_os_level("10.10")
     def test_methods10_10(self):
         self.assertResultIsBOOL(Quartz.IKImageBrowserView.isGroupExpandedAtIndex_)

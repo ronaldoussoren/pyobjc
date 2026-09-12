@@ -22,3 +22,4 @@ class TestBADownload(TestCase):
     @min_os_level("13.3")
     def test_methods13_3(self):
         self.assertResultIsBOOL(BackgroundAssets.BADownload.isEssential)
+        self.assertResultIsRetained(BackgroundAssets.BADownload.copyAsNonEssential)

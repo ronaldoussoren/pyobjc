@@ -123,7 +123,6 @@ functions = {
         b"v^{__SKIndex=}q^q^^{__CFURL=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 3: {
@@ -131,7 +130,7 @@ functions = {
                     "type_modifier": "o",
                     "c_array_length_in_arg": 1,
                 },
-            },
+            }
         },
     ),
     "SKSearchResultsCreateWithQuery": (
@@ -185,11 +184,10 @@ functions = {
         b"v^{__SKIndex=}q^q^@",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 3: {"c_array_length_in_arg": 1, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SKIndexOpenWithMutableData": (b"^{__SKIndex=}^{__CFData=}^{__CFString=}",),
@@ -221,12 +219,12 @@ functions = {
     "SKDocumentCreate": (
         b"@^{__CFString=}@^{__CFString=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "SKDocumentCreateWithURL": (
         b"@^{__CFURL=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "SKIndexClose": (b"v^{__SKIndex=}",),
     "SKIndexGetDocumentTermFrequency": (b"q^{__SKIndex=}qq",),
@@ -317,7 +315,6 @@ functions = {
         b"v^{__SKIndex=}q^q^^{__CFString=}^q",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
                 3: {
@@ -326,7 +323,7 @@ functions = {
                     "c_array_length_in_arg": 1,
                 },
                 4: {"c_array_length_in_arg": 1, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SKIndexGetIndexType": (b"I^{__SKIndex=}",),

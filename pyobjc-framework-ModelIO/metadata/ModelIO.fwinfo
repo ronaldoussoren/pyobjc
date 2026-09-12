@@ -1190,15 +1190,6 @@
         "type_override": "Z"
        }
       },
-      "class_method": true,
-      "selector": "newMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:"
-     },
-     {
-      "args": {
-       "2": {
-        "type_override": "Z"
-       }
-      },
       "class_method": false,
       "selector": "initBoxWithExtent:segments:inwardNormals:geometryType:allocator:"
      },

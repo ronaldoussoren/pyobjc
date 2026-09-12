@@ -190,14 +190,13 @@ functions = {
         b"B^{CGImageDestination=}^{CGImageSource=}^{__CFDictionary=}^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {
                     "null_accepted": True,
                     "already_cfretained": True,
                     "type_modifier": "o",
                 }
-            },
+            }
         },
     ),
     "CGImageSourceSetAllowableTypes": (b"i^{__CFArray=}",),

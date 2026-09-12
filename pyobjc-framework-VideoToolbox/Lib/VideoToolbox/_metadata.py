@@ -108,18 +108,12 @@ functions = {
     "VTPixelTransferSessionCreate": (
         b"i^{__CFAllocator=}^^{OpaqueVTPixelTransferSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCreateCGImageFromCVPixelBuffer": (
         b"i^{__CVBuffer=}^{__CFDictionary=}^^{CGImage=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCompressionSessionEndPass": (
         b"i^{OpaqueVTCompressionSession=}^Z^I",
@@ -132,10 +126,7 @@ functions = {
     "VTSessionCopySupportedPropertyDictionary": (
         b"i@^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTMotionEstimationSessionCompleteFrames": (
         b"i^{OpaqueVTMotionEstimationSession=}",
@@ -143,10 +134,7 @@ functions = {
     "VTPixelRotationSessionCreate": (
         b"i^{__CFAllocator=}^^{OpaqueVTPixelRotationSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTRAWProcessingSessionInvalidate": (b"v^{OpaqueVTRAWProcessingSession=}",),
     "VTHDRPerFrameMetadataGenerationSessionGetTypeID": (b"Q",),
@@ -208,10 +196,7 @@ functions = {
     "VTRAWProcessingSessionCreate": (
         b"i^{__CFAllocator=}^{opaqueCMFormatDescription=}^{__CFDictionary=}^{__CFDictionary=}^^{OpaqueVTRAWProcessingSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCompressionSessionPrepareToEncodeFrames": (b"i^{OpaqueVTCompressionSession=}",),
     "VTCompressionSessionInvalidate": (b"v^{OpaqueVTCompressionSession=}",),
@@ -282,18 +267,12 @@ functions = {
     "VTSessionCopyProperty": (
         b"i@^{__CFString=}^{__CFAllocator=}^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCopyRAWProcessorExtensionProperties": (
         b"i^{opaqueCMFormatDescription=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCompressionSessionBeginPass": (
         b"i^{OpaqueVTCompressionSession=}I^I",
@@ -303,10 +282,7 @@ functions = {
     "VTMotionEstimationSessionCreate": (
         b"i^{__CFAllocator=}^{__CFDictionary=}II^^{OpaqueVTMotionEstimationSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTRegisterProfessionalVideoWorkflowVideoDecoders": (b"v",),
     "VTRAWProcessingSessionProcessFrame": (
@@ -380,10 +356,7 @@ functions = {
     "VTMotionEstimationSessionCopySourcePixelBufferAttributes": (
         b"i^{OpaqueVTMotionEstimationSession=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTCompressionSessionEncodeFrameWithOutputHandler": (
         b"i^{OpaqueVTCompressionSession=}^{__CVBuffer=}{CMTime=qiIq}{CMTime=qiIq}^{__CFDictionary=}^I@?",
@@ -411,20 +384,16 @@ functions = {
         b"iiiI^{__CFDictionary=}^^{__CFString=}^^{__CFDictionary=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 4: {"already_cfretained": True, "type_modifier": "o"},
                 5: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "VTHDRPerFrameMetadataGenerationSessionCreate": (
         b"i^{__CFAllocator=}f^{__CFDictionary=}^^{OpaqueVTHDRPerFrameMetadataGenerationSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTPixelRotationSessionRotateImage": (
         b"i^{OpaqueVTPixelRotationSession=}^{__CVBuffer=}^{__CVBuffer=}",
@@ -455,10 +424,7 @@ functions = {
     "VTDecompressionSessionCopyBlackPixelBuffer": (
         b"i^{OpaqueVTDecompressionSession=}^^{__CVBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTPixelRotationSessionGetTypeID": (b"Q",),
     "VTRAWProcessingSessionGetTypeID": (b"Q",),
@@ -468,18 +434,12 @@ functions = {
     "VTCopyVideoEncoderList": (
         b"i^{__CFDictionary=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTMultiPassStorageCreate": (
         b"i^{__CFAllocator=}^{__CFURL=}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTMultiPassStorage=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTDecompressionSessionGetTypeID": (b"Q",),
     "VTSessionSetProperties": (b"i@^{__CFDictionary=}",),
@@ -516,10 +476,7 @@ functions = {
     "VTRAWProcessingSessionCopyProcessingParameters": (
         b"i^{OpaqueVTRAWProcessingSession=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTDecompressionSessionDecodeFrameWithOutputHandler": (
         b"i^{OpaqueVTDecompressionSession=}^{opaqueCMSampleBuffer=}I^I@?",
@@ -546,10 +503,7 @@ functions = {
     "VTCopyVideoDecoderExtensionProperties": (
         b"i^{opaqueCMFormatDescription=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTRAWProcessingSessionCompleteFrames": (b"i^{OpaqueVTRAWProcessingSession=}",),
     "VTCompressionSessionEncodeFrame": (
@@ -560,10 +514,7 @@ functions = {
     "VTFrameSiloCreate": (
         b"i^{__CFAllocator=}^{__CFURL=}{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTFrameSilo=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTIsStereoMVHEVCDecodeSupported": (b"Z",),
     "VTFrameSiloGetProgressOfCurrentPass": (
@@ -577,10 +528,7 @@ functions = {
     "VTSessionCopySerializableProperties": (
         b"i@^{__CFAllocator=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "VTIsStereoMVHEVCEncodeSupported": (b"Z",),
     "VTRAWProcessingSessionSetProcessingParameters": (
@@ -590,7 +538,6 @@ functions = {
         b"i^{__CFAllocator=}iiI^{__CFDictionary=}^{__CFDictionary=}^{__CFAllocator=}^?^v^^{OpaqueVTCompressionSession=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 9: {"already_cfretained": True, "type_modifier": "o"},
                 7: {
@@ -606,7 +553,7 @@ functions = {
                     },
                     "callable_retained": True,
                 },
-            },
+            }
         },
     ),
 }

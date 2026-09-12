@@ -775,7 +775,7 @@ functions = {
         "",
         {"arguments": {0: {"c_array_length_in_arg": 1, "type_modifier": "n"}}},
     ),
-    "NSCreateFilenamePboardType": (b"@@", "", {"retval": {"already_cfretained": True}}),
+    "NSCreateFilenamePboardType": (b"@@", "", {"retval": {"already_retained": True}}),
     "NSInterfaceStyleForKey": (b"Q@@",),
     "NSAvailableWindowDepths": (
         b"^i",
@@ -838,13 +838,9 @@ functions = {
     "NSCreateFileContentsPboardType": (
         b"@@",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
-    "NSCopyBits": (
-        b"vq{CGRect={CGPoint=dd}{CGSize=dd}}{CGPoint=dd}",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "NSCopyBits": (b"vq{CGRect={CGPoint=dd}{CGSize=dd}}{CGPoint=dd}",),
     "NSDisableScreenUpdates": (b"v",),
     "NSEdgeInsetsMake": (b"{NSEdgeInsets=dddd}dddd",),
     "NSReadPixel": (b"@{CGPoint=dd}",),
@@ -2591,6 +2587,11 @@ try:
     r(b"NSCollectionView", b"minItemSize", {"retval": {"type": "{CGSize=dd}"}})
     r(
         b"NSCollectionView",
+        b"newItemForRepresentedObject:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"NSCollectionView",
         b"performBatchUpdates:completionHandler:",
         {
             "arguments": {
@@ -3124,6 +3125,7 @@ try:
     )
     r(b"NSDatePickerCell", b"drawsBackground", {"retval": {"type": "Z"}})
     r(b"NSDatePickerCell", b"setDrawsBackground:", {"arguments": {2: {"type": "Z"}}})
+    r(b"NSDictionaryController", b"newObject", {"retval": {"already_retained": True}})
     r(
         b"NSDictionaryControllerKeyValuePair",
         b"isExplicitlyIncluded",
@@ -5736,6 +5738,7 @@ try:
     r(b"NSMenuItem", b"setHidden:", {"arguments": {2: {"type": "Z"}}})
     r(b"NSMenuItem", b"setUsesUserKeyEquivalents:", {"arguments": {2: {"type": "Z"}}})
     r(b"NSMenuItem", b"usesUserKeyEquivalents", {"retval": {"type": "Z"}})
+    r(b"NSMenuItemBadge", b"newItemsWithCount:", {"retval": {"already_retained": True}})
     r(
         b"NSMenuItemCell",
         b"drawBorderAndBackgroundWithFrame:inView:",
@@ -14958,6 +14961,7 @@ try:
         },
     )
     r(b"NSObjectController", b"isEditable", {"retval": {"type": "Z"}})
+    r(b"NSObjectController", b"newObject", {"retval": {"already_retained": True}})
     r(
         b"NSObjectController",
         b"setAutomaticallyPreparesContent:",

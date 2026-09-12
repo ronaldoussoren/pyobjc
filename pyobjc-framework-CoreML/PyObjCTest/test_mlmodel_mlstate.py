@@ -17,3 +17,5 @@ class TestMLModel_MLState(TestCase):
             3,
             b"v@@",
         )
+
+        self.assertResultIsRetained(CoreML.MLModel.newState)

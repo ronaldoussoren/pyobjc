@@ -61,18 +61,12 @@ functions = {
     "CWKeychainCopyEAPIdentityList": (
         b"i^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CWKeychainCopyWiFiEAPIdentity": (
         b"iq@^^{__SecIdentity=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CWKeychainSetWiFiEAPUsernameAndPassword": (b"iq@@@",),
     "CWKeychainFindWiFiEAPUsernameAndPassword": (
@@ -84,30 +78,23 @@ functions = {
         b"i^{__CFData=}^^{__CFString=}^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"already_cfretained": True, "type_modifier": "o"},
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CWKeychainSetPassword": (b"i^{__CFData=}^{__CFString=}",),
     "CWKeychainCopyPassword": (
         b"i^{__CFData=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CWKeychainDeleteEAPUsernameAndPassword": (b"i^{__CFData=}",),
     "CWKeychainCopyEAPIdentity": (
         b"i^{__CFData=}^^{__SecIdentity=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CWKeychainDeleteWiFiPassword": (b"iq@",),
     "CWMergeNetworks": (b"@@",),

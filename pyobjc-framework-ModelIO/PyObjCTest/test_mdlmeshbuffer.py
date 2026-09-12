@@ -61,15 +61,25 @@ class TestMDLMeshBuffer(TestCase):
         self.assertResultHasType(TestMDLMeshBufferHelper.length, objc._C_NSUInteger)
         self.assertResultHasType(TestMDLMeshBufferHelper.type, objc._C_NSUInteger)
         self.assertResultHasType(TestMDLMeshBufferHelper.capacity, objc._C_NSUInteger)
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newZone_)
         self.assertArgHasType(TestMDLMeshBufferHelper.newZone_, 0, objc._C_NSUInteger)
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newBuffer_type_)
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBuffer_type_, 0, objc._C_NSUInteger
         )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBuffer_type_, 1, objc._C_NSUInteger
         )
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newBufferWithData_type_)
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferWithData_type_, 1, objc._C_NSUInteger
+        )
+
+        self.assertResultIsRetained(
+            TestMDLMeshBufferHelper.newBufferFromZone_length_type_
         )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferFromZone_length_type_,
@@ -80,6 +90,10 @@ class TestMDLMeshBuffer(TestCase):
             TestMDLMeshBufferHelper.newBufferFromZone_length_type_,
             2,
             objc._C_NSUInteger,
+        )
+
+        self.assertResultIsRetained(
+            TestMDLMeshBufferHelper.newBufferFromZone_data_type_
         )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferFromZone_data_type_, 2, objc._C_NSUInteger

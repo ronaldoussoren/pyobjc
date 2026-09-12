@@ -375,10 +375,7 @@ functions = {
     "AudioHardwareCreateAggregateDevice": (
         b"i^{__CFDictionary=}^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "AudioHardwareDestroyAggregateDevice": (b"iI",),
     "AudioDeviceAddIOProc": (
@@ -488,7 +485,6 @@ functions = {
         b"i^^?I@@?",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "o"},
                 3: {
@@ -510,7 +506,7 @@ functions = {
                         },
                     }
                 },
-            },
+            }
         },
     ),
     "AudioDeviceRemoveIOProc": (
@@ -622,7 +618,6 @@ functions = {
         b"iI^?^v^^?",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -646,7 +641,7 @@ functions = {
                     "callable_retained": True,
                 },
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "AudioObjectGetPropertyDataSize": (

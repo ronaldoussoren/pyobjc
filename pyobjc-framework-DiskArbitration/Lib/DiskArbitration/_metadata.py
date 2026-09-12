@@ -137,11 +137,7 @@ functions = {
         b"v^{__DASession=}^{__CFRunLoop=}^{__CFString=}",
     ),
     "DADiskGetTypeID": (b"Q",),
-    "DADiskCopyIOMedia": (
-        b"I^{__DADisk=}",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "DADiskCopyIOMedia": (b"I^{__DADisk=}",),
     "DADissenterCreate": (
         b"^{__DADissenter=}^{__CFAllocator=}i^{__CFString=}",
         "",

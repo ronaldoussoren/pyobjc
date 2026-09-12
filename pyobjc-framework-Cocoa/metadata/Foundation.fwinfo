@@ -6572,9 +6572,6 @@
         "type_override": "^{_NSZone=}"
        }
       },
-      "retval": {
-        "already_retained": true
-      },
       "class_method": true,
       "selector": "copyWithZone:"
      },
@@ -7507,9 +7504,6 @@
        "0": {
         "type_override": "^{_NSZone=}"
        }
-      },
-      "retval": {
-        "already_retained": true
       },
       "class_method": false,
       "selector": "copyWithZone:"
@@ -13478,9 +13472,6 @@
        "0": {
         "type_override": "^{_NSZone=}"
        }
-      },
-      "retval": {
-        "already_retained": true
       },
       "class_method": false,
       "selector": "copyWithZone:"

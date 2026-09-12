@@ -78,6 +78,7 @@ class TestMTLHeap(TestCase):
             TestMTLHeapHelper.maxAvailableSizeWithAlignment_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newBufferWithLength_options_)
         self.assertArgHasType(
             TestMTLHeapHelper.newBufferWithLength_options_, 0, objc._C_NSUInteger
         )
@@ -94,6 +95,9 @@ class TestMTLHeap(TestCase):
 
         self.assertResultHasType(TestMTLHeapHelper.type, objc._C_NSInteger)
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newBufferWithLength_options_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newBufferWithLength_options_offset_, 0, objc._C_NSUInteger
         )
@@ -104,14 +108,19 @@ class TestMTLHeap(TestCase):
             TestMTLHeapHelper.newBufferWithLength_options_offset_, 2, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newTextureWithDescriptor_offset_)
         self.assertArgHasType(
             TestMTLHeapHelper.newTextureWithDescriptor_offset_, 1, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newAccelerationStructureWithSize_)
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithSize_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newAccelerationStructureWithSize_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithSize_offset_,
             0,
@@ -123,6 +132,9 @@ class TestMTLHeap(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newAccelerationStructureWithDescriptor_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithDescriptor_offset_,
             1,

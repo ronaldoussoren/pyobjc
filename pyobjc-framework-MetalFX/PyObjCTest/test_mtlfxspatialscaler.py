@@ -104,3 +104,10 @@ class TestMTLFXSpatialScaler(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsMetal4FX_)
         self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsDevice_)
+
+        self.assertResultIsRetained(
+            MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_
+        )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_compiler_
+        )

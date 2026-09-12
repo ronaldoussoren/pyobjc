@@ -101,3 +101,10 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
             MetalPerformanceShaders.MPSAccelerationStructure.boundingBox,
             MetalPerformanceShaders.MPSAxisAlignedBoundingBox.__typestr__,
         )
+
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_device_
+        )
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_group_
+        )

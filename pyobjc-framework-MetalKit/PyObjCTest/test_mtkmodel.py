@@ -16,6 +16,9 @@ class TestMTKModel(TestCase):
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertArgIsOut(MetalKit.MTKMesh.initWithMesh_device_error_, 2)
+        self.assertResultIsRetained(
+            MetalKit.MTKMesh.newMeshesFromAsset_device_sourceMeshes_error_
+        )
         self.assertArgIsOut(
             MetalKit.MTKMesh.newMeshesFromAsset_device_sourceMeshes_error_, 3
         )

@@ -29,6 +29,12 @@
    "kColorSyncConvertUseVectorUnit": { "typestr": "@", "removed": 1014 }
   },
   "functions": {
+   "ColorSyncCreateCodeFragment": {
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
+    }
+   },
    "ColorSyncIterateInstalledProfilesWithOptions": {
     "args": {
      "1": { "type_modifier": "N" }

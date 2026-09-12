@@ -18,3 +18,5 @@ class TestDOMMutationEvent(TestCase):
             2,
         )
         self.assertArgIsBOOL(WebKit.DOMMutationEvent.initMutationEvent________, 2)
+
+        self.assertResultIsRetained(WebKit.DOMMutationEvent.newValue)

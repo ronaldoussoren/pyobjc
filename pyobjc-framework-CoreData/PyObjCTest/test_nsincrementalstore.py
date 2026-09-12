@@ -19,3 +19,13 @@ class TestNSIncrementalStore(TestCase):
         self.assertArgIsOut(
             CoreData.NSIncrementalStore.obtainPermanentIDsForObjects_error_, 1
         )
+
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newObjectIDForEntity_referenceObject_
+        )
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newValueForRelationship_forObjectWithID_withContext_error_
+        )
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newValuesForObjectWithID_withContext_error_
+        )

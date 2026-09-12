@@ -9,6 +9,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def functionHandleWithBinaryFunction_stage_(self, a, b):
         pass
 
+    def newIntersectionFunctionTableWithDescriptor_(self, a):
+        pass
+
     def newRenderPipelineStateWithBinaryFunctions_error_(self, a, b):
         pass
 
@@ -45,6 +48,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def functionHandleWithFunction_stage_(self, a, b):
         return 1
 
+    def newVisibleFunctionTableWithDescriptor_(self, a):
+        return 1
+
     def newVisibleFunctionTableWithDescriptor_stage_(self, a, b):
         return 1
 
@@ -64,6 +70,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
         return 1
 
     def requiredThreadsPerMeshThreadgroup(self):
+        return 1
+
+    def newRenderPipelineDescriptorForSpecialization(self):
         return 1
 
 
@@ -358,6 +367,10 @@ class TestMTLRenderPipeline(TestCase):
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.functionHandleWithBinaryFunction_stage_, 1, b"Q"
         )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithBinaryFunctions_error_
+        )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newRenderPipelineStateWithBinaryFunctions_error_,
             1,
@@ -397,15 +410,35 @@ class TestMTLRenderPipeline(TestCase):
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.functionHandleWithFunction_stage_, 1, b"Q"
         )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_
+        )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_,
             1,
             b"Q",
         )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_
+        )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_,
             1,
             b"Q",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_
         )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_,
@@ -425,4 +458,8 @@ class TestMTLRenderPipeline(TestCase):
         self.assertResultHasType(
             TestMTLRenderPipelineHelper.requiredThreadsPerMeshThreadgroup,
             Metal.MTLSize.__typestr__,
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineDescriptorForSpecialization
         )

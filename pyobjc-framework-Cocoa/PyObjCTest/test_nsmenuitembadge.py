@@ -9,3 +9,6 @@ class TestNSMenuBadge(TestCase):
         self.assertEqual(AppKit.NSMenuItemBadgeTypeUpdates, 1)
         self.assertEqual(AppKit.NSMenuItemBadgeTypeNewItems, 2)
         self.assertEqual(AppKit.NSMenuItemBadgeTypeAlerts, 3)
+
+    def test_methods(self):
+        self.assertResultIsRetained(AppKit.NSMenuItemBadge.newItemsWithCount_)

@@ -129,11 +129,10 @@ functions = {
         b"i^^{OpaqueTECSnifferObjectRef=}^IQ",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "o"},
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "TECGetTextEncodingFromInternetNameOrMIB": (
@@ -172,11 +171,10 @@ functions = {
         b"i^^{OpaqueTECObjectRef=}IQ^I",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "o"},
                 3: {"c_array_length_in_arg": 2, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "TECGetMailTextEncodings": (
@@ -206,7 +204,7 @@ functions = {
         "",
         {"arguments": {0: {"type_modifier": "o"}}},
     ),
-    "CreateTextEncoding": (b"IIII", "", {"retval": {"already_cfretained": True}}),
+    "CreateTextEncoding": (b"IIII",),
     "TECCountDirectTextEncodingConversions": (
         b"i^Q",
         "",
@@ -345,11 +343,10 @@ functions = {
         b"iII^^{__CFString=}^i",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"already_cfretained": True, "type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "TECGetAvailableTextEncodings": (
@@ -380,10 +377,7 @@ functions = {
     "TECCreateConverter": (
         b"i^^{OpaqueTECObjectRef=}II",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "NearestMacTextEncodings": (
         b"iI^I^I",
@@ -457,11 +451,10 @@ functions = {
         b"i^^{OpaqueTECObjectRef=}^IQ",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "o"},
                 1: {"c_array_length_in_arg": 2, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "TECDisposeConverter": (b"i^{OpaqueTECObjectRef=}",),

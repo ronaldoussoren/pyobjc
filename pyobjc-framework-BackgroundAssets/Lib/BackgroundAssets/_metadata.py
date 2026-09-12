@@ -317,6 +317,7 @@ try:
         b"initWithContentsOfURL:applicationGroupIdentifier:error:",
         {"arguments": {4: {"type_modifier": b"o"}}},
     )
+    r(b"BADownload", b"copyAsNonEssential", {"retval": {"already_retained": True}})
     r(b"BADownload", b"isEssential", {"retval": {"type": b"Z"}})
     r(
         b"BADownloadManager",

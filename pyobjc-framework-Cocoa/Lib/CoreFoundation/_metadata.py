@@ -413,10 +413,7 @@ functions = {
     "CFFileSecurityCopyOwnerUUID": (
         b"Z^{__CFFileSecurity=}^^{__CFUUID=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "CFCalendarAddComponents": (
         b"Z^{__CFCalendar=}^dQ^t",
@@ -450,10 +447,7 @@ functions = {
     "CFStringSetExternalCharactersNoCopy": (
         b"v^{__CFString=}^Tqq",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"c_array_length_in_arg": 3, "type_modifier": "n"}},
-        },
+        {"arguments": {1: {"c_array_length_in_arg": 3, "type_modifier": "n"}}},
     ),
     "CFLocaleGetSystem": (b"^{__CFLocale=}",),
     "CFDataGetLength": (b"q^{__CFData=}",),
@@ -1038,10 +1032,7 @@ functions = {
     "CFStreamCreateBoundPair": (
         b"v^{__CFAllocator=}^^{__CFReadStream=}^^{__CFWriteStream=}q",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}, 2: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}, 2: {"type_modifier": "o"}}},
     ),
     "CFRunLoopTimerSetNextFireDate": (b"v^{__CFRunLoopTimer=}d",),
     "CFAllocatorSetDefault": (b"v^{__CFAllocator=}",),
@@ -1173,7 +1164,7 @@ functions = {
         b"@^{__CFAllocator=}^{__CFReadStream=}qQ^q^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {4: {"type_modifier": "o"}, 5: {"type_modifier": "o"}},
         },
     ),
@@ -1278,7 +1269,7 @@ functions = {
     "CFURLCreateResourcePropertyForKeyFromBookmarkData": (
         b"@^{__CFAllocator=}^{__CFString=}^{__CFData=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "CFDateGetAbsoluteTime": (b"d^{__CFDate=}",),
     "CFNumberIsFloatType": (b"Z^{__CFNumber=}",),
@@ -1574,7 +1565,7 @@ functions = {
         b"@^{__CFAllocator=}^{__CFData=}Q^q^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 3: {"type_modifier": "o"},
                 4: {
@@ -1991,12 +1982,11 @@ functions = {
         b"v^{__CFAllocator=}^{CFSocketSignature=iii^{__CFData=}}^^{__CFReadStream=}^^{__CFWriteStream=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "n"},
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "CFURLSetResourcePropertiesForKeys": (
@@ -2032,10 +2022,7 @@ functions = {
     "CFFileSecurityCopyGroupUUID": (
         b"Z^{__CFFileSecurity=}^^{__CFUUID=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "CFAttributedStringSetAttribute": (
         b"v^{__CFAttributedString=}{CFRange=qq}^{__CFString=}@",
@@ -2252,7 +2239,7 @@ functions = {
         b"@^{__CFAllocator=}^{__CFData=}Q^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {3: {"type_modifier": "o"}},
         },
     ),
@@ -2405,7 +2392,7 @@ functions = {
         b"@^{__CFAllocator=}^{__CFReadStream=}qQ^q^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {
                 4: {"type_modifier": "o"},
                 5: {
@@ -2421,7 +2408,6 @@ functions = {
         b"Z^{__CFURL=}^{__CFString=}^@^^{__CFError=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"already_cfretained": True, "type_modifier": "o"},
                 3: {
@@ -2429,7 +2415,7 @@ functions = {
                     "already_cfretained": True,
                     "type_modifier": "o",
                 },
-            },
+            }
         },
     ),
     "CFDateFormatterCopyProperty": (
@@ -2519,10 +2505,7 @@ functions = {
     "CFStreamCreatePairWithSocketToHost": (
         b"v^{__CFAllocator=}^{__CFString=}I^^{__CFReadStream=}^^{__CFWriteStream=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}, 4: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}, 4: {"type_modifier": "o"}}},
     ),
     "CFNumberCreate": (
         b"^{__CFNumber=}^{__CFAllocator=}q^v",
@@ -2597,7 +2580,7 @@ functions = {
         b"@^{__CFAllocator=}^{__CFURL=}^{__CFString=}^i",
         "",
         {
-            "retval": {"already_cfretained": True},
+            "retval": {"already_retained": False, "already_cfretained": True},
             "arguments": {3: {"type_modifier": "o"}},
         },
     ),
@@ -2691,10 +2674,7 @@ functions = {
     "CFStreamCreatePairWithSocket": (
         b"v^{__CFAllocator=}i^^{__CFReadStream=}^^{__CFWriteStream=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}, 3: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}, 3: {"type_modifier": "o"}}},
     ),
     "CFBitVectorCreateMutableCopy": (
         b"^{__CFBitVector=}^{__CFAllocator=}q^{__CFBitVector=}",
@@ -2820,12 +2800,11 @@ functions = {
         b"Z^{__CFAllocator=}^{__CFURL=}^^{__CFData=}^^{__CFDictionary=}^{__CFArray=}^i",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
                 5: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "CFAbsoluteTimeGetWeekOfYear": (b"id^{__CFTimeZone=}",),
@@ -3076,7 +3055,7 @@ functions = {
     "CFPropertyListCreateDeepCopy": (
         b"@^{__CFAllocator=}@Q",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": False, "already_cfretained": True}},
     ),
     "CFUUIDGetTypeID": (b"Q",),
     "CFNotificationCenterPostNotificationWithOptions": (

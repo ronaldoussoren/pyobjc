@@ -71,10 +71,18 @@ class TestMTLComputePipeline(TestCase):
             TestMTLComputePipelineHelper.staticThreadgroupMemoryLength,
             objc._C_NSUInteger,
         )
+
+        self.assertResultIsRetained(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_
+        )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithBinaryFunctions_error_
         )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithBinaryFunctions_error_,

@@ -135,11 +135,10 @@ functions = {
         b"i^{__CFAllocator=}^{__CVBuffer=}^{opaqueCMFormatDescription=}^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}QI^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {"type_modifier": "n"},
                 6: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMIOObjectRemovePropertyListener": (
@@ -166,10 +165,7 @@ functions = {
     "CMIOSampleBufferCreateNoDataMarker": (
         b"i^{__CFAllocator=}I^{opaqueCMFormatDescription=}QI^^{opaqueCMSampleBuffer=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {5: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMIOObjectGetPropertyDataSize": (
         b"iI^{CMIOObjectPropertyAddress=III}I^v^I",
@@ -189,19 +185,17 @@ functions = {
         b"i^{__CFAllocator=}^{OpaqueCMBlockBuffer=}^{opaqueCMFormatDescription=}II^{CMSampleTimingInfo={CMTime=qiIq}{CMTime=qiIq}{CMTime=qiIq}}I^QQI^^{opaqueCMSampleBuffer=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 10: {"already_cfretained": True, "type_modifier": "o"},
                 5: {"c_array_length_in_arg": 4, "type_modifier": "n"},
                 7: {"c_array_length_in_arg": 6, "type_modifier": "n"},
-            },
+            }
         },
     ),
     "CMIOStreamCopyBufferQueue": (
         b"iI^?^v^^{opaqueCMSimpleQueue=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -214,7 +208,7 @@ functions = {
                     }
                 },
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CMIOObjectAddPropertyListener": (
@@ -252,10 +246,7 @@ functions = {
     "CMIOStreamClockCreate": (
         b"i^{__CFAllocator=}^{__CFString=}^v{CMTime=qiIq}II^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {6: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {6: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CMIOStreamClockInvalidate": (b"i@",),
     "CMIOObjectSetPropertyData": (
@@ -290,8 +281,6 @@ functions = {
     ),
     "CMIOSampleBufferCopySampleAttachments": (
         b"i^{opaqueCMSampleBuffer=}^{opaqueCMSampleBuffer=}",
-        "",
-        {"retval": {"already_cfretained": True}},
     ),
     "CMIOStreamClockConvertHostTimeToDeviceTime": (b"{CMTime=qiIq}Q@",),
     "CMIOObjectRemovePropertyListenerBlock": (
@@ -319,8 +308,6 @@ functions = {
     ),
     "CMIOSampleBufferCopyNonRequiredAttachments": (
         b"i^{opaqueCMSampleBuffer=}^{opaqueCMSampleBuffer=}I",
-        "",
-        {"retval": {"already_cfretained": True}},
     ),
 }
 aliases = {

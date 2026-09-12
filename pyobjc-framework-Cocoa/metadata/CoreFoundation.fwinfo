@@ -1206,11 +1206,25 @@
     "args": {
      "4": { "type_modifier": "o" },
      "5": { "type_modifier": "o" }
+    },
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
+    }
+   },
+   "CFURLCreateResourcePropertyForKeyFromBookmarkData": {
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFPropertyListCreateFromXMLData": {
     "args": {
      "3": { "type_modifier": "o" }
+    },
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFPropertyListCreateWithData": {
@@ -1221,6 +1235,10 @@
       "null_accepted": true,
       "type_modifier": "o"
      }
+    },
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFPropertyListCreateWithStream": {
@@ -1231,6 +1249,10 @@
       "null_accepted": true,
       "type_modifier": "o"
      }
+    },
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFPropertyListWrite": {
@@ -1240,6 +1262,12 @@
       "null_accepted": true,
       "type_modifier": "o"
      }
+    }
+   },
+   "CFPropertyListCreateDeepCopy": {
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFPropertyListWriteToStream": {
@@ -1971,6 +1999,10 @@
    "CFURLCreatePropertyFromResource": {
     "args": {
      "3": { "type_modifier": "o" }
+    },
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
     }
    },
    "CFURLCreateWithBytes": {

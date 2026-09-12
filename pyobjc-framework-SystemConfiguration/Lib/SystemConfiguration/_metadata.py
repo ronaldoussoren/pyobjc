@@ -210,11 +210,10 @@ functions = {
         b"Z^{__CFDictionary=}^^{__CFString=}^^{__CFDictionary=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"already_cfretained": True, "type_modifier": "o"},
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "SCNetworkInterfaceGetBSDName": (b"^{__CFString=}^{__SCNetworkInterface=}",),
@@ -582,12 +581,11 @@ functions = {
         b"Z^{__SCNetworkInterface=}^i^i^i",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "o"},
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "SCNetworkSetGetServiceOrder": (b"^{__CFArray=}^{__SCNetworkSet=}",),
@@ -655,12 +653,11 @@ functions = {
         b"Z^{__SCNetworkInterface=}^^{__CFDictionary=}^^{__CFDictionary=}^^{__CFArray=}Z",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "o"},
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "SCPreferencesScheduleWithRunLoop": (

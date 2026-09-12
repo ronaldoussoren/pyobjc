@@ -1574,6 +1574,7 @@ try:
         b"newBoxWithDimensions:segments:geometryType:inwardNormals:allocator:",
         {
             "full_signature": b"@@:<3f><3I>qZ@",
+            "retval": {"already_retained": True},
             "arguments": {2: {"type": b"<3f>"}, 3: {"type": b"<3I>"}, 5: {"type": "Z"}},
         },
     )
@@ -1582,6 +1583,7 @@ try:
         b"newCapsuleWithHeight:radii:radialSegments:verticalSegments:hemisphereSegments:geometryType:inwardNormals:allocator:",
         {
             "full_signature": b"@@:f<2f>QQQqZ@",
+            "retval": {"already_retained": True},
             "arguments": {3: {"type": b"<2f>"}, 8: {"type": "Z"}},
         },
     )
@@ -1590,6 +1592,7 @@ try:
         b"newCylinderWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
         {
             "full_signature": b"@@:f<2f>QQqZ@",
+            "retval": {"already_retained": True},
             "arguments": {3: {"type": b"<2f>"}, 7: {"type": "Z"}},
         },
     )
@@ -1598,6 +1601,7 @@ try:
         b"newEllipsoidWithRadii:radialSegments:verticalSegments:geometryType:inwardNormals:hemisphere:allocator:",
         {
             "full_signature": b"@@:<3f>QQqZZ@",
+            "retval": {"already_retained": True},
             "arguments": {2: {"type": b"<3f>"}, 6: {"type": "Z"}, 7: {"type": "Z"}},
         },
     )
@@ -1606,6 +1610,7 @@ try:
         b"newEllipticalConeWithHeight:radii:radialSegments:verticalSegments:geometryType:inwardNormals:allocator:",
         {
             "full_signature": b"@@:f<2f>QQqZ@",
+            "retval": {"already_retained": True},
             "arguments": {3: {"type": b"<2f>"}, 7: {"type": "Z"}},
         },
     )
@@ -1617,7 +1622,7 @@ try:
     r(
         b"MDLMesh",
         b"newIcosahedronWithRadius:inwardNormals:geometryType:allocator:",
-        {"arguments": {3: {"type": b"Z"}}},
+        {"retval": {"already_retained": True}, "arguments": {3: {"type": b"Z"}}},
     )
     r(
         b"MDLMesh",
@@ -1629,8 +1634,14 @@ try:
         b"newPlaneWithDimensions:segments:geometryType:allocator:",
         {
             "full_signature": b"@@:<2f><2I>q@",
+            "retval": {"already_retained": True},
             "arguments": {2: {"type": b"<2f>"}, 3: {"type": b"<2I>"}},
         },
+    )
+    r(
+        b"MDLMesh",
+        b"newSubdividedMesh:submeshIndex:subdivisionLevels:",
+        {"retval": {"already_retained": True}},
     )
     r(b"MDLMeshBufferMap", b"bytes", {"retval": {"c_array_of_variable_length": True}})
     r(
@@ -2188,7 +2199,7 @@ try:
         b"newBuffer:type:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": "Q"}, 3: {"type": "Q"}},
         },
     )
@@ -2197,7 +2208,7 @@ try:
         b"newBufferFromZone:data:type:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": "Q"}},
         },
     )
@@ -2206,7 +2217,7 @@ try:
         b"newBufferFromZone:length:type:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": "Q"}, 4: {"type": "Q"}},
         },
     )
@@ -2215,21 +2226,25 @@ try:
         b"newBufferWithData:type:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": "Q"}},
         },
     )
     r(
         b"NSObject",
         b"newZone:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": "Q"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": "Q"}},
+        },
     )
     r(
         b"NSObject",
         b"newZoneForBuffersWithSize:andType:",
         {
             "required": True,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
         },
     )

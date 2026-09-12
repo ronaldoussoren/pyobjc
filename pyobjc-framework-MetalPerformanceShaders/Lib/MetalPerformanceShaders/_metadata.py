@@ -240,7 +240,9 @@ misc.update(
             ],
         ),
         "MPSPackedFloat3": objc.createStructType(
-            "MetalPerformanceShaders.MPSPackedFloat3", b"{_MPSPackedFloat3=fff}", []
+            "MetalPerformanceShaders.MPSPackedFloat3",
+            b"{_MPSPackedFloat3=fff}",
+            ["x", "y", "z"],
         ),
         "MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates": objc.createStructType(
             "MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates",
@@ -392,6 +394,16 @@ try:
             "full_signature": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}@:",
             "retval": {"type": b"{_MPSAxisAlignedBoundingBox=<3f><3f>}"},
         },
+    )
+    r(
+        b"MPSAccelerationStructure",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSAccelerationStructure",
+        b"copyWithZone:group:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSAccelerationStructure",
@@ -907,6 +919,7 @@ try:
             },
         },
     )
+    r(b"MPSFunction", b"copyWithZone:device:", {"retval": {"already_retained": True}})
     r(b"MPSFunction", b"supportsSecureCoding", {"retval": {"type": b"Z"}})
     r(b"MPSGRUDescriptor", b"flipOutputGates", {"retval": {"type": b"Z"}})
     r(b"MPSGRUDescriptor", b"setFlipOutputGates:", {"arguments": {2: {"type": b"Z"}}})
@@ -1018,6 +1031,7 @@ try:
         b"setDestinationMatrixOrigin:",
         {"arguments": {2: {"type": b"{MTLOrigin=QQQ}"}}},
     )
+    r(b"MPSImageDescriptor", b"copyWithZone:", {"retval": {"already_retained": True}})
     r(
         b"MPSImageDilate",
         b"initWithDevice:kernelWidth:kernelHeight:values:",
@@ -1259,6 +1273,7 @@ try:
         b"initWithDevice:thresholdValue:linearGrayColorTransform:",
         {"arguments": {4: {"c_array_of_fixed_length": 3, "type_modifier": b"n"}}},
     )
+    r(b"MPSKernel", b"copyWithZone:device:", {"retval": {"already_retained": True}})
     r(
         b"MPSKeyedUnarchiver",
         b"initForReadingFromData:device:error:",
@@ -1308,8 +1323,18 @@ try:
     r(b"MPSMatrixBatchNormalization", b"computeStatistics", {"retval": {"type": b"Z"}})
     r(
         b"MPSMatrixBatchNormalization",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixBatchNormalization",
         b"setComputeStatistics:",
         {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MPSMatrixBatchNormalizationGradient",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSMatrixBinaryKernel",
@@ -1374,6 +1399,21 @@ try:
         {"arguments": {3: {"type": b"Z"}}},
     )
     r(
+        b"MPSMatrixFindTopK",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixFullyConnected",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixFullyConnectedGradient",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
         b"MPSMatrixMultiplication",
         b"initWithDevice:transposeLeft:transposeRight:resultRows:resultColumns:interiorColumns:alpha:beta:",
         {"arguments": {3: {"type": b"Z"}, 4: {"type": b"Z"}}},
@@ -1407,6 +1447,26 @@ try:
         b"MPSMatrixMultiplication",
         b"setRightMatrixOrigin:",
         {"arguments": {2: {"type": b"{MTLOrigin=QQQ}"}}},
+    )
+    r(
+        b"MPSMatrixNeuron",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixNeuronGradient",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixSoftMax",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(
+        b"MPSMatrixSoftMaxGradient",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSMatrixSolveCholesky",
@@ -1637,6 +1697,11 @@ try:
         b"MPSNDArrayIdentity",
         b"reshapeWithCommandEncoder:commandBuffer:sourceArray:dimensionCount:dimensionSizes:destinationArray:",
         {"arguments": {6: {"type_modifier": b"n", "c_array_length_in_arg": 5}}},
+    )
+    r(
+        b"MPSNDArrayMultiaryBase",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSNDArrayMultiaryBase",
@@ -2067,6 +2132,7 @@ try:
         b"setClipRectSource:",
         {"arguments": {2: {"type": b"{MTLRegion={MTLOrigin=QQQ}{MTLSize=QQQ}}"}}},
     )
+    r(b"MPSPolygonBuffer", b"copyWithZone:", {"retval": {"already_retained": True}})
     r(b"MPSRNNDescriptor", b"setUseFloat32Weights:", {"arguments": {2: {"type": b"Z"}}})
     r(
         b"MPSRNNDescriptor",
@@ -2078,6 +2144,11 @@ try:
         b"MPSRNNDescriptor",
         b"useLayerInputUnitTransformMode",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSRNNImageInferenceLayer",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSRNNImageInferenceLayer",
@@ -2098,6 +2169,11 @@ try:
         b"MPSRNNImageInferenceLayer",
         b"storeAllIntermediateStates",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSRNNMatrixInferenceLayer",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSRNNMatrixInferenceLayer",
@@ -2123,6 +2199,11 @@ try:
         b"MPSRNNMatrixTrainingLayer",
         b"accumulateWeightGradients",
         {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MPSRNNMatrixTrainingLayer",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
     )
     r(
         b"MPSRNNMatrixTrainingLayer",
@@ -2164,6 +2245,12 @@ try:
         b"trainingStateIsTemporary",
         {"retval": {"type": b"Z"}},
     )
+    r(
+        b"MPSRayIntersector",
+        b"copyWithZone:device:",
+        {"retval": {"already_retained": True}},
+    )
+    r(b"MPSSVGF", b"copyWithZone:device:", {"retval": {"already_retained": True}})
     r(b"MPSState", b"isTemporary", {"retval": {"type": b"Z"}})
     r(
         b"MPSState",
@@ -2181,6 +2268,7 @@ try:
         b"resourceListWithTextureDescriptors:",
         {"variadic": True},
     )
+    r(b"MPSTemporalAA", b"copyWithZone:device:", {"retval": {"already_retained": True}})
     r(
         b"MPSUnaryImageKernel",
         b"clipRect",
@@ -2264,7 +2352,7 @@ try:
         b"copyWithZone:device:",
         {
             "required": False,
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"^{_NSZone=}"}, 3: {"type": b"@"}},
         },
     )
@@ -2351,7 +2439,11 @@ try:
     r(
         b"NSObject",
         b"newHeapWithDescriptor:",
-        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+        {
+            "required": True,
+            "retval": {"already_retained": True, "type": b"@"},
+            "arguments": {2: {"type": b"@"}},
+        },
     )
     r(
         b"NSObject",

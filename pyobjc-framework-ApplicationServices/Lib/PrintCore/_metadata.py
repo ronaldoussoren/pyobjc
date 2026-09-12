@@ -193,10 +193,7 @@ functions = {
     "PMPrinterCopyPresets": (
         b"i^{OpaquePMPrinter=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMGetLastPage": (
         b"i^{OpaquePMPrintSettings=}^I",
@@ -227,10 +224,7 @@ functions = {
     "PMPaperCreateLocalizedName": (
         b"i^{OpaquePMPaper=}^{OpaquePMPrinter=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSessionError": (b"i^{OpaquePMPrintSession=}",),
     "PMPresetGetAttributes": (
@@ -246,10 +240,7 @@ functions = {
     "PMSessionCopyDestinationFormat": (
         b"i^{OpaquePMPrintSession=}^{OpaquePMPrintSettings=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterSendCommand": (
         b"i^{OpaquePMPrinter=}^{__CFString=}^{__CFString=}^{__CFDictionary=}",
@@ -263,12 +254,11 @@ functions = {
         b"i^{OpaquePMPrintSession=}^^{__CFArray=}^q^^{OpaquePMPrinter=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"already_cfretained": True, "type_modifier": "o"},
                 2: {"type_modifier": "o"},
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "PMGetFirstPage": (
@@ -287,10 +277,7 @@ functions = {
     "PMPrintSettingsCopyAsDictionary": (
         b"i^{OpaquePMPrintSettings=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterPrintWithProvider": (
         b"i^{OpaquePMPrinter=}^{OpaquePMPrintSettings=}^{OpaquePMPageFormat=}^{__CFString=}^{CGDataProvider=}",
@@ -309,10 +296,7 @@ functions = {
     "PMPageFormatCreateWithDataRepresentation": (
         b"i^{__CFData=}^^{OpaquePMPageFormat=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "PMGetCollate": (
         b"i^{OpaquePMPrintSettings=}^Z",
@@ -322,10 +306,7 @@ functions = {
     "PMPresetCreatePrintSettings": (
         b"i^{OpaquePMPreset=}^{OpaquePMPrintSession=}^^{OpaquePMPrintSettings=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "PMSetCollate": (b"i^{OpaquePMPrintSettings=}Z",),
     "PMPrinterIsRemote": (
@@ -349,10 +330,7 @@ functions = {
     "PMSessionCopyOutputFormatList": (
         b"i^{OpaquePMPrintSession=}S^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSetPageFormatExtendedData": (
         b"i^{OpaquePMPageFormat=}II^v",
@@ -368,25 +346,15 @@ functions = {
     "PMPrintSettingsCreateWithDataRepresentation": (
         b"i^{__CFData=}^^{OpaquePMPrintSettings=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "PMPageFormatCreateDataRepresentation": (
         b"i^{OpaquePMPageFormat=}^^{__CFData=}I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSessionDefaultPageFormat": (b"i^{OpaquePMPrintSession=}^{OpaquePMPageFormat=}",),
-    "PMCopyPrintSettings": (
-        b"i^{OpaquePMPrintSettings=}^{OpaquePMPrintSettings=}",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "PMCopyPrintSettings": (b"i^{OpaquePMPrintSettings=}^{OpaquePMPrintSettings=}",),
     "PMPrinterGetCommInfo": (
         b"i^{OpaquePMPrinter=}^Z^Z",
         "",
@@ -416,10 +384,7 @@ functions = {
     "PMCreateGenericPrinter": (
         b"i^^{OpaquePMPrinter=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "PMGetAdjustedPaperRect": (
         b"i^{OpaquePMPageFormat=}^{PMRect=dddd}",
@@ -429,10 +394,7 @@ functions = {
     "PMCopyLocalizedPPD": (
         b"i^{__CFURL=}^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPaperGetID": (
         b"i^{OpaquePMPaper=}^^{__CFString=}",
@@ -447,27 +409,18 @@ functions = {
     "PMPrinterCopyDeviceURI": (
         b"i^{OpaquePMPrinter=}^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPaperCreateCustom": (
         b"i^{OpaquePMPrinter=}^{__CFString=}^{__CFString=}dd^{PMRect=dddd}^^{OpaquePMPaper=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {5: {"type_modifier": "n"}, 6: {"type_modifier": "o"}},
-        },
+        {"arguments": {5: {"type_modifier": "n"}, 6: {"type_modifier": "o"}}},
     ),
     "PMSessionEndDocumentNoDialog": (b"i^{OpaquePMPrintSession=}",),
     "PMServerCreatePrinterList": (
         b"i^{OpaquePMServer=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterGetDriverCreator": (
         b"i^{OpaquePMPrinter=}^I",
@@ -477,10 +430,7 @@ functions = {
     "PMSessionCopyDestinationLocation": (
         b"i^{OpaquePMPrintSession=}^{OpaquePMPrintSettings=}^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterGetIndexedPrinterResolution": (
         b"i^{OpaquePMPrinter=}I^{PMResolution=dd}",
@@ -490,18 +440,12 @@ functions = {
     "PMSessionCreatePageFormatList": (
         b"i^{OpaquePMPrintSession=}^{OpaquePMPrinter=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterCopyHostName": (
         b"i^{OpaquePMPrinter=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSetScale": (b"i^{OpaquePMPageFormat=}d",),
     "PMPrinterPrintWithFile": (
@@ -526,10 +470,7 @@ functions = {
     "PMPrinterCopyState": (
         b"i^{OpaquePMPrinter=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrintSettingsGetValue": (
         b"i^{OpaquePMPrintSettings=}^{__CFString=}^@",
@@ -539,10 +480,7 @@ functions = {
     "PMCreatePageFormat": (
         b"i^^{OpaquePMPageFormat=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "PMSessionBeginPageNoDialog": (
         b"i^{OpaquePMPrintSession=}^{OpaquePMPageFormat=}^{PMRect=dddd}",
@@ -558,10 +496,7 @@ functions = {
     "PMCopyPPDData": (
         b"i^{__CFURL=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSessionGetDataFromSession": (
         b"i^{OpaquePMPrintSession=}^{__CFString=}^@",
@@ -571,10 +506,7 @@ functions = {
     "PMPrintSettingsCreateDataRepresentation": (
         b"i^{OpaquePMPrintSettings=}^^{__CFData=}I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMPrinterGetDriverReleaseInfo": (
         b"i^{OpaquePMPrinter=}^{VersRec={NumVersion=CCCC}s[256C][256C]}",
@@ -596,25 +528,15 @@ functions = {
     "PMCreateSession": (
         b"i^^{OpaquePMPrintSession=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "PMServerLaunchPrinterBrowser": (b"i^{OpaquePMServer=}^{__CFDictionary=}",),
-    "PMCopyPageFormat": (
-        b"i^{OpaquePMPageFormat=}^{OpaquePMPageFormat=}",
-        "",
-        {"retval": {"already_cfretained": True}},
-    ),
+    "PMCopyPageFormat": (b"i^{OpaquePMPageFormat=}^{OpaquePMPageFormat=}",),
     "PMPrinterGetName": (b"^{__CFString=}^{OpaquePMPrinter=}",),
     "PMCopyAvailablePPDs": (
         b"iS^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSessionDefaultPrintSettings": (
         b"i^{OpaquePMPrintSession=}^{OpaquePMPrintSettings=}",
@@ -647,10 +569,7 @@ functions = {
     "PMWorkflowCopyItems": (
         b"i^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {0: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMGetAdjustedPageRect": (
         b"i^{OpaquePMPageFormat=}^{PMRect=dddd}",
@@ -660,18 +579,12 @@ functions = {
     "PMPrinterCopyDescriptionURL": (
         b"i^{OpaquePMPrinter=}^{__CFString=}^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMCreatePrintSettings": (
         b"i^^{OpaquePMPrintSettings=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "PMPrintSettingsSetValue": (b"i^{OpaquePMPrintSettings=}^{__CFString=}@Z",),
     "PMGetDuplex": (
@@ -687,10 +600,7 @@ functions = {
     "PMPresetCopyName": (
         b"i^{OpaquePMPreset=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMSessionGetCurrentPrinter": (
         b"i^{OpaquePMPrintSession=}^^{OpaquePMPrinter=}",
@@ -716,18 +626,12 @@ functions = {
     "PMPrintSettingsCopyKeys": (
         b"i^{OpaquePMPrintSettings=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PMCreatePageFormatWithPMPaper": (
         b"i^^{OpaquePMPageFormat=}^{OpaquePMPaper=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}}},
     ),
     "PMRelease": (b"i^v",),
 }

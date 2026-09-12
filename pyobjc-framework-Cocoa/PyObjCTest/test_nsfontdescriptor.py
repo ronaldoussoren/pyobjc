@@ -5,6 +5,7 @@ from PyObjCTools.TestSupport import (
     os_level_key,
     os_release,
     skipUnless,
+    cast_int,
 )
 
 
@@ -41,10 +42,10 @@ class TestNSFontDescriptor(TestCase):
         self.assertEqual(AppKit.NSFontClarendonSerifsClass, (4 << 28))
         self.assertEqual(AppKit.NSFontSlabSerifsClass, (5 << 28))
         self.assertEqual(AppKit.NSFontFreeformSerifsClass, (7 << 28))
-        self.assertEqual(AppKit.NSFontSansSerifClass, (8 << 28))
-        self.assertEqual(AppKit.NSFontOrnamentalsClass, (9 << 28))
-        self.assertEqual(AppKit.NSFontScriptsClass, (10 << 28))
-        self.assertEqual(AppKit.NSFontSymbolicClass, (12 << 28))
+        self.assertEqual(AppKit.NSFontSansSerifClass, cast_int(8 << 28))
+        self.assertEqual(AppKit.NSFontOrnamentalsClass, cast_int(9 << 28))
+        self.assertEqual(AppKit.NSFontScriptsClass, cast_int(10 << 28))
+        self.assertEqual(AppKit.NSFontSymbolicClass, cast_int(12 << 28))
         self.assertEqual(AppKit.NSFontFamilyClassMask, (0xF0000000))
 
         # Unnamed enum:

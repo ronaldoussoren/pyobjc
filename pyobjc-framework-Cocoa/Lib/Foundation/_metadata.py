@@ -484,7 +484,7 @@ functions = {
     "NSCreateHashTable": (
         b"@{NSHashTableCallBacks=^?^?^?^?^?}Q",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "NSOpenStepRootDirectory": (b"@",),
     "NSRoundDownToMultipleOfPageSize": (b"QQ",),
@@ -626,7 +626,7 @@ functions = {
     "NSCreateHashTableWithZone": (
         b"@{NSHashTableCallBacks=^?^?^?^?^?}Q^{_NSZone=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "NSSwapFloat": (b"{NSSwappedFloat=I}{NSSwappedFloat=I}",),
     "NSDecimalSubtract": (
@@ -749,10 +749,7 @@ functions = {
     "NSDecimalCopy": (
         b"v^{NSDecimal=b8b4b1b1b18[8S]}^{NSDecimal=b8b4b1b1b18[8S]}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}, 1: {"type_modifier": "n"}},
-        },
+        {"arguments": {0: {"type_modifier": "o"}, 1: {"type_modifier": "n"}}},
     ),
     "NSStringFromSelector": (b"@:",),
     "NSMakeRange": (b"{_NSRange=QQ}QQ",),
@@ -771,7 +768,7 @@ functions = {
     "NSCreateMapTableWithZone": (
         b"@{NSMapTableKeyCallBacks=^?^?^?^?^?^v}{NSMapTableValueCallBacks=^?^?^?}Q^{_NSZone=}",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "NSExtraRefCount": (b"Q@",),
     "NSRectFromCGRect": (
@@ -796,7 +793,7 @@ functions = {
     "NSCreateMapTable": (
         b"@{NSMapTableKeyCallBacks=^?^?^?^?^?^v}{NSMapTableValueCallBacks=^?^?^?}Q",
         "",
-        {"retval": {"already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "NSSwapHostFloatToLittle": (b"{NSSwappedFloat=I}f",),
     "NSEdgeInsetsEqual": (b"Z{NSEdgeInsets=dddd}{NSEdgeInsets=dddd}",),
@@ -5828,7 +5825,7 @@ try:
         b"NSObject",
         b"copyScriptingValue:forKey:withProperties:",
         {
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
         },
     )
@@ -6584,7 +6581,7 @@ try:
         b"NSObject",
         b"newScriptingObjectOfClass:forValueForKey:withContentsValue:properties:",
         {
-            "retval": {"type": b"@"},
+            "retval": {"already_retained": True, "type": b"@"},
             "arguments": {
                 2: {"type": "#"},
                 3: {"type": b"@"},

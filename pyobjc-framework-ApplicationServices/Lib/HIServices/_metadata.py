@@ -579,7 +579,6 @@ functions = {
         b"ii^?^^{__AXObserver=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -595,16 +594,13 @@ functions = {
                     "callable_retained": True,
                 },
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "TranslationCopySourceType": (
         b"i^{OpaqueTranslationRef=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXTextMarkerGetTypeID": (b"Q",),
     "HIShapeCreateMutableWithRect": (
@@ -650,10 +646,7 @@ functions = {
     "AXUIElementCopyParameterizedAttributeValue": (
         b"i^{__AXUIElement=}^{__CFString=}@^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PasteboardResolvePromises": (b"i^{OpaquePasteboardRef=}",),
     "NewIconActionUPP": (
@@ -728,18 +721,12 @@ functions = {
     "AXUIElementCopyActionNames": (
         b"i^{__AXUIElement=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PasteboardCopyItemFlavors": (
         b"i^{OpaquePasteboardRef=}^v^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "HIShapeEnumerate": (
         b"i^{__HIShape=}I^?^v",
@@ -784,26 +771,17 @@ functions = {
     "TranslationCopyDestinationType": (
         b"i^{OpaqueTranslationRef=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXUIElementCopyParameterizedAttributeNames": (
         b"i^{__AXUIElement=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PasteboardCreate": (
         b"i^{__CFString=}^^{OpaquePasteboardRef=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SetFrontProcessWithOptions": (
         b"i^{ProcessSerialNumber=II}I",
@@ -814,11 +792,10 @@ functions = {
         b"i^{ProcessSerialNumber=II}^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "n"},
                 1: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "PasteboardGetItemCount": (
@@ -853,10 +830,7 @@ functions = {
     "AXUIElementCopyActionDescription": (
         b"i^{__AXUIElement=}^{__CFString=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXObserverGetRunLoopSource": (b"^{__CFRunLoopSource=}^{__AXObserver=}",),
     "GetNextProcess": (
@@ -894,10 +868,7 @@ functions = {
     "TranslationCreate": (
         b"i^{__CFString=}^{__CFString=}I^^{OpaqueTranslationRef=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "HIShapeUnionWithRect": (
         b"i^{__HIShape=}^{CGRect={CGPoint=dd}{CGSize=dd}}",
@@ -912,10 +883,7 @@ functions = {
     "PasteboardCopyPasteLocation": (
         b"i^{OpaquePasteboardRef=}^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "PasteboardSetPromiseKeeper": (
         b"i^{OpaquePasteboardRef=}^?^v",
@@ -962,10 +930,7 @@ functions = {
     "AXUIElementCopyAttributeValues": (
         b"i^{__AXUIElement=}^{__CFString=}qq^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {4: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "SetIconFamilyData": (
         b"s^^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}I^^c",
@@ -975,11 +940,10 @@ functions = {
         b"i^{__CFArray=}I^^{__CFArray=}^^{__CFDictionary=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"already_cfretained": True, "type_modifier": "o"},
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "KillProcess": (
@@ -995,10 +959,7 @@ functions = {
     "PasteboardCopyItemFlavorData": (
         b"i^{OpaquePasteboardRef=}^v^{__CFString=}^^{__CFData=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXUIElementCreateApplication": (
         b"^{__AXUIElement=}i",
@@ -1009,10 +970,7 @@ functions = {
     "AXUIElementCopyAttributeNames": (
         b"i^{__AXUIElement=}^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "HIShapeContainsPoint": (
         b"Z^{__HIShape=}^{CGPoint=dd}",
@@ -1053,10 +1011,7 @@ functions = {
     "AXUIElementCopyAttributeValue": (
         b"i^{__AXUIElement=}^{__CFString=}^@",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "GetFrontProcess": (
         b"s^{ProcessSerialNumber=II}",
@@ -1079,7 +1034,6 @@ functions = {
         b"ii^?^^{__AXObserver=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -1094,7 +1048,7 @@ functions = {
                     "callable_retained": True,
                 },
                 2: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "AXTextMarkerRangeGetTypeID": (b"Q",),
@@ -1156,28 +1110,19 @@ functions = {
     "PasteboardCopyName": (
         b"i^{OpaquePasteboardRef=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "HIShapeDifference": (b"i^{__HIShape=}^{__HIShape=}^{__HIShape=}",),
     "AXValueGetTypeID": (b"Q", "", {"variadic": False}),
     "AXUIElementCopyElementAtPosition": (
         b"i^{__AXUIElement=}ff^^{__AXUIElement=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXUIElementCopyMultipleAttributeValues": (
         b"i^{__AXUIElement=}^{__CFArray=}I^^{__CFArray=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AXValueCreate": (
         b"^{__AXValue=}I^@",

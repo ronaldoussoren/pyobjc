@@ -209,10 +209,7 @@ functions = {
     "CFNetDiagnosticCopyNetworkStatusPassively": (
         b"q^{__CFNetDiagnostic=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "CFHTTPMessageCopyResponseStatusLine": (
         b"^{__CFString=}^{__CFHTTPMessage=}",
@@ -251,11 +248,10 @@ functions = {
         b"q^{__CFAllocator=}n^vq^^{__CFDictionary=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {"type_modifier": "n", "c_array_length_in_arg": 2},
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CFNetServiceGetTypeID": (b"Q",),
@@ -477,22 +473,20 @@ functions = {
         b"v^{__CFAllocator=}^{__CFHost=}i^^{__CFReadStream=}^^{__CFWriteStream=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 3: {"already_cfretained": True, "type_modifier": "o"},
                 4: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CFStreamCreatePairWithSocketToNetService": (
         b"v^{__CFAllocator=}^{__CFNetService=}^^{__CFReadStream=}^^{__CFWriteStream=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {"already_cfretained": True, "type_modifier": "o"},
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CFNetServiceResolveWithTimeout": (

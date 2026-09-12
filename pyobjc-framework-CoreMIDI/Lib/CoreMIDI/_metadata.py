@@ -265,7 +265,6 @@ functions = {
         b"iI^{__CFString=}^?^v^I",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {
                     "callable": {
@@ -278,7 +277,7 @@ functions = {
                     }
                 },
                 4: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "MIDI2PitchBend": (b"{MIDIMessage_64=II}CCI",),
@@ -338,7 +337,6 @@ functions = {
         b"iI^{__CFString=}^?^v^I",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 2: {
                     "callable": {
@@ -351,7 +349,7 @@ functions = {
                     }
                 },
                 4: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "MIDI2NoteOn": (b"{MIDIMessage_64=II}CCCCSS",),
@@ -369,23 +367,13 @@ functions = {
         "",
         {"arguments": {2: {"type_modifier": "o"}}},
     ),
-    "MIDISetupCreate": (
-        b"i^I",
-        "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "o"}},
-        },
-    ),
+    "MIDISetupCreate": (b"i^I", "", {"arguments": {0: {"type_modifier": "o"}}}),
     "MIDIDeltaClockstampTicksPerQuarterNoteMessage": (b"IS",),
     "MIDIEndpointDispose": (b"iI",),
     "MIDIExternalDeviceCreate": (
         b"i^{__CFString=}^{__CFString=}^{__CFString=}^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "MIDI2StreamMessageFromData": (
         b"{MIDIMessage_128=IIII}CI^vQ",
@@ -397,7 +385,6 @@ functions = {
         b"i^{__CFString=}^?^v^I",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -409,7 +396,7 @@ functions = {
                     }
                 },
                 3: {"type_modifier": "o"},
-            },
+            }
         },
     ),
     "MIDIPacketNext": (b"^{MIDIPacket=QS[256C]}^{MIDIPacket=QS[256C]}",),
@@ -428,10 +415,7 @@ functions = {
     "MIDIDestinationCreateWithProtocol": (
         b"iI^{__CFString=}i^I@?",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "MIDIObjectFindByUniqueID": (
         b"ii^I^i",
@@ -457,10 +441,7 @@ functions = {
     "MIDIClientCreateWithBlock": (
         b"i^{__CFString=}^I@?",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"type_modifier": "o"}},
-        },
+        {"arguments": {1: {"type_modifier": "o"}}},
     ),
     "MIDIThruConnectionGetParams": (
         b"iI^^{__CFData=}",
@@ -478,10 +459,7 @@ functions = {
     "MIDIThruConnectionCreate": (
         b"i^{__CFString=}^{__CFData=}^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "MIDIDeviceListDispose": (b"iI",),
     "MIDI2PerNoteManagment": (b"{MIDIMessage_64=II}CCCBB",),
@@ -498,10 +476,7 @@ functions = {
     "MIDIInputPortCreateWithProtocol": (
         b"iI^{__CFString=}i^I@?",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "MIDIDeviceGetEntity": (b"IIQ",),
     "MIDI2NoteOff": (b"{MIDIMessage_64=II}CCCCSS",),
@@ -511,27 +486,18 @@ functions = {
     "MIDIOutputPortCreate": (
         b"iI^{__CFString=}^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "MIDISourceCreateWithProtocol": (
         b"iI^{__CFString=}i^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "o"}},
-        },
+        {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "MIDIEntityGetDestination": (b"IIQ",),
     "MIDIInputPortCreateWithBlock": (
         b"iI^{__CFString=}^I@?",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "MIDI1UPPolyPressure": (b"ICCCC",),
     "MIDI2AssignableControl": (b"{MIDIMessage_64=II}CCCCI",),
@@ -550,10 +516,7 @@ functions = {
     "MIDISourceCreate": (
         b"iI^{__CFString=}^I",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "MIDIEntityGetNumberOfSources": (b"QI",),
     "MIDIBluetoothDriverActivateAllConnections": (b"i",),

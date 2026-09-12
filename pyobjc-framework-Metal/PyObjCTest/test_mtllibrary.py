@@ -19,6 +19,9 @@ class TestMTLLibraryHelper(Metal.NSObject):
     def newArgumentEncoderWithBufferIndex_reflection_(self, a, b):
         return 1
 
+    def newFunctionWithName_(self, a):
+        return 1
+
     def newFunctionWithName_constantValues_error_(self, a, b, c):
         return 1
 
@@ -127,10 +130,16 @@ class TestMTLLibrary(TestCase):
             TestMTLLibraryHelper.patchControlPointCount, objc._C_NSInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_
+        )
         self.assertArgHasType(
             TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_,
             0,
             objc._C_NSUInteger,
+        )
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_
         )
         self.assertArgHasType(
             TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_,
@@ -138,6 +147,11 @@ class TestMTLLibrary(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(TestMTLLibraryHelper.newFunctionWithName_)
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newFunctionWithName_constantValues_error_
+        )
         self.assertArgIsOut(
             TestMTLLibraryHelper.newFunctionWithName_constantValues_error_, 2
         )
@@ -147,14 +161,24 @@ class TestMTLLibrary(TestCase):
             b"v@@",
         )
         self.assertResultHasType(TestMTLLibraryHelper.options, objc._C_NSUInteger)
+
         self.assertArgIsBlock(
             TestMTLLibraryHelper.newFunctionWithDescriptor_completionHandler_, 1, b"v@@"
         )
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newFunctionWithDescriptor_error_
+        )
         self.assertArgIsOut(TestMTLLibraryHelper.newFunctionWithDescriptor_error_, 1)
+
         self.assertArgIsBlock(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_completionHandler_,
             1,
             b"v@@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_
         )
         self.assertArgIsOut(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_, 1

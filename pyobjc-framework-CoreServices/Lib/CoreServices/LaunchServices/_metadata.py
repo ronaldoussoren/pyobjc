@@ -104,10 +104,7 @@ functions = {
     "LSCopyItemInfoForRef": (
         b"i^{FSRef=[80C]}I^{LSItemInfoRecord=III^{__CFString=}}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "n"}, 2: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "n"}, 2: {"type_modifier": "o"}}},
     ),
     "GetIconRefFromTypeInfo": (
         b"sII^{__CFString=}^{__CFString=}I^^{OpaqueIconRef=}",
@@ -119,11 +116,10 @@ functions = {
         b"i^{FSRef=[80C]}I^{__CFString=}^@",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "n"},
                 3: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "LSSharedFileListItemMove": (
@@ -159,10 +155,7 @@ functions = {
     "LSCopyKindStringForTypeInfo": (
         b"iII^{__CFString=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {3: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "UTTypeCopyPreferredTagWithClass": (
         b"^{__CFString=}^{__CFString=}^{__CFString=}",
@@ -183,10 +176,7 @@ functions = {
     "LSCopyItemAttributes": (
         b"i^{FSRef=[80C]}I^{__CFArray=}^^{__CFDictionary=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {0: {"type_modifier": "n"}, 3: {"type_modifier": "o"}},
-        },
+        {"arguments": {0: {"type_modifier": "n"}, 3: {"type_modifier": "o"}}},
     ),
     "LSSharedFileListItemSetProperty": (
         b"i^{OpaqueLSSharedFileListItemRef=}^{__CFString=}@",
@@ -260,10 +250,7 @@ functions = {
     "LSCopyApplicationForMIMEType": (
         b"i^{__CFString=}I^^{__CFURL=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "ReleaseIconRef": (b"s^{OpaqueIconRef=}",),
     "UTTypeCreatePreferredIdentifierForTag": (
@@ -311,11 +298,10 @@ functions = {
         b"i^{FSRef=[80C]}^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "n"},
                 1: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "LSSharedFileListSetAuthorization": (
@@ -434,10 +420,7 @@ functions = {
     "LSCopyItemInfoForURL": (
         b"i^{__CFURL=}I^{LSItemInfoRecord=III^{__CFString=}}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"type_modifier": "o"}},
-        },
+        {"arguments": {2: {"type_modifier": "o"}}},
     ),
     "SetCustomIconsEnabled": (b"ssZ",),
     "LSRegisterFSRef": (
@@ -460,11 +443,10 @@ functions = {
         b"i^{FSRef=[80C]}^^{__CFString=}",
         "",
         {
-            "retval": {"already_cfretained": True},
             "arguments": {
                 0: {"type_modifier": "n"},
                 1: {"already_cfretained": True, "type_modifier": "o"},
-            },
+            }
         },
     ),
     "CompositeIconRef": (
@@ -481,19 +463,13 @@ functions = {
     "LSCopyKindStringForMIMEType": (
         b"i^{__CFString=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "UTTypeIsDeclared": (b"Z^{__CFString=}",),
     "LSCopyDisplayNameForURL": (
         b"i^{__CFURL=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "GetIconRefFromFolder": (
         b"ssiicc^^{OpaqueIconRef=}",
@@ -584,10 +560,7 @@ functions = {
     "LSCopyKindStringForURL": (
         b"i^{__CFURL=}^^{__CFString=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {1: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "LSCopyApplicationURLsForURL": (
         b"^{__CFArray=}^{__CFURL=}I",

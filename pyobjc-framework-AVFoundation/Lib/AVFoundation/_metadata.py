@@ -389,10 +389,7 @@ functions = {
     "CMTagCollectionCreateWithVideoOutputPreset": (
         b"i^{__CFAllocator=}I^^{OpaqueCMTagCollection=}",
         "",
-        {
-            "retval": {"already_cfretained": True},
-            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
-        },
+        {"arguments": {2: {"already_cfretained": True, "type_modifier": "o"}}},
     ),
     "AVSampleBufferAttachContentKey": (
         b"Z^{opaqueCMSampleBuffer=}@^@",
@@ -5657,6 +5654,11 @@ try:
         {"retval": {"type": b"Z"}},
     )
     r(
+        b"AVCaptureSpatialAudioMetadataSampleGenerator",
+        b"newTimedMetadataSampleBufferAndResetAnalyzer",
+        {"retval": {"already_cfretained": True}},
+    )
+    r(
         b"AVCaptureStillImageOutput",
         b"automaticallyEnablesStillImageStabilizationWhenAvailable",
         {"retval": {"type": b"Z"}},
@@ -7815,6 +7817,8 @@ try:
         b"configuredTimeOffsetFromLive",
         {"retval": {"type": b"{CMTime=qiIq}"}},
     )
+    r(b"AVPlayerItem", b"copy", {"retval": {"already_retained": True}})
+    r(b"AVPlayerItem", b"copyWithZone:", {"retval": {"already_retained": True}})
     r(b"AVPlayerItem", b"currentTime", {"retval": {"type": b"{CMTime=qiIq}"}})
     r(b"AVPlayerItem", b"duration", {"retval": {"type": b"{CMTime=qiIq}"}})
     r(

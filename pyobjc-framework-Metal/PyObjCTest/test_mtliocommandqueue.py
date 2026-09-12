@@ -35,6 +35,9 @@ class TestMTLIOCommandQueue(TestCase):
         self.assertProtocolExists("MTLIOFileHandle", Metal)
 
     def test_protocol_methods(self):
+        self.assertResultIsRetained(
+            TestMTLIOCommandQueueHelper.newScratchBufferWithMinimumSize_
+        )
         self.assertArgHasType(
             TestMTLIOCommandQueueHelper.newScratchBufferWithMinimumSize_,
             0,

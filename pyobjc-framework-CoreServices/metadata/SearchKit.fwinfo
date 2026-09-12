@@ -12,6 +12,18 @@
     "SKSearchRef": { "gettypeid_func": "SKSearchGetTypeID", "typestr": "^{__SKSearch=}" }
   },
   "functions": {
+   "SKDocumentCreate": {
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
+    }
+   },
+   "SKDocumentCreateWithURL": {
+    "retval": {
+     "already_retained": false,
+     "already_cfretained": true
+    }
+   },
    "SKIndexCopyDocumentRefsForDocumentIDs": {
     "args": {
      "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },

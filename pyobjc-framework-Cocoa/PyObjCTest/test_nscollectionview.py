@@ -125,6 +125,10 @@ class TestNSCollectionView(TestCase):
             b"N^" + AppKit.NSPoint.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            AppKit.NSCollectionView.newItemForRepresentedObject_
+        )
+
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSCollectionView.allowsEmptySelection)
