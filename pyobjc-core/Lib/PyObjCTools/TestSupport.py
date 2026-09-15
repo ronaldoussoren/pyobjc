@@ -254,7 +254,7 @@ def max_sdk_level(release):
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
     return _unittest.skipUnless(
-        v <= os_level_key(release), f"Requires build with SDK {release} or later"
+        v <= os_level_key(release), f"Requires build with SDK {release} or earlier"
     )
 
 
