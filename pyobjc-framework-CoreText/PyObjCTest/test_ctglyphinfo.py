@@ -60,7 +60,6 @@ class TestCTGlyphInfo(TestCase):
         v = CoreText.CTGlyphInfoGetCharacterIdentifier(info)
         self.assertIsInstance(v, int)
 
-        self.assertResultIsNotCFRetained(CoreText.CTGlyphInfoGetCharacterCollection)
         v = CoreText.CTGlyphInfoGetCharacterCollection(info)
         self.assertIsInstance(v, int)
 

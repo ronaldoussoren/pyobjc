@@ -13,3 +13,8 @@ class TestMTLPipeline(TestCase):
         self.assertEqual(Metal.MTLShaderValidationDefault, 0)
         self.assertEqual(Metal.MTLShaderValidationEnabled, 1)
         self.assertEqual(Metal.MTLShaderValidationDisabled, 2)
+
+        self.assertIsEnumType(Metal.MTLForwardProgressUsage)
+        self.assertEqual(Metal.MTLForwardProgressUsageAutomatic, 0)
+        self.assertEqual(Metal.MTLForwardProgressUsageWeak, 1)
+        self.assertEqual(Metal.MTLForwardProgressUsageSIMDGroupParallel, 2)

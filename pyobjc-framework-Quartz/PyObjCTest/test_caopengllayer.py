@@ -20,8 +20,10 @@ class TestCAOpenGLLayer(TestCase):
             3,
         )
 
-        self.assertResultIsRetained(Quartz.CAOpenGLLayer.copyCGLContextForPixelFormat_)
-        self.assertResultIsRetained(
+        self.assertResultIsCFRetained(
+            Quartz.CAOpenGLLayer.copyCGLContextForPixelFormat_
+        )
+        self.assertResultIsCFRetained(
             Quartz.CAOpenGLLayer.copyCGLPixelFormatForDisplayMask_
         )
 

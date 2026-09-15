@@ -31838,7 +31838,7 @@
      {
       "name": "loc",
       "type_name": "MachineLocation *",
-      "typestr": "^{MachineLocation=ii(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:116:5)=q{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:121:9)=[3c]c}{?=[3c]c})(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:116:5)=q{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:121:9)=[3c]c}{?=[3c]c})}"
+      "typestr": "^{MachineLocation=ii(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:116:5)=q{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:121:9)=[3c]c}{?=[3c]c})(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:116:5)=q{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/OSUtils.h:121:9)=[3c]c}{?=[3c]c})}"
      }
     ],
     "deprecated": "10.8",
@@ -36315,7 +36315,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "deprecated": "10.8",
@@ -36329,7 +36329,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "deprecated": "10.8",
@@ -36343,7 +36343,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "deprecated": "10.8",
@@ -36357,7 +36357,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "retval": {
@@ -36369,7 +36369,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "deprecated": "10.8",
@@ -36388,7 +36388,7 @@
      {
       "name": "d",
       "type_name": "const decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      },
      {
       "name": "s",
@@ -36453,7 +36453,7 @@
      {
       "name": "d",
       "type_name": "decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "deprecated": "10.8",
@@ -36477,7 +36477,7 @@
      {
       "name": "d",
       "type_name": "decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      }
     ],
     "retval": {
@@ -36568,7 +36568,7 @@
      {
       "name": "d",
       "type_name": "decimal *",
-      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+      "typestr": "^{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
      },
      {
       "name": "vp",
@@ -37821,7 +37821,7 @@
      "u"
     ],
     "special": false,
-    "typestr": "{PEFExportedSymbolKey=(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})}"
+    "typestr": "{PEFExportedSymbolKey=(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})}"
    },
    "PEFImportedLibrary": {
     "fieldnames": [
@@ -38448,7 +38448,7 @@
    "XLibExportedSymbolKey": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{PEFExportedSymbolKey=(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})(union (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})}"
+    "typestr": "{PEFExportedSymbolKey=(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})(union (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/PEFBinaryFormat.h:497:3)=I{PEFSplitHashWord=SS})}"
    },
    "decform": {
     "fieldnames": [
@@ -38467,7 +38467,7 @@
      "sig"
     ],
     "special": false,
-    "typestr": "{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
+    "typestr": "{decimal=ccs{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers/fp.h:1320:5)=C[36C]C}}"
    }
   },
   "typedefs": {
@@ -39041,6 +39041,6 @@
   "UnicodeUtilities.h",
   "fp.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }

@@ -8,7 +8,7 @@ Version 13.0a0
 
 * Main features
 
-  * Framework bindings updated for macOS 27 SDK (beta 6)
+  * Framework bindings updated for macOS 27 SDK
 
   * Add support for the following frameworks (all new in macOS 27):
 

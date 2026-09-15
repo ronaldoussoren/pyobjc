@@ -13,3 +13,4 @@ class TestCNCinematicError(TestCase):
         self.assertEqual(Cinematic.CNCinematicErrorCodeUnsupported, 5)
         self.assertEqual(Cinematic.CNCinematicErrorCodeIncompatible, 6)
         self.assertEqual(Cinematic.CNCinematicErrorCodeCancelled, 7)
+        self.assertEqual(Cinematic.CNCinematicErrorCodeDownloadFailed, 8)

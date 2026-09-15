@@ -22654,6 +22654,11 @@
     "type_name": "const HKQuantityTypeIdentifier",
     "typestr": "@"
    },
+   "HKQuantityTypeIdentifierHeartRateVariabilityRMSSD": {
+    "introduced": "27.0",
+    "type_name": "const HKQuantityTypeIdentifier",
+    "typestr": "@"
+   },
    "HKQuantityTypeIdentifierHeartRateVariabilitySDNN": {
     "introduced": "13.0",
     "type_name": "const HKQuantityTypeIdentifier",
@@ -23648,6 +23653,6 @@
   "HKWorkoutRouteQuery.h",
   "HKWorkoutSession.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }

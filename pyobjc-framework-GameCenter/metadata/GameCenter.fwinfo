@@ -23,6 +23,17 @@
    "GKTurnBasedExchangeStatus": { "type": "q" },
    "GKTurnBasedMatchStatus": { "type": "q" }
   },
+  "externs": {
+   "GKTurnTimeoutNone": { "typestr": "d" },
+   "GKExchangeTimeoutDefault": { "typestr": "d" },
+   "GKExchangeTimeoutNone": { "typestr": "d" },
+   "GKPlayerAuthenticationDidChangeNotificationName": { "typestr": "@" },
+   "GKSessionErrorDomain": { "typestr": "@" },
+   "GKVoiceChatServiceErrorDomain": { "typestr": "@" },
+   "GKPlayerDidChangeNotificationName": { "typestr": "@" },
+   "GKTurnTimeoutDefault": { "typestr": "f" },
+   "GKErrorDomain": { "typestr": "@" }
+  },
   "enum": {
    "GKPhotoSizeSmall": { "value": 0 },
    "GKPhotoSizeNormal": { "value": 1 },

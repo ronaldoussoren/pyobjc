@@ -3571,6 +3571,10 @@
    }
   },
   "typed_enum": {
+   "AVCaptureAncillaryDataUserKey": {
+    "type": "@",
+    "type_name": "NSString"
+   },
    "AVProVideoStorageBusyReason": {
     "type": "@",
     "type_name": "NSString"

@@ -69,3 +69,10 @@ class TestAVMetadataObject(TestCase):
     @min_os_level("26.0")
     def test_constants26_0(self):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogHead, str)
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFocusTrackedObject, str)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataObjectTypeCinematicVideoMetadata, str
+        )

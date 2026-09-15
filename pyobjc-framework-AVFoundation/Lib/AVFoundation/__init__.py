@@ -313,6 +313,8 @@ def _setup():
         ("AVPlannedSegmentWritingRequest", b"init"),
         ("AVPlannedVideoSegmentWritingRequest", b"new"),
         ("AVPlannedVideoSegmentWritingRequest", b"init"),
+        ("AVCaptureAncillaryDataEncoder", b"new"),
+        ("AVCaptureAncillaryDataEncoder", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

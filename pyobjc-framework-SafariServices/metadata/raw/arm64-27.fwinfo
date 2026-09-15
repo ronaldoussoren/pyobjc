@@ -904,6 +904,7 @@
      {
       "args": [],
       "class_method": true,
+      "introduced": "27.0",
       "retval": {
        "instancetype": true,
        "type_name": "instancetype",
@@ -916,6 +917,7 @@
      {
       "args": [],
       "class_method": false,
+      "introduced": "27.0",
       "retval": {
        "instancetype": true,
        "type_name": "instancetype",
@@ -954,6 +956,7 @@
        }
       ],
       "class_method": true,
+      "introduced": "27.0",
       "retval": {
        "type_name": "void",
        "typestr": "v",
@@ -1717,6 +1720,7 @@
     "typestr": "@"
    },
    "SFSafariSettingsErrorDomain": {
+    "introduced": "27.0",
     "type_name": "NSString *const",
     "typestr": "@"
    }
@@ -2144,6 +2148,6 @@
   "SFSafariWindow.h",
   "SFUniversalLink.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }

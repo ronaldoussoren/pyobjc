@@ -223,6 +223,9 @@
    "kCMClockError_MissingRequiredParameter": {
     "value": -12745
    },
+   "kCMClockError_PreferredStartTimeNotAvailable": {
+    "value": -12758
+   },
    "kCMClockError_UnsupportedOperation": {
     "value": -12756
    },
@@ -1719,6 +1722,16 @@
    },
    "kCMFormatDescriptionYCbCrMatrix_SMPTE_240M_1995": {
     "introduced": "10.11",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
+   "kCMGenlockClockNotificationPayload_AnyDisplayIsSynchronizedToLockedGenlockSignal": {
+    "introduced": "27.0",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
+   "kCMGenlockClockNotification_DisplayGenlockModeChanged": {
+    "introduced": "27.0",
     "type_name": "const CFStringRef",
     "typestr": "^{__CFString=}"
    },
@@ -4763,6 +4776,19 @@
      "typestr": "Q"
     }
    },
+   "CMClockCreateGenlockClock": {
+    "args": [
+     {
+      "name": null,
+      "typestr": "v"
+     }
+    ],
+    "introduced": "27.0",
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{OpaqueCMClock=}"
+    }
+   },
    "CMClockGetAnchorTime": {
     "args": [
      {
@@ -4798,6 +4824,34 @@
      "typestr": "^{OpaqueCMClock=}"
     }
    },
+   "CMClockGetPreferredStartTimePattern": {
+    "args": [
+     {
+      "name": "clock",
+      "type_name": "CMClockRef",
+      "typestr": "^{OpaqueCMClock=}"
+     },
+     {
+      "name": "outClockStartTime",
+      "type_name": "CMTime *",
+      "typestr": "^{CMTime=qiIq}"
+     },
+     {
+      "name": "outHostClockStartTime",
+      "type_name": "CMTime *",
+      "typestr": "^{CMTime=qiIq}"
+     },
+     {
+      "name": "outDeltaBetweenPreferredStartTimes",
+      "type_name": "CMTime *",
+      "typestr": "^{CMTime=qiIq}"
+     }
+    ],
+    "introduced": "27.0",
+    "retval": {
+     "typestr": "i"
+    }
+   },
    "CMClockGetTime": {
     "args": [
      {
@@ -4821,6 +4875,19 @@
     "introduced": "10.8",
     "retval": {
      "typestr": "Q"
+    }
+   },
+   "CMClockImplementsGetPreferredStartTimePattern": {
+    "args": [
+     {
+      "name": "clock",
+      "type_name": "CMClockRef",
+      "typestr": "^{OpaqueCMClock=}"
+     }
+    ],
+    "introduced": "27.0",
+    "retval": {
+     "typestr": "Z"
     }
    },
    "CMClockInvalidate": {
@@ -5167,6 +5234,18 @@
     "introduced": "10.7",
     "retval": {
      "typestr": "@"
+    }
+   },
+   "CMIsAnyDisplaySynchronizedToLockedGenlockSignal": {
+    "args": [
+     {
+      "name": null,
+      "typestr": "v"
+     }
+    ],
+    "introduced": "27.0",
+    "retval": {
+     "typestr": "Z"
     }
    },
    "CMMemoryPoolCreate": {
@@ -11347,6 +11426,7 @@
   "CMBufferQueue.h",
   "CMFormatDescription.h",
   "CMFormatDescriptionBridge.h",
+  "CMGenlockClock.h",
   "CMMemoryPool.h",
   "CMMetadata.h",
   "CMSampleBuffer.h",
@@ -11359,6 +11439,6 @@
   "CMTime.h",
   "CMTimeRange.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }

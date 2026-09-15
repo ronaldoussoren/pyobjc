@@ -380,3 +380,6 @@ class TestHKTypeIdentifiers(TestCase):
             HealthKit.HKCategoryTypeIdentifierBleedingAfterMenopause, str
         )
         self.assertIsInstance(HealthKit.HKCategoryTypeIdentifierMenopausalState, str)
+        self.assertIsInstance(
+            HealthKit.HKQuantityTypeIdentifierHeartRateVariabilityRMSSD, str
+        )

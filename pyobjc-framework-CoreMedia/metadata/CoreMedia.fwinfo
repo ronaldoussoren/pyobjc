@@ -75,6 +75,13 @@
    "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }
   },
   "functions": {
+  "CMClockGetPreferredStartTimePattern": {
+   "args": {
+    "1": { "type_modifier": "o" },
+    "2": { "type_modifier": "o" },
+    "3": { "type_modifier": "o" }
+   }
+  },
   "CMVideoFormatDescriptionCreateFromHEVCParameterSets": {
    "args": {
     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },

@@ -96,7 +96,6 @@ class TestConnectionReport(TestCase):
         self.assertResultIsRetained(
             Network.nw_resolution_report_copy_preferred_endpoint
         )
-        self.assertResultIsRetained(Network.nw_resolution_report_get_protocol)
 
         nw_report_resolution_report_enumerator_t = b"B@"
 

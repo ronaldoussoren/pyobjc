@@ -12,6 +12,7 @@ class TestCMSync(TestCase):
         self.assertEqual(CoreMedia.kCMClockError_InvalidParameter, -12746)
         self.assertEqual(CoreMedia.kCMClockError_AllocationFailed, -12747)
         self.assertEqual(CoreMedia.kCMClockError_UnsupportedOperation, -12756)
+        self.assertEqual(CoreMedia.kCMClockError_PreferredStartTimeNotAvailable, -12758)
 
         self.assertEqual(CoreMedia.kCMTimebaseError_MissingRequiredParameter, -12748)
         self.assertEqual(CoreMedia.kCMTimebaseError_InvalidParameter, -12749)
@@ -117,3 +118,11 @@ class TestCMSync(TestCase):
 
         CoreMedia.CMTimebaseSetSourceClock
         CoreMedia.CMTimebaseSetSourceTimebase
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        self.assertResultIsBOOL(CoreMedia.CMClockImplementsGetPreferredStartTimePattern)
+
+        self.assertArgIsOut(CoreMedia.CMClockGetPreferredStartTimePattern, 1)
+        self.assertArgIsOut(CoreMedia.CMClockGetPreferredStartTimePattern, 2)
+        self.assertArgIsOut(CoreMedia.CMClockGetPreferredStartTimePattern, 3)

@@ -78,3 +78,23 @@ class TestAVCaptureFileOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.setUsesProVideoStorage_, 0
         )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isCinematicVideoMetadataCaptureSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.automaticallyAdjustsCinematicVideoMetadataCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setAutomaticallyAdjustsCinematicVideoMetadataCaptureEnabled_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isCinematicVideoMetadataCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setCinematicVideoMetadataCaptureEnabled_,
+            0,
+        )

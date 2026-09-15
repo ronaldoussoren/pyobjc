@@ -464,3 +464,31 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice_Tundra.isAdjustingSignalCompensationDelayWhileRunningSupported
         )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isPrimaryConstituentDeviceSwitchingBehaviorLockedWithDeviceSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isPrimaryConstituentDeviceSwitchingBehaviorLockedWithDeviceSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isContinuousAutoFocusTrackingSubjectAcquired
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isContinuousAutoFocusTrackingSubjectAcquired
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isCinematicVideoMetadataCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isCinematicVideoMetadataCaptureSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isLowLightVideoNoiseReductionSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isLowLightVideoNoiseReductionSupported
+        )

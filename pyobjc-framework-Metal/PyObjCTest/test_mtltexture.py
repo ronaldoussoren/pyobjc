@@ -91,6 +91,15 @@ class TestMTLTextureHelper(Metal.NSObject):
     def swizzle(self):
         return 1
 
+    def setSwizzle_(self, a):
+        pass
+
+    def minLOD(self):
+        return 1
+
+    def setMinLOD_(self, a):
+        pass
+
     def firstMipmapInTail(self):
         return 1
 
@@ -355,6 +364,13 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__
         )
+        # self.assertArgHasType(
+        #    TestMTLTextureHelper.setSwizzle_, 0,
+        #    Metal.MTLTextureSwizzleChannels.__typestr__,
+        # )
+
+        self.assertResultHasType(TestMTLTextureHelper.minLOD, objc._C_FLT)
+        # self.assertArgHasType(TestMTLTextureHelper.setMinLOD_, 0, objc._C_FLT)
 
         self.assertResultIsRetained(
             TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_

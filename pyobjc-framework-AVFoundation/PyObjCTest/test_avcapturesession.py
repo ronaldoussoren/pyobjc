@@ -175,3 +175,24 @@ class TestAVCaptureSession(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureSession.setAutomaticallyRunsDeferredStart_, 0
         )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isLowLightVideoNoiseReductionSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.automaticallyEnablesLowLightVideoNoiseReduction
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setAutomaticallyEnablesLowLightVideoNoiseReduction_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.isLowLightVideoNoiseReductionEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setLowLightVideoNoiseReductionEnabled_, 0
+        )

@@ -29,14 +29,17 @@ else:
 
 misc = {}
 constants = """$CNCinematicErrorDomain$"""
-enums = """$CNCinematicErrorCodeCancelled@7$CNCinematicErrorCodeIncompatible@6$CNCinematicErrorCodeIncomplete@3$CNCinematicErrorCodeMalformed@4$CNCinematicErrorCodeUnknown@1$CNCinematicErrorCodeUnreadable@2$CNCinematicErrorCodeUnsupported@5$CNDetectionTypeAutoFocus@100$CNDetectionTypeCatBody@4$CNDetectionTypeCatHead@9$CNDetectionTypeCustom@102$CNDetectionTypeDogBody@5$CNDetectionTypeDogHead@10$CNDetectionTypeFixedFocus@101$CNDetectionTypeHumanFace@1$CNDetectionTypeHumanHead@2$CNDetectionTypeHumanTorso@3$CNDetectionTypeSportsBall@11$CNDetectionTypeUnknown@0$CNRenderingQualityExport@2$CNRenderingQualityExportHigh@3$CNRenderingQualityPreview@1$CNRenderingQualityThumbnail@0$CNSpatialAudioContentTypeSpatial@1$CNSpatialAudioContentTypeStereo@0$CNSpatialAudioRenderingStyleCinematic@0$CNSpatialAudioRenderingStyleCinematicBackgroundStem@3$CNSpatialAudioRenderingStyleCinematicForegroundStem@4$CNSpatialAudioRenderingStyleInFrame@2$CNSpatialAudioRenderingStyleInFrameBackgroundStem@9$CNSpatialAudioRenderingStyleInFrameForegroundStem@6$CNSpatialAudioRenderingStyleStandard@7$CNSpatialAudioRenderingStyleStudio@1$CNSpatialAudioRenderingStyleStudioBackgroundStem@8$CNSpatialAudioRenderingStyleStudioForegroundStem@5$"""
+enums = """$CNCinematicCapabilityNeedsPreprocessing@2$CNCinematicCapabilityNone@0$CNCinematicCapabilityRenderable@1$CNCinematicErrorCodeCancelled@7$CNCinematicErrorCodeDownloadFailed@8$CNCinematicErrorCodeIncompatible@6$CNCinematicErrorCodeIncomplete@3$CNCinematicErrorCodeMalformed@4$CNCinematicErrorCodeUnknown@1$CNCinematicErrorCodeUnreadable@2$CNCinematicErrorCodeUnsupported@5$CNCinematicResourceVersion1@1$CNDetectionTypeAutoFocus@100$CNDetectionTypeCatBody@4$CNDetectionTypeCatHead@9$CNDetectionTypeCustom@102$CNDetectionTypeDogBody@5$CNDetectionTypeDogHead@10$CNDetectionTypeFixedFocus@101$CNDetectionTypeHumanFace@1$CNDetectionTypeHumanHead@2$CNDetectionTypeHumanTorso@3$CNDetectionTypeSportsBall@11$CNDetectionTypeUnknown@0$CNRenderingQualityExport@2$CNRenderingQualityExportHigh@3$CNRenderingQualityPreview@1$CNRenderingQualityThumbnail@0$CNResourceStatusNeedsDownloading@1$CNResourceStatusReady@0$CNResourceStatusUnsupportedAsset@3$CNResourceStatusUnsupportedDevice@2$CNSpatialAudioContentTypeSpatial@1$CNSpatialAudioContentTypeStereo@0$CNSpatialAudioRenderingStyleCinematic@0$CNSpatialAudioRenderingStyleCinematicBackgroundStem@3$CNSpatialAudioRenderingStyleCinematicForegroundStem@4$CNSpatialAudioRenderingStyleInFrame@2$CNSpatialAudioRenderingStyleInFrameBackgroundStem@9$CNSpatialAudioRenderingStyleInFrameForegroundStem@6$CNSpatialAudioRenderingStyleStandard@7$CNSpatialAudioRenderingStyleStudio@1$CNSpatialAudioRenderingStyleStudioBackgroundStem@8$CNSpatialAudioRenderingStyleStudioForegroundStem@5$"""
 misc.update(
     {
         "CNDetectionType": NewType("CNDetectionType", int),
+        "CNCinematicCapability": NewType("CNCinematicCapability", int),
         "CNRenderingQuality": NewType("CNRenderingQuality", int),
         "CNCinematicErrorCode": NewType("CNCinematicErrorCode", int),
-        "CNSpatialAudioRenderingStyle": NewType("CNSpatialAudioRenderingStyle", int),
+        "CNCinematicResourceVersion": NewType("CNCinematicResourceVersion", int),
+        "CNResourceStatus": NewType("CNResourceStatus", int),
         "CNSpatialAudioContentType": NewType("CNSpatialAudioContentType", int),
+        "CNSpatialAudioRenderingStyle": NewType("CNSpatialAudioRenderingStyle", int),
     }
 )
 misc.update({})
@@ -44,6 +47,20 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
+    r(
+        b"CNAssetInfo",
+        b"checkCinematicCapabilityForAsset:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"q"}},
+                    }
+                }
+            }
+        },
+    )
     r(
         b"CNAssetInfo",
         b"checkIfCinematic:completionHandler:",
@@ -58,6 +75,39 @@ try:
             }
         },
     )
+    r(
+        b"CNAssetInfo",
+        b"downloadResourcesForVersions:timeout:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"CNAssetInfo",
+        b"downloadResourcesWithTimeout:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(b"CNAssetInfo", b"isPreprocessed", {"retval": {"type": b"Z"}})
     r(
         b"CNAssetInfo",
         b"loadFromAsset:completionHandler:",
@@ -78,8 +128,36 @@ try:
     )
     r(
         b"CNAssetInfo",
+        b"preprocessAssetWithConfiguration:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"CNAssetInfo",
         b"timeRange",
         {"retval": {"type": b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}"}},
+    )
+    r(
+        b"CNAssetPreprocessConfiguration",
+        b"referenceSourceAssetTracks",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"CNAssetPreprocessConfiguration",
+        b"setReferenceSourceAssetTracks:",
+        {"arguments": {2: {"type": b"Z"}}},
     )
     r(
         b"CNAssetSpatialAudioInfo",
@@ -325,6 +403,9 @@ finally:
     objc._updatingMetadata(False)
 
 objc.registerNewKeywordsFromSelector("CNAssetInfo", b"init")
+objc.registerNewKeywordsFromSelector(
+    "CNAssetPreprocessConfiguration", b"initWithDestinationAssetURL:"
+)
 objc.registerNewKeywordsFromSelector("CNAssetSpatialAudioInfo", b"init")
 objc.registerNewKeywordsFromSelector(
     "CNCustomDetectionTrack", b"initWithDetections:smooth:"

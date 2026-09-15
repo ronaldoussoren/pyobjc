@@ -3407,6 +3407,99 @@
       },
       "selector": "setSupportIndirectCommandBuffers:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "MTLForwardProgressUsage",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "forwardProgressUsage",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "forwardProgressUsage",
+        "type_name": "MTLForwardProgressUsage",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setForwardProgressUsage:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "MTLContentionRelief",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "contentionRelief",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "contentionRelief",
+        "type_name": "MTLContentionRelief",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setContentionRelief:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "optimizeForPersistentKernel",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "optimizeForPersistentKernel",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setOptimizeForPersistentKernel:",
+      "visibility": "public"
      }
     ],
     "name": "MTL4ComputePipelineDescriptor",
@@ -3481,6 +3574,36 @@
       "type_name": "MTL4IndirectCommandBufferSupportState",
       "typestr": "q",
       "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "forwardProgressUsage",
+      "type_name": "MTLForwardProgressUsage",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "contentionRelief",
+      "type_name": "MTLContentionRelief",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "optimizeForPersistentKernel",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
      }
     ],
     "protocols": [],
@@ -16245,6 +16368,99 @@
       },
       "selector": "setRequiredThreadsPerThreadgroup:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "MTLForwardProgressUsage",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "forwardProgressUsage",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "forwardProgressUsage",
+        "type_name": "MTLForwardProgressUsage",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setForwardProgressUsage:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "MTLContentionRelief",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "contentionRelief",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "contentionRelief",
+        "type_name": "MTLContentionRelief",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setContentionRelief:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "optimizeForPersistentKernel",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "optimizeForPersistentKernel",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setOptimizeForPersistentKernel:",
+      "visibility": "public"
      }
     ],
     "name": "MTLComputePipelineDescriptor",
@@ -16400,6 +16616,36 @@
       "name": "requiredThreadsPerThreadgroup",
       "type_name": "MTLSize",
       "typestr": "{MTLSize=QQQ}",
+      "typestr_special": true
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "forwardProgressUsage",
+      "type_name": "MTLForwardProgressUsage",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "contentionRelief",
+      "type_name": "MTLContentionRelief",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "optimizeForPersistentKernel",
+      "type_name": "BOOL",
+      "typestr": "Z",
       "typestr_special": true
      }
     ],
@@ -31026,6 +31272,37 @@
       },
       "selector": "setSwizzle:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "float",
+       "typestr": "f",
+       "typestr_special": false
+      },
+      "selector": "minLOD",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "minLOD",
+        "type_name": "float",
+        "typestr": "f",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setMinLOD:",
+      "visibility": "public"
      }
     ],
     "name": "MTLTextureViewDescriptor",
@@ -31079,6 +31356,16 @@
       "type_name": "MTLTextureSwizzleChannels",
       "typestr": "{MTLTextureSwizzleChannels=CCCC}",
       "typestr_special": true
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "minLOD",
+      "type_name": "float",
+      "typestr": "f",
+      "typestr_special": false
      }
     ],
     "protocols": [
@@ -33424,6 +33711,14 @@
     "enum": "MTLCompileSymbolVisibility",
     "value": 1
    },
+   "MTLContentionReliefAutomatic": {
+    "enum": "MTLContentionRelief",
+    "value": 0
+   },
+   "MTLContentionReliefNone": {
+    "enum": "MTLContentionRelief",
+    "value": 1
+   },
    "MTLCounterDontSample": {
     "value": -1
    },
@@ -34099,6 +34394,18 @@
     "enum": "MTLFloatingPointConversionRoundingMode",
     "value": 1
    },
+   "MTLForwardProgressUsageAutomatic": {
+    "enum": "MTLForwardProgressUsage",
+    "value": 0
+   },
+   "MTLForwardProgressUsageSIMDGroupParallel": {
+    "enum": "MTLForwardProgressUsage",
+    "value": 2
+   },
+   "MTLForwardProgressUsageWeak": {
+    "enum": "MTLForwardProgressUsage",
+    "value": 1
+   },
    "MTLFunctionLogTypeValidation": {
     "enum": "MTLFunctionLogType",
     "value": 0
@@ -34162,6 +34469,10 @@
    "MTLGPUFamilyApple10": {
     "enum": "MTLGPUFamily",
     "value": 1010
+   },
+   "MTLGPUFamilyApple11": {
+    "enum": "MTLGPUFamily",
+    "value": 1011
    },
    "MTLGPUFamilyApple2": {
     "enum": "MTLGPUFamily",
@@ -35134,6 +35445,54 @@
    "MTLPixelFormatRGB10A2Unorm": {
     "enum": "MTLPixelFormat",
     "value": 90
+   },
+   "MTLPixelFormatRGB16Float": {
+    "enum": "MTLPixelFormat",
+    "value": 99
+   },
+   "MTLPixelFormatRGB16Sint": {
+    "enum": "MTLPixelFormat",
+    "value": 98
+   },
+   "MTLPixelFormatRGB16Snorm": {
+    "enum": "MTLPixelFormat",
+    "value": 96
+   },
+   "MTLPixelFormatRGB16Uint": {
+    "enum": "MTLPixelFormat",
+    "value": 97
+   },
+   "MTLPixelFormatRGB16Unorm": {
+    "enum": "MTLPixelFormat",
+    "value": 95
+   },
+   "MTLPixelFormatRGB32Float": {
+    "enum": "MTLPixelFormat",
+    "value": 122
+   },
+   "MTLPixelFormatRGB32Sint": {
+    "enum": "MTLPixelFormat",
+    "value": 121
+   },
+   "MTLPixelFormatRGB32Uint": {
+    "enum": "MTLPixelFormat",
+    "value": 120
+   },
+   "MTLPixelFormatRGB8Sint": {
+    "enum": "MTLPixelFormat",
+    "value": 48
+   },
+   "MTLPixelFormatRGB8Snorm": {
+    "enum": "MTLPixelFormat",
+    "value": 46
+   },
+   "MTLPixelFormatRGB8Uint": {
+    "enum": "MTLPixelFormat",
+    "value": 47
+   },
+   "MTLPixelFormatRGB8Unorm": {
+    "enum": "MTLPixelFormat",
+    "value": 45
    },
    "MTLPixelFormatRGB9E5Float": {
     "enum": "MTLPixelFormat",
@@ -36298,6 +36657,9 @@
    "MTLCompileSymbolVisibility": {
     "type": "q"
    },
+   "MTLContentionRelief": {
+    "type": "q"
+   },
    "MTLCounterSampleBufferError": {
     "type": "q"
    },
@@ -36338,6 +36700,9 @@
     "type": "Q"
    },
    "MTLFloatingPointConversionRoundingMode": {
+    "type": "q"
+   },
+   "MTLForwardProgressUsage": {
     "type": "q"
    },
    "MTLFunctionLogType": {
@@ -48511,6 +48876,26 @@
       "visibility": "public"
      },
      {
+      "args": [
+       {
+        "name": "threadsPerThreadgroup",
+        "type_name": "MTLSize",
+        "typestr": "{MTLSize=QQQ}",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.0",
+      "required": true,
+      "retval": {
+       "type_name": "NSUInteger",
+       "typestr": "Q",
+       "typestr_special": false
+      },
+      "selector": "recommendedPersistentThreadgroupsPerGridForThreadsPerThreadgroup:",
+      "visibility": "public"
+     },
+     {
       "args": [],
       "class_method": false,
       "introduced": "10.13",
@@ -48639,6 +49024,19 @@
       },
       "selector": "requiredThreadsPerThreadgroup",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "required": true,
+      "retval": {
+       "type_name": "MTLForwardProgressUsage",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "forwardProgressUsage",
+      "visibility": "public"
      }
     ],
     "properties": [
@@ -48732,6 +49130,15 @@
       "type_name": "MTLSize",
       "typestr": "{MTLSize=QQQ}",
       "typestr_special": true
+     },
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "forwardProgressUsage",
+      "type_name": "MTLForwardProgressUsage",
+      "typestr": "q",
+      "typestr_special": false
      }
     ]
    },
@@ -64548,6 +64955,19 @@
       },
       "selector": "sparseTextureTier",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.0",
+      "required": true,
+      "retval": {
+       "type_name": "float",
+       "typestr": "f",
+       "typestr_special": false
+      },
+      "selector": "minLOD",
+      "visibility": "public"
      }
     ],
     "properties": [
@@ -64819,6 +65239,15 @@
       "name": "sparseTextureTier",
       "type_name": "MTLTextureSparseTier",
       "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "minLOD",
+      "type_name": "float",
+      "typestr": "f",
       "typestr_special": false
      }
     ]
@@ -65916,7 +66345,7 @@
    "MTLPackedFloat3": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{_MTLPackedFloat3=(union (anonymous at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:19:5)={struct (anonymous at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:20:9)=fff}[3f])}"
+    "typestr": "{_MTLPackedFloat3=(union (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:19:5)={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:20:9)=fff}[3f])}"
    },
    "MTLPackedFloat4x3": {
     "fieldnames": [
@@ -66100,6 +66529,7 @@
    "MTLCompareFunction": "enum MTLCompareFunction",
    "MTLCompileSymbolVisibility": "enum MTLCompileSymbolVisibility",
    "MTLComponentTransform": "struct MTLComponentTransform",
+   "MTLContentionRelief": "enum MTLContentionRelief",
    "MTLCoordinate2D": "MTLSamplePosition",
    "MTLCounterResultStageUtilization": "struct MTLCounterResultStageUtilization",
    "MTLCounterResultStatistic": "struct MTLCounterResultStatistic",
@@ -66126,6 +66556,7 @@
    "MTLDynamicLibraryError": "enum MTLDynamicLibraryError",
    "MTLFeatureSet": "enum MTLFeatureSet",
    "MTLFloatingPointConversionRoundingMode": "enum MTLFloatingPointConversionRoundingMode",
+   "MTLForwardProgressUsage": "enum MTLForwardProgressUsage",
    "MTLFunctionLogType": "enum MTLFunctionLogType",
    "MTLFunctionOptions": "enum MTLFunctionOptions",
    "MTLFunctionType": "enum MTLFunctionType",
@@ -66335,6 +66766,6 @@
   "MTLVertexDescriptor.h",
   "MTLVisibleFunctionTable.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }

@@ -1626,11 +1626,6 @@ try:
     )
     r(
         b"MDLMesh",
-        b"newMeshWithPrimitive:segments:inwardNormals:geometryType:allocator:",
-        {"arguments": {4: {"type": "Z"}}},
-    )
-    r(
-        b"MDLMesh",
         b"newPlaneWithDimensions:segments:geometryType:allocator:",
         {
             "full_signature": b"@@:<2f><2I>q@",

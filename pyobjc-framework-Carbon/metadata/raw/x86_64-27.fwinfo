@@ -2433,7 +2433,7 @@
      {
       "name": "inCommand",
       "type_name": "const HICommand *",
-      "typestr": "^{HICommand=II{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}}"
+      "typestr": "^{HICommand=II{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}}"
      }
     ],
     "retval": {
@@ -2550,7 +2550,7 @@
      "menu"
     ],
     "special": false,
-    "typestr": "{HICommand=II{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}{struct (unnamed at /Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}}"
+    "typestr": "{HICommand=II{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework/Headers/CarbonEvents.h:11932:3)=^{OpaqueMenuRef=}S}}"
    },
    "TabletPointRec": {
     "fieldnames": [
@@ -2696,6 +2696,6 @@
   "TypeSelect.h",
   "URLAccess.h"
  ],
- "release": "26.6.2",
- "sdk": "/Users/ronald/Applications/Stash/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "27.0",
+ "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
 }
