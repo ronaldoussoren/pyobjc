@@ -213,10 +213,14 @@ class oc_build_py(build_py.build_py):
 
 class oc_test(Command):
     description = "run test suite"
-    user_options = [("verbosity=", None, "print what tests are run")]
+    user_options = [
+        ("verbosity=", None, "print what tests are run"),
+        ("leaks", None, "run leaks(1) after testing"),
+    ]
 
     def initialize_options(self):
         self.verbosity = "1"
+        self.leaks = 0
 
     def finalize_options(self):
         if isinstance(self.verbosity, str):
@@ -317,6 +321,9 @@ class oc_test(Command):
 
         finally:
             self.remove_from_sys_path()
+
+            if self.leaks:
+                subprocess.run(["leaks", str(os.getpid())])
 
 
 class oc_egg_info(egg_info.egg_info):
