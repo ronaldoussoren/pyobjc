@@ -8432,6 +8432,6 @@
   "ImageCaptureConstants.h",
   "ImageCapturePlatform.h"
  ],
- "release": "27.0",
- "sdk": "/Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk"
+ "release": "macOS 27.0",
+ "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
 }
