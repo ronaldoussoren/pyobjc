@@ -355,6 +355,6 @@
   "ExceptionHandlingDefines.h",
   "NSExceptionHandler.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

@@ -73808,7 +73808,7 @@
    "MPSPackedFloat3": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{_MPSPackedFloat3=(union (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/Headers/MPSRayIntersectorTypes.h:27:5)={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/Headers/MPSRayIntersectorTypes.h:28:9)=fff}[3f])}"
+    "typestr": "{_MPSPackedFloat3=(union (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/Headers/MPSRayIntersectorTypes.h:27:5)={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/MetalPerformanceShaders.framework/Frameworks/MPSRayIntersector.framework/Headers/MPSRayIntersectorTypes.h:28:9)=fff}[3f])}"
    },
    "MPSRayOriginDirection": {
     "fieldnames": [
@@ -74095,6 +74095,6 @@
   "MPSTemporalAA.h",
   "MPSTriangleAccelerationStructure.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

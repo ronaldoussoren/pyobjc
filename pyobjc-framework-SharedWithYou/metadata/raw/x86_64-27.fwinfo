@@ -702,6 +702,37 @@
      {
       "args": [],
       "class_method": false,
+      "introduced": "27.2",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "showsParticipantCount",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "showsParticipantCount",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.2",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setShowsParticipantCount:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
       "introduced": "27.0",
       "retval": {
        "type_name": "NSUInteger",
@@ -955,6 +986,16 @@
       "type_name": "NSUInteger",
       "typestr": "Q",
       "typestr_special": false
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "showsParticipantCount",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
      },
      {
       "attributes": [
@@ -2228,6 +2269,6 @@
   "SWHighlightPersistenceEvent.h",
   "SWRemoveParticipantAlert.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

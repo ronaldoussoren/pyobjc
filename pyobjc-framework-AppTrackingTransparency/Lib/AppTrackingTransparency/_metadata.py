@@ -44,6 +44,27 @@ objc._updatingMetadata(True)
 try:
     r(
         b"ATTrackingManager",
+        b"requestTrackingAuthorizationUsingExpandedInterface:additionalInformationAction:completionHandler:",
+        {
+            "arguments": {
+                2: {"type": b"Z"},
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}},
+                    }
+                },
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"Q"}},
+                    }
+                },
+            }
+        },
+    )
+    r(
+        b"ATTrackingManager",
         b"requestTrackingAuthorizationWithCompletionHandler:",
         {
             "arguments": {

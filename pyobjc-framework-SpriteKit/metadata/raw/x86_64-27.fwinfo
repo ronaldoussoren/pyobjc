@@ -20878,7 +20878,7 @@
        {
         "name": "value",
         "type_name": "GLKVector2",
-        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
+        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
         "typestr_special": false
        }
       ],
@@ -20906,7 +20906,7 @@
        {
         "name": "value",
         "type_name": "GLKVector3",
-        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
+        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
         "typestr_special": false
        }
       ],
@@ -20934,7 +20934,7 @@
        {
         "name": "value",
         "type_name": "GLKVector4",
-        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
+        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
         "typestr_special": false
        }
       ],
@@ -20962,7 +20962,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix2",
-        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
+        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
         "typestr_special": false
        }
       ],
@@ -20990,7 +20990,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix3",
-        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
+        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
         "typestr_special": false
        }
       ],
@@ -21018,7 +21018,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix4",
-        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
+        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
         "typestr_special": false
        }
       ],
@@ -21046,7 +21046,7 @@
        {
         "name": "value",
         "type_name": "GLKVector2",
-        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
+        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
         "typestr_special": false
        }
       ],
@@ -21074,7 +21074,7 @@
        {
         "name": "value",
         "type_name": "GLKVector3",
-        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
+        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
         "typestr_special": false
        }
       ],
@@ -21102,7 +21102,7 @@
        {
         "name": "value",
         "type_name": "GLKVector4",
-        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
+        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
         "typestr_special": false
        }
       ],
@@ -21130,7 +21130,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix2",
-        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
+        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
         "typestr_special": false
        }
       ],
@@ -21158,7 +21158,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix3",
-        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
+        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
         "typestr_special": false
        }
       ],
@@ -21186,7 +21186,7 @@
        {
         "name": "value",
         "type_name": "GLKMatrix4",
-        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
+        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
         "typestr_special": false
        }
       ],
@@ -21482,7 +21482,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKVector2",
-       "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
+       "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
        "typestr_special": false
       },
       "selector": "floatVector2Value",
@@ -21493,7 +21493,7 @@
        {
         "name": "floatVector2Value",
         "type_name": "GLKVector2",
-        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
+        "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
         "typestr_special": false
        }
       ],
@@ -21515,7 +21515,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKVector3",
-       "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
+       "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
        "typestr_special": false
       },
       "selector": "floatVector3Value",
@@ -21526,7 +21526,7 @@
        {
         "name": "floatVector3Value",
         "type_name": "GLKVector3",
-        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
+        "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
         "typestr_special": false
        }
       ],
@@ -21548,7 +21548,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKVector4",
-       "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
+       "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
        "typestr_special": false
       },
       "selector": "floatVector4Value",
@@ -21559,7 +21559,7 @@
        {
         "name": "floatVector4Value",
         "type_name": "GLKVector4",
-        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
+        "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
         "typestr_special": false
        }
       ],
@@ -21581,7 +21581,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKMatrix2",
-       "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
+       "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
        "typestr_special": false
       },
       "selector": "floatMatrix2Value",
@@ -21592,7 +21592,7 @@
        {
         "name": "floatMatrix2Value",
         "type_name": "GLKMatrix2",
-        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
+        "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
         "typestr_special": false
        }
       ],
@@ -21614,7 +21614,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKMatrix3",
-       "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
+       "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
        "typestr_special": false
       },
       "selector": "floatMatrix3Value",
@@ -21625,7 +21625,7 @@
        {
         "name": "floatMatrix3Value",
         "type_name": "GLKMatrix3",
-        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
+        "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
         "typestr_special": false
        }
       ],
@@ -21647,7 +21647,7 @@
       "introduced": "10.8",
       "retval": {
        "type_name": "GLKMatrix4",
-       "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
+       "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
        "typestr_special": false
       },
       "selector": "floatMatrix4Value",
@@ -21658,7 +21658,7 @@
        {
         "name": "floatMatrix4Value",
         "type_name": "GLKMatrix4",
-        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
+        "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
         "typestr_special": false
        }
       ],
@@ -21773,42 +21773,42 @@
       "attributes": [],
       "name": "floatVector2Value",
       "type_name": "GLKVector2",
-      "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
+      "typestr": "(_GLKVector2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:101:5)=ff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:102:5)=ff}[2f])",
       "typestr_special": false
      },
      {
       "attributes": [],
       "name": "floatVector3Value",
       "type_name": "GLKVector3",
-      "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
+      "typestr": "(_GLKVector3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:117:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:118:5)=fff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:119:5)=fff}[3f])",
       "typestr_special": false
      },
      {
       "attributes": [],
       "name": "floatVector4Value",
       "type_name": "GLKVector4",
-      "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
+      "typestr": "(_GLKVector4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:134:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:135:5)=ffff}{struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:136:5)=ffff}[4f])",
       "typestr_special": false
      },
      {
       "attributes": [],
       "name": "floatMatrix2Value",
       "type_name": "GLKMatrix2",
-      "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
+      "typestr": "(_GLKMatrix2={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:36:5)=ffff}[2[2f]][4f])",
       "typestr_special": false
      },
      {
       "attributes": [],
       "name": "floatMatrix3Value",
       "type_name": "GLKMatrix3",
-      "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
+      "typestr": "(_GLKMatrix3={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:56:5)=fffffffff}[9f])",
       "typestr_special": false
      },
      {
       "attributes": [],
       "name": "floatMatrix4Value",
       "type_name": "GLKMatrix4",
-      "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
+      "typestr": "(_GLKMatrix4={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMathTypes.h:80:5)=ffffffffffffffff}[16f])",
       "typestr_special": false
      }
     ],
@@ -23687,7 +23687,7 @@
     "value": 1
    },
    "SK_VERSION": {
-    "value": 53000002
+    "value": 53001001
    }
   },
   "enum_type": {
@@ -24111,6 +24111,6 @@
   "SKWarpGeometry.h",
   "SpriteKitBase.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

@@ -2314,6 +2314,17 @@
     "methods": [
      {
       "args": [],
+      "class_method": true,
+      "retval": {
+       "type_name": "CMAuthorizationStatus",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "authorizationStatus",
+      "visibility": "public"
+     },
+     {
+      "args": [],
       "class_method": false,
       "retval": {
        "type_name": "void",
@@ -5833,6 +5844,6 @@
   "CMWaterSubmersionData.h",
   "CMWaterSubmersionManager.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

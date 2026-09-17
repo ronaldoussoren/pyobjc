@@ -3953,7 +3953,7 @@
      {
       "name": "LaunchParams",
       "type_name": "LaunchPBPtr",
-      "typestr": "^{LaunchParamBlockRec=ISSISS^{FSRef=[80C]}{ProcessSerialNumber=II}III^{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}}"
+      "typestr": "^{LaunchParamBlockRec=ISSISS^{FSRef=[80C]}{ProcessSerialNumber=II}III^{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}}"
      }
     ],
     "deprecated": "10.9",
@@ -6939,7 +6939,7 @@
      "messageLength"
     ],
     "special": false,
-    "typestr": "{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}"
+    "typestr": "{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}"
    },
    "ICAppSpec": {
     "fieldnames": [
@@ -7036,7 +7036,7 @@
      "launchAppParameters"
     ],
     "special": false,
-    "typestr": "{LaunchParamBlockRec=ISSISS^{FSRef=[80C]}{ProcessSerialNumber=II}III^{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}}"
+    "typestr": "{LaunchParamBlockRec=ISSISS^{FSRef=[80C]}{ProcessSerialNumber=II}III^{AppParameters={struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}{struct (unnamed at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks/HIServices.framework/Headers/Processes.h:57:3)=SII{Point=ss}S}II}}"
    },
    "ProcessInfoExtendedRec": {
     "fieldnames": [
@@ -7192,6 +7192,6 @@
   "TranslationServices.h",
   "UniversalAccess.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

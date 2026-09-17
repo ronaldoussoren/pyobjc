@@ -46,6 +46,63 @@
       "visibility": "public"
      },
      {
+      "args": [
+       {
+        "name": "preferExpandedInterface",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v",
+          "type_name": "void"
+         }
+        },
+        "name": "additionalInformationAction",
+        "null_accepted": true,
+        "type_name": "void (^)(void)",
+        "typestr": "@?",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "Q",
+           "type_name": "ATTrackingManagerAuthorizationStatus"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        },
+        "name": "completion",
+        "null_accepted": true,
+        "type_name": "void (^)(ATTrackingManagerAuthorizationStatus)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": true,
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "requestTrackingAuthorizationUsingExpandedInterface:additionalInformationAction:completionHandler:",
+      "visibility": "public"
+     },
+     {
       "args": [],
       "class_method": true,
       "introduced": "11.0",
@@ -151,6 +208,6 @@
  "headers": [
   "ATTrackingManager.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

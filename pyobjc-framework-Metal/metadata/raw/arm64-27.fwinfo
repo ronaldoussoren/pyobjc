@@ -66345,7 +66345,7 @@
    "MTLPackedFloat3": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{_MTLPackedFloat3=(union (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:19:5)={struct (anonymous at /Users/ronald/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:20:9)=fff}[3f])}"
+    "typestr": "{_MTLPackedFloat3=(union (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:19:5)={struct (anonymous at /Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:20:9)=fff}[3f])}"
    },
    "MTLPackedFloat4x3": {
     "fieldnames": [
@@ -66766,6 +66766,6 @@
   "MTLVertexDescriptor.h",
   "MTLVisibleFunctionTable.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

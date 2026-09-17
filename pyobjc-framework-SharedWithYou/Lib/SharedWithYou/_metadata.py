@@ -99,6 +99,12 @@ try:
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(
+        b"SWCollaborationView",
+        b"setShowsParticipantCount:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"SWCollaborationView", b"showsParticipantCount", {"retval": {"type": b"Z"}})
+    r(
         b"SWHighlightCenter",
         b"collaborationHighlightForIdentifier:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},

@@ -19534,6 +19534,10 @@
     "enum": "HKHeartRateRecoveryTestType",
     "value": 2
    },
+   "HKHeartRateRecoveryTestTypeStepTest": {
+    "enum": "HKHeartRateRecoveryTestType",
+    "value": 4
+   },
    "HKHeartRateSensorLocationChest": {
     "enum": "HKHeartRateSensorLocation",
     "value": 1
@@ -23653,6 +23657,6 @@
   "HKWorkoutRouteQuery.h",
   "HKWorkoutSession.h"
  ],
- "release": "macOS 27.0",
- "sdk": "Xcode 27.0 (27A266)/MacOSX27.sdk"
+ "release": "macOS 27.2",
+ "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
 }

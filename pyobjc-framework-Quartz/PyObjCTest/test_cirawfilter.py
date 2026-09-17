@@ -67,6 +67,11 @@ class TestCIRAWFilter(TestCase):
         self.assertIsInstance(Quartz.CIRAWDecoderVersion6, str)
         self.assertIsInstance(Quartz.CIRAWDecoderVersion6DNG, str)
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(Quartz.CIRAWDecoderVersion9, str)
+        self.assertIsInstance(Quartz.CIRAWDecoderVersion9DNG, str)
+
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isGamutMappingEnabled)
@@ -97,4 +102,12 @@ class TestCIRAWFilter(TestCase):
 
         self.assertArgIsBlock(
             Quartz.CIRAWFilter.downloadResourcesWithTimeout_completionHandler_, 1, b"v@"
+        )
+
+    @min_os_level("27.2")
+    def test_methods27_2(self):
+        self.assertArgIsBlock(
+            Quartz.CIRAWFilter.downloadAllResourcesWithTimeout_completionHandler_,
+            1,
+            b"v@",
         )

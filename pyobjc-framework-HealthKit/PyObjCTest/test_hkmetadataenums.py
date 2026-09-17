@@ -55,6 +55,7 @@ class TestHKMetadataEnums(TestCase):
             HealthKit.HKHeartRateRecoveryTestTypePredictionSubMaxExercise, 2
         )
         self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypePredictionNonExercise, 3)
+        self.assertEqual(HealthKit.HKHeartRateRecoveryTestTypeStepTest, 4)
 
         self.assertIsEnumType(HealthKit.HKHeartRateSensorLocation)
         self.assertEqual(HealthKit.HKHeartRateSensorLocationOther, 0)
