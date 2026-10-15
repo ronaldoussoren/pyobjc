@@ -244,7 +244,7 @@ It's also possible to use `Key-Value Coding`_ in some cases, which eliminates
 the need for writing most accessors, but only in scenarios where the rest of
 the code is using it.
 
-Objectie-C also support properties as syntactic sugar building upon the accessor
+Objective-C also support properties as syntactic sugar building upon the accessor
 methods mentioned earlier in this section. In Objective-C these live in a separate
 namespace and use the '.' to access the value:
 
