@@ -2314,17 +2314,6 @@
     "methods": [
      {
       "args": [],
-      "class_method": true,
-      "retval": {
-       "type_name": "CMAuthorizationStatus",
-       "typestr": "q",
-       "typestr_special": false
-      },
-      "selector": "authorizationStatus",
-      "visibility": "public"
-     },
-     {
-      "args": [],
       "class_method": false,
       "retval": {
        "type_name": "void",
@@ -2673,6 +2662,17 @@
      },
      {
       "args": [],
+      "class_method": true,
+      "retval": {
+       "type_name": "CMAuthorizationStatus",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "authorizationStatus",
+      "visibility": "public"
+     },
+     {
+      "args": [],
       "class_method": false,
       "retval": {
        "type_name": "NSTimeInterval",
@@ -2992,6 +2992,17 @@
     ],
     "name": "CMMotionManager",
     "properties": [
+     {
+      "attributes": [
+       "class",
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "authorizationStatus",
+      "type_name": "CMAuthorizationStatus",
+      "typestr": "q",
+      "typestr_special": false
+     },
      {
       "attributes": [
        "assign",
@@ -5845,5 +5856,5 @@
   "CMWaterSubmersionManager.h"
  ],
  "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
+ "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
 }

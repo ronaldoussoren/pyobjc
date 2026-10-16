@@ -139,8 +139,8 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicMachineGenerated, str)
         self.assertIsInstance(AVFoundation.AVFileTypeQuickTimeAudio, str)
 
-    @min_os_level("27.1")
-    def test_constants27_1(self):
+    @min_os_level("27.2")
+    def test_constants27_2(self):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicSignLanguageInterpretationForAccessibility,
             str,

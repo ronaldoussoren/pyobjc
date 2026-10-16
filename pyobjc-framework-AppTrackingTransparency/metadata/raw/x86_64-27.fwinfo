@@ -99,7 +99,7 @@
        "typestr": "v",
        "typestr_special": false
       },
-      "selector": "requestTrackingAuthorizationUsingExpandedInterface:additionalInformationAction:completionHandler:",
+      "selector": "requestTrackingAuthorizationPreferringExpandedInterface:additionalInformationAction:completionHandler:",
       "visibility": "public"
      },
      {
@@ -209,5 +209,5 @@
   "ATTrackingManager.h"
  ],
  "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
+ "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
 }

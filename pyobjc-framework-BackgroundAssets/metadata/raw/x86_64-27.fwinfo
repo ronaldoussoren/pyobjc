@@ -443,6 +443,85 @@
      {
       "args": [
        {
+        "name": "assetPackIdentifier",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "error",
+        "null_accepted": true,
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *",
+        "typestr": "^@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.2",
+      "retval": {
+       "type_name": "NSInteger",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "localVersionOfAssetPackWithIdentifier:error:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "assetPackIdentifier",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "calculationMethod",
+        "type_name": "BASizeCalculationMethod",
+        "typestr": "q",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "q",
+           "type_name": "long long"
+          },
+          "2": {
+           "type": "@",
+           "type_name": "NSError *"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        },
+        "name": "completionHandler",
+        "null_accepted": true,
+        "type_name": "void (^)(long long, NSError * _Nullable)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.2",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "getLocalSizeOfAssetPackWithIdentifier:calculationMethod:completionHandler:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
         "callable": {
          "arguments": {
           "0": {
@@ -2358,6 +2437,14 @@
    "BAManagedErrorCodeLocalAvailabilityFailure": {
     "enum": "BAManagedErrorCode",
     "value": 2
+   },
+   "BASizeCalculationMethodAllocated": {
+    "enum": "BASizeCalculationMethod",
+    "value": 1
+   },
+   "BASizeCalculationMethodLogical": {
+    "enum": "BASizeCalculationMethod",
+    "value": 0
    }
   },
   "enum_type": {
@@ -2374,6 +2461,9 @@
     "type": "q"
    },
    "BAManagedErrorCode": {
+    "type": "q"
+   },
+   "BASizeCalculationMethod": {
     "type": "q"
    }
   },
@@ -2952,7 +3042,8 @@
    "BADownloadState": "enum BADownloadState",
    "BADownloaderPriority": "NSInteger",
    "BAErrorCode": "enum BAErrorCode",
-   "BAManagedErrorCode": "enum BAManagedErrorCode"
+   "BAManagedErrorCode": "enum BAManagedErrorCode",
+   "BASizeCalculationMethod": "enum BASizeCalculationMethod"
   }
  },
  "framework": "BackgroundAssets",
@@ -2970,9 +3061,10 @@
   "BAManagedAssetPackDownloadDelegate.h",
   "BAManagedDownloaderExtension.h",
   "BAManagedError.h",
+  "BASizeCalculationMethod.h",
   "BATypes.h",
   "BAURLDownload.h"
  ],
  "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
+ "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
 }

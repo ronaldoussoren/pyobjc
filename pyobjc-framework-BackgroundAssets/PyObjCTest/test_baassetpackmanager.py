@@ -115,3 +115,16 @@ class TestBAAssetPackManager(TestCase):
             BackgroundAssets.BAAssetPackManager.URLForPath_asLocalizedForLanguage_error_,
             2,
         )
+
+    @min_os_level("27.2")
+    def test_methods27_2(self):
+        self.assertArgIsOut(
+            BackgroundAssets.BAAssetPackManager.localVersionOfAssetPackWithIdentifier_error_,
+            1,
+        )
+
+        self.assertArgIsBlock(
+            BackgroundAssets.BAAssetPackManager.getLocalSizeOfAssetPackWithIdentifier_calculationMethod_completionHandler_,
+            2,
+            b"vq@",
+        )

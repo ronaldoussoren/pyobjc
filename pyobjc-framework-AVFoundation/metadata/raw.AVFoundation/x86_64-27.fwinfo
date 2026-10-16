@@ -76935,6 +76935,10 @@
     "type_name": "const AVCaptureDeviceType",
     "typestr": "@"
    },
+   "AVCaptureDeviceTypeBuiltInInnerUltraWideCamera": {
+    "type_name": "const AVCaptureDeviceType",
+    "typestr": "@"
+   },
    "AVCaptureDeviceTypeBuiltInLiDARDepthCamera": {
     "type_name": "const AVCaptureDeviceType",
     "typestr": "@"
@@ -76942,6 +76946,10 @@
    "AVCaptureDeviceTypeBuiltInMicrophone": {
     "deprecated": "14.0",
     "introduced": "10.15",
+    "type_name": "const AVCaptureDeviceType",
+    "typestr": "@"
+   },
+   "AVCaptureDeviceTypeBuiltInOuterUltraWideCamera": {
     "type_name": "const AVCaptureDeviceType",
     "typestr": "@"
    },
@@ -86572,5 +86580,5 @@
   "AVVideoSettings.h"
  ],
  "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5019i)/MacOSX27.sdk"
+ "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
 }

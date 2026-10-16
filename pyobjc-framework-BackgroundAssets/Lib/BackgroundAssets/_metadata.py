@@ -29,14 +29,15 @@ else:
 
 misc = {}
 constants = """$BAAssetPackIdentifierErrorKey$BADownloaderPriorityDefault@q$BADownloaderPriorityMax@q$BADownloaderPriorityMin@q$BAErrorDomain$BAFailuresErrorKey$BAManagedErrorDomain$BASuccessesErrorKey$"""
-enums = """$BAAssetPackStatusDownloadAvailable@1$BAAssetPackStatusDownloaded@64$BAAssetPackStatusDownloading@32$BAAssetPackStatusObsolete@16$BAAssetPackStatusOutOfDate@8$BAAssetPackStatusUpToDate@4$BAAssetPackStatusUpdateAvailable@2$BAContentRequestInstall@1$BAContentRequestLanguageChange@4$BAContentRequestPeriodic@3$BAContentRequestUpdate@2$BADownloadStateCreated@0$BADownloadStateDownloading@2$BADownloadStateFailed@-1$BADownloadStateFinished@3$BADownloadStateWaiting@1$BAErrorCodeCallFromExtensionNotAllowed@50$BAErrorCodeCallFromInactiveProcessNotAllowed@51$BAErrorCodeCallerConnectionInvalid@56$BAErrorCodeCallerConnectionNotAccepted@55$BAErrorCodeDownloadAlreadyFailed@103$BAErrorCodeDownloadAlreadyScheduled@100$BAErrorCodeDownloadBackgroundActivityProhibited@111$BAErrorCodeDownloadDoesNotExist@113$BAErrorCodeDownloadEssentialDownloadNotPermitted@109$BAErrorCodeDownloadFailedToStart@102$BAErrorCodeDownloadInvalid@0$BAErrorCodeDownloadNotScheduled@101$BAErrorCodeDownloadWouldExceedAllowance@112$BAErrorCodeSessionDownloadAllowanceExceeded@204$BAErrorCodeSessionDownloadDisallowedByAllowance@203$BAErrorCodeSessionDownloadDisallowedByDomain@202$BAErrorCodeSessionDownloadNotPermittedBeforeAppLaunch@206$BAManagedErrorCodeAssetPackNotFound@0$BAManagedErrorCodeFileNotFound@1$BAManagedErrorCodeLocalAvailabilityFailure@2$"""
+enums = """$BAAssetPackStatusDownloadAvailable@1$BAAssetPackStatusDownloaded@64$BAAssetPackStatusDownloading@32$BAAssetPackStatusObsolete@16$BAAssetPackStatusOutOfDate@8$BAAssetPackStatusUpToDate@4$BAAssetPackStatusUpdateAvailable@2$BAContentRequestInstall@1$BAContentRequestLanguageChange@4$BAContentRequestPeriodic@3$BAContentRequestUpdate@2$BADownloadStateCreated@0$BADownloadStateDownloading@2$BADownloadStateFailed@-1$BADownloadStateFinished@3$BADownloadStateWaiting@1$BAErrorCodeCallFromExtensionNotAllowed@50$BAErrorCodeCallFromInactiveProcessNotAllowed@51$BAErrorCodeCallerConnectionInvalid@56$BAErrorCodeCallerConnectionNotAccepted@55$BAErrorCodeDownloadAlreadyFailed@103$BAErrorCodeDownloadAlreadyScheduled@100$BAErrorCodeDownloadBackgroundActivityProhibited@111$BAErrorCodeDownloadDoesNotExist@113$BAErrorCodeDownloadEssentialDownloadNotPermitted@109$BAErrorCodeDownloadFailedToStart@102$BAErrorCodeDownloadInvalid@0$BAErrorCodeDownloadNotScheduled@101$BAErrorCodeDownloadWouldExceedAllowance@112$BAErrorCodeSessionDownloadAllowanceExceeded@204$BAErrorCodeSessionDownloadDisallowedByAllowance@203$BAErrorCodeSessionDownloadDisallowedByDomain@202$BAErrorCodeSessionDownloadNotPermittedBeforeAppLaunch@206$BAManagedErrorCodeAssetPackNotFound@0$BAManagedErrorCodeFileNotFound@1$BAManagedErrorCodeLocalAvailabilityFailure@2$BASizeCalculationMethodAllocated@1$BASizeCalculationMethodLogical@0$"""
 misc.update(
     {
-        "BAAssetPackStatus": NewType("BAAssetPackStatus", int),
-        "BAErrorCode": NewType("BAErrorCode", int),
-        "BAManagedErrorCode": NewType("BAManagedErrorCode", int),
-        "BAContentRequest": NewType("BAContentRequest", int),
         "BADownloadState": NewType("BADownloadState", int),
+        "BAManagedErrorCode": NewType("BAManagedErrorCode", int),
+        "BAErrorCode": NewType("BAErrorCode", int),
+        "BAContentRequest": NewType("BAContentRequest", int),
+        "BAAssetPackStatus": NewType("BAAssetPackStatus", int),
+        "BASizeCalculationMethod": NewType("BASizeCalculationMethod", int),
     }
 )
 misc.update(
@@ -199,6 +200,24 @@ try:
     )
     r(
         b"BAAssetPackManager",
+        b"getLocalSizeOfAssetPackWithIdentifier:calculationMethod:completionHandler:",
+        {
+            "arguments": {
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"q"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"BAAssetPackManager",
         b"getLocalStatusOfAssetPackWithIdentifier:completionHandler:",
         {
             "arguments": {
@@ -278,6 +297,11 @@ try:
                 }
             }
         },
+    )
+    r(
+        b"BAAssetPackManager",
+        b"localVersionOfAssetPackWithIdentifier:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
     )
     r(
         b"BAAssetPackManager",

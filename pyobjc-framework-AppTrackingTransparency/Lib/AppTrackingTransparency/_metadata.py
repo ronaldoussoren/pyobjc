@@ -44,7 +44,7 @@ objc._updatingMetadata(True)
 try:
     r(
         b"ATTrackingManager",
-        b"requestTrackingAuthorizationUsingExpandedInterface:additionalInformationAction:completionHandler:",
+        b"requestTrackingAuthorizationPreferringExpandedInterface:additionalInformationAction:completionHandler:",
         {
             "arguments": {
                 2: {"type": b"Z"},
