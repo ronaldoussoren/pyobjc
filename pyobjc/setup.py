@@ -81,7 +81,7 @@ FRAMEWORK_WRAPPERS = [
     ("DiscRecording", None, None),
     ("DiscRecordingUI", None, None),
     ("DiskArbitration", None, None),
-    ("DVDPlayback", None, "26.6"),
+    ("DVDPlayback", None, None),
     ("EventKit", "10.8", None),
     ("ExceptionHandling", None, None),
     ("ExecutionPolicy", "10.15", None),
