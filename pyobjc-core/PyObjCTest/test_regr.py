@@ -7,6 +7,7 @@ import warnings
 import types
 import struct
 import fractions
+import pickle
 import objc.simd
 
 import objc
@@ -1480,7 +1481,7 @@ class TestTransient(TestCase):
         with objc.autorelease_pool():
             OC_MetaDataTest.performActionOn_class_(o, NSObject)
 
-        str(o.action)
+        str(o.action)  # noqa: B018
         del o.action
 
     def test_transient_value2(self):
@@ -1492,7 +1493,7 @@ class TestTransient(TestCase):
 
         self.assertEqual(gDeallocCounter, before)
 
-        str(o.action)
+        str(o.action)  # noqa: B018
         del o.action
         self.assertEqual(gDeallocCounter, before + 1)
 
@@ -1503,3 +1504,12 @@ class TestDeprecatedAttributes(TestCase):
             self.assertEqual(objc.platform, "MACOSX")
         else:
             self.assertNotHasAttr(objc, "platform")
+
+
+class TestNoPickle(TestCase):
+    def test_no_pickle_nsobject(self):
+        v = NSObject.alloc().init()
+
+        for prot in range(2, pickle.HIGHEST_PROTOCOL + 1):
+            with self.assertRaisesRegex(TypeError, "Cannot pickle Objective-C objects"):
+                pickle.dumps(v, protocol=prot)

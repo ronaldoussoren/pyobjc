@@ -646,6 +646,21 @@ class TestFunctions(TestCase):
             function_list2,
             m,
             [
+                (
+                    "sum4ints",
+                    b"i[4I]",
+                    "",
+                    {
+                        "arguments": {
+                            0: {
+                                "type_override": "^i",
+                                "type_modifier": "n",
+                                "c_array_of_fixed_length": 4,
+                            }
+                        }
+                    },
+                ),
+                ("distance", b"d[2{pt=dd}]"),
                 ("doubleInt", b"ii"),
                 ("trippleInt", b"ii", "", {"suggestion": "no valid api"}),
                 ("quadrupleInt", b"ii", "", {"deprecated": 2600}),
@@ -708,6 +723,17 @@ class TestFunctions(TestCase):
             self.assertEqual(cm[0].category, objc.ApiDeprecationWarning)
 
         stored = None
+
+        self.assertEqual(m["sum4ints"]((1, 2, 3, 4)), 10)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            m["sum4ints"]((1, 2, 3))
+        del m["sum4ints"]
+
+        pt1 = (2, 4)
+        pt2 = (6, 8)
+        r = m["distance"]((pt1, pt2))
+        self.assertIsInstance(r, float)
+        del m["distance"]
 
         def fun(v):
             nonlocal stored

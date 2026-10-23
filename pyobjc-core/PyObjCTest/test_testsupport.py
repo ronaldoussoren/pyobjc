@@ -508,6 +508,11 @@ class TestTestSupport(TestCase):
         except self.failureException:
             self.fail("NSCFType not recognized as a not-unique CFType")
 
+        with self.assertRaisesRegex(
+            self.failureException, "NSObject .* is not a CFTypeRef type"
+        ):
+            self.assertIsCFType(objc.lookUpClass("NSObject"), unique=False)
+
         # 'assertIsCFType' primarily tests that a type is either tollfree bridged, or
         # has a distinct type that is different from the default NSCFType 'placeholder' type.
         # self.assertIsCFType(objc.lookUpClass('NSObject'))
@@ -1571,6 +1576,12 @@ class TestTestSupport(TestCase):
         m = Method(None, {"already_retained": True, "type": b"@"})
         with self.assertRaisesRegex(
             self.failureException, "Result of <.*> is retained"
+        ):
+            self.assertResultIsNotRetained(m)
+
+        m = Method(None, {"already_retained": True, "type": b"i"})
+        with self.assertRaisesRegex(
+            self.failureException, "Result of <.*> is not an object"
         ):
             self.assertResultIsNotRetained(m)
 
