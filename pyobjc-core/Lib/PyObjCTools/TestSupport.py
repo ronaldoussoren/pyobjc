@@ -788,7 +788,7 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         if "type" not in info["retval"] or not any(
-            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^")
         ):
             self.fail(
                 message
