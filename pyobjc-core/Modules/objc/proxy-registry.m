@@ -4,6 +4,7 @@
 #include <objc/runtime.h>
 
 extern id   objc_loadWeakRetained(id* value);
+extern void objc_destroyWeak(id* value);
 extern void objc_release(id value);
 extern id   objc_retain(id value);
 
@@ -54,7 +55,7 @@ weak_value_release(NSMapTable* table __attribute__((__unused__)), void* _value)
     struct weak_value* value = (struct weak_value*)_value;
 
     if (--(value->refcnt) == 0) {
-        objc_storeWeak(&value->value, nil);
+        objc_destroyWeak(&value->value);
         free(value);
     }
 }
