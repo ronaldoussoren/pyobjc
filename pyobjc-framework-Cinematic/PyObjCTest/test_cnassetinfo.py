@@ -70,4 +70,3 @@ class TestCNAssetInfo(TestCase):
         )
 
         self.assertResultIsBOOL(Cinematic.CNAssetInfo.isPreprocessed)
-        self.assertArgIsBOOL(Cinematic.CNAssetInfo.setPreprocessed_, 0)

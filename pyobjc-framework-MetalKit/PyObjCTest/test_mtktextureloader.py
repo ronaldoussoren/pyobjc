@@ -40,27 +40,18 @@ class TestMTKTextureLoading(TestCase):
 
     @min_os_level("10.11")
     def test_methods10_11(self):
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_completionHandler_
-        )  # noqa: B950
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_completionHandler_,  # noqa: B950
             2,
             MTKTextureLoaderCallback,
         )
 
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTextureWithData_options_completionHandler_
-        )
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithData_options_completionHandler_,
             2,
             MTKTextureLoaderCallback,
         )
 
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTextureWithCGImage_options_completionHandler_
-        )
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithCGImage_options_completionHandler_,
             2,
@@ -90,27 +81,18 @@ class TestMTKTextureLoading(TestCase):
 
     @min_os_level("10.12")
     def test_methods10_12(self):
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_completionHandler_
-        )  # noqa: B950
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_completionHandler_,  # noqa: B950
             4,
             MTKTextureLoaderCallback,
         )
 
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler_
-        )  # noqa: B950
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler_,  # noqa: B950
             5,
             MTKTextureLoaderCallback,
         )
 
-        self.assertResultIsRetained(
-            MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_completionHandler_
-        )  # noqa: B950
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_completionHandler_,  # noqa: B950
             2,

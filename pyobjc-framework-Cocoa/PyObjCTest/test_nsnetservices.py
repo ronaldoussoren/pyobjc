@@ -1,5 +1,6 @@
 import Foundation
 import re
+import os
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 from .runloophelper import check_cfrunloop_side_effects
 
@@ -86,13 +87,14 @@ class TestNSNetservices(TestCase):
 
     @check_cfrunloop_side_effects
     def test_manual(self):
+        p = os.getpid()
         ns1 = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(
-            "local.", "_http._tcp", "pyobjctest99", 10000
+            "local.", "_http._tcp", f"pyobjctest{p}", 10000
         )
         ns1.publish()
 
         ns2 = Foundation.NSNetService.alloc().initWithDomain_type_name_(
-            "local.", "_http._tcp", "pyobjctest99"
+            "local.", "_http._tcp", f"pyobjctest{p}"
         )
         ns2.resolve()
 

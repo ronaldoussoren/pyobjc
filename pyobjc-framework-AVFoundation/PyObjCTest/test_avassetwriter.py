@@ -5,7 +5,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
     min_sdk_level,
-    expectedFailureIf,
 )
 
 
@@ -63,12 +62,14 @@ class TestAVAssetWriter(TestCase):
         )
 
     @min_os_level("27.0")
-    @expectedFailureIf(_build_version() == "26A428")
     def test_methods27_0(self):
         # XXX: These methods aren't present on macOS 27 beta 5, checked with ObjC program.
-        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
-        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.usesProVideoStorage)
-        self.assertArgIsBOOL(AVFoundation.AVAssetWriter.setUsesProVideoStorage_, 0)
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "isProVideoStorageSupported")
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "usesProVideoStorage")
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "setUsesProVideoStorage_")
+        # self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
+        # self.assertResultIsBOOL(AVFoundation.AVAssetWriter.usesProVideoStorage)
+        # self.assertArgIsBOOL(AVFoundation.AVAssetWriter.setUsesProVideoStorage_, 0)
 
     @min_sdk_level("11.0")
     def test_protocols(self):

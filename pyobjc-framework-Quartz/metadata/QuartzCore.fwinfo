@@ -207,6 +207,8 @@
    "kCIUISetDevelopment": { "typestr": "@" },
    "kCIUISetIntermediate": { "typestr": "@" },
    "CIRAWDecoderVersionNone": { "typestr": "@" },
+   "CIRAWDecoderVersion9": { "typestr": "@" },
+   "CIRAWDecoderVersion9DNG": { "typestr": "@" },
    "CIRAWDecoderVersion8": { "typestr": "@" },
    "CIRAWDecoderVersion8DNG": { "typestr": "@" },
    "CIRAWDecoderVersion7": { "typestr": "@" },
@@ -369,6 +371,21 @@
    },
    "CIRAWFilter": {
     "methods": [
+     {
+      "selector": "downloadAllResourcesWithTimeout:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "downloadResourcesWithTimeout:completionHandler:",
       "class_method": false,

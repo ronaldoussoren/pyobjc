@@ -26,6 +26,8 @@ class TestCallableMetadata(TestCase):
                 "CKSQLite",
                 "CKSQLiteDatabase",
                 "CKSQLiteStatement",
+                "CLBackgroundInertialOdometrySample",
+                "CLSmootherAltitudeSample",
                 "DSSandboxingURLWrapper",
                 "IMLogging",
                 "LACIOKitHelper",

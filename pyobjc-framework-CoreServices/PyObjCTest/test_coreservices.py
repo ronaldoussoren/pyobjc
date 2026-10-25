@@ -32,6 +32,8 @@ class TestCallableMetadata(TestCase):
                 "BKDevicePearl",
                 "BKDeviceTouchID",
                 "CBTDSAdvertisingData",
+                "CLBackgroundInertialOdometrySample",
+                "CLSmootherAltitudeSample",
                 "CULogHandle",
                 "DSSandboxingURLWrapper",
                 "IMLogging",

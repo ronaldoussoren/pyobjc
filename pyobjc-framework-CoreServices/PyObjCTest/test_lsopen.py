@@ -1,6 +1,6 @@
 import os
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, expectedFailure, os_release
+from PyObjCTools.TestSupport import TestCase, expectedFailure, os_release, os_level_key
 import objc
 
 
@@ -84,8 +84,13 @@ class TestLSOpen(TestCase):
         self.assertArgSizeInArg(CoreServices.LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
 
-        if os_release() != "27.0":
-            # XXX: Broken in beta 3
+        if os_level_key(os_release()) < (27, 0):
+            # XXX: This call consistently raises an exception on macOS 27:
+            #
+            #       NSInternalInconsistencyException - Invalid parameter not satisfying: keyDescToCopy != NULL
+            #
+            #      I haven't debugged this any further due to the API being long deprecated
+            #      (and the exception is from this API, not from PyObjC itself)
 
             ok, psns = CoreServices.LSOpenItemsWithRole(
                 [ref], 1, CoreServices.kLSRolesAll, None, None, None, 1

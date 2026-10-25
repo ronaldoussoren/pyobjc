@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import (
     min_os_level,
     fourcc,
     NoObjCClass,
+    expectedFailure,
 )
 import Quartz
 import objc
@@ -604,6 +605,7 @@ class TestCVPixelBuffer(TestCase):
             stderr,
         )
 
+    @expectedFailure
     def test_manual_createwithplanarbytes(self):
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
 

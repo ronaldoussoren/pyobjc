@@ -111,9 +111,9 @@ free_itemset(AuthorizationItemSet* itemset)
 
 static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
 {
-    PyObject* result = NULL;
-    PyObject* t      = NULL;
-    PyObject* o      = NULL;
+    PyObject* result; // = NULL;
+    PyObject* t = NULL;
+    PyObject* o = NULL;
 
     assert(itemset != NULL);
 
@@ -128,11 +128,17 @@ static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
 
         assert(item != NULL);
 
-        t = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}",
-                                          sizeof("{_AuthorizationItem=^cL^vI}") - 1, NULL,
+        t = PyObjC_CreateRegisteredStruct("{AuthorizationItem=^cQ^vI}",
+                                          sizeof("{AuthorizationItem=^cQ^vI}") - 1, NULL,
                                           &packed);
-        if (t == NULL)  // LCOV_BR_EXCL_LINE
-            goto error; // LCOV_EXCL_LINE
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_BR_EXCL_START
+            if (!PyErr_Occurred()) {
+                PyErr_SetString(PyExc_RuntimeError, "No binding for 'AuthorizationItem'");
+            }
+            goto error;
+            // LCOV_BR_EXCL_STOP
+        }
 
         o = PyBytes_FromString(item->name);
         if (o == NULL)  // LCOV_BR_EXCL_LINE
@@ -181,6 +187,7 @@ static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
 
 error:
     // LCOV_EXCL_START
+    // as
     Py_CLEAR(result);
     Py_CLEAR(t);
     Py_CLEAR(o);
@@ -219,7 +226,9 @@ static PyObject* _Nullable call_authorizationRights(PyObject* method, PyObject* 
 
     if (rights == NULL)
         Py_RETURN_NONE;
+
     py_rights = build_itemset(rights);
+    assert(py_rights || PyErr_Occurred());
     return py_rights;
 }
 
