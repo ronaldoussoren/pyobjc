@@ -497,10 +497,10 @@ class TestMTAudioProcessingTap(TestCase):
             player.currentItem().setAudioMix_(None)
 
             CoreFoundation.CFRunLoopRunInMode(
-                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+                CoreFoundation.kCFRunLoopDefaultMode, 1.0, False
             )
             CoreFoundation.CFRunLoopRunInMode(
-                CoreFoundation.kCFRunLoopDefaultMode, 0.5, False
+                CoreFoundation.kCFRunLoopDefaultMode, 1.0, False
             )
 
             self.assertEqual(record[0][0], "init")

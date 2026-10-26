@@ -538,10 +538,16 @@ class TestBasicConveniences(TestCase):
         with self.assertRaisesRegex(TypeError, "Key must be string"):
             o._[42]
         self.assertEqual(repr(o._), f"<KVC accessor for {o!r}>")
-        with self.assertRaisesRegex(AttributeError, "^nosuchattr$"):
-            o._.nosuchattr
-        with self.assertRaisesRegex(AttributeError, "^$"):
-            getattr(o._, "")
+        if sys.version_info[:2] < (3, 16):
+            with self.assertRaisesRegex(AttributeError, "^nosuchattr$"):
+                o._.nosuchattr
+            with self.assertRaisesRegex(AttributeError, "^$"):
+                getattr(o._, "")
+        else:
+            with self.assertRaisesRegex(AttributeError, "'nosuchattr'"):
+                o._.nosuchattr
+            with self.assertRaisesRegex(AttributeError, "''"):
+                getattr(o._, "")
         with self.assertRaisesRegex(TypeError, "Key must be string"):
             o._[42]
 
