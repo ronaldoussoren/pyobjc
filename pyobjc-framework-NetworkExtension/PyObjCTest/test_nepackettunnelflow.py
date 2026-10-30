@@ -5,7 +5,7 @@ import NetworkExtension
 
 class TestNEPacketTunnelFlow(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEPacketTunnelFlow.readPacketsWithCompletionHandler_,
             0,
@@ -16,7 +16,7 @@ class TestNEPacketTunnelFlow(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             NetworkExtension.NEPacketTunnelFlow.readPacketObjectsWithCompletionHandler_,
             0,

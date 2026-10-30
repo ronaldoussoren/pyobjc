@@ -5,8 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestError(TestCase):
-    @min_os_level("10.5")
-    def testTypes(self):
+    def test_types(self):
         try:
             NSCFError = objc.lookUpClass("__NSCFError")
         except objc.error:
@@ -14,12 +13,10 @@ class TestError(TestCase):
 
         self.assertIs(CoreFoundation.CFErrorRef, NSCFError)
 
-    @min_os_level("10.5")
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFErrorGetTypeID(), int)
 
-    @min_os_level("10.5")
-    def testCreation(self):
+    def test_creation(self):
         userInfo = {"foo": "bar"}
         err = CoreFoundation.CFErrorCreate(
             None, CoreFoundation.kCFErrorDomainPOSIX, 42, userInfo
@@ -54,8 +51,7 @@ class TestError(TestCase):
         dct = CoreFoundation.CFErrorCopyUserInfo(err)
         self.assertEqual(dct, {"key1": "value1", "key2": "value2"})
 
-    @min_os_level("10.5")
-    def testInspection(self):
+    def test_inspect(self):
         userInfo = {
             "foo": "bar",
             CoreFoundation.kCFErrorLocalizedFailureReasonKey: "failure reason",
@@ -90,8 +86,7 @@ class TestError(TestCase):
         v = CoreFoundation.CFErrorCopyRecoverySuggestion(err)
         self.assertEqual(v, "recovery suggestion")
 
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFErrorDomainPOSIX, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDomainOSStatus, str)
         self.assertIsInstance(CoreFoundation.kCFErrorDomainMach, str)
@@ -104,11 +99,9 @@ class TestError(TestCase):
         self.assertIsInstance(CoreFoundation.kCFErrorDescriptionKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorUnderlyingErrorKey, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
         self.assertIsInstance(CoreFoundation.kCFErrorURLKey, str)
         self.assertIsInstance(CoreFoundation.kCFErrorFilePathKey, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(CoreFoundation.kCFErrorLocalizedFailureKey, str)

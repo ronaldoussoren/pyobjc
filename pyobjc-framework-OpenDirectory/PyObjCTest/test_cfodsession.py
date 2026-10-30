@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFODSession(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertIsInstance(CFOpenDirectory.ODSessionGetTypeID(), int)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODSessionCreate)
@@ -12,7 +12,7 @@ class TestCFODSession(TestCase):
         self.assertResultIsCFRetained(CFOpenDirectory.ODSessionCopyNodeNames)
         self.assertArgIsOut(CFOpenDirectory.ODSessionCopyNodeNames, 2)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             CFOpenDirectory.kODSessionDefault,
             (CFOpenDirectory.ODSessionRef, type(None)),

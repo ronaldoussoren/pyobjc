@@ -3,21 +3,15 @@ import GameController
 
 
 class TestGCDualSenseAdaptiveTrigger(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCDualSenseAdaptiveTriggerMode)
-        self.assertIsEnumType(GameController.GCDualSenseAdaptiveTriggerStatus)
-
-    def test_constants(self):
-        self.assertEqual(
-            GameController.GCDualSenseAdaptiveTriggerDiscretePositionCount, 10
-        )
-
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeOff, 0)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeFeedback, 1)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeWeapon, 2)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeVibration, 3)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerModeSlopeFeedback, 4)
 
+        self.assertIsEnumType(GameController.GCDualSenseAdaptiveTriggerStatus)
         self.assertEqual(GameController.GCDualSenseAdaptiveTriggerStatusUnknown, -1)
         self.assertEqual(
             GameController.GCDualSenseAdaptiveTriggerStatusFeedbackNoLoad, 0
@@ -42,6 +36,11 @@ class TestGCDualSenseAdaptiveTrigger(TestCase):
         )
         self.assertEqual(
             GameController.GCDualSenseAdaptiveTriggerStatusSlopeFeedbackFinished, 9
+        )
+
+        # Unamed enum:
+        self.assertEqual(
+            GameController.GCDualSenseAdaptiveTriggerDiscretePositionCount, 10
         )
 
     def test_structs(self):

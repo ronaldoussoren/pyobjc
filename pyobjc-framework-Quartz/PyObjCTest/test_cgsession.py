@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGSession(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGSessionUserIDKey, "kCGSSessionUserIDKey")
         self.assertEqual(Quartz.kCGSessionUserNameKey, "kCGSSessionUserNameKey")
         self.assertEqual(Quartz.kCGSessionConsoleSetKey, "kCGSSessionConsoleSetKey")
@@ -18,7 +18,7 @@ class TestCGSession(TestCase):
             b"com.apple.coregraphics.GUISessionUserChanged",
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         v = Quartz.CGSessionCopyCurrentDictionary()
         self.assertIsInstance(v, Quartz.CFDictionaryRef)
 

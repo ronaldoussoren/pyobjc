@@ -5,12 +5,12 @@ import objc
 
 class TestCKFetchRecordsOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKFetchRecordsOperation")
         self.assertIsInstance(CloudKit.CKFetchRecordsOperation, objc.objc_class)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchRecordsOperation.setPerRecordProgressBlock_, 0, b"v@d"
         )

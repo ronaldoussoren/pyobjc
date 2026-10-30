@@ -15,9 +15,9 @@ class TestMEMessageEncoderHelper(MailKit.NSObject):
 
 class TestMEMessageEncoder(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MEMessageEncoder")
+        self.assertProtocolExists("MEMessageEncoder", MailKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestMEMessageEncoderHelper.getEncodingStatusForMessage_composeContext_completionHandler_,
             2,

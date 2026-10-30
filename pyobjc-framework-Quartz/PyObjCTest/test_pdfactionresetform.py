@@ -3,6 +3,6 @@ import Quartz
 
 
 class TestPDFActionResetForm(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.PDFActionResetForm.fieldsIncludedAreCleared)
         self.assertArgIsBOOL(Quartz.PDFActionResetForm.setFieldsIncludedAreCleared_, 0)

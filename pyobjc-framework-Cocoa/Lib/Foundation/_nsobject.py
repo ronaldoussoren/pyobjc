@@ -42,37 +42,33 @@ class NSObject(objc.Category(NSObject)):
         except:  # noqa: E722, B001
             result.append((False, sys.exc_info()))
 
-    if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
-
-        @objc.namedSelector(
-            b"pyobjc_performSelector:onThread:withObject:waitUntilDone:"
+    @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:waitUntilDone:")
+    def pyobjc_performSelector_onThread_withObject_waitUntilDone_(
+        self, aSelector, thread, arg, wait
+    ):
+        """
+        A version of performSelector:onThread:withObject:waitUntilDone: that
+        will log exceptions in the called method (instead of aborting the
+        NSRunLoop on the other thread).
+        """
+        self.performSelector_onThread_withObject_waitUntilDone_(
+            b"_pyobjc_performOnThread:", thread, (aSelector, arg), wait
         )
-        def pyobjc_performSelector_onThread_withObject_waitUntilDone_(
-            self, aSelector, thread, arg, wait
-        ):
-            """
-            A version of performSelector:onThread:withObject:waitUntilDone: that
-            will log exceptions in the called method (instead of aborting the
-            NSRunLoop on the other thread).
-            """
-            self.performSelector_onThread_withObject_waitUntilDone_(
-                b"_pyobjc_performOnThread:", thread, (aSelector, arg), wait
-            )
 
-        @objc.namedSelector(
-            b"pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:"
+    @objc.namedSelector(
+        b"pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:"
+    )
+    def pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
+        self, aSelector, thread, arg, wait, modes
+    ):
+        """
+        A version of performSelector:onThread:withObject:waitUntilDone:modes:
+        that will log exceptions in the called method (instead of aborting the
+        NSRunLoop on the other thread).
+        """
+        self.performSelector_onThread_withObject_waitUntilDone_modes_(
+            b"_pyobjc_performOnThread:", thread, (aSelector, arg), wait, modes
         )
-        def pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
-            self, aSelector, thread, arg, wait, modes
-        ):
-            """
-            A version of performSelector:onThread:withObject:waitUntilDone:modes:
-            that will log exceptions in the called method (instead of aborting the
-            NSRunLoop on the other thread).
-            """
-            self.performSelector_onThread_withObject_waitUntilDone_modes_(
-                b"_pyobjc_performOnThread:", thread, (aSelector, arg), wait, modes
-            )
 
     @objc.namedSelector(b"pyobjc_performSelector:withObject:afterDelay:")
     def pyobjc_performSelector_withObject_afterDelay_(self, aSelector, arg, delay):
@@ -98,18 +94,16 @@ class NSObject(objc.Category(NSObject)):
             b"_pyobjc_performOnThread:", (aSelector, arg), delay, modes
         )
 
-    if hasattr(NSObject, "performSelectorInBackground_withObject_"):
-
-        @objc.namedSelector(b"pyobjc_performSelectorInBackground:withObject:")
-        def pyobjc_performSelectorInBackground_withObject_(self, aSelector, arg):
-            """
-            A version of performSelectorInBackground:withObject:
-            that will log exceptions in the called method (instead of aborting the
-            NSRunLoop).
-            """
-            self.performSelectorInBackground_withObject_(
-                b"_pyobjc_performOnThread:", (aSelector, arg)
-            )
+    @objc.namedSelector(b"pyobjc_performSelectorInBackground:withObject:")
+    def pyobjc_performSelectorInBackground_withObject_(self, aSelector, arg):
+        """
+        A version of performSelectorInBackground:withObject:
+        that will log exceptions in the called method (instead of aborting the
+        NSRunLoop).
+        """
+        self.performSelectorInBackground_withObject_(
+            b"_pyobjc_performOnThread:", (aSelector, arg)
+        )
 
     @objc.namedSelector(b"pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:")
     def pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_(
@@ -180,46 +174,42 @@ class NSObject(objc.Category(NSObject)):
             exc_type, exc_value, exc_trace = result
             _raise(exc_type, exc_value, exc_trace)
 
-    if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
-        # These methods require Leopard, don't define them if the
-        # platform functionality isn't present.
+    @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:modes:")
+    def pyobjc_performSelector_onThread_withObject_modes_(
+        self, aSelector, thread, arg, modes
+    ):
+        result = []
+        self.performSelector_onThread_withObject_waitUntilDone_modes_(
+            b"_pyobjc_performOnThreadWithResult:",
+            thread,
+            (aSelector, arg, result),
+            True,
+            modes,
+        )
+        isOK, result = result[0]
 
-        @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:modes:")
-        def pyobjc_performSelector_onThread_withObject_modes_(
-            self, aSelector, thread, arg, modes
-        ):
-            result = []
-            self.performSelector_onThread_withObject_waitUntilDone_modes_(
-                b"_pyobjc_performOnThreadWithResult:",
-                thread,
-                (aSelector, arg, result),
-                True,
-                modes,
-            )
-            isOK, result = result[0]
+        if isOK:
+            return result
+        else:
+            exc_type, exc_value, exc_trace = result
+            _raise(exc_type, exc_value, exc_trace)
 
-            if isOK:
-                return result
-            else:
-                exc_type, exc_value, exc_trace = result
-                _raise(exc_type, exc_value, exc_trace)
+    @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:")
+    def pyobjc_performSelector_onThread_withObject_(self, aSelector, thread, arg):
+        result = []
+        self.performSelector_onThread_withObject_waitUntilDone_(
+            b"_pyobjc_performOnThreadWithResult:",
+            thread,
+            (aSelector, arg, result),
+            True,
+        )
+        isOK, result = result[0]
 
-        @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:")
-        def pyobjc_performSelector_onThread_withObject_(self, aSelector, thread, arg):
-            result = []
-            self.performSelector_onThread_withObject_waitUntilDone_(
-                b"_pyobjc_performOnThreadWithResult:",
-                thread,
-                (aSelector, arg, result),
-                True,
-            )
-            isOK, result = result[0]
-
-            if isOK:
-                return result
-            else:
-                exc_type, exc_value, exc_trace = result
-                _raise(exc_type, exc_value, exc_trace)
+        if isOK:
+            return result
+        else:
+            exc_type, exc_value, exc_trace = result
+            _raise(exc_type, exc_value, exc_trace)
 
 
 del NSObject

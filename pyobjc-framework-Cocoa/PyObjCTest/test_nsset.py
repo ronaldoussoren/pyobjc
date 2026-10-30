@@ -1,20 +1,20 @@
 import objc
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSetInteraction(TestCase):
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSSet.alloc().init()
 
-    def testContains(self):
+    def test_contains(self):
         x = Foundation.NSSet.setWithArray_(["foo", "bar", "baz"])
 
         self.assertIn("foo", x)
         self.assertNotIn("notfoo", x)
 
-    def testIteration(self):
+    def test_iterationg(self):
         x = Foundation.NSSet.setWithArray_(["foo", "bar", "baz"])
 
         for i in x:
@@ -58,7 +58,7 @@ class TestNSSetInteraction(TestCase):
 
 
 class TestVariadic(TestCase):
-    def testSetWithObjects(self):
+    def test_set_with_objects(self):
         o = Foundation.NSSet.setWithObjects_()
         self.assertEqual(len(o), 0)
         self.assertIsInstance(o, Foundation.NSSet)
@@ -81,7 +81,7 @@ class TestVariadic(TestCase):
         self.assertIn(2, o)
         self.assertIn(3, o)
 
-    def testInitWithObjects(self):
+    def test_initWithObjects(self):
         o = Foundation.NSSet.alloc().initWithObjects_()
         self.assertEqual(len(o), 0)
         self.assertIsInstance(o, Foundation.NSSet)
@@ -104,7 +104,7 @@ class TestVariadic(TestCase):
         self.assertIn(2, o)
         self.assertIn(3, o)
 
-    def testSetWithObjectsCount(self):
+    def test_set_with_objects_count(self):
         o = Foundation.NSSet.setWithObjects_count_([1, 2, 3], 3)
         self.assertEqual(len(o), 3)
         self.assertIsInstance(o, Foundation.NSSet)
@@ -128,7 +128,7 @@ class TestVariadic(TestCase):
         self.assertEqual(len(o), 0)
         self.assertIsInstance(o, Foundation.NSMutableSet)
 
-    def testInitWithObjectsCount(self):
+    def test_initWithObjectsCount(self):
         o = Foundation.NSSet.alloc().initWithObjects_count_([1, 2, 3], 3)
         self.assertEqual(len(o), 3)
         self.assertIsInstance(o, Foundation.NSSet)
@@ -152,7 +152,7 @@ class TestVariadic(TestCase):
         self.assertEqual(len(o), 0)
         self.assertIsInstance(o, Foundation.NSMutableSet)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSSet.containsObject_)
         self.assertResultIsBOOL(Foundation.NSSet.intersectsSet_)
         self.assertResultIsBOOL(Foundation.NSSet.isEqualToSet_)
@@ -165,8 +165,6 @@ class TestVariadic(TestCase):
 
         self.assertArgIsBOOL(Foundation.NSSet.initWithSet_copyItems_, 1)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSSet.enumerateObjectsUsingBlock_, 0, b"v@o^" + objc._C_NSBOOL
         )

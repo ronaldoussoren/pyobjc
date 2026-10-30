@@ -7,26 +7,18 @@ from PyObjCTools.TestSupport import (
 
 
 class TestICDevice(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceCapability, str)
-        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceLocationOptions, str)
-        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceStatus, str)
-        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceTransport, str)
-        self.assertIsTypedEnum(ImageCaptureCore.ICSessionOptions, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(ImageCaptureCore.ICDeviceLocationType)
+    def test_enums(self):
         self.assertIsEnumType(ImageCaptureCore.ICDeviceType)
-        self.assertIsEnumType(ImageCaptureCore.ICDeviceTypeMask)
-
-    def testConstants(self):
         self.assertEqual(ImageCaptureCore.ICDeviceTypeCamera, 0x00000001)
         self.assertEqual(ImageCaptureCore.ICDeviceTypeScanner, 0x00000002)
 
+        self.assertIsEnumType(ImageCaptureCore.ICDeviceLocationType)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeLocal, 0x00000100)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeShared, 0x00000200)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeBonjour, 0x00000400)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeBluetooth, 0x00000800)
+
+        self.assertIsEnumType(ImageCaptureCore.ICDeviceTypeMask)
         self.assertEqual(ImageCaptureCore.ICDeviceTypeMaskCamera, 0x00000001)
         self.assertEqual(ImageCaptureCore.ICDeviceTypeMaskScanner, 0x00000002)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskLocal, 0x00000100)
@@ -35,6 +27,14 @@ class TestICDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskBluetooth, 0x00000800)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskRemote, 0x0000FE00)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceCapability, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceLocationOptions, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceStatus, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICDeviceTransport, str)
+        self.assertIsTypedEnum(ImageCaptureCore.ICSessionOptions, str)
+
+    def test_constants(self):
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeUSB, str)
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeFireWire, str)
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeBluetooth, str)
@@ -57,23 +57,17 @@ class TestICDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICStatusNotificationKey, str)
         self.assertIsInstance(ImageCaptureCore.ICLocalizedStatusNotificationKey, str)
         self.assertIsInstance(ImageCaptureCore.ICDeviceCanEjectOrDisconnect, str)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertIsInstance(ImageCaptureCore.ICStatusCodeKey, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(ImageCaptureCore.ICEnumerationChronologicalOrder, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeProximity, str)
 
-    def testProtocolObjects(self):
-        self.assertProtocolExists("ICDeviceDelegate")
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isRemote)
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.hasOpenSession)
 
@@ -84,11 +78,11 @@ class TestICDevice(TestCase):
         )
 
     @max_os_level("10.14")
-    def testMethods_removed_in_10_15(self):
+    def test_methods_removed_in_10_15(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICDevice.isShared)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             ImageCaptureCore.ICDevice.requestOpenSessionWithOptions_completion_,
             1,
@@ -102,3 +96,6 @@ class TestICDevice(TestCase):
         self.assertArgIsBlock(
             ImageCaptureCore.ICDevice.requestEjectWithCompletion_, 0, b"v@"
         )
+
+    def test_protocols(self):
+        self.assertProtocolExists("ICDeviceDelegate", ImageCaptureCore)

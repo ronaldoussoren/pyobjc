@@ -1,15 +1,18 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSImageRep(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSImageLayoutDirection)
+        self.assertEqual(AppKit.NSImageLayoutDirectionUnspecified, -1)
+        self.assertEqual(AppKit.NSImageLayoutDirectionLeftToRight, 2)
+        self.assertEqual(AppKit.NSImageLayoutDirectionRightToLeft, 3)
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSImageHintKey, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSImageLayoutDirection)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSImageRepMatchesDevice, 0)
 
         self.assertEqual(
@@ -18,11 +21,7 @@ class TestNSImageRep(TestCase):
         )
         self.assertIsInstance(AppKit.NSImageRepRegistryDidChangeNotification, str)
 
-        self.assertEqual(AppKit.NSImageLayoutDirectionUnspecified, -1)
-        self.assertEqual(AppKit.NSImageLayoutDirectionLeftToRight, 2)
-        self.assertEqual(AppKit.NSImageLayoutDirectionRightToLeft, 3)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSImageRep.draw)
         self.assertResultIsBOOL(AppKit.NSImageRep.drawAtPoint_)
         self.assertResultIsBOOL(AppKit.NSImageRep.drawInRect_)
@@ -33,8 +32,6 @@ class TestNSImageRep(TestCase):
         self.assertResultIsBOOL(AppKit.NSImageRep.canInitWithData_)
         self.assertResultIsBOOL(AppKit.NSImageRep.canInitWithPasteboard_)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(
             AppKit.NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_
         )

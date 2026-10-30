@@ -2,7 +2,14 @@
 #define NS_INLINE
 #include "Python.h"
 #include "pyobjc-api.h"
+
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Metal/Metal.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  * The definitions below can cause warnings when using
@@ -55,8 +62,9 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map)) < 0)
-        return -1;
+    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
+        == -1)     // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -96,10 +104,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__inlines(void);
+PyObject* _Nullable PyInit__inlines(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__inlines(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

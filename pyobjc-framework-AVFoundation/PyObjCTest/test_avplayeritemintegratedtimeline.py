@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItemIntegratedTimeline(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVPlayerItemSegmentType)
         self.assertEqual(AVFoundation.AVPlayerItemSegmentTypePrimary, 0)
         self.assertEqual(AVFoundation.AVPlayerItemSegmentTypeInterstitial, 1)

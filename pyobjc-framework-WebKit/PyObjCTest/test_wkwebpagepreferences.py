@@ -3,8 +3,7 @@ import WebKit
 
 
 class TestWebPagePreferences(TestCase):
-
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKContentMode)
         self.assertEqual(WebKit.WKContentModeRecommended, 0)
         self.assertEqual(WebKit.WKContentModeMobile, 1)
@@ -38,3 +37,17 @@ class TestWebPagePreferences(TestCase):
     def test_methods13_0(self):
         self.assertResultIsBOOL(WebKit.WKWebpagePreferences.isLockdownModeEnabled)
         self.assertArgIsBOOL(WebKit.WKWebpagePreferences.setLockdownModeEnabled_, 0)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            WebKit.WKWebpagePreferences.allowsJSHandleCreationInPageWorld
+        )
+        self.assertArgIsBOOL(
+            WebKit.WKWebpagePreferences.setAllowsJSHandleCreationInPageWorld_, 0
+        )
+
+        self.assertResultIsBOOL(WebKit.WKWebpagePreferences.globalPrivacyControlEnabled)
+        self.assertArgIsBOOL(
+            WebKit.WKWebpagePreferences.setGlobalPrivacyControlEnabled_, 0
+        )

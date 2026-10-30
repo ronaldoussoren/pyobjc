@@ -1,16 +1,14 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestNSCustomImageRep(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSCustomImageRep.initWithDrawSelector_delegate_, 0, b"v@:@"
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertArgIsBOOL(
             AppKit.NSCustomImageRep.initWithSize_flipped_drawingHandler_, 1
         )

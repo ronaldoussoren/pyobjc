@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSRunLoop(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSRunLoop.runMode_beforeDate_)
 
         self.assertArgIsSEL(
@@ -21,10 +21,10 @@ class TestNSRunLoop(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(Foundation.NSRunLoop.performInModes_block_, 1, b"v")
         self.assertArgIsBlock(Foundation.NSRunLoop.performBlock_, 0, b"v")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSDefaultRunLoopMode, str)
         self.assertIsInstance(Foundation.NSRunLoopCommonModes, str)

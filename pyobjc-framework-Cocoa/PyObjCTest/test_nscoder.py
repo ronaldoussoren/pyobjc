@@ -5,10 +5,12 @@ import objc
 
 
 class TestNSCoderUsage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDecodingFailurePolicy)
+        self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
+        self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)
 
-    def testUsage(self):
+    def test_usage(self):
         class CoderClass1(Foundation.NSObject):
             def encodeWithCoder_(self, coder):
                 # Foundation.NSObject does not implement Foundation.NSCoding, no need to
@@ -89,7 +91,7 @@ class TestPythonCoder(TestCase):
     #
     # The tests only use those methods that require a custom IMP-stub.
     #
-    def testEncoding(self):
+    def test_encoding(self):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4.alloc().init()
         o.encodeWithCoder_(coder)
@@ -102,7 +104,7 @@ class TestPythonCoder(TestCase):
             ],
         )
 
-    def testDecoding(self):
+    def test_decoding(self):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4
 
@@ -121,7 +123,7 @@ class TestPythonCoder(TestCase):
         d = o.fetchArray_(coder)
         self.assertEqual(tuple(range(10)), tuple(d))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSCoder.allowsKeyedCoding)
         self.assertArgIsBOOL(Foundation.NSCoder.encodeBool_forKey_, 0)
         self.assertResultIsBOOL(Foundation.NSCoder.containsValueForKey_)
@@ -137,25 +139,18 @@ class TestPythonCoder(TestCase):
 
         self.assertTrue(hasattr(Foundation, "NXReadNSObjectFromCoder"))
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertResultIsBOOL(Foundation.NSCoder.requiresSecureCoding)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsOut(Foundation.NSCoder.decodeTopLevelObjectAndReturnError_, 0)
         self.assertArgIsOut(
             Foundation.NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2
         )
 
     @min_os_level("15.4")
-    def testMethods15_4(self):
+    def test_methods15_4(self):
         self.assertResultSizeInArg(Foundation.NSCoder.decodeBytesWithMinimumLength_, 0)
         self.assertResultSizeInArg(
             Foundation.NSCoder.decodeBytesForKey_minimumLength_, 1
         )
-
-    @min_os_level("10.11")
-    def testConstants(self):
-        self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
-        self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)

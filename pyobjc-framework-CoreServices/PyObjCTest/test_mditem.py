@@ -154,8 +154,6 @@ class TestMDImport(TestCase):
         self.assertIsInstance(CoreServices.kMDItemMusicalInstrumentCategory, str)
         self.assertIsInstance(CoreServices.kMDItemMusicalInstrumentName, str)
 
-    @min_os_level("10.5")
-    def test_constants10_5(self):
         self.assertIsInstance(CoreServices.kMDItemContentTypeTree, str)
         self.assertIsInstance(CoreServices.kMDItemEditors, str)
         self.assertIsInstance(CoreServices.kMDItemEXIFGPSVersion, str)
@@ -179,16 +177,12 @@ class TestMDImport(TestCase):
         self.assertIsInstance(CoreServices.kMDItemRecipientEmailAddresses, str)
         self.assertIsInstance(CoreServices.kMDItemURL, str)
 
-    @min_os_level("10.6")
-    def test_constants10_6(self):
         self.assertIsInstance(CoreServices.kMDItemParticipants, str)
         self.assertIsInstance(CoreServices.kMDItemPixelCount, str)
         self.assertIsInstance(CoreServices.kMDItemNamedLocation, str)
         self.assertIsInstance(CoreServices.kMDItemAuthorAddresses, str)
         self.assertIsInstance(CoreServices.kMDItemRecipientAddresses, str)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
         self.assertIsInstance(CoreServices.kMDItemDownloadedDate, str)
         self.assertIsInstance(CoreServices.kMDItemDateAdded, str)
         self.assertIsInstance(CoreServices.kMDItemCameraOwner, str)

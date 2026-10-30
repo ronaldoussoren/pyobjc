@@ -13,10 +13,10 @@ def _setup():
     import objc
     from . import _metadata, _Contacts
 
-    if objc.macos_available(10, 13):
+    if objc.macos_available(10, 13):  # pragma: no branch
         identifier = "com.apple.contacts"
     else:
-        identifier = "com.apple.contacts.Contacts"
+        identifier = "com.apple.contacts.Contacts"  # pragma: no cover
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Contacts",

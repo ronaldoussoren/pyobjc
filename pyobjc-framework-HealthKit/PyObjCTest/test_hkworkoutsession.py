@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKWorkoutSession(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKWorkoutSessionState)
         self.assertEqual(HealthKit.HKWorkoutSessionStateNotStarted, 1)
         self.assertEqual(HealthKit.HKWorkoutSessionStateRunning, 2)
@@ -17,7 +17,7 @@ class TestHKWorkoutSession(TestCase):
         self.assertEqual(HealthKit.HKWorkoutSessionTypeMirrored, 1)
 
     def test_protocols(self):
-        self.assertProtocolExists("HKWorkoutSessionDelegate")
+        self.assertProtocolExists("HKWorkoutSessionDelegate", HealthKit)
 
     def test_methods(self):
         self.assertArgIsOut(HealthKit.HKWorkoutSession.initWithConfiguration_error_, 1)

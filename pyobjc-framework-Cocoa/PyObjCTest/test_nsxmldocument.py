@@ -3,16 +3,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLDocument(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSXMLDocumentContentKind)
-
-    def testConstants(self):
         self.assertEqual(Foundation.NSXMLDocumentXMLKind, 0)
         self.assertEqual(Foundation.NSXMLDocumentXHTMLKind, 1)
         self.assertEqual(Foundation.NSXMLDocumentHTMLKind, 2)
         self.assertEqual(Foundation.NSXMLDocumentTextKind, 3)
 
-    def testOutputArgs(self):
+    def test_output(self):
         self.assertArgIsOut(
             Foundation.NSXMLDocument.initWithXMLString_options_error_, 2
         )

@@ -3,10 +3,8 @@ import Intents
 
 
 class TestINGetReservationDetailsIntentResponse(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INGetReservationDetailsIntentResponseCode)
-
-    def testConstants(self):
         self.assertEqual(
             Intents.INGetReservationDetailsIntentResponseCodeUnspecified, 0
         )

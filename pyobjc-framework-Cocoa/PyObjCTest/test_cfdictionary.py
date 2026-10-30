@@ -1,10 +1,10 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFDictionary(TestCase):
-    def testCreation(self):
+    def test_creation(self):
         dictionary = CoreFoundation.CFDictionaryCreate(
             None,
             ("aap", "noot", "mies", "wim"),
@@ -28,7 +28,7 @@ class TestCFDictionary(TestCase):
         CoreFoundation.CFDictionarySetValue(dictionary, "hello", "world")
         self.assertEqual(dictionary, {"hello": "world"})
 
-    def testApplyFunction(self):
+    def test_apply_function(self):
         dictionary = CoreFoundation.CFDictionaryCreate(
             None,
             ("aap", "noot", "mies", "wim"),
@@ -56,10 +56,10 @@ class TestCFDictionary(TestCase):
             [("aap", "monkey"), ("mies", "missy"), ("noot", "nut"), ("wim", "john")],
         )
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFDictionaryGetTypeID(), int)
 
-    def testCreation2(self):  # XXX
+    def test_creation2(self):  # XXX
         dct = CoreFoundation.CFDictionaryCreate(
             None,
             ["key1" "key2"],
@@ -81,7 +81,7 @@ class TestCFDictionary(TestCase):
         dct = CoreFoundation.CFDictionaryCreateMutableCopy(None, 0, dct)
         self.assertIsInstance(dct, CoreFoundation.CFDictionaryRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         dct = CoreFoundation.CFDictionaryCreate(
             None,
             ["key1", "key2"],
@@ -118,13 +118,32 @@ class TestCFDictionary(TestCase):
         ok, value = CoreFoundation.CFDictionaryGetValueIfPresent(dct, "key3", None)
         self.assertFalse(ok)
         self.assertIs(value, None)
-        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, None)
-        self.assertEqual(values, (42, 42))
-        keys = list(keys)
-        keys.sort()
-        self.assertEqual(keys, ["key1", "key2"])
 
-    def testMutation(self):
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFDictionaryGetKeysAndValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(NoObjCClass(), None, None)
+
+        with self.assertRaisesRegex(ValueError, "keys must be None of NULL"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(dct, 42, None)
+
+        with self.assertRaisesRegex(ValueError, "values must be None of NULL"):
+            CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, 42)
+
+        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, None)
+        self.assertEqual(set(keys), {"key1", "key2"})
+        self.assertEqual(values, (42, 42))
+
+        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, objc.NULL, None)
+        self.assertIs(keys, objc.NULL)
+        self.assertEqual(values, (42, 42))
+
+        keys, values = CoreFoundation.CFDictionaryGetKeysAndValues(dct, None, objc.NULL)
+        self.assertEqual(set(keys), {"key1", "key2"})
+        self.assertIs(values, objc.NULL)
+
+    def test_mutation(self):
         dct = CoreFoundation.CFDictionaryCreateMutable(
             None,
             0,

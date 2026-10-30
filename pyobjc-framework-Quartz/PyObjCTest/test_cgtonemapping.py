@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGToneMapping(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.CGToneMapping)
         self.assertEqual(Quartz.kCGToneMappingDefault, 0)
         self.assertEqual(Quartz.kCGToneMappingImageSpecificLumaScaling, 1)
@@ -11,6 +11,7 @@ class TestCGToneMapping(TestCase):
         self.assertEqual(Quartz.kCGToneMappingITURecommended, 3)
         self.assertEqual(Quartz.kCGToneMappingEXRGamma, 4)
         self.assertEqual(Quartz.kCGToneMappingNone, 5)
+        self.assertEqual(Quartz.kCGToneMappingHeadroomAdaptiveGainCurve, 6)
 
     @min_os_level("26.0")
     def test_constants26_0(self):

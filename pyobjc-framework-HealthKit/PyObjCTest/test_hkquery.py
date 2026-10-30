@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKQuery(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKQueryOptions)
         self.assertEqual(HealthKit.HKQueryOptionNone, 0)
         self.assertEqual(HealthKit.HKQueryOptionStrictStartDate, 1 << 0)

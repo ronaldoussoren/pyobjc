@@ -8,7 +8,7 @@ with warnings.catch_warnings():
 
 
 class TestUTCoreTypes(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(LaunchServices.kUTTypeItem, str)
         self.assertIsInstance(LaunchServices.kUTTypeContent, str)
         self.assertIsInstance(LaunchServices.kUTTypeCompositeContent, str)
@@ -79,7 +79,7 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(LaunchServices.kUTTypeInkText, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(LaunchServices.kUTTypeURLBookmarkData, str)
         self.assertIsInstance(LaunchServices.kUTTypeDelimitedText, str)
         self.assertIsInstance(LaunchServices.kUTTypeCommaSeparatedText, str)
@@ -138,5 +138,5 @@ class TestUTCoreTypes(TestCase):
         self.assertIsInstance(LaunchServices.kUTTypeLog, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(LaunchServices.kUTTypeSwiftSource, str)

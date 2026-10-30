@@ -3,47 +3,6 @@
 {
  "definitions": {
   "classes": {
-   "OSALanguage": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithComponent:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "componentInstance"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "componentInstance"
-     }
-    ]
-   },
-   "OSALanguageInstance": {
-    "methods": [
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "componentInstance"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "componentInstance"
-     }
-    ]
-   },
    "OSAScript": {
     "methods": [
      {
@@ -149,9 +108,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

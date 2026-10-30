@@ -10,6 +10,7 @@ FILES = [
     ("pyobjc-core/Modules/objc/pyobjc-compat.h", "Modules/pyobjc-compat.h"),
     ("pyobjc-core/Tools/pyobjc_setup.py", "pyobjc_setup.py"),
     ("pyobjc-core/Tools/MANIFEST.in", "MANIFEST.in"),
+    ("pyobjc-core/Tools/Makefile.framework", "Makefile"),
     ("pyobjc-core/License.txt", "License.txt"),
     ("pyobjc-core/pyproject.toml", "pyproject.toml"),
 ]

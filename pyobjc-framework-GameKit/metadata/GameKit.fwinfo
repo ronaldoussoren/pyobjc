@@ -1,17 +1,9 @@
 {
  "definitions": {
   "enum": {
-   "GKFriendsAuthorizationStatusNotDetermined": { "value": 0 },
-   "GKFriendsAuthorizationStatusRestricted": { "value": 1 },
-   "GKFriendsAuthorizationStatusDenied": { "value": 2 },
-   "GKFriendsAuthorizationStatusAuthorized": { "value": 3 },
-   "GKErrorFriendListDescriptionMissing": { "value": 100 },
-   "GKErrorFriendListRestricted": { "value": 101 },
-   "GKErrorFriendListDenied": { "value": 102 },
-   "GKAuthenticatingWithoutUI": { "value": 0 },
-   "GKAuthenticatingWithGreenBuddyUI": { "value": 1 },
-   "GKAuthenticatingWithAuthKitInvocation": { "value": 2 },
-   "GKPeerStateConnectedRelay": { "value": 5 }
+   "GKAuthenticatingWithoutUI": { "value": 0, "removed": 1100 },
+   "GKAuthenticatingWithGreenBuddyUI": { "value": 1, "removed": 1100 },
+   "GKAuthenticatingWithAuthKitInvocation": { "value": 2, "removed": 1100 }
   },
   "classes": {
    "GKAchievementDescription": {
@@ -97,27 +89,6 @@
 	}
        }
       }
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPlayers:dataMode:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendDataToAllPlayers:withDataMode:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPlayers:withDataMode:error:"
      }
     ]
    },
@@ -1714,22 +1685,6 @@
       }
      },
      {
-      "selector": "rematchWithCompletionHandler:",
-      "class_method": true,
-      "args": {
-       "0": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" },
-	  "2": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       }
-      }
-     },
-     {
       "selector": "declineInviteWithCompletionHandler:",
       "class_method": true,
       "args": {
@@ -1797,55 +1752,13 @@
     "methods": [
      {
       "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendData:toPeers:withDataMode:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "sendDataToAllPeers:withDataMode:error:"
-     },
-     {
-      "args": {
        "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "setDataReceiveHandler:withContext:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "acceptConnectionFromPeer:error:"
-     }
-    ]
-   },
-   "GKVoiceChatService": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "startVoiceChatWithParticipantID:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "acceptCallID:error:"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

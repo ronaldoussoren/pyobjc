@@ -14,17 +14,21 @@ class TestNSFetchedResultsControllerHelper(CoreData.NSObject):
 
 
 class TestNSFetchedResultsController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSFetchedResultsChangeType)
+        self.assertEqual(CoreData.NSFetchedResultsChangeInsert, 1)
+        self.assertEqual(CoreData.NSFetchedResultsChangeDelete, 2)
+        self.assertEqual(CoreData.NSFetchedResultsChangeMove, 3)
+        self.assertEqual(CoreData.NSFetchedResultsChangeUpdate, 4)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreData.NSFetchedResultsController.performFetch_)
         self.assertArgIsOut(CoreData.NSFetchedResultsController.performFetch_, 0)
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
-        self.assertProtocolExists("NSFetchedResultsControllerDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSFetchedResultsControllerDelegate", CoreData)
 
     def test_protocol_methods(self):
         self.assertArgHasType(
@@ -42,10 +46,3 @@ class TestNSFetchedResultsController(TestCase):
             3,
             objc._C_NSUInteger,
         )
-
-    @min_os_level("10.12")
-    def testConstants(self):
-        self.assertEqual(CoreData.NSFetchedResultsChangeInsert, 1)
-        self.assertEqual(CoreData.NSFetchedResultsChangeDelete, 2)
-        self.assertEqual(CoreData.NSFetchedResultsChangeMove, 3)
-        self.assertEqual(CoreData.NSFetchedResultsChangeUpdate, 4)

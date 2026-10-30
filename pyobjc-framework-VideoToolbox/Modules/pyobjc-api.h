@@ -60,6 +60,11 @@ typedef int(RegisterMethodMappingFunctionType)(
                                     PyObject* _Nonnull const* _Nonnull, size_t),
     IMP _Nullable (*_Nonnull)(PyObject* _Nonnull, PyObject* _Nonnull));
 
+#ifndef PyObjC_FUNCTION_CALL_H
+typedef PyObject* _Nullable (*PyObjC_FunctionCallFunc)(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs);
+#endif
+
 struct pyobjc_api {
     int                                api_version; /* API version */
     size_t                             struct_len;  /* Length of this struct */
@@ -117,6 +122,9 @@ struct pyobjc_api {
 
     PyObject* _Nullable (*_Nonnull createopaquepointertype)(const char*, const char*,
                                                             const char*);
+    int (*_Nonnull register_functioncaller)(void*, PyObjC_FunctionCallFunc);
+    PyObject* _Nullable (*_Nonnull create_registered_struct)(
+        const char*, Py_ssize_t, const char* _Nonnull* _Nullable, Py_ssize_t*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -159,6 +167,8 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_CheckArgCount (PyObjC_API->checkargcount)
 #define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->createopaquepointertype)
+#define PyObjCRegister_FunctionCaller (PyObjC_API->register_functioncaller)
+#define PyObjC_CreateRegisteredStruct (PyObjC_API->create_registered_struct)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
@@ -178,21 +188,25 @@ static inline int
 PyObjC_ImportAPI(PyObject* calling_module)
 {
     PyObjC_API = (struct pyobjc_api*)PyCapsule_Import("objc." PYOBJC_API_NAME, 0);
-    if (PyObjC_API == NULL) {
-        return -1;
+    if (PyObjC_API == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;            // LCOV_EXCL_LINE
     }
-    if (PyObjC_API->api_version != PYOBJC_API_VERSION) {
+    if (PyObjC_API->api_version != PYOBJC_API_VERSION) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError,
                      "Wrong version of PyObjC C API (got %d, expected %d)",
                      (int)PyObjC_API->api_version, (int)PYOBJC_API_VERSION);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
-    if (PyObjC_API->struct_len < PyObjC_EXPECTED_STRUCT_SIZE) {
+    if (PyObjC_API->struct_len < PyObjC_EXPECTED_STRUCT_SIZE) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_Format(PyExc_RuntimeError,
                      "Wrong struct-size of PyObjC C API (got %d, expected %d)",
                      (int)PyObjC_API->struct_len, (int)sizeof(struct pyobjc_api));
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     /* Current pyobjc implementation doesn't allow deregistering

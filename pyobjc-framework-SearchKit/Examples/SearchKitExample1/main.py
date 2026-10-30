@@ -5,5 +5,4 @@ import AppController  # noqa: F401
 # debugging.
 from PyObjCTools import AppHelper
 
-
 AppHelper.runEventLoop()

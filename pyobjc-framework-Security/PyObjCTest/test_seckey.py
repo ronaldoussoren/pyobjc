@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
 
 SecureDownloadTrustSetupCallback = b"i@^v"
 SecureDownloadTrustEvaluateCallback = b"i@i^v"
@@ -9,10 +8,8 @@ SecKeyGeneratePairBlock = b"v@@@"
 
 
 class TestSecKey(TestCase):
-    def testTypes(self):
-        self.assertIsCFType(Security.SecKeyRef)
-
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(Security.kSecKeyKeyClass, 0)
         self.assertEqual(Security.kSecKeyPrintName, 1)
         self.assertEqual(Security.kSecKeyAlias, 2)
@@ -41,10 +38,12 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecKeyWrap, 25)
         self.assertEqual(Security.kSecKeyUnwrap, 26)
 
+        self.assertIsEnumType(Security.SecCredentialType)
         self.assertEqual(Security.kSecCredentialTypeDefault, 0)
         self.assertEqual(Security.kSecCredentialTypeWithUI, 1)
         self.assertEqual(Security.kSecCredentialTypeNoUI, 2)
 
+        self.assertIsEnumType(Security.SecPadding)
         self.assertEqual(Security.kSecPaddingNone, 0)
         self.assertEqual(Security.kSecPaddingPKCS1, 1)
         self.assertEqual(Security.kSecPaddingOAEP, 2)
@@ -57,6 +56,10 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecPaddingPKCS1SHA384, 0x8005)
         self.assertEqual(Security.kSecPaddingPKCS1SHA512, 0x8006)
 
+        self.assertIsEnumType(Security.SecPadding)
+        self.assertEqual(Security.kSecPaddingNone, 0)
+
+        self.assertIsEnumType(Security.SecKeySizes)
         self.assertEqual(Security.kSecDefaultKeySize, 0)
         self.assertEqual(Security.kSec3DES192, 192)
         self.assertEqual(Security.kSecAES128, 128)
@@ -69,14 +72,14 @@ class TestSecKey(TestCase):
         self.assertEqual(Security.kSecRSAMin, 1024)
         self.assertEqual(Security.kSecRSAMax, 4096)
 
+        self.assertIsEnumType(Security.SecKeyOperationType)
         self.assertEqual(Security.kSecKeyOperationTypeSign, 0)
         self.assertEqual(Security.kSecKeyOperationTypeVerify, 1)
         self.assertEqual(Security.kSecKeyOperationTypeEncrypt, 2)
         self.assertEqual(Security.kSecKeyOperationTypeDecrypt, 3)
         self.assertEqual(Security.kSecKeyOperationTypeKeyExchange, 4)
 
-    @min_os_level("10.8")
-    def test_constants_10_8(self):
+    def test_constants(self):
         self.assertIsInstance(Security.kSecPrivateKeyAttrs, str)
         self.assertIsInstance(Security.kSecPublicKeyAttrs, str)
 
@@ -321,75 +324,32 @@ class TestSecKey(TestCase):
             Security.kSecKeyAlgorithmECDSASignatureMessageRFC4754SHA512, str
         )
 
+    def test_types(self):
+        self.assertIsCFType(Security.SecKeyRef)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecKeyGetTypeID(), int)
 
-    @min_os_level("10.6")
-    def test_functions_10_6(self):
-        self.assertResultHasType(Security.SecKeyGetBlockSize, objc._C_ULNG)
-        self.assertArgHasType(Security.SecKeyGetBlockSize, 0, objc._C_ID)
+        Security.SecKeyGetBlockSize
 
-    @min_os_level("10.7")
-    def test_functions_10_7(self):
-        self.assertResultHasType(Security.SecKeyGenerateSymmetric, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyGenerateSymmetric)
-        self.assertArgHasType(Security.SecKeyGenerateSymmetric, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyGenerateSymmetric, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyGenerateSymmetric, 1)
 
-        self.assertResultHasType(Security.SecKeyCreateFromData, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateFromData)
-        self.assertArgHasType(Security.SecKeyCreateFromData, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateFromData, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyCreateFromData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyCreateFromData, 2)
 
-        self.assertResultHasType(Security.SecKeyGeneratePairAsync, objc._C_VOID)
-        self.assertArgHasType(Security.SecKeyGeneratePairAsync, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyGeneratePairAsync, 1, b"^{dispatch_queue_s=}"
-        )
         self.assertArgIsBlock(
             Security.SecKeyGeneratePairAsync, 2, SecKeyGeneratePairBlock
         )
 
-        self.assertResultHasType(Security.SecKeyDeriveFromPassword, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyDeriveFromPassword)
-        self.assertArgHasType(Security.SecKeyDeriveFromPassword, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyDeriveFromPassword, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyDeriveFromPassword, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyDeriveFromPassword, 2)
 
-        self.assertResultHasType(Security.SecKeyWrapSymmetric, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyWrapSymmetric, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyWrapSymmetric, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyWrapSymmetric, 2, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyWrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyWrapSymmetric, 3)
 
-        self.assertResultHasType(Security.SecKeyUnwrapSymmetric, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyUnwrapSymmetric, 0, objc._C_IN + objc._C_PTR + objc._C_ID
-        )
-        self.assertArgHasType(Security.SecKeyUnwrapSymmetric, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyWrapSymmetric, 2, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyUnwrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsIn(Security.SecKeyUnwrapSymmetric, 0)
+        self.assertArgIsOut(Security.SecKeyUnwrapSymmetric, 3)
 
-        self.assertResultHasType(Security.SecKeyGeneratePair, objc._C_INT)
-        self.assertArgHasType(Security.SecKeyGeneratePair, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyGeneratePair, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyGeneratePair, 1)
         self.assertArgIsCFRetained(Security.SecKeyGeneratePair, 1)
-        self.assertArgHasType(
-            Security.SecKeyGeneratePair, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyGeneratePair, 2)
         self.assertArgIsCFRetained(Security.SecKeyGeneratePair, 2)
 
         self.assertFalse(hasattr(Security, "SecKeyRawSign"))
@@ -399,94 +359,40 @@ class TestSecKey(TestCase):
 
     @min_os_level("10.12")
     def test_functions_10_12(self):
-        self.assertResultHasType(Security.SecKeyCreateRandomKey, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateRandomKey)
-        self.assertArgHasType(Security.SecKeyCreateRandomKey, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyCreateRandomKey, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyCreateRandomKey, 1)
 
-        self.assertResultHasType(Security.SecKeyCreateWithData, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateWithData)
-        self.assertArgHasType(Security.SecKeyCreateWithData, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateWithData, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyCreateWithData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyCreateWithData, 2)
 
-        self.assertResultHasType(Security.SecKeyCopyExternalRepresentation, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCopyExternalRepresentation)
-        self.assertArgHasType(Security.SecKeyCopyExternalRepresentation, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeyCopyExternalRepresentation,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(Security.SecKeyCopyAttributes, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCopyAttributes)
-        self.assertArgHasType(Security.SecKeyCopyAttributes, 0, objc._C_ID)
+        Security.SecKeyCopyAttributes
 
-        self.assertResultHasType(Security.SecKeyCopyPublicKey, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCopyPublicKey)
-        self.assertArgHasType(Security.SecKeyCopyPublicKey, 0, objc._C_ID)
+        Security.SecKeyCopyPublicKey
 
-        self.assertResultHasType(Security.SecKeyCreateSignature, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateSignature)
-        self.assertArgHasType(Security.SecKeyCreateSignature, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateSignature, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateSignature, 2, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyCreateSignature, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyCreateSignature, 3)
 
         self.assertResultIsBOOL(Security.SecKeyVerifySignature)
-        self.assertArgHasType(Security.SecKeyVerifySignature, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyVerifySignature, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyVerifySignature, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyVerifySignature, 3, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecKeyVerifySignature, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecKeyVerifySignature, 4)
 
-        self.assertResultHasType(Security.SecKeyCreateEncryptedData, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateEncryptedData)
-        self.assertArgHasType(Security.SecKeyCreateEncryptedData, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateEncryptedData, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateEncryptedData, 2, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeyCreateEncryptedData,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(Security.SecKeyCreateDecryptedData, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCreateDecryptedData)
-        self.assertArgHasType(Security.SecKeyCreateDecryptedData, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateDecryptedData, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateDecryptedData, 2, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeyCreateDecryptedData,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
-        self.assertResultHasType(Security.SecKeyCopyKeyExchangeResult, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecKeyCopyKeyExchangeResult)
-        self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 3, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeyCopyKeyExchangeResult,
             4,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
         self.assertResultIsBOOL(Security.SecKeyIsAlgorithmSupported)
-        self.assertArgHasType(Security.SecKeyIsAlgorithmSupported, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyIsAlgorithmSupported, 1, objc._C_NSInteger)
-        self.assertArgHasType(Security.SecKeyIsAlgorithmSupported, 2, objc._C_ID)
 
     def test_functions_deprecated(self):
         self.assertFalse(hasattr(Security, "SecKeyCreatePair"))

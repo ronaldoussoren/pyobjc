@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 def cmp(a, b):
@@ -15,20 +15,49 @@ def cmp(a, b):
 
 
 class TestCFTree(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFTreeRef)
 
-    def testCreation(self):
+    def test_creation(self):
         context = object()
         tree = CoreFoundation.CFTreeCreate(None, context)
 
         self.assertIsInstance(tree, CoreFoundation.CFTreeRef)
+        self.assertIn(repr(context), repr(tree))
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFTreeGetContext()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeGetContext(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'context' must be None"):
+            CoreFoundation.CFTreeGetContext(None, 42)
 
         self.assertTrue(CoreFoundation.CFTreeGetContext(tree, None) is context)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFTreeSetContext()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeSetContext(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeSetContext(tree, NoObjCClass())
+
         CoreFoundation.CFTreeSetContext(tree, 42)
         self.assertEqual(CoreFoundation.CFTreeGetContext(tree, None), 42)
 
-    def testCreateTree(self):
+    def test_create_tree(self):
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFTreeCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeCreate(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeCreate(None, NoObjCClass())
+
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(10):
@@ -57,11 +86,11 @@ class TestCFTree(TestCase):
             9,
         )
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFTreeGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testQuerying(self):
+    def test_querying(self):
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(2):
@@ -91,6 +120,15 @@ class TestCFTree(TestCase):
         cnt = CoreFoundation.CFTreeGetChildCount(c)
         self.assertEqual(cnt, 0)
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFTreeGetChildren()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFTreeGetChildren(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "buffer must be None"):
+            CoreFoundation.CFTreeGetChildren(None, 42)
+
         children = CoreFoundation.CFTreeGetChildren(root, None)
         self.assertIsInstance(children, (list, tuple))
         self.assertEqual(len(children), 2)
@@ -98,7 +136,7 @@ class TestCFTree(TestCase):
         r = CoreFoundation.CFTreeFindRoot(s2)
         self.assertIs(r, root)
 
-    def testModification(self):
+    def test_modification(self):
         root = CoreFoundation.CFTreeCreate(None, "root")
 
         for child in range(2):

@@ -1,5 +1,9 @@
 {
  "definitions": {
+  "typed_enum": {
+   "AEAppleMenuItem": { "type": "@", "type_name": "NSString" },
+   "AEMenuBarItem": { "type": "@", "type_name": "NSString" }
+  },
   "classes": {
    "AEAssessmentSession": {
     "methods": [

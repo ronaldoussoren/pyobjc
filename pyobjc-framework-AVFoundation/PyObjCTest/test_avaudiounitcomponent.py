@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVAudioUnitComponent(TestCase):
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeOutput, str)
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicDevice, str)
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicEffect, str)
@@ -24,14 +24,14 @@ class TestAVAudioUnitComponent(TestCase):
         )
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             AVFoundation.AVAudioUnitComponentManagerRegistrationsChangedNotification,  # noqa: B950
             str,
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.isSandboxSafe)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasMIDIInput)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasMIDIOutput)

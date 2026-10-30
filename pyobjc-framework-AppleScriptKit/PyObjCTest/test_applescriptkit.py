@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAppleScriptKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(AppleScriptKit, "ASKPluginObject")
         self.assertIsInstance(AppleScriptKit.ASKPluginObject, objc.objc_class)
 

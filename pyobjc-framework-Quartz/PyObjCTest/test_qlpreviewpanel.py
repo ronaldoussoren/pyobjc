@@ -1,6 +1,6 @@
 import objc
 from Foundation import NSObject, NSRect
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import Quartz
 
@@ -22,16 +22,16 @@ class TestQLPreviewPanelHelper(NSObject):
 
 
 class TestQLPreviewPanel(TestCase):
-    @min_os_level("10.6")
-    def testClasses(self):
-        self.assertIsInstance(Quartz.QLPreviewPanel, objc.objc_class)
-
-    @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.sharedPreviewPanelExists)
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.enterFullScreenMode_withOptions_)
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.isInFullScreenMode)
 
+    def test_protocols(self):
+        self.assertProtocolExists("QLPreviewPanelDataSource", Quartz)
+        self.assertProtocolExists("QLPreviewPanelDelegate", Quartz)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestQLPreviewPanelHelper.acceptsPreviewPanelControl_)
         self.assertResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
 
@@ -44,11 +44,3 @@ class TestQLPreviewPanel(TestCase):
             2,
             objc._C_IN + objc._C_PTR + NSRect.__typestr__,
         )
-
-    @min_os_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("QLPreviewPanelDataSource")
-
-    @min_os_level("10.7")
-    def testProtocols10_7(self):
-        self.assertProtocolExists("QLPreviewPanelDelegate")

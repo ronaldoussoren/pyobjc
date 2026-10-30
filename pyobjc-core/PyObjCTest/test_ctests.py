@@ -63,10 +63,9 @@ def make_test(name):
 
     do_exec(
         """\
-def test_%s(self):
+def test_{}(self):
     meth()
-"""
-        % (name,),
+""".format(name),
         result,
         result,
     )

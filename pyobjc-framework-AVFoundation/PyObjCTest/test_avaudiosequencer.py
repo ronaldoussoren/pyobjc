@@ -7,20 +7,20 @@ AVMusicEventEnumerationBlock = b"v@N^dN^Z"
 
 
 class TestAVAudioSequencer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVMusicSequenceLoadOptions)
-        self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
-        self.assertIsTypedEnum(AVFoundation.AVAudioSequencerInfoDictionaryKey, str)
-
-    def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
         self.assertEqual(
             AVFoundation.AVMusicSequenceLoadSMF_ChannelsToTracks, 1
         )  # noqa: B950
 
+        self.assertIsEnumType(AVFoundation.AVMusicTrackLoopCount)
         self.assertEqual(AVFoundation.AVMusicTrackLoopCountForever, -1)
 
         self.assertEqual(AVFoundation.AVMusicTimeStampEndOfTrack, sys.float_info.max)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVAudioSequencerInfoDictionaryKey, str)
 
     @min_os_level("13.0")
     def test_constants13_0(self):
@@ -78,21 +78,21 @@ class TestAVAudioSequencer(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVAudioSequencerInfoDictionaryKeyYear, str)
 
-    def testStructs(self):
+    def test_structs(self):
         v = AVFoundation.AVBeatRange()
         self.assertIsInstance(v.start, float)
         self.assertIsInstance(v.length, float)
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
-    def testFunctions(self):
+    def test_functions(self):
         v = AVFoundation.AVMakeBeatRange(1.5, 2.5)
         self.assertIsInstance(v, AVFoundation.AVBeatRange)
         self.assertEqual(v.start, 1.5)
         self.assertEqual(v.length, 2.5)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioSequencer.loadFromURL_options_error_
         )
@@ -149,7 +149,7 @@ class TestAVAudioSequencer(TestCase):
         self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 0)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.removeTrack_)
         self.assertArgIsBlock(
             AVFoundation.AVAudioSequencer.setUserCallback_,

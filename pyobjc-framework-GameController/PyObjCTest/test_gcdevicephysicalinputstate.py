@@ -17,7 +17,7 @@ class TestGCDevicePhysicalInputStateHelper(GameController.NSObject):
 class TestGCDevicePhysicalInputState(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCDevicePhysicalInputState")
+        self.assertProtocolExists("GCDevicePhysicalInputState", GameController)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSCachedImageRep(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSCachedImageRep.initWithSize_depth_separate_alpha_, 2
         )

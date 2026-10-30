@@ -14,9 +14,7 @@ import sys
 import typing
 from _topsort import topological_sort
 
-
 PY_VERSIONS = [
-    "3.10",
     "3.11",
     "3.12",
     "3.13",
@@ -25,6 +23,8 @@ PY_VERSIONS = [
     "3.14t",
     "3.15",
     "3.15t",
+    "3.16",
+    "3.16t",
 ]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -166,6 +166,12 @@ def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
             [interpreter, "-mpip", "install", "-U", "wheel"],
             stdout=subprocess.DEVNULL,
         )
+        # XXX: Temporarily use old version of readme renderer to avoid
+        #      requiring a rust dependency without a binary 3.15 wheel.
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "readme-renderer<42"],
+            stdout=subprocess.DEVNULL,
+        )
         subprocess.run(
             [interpreter, "-mpip", "install", "-U", "twine"],
             stdout=subprocess.DEVNULL,
@@ -179,6 +185,12 @@ def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
         )
         subprocess.check_call(
             [interpreter, "-mpip", "install", "-U", "wheel"],
+        )
+
+        # XXX: Temporarily use old version of readme renderer to avoid
+        #      requiring a rust dependency without a binary 3.15 wheel.
+        subprocess.run(
+            [interpreter, "-mpip", "install", "-U", "readme-renderer<42"],
         )
         subprocess.run(
             [interpreter, "-mpip", "install", "-U", "twine"],

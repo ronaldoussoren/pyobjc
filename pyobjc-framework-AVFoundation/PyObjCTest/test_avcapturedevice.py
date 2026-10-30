@@ -3,88 +3,80 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureDevice(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVAuthorizationStatus)
-        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusRangeRestriction)
-        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusSystem)
-        self.assertIsEnumType(AVFoundation.AVCaptureCenterStageControlMode)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureColorSpace)
-        self.assertIsEnumType(AVFoundation.AVCaptureDevicePosition)
-        self.assertIsEnumType(AVFoundation.AVCaptureDeviceTransportControlsPlaybackMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureExposureMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureFlashMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureFocusMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureMicrophoneMode)
-        self.assertIsEnumType(
-            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditions
-        )
-        self.assertIsEnumType(
-            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehavior
-        )
-        self.assertIsEnumType(AVFoundation.AVCaptureSystemUserInterface)
-        self.assertIsEnumType(AVFoundation.AVCaptureTorchMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureVideoStabilizationMode)
-        self.assertIsEnumType(AVFoundation.AVCaptureWhiteBalanceMode)
-
-    def test_constants(self):
         self.assertEqual(AVFoundation.AVCaptureColorSpace_sRGB, 0)
         self.assertEqual(AVFoundation.AVCaptureColorSpace_P3_D65, 1)
 
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceWasDisconnectedNotification, str
-        )
-
+        self.assertIsEnumType(AVFoundation.AVCaptureDevicePosition)
         self.assertEqual(AVFoundation.AVCaptureDevicePositionUnspecified, 0)
         self.assertEqual(AVFoundation.AVCaptureDevicePositionBack, 1)
         self.assertEqual(AVFoundation.AVCaptureDevicePositionFront, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
+        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
+
+        self.assertIsEnumType(AVFoundation.AVCaptureFlashMode)
         self.assertEqual(AVFoundation.AVCaptureFlashModeOff, 0)
         self.assertEqual(AVFoundation.AVCaptureFlashModeOn, 1)
         self.assertEqual(AVFoundation.AVCaptureFlashModeAuto, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureTorchMode)
         self.assertEqual(AVFoundation.AVCaptureTorchModeOff, 0)
         self.assertEqual(AVFoundation.AVCaptureTorchModeOn, 1)
         self.assertEqual(AVFoundation.AVCaptureTorchModeAuto, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureFocusMode)
         self.assertEqual(AVFoundation.AVCaptureFocusModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureFocusModeAutoFocus, 1)
         self.assertEqual(AVFoundation.AVCaptureFocusModeContinuousAutoFocus, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusRangeRestriction)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionNone, 0)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionNear, 1)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusRangeRestrictionFar, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureExposureMode)
         self.assertEqual(AVFoundation.AVCaptureExposureModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureExposureModeAutoExpose, 1)
         self.assertEqual(AVFoundation.AVCaptureExposureModeContinuousAutoExposure, 2)
         self.assertEqual(AVFoundation.AVCaptureExposureModeCustom, 3)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureWhiteBalanceMode)
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeAutoWhiteBalance, 1)
         self.assertEqual(
             AVFoundation.AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance, 2
         )
 
+        self.assertIsEnumType(AVFoundation.AVCaptureDeviceTransportControlsPlaybackMode)
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsNotPlayingMode, 0)
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsPlayingMode, 1)
 
+        self.assertIsEnumType(AVFoundation.AVAuthorizationStatus)
         self.assertEqual(AVFoundation.AVAuthorizationStatusNotDetermined, 0)
         self.assertEqual(AVFoundation.AVAuthorizationStatusRestricted, 1)
         self.assertEqual(AVFoundation.AVAuthorizationStatusDenied, 2)
         self.assertEqual(AVFoundation.AVAuthorizationStatusAuthorized, 3)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureMicrophoneMode)
         self.assertEqual(AVFoundation.AVCaptureMicrophoneModeStandard, 0)
         self.assertEqual(AVFoundation.AVCaptureMicrophoneModeWideSpectrum, 1)
         self.assertEqual(AVFoundation.AVCaptureMicrophoneModeVoiceIsolation, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureSystemUserInterface)
         self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceVideoEffects, 1)
         self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceMicrophoneModes, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureCenterStageControlMode)
         self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeUser, 0)
         self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeApp, 1)
         self.assertEqual(AVFoundation.AVCaptureCenterStageControlModeCooperative, 2)
 
+        self.assertIsEnumType(AVFoundation.AVCaptureAutoFocusSystem)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemNone, 0)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemContrastDetection, 1)
         self.assertEqual(AVFoundation.AVCaptureAutoFocusSystemPhaseDetection, 2)
@@ -108,18 +100,9 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureCameraLensSmudgeDetectionStatusUnknown, 3
         )
 
-    @min_os_level("10.15")
-    def test_constants10_15(self):
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, str)
-        self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, str
+        self.assertIsEnumType(
+            AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehavior
         )
-
-        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
         self.assertEqual(
             AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorUnsupported,
             0,
@@ -134,6 +117,9 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCapturePrimaryConstituentDeviceSwitchingBehaviorLocked, 3
         )
 
+        self.assertIsEnumType(
+            AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditions
+        )
         self.assertEqual(
             AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionNone,
             0,
@@ -150,6 +136,22 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCapturePrimaryConstituentDeviceRestrictedSwitchingBehaviorConditionExposureModeChanged,
             1 << 2,
         )
+
+    def test_constants(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceWasDisconnectedNotification, str
+        )
+
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, str)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, str
+        )
+
+        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
     @min_os_level("13.0")
     def test_constants13_0(self):
@@ -172,8 +174,7 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureSceneMonitoringStatusNotEnoughLight, str
         )
 
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.lockForConfiguration_)
@@ -207,7 +208,7 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
 
     @min_os_level("12.0")
-    def testMethods_Clones(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.hasMediaType_)
 
         self.assertResultIsBOOL(
@@ -254,16 +255,17 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDevice_Tundra.isAdjustingWhiteBalance
         )
 
-    @expectedFailure  # XXX
-    @min_os_level("10.7")
-    def testMethods_error_on_11(self):
+    @expectedFailure
+    def test_methods_error_on_11(self):
+        # The API is marked as available in the headers, but marked as unavailable
+        # on all platforms but macOS.
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice_Tundra.transportControlsSupported
         )
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_,
             1,
@@ -271,7 +273,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra10_14(self):
+    def test_methods_tundra10_14(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureDevice_Tundra.requestAccessForMediaType_completionHandler_,
             1,
@@ -279,7 +281,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFlashAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchActive)
@@ -292,7 +294,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethodsTundra10_15(self):
+    def test_methods_tundra10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isFlashAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchAvailable)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isTorchActive)
@@ -305,7 +307,7 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isHighPhotoQualitySupported
         )
@@ -351,17 +353,13 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isContinuityCamera)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isContinuityCamera)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightEnabled)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice_Tundra.isStudioLightEnabled
         )
-        # self.assertArgIsBOOL(AVFoundation.AVCaptureDevice.setStudioLightEnabled_, 0)
-        # self.assertArgIsBOOL(
-        #    AVFoundation.AVCaptureDevice_Tundra.setStudioLightEnabled_, 0
-        # )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isStudioLightActive)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice_Tundra.isStudioLightActive)
         self.assertResultIsBOOL(
@@ -372,20 +370,20 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.reactionEffectsEnabled)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.reactionEffectsSupported
         )
 
     @min_os_level("14.2")
-    def testMethods14_2(self):
+    def test_methods14_2(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.zoomFactorsOutsideOfVideoZoomRangesForDepthDeliverySupported
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice.isAutoVideoFrameRateEnabled
         )
@@ -411,11 +409,11 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("15.2")
-    def testMethods15_2(self):
+    def test_methods15_2(self):
         self.assertResultIsBOOL(AVFoundation.AVExposureBiasRange.containsExposureBias_)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDevice.isExposureRectOfInterestSupported
         )
@@ -452,8 +450,45 @@ class TestAVCaptureDevice(TestCase):
         )
 
     @min_os_level("26.2")
-    def testMethods26_2(self):
+    def test_methods26_2(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightEnabled)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isEdgeLightActive)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceFormat.isEdgeLightSupported)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isAdjustingSignalCompensationDelayWhileRunningSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isAdjustingSignalCompensationDelayWhileRunningSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isPrimaryConstituentDeviceSwitchingBehaviorLockedWithDeviceSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isPrimaryConstituentDeviceSwitchingBehaviorLockedWithDeviceSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isContinuousAutoFocusTrackingSubjectAcquired
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice_Tundra.isContinuousAutoFocusTrackingSubjectAcquired
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isCinematicVideoMetadataCaptureSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isCinematicVideoMetadataCaptureSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isLowLightVideoNoiseReductionSupported
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat_Tundra.isLowLightVideoNoiseReductionSupported
+        )

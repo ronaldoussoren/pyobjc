@@ -3,5 +3,5 @@ import WebKit
 
 
 class TestWebHistoryItem(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.WebHistoryItemChangedNotification, str)

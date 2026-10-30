@@ -2,6 +2,7 @@ import objc
 import ctypes
 import subprocess
 import os
+import sysconfig
 from PyObjCTools.TestSupport import TestCase
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,10 +14,16 @@ NSArray = objc.lookUpClass("NSArray")
 class TestAllocateBuffer(TestCase):
     @classmethod
     def setUpClass(cls):
+        deploy = sysconfig.get_config_var("MACOSX_DEPLOYMENT_TARGET")
+
+        target = f"{objc.arch}-apple-macos{deploy}"
+
         subprocess.check_call(
             [
                 "/usr/bin/xcrun",
                 "swiftc",
+                "-target",
+                target,
                 os.path.join(BASE, "Modules/objc/test/swiftobject.swift"),
                 "-emit-library",
                 "-o",

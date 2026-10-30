@@ -1,11 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
-import objc
 
 
 class TestIKFilterUI(TestCase):
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.IKUISizeFlavor, str)
         self.assertIsInstance(Quartz.IKUISizeMini, str)
         self.assertIsInstance(Quartz.IKUISizeSmall, str)
@@ -13,8 +11,5 @@ class TestIKFilterUI(TestCase):
         self.assertIsInstance(Quartz.IKUImaxSize, str)
         self.assertIsInstance(Quartz.IKUIFlavorAllowFallback, str)
 
-    @min_os_level("10.5")
-    def no_testProtocol(self):
-        self.assertIsInstance(
-            self.assertProtocolExists("IKFilterCustomUIProvider"), objc.formal_protocol
-        )
+    def test_protocols(self):
+        self.assertProtocolExists("IKFilterCustomUIProvider", Quartz)

@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVComposition(TestCase):
-    @min_os_level("10.7")
-    def test_methods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableComposition.insertTimeRange_ofAsset_atTime_error_
         )

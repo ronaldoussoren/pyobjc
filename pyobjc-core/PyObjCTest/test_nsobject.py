@@ -3,14 +3,13 @@ import os
 import tempfile
 
 # from objc import super
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 from PyObjCTest.helpernsobject import (
     OC_AllocRaises,
     OC_RefcountRaises,
     OC_CustomMethods,
 )
 from objc import super  # noqa: A004
-from .test_metadata import NoObjCClass
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -34,7 +33,7 @@ class Py_RefCountRaises(NSObject):
         self.scenario = 0
         return self
 
-    # XXX: For some reason super() doens't work
+    # XXX: For some reason super() doesn't work
     #      to resolve these methods, to be fixed...
     def alloc(cls):
         return super().alloc()
@@ -119,7 +118,7 @@ class TestNSObjectSupport(TestCase):
 
     def test_invalid_cls(self):
         with self.assertRaisesRegex(
-            TypeError, "Expecting instance of NSObject as self, got one of int"
+            TypeError, "Expecting subclass of NSObject as self, got 42"
         ):
             type(NSObject).__dict__["alloc"](42)
 

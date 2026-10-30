@@ -7,7 +7,7 @@ nw_path_enumerate_gateways_block_t = b"B@"
 
 
 class TestPath(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Network.nw_path_status_t)
         self.assertEqual(Network.nw_path_status_invalid, 0)
         self.assertEqual(Network.nw_path_status_satisfied, 1)

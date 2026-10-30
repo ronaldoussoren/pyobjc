@@ -4,20 +4,20 @@ import Photos
 
 class TestPHAsset(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Photos.PHAsset.isHidden)
         self.assertResultIsBOOL(Photos.PHAsset.isFavorite)
 
     @min_os_level("10.13")
     @max_os_level("10.14")
-    def testMethods10_13_removed_in_10_15(self):
+    def test_methods10_13_removed_in_10_15(self):
         self.assertResultIsBOOL(Photos.PHAsset.isSyncFailureHidden)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(Photos.PHAsset.representsBurst)
         self.assertResultIsBOOL(Photos.PHAsset.canPerformEditOperation_)
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(Photos.PHAsset.hasAdjustments)

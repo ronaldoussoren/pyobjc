@@ -1,29 +1,27 @@
 # NOTE: This file only contains basic tests of the keyvalue observing header definitions,
 # test_keyvalue contains tests for the actually KVC/KVO mechanisms.
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSKeyValueObserving(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSKeyValueChangeKey, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSKeyValueChange)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSKeyValueObservingOptions)
-        self.assertIsEnumType(Foundation.NSKeyValueSetMutationKind)
-
-    def testConstants(self):
         self.assertEqual(Foundation.NSKeyValueObservingOptionNew, 1)
         self.assertEqual(Foundation.NSKeyValueObservingOptionOld, 2)
         self.assertEqual(Foundation.NSKeyValueObservingOptionInitial, 4)
         self.assertEqual(Foundation.NSKeyValueObservingOptionPrior, 8)
 
+        self.assertIsEnumType(Foundation.NSKeyValueChange)
         self.assertEqual(Foundation.NSKeyValueChangeSetting, 1)
         self.assertEqual(Foundation.NSKeyValueChangeInsertion, 2)
         self.assertEqual(Foundation.NSKeyValueChangeRemoval, 3)
         self.assertEqual(Foundation.NSKeyValueChangeReplacement, 4)
 
+        self.assertIsEnumType(Foundation.NSKeyValueSetMutationKind)
         self.assertEqual(Foundation.NSKeyValueUnionSetMutation, 1)
         self.assertEqual(Foundation.NSKeyValueMinusSetMutation, 2)
         self.assertEqual(Foundation.NSKeyValueIntersectSetMutation, 3)
@@ -35,7 +33,7 @@ class TestNSKeyValueObserving(TestCase):
         self.assertIsInstance(Foundation.NSKeyValueChangeIndexesKey, str)
         self.assertIsInstance(Foundation.NSKeyValueChangeNotificationIsPriorKey, str)
 
-    def testContext(self):
+    def test_context(self):
         o = Foundation.NSObject.alloc().init()
         m = o.observeValueForKeyPath_ofObject_change_context_.__metadata__()
         self.assertEqual(m["arguments"][5]["type"], b"^v")
@@ -60,8 +58,6 @@ class TestNSKeyValueObserving(TestCase):
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
         self.assertEqual(m["arguments"][5]["type"], b"^v")
 
-    @min_os_level("10.7")
-    def testContext10_7(self):
         o = Foundation.NSObject.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"^v")
@@ -78,7 +74,7 @@ class TestNSKeyValueObserving(TestCase):
         m = o.removeObserver_forKeyPath_context_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"^v")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             Foundation.NSObject.automaticallyNotifiesObserversForKey_
         )

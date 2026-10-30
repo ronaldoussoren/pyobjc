@@ -12,6 +12,8 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
     struct objc_super super;
     Py_buffer         info;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
 
@@ -47,7 +49,9 @@ static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
                  < 0)) {
         return NULL; // LCOV_EXCL_LINE
     }
-    return PyMemoryView_FromBuffer(&info);
+    PyObject* result = PyMemoryView_FromBuffer(&info);
+    PyBuffer_Release(&info);
+    return result;
 }
 
 static IMP
@@ -109,6 +113,8 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
     struct objc_super super;
     Py_buffer         info;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
 
@@ -151,7 +157,7 @@ static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        meth
         return NULL; // LCOV_EXCL_LINE
     }
     result = PyMemoryView_FromBuffer(&info);
-
+    PyBuffer_Release(&info);
     return result;
 }
 
@@ -172,8 +178,8 @@ mkimp_NSMutableData_mutableBytes(PyObject* callable, PyObjCMethodSignature* meth
           goto error;     // LCOV_EXCL_LINE
 
       PyObject* arglist[2] = {NULL, pyself};
-      result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                   1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       PyObjCObject_ReleaseTransient(pyself, cookie);
       pyself = NULL;
       if (result == NULL)

@@ -304,6 +304,9 @@ class MethodAccessTest(TestCase):
         # del NSObject.alloca
 
         class OCTestWithGetAttr(NSObject):
+            def init(self):
+                return self
+
             def __getattr__(self, key):
                 raise AttributeError(f"no -- {key} --")
 

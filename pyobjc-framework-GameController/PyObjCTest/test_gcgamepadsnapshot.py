@@ -1,15 +1,13 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 import GameController
 
 
 class TestGCGamepadSnapshot(TestCase):
-    @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCGamepadSnapshot, objc.objc_class)
 
-    @min_os_level("10.9")
-    def testStructs(self):
+    def test_structs(self):
         self.assertEqual(GameController.GCGamepadSnapShotDataV100.__struct_pack__, 1)
 
         v = GameController.GCGamepadSnapShotDataV100()
@@ -25,8 +23,7 @@ class TestGCGamepadSnapshot(TestCase):
         self.assertIsInstance(v.rightShoulder, float)
         self.assertPickleRoundTrips(v)
 
-    @min_os_level("10.9")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(GameController.GCGamepadSnapShotDataV100FromNSData)
         self.assertArgIsOut(GameController.GCGamepadSnapShotDataV100FromNSData, 0)
         self.assertArgIsIn(GameController.NSDataFromGCGamepadSnapShotDataV100, 0)

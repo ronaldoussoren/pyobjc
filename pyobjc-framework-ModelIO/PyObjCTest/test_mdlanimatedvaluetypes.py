@@ -4,15 +4,13 @@ from objc import simd
 
 
 class TestMDLAnimatedValue(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLAnimatedValueInterpolation)
-
-    def testConstants(self):
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationConstant, 0)
         self.assertEqual(ModelIO.MDLAnimatedValueInterpolationLinear, 1)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(ModelIO.MDLAnimatedValue.isAnimated)
 
         self.assertArgIsOut(ModelIO.MDLAnimatedValue.getTimes_maxCount_, 0)
@@ -154,7 +152,7 @@ class TestMDLAnimatedValue(TestCase):
         self.assertArgIsOut(ModelIO.MDLAnimatedScalar.getDoubleArray_maxCount_, 0)
 
     @min_os_level("10.13")
-    def testMethodsVector(self):
+    def test_methods_simd(self):
         self.assertArgHasType(
             ModelIO.MDLAnimatedVector3Array.setFloat3Array_count_atTime_,
             0,

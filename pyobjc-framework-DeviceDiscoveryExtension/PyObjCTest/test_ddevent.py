@@ -4,7 +4,7 @@ import DeviceDiscoveryExtension
 
 
 class TestDDEvent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(DeviceDiscoveryExtension.DDEventType)
         self.assertEqual(DeviceDiscoveryExtension.DDEventTypeUnknown, 0)
         self.assertEqual(DeviceDiscoveryExtension.DDEventTypeDeviceFound, 40)

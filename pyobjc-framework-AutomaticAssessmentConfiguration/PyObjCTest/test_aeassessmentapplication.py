@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAEAssessmentApplication(TestCase):
     @min_os_level("12.0")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             AutomaticAssessmentConfiguration.AEAssessmentApplication, objc.objc_class
         )

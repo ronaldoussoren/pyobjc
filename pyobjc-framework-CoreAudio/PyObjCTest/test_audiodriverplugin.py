@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAudioDriverPlugIn(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInOpen"))
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInClose"))
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInDeviceGetPropertyInfo"))

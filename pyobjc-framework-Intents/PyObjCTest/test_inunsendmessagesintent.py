@@ -13,7 +13,7 @@ class TestINUnsendMessagesIntentHelper(Intents.NSObject):
 class TestINUnsendMessagesIntent(TestCase):
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("INUnsendMessagesIntentHandling")
+        self.assertProtocolExists("INUnsendMessagesIntentHandling", Intents)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

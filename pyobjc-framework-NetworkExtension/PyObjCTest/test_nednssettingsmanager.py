@@ -3,10 +3,8 @@ import NetworkExtension
 
 
 class TestNEDNSSettingsManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEDNSSettingsManagerError)
-
-    def test_constants(self):
         self.assertEqual(
             NetworkExtension.NEDNSSettingsManagerErrorConfigurationInvalid, 1
         )

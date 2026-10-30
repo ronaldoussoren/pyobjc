@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -25,7 +25,7 @@ class TestNSURLConnectionHelper(Foundation.NSObject):
 
 
 class TestNSURLConnection(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSURLConnection.canHandleRequest_)
 
         self.assertArgIsBOOL(
@@ -41,8 +41,15 @@ class TestNSURLConnection(TestCase):
             2,
         )
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_protocols(self):
+        self.assertProtocolExists("NSURLConnectionDelegate", Foundation)
+
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSURLConnectionDataDelegate", Foundation)
+        self.assertProtocolExists("NSURLConnectionDownloadDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSURLConnectionHelper.connection_canAuthenticateAgainstProtectionSpace_
         )
@@ -92,19 +99,8 @@ class TestNSURLConnection(TestCase):
             objc._C_LNG_LNG,
         )
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertArgIsBlock(
             Foundation.NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
             2,
             b"v@@",
         )
-
-    @min_sdk_level("10.7")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSURLConnectionDelegate")
-
-    @min_sdk_level("10.10")
-    def testProtocolObjects10_10(self):
-        self.assertProtocolExists("NSURLConnectionDataDelegate")
-        self.assertProtocolExists("NSURLConnectionDownloadDelegate")

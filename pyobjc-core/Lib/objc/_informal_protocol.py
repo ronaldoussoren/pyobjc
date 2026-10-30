@@ -2,7 +2,6 @@ __all__ = ("informal_protocol",)
 import objc
 import collections
 
-
 # A mapping from a selector on a list of informal protocols
 # implementing that selector.
 #

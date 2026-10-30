@@ -1,5 +1,5 @@
 import AuthenticationServices
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -25,7 +25,7 @@ class TestASAuthorizationProviderExtensionRegistrationHandlerHelper(
 
 
 class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethod
         )
@@ -36,6 +36,14 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodUserSecureEnclaveKey,
             2,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodSmartCard,
+            3,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionAuthenticationMethodOpenID,
+            5,
         )
 
         self.assertIsEnumType(
@@ -116,6 +124,10 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesSAML2_0,
             1 << 3,
         )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionSupportedGrantTypesTokenExchange,
+            1 << 4,
+        )
 
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionPlatformSSOProtocolVersion
@@ -131,9 +143,12 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("ASAuthorizationProviderExtensionRegistrationHandler")
+        self.assertProtocolExists(
+            "ASAuthorizationProviderExtensionRegistrationHandler",
+            AuthenticationServices,
+        )
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.beginDeviceRegistrationUsingLoginManager_options_completion_,
             1,
@@ -166,8 +181,6 @@ class TestASAuthorizationProviderExtensionRegistrationHandler(TestCase):
             b"vZ",
         )
 
-    @min_os_level("26.0")
-    def test_methods26_0(self):
         self.assertArgIsBlock(
             TestASAuthorizationProviderExtensionRegistrationHandlerHelper.displayNamesForGroups_loginManager_completion_,
             2,

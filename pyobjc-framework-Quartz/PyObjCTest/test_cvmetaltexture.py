@@ -4,7 +4,7 @@ import Quartz
 
 class TestCVMetalTexture(TestCase):
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertIsInstance(Quartz.CVMetalTextureGetTypeID(), int)
 
         Quartz.CVMetalTextureGetTexture

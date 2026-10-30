@@ -6,6 +6,26 @@ MPSAccelerationStructureCompletionHandler = b"v@"
 
 
 class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureStatus)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAccelerationStructureStatusUnbuilt, 0
+        )
+        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureStatusBuilt, 1)
+
+        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureUsage)
+        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageRefit, 1)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAccelerationStructureUsageFrequentRebuild, 2
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAccelerationStructureUsagePreferGPUBuild, 4
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSAccelerationStructureUsagePreferCPUBuild, 8
+        )
+
     def test_structs(self):
         self.assertEqual(
             MetalPerformanceShaders.MPSAxisAlignedBoundingBox.__typestr__,
@@ -69,28 +89,6 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
         self.assertIsInstance(v.instanceIndex, int)
         self.assertIs(v.coordinates, None)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureStatus)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSAccelerationStructureUsage)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureUsageRefit, 1)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAccelerationStructureUsageFrequentRebuild, 2
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAccelerationStructureUsagePreferGPUBuild, 4
-        )
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAccelerationStructureUsagePreferCPUBuild, 8
-        )
-
-        self.assertEqual(
-            MetalPerformanceShaders.MPSAccelerationStructureStatusUnbuilt, 0
-        )
-        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureStatusBuilt, 1)
-
     @min_os_level("10.14")
     def test_methods10_14(self):
         self.assertArgIsBlock(
@@ -102,4 +100,11 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
         self.assertResultHasType(
             MetalPerformanceShaders.MPSAccelerationStructure.boundingBox,
             MetalPerformanceShaders.MPSAxisAlignedBoundingBox.__typestr__,
+        )
+
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_device_
+        )
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_group_
         )

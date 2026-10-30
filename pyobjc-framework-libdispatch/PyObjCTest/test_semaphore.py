@@ -1,10 +1,9 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSemaphoreAPI(TestCase):
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertResultIsRetained(dispatch.dispatch_semaphore_create)
         self.assertResultHasType(dispatch.dispatch_semaphore_create, objc._C_ID)

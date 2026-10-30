@@ -5,7 +5,7 @@ import VideoToolbox
 
 class TestVTPixelRotationSession(TestCase):
     @min_os_level("13.0")
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(VideoToolbox.VTPixelRotationSessionRef)
 
     @min_os_level("13.0")

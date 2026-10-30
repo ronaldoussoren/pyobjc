@@ -4,7 +4,7 @@ import CompositorServices
 
 
 class TestLayerRendererLayout(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(CompositorServices.cp_layer_renderer_layout)
         self.assertEqual(CompositorServices.cp_layer_renderer_layout_dedicated, 0)
         self.assertEqual(CompositorServices.cp_layer_renderer_layout_shared, 1)

@@ -26,7 +26,7 @@ class TestVTFrameProcessorConfigurationHelper(VideoToolbox.NSObject):
 class TestVTFrameProcessorConfiguration(TestCase):
     @min_sdk_level("15.4")
     def test_protocols(self):
-        self.assertProtocolExists("VTFrameProcessorConfiguration")
+        self.assertProtocolExists("VTFrameProcessorConfiguration", VideoToolbox)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestVTFrameProcessorConfigurationHelper.isSupported)

@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEAppProxyProviderManager(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyProviderManager.loadAllFromPreferencesWithCompletionHandler_,
             0,

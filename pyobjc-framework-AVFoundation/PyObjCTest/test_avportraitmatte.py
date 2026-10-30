@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVPortraitMatte(TestCase):
     @min_os_level("10.14")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AVFoundation.AVPortraitEffectsMatte.portraitEffectsMatteFromDictionaryRepresentation_error_,  # noqa: B950
             1,

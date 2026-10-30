@@ -3,10 +3,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLHandle(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLHandleStatus)
+        self.assertEqual(Foundation.NSURLHandleNotLoaded, 0)
+        self.assertEqual(Foundation.NSURLHandleLoadSucceeded, 1)
+        self.assertEqual(Foundation.NSURLHandleLoadInProgress, 2)
+        self.assertEqual(Foundation.NSURLHandleLoadFailed, 3)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSHTTPPropertyStatusCodeKey, str)
         self.assertIsInstance(Foundation.NSHTTPPropertyStatusReasonKey, str)
         self.assertIsInstance(Foundation.NSHTTPPropertyServerHTTPVersionKey, str)
@@ -19,17 +23,12 @@ class TestNSURLHandle(TestCase):
         self.assertIsInstance(Foundation.NSFTPPropertyFileOffsetKey, str)
         self.assertIsInstance(Foundation.NSFTPPropertyFTPProxy, str)
 
-        self.assertEqual(Foundation.NSURLHandleNotLoaded, 0)
-        self.assertEqual(Foundation.NSURLHandleLoadSucceeded, 1)
-        self.assertEqual(Foundation.NSURLHandleLoadInProgress, 2)
-        self.assertEqual(Foundation.NSURLHandleLoadFailed, 3)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSURLHandle.didLoadBytes_loadComplete_, 1)
         self.assertResultIsBOOL(Foundation.NSURLHandle.canInitWithURL_)
         self.assertArgIsBOOL(Foundation.NSURLHandle.initWithURL_cached_, 1)
         self.assertResultIsBOOL(Foundation.NSURLHandle.writeProperty_forKey_)
         self.assertResultIsBOOL(Foundation.NSURLHandle.writeData_)
 
-    def testProtocols(self):
-        self.assertProtocolExists("NSURLHandleClient")
+    def test_protocols(self):
+        self.assertProtocolExists("NSURLHandleClient", Foundation)

@@ -1,5 +1,3 @@
-# objective.metada exceptions file, see its document
-# for information on how to update this file.
 {
  "definitions": {
   "aliases": {
@@ -18,59 +16,14 @@
    "kCWError":  { "alias": "kCWErr" }
   },
   "externs": {
-   "CWServiceDidChangeNotification": { "typestr": "@" },
-   "CoreWLANFrameworkVersionNumber": { "typestr": "d" },
-   "kCWAssocKey8021XProfile": { "typestr": "@" },
-   "kCWAssocKeyPassphrase": { "typestr": "@" },
-   "kCWBSSIDDidChangeNotification": { "typestr": "@" },
-   "kCWCountryCodeDidChangeNotification": { "typestr": "@" },
-   "kCWErrorDomain": { "typestr": "@" },
-   "kCWIBSSKeyChannel": { "typestr": "@" },
-   "kCWIBSSKeyPassphrase": { "typestr": "@" },
-   "kCWIBSSKeySSID": { "typestr": "@" },
-   "kCWLinkDidChangeNotification": { "typestr": "@" },
-   "kCWModeDidChangeNotification": { "typestr": "@" },
-   "kCWPowerDidChangeNotification": { "typestr": "@" },
-   "kCWSSIDDidChangeNotification": { "typestr": "@" },
-   "kCWScanKeyBSSID": { "typestr": "@" },
-   "kCWScanKeyDwellTime": { "typestr": "@" },
-   "kCWScanKeyMerge": { "typestr": "@" },
-   "kCWScanKeyRestTime": { "typestr": "@" },
-   "kCWScanKeySSID": { "typestr": "@" },
-   "kCWScanKeyScanType": { "typestr": "@" }
-  },
-  "enum": {
-   "kCWScanTypeActive": { "value": 0 },
-   "kCWScanTypePassive": { "value": 1 },
-   "kCWScanTypeFast": { "value": 2 },
-   "kCWInterfaceStateInactive": { "value": 0 },
-   "kCWInterfaceStateScanning": { "value": 1 },
-   "kCWInterfaceStateAuthenticating": { "value": 2 },
-   "kCWInterfaceStateAssociating": { "value": 3 },
-   "kCWInterfaceStateRunning": { "value": 4 },
-   "kCWSecurityModeOpen": { "value": 0 },
-   "kCWSecurityModeWEP": { "value": 1 },
-   "kCWSecurityModeWPA_PSK": { "value": 2 },
-   "kCWSecurityModeWPA2_PSK": { "value": 3 },
-   "kCWSecurityModeDynamicWEP": { "value": 4 },
-   "kCWSecurityModeWPA_Enterprise": { "value": 5 },
-   "kCWSecurityModeWPA2_Enterprise": { "value": 6 },
-   "kCWSecurityModeWPS": { "value": 7 },
-   "kCWOpModeStation": { "value": 0 },
-   "kCWOpModeIBSS": { "value": 1 },
-   "kCWOpModeHostAP": { "value": 2 },
-   "kCWOpModeMonitorMode": { "value": 3 },
-   "CoreWLANFrameworkVersionNumber2_0": { "value": 200 },
-   "CWEventTypeVirtualInterfaceStateChanged": { "value": 9 },
-   "CWEventTypeRangingReportEvent": { "value": 10 },
-   "kCWSecurityWPA3Personal": { "value": 11 },
-   "kCWSecurityWPA3Enterprise": { "value": 12 },
-   "kCWSecurityWPA3Transition": { "value": 13 },
-   "kCWPHYMode11ax": { "value": 6 },
-   "kCWPHYMode11A": { "value": 0 },
-   "kCWPHYMode11B": { "value": 1 },
-   "kCWPHYMode11G": { "value": 2 },
-   "kCWPHYMode11N": { "value": 3 }
+   "kCWAssocKey8021XProfile": { "typestr": "@", "deprecated": 1007, "removed": 1010 },
+   "kCWAssocKeyPassphrase": { "typestr": "@", "deprecated": 1007, "removed": 1010 },
+   "kCWBSSIDDidChangeNotification": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWCountryCodeDidChangeNotification": { "typestr": "@", "deprecated": 1011, "removed": 1400 },
+   "kCWIBSSKeyChannel": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWIBSSKeyPassphrase": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWIBSSKeySSID": { "typestr": "@", "deprecatd": 1010, "removed": 1100 },
+   "kCWLinkDidChangeNotification": { "typestr": "@", "deprecated": 1010, "removed": 1100 }
   },
   "classes": {
    "CWNetwork": {
@@ -153,90 +106,10 @@
      },
      {
       "args": {
-       "1": { "type_override": "Z" },
-       "2": { "type_modifier": "o" }
+       "1": { "type_override": "Z" }
       },
       "class_method": false,
       "selector": "scanForNetworksWithName:includeHidden:error:"
-     },
-     {
-      "args": {
-       "1": { "type_override": "Z" },
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithSSID:includeHidden:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPower:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setWLANChannel:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setPairwiseMasterKey:error:"
-     },
-     {
-      "args": {
-       "3": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "setWEPKey:flags:index:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithSSID:error:"
-     },
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "scanForNetworksWithName:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "associateToNetwork:password:error:"
-     },
-     {
-      "args": {
-       "1": {},
-       "4": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "associateToEnterpriseNetwork:identity:username:password:error:"
-     },
-     {
-      "args": {
-       "4": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "startIBSSModeWithSSID:security:channel:password:error:"
-     },
-     {
-      "args": {
-       "2": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "commitConfiguration:authorization:error:"
      },
      {
       "args": {
@@ -276,30 +149,25 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "CWKeychainCopyWiFiEAPIdentity": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CWKeychainFindWiFiPassword": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CWKeychainFindWiFiEAPUsernameAndPassword": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" }
     }
    },
    "CWKeychainCopyEAPIdentity": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -310,47 +178,15 @@
    },
    "CWKeychainCopyEAPUsernameAndPassword": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true },
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CWKeychainCopyPassword": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CWKeychainDeleteEAPUsernameAndPassword": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CWKeychainDeletePassword": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CWKeychainSetEAPIdentity": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CWKeychainSetEAPUsernameAndPassword": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CWKeychainSetPassword": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

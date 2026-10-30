@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCMWaterSubmersionData(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMotion.CMWaterSubmersionState)
         self.assertEqual(CoreMotion.CMWaterSubmersionStateUnknown, 0)
         self.assertEqual(CoreMotion.CMWaterSubmersionStateNotSubmerged, 1)

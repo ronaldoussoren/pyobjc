@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -21,14 +21,36 @@ class TestNSMenuHelper(AppKit.NSObject):
 
 
 class TestNSMenu(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSMenuProperties)
+        self.assertEqual(AppKit.NSMenuPropertyItemTitle, 1 << 0)
+        self.assertEqual(AppKit.NSMenuPropertyItemAttributedTitle, 1 << 1)
+        self.assertEqual(AppKit.NSMenuPropertyItemKeyEquivalent, 1 << 2)
+        self.assertEqual(AppKit.NSMenuPropertyItemImage, 1 << 3)
+        self.assertEqual(AppKit.NSMenuPropertyItemEnabled, 1 << 4)
+        self.assertEqual(AppKit.NSMenuPropertyItemAccessibilityDescription, 1 << 5)
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSMenuDelegate")
+        self.assertIsEnumType(AppKit.NSMenuPresentationStyle)
+        self.assertEqual(AppKit.NSMenuPresentationStyleRegular, 0)
 
-    def testProtocol(self):
+        self.assertIsEnumType(AppKit.NSMenuSelectionMode)
+        self.assertEqual(AppKit.NSMenuSelectionModeAutomatic, 0)
+        self.assertEqual(AppKit.NSMenuSelectionModeSelectOne, 1)
+        self.assertEqual(AppKit.NSMenuSelectionModeSelectAny, 2)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSMenuWillSendActionNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidSendActionNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidAddItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidRemoveItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidChangeItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidBeginTrackingNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidEndTrackingNotification, str)
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSMenuDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSMenuHelper.validateMenuItem_)
         self.assertResultHasType(
             TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger
@@ -48,7 +70,7 @@ class TestNSMenu(TestCase):
             TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 3, b"o^:"
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSMenu.menuBarVisible)
         self.assertArgIsBOOL(AppKit.NSMenu.setMenuBarVisible_, 0)
         self.assertResultIsBOOL(AppKit.NSMenu.autoenablesItems)
@@ -67,25 +89,6 @@ class TestNSMenu(TestCase):
             AppKit.NSMenu.locationForSubmenu_, AppKit.NSPoint.__typestr__
         )
 
-    def testConstants(self):
-        self.assertIsInstance(AppKit.NSMenuWillSendActionNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidSendActionNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidAddItemNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidRemoveItemNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidChangeItemNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidBeginTrackingNotification, str)
-        self.assertIsInstance(AppKit.NSMenuDidEndTrackingNotification, str)
-
-        self.assertIsEnumType(AppKit.NSMenuPresentationStyle)
-        self.assertEqual(AppKit.NSMenuPresentationStyleRegular, 0)
-
-        self.assertIsEnumType(AppKit.NSMenuSelectionMode)
-        self.assertEqual(AppKit.NSMenuSelectionModeAutomatic, 0)
-        self.assertEqual(AppKit.NSMenuSelectionModeSelectOne, 1)
-        self.assertEqual(AppKit.NSMenuSelectionModeSelectAny, 2)
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(
             AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
         )
@@ -101,15 +104,6 @@ class TestNSMenu(TestCase):
         self.assertResultHasType(
             TestNSMenuHelper.confinementRectForMenu_onScreen_, AppKit.NSRect.__typestr__
         )
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(AppKit.NSMenuPropertyItemTitle, 1 << 0)
-        self.assertEqual(AppKit.NSMenuPropertyItemAttributedTitle, 1 << 1)
-        self.assertEqual(AppKit.NSMenuPropertyItemKeyEquivalent, 1 << 2)
-        self.assertEqual(AppKit.NSMenuPropertyItemImage, 1 << 3)
-        self.assertEqual(AppKit.NSMenuPropertyItemEnabled, 1 << 4)
-        self.assertEqual(AppKit.NSMenuPropertyItemAccessibilityDescription, 1 << 5)
 
     @min_os_level("14.0")
     def test_methods14_0(self):

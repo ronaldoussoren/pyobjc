@@ -1,14 +1,10 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import SpriteKit
 
 
 class TestSKPhysicsBody(TestCase):
-    @min_os_level("10.9")
-    def testMethods(self):
-        self.assertIsInstance(SpriteKit.SKPhysicsBody, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setDynamic_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.isDynamic)
         self.assertArgIsBOOL(
@@ -23,6 +19,6 @@ class TestSKPhysicsBody(TestCase):
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.affectedByGravity)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setPinned_, 0)
         self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.pinned)

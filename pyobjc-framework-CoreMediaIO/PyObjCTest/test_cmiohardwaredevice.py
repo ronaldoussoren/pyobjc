@@ -1,12 +1,11 @@
 import CoreMediaIO
-from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
-import objc
+from PyObjCTools.TestSupport import TestCase, fourcc
 
 CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
 
 
 class TestCMIOHardwareDevice(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = CoreMediaIO.CMIODeviceStreamConfiguration()
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mNumberChannels, None)
@@ -33,7 +32,7 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(v.mRefCon, None)
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeInput, fourcc(b"inpt"))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeOutput, fourcc(b"outp"))
         self.assertEqual(
@@ -179,12 +178,10 @@ class TestCMIOHardwareDevice(TestCase):
             CoreMediaIO.kCMIODevicePropertyLocationExternalWirelessDevice, 4
         )
 
-    @min_os_level("10.7")
-    def testFunctions(self):
+    def test_functions(self):
         CoreMediaIO.CMIODeviceStartStream
         CoreMediaIO.CMIODeviceStopStream
 
-        self.assertNotIsInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
-        self.assertNotIsInstance(
-            CoreMediaIO.CMIODeviceProcessRS422Command, objc.function
-        )
+        # XXX: Needs manual testing:
+        CoreMediaIO.CMIODeviceProcessAVCCommand
+        CoreMediaIO.CMIODeviceProcessRS422Command

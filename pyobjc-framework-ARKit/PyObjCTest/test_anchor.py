@@ -11,8 +11,8 @@ class TestAnchor(TestCase):
         pass
 
     def test_functions(self):
-        # SIMD types
-        # ARKit.ar_anchor_get_origin_from_anchor_transform
+        ARKit.ar_anchor_get_origin_from_anchor_transform
         self.assertArgIsOut(ARKit.ar_anchor_get_identifier, 1)
+        self.assertArgIsFixedSize(ARKit.ar_anchor_get_identifier, 1, 16)
         ARKit.ar_anchor_get_timestamp
         ARKit.ar_trackable_anchor_is_tracked

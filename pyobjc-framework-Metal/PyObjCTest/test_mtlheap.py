@@ -51,19 +51,17 @@ class TestMTLHeapHelper(Metal.NSObject):
 
 
 class TestMTLHeap(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLHeapType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLHeapTypeAutomatic, 0)
         self.assertEqual(Metal.MTLHeapTypePlacement, 1)
         self.assertEqual(Metal.MTLHeapTypeSparse, 2)
 
     @min_os_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MTLHeap")
+        self.assertProtocolExists("MTLHeap", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLHeapHelper.storageMode, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLHeapHelper.cpuCacheMode, objc._C_NSUInteger)
         self.assertResultHasType(
@@ -80,6 +78,7 @@ class TestMTLHeap(TestCase):
             TestMTLHeapHelper.maxAvailableSizeWithAlignment_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newBufferWithLength_options_)
         self.assertArgHasType(
             TestMTLHeapHelper.newBufferWithLength_options_, 0, objc._C_NSUInteger
         )
@@ -96,6 +95,9 @@ class TestMTLHeap(TestCase):
 
         self.assertResultHasType(TestMTLHeapHelper.type, objc._C_NSInteger)
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newBufferWithLength_options_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newBufferWithLength_options_offset_, 0, objc._C_NSUInteger
         )
@@ -106,14 +108,19 @@ class TestMTLHeap(TestCase):
             TestMTLHeapHelper.newBufferWithLength_options_offset_, 2, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newTextureWithDescriptor_offset_)
         self.assertArgHasType(
             TestMTLHeapHelper.newTextureWithDescriptor_offset_, 1, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(TestMTLHeapHelper.newAccelerationStructureWithSize_)
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithSize_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newAccelerationStructureWithSize_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithSize_offset_,
             0,
@@ -125,6 +132,9 @@ class TestMTLHeap(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(
+            TestMTLHeapHelper.newAccelerationStructureWithDescriptor_offset_
+        )
         self.assertArgHasType(
             TestMTLHeapHelper.newAccelerationStructureWithDescriptor_offset_,
             1,

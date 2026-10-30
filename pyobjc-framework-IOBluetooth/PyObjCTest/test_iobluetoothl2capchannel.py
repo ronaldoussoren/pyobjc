@@ -26,7 +26,7 @@ class TestIOBluetoothL2CAPChannel(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("IOBluetoothL2CAPChannelDelegate")
+        self.assertProtocolExists("IOBluetoothL2CAPChannelDelegate", IOBluetooth)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

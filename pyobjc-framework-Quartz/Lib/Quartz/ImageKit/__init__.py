@@ -11,13 +11,13 @@ def _setup():
 
     import AppKit
     import objc
-    from . import _metadata, _imagekit
+    from . import _metadata, _ImageKit
 
-    if objc.macos_available(14, 0):
+    if objc.macos_available(14, 0):  # pragma: no branch
         identifier = "com.apple.quartzframework"
-    elif objc.macos_available(13, 0):
+    elif objc.macos_available(13, 0):  # pragma: no cover
         identifier = "com.apple.Quartz"
-    else:
+    else:  # pragma: no cover
         identifier = "com.apple.quartzframework"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
@@ -29,7 +29,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _imagekit,
+            _ImageKit,
             AppKit,
         ),
         metadict=_metadata.__dict__,

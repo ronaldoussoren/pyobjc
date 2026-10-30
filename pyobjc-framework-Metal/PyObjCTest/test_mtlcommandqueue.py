@@ -13,9 +13,9 @@ class TestMTLCommandQueueHelper(Metal.NSObject):
 class TestMTLCommandQueue(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLCommandQueue")
+        self.assertProtocolExists("MTLCommandQueue", Metal)
 
-    def test_protocol_methos(self):
+    def test_protocol_methods(self):
         self.assertArgIsIn(TestMTLCommandQueueHelper.addResidencySets_count_, 0)
         self.assertArgSizeInArg(TestMTLCommandQueueHelper.addResidencySets_count_, 0, 1)
         self.assertArgHasType(

@@ -4,7 +4,7 @@ import SensitiveContentAnalysis
 
 
 class TestSCSensitivityAnalyzer(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SensitiveContentAnalysis.SCSensitivityAnalysisPolicy)
 
         self.assertEqual(

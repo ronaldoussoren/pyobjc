@@ -4,12 +4,12 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLockProtocols(TestCase):
-    def testLockIsLock(self):
+    def test_lock_is_lock(self):
         # Test for bug #1735937
         lock = Foundation.NSLock.alloc().init()
         self.assertTrue(lock.conformsToProtocol_(objc.protocolNamed("NSLocking")))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSLock.tryLock)
         self.assertResultIsBOOL(Foundation.NSLock.lockBeforeDate_)
 

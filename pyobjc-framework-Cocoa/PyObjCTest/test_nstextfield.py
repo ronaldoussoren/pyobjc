@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -15,7 +15,7 @@ class TestNSTextFieldHelper(AppKit.NSObject):
 
 
 class TestNSTextField(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextField.drawsBackground)
         self.assertArgIsBOOL(AppKit.NSTextField.setDrawsBackground_, 0)
         self.assertResultIsBOOL(AppKit.NSTextField.isBordered)
@@ -35,14 +35,14 @@ class TestNSTextField(TestCase):
         self.assertArgIsBOOL(AppKit.NSTextField.setImportsGraphics_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSTextField.allowsDefaultTighteningForTruncation)
         self.assertArgIsBOOL(
             AppKit.NSTextField.setAllowsDefaultTighteningForTruncation_, 0
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSTextField.isAutomaticTextCompletionEnabled)
         self.assertArgIsBOOL(AppKit.NSTextField.setAutomaticTextCompletionEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSTextField.allowsCharacterPickerTouchBarItem)
@@ -50,6 +50,29 @@ class TestNSTextField(TestCase):
             AppKit.NSTextField.setAllowsCharacterPickerTouchBarItem_, 0
         )
 
+    @min_os_level("15.2")
+    def test_methods15_2(self):
+        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingTools)
+        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingTools_, 0)
+
+    @min_os_level("15.4")
+    def test_methods15_4(self):
+        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingToolsAffordance)
+        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingToolsAffordance_, 0)
+
+    @min_os_level("26.0")
+    def test_methods26_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSTextField.resolvesNaturalAlignmentWithBaseWritingDirection
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextField.setResolvesNaturalAlignmentWithBaseWritingDirection_, 0
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSTextFieldDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTextFieldHelper.textField_textView_candidatesForSelectedRange_,
             2,
@@ -68,26 +91,3 @@ class TestNSTextField(TestCase):
         self.assertResultIsBOOL(
             TestNSTextFieldHelper.textField_textView_shouldSelectCandidateAtIndex_
         )
-
-    @min_os_level("15.2")
-    def testMethods15_2(self):
-        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingTools)
-        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingTools_, 0)
-
-    @min_os_level("15.4")
-    def testMethods15_4(self):
-        self.assertResultIsBOOL(AppKit.NSTextField.allowsWritingToolsAffordance)
-        self.assertArgIsBOOL(AppKit.NSTextField.setAllowsWritingToolsAffordance_, 0)
-
-    @min_os_level("26.0")
-    def testMethods26_0(self):
-        self.assertResultIsBOOL(
-            AppKit.NSTextField.resolvesNaturalAlignmentWithBaseWritingDirection
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSTextField.setResolvesNaturalAlignmentWithBaseWritingDirection_, 0
-        )
-
-    @min_sdk_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("NSTextFieldDelegate")

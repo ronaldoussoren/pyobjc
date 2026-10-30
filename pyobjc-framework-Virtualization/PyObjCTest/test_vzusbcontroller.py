@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 import Virtualization
 
@@ -12,3 +12,7 @@ class TestVZUSBController(TestCase):
         self.assertArgIsBlock(
             Virtualization.VZUSBController.detachDevice_completionHandler_, 1, b"v@"
         )
+
+    @min_sdk_level("27.0")
+    def test_protocols(self):
+        self.assertProtocolExists("VZUSBControllerDelegate", Virtualization)

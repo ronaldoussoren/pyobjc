@@ -4,10 +4,8 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCNNOptimzers(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSNNRegularizationType)
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSNNRegularizationTypeNone, 0)
         self.assertEqual(MetalPerformanceShaders.MPSNNRegularizationTypeL1, 1)
         self.assertEqual(MetalPerformanceShaders.MPSNNRegularizationTypeL2, 2)

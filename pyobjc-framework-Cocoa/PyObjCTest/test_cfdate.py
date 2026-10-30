@@ -7,7 +7,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDate(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             cls = objc.lookUpClass("__NSDate")
             self.assertIs(cls, CoreFoundation.CFDateRef)
@@ -24,11 +24,11 @@ class TestDate(TestCase):
         except objc.error:
             self.assertIsCFType(CoreFoundation.CFTimeZoneRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFDateGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFAbsoluteTimeIntervalSince1970, float)
         self.assertIsInstance(CoreFoundation.kCFAbsoluteTimeIntervalSince1904, float)
         self.assertEqual(CoreFoundation.kCFGregorianUnitsYears, (1 << 0))
@@ -39,7 +39,7 @@ class TestDate(TestCase):
         self.assertEqual(CoreFoundation.kCFGregorianUnitsSeconds, (1 << 5))
         self.assertEqual(CoreFoundation.kCFGregorianAllUnits, 0x00FFFFFF)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreFoundation.CFGregorianDate()
         self.assertHasAttr(v, "year")
         self.assertHasAttr(v, "month")
@@ -60,19 +60,19 @@ class TestDate(TestCase):
 
         self.assertPickleRoundTrips(v)
 
-    def testAbsoluteTime(self):
+    def test_absolute_time(self):
         v = CoreFoundation.CFAbsoluteTimeGetCurrent()
         self.assertIsInstance(v, float)
         self.assertLess(
             abs(v - time.time() + CoreFoundation.kCFAbsoluteTimeIntervalSince1970), 1.0
         )
 
-    def testCreation(self):
+    def test_creation(self):
         now = CoreFoundation.CFAbsoluteTimeGetCurrent()
         dt = CoreFoundation.CFDateCreate(None, now)
         self.assertIsInstance(dt, NSDate)
 
-    def testInspection(self):
+    def test_inspect(self):
         now = CoreFoundation.CFAbsoluteTimeGetCurrent()
         nowtm = time.localtime()
         dt = CoreFoundation.CFDateCreate(None, now)

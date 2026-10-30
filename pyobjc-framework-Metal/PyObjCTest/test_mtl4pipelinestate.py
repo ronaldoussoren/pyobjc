@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestMTL4PipelineState(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4ShaderReflection)
         self.assertEqual(Metal.MTL4ShaderReflectionNone, 0)
         self.assertEqual(Metal.MTL4ShaderReflectionBindingInfo, 1 << 0)

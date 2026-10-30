@@ -52,19 +52,13 @@ class TestNSFileProviderItemHelper(FileProvider.NSObject):
     def isSharedByCurrentUser(self):
         return 1
 
+    def namespacePolicy(self):
+        return 1
+
 
 class TestNSFileProviderItem(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(FileProvider.NSFileProviderFileSystemFlags)
+    def test_enums(self):
         self.assertIsEnumType(FileProvider.NSFileProviderItemCapabilities)
-
-    def test_structs(self):
-        v = FileProvider.NSFileProviderTypeAndCreator()
-        self.assertIsInstance(v.type, int)
-        self.assertIsInstance(v.creator, int)
-        self.assertPickleRoundTrips(v)
-
-    def test_constants(self):
         self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0
         )
@@ -107,6 +101,7 @@ class TestNSFileProviderItem(TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting,
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderFileSystemFlags)
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserExecutable, 1 << 0)
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserReadable, 1 << 1)
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserWritable, 1 << 2)
@@ -115,6 +110,14 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderFileSystemPathExtensionHidden, 1 << 4
         )
 
+        self.assertIsEnumType(FileProvider.NSFileProviderNamespacePolicy)
+        self.assertEqual(FileProvider.NSFileProviderNamespacePolicyInherited, 0)
+        self.assertEqual(FileProvider.NSFileProviderNamespacePolicyMaterializeLazily, 1)
+        self.assertEqual(
+            FileProvider.NSFileProviderNamespacePolicyMaterializeEagerly, 2
+        )
+
+    def test_constants(self):
         self.assertIsInstance(
             FileProvider.NSFileProviderRootContainerItemIdentifier, str
         )
@@ -125,11 +128,17 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderTrashContainerItemIdentifier, str
         )
 
+    def test_structs(self):
+        v = FileProvider.NSFileProviderTypeAndCreator()
+        self.assertIsInstance(v.type, int)
+        self.assertIsInstance(v.creator, int)
+        self.assertPickleRoundTrips(v)
+
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("NSFileProviderItem")
+        self.assertProtocolExists("NSFileProviderItem", FileProvider)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSFileProviderItemHelper.typeAndCreator,
             FileProvider.NSFileProviderTypeAndCreator.__typestr__,
@@ -155,3 +164,7 @@ class TestNSFileProviderItem(TestCase):
         )
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isShared)
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isSharedByCurrentUser)
+
+        self.assertResultHasType(
+            TestNSFileProviderItemHelper.namespacePolicy, objc._C_NSInteger
+        )

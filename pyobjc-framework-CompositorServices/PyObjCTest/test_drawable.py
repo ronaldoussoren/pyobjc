@@ -4,7 +4,7 @@ import CompositorServices
 
 
 class TestDrawable(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(CompositorServices.cp_drawable_state)
         self.assertEqual(CompositorServices.cp_drawable_state_available, 0)
         self.assertEqual(CompositorServices.cp_drawable_state_rendering, 1)

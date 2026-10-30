@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLMonitoringEvent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreLocation.CLMonitoringState)
         self.assertEqual(CoreLocation.CLMonitoringStateUnknown, 0)
         self.assertEqual(CoreLocation.CLMonitoringStateSatisfied, 1)

@@ -3,12 +3,7 @@ import Quartz
 
 
 class TestQuartzFilterManager(TestCase):
-    @min_os_level("10.5")
-    def testMethods(self):
-        self.assertResultIsBOOL(Quartz.QuartzFilterManager.selectFilter_)
-
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kQuartzFilterManagerDidAddFilterNotification, str)
         self.assertIsInstance(
             Quartz.kQuartzFilterManagerDidRemoveFilterNotification, str
@@ -21,13 +16,14 @@ class TestQuartzFilterManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testConstants10_6(self):
-        # The following definitions are documented for 10.5, but aren't actually
-        # exported from the framework:
+    def test_constants10_15(self):
         self.assertIsInstance(Quartz.kQuartzFilterApplicationDomain, str)
         self.assertIsInstance(Quartz.kQuartzFilterPDFWorkflowDomain, str)
         self.assertIsInstance(Quartz.kQuartzFilterPrintingDomain, str)
 
+    def test_methods(self):
+        self.assertResultIsBOOL(Quartz.QuartzFilterManager.selectFilter_)
+
     @expectedFailure
-    def testGlobalUpdateOK(self):
+    def test_global_update_ok(self):
         self.fail("Not yet supported")

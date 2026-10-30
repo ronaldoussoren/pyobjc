@@ -4,7 +4,7 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphFourierTransformOps(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphFFTScalingMode)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphFFTScalingModeNone, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphFFTScalingModeSize, 1)

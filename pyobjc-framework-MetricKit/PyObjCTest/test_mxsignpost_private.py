@@ -11,7 +11,7 @@ class TestMXSignpost_Private(TestCase):
             b"\n%{public, " + MetricKit._METRICS_SIGNPOST_TYPE_TOKEN + b"}@",
         )
 
-    def test_function_macros(self):
+    def test_functions_macros(self):
         # These function macros use _MXSignpostMetricsSnapshot() which
         # is not available on macOS, hence these should not be exposed:
         # XXX: The macOS 26 SDK introduces support...

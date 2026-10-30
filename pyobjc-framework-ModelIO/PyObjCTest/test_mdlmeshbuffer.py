@@ -33,15 +33,13 @@ class TestMDLMeshBufferHelper(ModelIO.NSObject):
 
 
 class TestMDLMeshBuffer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLMeshBufferType)
-
-    def testConstants(self):
         self.assertEqual(ModelIO.MDLMeshBufferTypeVertex, 1)
         self.assertEqual(ModelIO.MDLMeshBufferTypeIndex, 2)
         self.assertEqual(ModelIO.MDLMeshBufferTypeCustom, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsVariableSize(
             ModelIO.MDLMeshBufferMap.initWithBytes_deallocator_, 0
         )
@@ -51,21 +49,37 @@ class TestMDLMeshBuffer(TestCase):
 
         self.assertResultIsVariableSize(ModelIO.MDLMeshBufferMap.bytes)
 
+    def test_protocols(self):
+        self.assertProtocolExists("MDLMeshBuffer", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferZone", ModelIO)
+        self.assertProtocolExists("MDLMeshBufferAllocator", ModelIO)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMDLMeshBufferHelper.fillData_offset_, 1, objc._C_NSUInteger
         )
         self.assertResultHasType(TestMDLMeshBufferHelper.length, objc._C_NSUInteger)
         self.assertResultHasType(TestMDLMeshBufferHelper.type, objc._C_NSUInteger)
         self.assertResultHasType(TestMDLMeshBufferHelper.capacity, objc._C_NSUInteger)
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newZone_)
         self.assertArgHasType(TestMDLMeshBufferHelper.newZone_, 0, objc._C_NSUInteger)
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newBuffer_type_)
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBuffer_type_, 0, objc._C_NSUInteger
         )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBuffer_type_, 1, objc._C_NSUInteger
         )
+
+        self.assertResultIsRetained(TestMDLMeshBufferHelper.newBufferWithData_type_)
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferWithData_type_, 1, objc._C_NSUInteger
+        )
+
+        self.assertResultIsRetained(
+            TestMDLMeshBufferHelper.newBufferFromZone_length_type_
         )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferFromZone_length_type_,
@@ -77,11 +91,10 @@ class TestMDLMeshBuffer(TestCase):
             2,
             objc._C_NSUInteger,
         )
+
+        self.assertResultIsRetained(
+            TestMDLMeshBufferHelper.newBufferFromZone_data_type_
+        )
         self.assertArgHasType(
             TestMDLMeshBufferHelper.newBufferFromZone_data_type_, 2, objc._C_NSUInteger
         )
-
-    def testProtocolObjects(self):
-        self.assertProtocolExists("MDLMeshBuffer")
-        self.assertProtocolExists("MDLMeshBufferZone")
-        self.assertProtocolExists("MDLMeshBufferAllocator")

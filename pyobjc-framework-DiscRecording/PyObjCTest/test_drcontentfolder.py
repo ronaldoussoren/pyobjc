@@ -4,10 +4,10 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 class TestDRContentFolder(TestCase):
     @expectedFailure
-    def testCFTypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(DiscRecording.DRFolderRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRFolderGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRFolderCreateReal)

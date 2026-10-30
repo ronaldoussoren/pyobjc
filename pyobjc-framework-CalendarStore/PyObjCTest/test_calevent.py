@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalEvent(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CalendarStore.CalEvent.isAllDay)
         self.assertArgIsBOOL(CalendarStore.CalEvent.setIsAllDay_, 0)
 

@@ -3,17 +3,23 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMorphology(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSGrammaticalGender)
-        self.assertIsEnumType(Foundation.NSGrammaticalNumber)
-        self.assertIsEnumType(Foundation.NSGrammaticalPartOfSpeech)
-
-    def test_constants(self):
         self.assertEqual(Foundation.NSGrammaticalGenderNotSet, 0)
         self.assertEqual(Foundation.NSGrammaticalGenderFeminine, 1)
         self.assertEqual(Foundation.NSGrammaticalGenderMasculine, 2)
         self.assertEqual(Foundation.NSGrammaticalGenderNeuter, 3)
 
+        self.assertIsEnumType(Foundation.NSGrammaticalNumber)
+        self.assertEqual(Foundation.NSGrammaticalNumberNotSet, 0)
+        self.assertEqual(Foundation.NSGrammaticalNumberSingular, 1)
+        self.assertEqual(Foundation.NSGrammaticalNumberZero, 2)
+        self.assertEqual(Foundation.NSGrammaticalNumberPlural, 3)
+        self.assertEqual(Foundation.NSGrammaticalNumberPluralTwo, 4)
+        self.assertEqual(Foundation.NSGrammaticalNumberPluralFew, 5)
+        self.assertEqual(Foundation.NSGrammaticalNumberPluralMany, 6)
+
+        self.assertIsEnumType(Foundation.NSGrammaticalPartOfSpeech)
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechNotSet, 0)
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechDeterminer, 1)
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechPronoun, 2)
@@ -29,14 +35,6 @@ class TestNSMorphology(TestCase):
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechInterjection, 12)
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechPreposition, 13)
         self.assertEqual(Foundation.NSGrammaticalPartOfSpeechAbbreviation, 14)
-
-        self.assertEqual(Foundation.NSGrammaticalNumberNotSet, 0)
-        self.assertEqual(Foundation.NSGrammaticalNumberSingular, 1)
-        self.assertEqual(Foundation.NSGrammaticalNumberZero, 2)
-        self.assertEqual(Foundation.NSGrammaticalNumberPlural, 3)
-        self.assertEqual(Foundation.NSGrammaticalNumberPluralTwo, 4)
-        self.assertEqual(Foundation.NSGrammaticalNumberPluralFew, 5)
-        self.assertEqual(Foundation.NSGrammaticalNumberPluralMany, 6)
 
         self.assertIsEnumType(Foundation.NSGrammaticalCase)
         self.assertEqual(Foundation.NSGrammaticalCaseNotSet, 0)

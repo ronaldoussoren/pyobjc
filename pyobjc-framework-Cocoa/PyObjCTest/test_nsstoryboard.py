@@ -6,7 +6,7 @@ NSStoryboardControllerCreator = b"@@"
 
 class TestNSStoryboard(TestCase):
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             AppKit.NSStoryboard.instantiateInitialControllerWithCreator_,
             0,

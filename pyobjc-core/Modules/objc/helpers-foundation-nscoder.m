@@ -12,6 +12,8 @@ static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
     struct objc_super super;
     Py_buffer         view;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
@@ -114,8 +116,8 @@ mkimp_NSCoder_encodeValueOfObjCType_at_(PyObject*              callable,
               goto error;           // LCOV_EXCL_LINE
 
           PyObject* arglist[4] = {NULL, pyself, v1, v2};
-          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_CLEAR(v1);
           Py_CLEAR(v2);
 
@@ -156,6 +158,8 @@ static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
     int               err;
     struct objc_super super;
     Py_buffer         view;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
         return NULL;
@@ -344,6 +348,8 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
     PyObject*         py_buf;
     Py_buffer         view;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
@@ -443,8 +449,8 @@ mkimp_NSCoder_decodeValueOfObjCType_at_(PyObject*              callable,
               goto error;          // LCOV_EXCL_LINE
 
           PyObject* arglist[4] = {NULL, pyself, v, Py_None};
-          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_DECREF(v);
           v = NULL;
           if (result == NULL)
@@ -479,6 +485,8 @@ static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_size_(
     struct objc_super super;
     PyObject*         py_buf;
     Py_buffer         view;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
         return NULL;
@@ -637,6 +645,8 @@ static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
     Py_ssize_t        size;
     struct objc_super super;
     Py_buffer         view;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
         return NULL;
@@ -825,6 +835,8 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        met
 
     struct objc_super super;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
 
@@ -949,6 +961,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
     PyObject*         py_buf;
     struct objc_super super;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
 
@@ -1041,8 +1055,8 @@ mkimp_NSCoder_decodeBytesWithReturnedLength_(PyObject*              callable,
       }
 
       PyObject* arglist[3] = {NULL, pyself, Py_None};
-      result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                 2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+      result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                   2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
       if (result == NULL)
           goto error;
 
@@ -1108,6 +1122,8 @@ static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
     PyObject*         py_buf;
     id                key;
     struct objc_super super;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
         return NULL;
@@ -1216,8 +1232,8 @@ mkimp_NSCoder_decodeBytesForKey_returnedLength_(PyObject*              callable,
               goto error;           // LCOV_EXCL_LINE
 
           PyObject* arglist[] = {NULL, v1, v2, Py_None};
-          result              = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                    3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                       3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_CLEAR(v1);
           Py_CLEAR(v2);
           if (result == NULL)
@@ -1283,6 +1299,8 @@ static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
     struct objc_super super;
     Py_buffer         view;
     NSUInteger        count;
+
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
 
     if (PyObjC_CheckArgCount(method, 2, 3, nargs) == -1)
         return NULL;
@@ -1391,8 +1409,8 @@ mkimp_NSCoder_encodeBytes_length_forKey_(PyObject*              callable,
               goto error;           // LCOV_EXCL_LINE
 
           PyObject* arglist[5] = {NULL, pyself, v1, v2, v3};
-          result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
-                                                     4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                       4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           Py_CLEAR(v1);
           Py_CLEAR(v2);
           Py_CLEAR(v3);

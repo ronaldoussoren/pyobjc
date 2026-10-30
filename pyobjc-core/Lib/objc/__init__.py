@@ -47,20 +47,6 @@ from ._informal_protocol import *  # noqa: F401, F403, E402
 from . import _new  # noqa: F401, E402
 from ._types import *  # noqa: F401, F403, E402
 
-
-# Helper function for new-style metadata modules
-def _resolve_name(name):
-    if "." not in name:
-        raise ValueError(name)
-
-    module, name = name.rsplit(".", 1)
-    m = __import__(module)
-    for k in module.split(".")[1:]:
-        m = getattr(m, k)
-
-    return getattr(m, name)
-
-
 _NSAutoreleasePool = None
 
 # Aliases for some common Objective-C constants

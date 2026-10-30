@@ -48,6 +48,7 @@ The same is true for fetching elements::
     >>> d.objectForKey_('key1')
     'hello'
 """
+
 import doctest
 
 import __main__

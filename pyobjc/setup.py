@@ -13,7 +13,7 @@ import re
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = '12.2.3'
+VERSION = "13.0"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -25,6 +25,7 @@ FRAMEWORK_WRAPPERS = [
     ("libdispatch", "10.8", None),
     ("libxpc", "10.8", None),
     ("Accessibility", "11.0", None),
+    ("AccessoryAccess", "27.0", None),
     ("AdServices", "11.0", None),
     ("AdSupport", "10.14", None),
     ("AppTrackingTransparency", "11.0", None),
@@ -108,6 +109,7 @@ FRAMEWORK_WRAPPERS = [
     ("LatentSemanticMapping", None, None),
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
+    ("LinkSecurity", "27.0", None),
     ("LocalAuthentication", "10.10", None),
     ("LocalAuthenticationEmbeddedUI", "12.0", None),
     ("MailKit", "12.0", None),
@@ -160,6 +162,7 @@ FRAMEWORK_WRAPPERS = [
     ("Social", "10.8", None),
     ("Speech", "10.15", None),
     ("SpriteKit", "10.9", None),
+    ("StateReporting", "27.0", None),
     ("StoreKit", "10.7", None),
     ("SyncServices", None, None),
     ("SystemConfiguration", None, None),
@@ -212,6 +215,8 @@ MACOS_TO_DARWIN = {
     "15.4": "24.4",
     "26.0": "25.0",
     "26.4": "25.4",
+    "26.6": "25.6",
+    "27.0": "26.0",
 }
 
 
@@ -620,7 +625,7 @@ class oc_test(Command):
                     print(f"Framework {fwk} not in framework-wrappers.rst")
                     failures += 1
 
-        print(" scanning for undeclared framework dependencies...")
+        print("  scanning for undeclared framework dependencies...")
         frameworks = sorted(
             nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-")
         )
@@ -643,7 +648,7 @@ class oc_test(Command):
                     print(f"* {fw} depends on {r} but doesn't require it")
                     failures += 1
 
-        print("  Scanning for case sensitivity issues")
+        print("  scanning for case sensitivity issues")
         for ln in subprocess.check_output(
             ["git", "ls-files"], cwd="..", text=True
         ).splitlines():
@@ -680,32 +685,17 @@ class oc_test(Command):
 
 def frameworks_in_table(filename):
     result = {}
-    in_table = False
     with open(filename) as stream:
         for line in stream:
             line = line.lstrip()
-            if not in_table:
-                if line.startswith("+--") or line.startswith("+=="):
-                    in_table = True
-                    continue
+            if line.startswith("* - "):
+                rest = line[4:]
+                if "`" in rest:
+                    result[rest.split("`")[1].split()[0]] = True
 
-            else:
-                if line.startswith("+--") or line.startswith("+=="):
-                    continue
-                elif not line.startswith("|"):
-                    break
-
-                cell = line.split("|")[1].strip()
-                if not cell:
-                    continue
-
-                if "`" in cell:
-                    cell = cell.split("`")[1].split()[0]
-                    linked = True
                 else:
-                    linked = False
+                    result[rest.strip()] = False
 
-                result[cell] = linked
     return result
 
 

@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
-    PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCMethodSignature_Type)
+    Py_IS_TYPE((obj), (PyTypeObject*)PyObjCMethodSignature_Type)
 
 enum _PyObjC_PointerType
 #if __has_feature(objc_fixed_enum)
@@ -42,6 +42,7 @@ struct _PyObjC_ArgDescr {
     unsigned int             typeOverride : 1;
     unsigned int             arraySizeInRetval : 1;
     unsigned int             printfFormat : 1;
+    unsigned int             hasAlreadyRetained : 1;
     unsigned int             alreadyRetained : 1;
     unsigned int             alreadyCFRetained : 1;
     unsigned int             callableRetained

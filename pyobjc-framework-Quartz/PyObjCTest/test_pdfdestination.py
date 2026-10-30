@@ -4,5 +4,5 @@ import Quartz
 
 class TestPDFDestination(TestCase):
     @min_os_level("10.13")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kPDFDestinationUnspecifiedValue, float)

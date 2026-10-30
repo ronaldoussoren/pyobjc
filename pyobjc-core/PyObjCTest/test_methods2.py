@@ -4,7 +4,6 @@ from PyObjCTest.fnd import NSPriorDayDesignations
 from PyObjCTest.testbndl2 import PyObjC_TestClass1, PyObjC_TestClass2
 from PyObjCTools.TestSupport import TestCase, skipUnless
 
-
 NSPoint_tp = b"{_NSPoint=dd}"
 NSRect_tp = b"{_NSRect={_NSPoint=dd}{_NSSize=dd}}"
 long_tp = b"q"

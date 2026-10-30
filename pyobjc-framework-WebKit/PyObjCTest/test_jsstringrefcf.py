@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestJSStrintRefCF(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         v = JavaScriptCore.JSStringCreateWithCFString("hello world")
         self.assertIsInstance(v, JavaScriptCore.JSStringRef)
 

@@ -5,7 +5,7 @@ from objc import simd
 
 class TestMDLVoxelArray(TestCase):
     @expectedFailure
-    def testStructs(self):
+    def test_structs(self):
         self.assertEqual(
             ModelIO.MDLVoxelIndexExtent.__typestr__, b"{_MDLVoxelIndexExtent=<4i><4i>"
         )
@@ -13,7 +13,7 @@ class TestMDLVoxelArray(TestCase):
         self.assertIs(v.minimumExtent, None)
         self.assertIs(v.maximumExtent, None)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             ModelIO.MDLVoxelArray.voxelExistsAtIndex_allowAnyX_allowAnyY_allowAnyZ_allowAnyShell_
         )
@@ -92,5 +92,5 @@ class TestMDLVoxelArray(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(ModelIO.MDLVoxelArray.isValidSignedShellField)

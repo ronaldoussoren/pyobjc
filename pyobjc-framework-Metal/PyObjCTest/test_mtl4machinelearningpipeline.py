@@ -10,7 +10,7 @@ class TestMTL4MachineLearningPipelineHelper(Metal.NSObject):
 class TestMTL4MachineLearningPipeline(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4MachineLearningPipelineState")
+        self.assertProtocolExists("MTL4MachineLearningPipelineState", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

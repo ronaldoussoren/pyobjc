@@ -52,7 +52,7 @@ class TestWKWebExtensionControllerDelegateHelper(WebKit.NSObject):
 class TestWKWebExtensionControllerDelegate(TestCase):
     @min_sdk_level("15.4")
     def test_protoocls(self):
-        self.assertProtocolExists("WKWebExtensionControllerDelegate")
+        self.assertProtocolExists("WKWebExtensionControllerDelegate", WebKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

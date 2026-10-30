@@ -29,10 +29,10 @@ class TestCHHapticDeviceCapabilityHelper(CoreHaptics.NSObject):
 class TestCHHapticDeviceCapability(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("CHHapticParameterAttributes")
-        self.assertProtocolExists("CHHapticDeviceCapability")
+        self.assertProtocolExists("CHHapticParameterAttributes", CoreHaptics)
+        self.assertProtocolExists("CHHapticDeviceCapability", CoreHaptics)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         # CHHapticParameterAttributes
         self.assertResultHasType(
             TestCHHapticDeviceCapabilityHelper.minValue, objc._C_FLT

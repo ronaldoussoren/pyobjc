@@ -4,11 +4,15 @@ import MetalPerformanceShaders
 
 
 class TestMetalPerformanceShaders(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSImageEdgeMode)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSKernelOptions)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeZero, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeClamp, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirror, 2)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeMirrorWithEdge, 3)
+        self.assertEqual(MetalPerformanceShaders.MPSImageEdgeModeConstant, 4)
 
-    def test_constants(self):
+        self.assertIsEnumType(MetalPerformanceShaders.MPSKernelOptions)
         self.assertEqual(MetalPerformanceShaders.MPSDeviceOptionsDefault, 0)
         self.assertEqual(MetalPerformanceShaders.MPSDeviceOptionsLowPower, 1)
         self.assertEqual(MetalPerformanceShaders.MPSDeviceOptionsSkipRemovable, 2)

@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKQuantityAggregationStyle(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKQuantityAggregationStyle)
         self.assertEqual(HealthKit.HKQuantityAggregationStyleCumulative, 0)
         self.assertEqual(HealthKit.HKQuantityAggregationStyleDiscreteArithmetic, 1)

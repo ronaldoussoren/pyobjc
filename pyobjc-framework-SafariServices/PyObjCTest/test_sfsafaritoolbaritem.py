@@ -5,7 +5,7 @@ import SafariServices
 
 class TestSFSafariToolbarItem(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             SafariServices.SFSafariToolbarItem.setEnabled_withBadgeText_, 0
         )

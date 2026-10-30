@@ -20,7 +20,7 @@ class TestMKMapViewHelper(MapKit.NSObject):
 
 
 class TestMKMapView(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKUserTrackingMode)
         self.assertEqual(MapKit.MKUserTrackingModeNone, 0)
         self.assertEqual(MapKit.MKUserTrackingModeFollow, 1)
@@ -30,31 +30,7 @@ class TestMKMapView(TestCase):
         self.assertEqual(MapKit.MKOverlayLevelAboveRoads, 0)
         self.assertEqual(MapKit.MKOverlayLevelAboveLabels, 1)
 
-    @min_os_level("10.9")
-    def testProtocols(self):
-        self.assertProtocolExists("MKMapViewDelegate")
-
-    def test_protocol_methods(self):
-        self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)
-        self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1)
-        self.assertArgIsBOOL(
-            TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1
-        )
-        self.assertArgHasType(
-            TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
-            2,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
-            3,
-            objc._C_NSUInteger,
-        )
-
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertIsInstance(MapKit.MKMapView, objc.objc_class)
-
+    def test_methods(self):
         self.assertArgIsBOOL(MapKit.MKMapView.setRegion_animated_, 1)
         self.assertArgIsBOOL(MapKit.MKMapView.setCenterCoordinate_animated_, 1)
         self.assertArgIsBOOL(MapKit.MKMapView.setVisibleMapRect_animated_, 1)
@@ -116,17 +92,17 @@ class TestMKMapView(TestCase):
         )
 
     @min_os_level("10.10")
-    def testClasses10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsScale)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsScale_, 0)
 
     @min_os_level("10.11")
-    def testClasses10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsTraffic)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsTraffic_, 0)
 
     @min_os_level("10.15")
-    def testClasses10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsPointsOfInterest)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsPointsOfInterest_, 0)
 
@@ -134,3 +110,23 @@ class TestMKMapView(TestCase):
     def test_methods14_0(self):
         self.assertResultIsBOOL(MapKit.MKMapView.showsUserTrackingButton)
         self.assertArgIsBOOL(MapKit.MKMapView.setShowsUserTrackingButton_, 0)
+
+    def test_protocols(self):
+        self.assertProtocolExists("MKMapViewDelegate", MapKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)
+        self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1)
+        self.assertArgIsBOOL(
+            TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1
+        )
+        self.assertArgHasType(
+            TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMKMapViewHelper.mapView_annotationView_didChangeDragState_fromOldState_,
+            3,
+            objc._C_NSUInteger,
+        )

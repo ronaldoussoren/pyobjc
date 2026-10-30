@@ -33,8 +33,8 @@ class TestMERawProcessor(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("MERAWProcessorExtension")
-        self.assertProtocolExists("MERAWProcessor")
+        self.assertProtocolExists("MERAWProcessorExtension", MediaExtension)
+        self.assertProtocolExists("MERAWProcessor", MediaExtension)
 
     def test_protocol_methods(self):
         self.assertArgIsOut(

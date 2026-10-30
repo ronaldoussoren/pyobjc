@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCTTextTab(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreText.CTTextTabRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreText.kCTTabColumnTerminatorsAttributeName, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreText.CTTextTabGetTypeID(), int)
 
         tab = CoreText.CTTextTabCreate(

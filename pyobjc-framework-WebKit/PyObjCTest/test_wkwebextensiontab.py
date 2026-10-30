@@ -88,7 +88,7 @@ class TestWKWebExtensionTabHelper(WebKit.NSObject):
 
 
 class TestWKWebExtensionTab(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionTabChangedProperties)
         self.assertEqual(WebKit.WKWebExtensionTabChangedPropertiesNone, 0)
         self.assertEqual(WebKit.WKWebExtensionTabChangedPropertiesLoading, 1 << 1)

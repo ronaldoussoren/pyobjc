@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSController(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSController.commitEditing)
         self.assertResultIsBOOL(AppKit.NSController.isEditing)
         self.assertArgIsSEL(

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -104,65 +104,12 @@ class TestNSTableViewHelper(AppKit.NSObject):
 
 
 class TestNSTableView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTableRowActionEdge)
+        self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
+        self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
+
         self.assertIsEnumType(AppKit.NSTableViewAnimationOptions)
-        self.assertIsEnumType(AppKit.NSTableViewColumnAutoresizingStyle)
-        self.assertIsEnumType(AppKit.NSTableViewDraggingDestinationFeedbackStyle)
-        self.assertIsEnumType(AppKit.NSTableViewDropOperation)
-        self.assertIsEnumType(AppKit.NSTableViewGridLineStyle)
-        self.assertIsEnumType(AppKit.NSTableViewRowSizeStyle)
-        self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
-        self.assertIsEnumType(AppKit.NSTableViewStyle)
-
-    def testConstants(self):
-        self.assertEqual(AppKit.NSTableViewDropOn, 0)
-        self.assertEqual(AppKit.NSTableViewDropAbove, 1)
-
-        self.assertEqual(AppKit.NSTableViewNoColumnAutoresizing, 0)
-        self.assertEqual(AppKit.NSTableViewUniformColumnAutoresizingStyle, 1)
-        self.assertEqual(AppKit.NSTableViewSequentialColumnAutoresizingStyle, 2)
-        self.assertEqual(AppKit.NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
-        self.assertEqual(AppKit.NSTableViewLastColumnOnlyAutoresizingStyle, 4)
-        self.assertEqual(AppKit.NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
-
-        self.assertEqual(AppKit.NSTableViewGridNone, 0)
-        self.assertEqual(AppKit.NSTableViewSolidVerticalGridLineMask, 1 << 0)
-        self.assertEqual(AppKit.NSTableViewSolidHorizontalGridLineMask, 1 << 1)
-
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleRegular, 0)
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleSourceList, 1)
-
-        self.assertIsInstance(AppKit.NSTableViewSelectionDidChangeNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewColumnDidMoveNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
-        self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
-
-        self.assertEqual(AppKit.NSTableViewStyleAutomatic, 0)
-        self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
-        self.assertEqual(AppKit.NSTableViewStyleInset, 2)
-        self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
-        self.assertEqual(AppKit.NSTableViewStylePlain, 4)
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
-        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
-        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
-        self.assertEqual(
-            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
-        )
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
-
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleCustom, 0)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleSmall, 1)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleMedium, 2)
-        self.assertEqual(AppKit.NSTableViewRowSizeStyleLarge, 3)
-
         self.assertEqual(AppKit.NSTableViewAnimationEffectNone, 0)
         self.assertEqual(AppKit.NSTableViewAnimationEffectFade, 1)
         self.assertEqual(AppKit.NSTableViewAnimationEffectGap, 2)
@@ -171,20 +118,60 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewAnimationSlideLeft, 0x30)
         self.assertEqual(AppKit.NSTableViewAnimationSlideRight, 0x40)
 
-        self.assertIsInstance(AppKit.NSTableViewRowViewKey, str)
+        self.assertIsEnumType(AppKit.NSTableViewColumnAutoresizingStyle)
+        self.assertEqual(AppKit.NSTableViewNoColumnAutoresizing, 0)
+        self.assertEqual(AppKit.NSTableViewUniformColumnAutoresizingStyle, 1)
+        self.assertEqual(AppKit.NSTableViewSequentialColumnAutoresizingStyle, 2)
+        self.assertEqual(AppKit.NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
+        self.assertEqual(AppKit.NSTableViewLastColumnOnlyAutoresizingStyle, 4)
+        self.assertEqual(AppKit.NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
 
-        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
+        self.assertIsEnumType(AppKit.NSTableViewDraggingDestinationFeedbackStyle)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
+        self.assertEqual(
+            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
+        )
         self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleGap, 2)
 
-    @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
-        self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
+        self.assertIsEnumType(AppKit.NSTableViewDropOperation)
+        self.assertEqual(AppKit.NSTableViewDropOn, 0)
+        self.assertEqual(AppKit.NSTableViewDropAbove, 1)
 
-    def testMethods(self):
+        self.assertIsEnumType(AppKit.NSTableViewGridLineStyle)
+        self.assertEqual(AppKit.NSTableViewGridNone, 0)
+        self.assertEqual(AppKit.NSTableViewSolidVerticalGridLineMask, 1 << 0)
+        self.assertEqual(AppKit.NSTableViewSolidHorizontalGridLineMask, 1 << 1)
+        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
+
+        self.assertIsEnumType(AppKit.NSTableViewRowSizeStyle)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleCustom, 0)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleSmall, 1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleMedium, 2)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleLarge, 3)
+
+        self.assertIsEnumType(AppKit.NSTableViewSelectionHighlightStyle)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleRegular, 0)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleSourceList, 1)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
+
+        self.assertIsEnumType(AppKit.NSTableViewStyle)
+        self.assertEqual(AppKit.NSTableViewStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
+        self.assertEqual(AppKit.NSTableViewStyleInset, 2)
+        self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
+        self.assertEqual(AppKit.NSTableViewStylePlain, 4)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSTableViewSelectionDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidMoveNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
+
+        self.assertIsInstance(AppKit.NSTableViewRowViewKey, str)
+
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnReordering_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnReordering)
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnResizing_, 0)
@@ -237,8 +224,6 @@ class TestNSTableView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTableView.setAutoresizesAllColumnsToFit_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.autoresizesAllColumnsToFit)
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
         self.assertArgIsBOOL(AppKit.NSTableView.setAllowsTypeSelect_, 0)
         self.assertResultIsBOOL(AppKit.NSTableView.allowsTypeSelect)
 
@@ -246,12 +231,8 @@ class TestNSTableView(TestCase):
             AppKit.NSTableView.columnIndexesInRect_, 0, AppKit.NSRect.__typestr__
         )
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSTableView.shouldFocusCell_atColumn_row_)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertArgIsBOOL(AppKit.NSTableView.viewAtColumn_row_makeIfNecessary_, 2)
         self.assertArgIsBOOL(AppKit.NSTableView.rowViewAtRow_makeIfNecessary_, 1)
 
@@ -265,26 +246,25 @@ class TestNSTableView(TestCase):
         self.assertArgIsBOOL(AppKit.NSTableView.setFloatsGroupRows_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTableView.usesStaticContents)
         self.assertArgIsBOOL(AppKit.NSTableView.setUsesStaticContents_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSTableView.rowActionsVisible)
         self.assertArgIsBOOL(AppKit.NSTableView.setRowActionsVisible_, 0)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSTableView.usesAutomaticRowHeights)
         self.assertArgIsBOOL(AppKit.NSTableView.setUsesAutomaticRowHeights_, 0)
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSTableViewDelegate")
-        self.assertProtocolExists("NSTableViewDataSource")
+    def test_protocols(self):
+        self.assertProtocolExists("NSTableViewDelegate", AppKit)
+        self.assertProtocolExists("NSTableViewDataSource", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger
         )
@@ -417,8 +397,6 @@ class TestNSTableView(TestCase):
             TestNSTableViewHelper.tableView_isGroupRow_, 1, objc._C_NSInteger
         )
 
-    @min_os_level("10.6")
-    def testProtocols10_6(self):
         self.assertResultHasType(
             TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, objc._C_CGFloat
         )
@@ -442,8 +420,6 @@ class TestNSTableView(TestCase):
             objc._C_NSInteger,
         )
 
-    @min_os_level("10.7")
-    def testProtocols10_7(self):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_pasteboardWriterForRow_,
             1,

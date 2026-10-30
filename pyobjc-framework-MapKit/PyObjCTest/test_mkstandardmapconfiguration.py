@@ -4,7 +4,7 @@ import MapKit
 
 
 class TestMKStandardMapConfiguration(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKStandardMapEmphasisStyle)
         self.assertEqual(MapKit.MKStandardMapEmphasisStyleDefault, 0)
         self.assertEqual(MapKit.MKStandardMapEmphasisStyleMuted, 1)

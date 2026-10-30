@@ -14,20 +14,10 @@
    "kMIDIUInteger28Max": { "value": 268435455 },
    "kMIDIDeviceIDUMPGroup": { "value": 126 },
    "kMIDIDeviceIDFunctionBlock": { "value": 127 },
-   "kMIDIObjectType_ExternalMask": { "value": 16 },
-   "MIDINetworkConnectionPolicy_NoOne": { "value": 0 },
-   "MIDINetworkConnectionPolicy_HostsInContactList": { "value": 1 },
-   "MIDINetworkConnectionPolicy_Anyone": { "value": 2 },
-   "kMIDIMessageTypeUnknownF": { "value": 15 },
-   "kMIDIStatusActiveSensing": { "value": 254 }
+   "kMIDIObjectType_ExternalMask": { "value": 16 }
   },
   "structs": {
    "MIDIUniversalMessage": { "ignore": true }
-  },
-  "externs": {
-   "MIDINetworkBonjourServiceType": { "typestr": "@" },
-   "MIDINetworkNotificationContactsDidChange": { "typestr": "@" },
-   "MIDINetworkNotificationSessionDidChange": { "typestr": "@" }
   },
   "classes": {
    "MIDICIDiscoveryManager": {
@@ -196,7 +186,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "MIDI2EndpointNameNotificationMessage": {
     "args": {
@@ -230,7 +219,6 @@
    "MIDIEventListForEachEvent": { "ignore": true },
    "MIDIClientCreate": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -246,19 +234,16 @@
        }
       }
      },
-     "2": {},
      "3": { "type_modifier": "o"}
     }
    },
    "MIDIClientCreateWithBlock": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o"}
     }
    },
    "MIDIDestinationCreate": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -277,49 +262,39 @@
        }
       }
      },
-     "3": {},
      "4": {"type_modifier":"o"}
     }
    },
    "MIDIDestinationCreateWithBlock": {
     "ignore": true,
     "args": {
-     "1": {},
      "2": {"type_modifier":"o"}
     }
    },
    "MIDIDestinationCreateWithProtocol": {
     "args": {
-     "1": {},
      "3": { "type_modifier": "o"}
     }
    },
    "MIDIDeviceAddEntity": {
     "args": {
-     "1": {},
      "5": { "type_modifier": "o" }
     }
    },
    "MIDIDeviceCreate": {
     "ignore": true,
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
      "4": { "type_modifier": "o" }
     }
    },
    "MIDIDeviceNewEntity": {
     "args": {
-     "1": {},
      "6": { "type_modifier": "o" }
     }
    },
    "MIDIDriverEnableMonitoring": {
     "ignore": true,
     "args": {
-     "0": {}
     }
    },
    "MIDIEndpointGetEntity": {
@@ -333,55 +308,24 @@
      "2": { "type_modifier": "o" }
     }
    },
-   "MIDIEndpointSetRefCons": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
    "MIDIEntityGetDevice": {
     "args": {
      "1": { "type_modifier": "o"}
     }
    },
-   "MIDIEventListAdd": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {},
-     "5": {}
-    },
-    "retval": {}
-   },
    "MIDIEventListInit": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    },
-    "retval": {}
+    "ignore": true
    },
-   "MIDIEventPacketNext": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
+   "MIDIEventListAdd": {
+    "ignore": true
    },
    "MIDIExternalDeviceCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
    "MIDIGetDriverDeviceList": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
-   },
-   "MIDIGetDriverIORunLoop": {
-    "retval": {}
+    "ignore": true
    },
    "MIDIGetSerialPortDrivers": {
     "args": {
@@ -390,13 +334,11 @@
    },
    "MIDIGetSerialPortOwner": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "MIDIInputPortCreate": {
     "args": {
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -415,19 +357,16 @@
        }
       }
      },
-     "3": {},
      "4": { "type_modifier": "o" }
     }
    },
    "MIDIInputPortCreateWithBlock": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDIInputPortCreateWithProtocol": {
     "args": {
-     "1": {},
      "3": { "type_modifier": "o" }
     }
    },
@@ -439,19 +378,16 @@
    },
    "MIDIObjectGetDataProperty": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetDictionaryProperty": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDIObjectGetIntegerProperty": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
@@ -462,106 +398,34 @@
    },
    "MIDIObjectGetStringProperty": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "MIDIObjectRemoveProperty": {
-    "args": {
-     "1": {}
-    }
-   },
-   "MIDIObjectSetDataProperty": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "MIDIObjectSetDictionaryProperty": {
-    "args": {
-     "1": {},
-     "2": {}
-    }
-   },
-   "MIDIObjectSetIntegerProperty": {
-    "args": {
-     "1": {}
-    }
-   },
-   "MIDIObjectSetStringProperty": {
-    "args": {
-     "1": {},
-     "2": {}
     }
    },
    "MIDIOutputPortCreate": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDIPacketListAdd": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "2": {},
-     "5": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "MIDIPacketListInit": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "MIDIPacketNext": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "MIDIPortConnectSource": {
-    "args": {
-     "2": {}
-    }
+    "ignore": true
    },
    "MIDIReceived": {
-    "ignore": true,
-    "args": {
-     "1": {}
-    }
+    "ignore": true
    },
    "MIDIReceivedEventList": {
-    "ignore": true,
-    "args": {
-     "1": {}
-    }
+    "ignore": true
    },
    "MIDISend": {
-    "ignore": true,
-    "args": {
-     "2": {}
-    }
+    "ignore": true
    },
    "MIDISendEventList": {
-    "ignore": true,
-    "args": {
-     "2": {}
-    }
+    "ignore": true
    },
    "MIDISendSysex": {
-    "ignore": true,
-    "args": {
-     "0": {}
-    }
-   },
-   "MIDISetSerialPortOwner": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
+    "ignore": true
    },
    "MIDISetupCreate": {
     "args": {
@@ -570,7 +434,6 @@
    },
    "MIDISetupFromData": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
@@ -586,26 +449,21 @@
    },
    "MIDISourceCreate": {
     "args": {
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDISourceCreateWithProtocol": {
     "args": {
-     "1": {},
      "3": { "type_modifier": "o" }
     }
    },
    "MIDIThruConnectionCreate": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
     }
    },
    "MIDIThruConnectionFind": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
@@ -618,18 +476,7 @@
     "args": {
      "0": { "type_modifier": "n" }
     }
-   },
-   "MIDIThruConnectionParamsSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "MIDIThruConnectionSetParams": {
-    "args": {
-     "1": {}
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

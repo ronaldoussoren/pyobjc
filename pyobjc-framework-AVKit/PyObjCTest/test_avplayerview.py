@@ -19,20 +19,23 @@ class TestAVPlayerViewHelper(AVKit.NSObject):
 
 
 class TestAVPlayerView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVKit.AVPlayerViewControlsStyle)
+        self.assertEqual(AVKit.AVPlayerViewControlsStyleNone, 0)
+        self.assertEqual(AVKit.AVPlayerViewControlsStyleInline, 1)
+        self.assertEqual(AVKit.AVPlayerViewControlsStyleFloating, 2)
+        self.assertEqual(AVKit.AVPlayerViewControlsStyleMinimal, 3)
+        self.assertEqual(
+            AVKit.AVPlayerViewControlsStyleDefault,
+            AVKit.AVPlayerViewControlsStyleInline,
+            4,
+        )
+
         self.assertIsEnumType(AVKit.AVPlayerViewTrimResult)
+        self.assertEqual(AVKit.AVPlayerViewTrimOKButton, 0)
+        self.assertEqual(AVKit.AVPlayerViewTrimCancelButton, 1)
 
-    @min_sdk_level("12.0")
-    def test_protocols12_0(self):
-        self.assertProtocolExists("AVPlayerViewDelegate")
-
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertIsInstance(AVKit.AVPlayerView, objc.objc_class)
-
-    @min_os_level("10.9")
-    def testMethods10_9(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsFrameSteppingButtons_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.showsFrameSteppingButtons)
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsSharingServiceButton_, 0)
@@ -48,22 +51,39 @@ class TestAVPlayerView(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AVKit.AVPlayerView.isReadyForDisplay)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setUpdatesNowPlayingInfoCenter_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.updatesNowPlayingInfoCenter)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBOOL(AVKit.AVPlayerView.setShowsTimecodes_, 0)
         self.assertResultIsBOOL(AVKit.AVPlayerView.showsTimecodes)
 
         self.assertResultIsBOOL(AVKit.AVPlayerView.allowsPictureInPicturePlayback)
         self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_, 0)
 
+    @min_os_level("13.0")
+    def test_methods13_0(self):
+        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsVideoFrameAnalysis)
+        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsVideoFrameAnalysis_, 0)
+
+        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsMagnification)
+        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsMagnification_, 0)
+
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        self.assertProtocolExists("AVPlayerViewPictureInPictureDelegate", AVKit)
+
+    @min_sdk_level("12.0")
+    def test_protocols12_0(self):
+        self.assertProtocolExists("AVPlayerViewDelegate", AVKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestAVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,  # noqa: B950
             1,
@@ -78,30 +98,3 @@ class TestAVPlayerView(TestCase):
             1,
             b"vZ",
         )
-
-    @min_os_level("13.0")
-    def testMethods13_0(self):
-        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsVideoFrameAnalysis)
-        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsVideoFrameAnalysis_, 0)
-
-        self.assertResultIsBOOL(AVKit.AVPlayerView.allowsMagnification)
-        self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsMagnification_, 0)
-
-    @min_os_level("10.9")
-    def test_constants(self):
-        self.assertEqual(AVKit.AVPlayerViewControlsStyleNone, 0)
-        self.assertEqual(AVKit.AVPlayerViewControlsStyleInline, 1)
-        self.assertEqual(AVKit.AVPlayerViewControlsStyleFloating, 2)
-        self.assertEqual(AVKit.AVPlayerViewControlsStyleMinimal, 3)
-        self.assertEqual(
-            AVKit.AVPlayerViewControlsStyleDefault,
-            AVKit.AVPlayerViewControlsStyleInline,
-            4,
-        )
-
-        self.assertEqual(AVKit.AVPlayerViewTrimOKButton, 0)
-        self.assertEqual(AVKit.AVPlayerViewTrimCancelButton, 1)
-
-    @min_sdk_level("10.15")
-    def test_protocols(self):
-        self.assertProtocolExists("AVPlayerViewPictureInPictureDelegate")

@@ -23,19 +23,23 @@ NSItemProviderLoadHandler = b"v@?#@"
 
 
 class TestNSItemProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSItemProviderErrorCode)
-        self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
-        self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
+        self.assertEqual(AppKit.NSItemProviderUnknownError, -1)
+        self.assertEqual(AppKit.NSItemProviderItemUnavailableError, -1000)
+        self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
+        self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
 
-    def testConstants(self):
+        self.assertIsEnumType(Foundation.NSItemProviderFileOptions)
+        self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
+
+        self.assertIsEnumType(Foundation.NSItemProviderRepresentationVisibility)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityAll, 0)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityGroup, 2)
         self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityOwnProcess, 3)
-        self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSTypeIdentifierDateText, str)
         self.assertIsInstance(AppKit.NSTypeIdentifierAddressText, str)
         self.assertIsInstance(AppKit.NSTypeIdentifierPhoneNumberText, str)
@@ -45,37 +49,8 @@ class TestNSItemProvider(TestCase):
         self.assertIsInstance(AppKit.NSExtensionJavaScriptPreprocessingResultsKey, str)
         self.assertIsInstance(AppKit.NSItemProviderErrorDomain, str)
 
-        self.assertEqual(AppKit.NSItemProviderUnknownError, -1)
-        self.assertEqual(AppKit.NSItemProviderItemUnavailableError, -1000)
-        self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
-
-    @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
-
-    def testMethods(self):
-        self.assertResultHasType(
-            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
-            objc._C_NSInteger,
-        )
-        self.assertResultHasType(
-            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
-            objc._C_NSInteger,
-        )
-        self.assertArgIsBlock(
-            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
-            1,
-            b"v@@",
-        )
-        self.assertArgIsOut(
-            TestNSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2
-        )
-        self.assertArgIsOut(
-            TestNSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2
-        )
-
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             AppKit.NSItemProvider.hasItemConformingToTypeIdentifier_
         )
@@ -106,7 +81,7 @@ class TestNSItemProvider(TestCase):
         # self.fail("NSItemProviderLoadHandler metadata test")
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(
             AppKit.NSItemProvider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_,  # noqa: B950
@@ -161,6 +136,27 @@ class TestNSItemProvider(TestCase):
         )
 
     @min_sdk_level("10.13")
-    def testProtocols10_13(self):
-        self.assertProtocolExists("NSItemProviderWriting")
-        self.assertProtocolExists("NSItemProviderReading")
+    def test_protocols10_13(self):
+        self.assertProtocolExists("NSItemProviderWriting", AppKit)
+        self.assertProtocolExists("NSItemProviderReading", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+            objc._C_NSInteger,
+        )
+        self.assertResultHasType(
+            TestNSItemProviderHelper.itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+            objc._C_NSInteger,
+        )
+        self.assertArgIsBlock(
+            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
+            1,
+            b"v@@",
+        )
+        self.assertArgIsOut(
+            TestNSItemProviderHelper.objectWithItemProviderData_typeIdentifier_error_, 2
+        )
+        self.assertArgIsOut(
+            TestNSItemProviderHelper.initWithItemProviderData_typeIdentifier_error_, 2
+        )

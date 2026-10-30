@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCollaboration(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(Collaboration, "CBIdentity")
         self.assertIsInstance(Collaboration.CBIdentity, objc.objc_class)
         self.assertHasAttr(Collaboration, "CBGroupIdentity")

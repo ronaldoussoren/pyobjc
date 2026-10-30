@@ -16,9 +16,9 @@ class TestINEditMessageIntentHelper(Intents.NSObject):
 class TestINEditMessageIntent(TestCase):
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("INEditMessageIntentHandling")
+        self.assertProtocolExists("INEditMessageIntentHandling", Intents)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestINEditMessageIntentHelper.handleEditMessage_completion_, 1, b"v@"
         )

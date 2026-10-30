@@ -3,7 +3,7 @@ import CloudKit
 
 
 class TestCKSyncEngineEvent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKSyncEngineEventType)
         self.assertEqual(CloudKit.CKSyncEngineEventTypeStateUpdate, 0)
         self.assertEqual(CloudKit.CKSyncEngineEventTypeAccountChange, 1)

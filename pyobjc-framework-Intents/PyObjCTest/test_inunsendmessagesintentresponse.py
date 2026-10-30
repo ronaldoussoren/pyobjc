@@ -3,7 +3,7 @@ import Intents
 
 
 class TestINUnsendMessagesIntentResponse(TestCase):
-    def testConstants(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INUnsendMessagesIntentResponseCode)
         self.assertEqual(Intents.INUnsendMessagesIntentResponseCodeUnspecified, 0)
         self.assertEqual(Intents.INUnsendMessagesIntentResponseCodeReady, 1)

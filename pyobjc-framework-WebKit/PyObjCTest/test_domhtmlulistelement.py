@@ -3,6 +3,6 @@ import WebKit
 
 
 class TestDOMHTMLUListElement(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLUListElement.compact)
         self.assertArgIsBOOL(WebKit.DOMHTMLUListElement.setCompact_, 0)

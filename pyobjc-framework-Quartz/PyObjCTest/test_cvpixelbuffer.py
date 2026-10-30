@@ -1,10 +1,19 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure, fourcc
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    fourcc,
+    NoObjCClass,
+    expectedFailure,
+)
 import Quartz
 import objc
+import os
+import tempfile
+import warnings
 
 
 class TestCVPixelBuffer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCVPixelFormatType_1Monochrome, 0x00000001)
         self.assertEqual(Quartz.kCVPixelFormatType_2Indexed, 0x00000002)
         self.assertEqual(Quartz.kCVPixelFormatType_4Indexed, 0x00000004)
@@ -207,11 +216,58 @@ class TestCVPixelBuffer(TestCase):
             Quartz.kCVPixelFormatType_Lossy_422YpCbCr10PackedBiPlanarVideoRange,
             fourcc(b"-xv2"),
         )
+        self.assertEqual(Quartz.kCVPixelBufferLock_ReadOnly, 1)
 
-    def testTypes(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferPlaneAlignmentKey, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePropertiesKey, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, str
+        )
+
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferMetalCompatibilityKey, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferOpenGLTextureCacheCompatibilityKey, str
+        )
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
+        )
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_BlackLevel, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteLevel, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceCCT, str)
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceRedFactor, str
+        )
+        self.assertIsInstance(
+            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceBlueFactor, str
+        )
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_ColorMatrix, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_GainFactor, str)
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
+
+    def test_types(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)
 
-    def testStructures(self):
+    def test_structsures(self):
         v = Quartz.CVPlanarComponentInfo()
         self.assertIsInstance(v.offset, int)
         self.assertIsInstance(v.rowBytes, int)
@@ -229,7 +285,7 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(v.componentInfoY, Quartz.CVPlanarComponentInfo())
         self.assertEqual(v.componentInfoCbCr, Quartz.CVPlanarComponentInfo())
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVPixelBufferGetTypeID(), int)
 
         buf = self.makeBuffer()
@@ -313,10 +369,244 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVPixelBufferCreate, 5)
         self.assertArgIsCFRetained(Quartz.CVPixelBufferCreate, 5)
 
+    def test_manual_createwithbytes(self):
+        context = object()
+        released = None
+
+        def release(refcon):
+            nonlocal released
+            released = refcon
+
+        def release_raises(refcon):
+            raise RuntimeError("release error")
+
+        with self.assertRaisesRegex(
+            TypeError, "expected between 9 and 10 arguments, got 0"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                NoObjCClass(),
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                "200",
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                "100",
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                "Quartz.kCVPixelFormatType_Lossy_32BGRA",
+                bytearray(200 * 100 * 10),
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'NoneType'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                None,
+                400,
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                "800",
+                release,
+                context,
+                {},
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                800,
+                release,
+                context,
+                NoObjCClass(),
+                None,
+            )
+
+        with self.assertRaisesRegex(ValueError, "pixelBufferOut must be None"):
+            Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                200,
+                100,
+                Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                bytearray(200 * 100 * 10),
+                800,
+                release,
+                context,
+                None,
+                42,
+            )
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "leaving out 'pixelBuffer' is deprecated"
+            ):
+                Quartz.CVPixelBufferCreateWithBytes(
+                    None,
+                    200,
+                    100,
+                    Quartz.kCVPixelFormatType_Lossy_32BGRA,
+                    bytearray(200 * 100 * 10),
+                    400,
+                    release,
+                    context,
+                    {},
+                )
+
+        data = bytearray(640 * 480 * 4)
+        with warnings.catch_warnings(record=True) as wrn:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            buf = Quartz.CVPixelBufferCreateWithBytes(
+                None,
+                640,
+                480,
+                Quartz.kCVPixelFormatType_32BGRA,
+                data,
+                640 * 4,
+                None,
+                context,
+                {},
+            )
+            self.assertIsNot(buf, None)
+            del buf
+        self.assertEqual(len(wrn), 1)
+        self.assertEqual(wrn[0].category, DeprecationWarning)
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            0,
+            bytearray(200 * 100 * 10),
+            400,
+            release,
+            context,
+            {},
+            None,
+        )
+        self.assertIs(buf, None)
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            Quartz.kCVPixelFormatType_32BGRA,
+            bytearray(200 * 100 * 10),
+            400,
+            release,
+            context,
+            {},
+            None,
+        )
+        self.assertIsNot(buf, None)
+        self.assertIs(released, None)
+        del buf
+        self.assertIs(released, context)
+
+        buf = Quartz.CVPixelBufferCreateWithBytes(
+            None,
+            200,
+            100,
+            Quartz.kCVPixelFormatType_32BGRA,
+            bytearray(200 * 100 * 10),
+            400,
+            release_raises,
+            context,
+            {},
+            None,
+        )
+        self.assertIsNot(buf, None)
+
+        with tempfile.TemporaryFile() as fp:
+            orig_stderr = os.dup(2)
+            try:
+                os.dup2(fp.fileno(), 2)
+                del buf
+
+            finally:
+                os.dup2(orig_stderr, 2)
+
+            fp.seek(0)
+            stderr = fp.read()
+
+        self.assertIn(
+            b"PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: release error",
+            stderr,
+        )
+
     @expectedFailure
-    def testManual(self):
-        self.fail("CVPixelBufferCreate requires manual wrapper")
-        self.fail("CVPixelBufferCreateWithBytes requires manual wrapper")
+    def test_manual_createwithplanarbytes(self):
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
 
     def makeBuffer(self):
@@ -342,58 +632,6 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(rv, 0)
         return image
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(Quartz.kCVPixelBufferLock_ReadOnly, 1)
-
-        self.assertIsInstance(Quartz.kCVPixelBufferPlaneAlignmentKey, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePropertiesKey, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, str
-        )
-
-    @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferMetalCompatibilityKey, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferOpenGLTextureCacheCompatibilityKey, str
-        )
-
-    @min_os_level("11.0")
-    def testConstants11_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferVersatileBayerKey_BayerPattern, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_SenselSitingOffsets, str
-        )
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_BlackLevel, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteLevel, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceCCT, str)
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceRedFactor, str
-        )
-        self.assertIsInstance(
-            Quartz.kCVPixelBufferProResRAWKey_WhiteBalanceBlueFactor, str
-        )
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_ColorMatrix, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_GainFactor, str)
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_RecommendedCrop, str)
-
-    @min_os_level("12.0")
-    def testConstants12_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferProResRAWKey_MetadataExtension, str)
-
-    @min_os_level("26.0")
-    def testConstants26_0(self):
-        self.assertIsInstance(Quartz.kCVPixelBufferIOSurfacePurgeableKey, str)
-
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
         self.assertResultHasType(Quartz.CVPixelBufferGetIOSurface, b"^{__IOSurface=}")
         self.assertArgHasType(Quartz.CVPixelBufferGetIOSurface, 0, b"^{__CVBuffer=}")
         self.assertArgHasType(
@@ -402,9 +640,9 @@ class TestCVPixelBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVPixelBufferCreateWithIOSurface, 3)
 
     @min_os_level("12.0")
-    def testFunctions12_0(self):
+    def test_functions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVPixelBufferCopyCreationAttributes)
 
     @min_os_level("26.0")
-    def testFunctions26_0(self):
+    def test_functions26_0(self):
         self.assertResultIsBOOL(Quartz.CVPixelBufferIsCompatibleWithAttributes)

@@ -4,7 +4,7 @@ import SceneKit
 
 
 class TestSCNPhysicsShape(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(SceneKit.SCNPhysicsTestOption, str)
         self.assertIsTypedEnum(SceneKit.SCNPhysicsTestSearchMode, str)
 
@@ -36,5 +36,5 @@ class TestSCNPhysicsShape(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("SCNPhysicsContactDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("SCNPhysicsContactDelegate", SceneKit)

@@ -1,3 +1,4 @@
+NS_ASSUME_NONNULL_BEGIN
 
 static void*
 mod_writestream_retain(void* info)
@@ -38,57 +39,60 @@ mod_CFWriteStreamClientCallBack(CFWriteStreamRef f, CFStreamEventType eventType,
     PyGILState_Release(state);
 }
 
-static PyObject*
-mod_CFWriteStreamSetClient(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFWriteStreamSetClient(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*        py_stream;
-    PyObject*        py_streamEvents;
-    PyObject*        callout;
-    PyObject*        info;
     CFWriteStreamRef stream;
     CFOptionFlags    streamEvents;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_stream, &py_streamEvents, &callout, &info)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFWriteStreamRef), py_stream, &stream) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFWriteStreamRef), args[0], &stream) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), py_streamEvents, &streamEvents) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFOptionFlags), args[1], &streamEvents) < 0) {
         return NULL;
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext_Write;
-    context.info                  = Py_BuildValue("OO", callout, info);
-    if (context.info == NULL) {
-        return NULL;
+    context.info                  = PyTuple_Pack(2, args[2], args[3]);
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     Boolean rv = FALSE;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            if (callout == Py_None) {
+            if (args[2] == Py_None) {
                 rv = CFWriteStreamSetClient(stream, streamEvents, NULL, &context);
             } else {
                 rv = CFWriteStreamSetClient(stream, streamEvents,
                                             mod_CFWriteStreamClientCallBack, &context);
             }
 
-        } @catch (NSException* localException) {
-            rv = FALSE;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = FALSE;                          // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     return PyBool_FromLong(rv);
 }
 
-#define COREFOUNDATION_WRITESTREAM_METHODS                                               \
-    {"CFWriteStreamSetClient", (PyCFunction)mod_CFWriteStreamSetClient, METH_VARARGS,    \
-     NULL},
+static int
+setup_writestream(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFWriteStreamSetClient, mod_CFWriteStreamSetClient)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

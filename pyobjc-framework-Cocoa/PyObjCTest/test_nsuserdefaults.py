@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class PythonListAsValue(TestCase):
-    def testSettingPythonList(self):
+    def test_setting_python_list(self):
         defaults = Foundation.NSUserDefaults.standardUserDefaults()
         defaults.setObject_forKey_(["a", "b", "c"], "randomKey")
 
         self.assertEqual(defaults.arrayForKey_("randomKey"), ["a", "b", "c"])
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSUserDefaults.boolForKey_)
         self.assertArgIsBOOL(Foundation.NSUserDefaults.setBool_forKey_, 0)
         self.assertResultIsBOOL(Foundation.NSUserDefaults.synchronize)
@@ -18,7 +18,7 @@ class PythonListAsValue(TestCase):
             Foundation.NSUserDefaults.objectIsForcedForKey_inDomain_
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSGlobalDomain, str)
         self.assertIsInstance(Foundation.NSArgumentDomain, str)
         self.assertIsInstance(Foundation.NSRegistrationDomain, str)

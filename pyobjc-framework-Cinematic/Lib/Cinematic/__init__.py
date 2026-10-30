@@ -57,6 +57,10 @@ def _setup():
         ("CNRenderingSession", b"new"),
         ("CNAssetSpatialAudioInfo", b"init"),
         ("CNAssetSpatialAudioInfo", b"new"),
+        ("CNImageRenderingSessionConfiguration", b"init"),
+        ("CNImageRenderingSessionConfiguration", b"new"),
+        ("CNImageRenderingSession", b"init"),
+        ("CNImageRenderingSession", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

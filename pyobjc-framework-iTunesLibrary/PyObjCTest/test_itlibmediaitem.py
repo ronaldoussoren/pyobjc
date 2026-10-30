@@ -3,7 +3,6 @@ import objc
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    expectedFailure,
 )
 
 
@@ -11,7 +10,7 @@ class TestITMediaItem(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItem, objc.objc_class)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isRatingComputed)
 
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.hasArtworkAvailable)
@@ -21,7 +20,7 @@ class TestITMediaItem(TestCase):
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isVideo)
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItem.isUserDisabled)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindUnknown, 1)
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindSong, 2)
         self.assertEqual(iTunesLibrary.ITLibMediaItemMediaKindMovie, 3)
@@ -126,20 +125,18 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLocation, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyArtwork, str)
 
-    # @max_os_level("13.99")
     def test_constants_removed_in_14_0(self):
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertyVoiceOverLanguage, str
         )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayStatus, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementCount, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementName, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementNumber, str)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, str)
 
-    @expectedFailure
-    def testConstants_missing(self):
+    def test_constants_missing(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyFileType, str)

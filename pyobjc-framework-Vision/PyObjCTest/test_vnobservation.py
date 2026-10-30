@@ -4,7 +4,7 @@ from objc import simd
 
 
 class TestVNObservation(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNHumanBodyPose3DObservationHeightEstimation)
         self.assertEqual(
             Vision.VNHumanBodyPose3DObservationHeightEstimationReference, 0

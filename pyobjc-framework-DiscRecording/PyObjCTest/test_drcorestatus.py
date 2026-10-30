@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRCoreStatus(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDRStatusStateKey, str)
         self.assertIsInstance(DiscRecording.kDRStatusPercentCompleteKey, str)
         self.assertIsInstance(DiscRecording.kDRStatusCurrentSpeedKey, str)

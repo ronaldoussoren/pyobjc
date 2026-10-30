@@ -4,10 +4,6 @@
  "definitions": {
   "enum": {
    "CXCallDirectoryPhoneNumberMax": { "value": 9223372036854775806 }
-  },
-  "classes": {},
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

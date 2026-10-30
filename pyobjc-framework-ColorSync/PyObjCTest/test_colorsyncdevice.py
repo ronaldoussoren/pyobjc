@@ -4,7 +4,7 @@ import ColorSync
 
 
 class TestColorSyncDevice(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(ColorSync.kColorSyncDeviceID, str)
         self.assertIsInstance(ColorSync.kColorSyncDeviceClass, str)
         self.assertIsInstance(ColorSync.kColorSyncCameraDeviceClass, str)
@@ -38,7 +38,7 @@ class TestColorSyncDevice(TestCase):
         )
         self.assertIsInstance(ColorSync.kColorSyncRegistrationUpdateWindowServer, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         ColorSync.ColorSyncRegisterDevice
         ColorSync.ColorSyncUnregisterDevice
         ColorSync.ColorSyncDeviceSetCustomProfiles

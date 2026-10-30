@@ -4,6 +4,7 @@
  * These are basic bindings to the AudioChannelLayout type,
  * basically a buffer with extra attributes.
  */
+NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* audio_channel_layout_type;
 
@@ -30,8 +31,8 @@ static PyMemberDef avl_members[] = {
     {.name = NULL} /* Sentinel */
 };
 
-static PyObject*
-avl_get_mChannelLayoutTag(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable avl_get_mChannelLayoutTag(PyObject* _self, void* closure
+                                                     __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
     PyObject*                    result;
@@ -43,8 +44,8 @@ avl_get_mChannelLayoutTag(PyObject* _self, void* closure __attribute__((__unused
 }
 
 static int
-avl_set_mChannelLayoutTag(PyObject* _self, PyObject* value,
-                          void* closure __attribute__((__unused__)))
+avl_set_mChannelLayoutTag(PyObject* _self, PyObject* _Nullable value,
+                          void*     closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
     int                          result;
@@ -61,8 +62,8 @@ avl_set_mChannelLayoutTag(PyObject* _self, PyObject* value,
     return result;
 }
 
-static PyObject*
-avl_get_mChannelBitmap(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable avl_get_mChannelBitmap(PyObject* _self, void* closure
+                                                  __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
     PyObject*                    result;
@@ -74,8 +75,8 @@ avl_get_mChannelBitmap(PyObject* _self, void* closure __attribute__((__unused__)
 }
 
 static int
-avl_set_mChannelBitmap(PyObject* _self, PyObject* value,
-                       void* closure __attribute__((__unused__)))
+avl_set_mChannelBitmap(PyObject* _self, PyObject* _Nullable value,
+                       void*     closure __attribute__((__unused__)))
 {
     struct audio_channel_layout* self = (struct audio_channel_layout*)_self;
     int                          result;
@@ -113,8 +114,7 @@ avl_length(PyObject* self)
     return ((struct audio_channel_layout*)self)->avl_layout->mNumberChannelDescriptions;
 }
 
-static PyObject*
-avl_get_item(PyObject* _self, Py_ssize_t idx)
+static PyObject* _Nullable avl_get_item(PyObject* _self, Py_ssize_t idx)
 {
     struct audio_channel_layout* self   = ((struct audio_channel_layout*)_self);
     PyObject*                    result = NULL;
@@ -139,8 +139,8 @@ avl_get_item(PyObject* _self, Py_ssize_t idx)
     } else {
         Py_ssize_t i;
         self->avl_items = PyTuple_New(self->avl_layout->mNumberChannelDescriptions);
-        if (self->avl_items == NULL) {
-            goto end;
+        if (self->avl_items == NULL) { // LCOV_BR_EXCL_LINE
+            goto end;                  // LCOV_EXCL_LINE
         }
         for (i = 0; i < (Py_ssize_t)self->avl_layout->mNumberChannelDescriptions; i++) {
             PyTuple_SET_ITEM(self->avl_items, i, Py_None);
@@ -149,8 +149,8 @@ avl_get_item(PyObject* _self, Py_ssize_t idx)
     }
 
     result = acd_create(self->avl_layout->mChannelDescriptions + idx);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     Py_DECREF(PyTuple_GET_ITEM(self->avl_items, idx));
@@ -163,8 +163,7 @@ end:
     return result;
 }
 
-static PyObject*
-avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
     static char*                 keywords[] = {"num_channels", NULL};
     struct audio_channel_layout* result;
@@ -177,17 +176,19 @@ avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 
     result = PyObject_New(struct audio_channel_layout,
                           (PyTypeObject*)audio_channel_layout_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->avl_ownsstorage = 1;
     result->avl_items       = NULL;
-    result->avl_layout      = PyMem_Malloc(sizeof(AudioChannelLayout)
-                                           + (num_channels * sizeof(AudioChannelDescription)));
-    if (result->avl_layout == NULL) {
+    result->avl_layout = PyMem_Malloc(sizeof(AudioChannelLayout)
+                                      + (num_channels * sizeof(AudioChannelDescription)));
+    if (result->avl_layout == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     result->avl_layout->mChannelLayoutTag          = 0;
     result->avl_layout->mChannelBitmap             = 0;
@@ -213,7 +214,7 @@ avl_dealloc(PyObject* object)
         Py_DECREF(self->avl_items);
     }
 
-    if (self->avl_ownsstorage) {
+    if (self->avl_ownsstorage && self->avl_layout) {
         PyMem_Free(self->avl_layout);
     }
     Py_TYPE(object)->tp_free(object);
@@ -243,8 +244,7 @@ static PyType_Spec avl_spec = {
     .slots     = avl_slots,
 };
 
-static PyObject*
-pythonify_audio_channel_layout(void* pointer)
+static PyObject* _Nullable pythonify_audio_channel_layout(void* pointer)
 {
     AudioChannelLayout*          buf_pointer = (AudioChannelLayout*)pointer;
     struct audio_channel_layout* result;
@@ -256,8 +256,8 @@ pythonify_audio_channel_layout(void* pointer)
 
     result = PyObject_New(struct audio_channel_layout,
                           (PyTypeObject*)audio_channel_layout_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->avl_ownsstorage = 0;
@@ -291,33 +291,39 @@ init_audio_channel_layout(PyObject* module)
     int r;
 
     PyObject* tmp = PyType_FromSpec(&avl_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     audio_channel_layout_type = tmp;
 
     PyObject* ts = PyBytes_FromString(@encode(AudioChannelLayout));
-    if (ts == NULL) {
-        Py_CLEAR(audio_channel_layout_type);
+    if (ts == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_channel_layout_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyObject_SetAttrString(audio_channel_layout_type, "__typestr__", ts);
-    if (r == -1) {
-        Py_CLEAR(audio_channel_layout_type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_channel_layout_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyModule_AddObject(module, "AudioChannelLayout", audio_channel_layout_type);
-    if (r == -1) {
-        Py_CLEAR(audio_channel_layout_type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_channel_layout_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(audio_channel_layout_type);
 
-    r = PyObjCPointerWrapper_Register("AudioChannelLayout*", @encode(AudioChannelLayout*),
-                                      pythonify_audio_channel_layout,
-                                      depythonify_audio_channel_layout);
-
-    return r;
+    return PyObjCPointerWrapper_Register(
+        "AudioChannelLayout*", @encode(AudioChannelLayout*),
+        pythonify_audio_channel_layout, depythonify_audio_channel_layout);
 }
+
+NS_ASSUME_NONNULL_END

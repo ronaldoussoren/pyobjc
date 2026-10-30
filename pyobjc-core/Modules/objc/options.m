@@ -1013,7 +1013,7 @@ PyObjC_CallClassExtender(PyObject* cls)
             if (PyObjC_is_ascii_string(k, "__dict__")
                 || PyObjC_is_ascii_string(k, "__bases__")
                 || PyObjC_is_ascii_string(k, "__slots__")
-                || PyObjC_is_ascii_string(k, "__mro__")) {
+                || PyObjC_is_ascii_string(k, "__mro__")) { // LCOV_BR_EXCL_LINE
 
                 continue;
             }
@@ -1395,8 +1395,8 @@ static PyType_Spec options_spec = {
     .basicsize = sizeof(struct options),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = options_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = options_slots,
 };
 
 int

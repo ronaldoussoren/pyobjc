@@ -28,11 +28,8 @@ class TestTKTokenHelper(CryptoTokenKit.NSObject):
 
 
 class TestTKToken(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CryptoTokenKit.TKTokenOperation)
-
-    @min_os_level("10.12")
-    def testConstants(self):
         self.assertEqual(CryptoTokenKit.TKTokenOperationNone, 0)
         self.assertEqual(CryptoTokenKit.TKTokenOperationReadData, 1)
         self.assertEqual(CryptoTokenKit.TKTokenOperationSignData, 2)
@@ -40,7 +37,7 @@ class TestTKToken(TestCase):
         self.assertEqual(CryptoTokenKit.TKTokenOperationPerformKeyExchange, 4)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeyAlgorithm.isAlgorithm_)
         self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeyAlgorithm.supportsAlgorithm_)
 
@@ -48,13 +45,12 @@ class TestTKToken(TestCase):
         self.assertArgIsOut(CryptoTokenKit.TKTokenAuthOperation.finishWithError_, 0)
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
-        self.assertProtocolExists("TKTokenSessionDelegate")
-        self.assertProtocolExists("TKTokenDelegate")
-        self.assertProtocolExists("TKTokenDriverDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("TKTokenSessionDelegate", CryptoTokenKit)
+        self.assertProtocolExists("TKTokenDelegate", CryptoTokenKit)
+        self.assertProtocolExists("TKTokenDriverDelegate", CryptoTokenKit)
 
-    @min_sdk_level("10.12")
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestTKTokenHelper.tokenSession_beginAuthForOperation_constraint_error_,
             3,

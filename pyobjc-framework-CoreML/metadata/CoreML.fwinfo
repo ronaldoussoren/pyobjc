@@ -4,39 +4,6 @@
    "MLFeatureValueImageOption": { "type": "@", "type_name": "NSString" },
    "MLModelMetadataKey": { "type": "@", "type_name": "NSString" }
   },
-  "enum": {
-   "MLComputeUnitsCPUOnly": { "value": 0 },
-   "MLComputeUnitsCPUAndGPU": { "value": 1 },
-   "MLComputeUnitsAll": { "value": 2 },
-   "MLMultiArrayShapeConstraintTypeUnspecified": { "value": 1 },
-   "MLMultiArrayShapeConstraintTypeEnumerated": { "value": 2 },
-   "MLMultiArrayShapeConstraintTypeRange": { "value": 3 },
-   "MLModelErrorCustomLayer": { "value": 4 },
-   "MLModelErrorCustomModel": { "value": 5 },
-   "MLMultiArrayDataTypeDouble": { "value": 65600 },
-   "MLMultiArrayDataTypeFloat32": { "value": 65568 },
-   "MLMultiArrayDataTypeInt32": { "value": 131104 },
-   "MLModelErrorGeneric": { "value": 0 },
-   "MLModelErrorFeatureType": { "value": 1 },
-   "MLModelErrorIO": { "value": 3 },
-   "MLFeatureTypeInvalid": { "value": 0 },
-   "MLFeatureTypeInt64": { "value": 1 },
-   "MLFeatureTypeDouble": { "value": 2 },
-   "MLFeatureTypeString": { "value": 3 },
-   "MLFeatureTypeImage": { "value": 4 },
-   "MLFeatureTypeMultiArray": { "value": 5 },
-   "MLFeatureTypeDictionary": { "value": 6 },
-   "MLImageSizeConstraintTypeUnspecified": { "value": 0 },
-   "MLImageSizeConstraintTypeEnumerated": { "value": 2 },
-   "MLImageSizeConstraintTypeRange": { "value": 3 }
-  },
-  "externs": {
-   "MLModelCreatorDefinedKey": { "typestr": "@" },
-   "MLModelDescriptionKey": { "typestr": "@" },
-   "MLModelVersionStringKey": { "typestr": "@" },
-   "MLModelAuthorKey": { "typestr": "@" },
-   "MLModelLicenseKey": { "typestr": "@" }
-  },
   "classes": {
    "MLModelAsset": {
     "methods": [
@@ -81,17 +48,6 @@
 	 "retval": { "type": "v" }
 	}
        }
-      }
-     }
-    ]
-   },
-   "MLDictionaryFeatureProvider": {
-    "methods": [
-     {
-      "selector": "initWithDictionary:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
       }
      }
     ]
@@ -172,46 +128,35 @@
       "selector": "isEqualToFeatureValue:",
       "class_method": false,
       "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "featureValueWithCGImage:constraint:options:error:",
-      "class_method": true,
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "featureValueWithCGImage:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
-      "class_method": true,
-      "args": {
-       "5": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "featureValueWithImageAtURL:constraint:options:error:",
-      "class_method": true,
-      "args": {
-       "3": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "featureValueWithImageAtURL:pixelsWide:pixelsHigh:pixelFormatType:options:error:",
-      "class_method": true,
-      "args": {
-       "5": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "featureValueWithDictionary:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
      }
     ]
    },
    "MLUpdateProgressHandlers": {
     "methods": [
+     {
+      "selector": "initForEvents:progressHandler:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "initForEvents:progressHandler:completionHandler:",
       "class_method": true,
@@ -242,12 +187,12 @@
       "args": {
        "3": {
         "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
        },
        "4": { "type_modifier": "o" }
       }
@@ -284,51 +229,6 @@
 	 },
 	 "retval": { "type": "v" }
 	}
-       },
-       "4": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "updateTaskForModelAtURL:trainingData:configuration:completionHandler:error:",
-      "class_method": true,
-      "args": {
-       "3": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       },
-       "4": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
-   "MLUpdateProgressHandlers": {
-    "methods": [
-     {
-      "selector": "initForEvents:progressHandler:completionHandler:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
-       },
-       "2": {
-        "callable": {
-	 "arguments": {
-	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
-	 },
-	 "retval": { "type": "v" }
-	}
        }
       }
      }
@@ -341,55 +241,6 @@
       "class_method": true,
       "args": {
        "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "compileModelAtURL:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "modelWithContentsOfURL:error:",
-      "class_method": true,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "modelWithContentsOfURL:configuration:error:",
-      "class_method": true,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "predictionFromFeatures:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "predictionFromFeatures:options:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "parameterValueForKey:error:",
-      "class_method": false,
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "selector": "predictionsFromBatch:options:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
       }
      }
     ]
@@ -420,95 +271,6 @@
         "type_override": "o^@"
        }
       }
-     },
-     {
-      "selector": "predictionsFromBatch:options:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      }
-     },
-     {
-      "selector": "predictionFromFeatures:options:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      }
-     },
-     {
-      "selector": "initWithModelDescription:parameterDictionary:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      }
-     },
-     {
-      "selector": "encodeToCommandBuffer:inputs:outputs:error:",
-      "class_method": false,
-      "args": {
-       "3": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      },
-      "retval": {
-       "type_override": "Z"
-      }
-     },
-     {
-      "selector": "evaluateOnCPUWithInputs:outputs:error:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      },
-      "retval": {
-       "type_override": "Z"
-      }
-     },
-     {
-      "selector": "setWeightData:error:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      },
-      "retval": {
-       "type_override": "Z"
-      }
-     },
-     {
-      "selector": "outputShapesForInputShapes:error:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      }
-     },
-     {
-      "selector": "initWithParameterDictionary:error:",
-      "class_method": false,
-      "args": {
-       "1": {
-        "type_override": "^@",
-	"type_modifier": "o"
-       }
-      }
      }
     ]
    },
@@ -518,13 +280,6 @@
       "selector": "dataPointer",
       "class_method": false,
       "retval": { "c_array_of_variable_length": true }
-     },
-     {
-      "selector": "initWithShape:dataType:error:",
-      "class_method": false,
-      "args": {
-       "2": { "type_modifier": "o" }
-      }
      },
      {
       "selector": "getBytesWithHandler:",
@@ -574,8 +329,7 @@
 	 },
 	 "retval": { "type": "v" }
 	}
-       },
-       "5": { "type_modifier": "o" }
+       }
       }
      }
     ]

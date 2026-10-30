@@ -3,10 +3,8 @@ import UserNotifications
 
 
 class TestUNNotificationCategory(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(UserNotifications.UNNotificationCategoryOptions)
-
-    def test_constants(self):
         self.assertEqual(
             UserNotifications.UNNotificationCategoryOptionCustomDismissAction, 1 << 0
         )

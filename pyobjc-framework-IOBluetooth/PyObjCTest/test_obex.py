@@ -8,9 +8,8 @@ OBEXSessionEventCallback = b"vn^v"
 
 
 class TestOBEX(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(IOBluetooth.OBEXErrorCodes)
-
         self.assertEqual(IOBluetooth.kOBEXErrorRangeMin, -21850)
         self.assertEqual(IOBluetooth.kOBEXErrorRangeMax, -21899)
         self.assertEqual(IOBluetooth.kOBEXSuccess, 0)

@@ -4,7 +4,7 @@ import MultipeerConnectivity
 
 class TestMCError(TestCase):
     @min_os_level("10.10")
-    def testContents(self):
+    def test_constants(self):
         self.assertEqual(MultipeerConnectivity.MCErrorUnknown, 0)
         self.assertEqual(MultipeerConnectivity.MCErrorNotConnected, 1)
         self.assertEqual(MultipeerConnectivity.MCErrorInvalidParameter, 2)

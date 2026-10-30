@@ -4,7 +4,8 @@ import objc
 
 
 class TestASCredentialIdentityStore(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(AuthenticationServices.ASCredentialIdentityStoreErrorCode)
         self.assertEqual(
             AuthenticationServices.ASCredentialIdentityStoreErrorCodeInternalError, 0
         )

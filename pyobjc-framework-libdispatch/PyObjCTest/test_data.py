@@ -1,25 +1,21 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 dispatch_data_applier_t = b"B@Ln^vL"
 
 
 class TestDataAPI(TestCase):
-    @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(dispatch.dispatch_data_empty, objc.objc_object)
         self.assertIsInstance(dispatch.DISPATCH_DATA_DESTRUCTOR_FREE, objc.objc_object)
 
         self.assertIs(dispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT, None)
 
-    @min_os_level("10.9")
-    def test_constants10_9(self):
         self.assertIsInstance(
             dispatch.DISPATCH_DATA_DESTRUCTOR_MUNMAP, objc.objc_object
         )
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertResultIsRetained(dispatch.dispatch_data_create)
         self.assertResultHasType(dispatch.dispatch_data_create, objc._C_ID)
@@ -36,8 +32,10 @@ class TestDataAPI(TestCase):
         self.assertResultHasType(dispatch.dispatch_data_get_size, objc._C_ULNG)
         self.assertArgHasType(dispatch.dispatch_data_get_size, 0, objc._C_ID)
 
-        # FIXME: dispatch_data_create_map
-        self.assertIsInstance(dispatch.dispatch_data_create_map, type(id))
+        self.assertArgIsOut(dispatch.dispatch_data_create_map, 1)
+        self.assertArgIsOut(dispatch.dispatch_data_create_map, 2)
+        # XXX: This is not quite correct, but possibly acceptable for a manual binding
+        self.assertArgSizeInArg(dispatch.dispatch_data_create_map, 1, 2)
 
         self.assertResultIsRetained(dispatch.dispatch_data_create_concat)
         self.assertResultHasType(dispatch.dispatch_data_create_concat, objc._C_ID)
@@ -61,7 +59,7 @@ class TestDataAPI(TestCase):
         self.assertArgHasType(
             dispatch.dispatch_data_copy_region,
             2,
-            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
+            objc._C_OUT + objc._C_PTR + objc._C_ULNG_LNG,
         )
 
 
@@ -78,6 +76,18 @@ class TestDataUsage(TestCase):
         self.assertIsNot(d2, None)
 
         self.assertEqual(dispatch.dispatch_data_get_size(d1), 6)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            dispatch.dispatch_data_create_map()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            dispatch.dispatch_data_create_map(NoObjCClass(), None, None)
+
+        with self.assertRaisesRegex(TypeError, "must be None"):
+            dispatch.dispatch_data_create_map(d1, 42, None)
+
+        with self.assertRaisesRegex(TypeError, "must be None"):
+            dispatch.dispatch_data_create_map(d1, None, 42)
 
         d, b, s = dispatch.dispatch_data_create_map(d1, None, None)
         self.assertIsNot(d, None)

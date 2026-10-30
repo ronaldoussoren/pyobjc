@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSByteOrder(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             Foundation.NS_UnknownByteOrder, CoreFoundation.CFByteOrderUnknown
         )
@@ -13,7 +13,7 @@ class TestNSByteOrder(TestCase):
         )
         self.assertEqual(Foundation.NS_BigEndian, CoreFoundation.CFByteOrderBigEndian)
 
-    def testInlines(self):
+    def test_functions_inlines(self):
         self.assertEqual(
             Foundation.NSHostByteOrder(), CoreFoundation.CFByteOrderGetCurrent()
         )

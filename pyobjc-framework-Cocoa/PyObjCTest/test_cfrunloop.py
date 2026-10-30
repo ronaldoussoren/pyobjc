@@ -1,16 +1,19 @@
 import CoreFoundation
 import objc
+import warnings
+from .runloophelper import check_cfrunloop_side_effects
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     os_level_key,
     os_release,
     skipUnless,
+    NoObjCClass,
+    NotBool,
 )
 
 
 class TestRunLoop(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFRunLoopRef)
         self.assertIsCFType(CoreFoundation.CFRunLoopSourceRef)
         self.assertIsCFType(CoreFoundation.CFRunLoopObserverRef)
@@ -27,7 +30,7 @@ class TestRunLoop(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFRunLoopTimerRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFRunLoopRunFinished, 1)
         self.assertEqual(CoreFoundation.kCFRunLoopRunStopped, 2)
         self.assertEqual(CoreFoundation.kCFRunLoopRunTimedOut, 3)
@@ -42,13 +45,14 @@ class TestRunLoop(TestCase):
         self.assertIsInstance(CoreFoundation.kCFRunLoopDefaultMode, str)
         self.assertIsInstance(CoreFoundation.kCFRunLoopCommonModes, str)
 
-    def testGetTypeID(self):
+    def test_get_typeid(self):
         self.assertIsInstance(CoreFoundation.CFRunLoopGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopSourceGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopObserverGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.CFRunLoopTimerGetTypeID(), int)
 
-    def testRunloop(self):
+    @check_cfrunloop_side_effects
+    def test_runloop(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
@@ -75,14 +79,15 @@ class TestRunLoop(TestCase):
         CoreFoundation.CFRunLoopWakeUp(loop)
         CoreFoundation.CFRunLoopStop(loop)
 
-        res = CoreFoundation.CFRunLoopRunInMode("mode", 2.0, True)
+        res = CoreFoundation.CFRunLoopRunInMode("mode", 2.0, False)
         self.assertIsInstance(res, int)
         self.assertEqual(res, CoreFoundation.kCFRunLoopRunFinished)
 
         # CoreFoundation.CFRunLoopRun is hard to test reliably
         self.assertHasAttr(CoreFoundation, "CFRunLoopRun")
 
-    def testObserver(self):
+    @check_cfrunloop_side_effects
+    def test_observer(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
@@ -94,6 +99,53 @@ class TestRunLoop(TestCase):
         def callback(observer, activity, info):
             state.append((observer, activity, info))
 
+        with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
+            CoreFoundation.CFRunLoopObserverCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopObserverCreate(
+                NoObjCClass(),
+                CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
+                True,
+                4,
+                callback,
+                data,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreFoundation.CFRunLoopObserverCreate(
+                None,
+                "42",
+                True,
+                4,
+                callback,
+                data,
+            )
+
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
+            CoreFoundation.CFRunLoopObserverCreate(
+                None,
+                CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
+                NotBool(),
+                4,
+                callback,
+                data,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFRunLoopObserverCreate(
+                None,
+                CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
+                True,
+                "four",
+                callback,
+                data,
+            )
+
         observer = CoreFoundation.CFRunLoopObserverCreate(
             None,
             CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
@@ -103,7 +155,18 @@ class TestRunLoop(TestCase):
             data,
         )
         self.assertIsInstance(observer, CoreFoundation.CFRunLoopObserverRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFRunLoopObserverGetContext()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopObserverGetContext(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'context' must be None"):
+            CoreFoundation.CFRunLoopObserverGetContext(observer, 42)
+
         ctx = CoreFoundation.CFRunLoopObserverGetContext(observer, None)
+
         self.assertIs(ctx, data)
         self.assertIs(CoreFoundation.CFRunLoopObserverDoesRepeat(observer), True)
         self.assertEqual(CoreFoundation.CFRunLoopObserverGetOrder(observer), 4)
@@ -140,7 +203,7 @@ class TestRunLoop(TestCase):
         )
         self.assertIsInstance(stream, CoreFoundation.CFReadStreamRef)
         CoreFoundation.CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.0, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
         self.assertIsInstance(res, int)
         CoreFoundation.CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
 
@@ -156,7 +219,36 @@ class TestRunLoop(TestCase):
             CoreFoundation.CFRunLoopContainsObserver(rl, observer, runloop_mode), False
         )
 
-    def testTimer(self):
+        # Repeat test with an observer that will raise
+        def callback_raises(observer, activity, info):
+            raise RuntimeError("callback error")
+
+        observer = CoreFoundation.CFRunLoopObserverCreate(
+            None,
+            CoreFoundation.kCFRunLoopAllActivities,
+            True,
+            4,
+            callback_raises,
+            data,
+        )
+        self.assertIsNot(observer, None)
+        CoreFoundation.CFRunLoopAddObserver(rl, observer, runloop_mode)
+
+        strval = b"hello world"
+        stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
+            None, strval, len(strval), CoreFoundation.kCFAllocatorNull
+        )
+        self.assertIsNot(stream, None)
+        CoreFoundation.CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
+
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
+
+        CoreFoundation.CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
+        CoreFoundation.CFRunLoopRemoveObserver(rl, observer, runloop_mode)
+
+    @check_cfrunloop_side_effects
+    def test_timer(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
         rl = CoreFoundation.CFRunLoopGetCurrent()
@@ -166,6 +258,30 @@ class TestRunLoop(TestCase):
 
         def callback(timer, info):
             state.append((timer, info))
+
+        with self.assertRaisesRegex(TypeError, "expected 7 arguments, got 0"):
+            CoreFoundation.CFRunLoopTimerCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopTimerCreate(
+                NoObjCClass(), 0, 0.5, 0, 0, callback, data
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            CoreFoundation.CFRunLoopTimerCreate(None, "none", 0.5, 0, 0, callback, data)
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'double', got 'str'"):
+            CoreFoundation.CFRunLoopTimerCreate(None, 0, "half", 0, 0, callback, data)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            CoreFoundation.CFRunLoopTimerCreate(None, 0, 0.5, "none", 0, callback, data)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFRunLoopTimerCreate(None, 0, 0.5, 0, "none", callback, data)
 
         timer = CoreFoundation.CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
 
@@ -177,6 +293,15 @@ class TestRunLoop(TestCase):
 
         r = CoreFoundation.CFRunLoopTimerGetInterval(timer)
         self.assertEqual(r, 0.5)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFRunLoopTimerGetContext()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopTimerGetContext(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'context' must be None"):
+            CoreFoundation.CFRunLoopTimerGetContext(timer, 42)
 
         self.assertIs(CoreFoundation.CFRunLoopTimerGetContext(timer, None), data)
         self.assertIs(CoreFoundation.CFRunLoopTimerDoesRepeat(timer), True)
@@ -193,7 +318,7 @@ class TestRunLoop(TestCase):
         self.assertIs(
             CoreFoundation.CFRunLoopContainsTimer(rl, timer, runloop_mode), True
         )
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.3, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.3, False)
         self.assertIsInstance(res, int)
 
         CoreFoundation.CFRunLoopTimerInvalidate(timer)
@@ -206,7 +331,42 @@ class TestRunLoop(TestCase):
             self.assertIs(item[0], timer)
             self.assertIs(item[1], data)
 
-    def testSource(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "Leaving off last argument is deprecated"
+            ):
+                CoreFoundation.CFRunLoopTimerGetContext(timer)
+
+        with warnings.catch_warnings(record=True) as wrn:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            CoreFoundation.CFRunLoopTimerGetContext(timer)
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                CoreFoundation.CFRunLoopTimerGetContext(NoObjCClass())
+
+        self.assertEqual(len(wrn), 2)
+        for item in wrn:
+            self.assertEqual(item.category, DeprecationWarning)
+
+        def callback_raises(timer, info):
+            raise RuntimeError("callback error")
+
+        timer = CoreFoundation.CFRunLoopTimerCreate(
+            None, 0, 0.5, 0, 0, callback_raises, data
+        )
+        self.assertIsNot(timer, None)
+        CoreFoundation.CFRunLoopAddTimer(rl, timer, runloop_mode)
+
+        try:
+            with self.assertRaisesRegex(RuntimeError, "callback error"):
+                CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.3, False)
+        finally:
+            CoreFoundation.CFRunLoopTimerInvalidate(timer)
+            CoreFoundation.CFRunLoopRemoveTimer(rl, timer, runloop_mode)
+
+    @check_cfrunloop_side_effects
+    def test_source(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
@@ -214,20 +374,66 @@ class TestRunLoop(TestCase):
 
         state = []
         data = {}
+        exception = None
 
         def schedule(info, rl, mode):
+            if exception is not None:
+                raise exception
             state.append(["schedule", info, rl, mode])
 
         def cancel(info, rl, mode):
+            if exception is not None:
+                raise exception
             state.append(["cancel", info, rl, mode])
 
         def perform(info):
+            if exception is not None:
+                raise exception
             state.append(["perform", info])
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFRunLoopSourceCreate()
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopSourceCreate(
+                NoObjCClass(), 55, (0, schedule, cancel, perform, data)
+            )
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFRunLoopSourceCreate(
+                None, "55", (0, schedule, cancel, perform, data)
+            )
+
+        with self.assertRaisesRegex(ValueError, "context must be tuple of length 5"):
+            CoreFoundation.CFRunLoopSourceCreate(None, 55, 42)
+
+        with self.assertRaisesRegex(ValueError, "context must be tuple of length 5"):
+            CoreFoundation.CFRunLoopSourceCreate(
+                None, 55, (0, schedule, cancel, perform, data, 9)
+            )
+
+        with self.assertRaisesRegex(ValueError, "Version field must be 0"):
+            CoreFoundation.CFRunLoopSourceCreate(
+                None, 55, ("nil", schedule, cancel, perform, data)
+            )
+
+        with self.assertRaisesRegex(ValueError, "Version field must be 0"):
+            CoreFoundation.CFRunLoopSourceCreate(
+                None, 55, (1, schedule, cancel, perform, data)
+            )
 
         source = CoreFoundation.CFRunLoopSourceCreate(
             None, 55, (0, schedule, cancel, perform, data)
         )
         self.assertIsInstance(source, CoreFoundation.CFRunLoopSourceRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFRunLoopSourceGetContext()
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFRunLoopSourceGetContext(NoObjCClass(), None)
+        with self.assertRaisesRegex(ValueError, "'context' must be None"):
+            CoreFoundation.CFRunLoopSourceGetContext(source, 42)
+
         ctx = CoreFoundation.CFRunLoopSourceGetContext(source, None)
         self.assertIsInstance(ctx, tuple)
         self.assertEqual(ctx[0], 0)
@@ -247,6 +453,14 @@ class TestRunLoop(TestCase):
         self.assertIs(
             CoreFoundation.CFRunLoopContainsSource(rl, source, runloop_mode), False
         )
+
+        exception = RuntimeError("callback error")
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CoreFoundation.CFRunLoopAddSource(rl, source, runloop_mode)
+        exception = None
+        CoreFoundation.CFRunLoopRemoveSource(rl, source, runloop_mode)
+        del state[:]
+
         CoreFoundation.CFRunLoopAddSource(rl, source, runloop_mode)
         self.assertIs(
             CoreFoundation.CFRunLoopContainsSource(rl, source, runloop_mode), True
@@ -258,7 +472,7 @@ class TestRunLoop(TestCase):
         self.assertEqual(state[0][3], runloop_mode)
         del state[:]
 
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
         self.assertIsInstance(res, int)
         # self.assertEqual(res, CoreFoundation.kCFRunLoopRunTimedOut)
 
@@ -266,13 +480,21 @@ class TestRunLoop(TestCase):
 
         CoreFoundation.CFRunLoopSourceSignal(source)
 
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
         self.assertIsInstance(res, int)
-        self.assertEqual(res, CoreFoundation.kCFRunLoopRunHandledSource)
+        self.assertEqual(res, CoreFoundation.kCFRunLoopRunTimedOut)
 
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0], "perform")
         self.assertIs(state[0][1], data)
+        del state[:]
+
+        CoreFoundation.CFRunLoopSourceSignal(source)
+
+        exception = RuntimeError("callback error")
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
+        exception = None
         del state[:]
 
         CoreFoundation.CFRunLoopRemoveSource(rl, source, runloop_mode)
@@ -285,6 +507,28 @@ class TestRunLoop(TestCase):
         self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3], runloop_mode)
 
+        CoreFoundation.CFRunLoopAddSource(rl, source, runloop_mode)
+        exception = RuntimeError("callback error")
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CoreFoundation.CFRunLoopRemoveSource(rl, source, runloop_mode)
+        exception = None
+        CoreFoundation.CFRunLoopRemoveSource(rl, source, runloop_mode)
+        del state[:]
+
+        lst = []
+        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
+            None,
+            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
+            0.0,
+            0,
+            0,
+            lambda x: lst.append(x),
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
+        CoreFoundation.CFRunLoopTimerSetTolerance(ref, 5.0)
+        v = CoreFoundation.CFRunLoopTimerGetTolerance(ref)
+        self.assertIsInstance(v, float)
+
     @skipUnless(
         not (
             os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
@@ -295,8 +539,7 @@ class TestRunLoop(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions_manual(self):
         self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
 
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
@@ -308,23 +551,11 @@ class TestRunLoop(TestCase):
             lst.append(True)
 
         CoreFoundation.CFRunLoopPerformBlock(rl, runloop_mode, doit)
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
         self.assertIsInstance(res, int)
 
         self.assertEqual(lst, [True])
 
-    @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
-        "Crash on 10.13, 10.14??",
-    )
-    @skipUnless(
-        not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
-        "Crash on macOS 15 beta",
-    )
-    @min_os_level("10.7")
-    def testFunctions10_7(self):
         self.assertArgIsBOOL(CoreFoundation.CFRunLoopObserverCreateWithHandler, 2)
         self.assertArgIsBlock(
             CoreFoundation.CFRunLoopObserverCreateWithHandler,
@@ -346,7 +577,7 @@ class TestRunLoop(TestCase):
         rl = CoreFoundation.CFRunLoopGetCurrent()
 
         CoreFoundation.CFRunLoopAddObserver(rl, ref, runloop_mode)
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, False)
         CoreFoundation.CFRunLoopRemoveObserver(rl, ref, runloop_mode)
 
         self.assertNotEqual(lst, [])
@@ -369,7 +600,7 @@ class TestRunLoop(TestCase):
         self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
 
         CoreFoundation.CFRunLoopAddTimer(rl, ref, runloop_mode)
-        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 6.0, True)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 6.0, False)
         self.assertIsInstance(res, int)
         CoreFoundation.CFRunLoopRemoveTimer(rl, ref, runloop_mode)
 
@@ -382,19 +613,3 @@ class TestRunLoop(TestCase):
         self.assertNotEqual(lst, [])
         for a in lst:
             self.assertEqual(a, ref)
-
-    @min_os_level("10.9")
-    def testFunctions10_9(self):
-        lst = []
-        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
-            None,
-            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
-            0.0,
-            0,
-            0,
-            lambda x: lst.append(x),
-        )
-        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
-        CoreFoundation.CFRunLoopTimerSetTolerance(ref, 5.0)
-        v = CoreFoundation.CFRunLoopTimerGetTolerance(ref)
-        self.assertIsInstance(v, float)

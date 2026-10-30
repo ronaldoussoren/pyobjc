@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLResponse(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSURLResponseUnknownLength, -1)

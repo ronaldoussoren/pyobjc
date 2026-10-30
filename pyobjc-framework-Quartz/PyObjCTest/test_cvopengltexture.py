@@ -3,11 +3,11 @@ import Quartz
 
 
 class TestCVOpenGLTexture(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVOpenGLTextureRef)
 
     @expectedFailure
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVOpenGLTextureGetTypeID(), int)
 
         Quartz.CVOpenGLTextureRetain

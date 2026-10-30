@@ -6,7 +6,7 @@ from objc import simd
 
 class TestSKFieldNode(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKFieldNode.setEnabled_, 0)
         self.assertResultIsBOOL(SpriteKit.SKFieldNode.isEnabled)
         self.assertArgIsBOOL(SpriteKit.SKFieldNode.setExclusive_, 0)

@@ -4,7 +4,7 @@ import IOBluetooth
 
 
 class TestBluetooth(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertEqual(
             IOBluetooth.kBluetoothConnectionHandleSerialDeviceReserved, 0x0FFF
         )
@@ -700,6 +700,7 @@ class TestBluetooth(TestCase):
             IOBluetooth.BluetoothLESecurityManagerKeypressNotificationType
         )
 
+        self.assertIsEnumType(IOBluetooth.BluetoothAMPManagerCode)
         self.assertEqual(IOBluetooth.kBluetoothAMPManagerCodeReserved, 0x00)
         self.assertEqual(IOBluetooth.kBluetoothAMPManagerCodeAMPCommandReject, 0x01)
         self.assertEqual(IOBluetooth.kBluetoothAMPManagerCodeAMPDiscoverRequest, 0x02)
@@ -2434,7 +2435,7 @@ class TestBluetooth(TestCase):
         self.assertEqual(IOBluetooth.kInfoStringMaxLength, 35)
         self.assertEqual(IOBluetooth.kBluetoothHCIInquiryResultsMaxResults, 50)
 
-    def test_struct_tyeps(self):
+    def test_structs(self):
         v = IOBluetooth.BluetoothDeviceAddress()
         self.assertIs(v.data, None)
 

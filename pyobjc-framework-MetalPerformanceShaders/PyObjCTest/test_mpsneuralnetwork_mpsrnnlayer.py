@@ -4,27 +4,15 @@ import MetalPerformanceShaders
 
 
 class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSRNNBidirectionalCombineMode)
+        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeAdd, 1)
+        self.assertEqual(
+            MetalPerformanceShaders.MPSRNNBidirectionalCombineModeConcatenate, 2
+        )
+
         self.assertIsEnumType(MetalPerformanceShaders.MPSRNNMatrixId)
-        self.assertIsEnumType(MetalPerformanceShaders.MPSRNNSequenceDirection)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionForward, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionBackward, 1)
-
-        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeAdd, 1)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNBidirectionalCombineModeConcatenate, 2
-        )
-
-        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSRNNBidirectionalCombineModeAdd, 1)
-        self.assertEqual(
-            MetalPerformanceShaders.MPSRNNBidirectionalCombineModeConcatenate, 2
-        )
-
         self.assertEqual(
             MetalPerformanceShaders.MPSRNNMatrixIdSingleGateInputWeights, 0
         )
@@ -111,6 +99,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
             MetalPerformanceShaders.MPSRNNMatrixIdGRUOutputGateBiasTerms, 28
         )
 
+        self.assertIsEnumType(MetalPerformanceShaders.MPSRNNSequenceDirection)
+        self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionForward, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSRNNSequenceDirectionBackward, 1)
+
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertResultIsBOOL(
@@ -142,6 +134,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
             MetalPerformanceShaders.MPSLSTMDescriptor.setMemoryWeightsAreDiagonal_, 0
         )
 
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNImageInferenceLayer.copyWithZone_device_
+        )
+
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSRNNImageInferenceLayer.recurrentOutputIsTemporary
         )
@@ -156,6 +152,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSRNNImageInferenceLayer.setStoreAllIntermediateStates_,
             0,
+        )
+
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNMatrixInferenceLayer.copyWithZone_device_
         )
 
         self.assertResultIsBOOL(
@@ -176,6 +176,10 @@ class TestMPSNeuralNetwork_MPSCRNNLayer(TestCase):
 
     @min_os_level("10.14")
     def test_methods10_14(self):
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.copyWithZone_device_
+        )
+
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.storeAllIntermediateStates
         )

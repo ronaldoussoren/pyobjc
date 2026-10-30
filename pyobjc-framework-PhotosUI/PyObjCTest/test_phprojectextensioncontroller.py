@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import PhotosUI
 
 
@@ -15,11 +15,10 @@ class TestPHProjectExtensionControllerHelper(PhotosUI.NSObject):
 
 class TestPHProjectExtensionController(TestCase):
     @min_sdk_level("10.13")
-    def testProtocols(self):
-        self.assertProtocolExists("PHProjectExtensionController")
+    def test_protocols(self):
+        self.assertProtocolExists("PHProjectExtensionController", PhotosUI)
 
-    @min_os_level("10.11")
-    def testMethods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestPHProjectExtensionControllerHelper.beginProjectWithExtensionContext_projectInfo_completion_,
             2,

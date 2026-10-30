@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSKReceiptRefreshRequest(TestCase):
-    @min_os_level("10.9")
     def test_constants(self):
         self.assertIsInstance(StoreKit.SKReceiptPropertyIsExpired, str)
         self.assertIsInstance(StoreKit.SKReceiptPropertyIsRevoked, str)

@@ -1,7 +1,7 @@
 import os
 import warnings
 
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure, os_release, os_level_key
 import objc
 
 with warnings.catch_warnings():
@@ -24,7 +24,7 @@ class TestLSOpen(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LaunchServices.kLSLaunchDefaults, 0x00000001)
         self.assertEqual(LaunchServices.kLSLaunchAndPrint, 0x00000002)
         self.assertEqual(LaunchServices.kLSLaunchReserved2, 0x00000004)
@@ -44,7 +44,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(LaunchServices.kLSLaunchAndHideOthers, 0x00200000)
         self.assertEqual(LaunchServices.kLSLaunchHasUntrustedContents, 0x00400000)
 
-    def testStructs(self):
+    def test_structs(self):
         v = LaunchServices.LSApplicationParameters()
         self.assertHasAttr(v, "version")
         self.assertHasAttr(v, "flags")
@@ -54,7 +54,7 @@ class TestLSOpen(TestCase):
         self.assertHasAttr(v, "argv")
         self.assertHasAttr(v, "initialEvent")
 
-    def testLSLaunchFSRefSpec(self):
+    def test_lslaunchfsrefspec(self):
         o = LaunchServices.LSLaunchURLSpec()
         self.assertEqual(o.appURL, None)
         self.assertEqual(o.itemURLs, None)
@@ -70,7 +70,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(o.launchFlags, 0)
         self.assertEqual(o.asyncRefCon, None)
 
-    def testFunctions(self):
+    def test_functions(self):
         url = LaunchServices.CFURLCreateFromFileSystemRepresentation(
             None, self.bpath, len(self.bpath), True
         )
@@ -87,17 +87,25 @@ class TestLSOpen(TestCase):
         self.assertArgIsOut(LaunchServices.LSOpenItemsWithRole, 5)
         self.assertArgSizeInArg(LaunchServices.LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
-        ok, psns = LaunchServices.LSOpenItemsWithRole(
-            [ref], 1, LaunchServices.kLSRolesAll, None, None, None, 1
-        )
-        self.assertIn(ok, (0, -50))
-        self.assertIsInstance(psns, (list, tuple))
-        for x in psns:
-            # Actually a ProcessSerialNumber, but those aren't wrapped yet
-            self.assertIsInstance(x, tuple)
-            self.assertEqual(len(x), 2)
-            self.assertIsInstance(x[0], int)
-            self.assertIsInstance(x[1], int)
+
+        if os_level_key(os_release()) < (27, 0):
+            # XXX: This call consistently raises an exception on macOS 27:
+            #
+            #       NSInternalInconsistencyException - Invalid parameter not satisfying: keyDescToCopy != NULL
+            #
+            #      I haven't debugged this any further due to the API being long deprecated
+            #      (and the exception is from this API, not from PyObjC itself)
+            ok, psns = LaunchServices.LSOpenItemsWithRole(
+                [ref], 1, LaunchServices.kLSRolesEditor, None, None, None, 1
+            )
+            self.assertIn(ok, (0, -50))
+            self.assertIsInstance(psns, (list, tuple))
+            for x in psns:
+                # Actually a ProcessSerialNumber, but those aren't wrapped yet
+                self.assertIsInstance(x, tuple)
+                self.assertEqual(len(x), 2)
+                self.assertIsInstance(x[0], int)
+                self.assertIsInstance(x[1], int)
 
         self.assertArgIsIn(LaunchServices.LSOpenURLsWithRole, 2)
         self.assertArgIsIn(LaunchServices.LSOpenURLsWithRole, 3)
@@ -116,7 +124,7 @@ class TestLSOpen(TestCase):
             self.assertIsInstance(x[1], int)
 
     @expectedFailure
-    def testUnsupportedFunctions(self):
+    def test_functions_unsupported(self):
         self.assertArgIsIn(LaunchServices.LSOpenApplication, 0)
         self.assertArgIsOut(LaunchServices.LSOpenApplication, 1)
         params = LaunchServices.LSApplicationParameters(
@@ -137,7 +145,7 @@ class TestLSOpen(TestCase):
         self.assertEqual(ok, 0)
         self.assertIsInstance(psn, int)
 
-    def testFSRef(self):
+    def test_fsref(self):
         # Functions using structs we don't support, probably need
         # manual wrappers
         self.assertArgIsIn(LaunchServices.LSOpenFromRefSpec, 0)

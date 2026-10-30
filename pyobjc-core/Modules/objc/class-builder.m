@@ -217,7 +217,7 @@ is_instance_method(PyObject* value)
     if (!PyObjCSelector_Check(value)) {
         return 0;
     }
-    if (PyObjCNativeSelector_Check(value)) {
+    if (PyObjCNativeSelector_Check(value) || PyObjCBoundNativeSelector_Check(value)) {
         return 0;
     }
     return !PyObjCSelector_IsClassMethod(value);
@@ -233,7 +233,7 @@ is_class_method(PyObject* value)
     if (!PyObjCSelector_Check(value)) {
         return 0;
     }
-    if (PyObjCNativeSelector_Check(value)) {
+    if (PyObjCNativeSelector_Check(value) || PyObjCBoundNativeSelector_Check(value)) {
         return 0;
     }
     return PyObjCSelector_IsClassMethod(value);
@@ -469,7 +469,7 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
     for (i = 0; i < PyTuple_GET_SIZE(instance_methods); i++) {
         value = PyTuple_GET_ITEM(instance_methods, i);
 
-        if (!PyObjCSelector_Check(value)) {
+        if (!PyObjCSelector_Check(value) || PyObjCBoundSelector_Check(value)) {
             continue;
         }
 
@@ -480,6 +480,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (imp == NULL) {
             goto error_cleanup;
         }
+
+        assert(!PyObjCBoundSelector_Check(value));
 
         if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
                 new_class, PyObjCSelector_GetSelector(value), imp,
@@ -497,6 +499,10 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
             /* Cannot happen, sequence items were validated earlier */
             continue; // LCOV_EXCL_LINE
         }
+        if (unlikely(PyObjCBoundSelector_Check(value))) { // LCOV_BR_EXCL_LINE
+            /* Cannot happen, sequence items were validated earlier */
+            continue; // LCOV_EXCL_LINE
+        }
 
         /* Make sure that the selector is bound to the newly created class */
         ((PyObjCSelector*)value)->sel_class = new_class;
@@ -505,6 +511,8 @@ Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, c
         if (imp == NULL) {
             goto error_cleanup;
         }
+
+        assert(!PyObjCBoundSelector_Check(value));
 
         if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
                 new_meta_class, PyObjCSelector_GetSelector(value), imp,
@@ -707,8 +715,8 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
                 PyObject* s = _PyObjCObject_NewDeallocHelper(self);
                 if (unlikely(s != NULL)) { // LCOV_BR_EXCL_LINE
                     PyObject* args[2] = {NULL, s};
-                    obj               = PyObject_Vectorcall(delmethod, args + 1,
-                                                            1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                    obj = PyObject_Vectorcall(delmethod, args + 1,
+                                              1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
                     if (obj == NULL) {
                         PyErr_WriteUnraisable(delmethod);
                     } else {
@@ -991,8 +999,9 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
                 /* Check that we don't accidentally return
                  * an accessor method.
                  */
-                if (PyObjCSelector_Check(res)
-                    && ((PyObjCSelector*)res)->sel_self == selfObj) {
+                if (PyObjCBoundSelector_Check(res)
+
+                    && PyObjCBoundSelector_SELF(res) == selfObj) {
                     Py_DECREF(res);
                     res = NULL;
                     break;

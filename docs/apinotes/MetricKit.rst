@@ -14,5 +14,7 @@ These bindings are accessed through the ``MetricKit`` package (that is, ``import
 
 .. macosadded:: 12
 
+.. macosdeprecated:: 27 All public APIs were deprecated in the macOS 27 SDK.
+
 API Notes
 ---------

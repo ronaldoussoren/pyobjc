@@ -7,13 +7,20 @@ class TestMPSCore_MPSCommandBufferHelper(MetalPerformanceShaders.NSObject):
     def retireHeap_cacheDelay_(self, a, b):
         pass
 
+    def newHeapWithDescriptor_(self, a):
+        return 1
+
 
 class TestMPSCore_MPSCommandBuffer(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MPSHeapProvider")
+        self.assertProtocolExists("MPSHeapProvider", MetalPerformanceShaders)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMPSCore_MPSCommandBufferHelper.retireHeap_cacheDelay_, 1, objc._C_DBL
+        )
+
+        self.assertResultIsRetained(
+            TestMPSCore_MPSCommandBufferHelper.newHeapWithDescriptor_
         )

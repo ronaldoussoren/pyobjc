@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNPhoneNumber(TestCase):
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Contacts.CNLabelPhoneNumberiPhone, str)
         self.assertIsInstance(Contacts.CNLabelPhoneNumberMobile, str)
         self.assertIsInstance(Contacts.CNLabelPhoneNumberMain, str)
@@ -14,5 +14,5 @@ class TestCNPhoneNumber(TestCase):
         self.assertIsInstance(Contacts.CNLabelPhoneNumberPager, str)
 
     @min_os_level("11.1")
-    def testConstants11_1(self):
+    def test_constants11_1(self):
         self.assertIsInstance(Contacts.CNLabelPhoneNumberAppleWatch, str)

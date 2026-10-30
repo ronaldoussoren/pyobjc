@@ -6,7 +6,7 @@ from objc import simd
 
 class TestGKNoiseMap(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKNoiseMap.isSeamless)
         # self.assertArgIsBOOL(GameplayKit.GKNoiseMap.setSeamless_, 0)
 

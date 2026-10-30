@@ -5,14 +5,14 @@ import objc
 
 class TestCKMarkNotificationsReadOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKMarkNotificationsReadOperation")
         self.assertIsInstance(
             CloudKit.CKMarkNotificationsReadOperation, objc.objc_class
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBlock(
             CloudKit.CKMarkNotificationsReadOperation.markNotificationsReadCompletionBlock,
             b"v@@",

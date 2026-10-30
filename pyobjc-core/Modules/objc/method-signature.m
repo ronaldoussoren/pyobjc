@@ -224,20 +224,21 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_argdescr(
     } else {
         retval->type = NULL;
     }
-    retval->typeOverride      = NO;
-    retval->modifier          = '\0';
-    retval->ptrType           = PyObjC_kPointerPlain;
-    retval->allowNULL         = YES;
-    retval->arraySizeInRetval = NO;
-    retval->printfFormat      = NO;
-    retval->alreadyRetained   = NO;
-    retval->alreadyCFRetained = NO;
-    retval->callableRetained  = NO;
-    retval->tmpl              = NO;
-    retval->callable          = NULL;
-    retval->sel_type          = NULL;
-    retval->arrayArg          = 0;
-    retval->arrayArgOut       = 0;
+    retval->typeOverride       = NO;
+    retval->modifier           = '\0';
+    retval->ptrType            = PyObjC_kPointerPlain;
+    retval->allowNULL          = YES;
+    retval->arraySizeInRetval  = NO;
+    retval->printfFormat       = NO;
+    retval->hasAlreadyRetained = NO;
+    retval->alreadyRetained    = NO;
+    retval->alreadyCFRetained  = NO;
+    retval->callableRetained   = NO;
+    retval->tmpl               = NO;
+    retval->callable           = NULL;
+    retval->sel_type           = NULL;
+    retval->arrayArg           = 0;
+    retval->arrayArgOut        = 0;
     return retval;
 }
 
@@ -293,8 +294,8 @@ static PyType_Spec sig_spec = {
     .basicsize = sizeof(PyObjCMethodSignature),
     .itemsize  = sizeof(struct _PyObjC_ArgDescr*),
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = sig_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = sig_slots,
 };
 
 PyObject* PyObjCMethodSignature_Type;
@@ -708,16 +709,15 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
         if (r == -1) {
             return -1;
         }
-        if (r) {
-            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(d);
-                return -2;
-                // LCOV_EXCL_STOP
-            }
-            descr->alreadyRetained = YES;
-            Py_CLEAR(d);
+        if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(d);
+            return -2;
+            // LCOV_EXCL_STOP
         }
+        descr->alreadyRetained    = !!r;
+        descr->hasAlreadyRetained = YES;
+        Py_CLEAR(d);
     }
 
     assert(descr == NULL || !descr->alreadyCFRetained);
@@ -732,16 +732,15 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
         if (r == -1) {
             return -1;
         }
-        if (r) {
-            if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
-                // LCOV_EXCL_START
-                Py_DECREF(d);
-                return -2;
-                // LCOV_EXCL_STOP
-            }
-            descr->alreadyCFRetained = YES;
-            Py_CLEAR(d);
+        if (descr == NULL || descr->tmpl) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
+            Py_DECREF(d);
+            return -2;
+            // LCOV_EXCL_STOP
         }
+        descr->alreadyCFRetained  = !!r;
+        descr->hasAlreadyRetained = YES;
+        Py_CLEAR(d);
     }
 
     assert(descr == NULL || !descr->callableRetained);
@@ -1255,7 +1254,12 @@ setup_descr(struct _PyObjC_ArgDescr* _Nullable descr, PyObject* meta, BOOL is_na
                 tp[0] = typeModifier;
                 strlcpy(tp + 1, withoutModifiers, bufsize - 1);
 
-                assert(!descr->typeOverride);
+                if (descr->typeOverride) {
+                    /* XXX: Can happen when a function has an array
+                     *      type argument, eg: b"iI[256C]"
+                     */
+                    PyMem_Free((char*)descr->type);
+                }
 
                 descr->typeOverride = YES;
                 descr->type         = tp;
@@ -1763,7 +1767,7 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(
 
 static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     struct _PyObjC_ArgDescr* _Nonnull descr, struct _PyObjC_ArgDescr* _Nonnull meta,
-    BOOL is_native __attribute__((__unused__)))
+    BOOL is_native __attribute__((__unused__)), BOOL is_copy_new_category)
 {
     assert(descr != meta);
     if (meta->type != NULL) {
@@ -1807,12 +1811,27 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
     if (meta->ptrType != PyObjC_kPointerPlain) {
         descr->ptrType = meta->ptrType;
     }
-    descr->allowNULL         = meta->allowNULL;
-    descr->arraySizeInRetval = meta->arraySizeInRetval;
-    descr->printfFormat      = meta->printfFormat;
-    descr->alreadyRetained   = meta->alreadyRetained;
-    descr->alreadyCFRetained = meta->alreadyCFRetained;
-    descr->callableRetained  = meta->callableRetained;
+    descr->allowNULL          = meta->allowNULL;
+    descr->arraySizeInRetval  = meta->arraySizeInRetval;
+    descr->printfFormat       = meta->printfFormat;
+    descr->alreadyRetained    = meta->alreadyRetained;
+    descr->alreadyCFRetained  = meta->alreadyCFRetained;
+    descr->callableRetained   = meta->callableRetained;
+    descr->hasAlreadyRetained = meta->hasAlreadyRetained;
+    if (!meta->hasAlreadyRetained) {
+        if (is_copy_new_category) {
+            switch (*PyObjCRT_SkipTypeQualifiers(descr->type)) {
+            case _C_ID:
+                descr->alreadyRetained    = YES;
+                descr->hasAlreadyRetained = YES;
+                break;
+            case _C_PTR:
+                descr->alreadyCFRetained  = YES;
+                descr->hasAlreadyRetained = YES;
+                break;
+            }
+        }
+    }
 
     if (meta->modifier != '\0') {
         assert(descr->type != NULL);
@@ -1858,11 +1877,30 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(
 
 static int
 process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* metadata,
-                        BOOL is_native)
+                        BOOL is_native, BOOL is_copy_new_category)
 {
     Py_ssize_t               i, len;
     struct _PyObjC_ArgDescr* tmp;
     if (metadata == NULL) {
+        if (is_copy_new_category) {
+            if (methinfo->rettype->tmpl) {
+                methinfo->rettype = alloc_argdescr(methinfo->rettype);
+                if (methinfo->rettype == NULL) { // LCOV_BR_EXCL_LINE
+                    return -1;                   // LCOV_EXCL_LINE
+                }
+            }
+            switch (*PyObjCRT_SkipTypeQualifiers(methinfo->rettype->type)) {
+            case _C_ID:
+                methinfo->rettype->alreadyRetained    = YES;
+                methinfo->rettype->hasAlreadyRetained = YES;
+                break;
+            case _C_PTR:
+                methinfo->rettype->alreadyCFRetained  = YES;
+                methinfo->rettype->hasAlreadyRetained = YES;
+                break;
+            }
+        }
+
         return 0;
     }
 
@@ -1879,12 +1917,30 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
 
     assert(methinfo->rettype);
     if (metadata->rettype) {
-        tmp = merge_descr(methinfo->rettype, metadata->rettype, is_native);
+        tmp = merge_descr(methinfo->rettype, metadata->rettype, is_native,
+                          is_copy_new_category);
         if (tmp == NULL) { // LCOV_BR_EXCL_LINE
             return -1;     // LCOV_EXCL_LINE
         }
         free_argdescr(methinfo->rettype);
         methinfo->rettype = tmp;
+    } else if (is_copy_new_category) {
+        if (methinfo->rettype->tmpl) {
+            methinfo->rettype = alloc_argdescr(methinfo->rettype);
+            if (methinfo->rettype == NULL) { // LCOV_BR_EXCL_LINE
+                return -1;                   // LCOV_EXCL_LINE
+            }
+        }
+        switch (*PyObjCRT_SkipTypeQualifiers(methinfo->rettype->type)) {
+        case _C_ID:
+            methinfo->rettype->alreadyRetained    = YES;
+            methinfo->rettype->hasAlreadyRetained = YES;
+            break;
+        case _C_PTR:
+            methinfo->rettype->alreadyCFRetained  = YES;
+            methinfo->rettype->hasAlreadyRetained = YES;
+            break;
+        }
     }
 
     len = Py_SIZE(methinfo);
@@ -1895,7 +1951,7 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     for (i = 0; i < len; i++) {
         assert(methinfo->argtype[i]);
         if (metadata->argtype[i] != NULL) {
-            tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);
+            tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native, NO);
             if (tmp == NULL) { // LCOV_BR_EXCL_LINE
                 return -1;     // LCOV_EXCL_LINE
             }
@@ -1915,11 +1971,12 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_GetRegistered(Class cls, 
 }
 
 PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
-    Class cls, BOOL isClassMethod __attribute__((__unused__)), SEL sel, const char* signature,
-    BOOL is_native __attribute__((__unused__)))
+    Class cls, BOOL isClassMethod __attribute__((__unused__)), SEL sel,
+    const char* signature, BOOL is_native __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo;
     PyObject*              metadata;
+    BOOL                   is_copy_new_category = NO;
 
     metadata = PyObjC_FindInRegistry(registry, cls, sel);
     assert(metadata == NULL || PyObjCMethodSignature_Check(metadata));
@@ -1937,31 +1994,25 @@ PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
         return NULL;
     }
 
+    {
+        const char* nm = sel_getName(sel);
+        if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
+            is_copy_new_category = YES;
+        }
+
+        if (strncmp(nm, "copy", 4) == 0 && ((nm[4] == 0) || isupper(nm[4]))) {
+            is_copy_new_category = YES;
+        }
+    }
+
     if (process_metadata_object( // LCOV_BR_EXCL_LINE
-            methinfo, (PyObjCMethodSignature*)metadata, is_native)
-        == -1) {
+            methinfo, (PyObjCMethodSignature*)metadata, is_native, is_copy_new_category)
+        == -1) { // LCOV_BR_EXCL_LINE
         // LCOV_EXCL_START
         Py_DECREF(methinfo);
         Py_XDECREF(metadata);
         return NULL;
         // LCOV_EXCL_STOP
-    }
-
-    {
-        const char* nm = sel_getName(sel);
-        if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
-            if (methinfo->rettype->tmpl) {
-                methinfo->rettype = alloc_argdescr(methinfo->rettype);
-                if (methinfo->rettype == NULL) { // LCOV_BR_EXCL_LINE
-                    // LCOV_EXCL_START
-                    Py_XDECREF(methinfo);
-                    Py_XDECREF(metadata);
-                    return NULL;
-                    // LCOV_EXCL_STOP
-                }
-            }
-            methinfo->rettype->alreadyRetained = YES;
-        }
     }
 
     assert(methinfo->rettype);
@@ -2304,7 +2355,7 @@ PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
     PyObject* result = PyObjC_CopyRegistry(
         registry, (PyObjC_ItemTransform)PyObjCMethodSignature_AsFrozenDict);
 #if PY_VERSION_HEX >= 0x030f00a7
-    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LIN#
+    if (unlikely(result == NULL)) { // LCOV_BR_EXCL_LINE
         return result;              // LCOV_EXCL_LINE
     }
     PyObject* tmp = PyFrozenDict_New(result);

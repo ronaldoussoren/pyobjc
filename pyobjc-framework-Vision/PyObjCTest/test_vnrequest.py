@@ -17,7 +17,7 @@ class TestVNRequestHelper(Vision.NSObject):
 
 class TestVNRequest(TestCase):
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(Vision.VNRequest.initWithCompletionHandler_, 0, b"v@@")
         self.assertResultIsBOOL(Vision.VNRequest.preferBackgroundProcessing)
         self.assertArgIsBOOL(Vision.VNRequest.setPreferBackgroundProcessing_, 0)
@@ -25,16 +25,8 @@ class TestVNRequest(TestCase):
         self.assertArgIsBOOL(Vision.VNRequest.setUsesCPUOnly_, 0)
         self.assertResultIsBlock(Vision.VNRequest.completionHandler, b"v@@")
 
-        self.assertResultIsBlock(
-            TestVNRequestHelper.progressHandler, VNRequestProgressHandler
-        )
-        self.assertArgIsBlock(
-            TestVNRequestHelper.setProgressHandler_, 0, VNRequestProgressHandler
-        )
-        self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)
-
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsOut(
             Vision.VNRequest.supportedComputeStageDevicesAndReturnError_, 0
         )
@@ -43,5 +35,14 @@ class TestVNRequest(TestCase):
         self.assertEqual(Vision.VNRequestRevisionUnspecified, 0)
 
     @min_sdk_level("10.15")
-    def testProtocols(self):
-        self.assertProtocolExists("VNRequestProgressProviding")
+    def test_protocols(self):
+        self.assertProtocolExists("VNRequestProgressProviding", Vision)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBlock(
+            TestVNRequestHelper.progressHandler, VNRequestProgressHandler
+        )
+        self.assertArgIsBlock(
+            TestVNRequestHelper.setProgressHandler_, 0, VNRequestProgressHandler
+        )
+        self.assertResultIsBOOL(TestVNRequestHelper.indeterminate)

@@ -124,7 +124,6 @@ class TestCMSampleBuffer(TestCase):
             CoreMedia.kCMSampleBufferAttachmentKey_GradualDecoderRefresh, str
         )
 
-    @min_os_level("10.8")
     def test_constants10_8(self):
         self.assertIsInstance(
             CoreMedia.kCMSampleBufferConduitNotificationParameter_MaxUpcomingOutputPTS,

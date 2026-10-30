@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGError(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGErrorSuccess, 0)
         self.assertEqual(Quartz.kCGErrorFirst, 1000)
         self.assertEqual(Quartz.kCGErrorFailure, Quartz.kCGErrorFirst)
@@ -34,5 +34,5 @@ class TestCGError(TestCase):
         self.assertNotHasAttr(Quartz, "kCGErrorLast")
 
     @min_os_level("12.0")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsFunction(Quartz.CGErrorSetCallback, 0, b"v", True)

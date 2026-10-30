@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "typed_enum": {
+   "IMKCandidatePanelType": { "type": "Q" },
+   "IMKStyleType": { "type": "Q" },
+   "IMKCandidatesLocationHint": { "type": "Q" }
+  },
   "classes": {
    "IMKCandidates": {
     "methods": [
@@ -57,18 +62,6 @@
       },
       "class_method": false,
       "selector": "doCommandBySelector:commandDictionary:"
-     }
-    ]
-   },
-   "IMKServer": {
-    "methods": [
-     {
-      "args": {
-       "1": {},
-       "2": {}
-      },
-      "class_method": false,
-      "selector": "initWithName:controllerClass:delegateClass:"
      }
     ]
    },
@@ -195,8 +188,6 @@
      }
     ]
    }
-  },
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

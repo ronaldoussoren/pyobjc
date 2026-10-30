@@ -12,3 +12,10 @@ class TestMPSNeuralNetwork_MPSMatrixBatchNormalization(TestCase):
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSMatrixBatchNormalization.setComputeStatistics_, 0
         )
+
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSMatrixBatchNormalization.copyWithZone_device_
+        )
+        self.assertResultIsRetained(
+            MetalPerformanceShaders.MPSMatrixBatchNormalizationGradient.copyWithZone_device_
+        )

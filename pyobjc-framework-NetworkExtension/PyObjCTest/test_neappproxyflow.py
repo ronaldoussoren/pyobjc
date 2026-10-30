@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNEAppProxyFlow(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEAppProxyFlowError)
-
-    @min_os_level("10.11")
-    def testConstants(self):
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorNotConnected, 1)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorPeerReset, 2)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorHostUnreachable, 3)
@@ -19,10 +16,12 @@ class TestNEAppProxyFlow(TestCase):
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorDatagramTooLarge, 9)
         self.assertEqual(NetworkExtension.NEAppProxyFlowErrorReadAlreadyPending, 10)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(NetworkExtension.NEAppProxyErrorDomain, str)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyFlow.openWithLocalEndpoint_completionHandler_,
             1,
@@ -30,11 +29,11 @@ class TestNEAppProxyFlow(TestCase):
         )
 
     @min_os_level("11.1")
-    def testMethods11_1(self):
+    def test_methods11_1(self):
         self.assertResultIsBOOL(NetworkExtension.NEAppProxyFlow.isBound)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyFlow.openWithLocalFlowEndpoint_completionHandler_,
             1,

@@ -24,11 +24,14 @@ class TestGCDevicePhysicalInputHelper(GameController.NSObject):
     def setInputStateQueueDepth_(self, a):
         pass
 
+    def inputStateForSpatialAccessoryAnchorTimestamp_(self, a):
+        return 1
+
 
 class TestGCDevicePhysicalInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCDevicePhysicalInput")
+        self.assertProtocolExists("GCDevicePhysicalInput", GameController)
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(
@@ -43,4 +46,10 @@ class TestGCDevicePhysicalInput(TestCase):
         )
         self.assertArgIsBlock(
             TestGCDevicePhysicalInputHelper.setInputStateAvailableHandler_, 0, b"v@"
+        )
+
+        self.assertArgHasType(
+            TestGCDevicePhysicalInputHelper.inputStateForSpatialAccessoryAnchorTimestamp_,
+            0,
+            b"d",
         )

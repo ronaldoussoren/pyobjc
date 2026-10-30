@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestSubclassing(TestCase):
-    def testBasicSubclassing(self):
+    def test_basic_subclassing(self):
         class NSObjectSubclass(Foundation.NSObject):
             def someRandomMethod(self):
                 return 42

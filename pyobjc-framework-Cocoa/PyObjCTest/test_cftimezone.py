@@ -1,7 +1,7 @@
 import time
 
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 NSData = objc.lookUpClass("NSData")
@@ -9,7 +9,7 @@ NSDictionary = objc.lookUpClass("NSDictionary")
 
 
 class TestTimeZone(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if objc.lookUpClass("NSTimeZone") is CoreFoundation.CFTimeZoneRef:
                 return
@@ -17,25 +17,25 @@ class TestTimeZone(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFTimeZoneRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         value = CoreFoundation.CFTimeZoneGetTypeID()
         self.assertIsInstance(value, int)
 
-    def testSystemZone(self):
+    def test_system_zone(self):
         zone = CoreFoundation.CFTimeZoneCopySystem()
         self.assertIsInstance(zone, CoreFoundation.CFTimeZoneRef)
 
         CoreFoundation.CFTimeZoneSetDefault
 
-    def testResetSystem(self):
+    def test_reset_system(self):
         v = CoreFoundation.CFTimeZoneResetSystem()
         self.assertIs(v, None)
 
-    def testCopyDefault(self):
+    def test_copy_default(self):
         zone = CoreFoundation.CFTimeZoneCopyDefault()
         self.assertIsInstance(zone, CoreFoundation.CFTimeZoneRef)
 
-    def testNames(self):
+    def test_names(self):
         self.assertResultIsCFRetained(CoreFoundation.CFTimeZoneCopyKnownNames)
         array = CoreFoundation.CFTimeZoneCopyKnownNames()
         self.assertIsInstance(array, CoreFoundation.CFArrayRef)
@@ -43,18 +43,14 @@ class TestTimeZone(TestCase):
         for nm in array:
             self.assertIsInstance(nm, str)
 
-    def testAbbreviationDict(self):
+    def test_abbreviation_dict(self):
         abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
         self.assertIsInstance(abbrevs, NSDictionary)
         for key, value in abbrevs.items():
             self.assertIsInstance(key, str)
             self.assertIsInstance(value, str)
 
-    @min_os_level("10.6")
-    def testAbbrievationDictSetting(self):
-        # Setting the dictionary is technically also possible
-        # on 10.5, but the code below causes a crash, even when
-        # rewritten als plan Objective-C.
+    def test_abbreviation_dict_setting(self):
         abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
         newmap = abbrevs.mutableCopy()
         newmap["AAA"] = "Europe/Amsterdam"
@@ -68,7 +64,7 @@ class TestTimeZone(TestCase):
         finally:
             CoreFoundation.CFTimeZoneSetAbbreviationDictionary(abbrevs)
 
-    def testZoneObject(self):
+    def test_zone_object(self):
         with open("/usr/share/zoneinfo/posixrules", "rb") as fp:
             data = fp.read()
         zone = CoreFoundation.CFTimeZoneCreate(None, "Europe/Amsterdam", data)
@@ -121,7 +117,7 @@ class TestTimeZone(TestCase):
         )
         self.assertIsInstance(nm, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleStandard, 0)
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleShortStandard, 1)
         self.assertEqual(CoreFoundation.kCFTimeZoneNameStyleDaylightSaving, 2)

@@ -6,7 +6,7 @@ import GameController
 
 
 class TestGCDevicePhysicalInputStateDiff(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCDevicePhysicalInputElementChange)
         self.assertEqual(GameController.GCDevicePhysicalInputElementUnknownChange, -1)
         self.assertEqual(GameController.GCDevicePhysicalInputElementNoChange, 0)
@@ -14,4 +14,4 @@ class TestGCDevicePhysicalInputStateDiff(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCDevicePhysicalInputStateDiff")
+        self.assertProtocolExists("GCDevicePhysicalInputStateDiff", GameController)

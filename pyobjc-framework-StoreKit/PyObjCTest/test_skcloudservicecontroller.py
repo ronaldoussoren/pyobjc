@@ -4,16 +4,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSKCloudServiceController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(StoreKit.SKCloudServiceAuthorizationStatus)
-        self.assertIsEnumType(StoreKit.SKCloudServiceCapability)
-
-    def test_constants(self):
         self.assertEqual(StoreKit.SKCloudServiceAuthorizationStatusNotDetermined, 0)
         self.assertEqual(StoreKit.SKCloudServiceAuthorizationStatusDenied, 1)
         self.assertEqual(StoreKit.SKCloudServiceAuthorizationStatusRestricted, 2)
         self.assertEqual(StoreKit.SKCloudServiceAuthorizationStatusAuthorized, 3)
 
+        self.assertIsEnumType(StoreKit.SKCloudServiceCapability)
         self.assertEqual(StoreKit.SKCloudServiceCapabilityNone, 0)
         self.assertEqual(StoreKit.SKCloudServiceCapabilityMusicCatalogPlayback, 1 << 0)
         self.assertEqual(

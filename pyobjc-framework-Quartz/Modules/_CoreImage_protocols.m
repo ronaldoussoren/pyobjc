@@ -1,7 +1,14 @@
+// LCOV_EXCL_START
+// This function is only present to ensure protocols are
+// available at runtime.
+NS_ASSUME_NONNULL_BEGIN
+
 static void __attribute__((__used__))
 use_protocols2(void)
 {
     PyObject* p __attribute__((__unused__));
+    p = PyObjC_IdToPython(@protocol(CIPlugInRegistration));
+    Py_XDECREF(p);
 #if PyObjC_BUILD_RELEASE >= 1015
     p = PyObjC_IdToPython(@protocol(CIFilter));
     Py_XDECREF(p);
@@ -382,3 +389,6 @@ use_protocols2(void)
     Py_XDECREF(p);
 #endif
 }
+
+NS_ASSUME_NONNULL_END
+// LCOV_EXCL_STOP

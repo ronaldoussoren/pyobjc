@@ -6,7 +6,7 @@ import objc
 
 class TestSKMutableTexture(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             SpriteKit.SKMutableTexture.modifyPixelDataWithBlock_,
             0,

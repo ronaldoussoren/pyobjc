@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_INDEX_SIZE_ERR, 1)
         self.assertEqual(WebKit.DOM_DOMSTRING_SIZE_ERR, 2)
         self.assertEqual(WebKit.DOM_HIERARCHY_REQUEST_ERR, 3)

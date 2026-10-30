@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestASAuthorizationPlatformPublicKeyCredentialRegistrationRequest(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationPlatformPublicKeyCredentialRegistrationRequestStyle
         )

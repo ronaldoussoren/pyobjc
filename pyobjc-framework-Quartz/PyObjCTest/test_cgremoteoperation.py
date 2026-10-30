@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
 
 class TestCGRemoteOperation(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.CGEventNoErr, Quartz.kCGErrorSuccess)
 
         self.assertEqual(Quartz.kCGScreenUpdateOperationRefresh, 0)
@@ -37,17 +37,18 @@ class TestCGRemoteOperation(TestCase):
             Quartz.kCGNumberOfEventSuppressionStates,
         )
 
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CGScreenUpdateMoveDelta()
         self.assertTrue(hasattr(v, "dX"))
         self.assertTrue(hasattr(v, "dY"))
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         myInfo = object()
         callcount = [0]
 
         def callbackRefresh(count, rects, info):
+            print("refresh")
             self.assertTrue(info is myInfo)
             self.assertIsInstance(rects, tuple)
             self.assertIsInstance(count, int)
@@ -55,23 +56,26 @@ class TestCGRemoteOperation(TestCase):
                 self.assertIsInstance(i, Quartz.CGRect)
             callcount[0] += 1
 
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGRegisterScreenRefreshCallback()
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGRegisterScreenRefreshCallback(42, myInfo)
+
         err = Quartz.CGRegisterScreenRefreshCallback(callbackRefresh, myInfo)
         self.assertEqual(err, 0)
 
-        # FIXME: should force a refresh here
+        # XXX:
+        # - create and show a semi-transparent window (full screen, on top)
+        # - refresh every 10th of a second
+        # - destroy when the RunLoopRun call returns
 
+        # Quartz.CFRunLoopRunInMode(Quartz.kCFRunLoopDefaultMode, 1.0, False)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGUnregisterScreenRefreshCallback()
+        with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
+            Quartz.CGUnregisterScreenRefreshCallback(1, 2)
         Quartz.CGUnregisterScreenRefreshCallback(callbackRefresh, myInfo)
-
-        # FIXME: This complete hangs the interpreter, don't have
-        # time to investigate this.
-        #
-        Quartz.CGWaitForScreenRefreshRects
-        # err, rects, count = Quartz.CGWaitForScreenRefreshRects(None, None)
-        # self.assertEqual(err, 0)
-        # self.assertIsInstance(rects, tuple)
-        # self.assertIsInstance(count, int)
-        # for i in rects:
-        #    self.assertIsInstance(i, Quartz.CGRect)
 
         v = Quartz.CGCursorIsVisible()
         self.assertIsInstance(v, int)
@@ -122,14 +126,57 @@ class TestCGRemoteOperation(TestCase):
             is Quartz.CGSetLocalEventsFilterDuringSuppressionState
         )
 
-    @min_os_level("10.8")
-    def testFunctions10_8(self):
         self.assertResultIsCFRetained(Quartz.CGWindowServerCreateServerPort)
 
-    @expectedFailure
-    def testMissing(self):
-        self.fail("CGScreenRegisterMoveCallback")
-        self.fail("CGScreenUnregisterMoveCallback")
-        self.fail("CGReleaseScreenRefreshRects")
-        self.fail("CGWaitForScreenUpdateRects")
-        self.fail("CGWaitForScreenRefreshRects")
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not functional since macOS 10.8",
+        ):
+            Quartz.CGReleaseScreenRefreshRects()
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not functional since macOS 10.8",
+        ):
+            Quartz.CGWaitForScreenRefreshRects(None, None)
+
+        with self.assertRaisesRegex(
+            TypeError,
+            "function is not functional since macOS 10.8",
+        ):
+            Quartz.CGWaitForScreenUpdateRects(None, None)
+
+        context = object()
+
+        def move_callback(delta, count, rects, info):
+            pass
+
+        def move_callback2(delta, count, rects, info):
+            pass
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGScreenRegisterMoveCallback()
+
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGScreenRegisterMoveCallback(context, context)
+
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGScreenUnregisterMoveCallback()
+
+        with self.assertRaisesRegex(ValueError, "Cannot find callback info"):
+            Quartz.CGScreenUnregisterMoveCallback(context, context)
+
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context)
+
+        context2 = object()
+        context3 = object()
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context)
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context2)
+        Quartz.CGScreenRegisterMoveCallback(move_callback, context3)
+        Quartz.CGScreenRegisterMoveCallback(move_callback2, context3)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context3)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback, context2)
+        Quartz.CGScreenUnregisterMoveCallback(move_callback2, context3)

@@ -2,12 +2,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PyObjC_TestClass3 : NSObject {
 }
 + createAHostWithAddress:(NSString*)address;
-+ makeACopy:source;
 + makeDataWithBytes:(Class)cls method:(int)i;
 + makeDictFromClass:(Class)cls method:(int)i;
 + getBytes:(NSData*)data;
@@ -16,6 +17,21 @@
 @end
 
 @implementation PyObjC_TestClass3
+
++ (id)elementAtIndex:(NSInteger)idx on:(NSBezierPath*)path
+{
+    NSPoint buffer[5] = {0};
+
+    NSInteger tp = [path elementAtIndex:idx associatedPoints:buffer];
+
+    return @[
+        @(tp), [NSArray arrayWithObjects:[NSValue valueWithPoint:buffer[0]],
+                                         [NSValue valueWithPoint:buffer[1]],
+                                         [NSValue valueWithPoint:buffer[2]],
+                                         [NSValue valueWithPoint:buffer[3]],
+                                         [NSValue valueWithPoint:buffer[4]], nil]
+    ];
+}
 
 + createAHostWithAddress:(NSString*)address
 {
@@ -26,8 +42,9 @@
 {
     const void* bytes = [data bytes];
 
-    if (bytes == NULL) {
-        return nil;
+    if (bytes == NULL) { // LCOV_BR_EXCL_LINE
+        /* -[NSData bytes] return value is _Nonnull */
+        return nil; // LCOV_EXCL_LINE
     } else {
         return [NSData dataWithBytes:bytes length:[data length]];
     }
@@ -38,8 +55,8 @@
     if (i == 0) {
         return [cls dataWithBytes:"hello world" length:sizeof("hello world") - 1];
     } else {
-        id o = [cls alloc];
-        return [o initWithBytes:"hello world" length:sizeof("hello world") - 1];
+        return [[[cls alloc] initWithBytes:"hello world"
+                                    length:sizeof("hello world") - 1] autorelease];
     }
 }
 
@@ -61,26 +78,8 @@
     if (i == 0) {
         return [cls dictionaryWithObjects:objects forKeys:keys count:4];
     } else {
-        return [[cls alloc] initWithObjects:objects forKeys:keys count:4];
+        return [[[cls alloc] initWithObjects:objects forKeys:keys count:4] autorelease];
     }
-}
-
-+ makeACopy:source
-{
-    id theCopy;
-    id pool;
-
-    /* Copy the source, bracketed by the creation and
-     * destruction of an autorelease pool. This should
-     * cause a core-dump if the copy is not a 'new'
-     * object.
-     */
-    pool    = [[NSAutoreleasePool alloc] init];
-    theCopy = [source copy];
-    [pool release];
-    pool = nil;
-
-    return theCopy;
 }
 
 + keyValue:(int)idx forObject:object key:key
@@ -98,7 +97,8 @@
         return [object valuesForKeys:key];
 #pragma clang diagnostic pop
     }
-    return nil;
+    // Not reached
+    return nil; // LCOV_EXCL_LINE
 }
 
 + (void)setKeyValue:(int)idx forObject:object key:key value:value
@@ -129,18 +129,6 @@
         break;
     }
 }
-
-+ (NSObject*)createObservedOfClass:(Class)class
-                          observer:(NSObject*)obj
-                           keyPath:(NSString*)path
-{
-    NSObject* o = [[class alloc] init];
-    [o addObserver:obj
-        forKeyPath:path
-           options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-           context:0];
-    return o;
-}
 @end
 
 @interface PyObjC_TestClass4 : NSObject {
@@ -161,11 +149,6 @@
 @end
 
 @implementation PyObjC_TestClass4
-- (int)_privateMethodWithArg:(float)arg
-{
-    return (int)arg;
-}
-
 - (void)runThread:(id)object
 {
     NSObject* pool = [[NSAutoreleasePool alloc] init];
@@ -191,14 +174,17 @@
 + (int)fetchInt:(NSCoder*)coder
 {
     int i;
-    [coder decodeValueOfObjCType:@encode(int) at:&i];
+
+    /* FIX when dropping support for macOS 10.13 */
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(int) at:&i];
     return i;
 }
 
 + (double)fetchDouble:(NSCoder*)coder
 {
     double i;
-    [coder decodeValueOfObjCType:@encode(double) at:&i];
+    /* FIX when dropping support for macOS 10.13 */
+    CLANG_SUPPRESS [coder decodeValueOfObjCType:@encode(double) at:&i];
     return i;
 }
 
@@ -228,11 +214,6 @@
                                      [NSNumber numberWithInt:data[9]], nil];
 }
 
-+ (NSString*)fetchObjectDescription:(NSObject*)value
-{
-    return [value description];
-}
-
 @end
 
 static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
@@ -240,19 +221,19 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1) {
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) { // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
                            PyObjC_IdToPython([PyObjC_TestClass3 class]))
-        < 0) {
-        return -1;
+        < 0) {     // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
                            PyObjC_IdToPython([PyObjC_TestClass4 class]))
-        < 0) {
-        return -1;
+        < 0) {     // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
     }
     return 0;
 }
@@ -292,10 +273,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit_testhelper(void);
+PyObject* _Nullable PyInit_testhelper(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit_testhelper(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

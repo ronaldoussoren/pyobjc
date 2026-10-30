@@ -110,13 +110,11 @@ class oc_egg_info(egg_info.egg_info):
         else:
             sdk_version = os.path.basename(sdk_root)
 
-        build_info = textwrap.dedent(
-            f"""\
+        build_info = textwrap.dedent(f"""\
             macOS {macos_version} ({macos_build})
             {clang_version}
             SDK: {sdk_version}
-            """
-        )
+            """)
 
         self.write_file(
             "pyobjc-build-info.txt",
@@ -204,7 +202,7 @@ class oc_test(Command):
                 "errors": len(result.errors),
                 "xfails": len(getattr(result, "expectedFailures", [])),
                 "xpass": len(getattr(result, "unexpectedSuccesses", [])),
-                "skip=": len(getattr(result, "skipped", [])),
+                "skip": len(getattr(result, "skipped", [])),
                 "testSeconds": (time_after - time_before),
             }
             print(f"SUMMARY: {summary}")
@@ -228,12 +226,12 @@ Operating System :: MacOS :: MacOS X
 Programming Language :: Python
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3 :: Only
-Programming Language :: Python :: 3.10
 Programming Language :: Python :: 3.11
 Programming Language :: Python :: 3.12
 Programming Language :: Python :: 3.13
 Programming Language :: Python :: 3.14
 Programming Language :: Python :: 3.15
+Programming Language :: Python :: 3.16
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Python :: Free Threading :: 3 - Stable
 Programming Language :: Objective C
@@ -499,6 +497,8 @@ def Extension(*args, **kwds):
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
                 % (tuple(map(int, version.split(".")[:2])))
             )
+            ldflags.append("-isysroot")
+            ldflags.append(data)
         else:
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
@@ -677,7 +677,7 @@ def setup(
         zip_safe=False,
         license="MIT",
         classifiers=CLASSIFIERS,
-        python_requires=">=3.10",
+        python_requires=">=3.11",
         keywords=["PyObjC"] + [p for p in k["packages"] if p not in ("PyObjCTools",)],
         options=options,
         **k,

@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
@@ -12,6 +16,8 @@
 
 #include "_AVFoundation_AVAudioBuffer.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
@@ -19,10 +25,10 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (init_avaudiobuffer() == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
+    if (init_avaudiobuffer() == -1) // LCOV_BR_EXCL_LINE
+        return -1;                  // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -58,10 +64,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__AVFoundation(void);
+PyObject* _Nullable PyInit__AVFoundation(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__AVFoundation(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

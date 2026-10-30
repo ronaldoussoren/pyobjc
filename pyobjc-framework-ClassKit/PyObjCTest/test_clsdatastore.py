@@ -5,7 +5,7 @@ import ClassKit
 
 class TestCLSDataStore(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("CLSDataStoreDelegate")
+        self.assertProtocolExists("CLSDataStoreDelegate", ClassKit)
 
     def test_methods(self):
         self.assertArgIsBlock(ClassKit.CLSDataStore.saveWithCompletion_, 0, b"v@")

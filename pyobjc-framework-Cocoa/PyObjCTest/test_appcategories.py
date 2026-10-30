@@ -7,13 +7,13 @@ class TestAppKitCategories(TestCase):
     # Note: These tests don't actually test anything beyond asserting that
     # the code doesn't crash...
 
-    def testSavedGraphicsState(self):
+    def test_saved_graphics_state(self):
         with Cocoa.NSGraphicsContext.savedGraphicsState():
             pass
 
     @skipUnless(
         hasattr(Cocoa, "NSAnimationContext"), "Test for NSAnimationContext category"
     )
-    def testAnimationContext(self):
+    def test_animation_context(self):
         with Cocoa.NSAnimationContext:
             pass

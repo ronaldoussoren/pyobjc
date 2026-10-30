@@ -31,11 +31,11 @@ class TestPDEPluginInterfaceHelper(PrintCore.NSObject):
 class TestPDEPluginInterface(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("PDEPlugIn")
-        self.assertProtocolExists("PDEPanel")
-        self.assertProtocolExists("PDEPlugInCallbackProtocol")
+        self.assertProtocolExists("PDEPlugIn", PrintCore)
+        self.assertProtocolExists("PDEPanel", PrintCore)
+        self.assertProtocolExists("PDEPlugInCallbackProtocol", PrintCore)
 
-    def testMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldHide)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_)
         self.assertArgIsOut(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_, 0)

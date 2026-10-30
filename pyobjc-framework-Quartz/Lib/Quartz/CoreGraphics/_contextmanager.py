@@ -1,6 +1,5 @@
 """
-This module defines a number of context managers. These are meant to be used
-in the context of the with statement (introduced in Python 2.5).
+This module defines a number of context managers.
 """
 
 __all__ = ("CGSavedGState", "CGTransparencyLayer", "CGContextPage")

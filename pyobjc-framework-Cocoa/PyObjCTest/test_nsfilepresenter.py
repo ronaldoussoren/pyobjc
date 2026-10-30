@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class Presenter(Foundation.NSObject):
@@ -23,9 +23,8 @@ class Presenter(Foundation.NSObject):
 
 
 class TestNSFilePresenter(TestCase):
-    @min_os_level("10.7")
-    def testProtocols(self):
-        self.assertProtocolExists("NSFilePresenter")
+    def test_protocols(self):
+        self.assertProtocolExists("NSFilePresenter", Foundation)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

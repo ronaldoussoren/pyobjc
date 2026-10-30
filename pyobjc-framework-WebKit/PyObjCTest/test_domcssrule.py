@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMCSSRule(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_UNKNOWN_RULE, 0)
         self.assertEqual(WebKit.DOM_STYLE_RULE, 1)
         self.assertEqual(WebKit.DOM_CHARSET_RULE, 2)

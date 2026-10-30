@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -18,7 +18,13 @@ class TestNSSpeechSynthesizerHelper(AppKit.NSObject):
 
 
 class TestNSSpeechSynthesizer(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSSpeechBoundary)
+        self.assertEqual(AppKit.NSSpeechImmediateBoundary, 0)
+        self.assertEqual(AppKit.NSSpeechWordBoundary, 1)
+        self.assertEqual(AppKit.NSSpeechSentenceBoundary, 2)
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSSpeechCommandDelimiterKey, str)
         self.assertIsTypedEnum(AppKit.NSSpeechDictionaryKey, str)
         self.assertIsTypedEnum(AppKit.NSSpeechErrorKey, str)
@@ -31,10 +37,7 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsTypedEnum(AppKit.NSVoiceAttributeKey, str)
         self.assertIsTypedEnum(AppKit.NSVoiceGenderName, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSSpeechBoundary)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSVoiceName, str)
         self.assertIsInstance(AppKit.NSVoiceIdentifier, str)
         self.assertIsInstance(AppKit.NSVoiceAge, str)
@@ -45,12 +48,6 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSVoiceGenderMale, str)
         self.assertIsInstance(AppKit.NSVoiceGenderFemale, str)
         self.assertIsInstance(AppKit.NSVoiceLanguage, str)
-
-    @min_os_level("10.5")
-    def testConstants10_5(self):
-        self.assertEqual(AppKit.NSSpeechImmediateBoundary, 0)
-        self.assertEqual(AppKit.NSSpeechWordBoundary, 1)
-        self.assertEqual(AppKit.NSSpeechSentenceBoundary, 2)
 
         self.assertIsInstance(AppKit.NSVoiceLocaleIdentifier, str)
         self.assertIsInstance(AppKit.NSVoiceSupportedCharacters, str)
@@ -110,10 +107,10 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertIsInstance(AppKit.NSSpeechDictionaryEntryPhonemes, str)
 
     @min_os_level("12.3")
-    def testConstants12_3(self):
+    def test_constants12_3(self):
         self.assertIsInstance(AppKit.NSVoiceGenderNeutral, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.startSpeakingString_toURL_)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.isSpeaking)
@@ -125,7 +122,10 @@ class TestNSSpeechSynthesizer(TestCase):
         self.assertArgIsOut(AppKit.NSSpeechSynthesizer.objectForProperty_error_, 1)
         self.assertResultIsBOOL(AppKit.NSSpeechSynthesizer.isAnyApplicationSpeaking)
 
-    def testProtocol(self):
+    def test_protocols(self):
+        self.assertProtocolExists("NSSpeechSynthesizerDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestNSSpeechSynthesizerHelper.speechSynthesizer_didFinishSpeaking_, 1
         )
@@ -140,14 +140,8 @@ class TestNSSpeechSynthesizer(TestCase):
             objc._C_SHT,
         )
 
-    @min_os_level("10.5")
-    def testProtocol10_5(self):
         self.assertArgHasType(
             TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
-
-    @min_sdk_level("10.9")
-    def testProtocol10_9(self):
-        self.assertProtocolExists("NSSpeechSynthesizerDelegate")

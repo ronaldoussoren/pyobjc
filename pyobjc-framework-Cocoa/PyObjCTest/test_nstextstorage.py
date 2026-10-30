@@ -20,28 +20,27 @@ class TestNSTextStorageHelper(AppKit.NSObject):
 
 
 class TestNSTextStorage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextStorageEditActions)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSTextStorageEditedAttributes, 1 << 0)
         self.assertEqual(AppKit.NSTextStorageEditedCharacters, 1 << 1)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSTextStorageWillProcessEditingNotification, str)
         self.assertIsInstance(AppKit.NSTextStorageDidProcessEditingNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSTextStorage.fixesAttributesLazily)
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSTextStorageDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSTextStorageDelegate", AppKit)
 
     @min_sdk_level("12.0")
-    def testProtocolObjects12_0(self):
-        self.assertProtocolExists("NSTextStorageObserving")
+    def test_protocols12_0(self):
+        self.assertProtocolExists("NSTextStorageObserving", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_,
             1,

@@ -5,38 +5,41 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <ApplicationServices/ApplicationServices.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static void
 m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject* info    = (PyObject*)_info;
+    PyObject* args[4] = {NULL};
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* args = PyTuple_New(3);
-    if (args == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
+    args[1] = PyBytes_FromString(key);
+    if (args[1] == NULL) {                    // LCOV_BR_EXCL_LINE
+        PyObjCErr_ToObjCWithGILState(&state); // LCOV_EXCL_LINE
     }
 
-    PyTuple_SetItem(args, 0, PyBytes_FromString(key));
-    if (PyTuple_GetItem(args, 0) == NULL) {
-        Py_DECREF(args);
+    args[2] = PyObjC_ObjCToPython(@encode(CGPDFObjectRef), &value);
+    if (args[2] == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_CLEAR(args[1]);
         PyObjCErr_ToObjCWithGILState(&state);
+        // LCOV_EXCL_STOP
     }
 
-    PyTuple_SetItem(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
-    if (PyTuple_GetItem(args, 1) == NULL) {
-        Py_DECREF(args);
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
+    args[3] = PyTuple_GET_ITEM(info, 1);
 
-    PyTuple_SetItem(args, 2, PyTuple_GetItem(info, 1));
-    Py_INCREF(PyTuple_GetItem(args, 2));
-
-    PyObject* result = PyObject_Call(PyTuple_GetItem(info, 0), args, NULL);
-    Py_DECREF(args);
-
+    PyObject* result = PyObject_Vectorcall(PyTuple_GET_ITEM(info, 0), args + 1,
+                                           3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_CLEAR(args[1]);
+    Py_CLEAR(args[2]);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -45,28 +48,25 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
     PyGILState_Release(state);
 }
 
-static PyObject*
-m_CGPDFDictionaryApplyFunction(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable m_CGPDFDictionaryApplyFunction(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*          d;
-    PyObject*          f;
-    PyObject*          i;
     CGPDFDictionaryRef dictionary;
 
-    if (!PyArg_ParseTuple(args, "OOO", &d, &f, &i)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
-    if (!PyCallable_Check(f)) {
+    if (!PyCallable_Check(args[1])) {
         PyErr_SetString(PyExc_TypeError, "callback not callable");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), d, &dictionary) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGPDFDictionaryRef), args[0], &dictionary) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", f, i);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = Py_BuildValue("OO", args[1], args[2]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -78,7 +78,7 @@ m_CGPDFDictionaryApplyFunction(PyObject* self __attribute__((__unused__)), PyObj
         }
     Py_END_ALLOW_THREADS
 
-    Py_DECREF(real_info);
+    Py_CLEAR(real_info);
     if (PyErr_Occurred()) {
         return NULL;
     }
@@ -99,15 +99,10 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_element =
+    PyObject* result = PyObject_CallFunction(
+        PyTuple_GetItem(info, 0), "ON", PyTuple_GetItem(info, 1),
         PyObject_CallFunction(gCGPathElement, "lN", element->type,
-                              PyObjCVarList_New(@encode(CGPoint), element->points));
-    if (element == NULL) {
-        PyObjCErr_ToObjCWithGILState(&state);
-    }
-
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "ON",
-                                             PyTuple_GetItem(info, 1), py_element);
+                              PyObjCVarList_New(@encode(CGPoint), element->points)));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -115,82 +110,65 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
     PyGILState_Release(state);
 }
 
-static PyObject*
-setCGPathElement(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable setCGPathElement(PyObject* meth __attribute__((__unused__)),
+                                            PyObject* arg)
 {
-    PyObject* v;
-
-    if (!PyArg_ParseTuple(args, "O", &v)) {
-        return NULL;
-    }
-
+    /* This function is only called during import, therefore it
+     * is not necessary to use a lock to protect access to gCGPathElement.
+     */
     Py_XDECREF(gCGPathElement);
-    Py_INCREF(v);
-    gCGPathElement = v;
+    Py_INCREF(arg);
+    gCGPathElement = arg;
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
-static PyObject*
-m_CGPathApply(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable m_CGPathApply(PyObject* meth,
+                                         PyObject* _Nonnull const* _Nonnull args,
+                                         size_t nargs)
 {
-    PyObject* py_path;
-    PyObject* callback;
-    PyObject* info;
     CGPathRef path;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_path, &info, &callback)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
-    if (!PyCallable_Check(callback)) {
+
+    if (!PyCallable_Check(args[2])) {
         PyErr_SetString(PyExc_TypeError, "callback not callable");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGPathRef), py_path, &path) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGPathRef), args[0], &path) < 0) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OO", callback, info);
-    if (real_info == NULL) {
-        return NULL;
+    PyObject* real_info = PyTuple_Pack(2, args[2], args[1]);
+    if (real_info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;         // LCOV_EXCL_LINE
     }
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             CGPathApply(path, real_info, m_CGPathApplierFunction);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyMethodDef mod_methods[] = {{
-                                        "CGPDFDictionaryApplyFunction",
-                                        (PyCFunction)m_CGPDFDictionaryApplyFunction,
-                                        METH_VARARGS,
-                                        NULL,
-                                    },
-                                    {
-                                        "CGPathApply",
-                                        (PyCFunction)m_CGPathApply,
-                                        METH_VARARGS,
-                                        NULL,
-                                    },
-                                    {
-                                        "setCGPathElement",
+                                        "_setCGPathElement",
                                         (PyCFunction)setCGPathElement,
-                                        METH_VARARGS,
+                                        METH_O,
                                         NULL,
                                     },
 
@@ -199,8 +177,18 @@ static PyMethodDef mod_methods[] = {{
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) < 0)
-        return -1;
+    if (PyObjC_ImportAPI(m) < 0) // LCOV_BR_EXCL_LINE
+        return -1;               // LCOV_EXCL_LINE
+
+    if (PyObjCRegister_FunctionCaller(CGPDFDictionaryApplyFunction,
+                                      m_CGPDFDictionaryApplyFunction)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(CGPathApply, m_CGPathApply)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
 
     return 0;
 }
@@ -240,10 +228,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__sortandmap(void);
+PyObject* _Nullable PyInit__sortandmap(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__sortandmap(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

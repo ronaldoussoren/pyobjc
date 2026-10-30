@@ -22,13 +22,19 @@ class TestMTLBufferHelper(Metal.NSObject):
     def newTensorWithDescriptor_offset_error_(self, a, b, c):
         return 1
 
+    def newRemoteBufferViewForDevice_(self, a):
+        return 1
+
+    def newRemoteTextureViewForDevice_(self, a):
+        return 1
+
 
 class TestMTLBuffer(TestCase):
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
-        self.assertProtocolExists("MTLBuffer")
+        self.assertProtocolExists("MTLBuffer", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLBufferHelper.length, objc._C_NSUInteger)
 
         self.assertResultHasType(
@@ -40,6 +46,9 @@ class TestMTLBuffer(TestCase):
             TestMTLBufferHelper.didModifyRange_, 0, Metal.NSRange.__typestr__
         )
 
+        self.assertResultIsRetained(
+            TestMTLBufferHelper.newTextureWithDescriptor_offset_bytesPerRow_
+        )
         self.assertArgHasType(
             TestMTLBufferHelper.newTextureWithDescriptor_offset_bytesPerRow_,
             1,
@@ -55,9 +64,16 @@ class TestMTLBuffer(TestCase):
             TestMTLBufferHelper.addDebugMarker_range_, 1, Metal.NSRange.__typestr__
         )
 
+        self.assertResultIsRetained(
+            TestMTLBufferHelper.newTensorWithDescriptor_offset_error_
+        )
         self.assertArgHasType(
             TestMTLBufferHelper.newTensorWithDescriptor_offset_error_, 1, b"Q"
         )
         self.assertArgHasType(
             TestMTLBufferHelper.newTensorWithDescriptor_offset_error_, 2, b"o^@"
         )
+
+        self.assertResultIsRetained(TestMTLBufferHelper.newRemoteBufferViewForDevice_)
+
+        self.assertResultIsRetained(TestMTLBufferHelper.newRemoteTextureViewForDevice_)

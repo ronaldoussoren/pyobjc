@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreAudioKit/CoreAudioKit.h>
 #import <Foundation/Foundation.h>
 
@@ -9,6 +13,8 @@
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_CoreAudioKit_protocols.m"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
@@ -55,10 +61,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreAudioKit(void);
+PyObject* _Nullable PyInit__CoreAudioKit(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreAudioKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

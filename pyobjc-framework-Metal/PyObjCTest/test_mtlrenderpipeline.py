@@ -9,6 +9,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def functionHandleWithBinaryFunction_stage_(self, a, b):
         pass
 
+    def newIntersectionFunctionTableWithDescriptor_(self, a):
+        pass
+
     def newRenderPipelineStateWithBinaryFunctions_error_(self, a, b):
         pass
 
@@ -45,6 +48,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def functionHandleWithFunction_stage_(self, a, b):
         return 1
 
+    def newVisibleFunctionTableWithDescriptor_(self, a):
+        return 1
+
     def newVisibleFunctionTableWithDescriptor_stage_(self, a, b):
         return 1
 
@@ -66,14 +72,30 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def requiredThreadsPerMeshThreadgroup(self):
         return 1
 
+    def newRenderPipelineDescriptorForSpecialization(self):
+        return 1
+
 
 class TestMTLRenderPipeline(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLArgumentAccess)
-        self.assertIsEnumType(Metal.MTLArgumentType)
-        self.assertIsEnumType(Metal.MTLDataType)
+        self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
+        self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
+        self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLArgumentType)
+        self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
+        self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
+        self.assertEqual(Metal.MTLArgumentTypeTexture, 2)
+        self.assertEqual(Metal.MTLArgumentTypeSampler, 3)
+        self.assertEqual(Metal.MTLArgumentTypeImageblockData, 16)
+        self.assertEqual(Metal.MTLArgumentTypeImageblock, 17)
+        self.assertEqual(Metal.MTLArgumentTypeVisibleFunctionTable, 24)
+        self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
+        self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
+        self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
+
+        self.assertIsEnumType(Metal.MTLDataType)
         self.assertEqual(Metal.MTLDataTypeNone, 0)
         self.assertEqual(Metal.MTLDataTypeStruct, 1)
         self.assertEqual(Metal.MTLDataTypeArray, 2)
@@ -161,26 +183,10 @@ class TestMTLRenderPipeline(TestCase):
         self.assertEqual(Metal.MTLDataTypeULong2, 86)
         self.assertEqual(Metal.MTLDataTypeULong3, 87)
         self.assertEqual(Metal.MTLDataTypeULong4, 88)
-
         self.assertEqual(Metal.MTLDataTypeVisibleFunctionTable, 115)
         self.assertEqual(Metal.MTLDataTypeIntersectionFunctionTable, 116)
         self.assertEqual(Metal.MTLDataTypePrimitiveAccelerationStructure, 117)
         self.assertEqual(Metal.MTLDataTypeInstanceAccelerationStructure, 118)
-
-        self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
-        self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
-        self.assertEqual(Metal.MTLArgumentTypeTexture, 2)
-        self.assertEqual(Metal.MTLArgumentTypeSampler, 3)
-        self.assertEqual(Metal.MTLArgumentTypeImageblockData, 16)
-        self.assertEqual(Metal.MTLArgumentTypeImageblock, 17)
-        self.assertEqual(Metal.MTLArgumentTypeVisibleFunctionTable, 24)
-        self.assertEqual(Metal.MTLArgumentTypePrimitiveAccelerationStructure, 25)
-        self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
-        self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
-
-        self.assertEqual(Metal.MTLArgumentAccessReadOnly, 0)
-        self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
-        self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
         self.assertIsEnumType(Metal.MTLBlendFactor)
         self.assertEqual(Metal.MTLBlendFactorZero, 0)
@@ -352,7 +358,7 @@ class TestMTLRenderPipeline(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLRenderPipelineState")
+        self.assertProtocolExists("MTLRenderPipelineState", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(
@@ -360,6 +366,10 @@ class TestMTLRenderPipeline(TestCase):
         )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.functionHandleWithBinaryFunction_stage_, 1, b"Q"
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithBinaryFunctions_error_
         )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newRenderPipelineStateWithBinaryFunctions_error_,
@@ -374,7 +384,7 @@ class TestMTLRenderPipeline(TestCase):
             TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize
         )
         self.assertResultHasType(
-            TestMTLRenderPipelineHelper.imageblockSampleLength, b"q"
+            TestMTLRenderPipelineHelper.imageblockSampleLength, b"Q"
         )
         self.assertResultIsBOOL(
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
@@ -400,15 +410,35 @@ class TestMTLRenderPipeline(TestCase):
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.functionHandleWithFunction_stage_, 1, b"Q"
         )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_
+        )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_,
             1,
             b"Q",
         )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_
+        )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_,
             1,
             b"Q",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_
         )
         self.assertArgHasType(
             TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_,
@@ -428,4 +458,8 @@ class TestMTLRenderPipeline(TestCase):
         self.assertResultHasType(
             TestMTLRenderPipelineHelper.requiredThreadsPerMeshThreadgroup,
             Metal.MTLSize.__typestr__,
+        )
+
+        self.assertResultIsRetained(
+            TestMTLRenderPipelineHelper.newRenderPipelineDescriptorForSpecialization
         )

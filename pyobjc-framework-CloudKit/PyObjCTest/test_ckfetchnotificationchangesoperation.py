@@ -5,13 +5,13 @@ import objc
 
 class TestCKFetchNotificationChangesOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             CloudKit.CKFetchNotificationChangesOperation, objc.objc_class
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchNotificationChangesOperation.setNotificationChangedBlock_,
             0,

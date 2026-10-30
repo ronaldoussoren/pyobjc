@@ -3,13 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSVisualEffectView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSVisualEffectBlendingMode)
-        self.assertIsEnumType(AppKit.NSVisualEffectMaterial)
-        self.assertIsEnumType(AppKit.NSVisualEffectState)
+        self.assertEqual(AppKit.NSVisualEffectBlendingModeBehindWindow, 0)
+        self.assertEqual(AppKit.NSVisualEffectBlendingModeWithinWindow, 1)
 
-    @min_os_level("10.10")
-    def testConstants10_10(self):
+        self.assertIsEnumType(AppKit.NSVisualEffectMaterial)
         self.assertEqual(AppKit.NSVisualEffectMaterialAppearanceBased, 0)
         self.assertEqual(AppKit.NSVisualEffectMaterialLight, 1)
         self.assertEqual(AppKit.NSVisualEffectMaterialDark, 2)
@@ -30,14 +29,12 @@ class TestNSVisualEffectView(TestCase):
         self.assertEqual(AppKit.NSVisualEffectMaterialUnderWindowBackground, 21)
         self.assertEqual(AppKit.NSVisualEffectMaterialUnderPageBackground, 22)
 
-        self.assertEqual(AppKit.NSVisualEffectBlendingModeBehindWindow, 0)
-        self.assertEqual(AppKit.NSVisualEffectBlendingModeWithinWindow, 1)
-
+        self.assertIsEnumType(AppKit.NSVisualEffectState)
         self.assertEqual(AppKit.NSVisualEffectStateFollowsWindowActiveState, 0)
         self.assertEqual(AppKit.NSVisualEffectStateActive, 1)
         self.assertEqual(AppKit.NSVisualEffectStateInactive, 2)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSVisualEffectView.isEmphasized)
         self.assertArgIsBOOL(AppKit.NSVisualEffectView.setEmphasized_, 0)

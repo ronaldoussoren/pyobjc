@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 
 import xpc
 import objc
@@ -10,7 +10,7 @@ xpc_handler_t = b"v@"
 
 
 class TestXPC(TestCase):
-    def test_metadata_sane(self):
+    def test_callable_metadata_is_sane(self):
         to_exclude = set()
         for class_name in (
             "XPC_TYPE_ACTIVITY",
@@ -134,7 +134,15 @@ class TestXPC(TestCase):
         self.assertArgIsNullTerminated(xpc.xpc_string_create_with_format, 0)
         self.assertArgIsPrintf(xpc.xpc_string_create_with_format, 0)
 
-        self.assertNotHasAttr(xpc, "xpc_string_create_with_format_and_arguments")
+        with self.assertRaisesRegex(
+            TypeError, "Use 'xpc.xpc_string_create_with_format' instead."
+        ):
+            xpc.xpc_string_create_with_format_and_arguments("foo", [])
+
+        self.assertArgIsIn(xpc.xpc_string_create_with_format_and_arguments, 0)
+        self.assertArgIsNullTerminated(
+            xpc.xpc_string_create_with_format_and_arguments, 0
+        )
 
         xpc.xpc_string_get_length
 
@@ -205,11 +213,51 @@ class TestXPC(TestCase):
         self.assertResultIsRetained(xpc.xpc_array_create_connection)
 
         # Manual binding:
-        # self.assertResultIsRetained(xpc.xpc_dictionary_create)
-        # self.assertArgIsIn(xpc.xpc_dictionary_create, 0)
-        # self.assertArgSizeInArg(xpc.xpc_dictionary_create, 0, 2)
-        # self.assertArgIsIn(xpc.xpc_dictionary_create, 1)
-        # self.assertArgSizeInArg(xpc.xpc_dictionary_create, 1, 2)
+        self.assertResultIsRetained(xpc.xpc_dictionary_create)
+        self.assertArgIsIn(xpc.xpc_dictionary_create, 0)
+        self.assertArgSizeInArg(xpc.xpc_dictionary_create, 0, 2)
+        self.assertArgIsIn(xpc.xpc_dictionary_create, 1)
+        self.assertArgSizeInArg(xpc.xpc_dictionary_create, 1, 2)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            xpc.xpc_dictionary_create()
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            xpc.xpc_dictionary_create(42, [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], 2)
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            xpc.xpc_dictionary_create([b"key1", b"key2"], 42, 2)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'type'"
+        ):
+            xpc.xpc_dictionary_create(
+                [b"key1", b"key2"], [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], object
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "Expecting sequence of exactly 9 items for"
+        ):
+            value = xpc.xpc_dictionary_create(
+                [b"key1", b"key2"], [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], 9
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "Expecting sequence of exactly 2 items for"
+        ):
+            value = xpc.xpc_dictionary_create(
+                [b"key1", b"key2"], [xpc.XPC_BOOL_TRUE], 2
+            )
+
+        with self.assertRaisesRegex(TypeError, "Keys should be sequence of bytes"):
+            value = xpc.xpc_dictionary_create(
+                ["key1", "key2"], [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], 2
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            value = xpc.xpc_dictionary_create(
+                [b"key1", b"key2"], [NoObjCClass(), xpc.XPC_BOOL_FALSE], 2
+            )
 
         value = xpc.xpc_dictionary_create(
             [b"key1", b"key2"], [xpc.XPC_BOOL_TRUE, xpc.XPC_BOOL_FALSE], 2

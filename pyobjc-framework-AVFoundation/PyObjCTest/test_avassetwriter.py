@@ -1,6 +1,17 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import subprocess
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    min_sdk_level,
+)
+
+
+def _build_version():
+    return (
+        subprocess.check_output(["/usr/bin/sw_vers", "-buildVersion"]).strip().decode()
+    )
 
 
 class TestAVAssetWriterHelper(AVFoundation.NSObject):
@@ -12,26 +23,15 @@ class TestAVAssetWriterHelper(AVFoundation.NSObject):
 
 
 class TestAVAssetWriter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAssetWriterStatus)
-
-    @min_os_level("10.7")
-    def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetWriterStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetWriterStatusWriting, 1)
         self.assertEqual(AVFoundation.AVAssetWriterStatusCompleted, 2)
         self.assertEqual(AVFoundation.AVAssetWriterStatusFailed, 3)
         self.assertEqual(AVFoundation.AVAssetWriterStatusCancelled, 4)
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
-        self.assertArgIsBlock(
-            AVFoundation.AVAssetWriter.finishWritingWithCompletionHandler_, 0, b"v"
-        )
-        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.canAddInputGroup_)
-
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(
             AVFoundation.AVAssetWriter.assetWriterWithURL_fileType_error_, 2
         )
@@ -49,16 +49,31 @@ class TestAVAssetWriter(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.startWriting)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.finishWriting)
 
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetWriter.finishWritingWithCompletionHandler_, 0, b"v"
+        )
+        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.canAddInputGroup_)
+
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.producesCombinableFragments)
         self.assertArgIsBOOL(
             AVFoundation.AVAssetWriter.setProducesCombinableFragments_, 0
         )
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        # XXX: These methods aren't present on macOS 27 beta 5, checked with ObjC program.
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "isProVideoStorageSupported")
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "usesProVideoStorage")
+        self.assertNotHasAttr(AVFoundation.AVAssetWriter, "setUsesProVideoStorage_")
+        # self.assertResultIsBOOL(AVFoundation.AVAssetWriter.isProVideoStorageSupported)
+        # self.assertResultIsBOOL(AVFoundation.AVAssetWriter.usesProVideoStorage)
+        # self.assertArgIsBOOL(AVFoundation.AVAssetWriter.setUsesProVideoStorage_, 0)
+
     @min_sdk_level("11.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVAssetWriterDelegate")
+        self.assertProtocolExists("AVAssetWriterDelegate", AVFoundation)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

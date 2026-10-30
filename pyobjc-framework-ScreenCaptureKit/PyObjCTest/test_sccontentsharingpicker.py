@@ -4,7 +4,7 @@ import ScreenCaptureKit
 
 
 class TestSCContentSharingPicker(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCContentSharingPickerMode)
         self.assertEqual(
             ScreenCaptureKit.SCContentSharingPickerModeSingleWindow, 1 << 0
@@ -24,7 +24,7 @@ class TestSCContentSharingPicker(TestCase):
 
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("SCContentSharingPickerObserver")
+        self.assertProtocolExists("SCContentSharingPickerObserver", ScreenCaptureKit)
 
     @min_os_level("14.0")
     def test_methods(self):
@@ -38,3 +38,16 @@ class TestSCContentSharingPicker(TestCase):
 
         self.assertResultIsBOOL(ScreenCaptureKit.SCContentSharingPicker.isActive)
         self.assertArgIsBOOL(ScreenCaptureKit.SCContentSharingPicker.setActive_, 0)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        # Some tests fail when testing through the class.
+        obj = ScreenCaptureKit.SCContentSharingPickerConfiguration()
+
+        self.assertResultIsBOOL(obj.showsMicrophoneControl)
+        self.assertArgIsBOOL(obj.setShowsMicrophoneControl_, 0)
+
+        self.assertResultIsBOOL(obj.showsCameraControl)
+        self.assertArgIsBOOL(obj.setShowsCameraControl_, 0)
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentSharingPicker.isAvailable)

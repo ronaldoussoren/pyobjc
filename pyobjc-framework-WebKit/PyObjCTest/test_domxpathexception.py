@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMXPathException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(WebKit.DOMXPathException, str)
 
         self.assertEqual(WebKit.DOM_INVALID_EXPRESSION_ERR, 51)

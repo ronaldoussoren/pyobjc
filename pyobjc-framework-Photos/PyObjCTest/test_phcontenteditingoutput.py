@@ -5,7 +5,7 @@ import Photos
 
 class TestPHContentEditingOutput(TestCase):
     @min_os_level("10.11")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(Photos.PHContentEditingOutput, objc.objc_class)
 
         @min_os_level("14.0")

@@ -3,23 +3,8 @@ import AudioVideoBridging
 
 
 class TestAVBConstants(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPFlags)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPMessageType)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPStatusCode)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPControllerCapabilities)
+    def test_enums(self):
         self.assertIsEnumType(AudioVideoBridging.AVB17221ADPEntityCapabilities)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPListenerCapabilities)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPTalkerCapabilities)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPAddressAccessTLVMode)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPMessageType)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPStatusCode)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221AEMCommandType)
-        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPIPFlag)
-
-    def test_constants(self):
-        self.assertIsInstance(AudioVideoBridging.AVBErrorDomain, str)
-
         self.assertEqual(
             AudioVideoBridging.AVB17221ADPEntityCapabilitiesDFUMode, 0x00000001
         )
@@ -119,6 +104,7 @@ class TestAVBConstants(TestCase):
             0x01000000,
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPTalkerCapabilities)
         self.assertEqual(
             AudioVideoBridging.AVB17221ADPTalkerCapabilitiesImplemented, 0x0001
         )
@@ -144,6 +130,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221ADPTalkerCapabilitiesHasVideoSource, 0x8000
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPListenerCapabilities)
         self.assertEqual(
             AudioVideoBridging.AVB17221ADPListenerCapabilitiesImplemented, 0x0001
         )
@@ -169,6 +156,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221ADPListenerCapabilitiesHasVideoSink, 0x8000
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ADPControllerCapabilities)
         self.assertEqual(
             AudioVideoBridging.AVB17221ADPControllerCapabilitiesImplemented, 0x00000001
         )
@@ -177,6 +165,7 @@ class TestAVBConstants(TestCase):
             0x00000002,
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPMessageType)
         self.assertEqual(AudioVideoBridging.AVB17221AECPMessageTypeAEMCommand, 0x0)
         self.assertEqual(AudioVideoBridging.AVB17221AECPMessageTypeAEMResponse, 0x1)
         self.assertEqual(
@@ -198,6 +187,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AECPMessageTypeVendorUniqueResponse, 0x7
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPStatusCode)
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusSuccess, 0x00)
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusNotImplemented, 0x01)
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusNoSuchDescriptor, 0x02)
@@ -233,6 +223,7 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusAVCFailure, 0x02)
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPMessageType)
         self.assertEqual(
             AudioVideoBridging.AVB17221ACMPMessageTypeConnectTXCommand, 0x0
         )
@@ -276,6 +267,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221ACMPMessageTypeGetTXConnectionResponse, 0xD
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPStatusCode)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusSuccess, 0x00)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusListenerUnknownID, 0x01)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusTalkerUnknownID, 0x02)
@@ -306,6 +298,7 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(AudioVideoBridging.AVB17221ACMPStatusNotSupported, 0x1F)
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPFlags)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPFlagsNone, 0x0000)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPFlagsClassB, 0x0001)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPFlagsFastConnect, 0x0002)
@@ -325,6 +318,7 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(AudioVideoBridging.AVB17221ACMPFlagsStreamingUsingUDP, 0x0200)
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AEMCommandType)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAcquireEntity, 0x0000)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeLockEntity, 0x0001)
         self.assertEqual(
@@ -639,10 +633,15 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AEMCommandTypeAuthenticationAddKeyNonce, 0x0068
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221AECPAddressAccessTLVMode)
         self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeRead, 0x00)
         self.assertEqual(AudioVideoBridging.AVB17221AECPAddressAccessTLVModeWrite, 0x01)
         self.assertEqual(
             AudioVideoBridging.AVB17221AECPAddressAccessTLVModeExecute, 0x02
         )
 
+        self.assertIsEnumType(AudioVideoBridging.AVB17221ACMPIPFlag)
         self.assertEqual(AudioVideoBridging.AVB17221ACMPIPFlagNone, 0x0000)
+
+    def test_constants(self):
+        self.assertIsInstance(AudioVideoBridging.AVBErrorDomain, str)

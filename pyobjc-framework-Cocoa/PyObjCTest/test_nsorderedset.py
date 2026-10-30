@@ -4,16 +4,7 @@ import objc
 
 
 class TestNSOrderedSet(TestCase):
-    @min_os_level("10.15")
-    def testMethods10_15(self):
-        self.assertArgIsBlock(
-            Foundation.NSOrderedSet.differenceFromOrderedSet_withOptions_usingEquivalenceTest_,
-            2,
-            b"Z@@",
-        )
-
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSOrderedSet.isEqualToOrderedSet_)
         self.assertResultIsBOOL(Foundation.NSOrderedSet.containsObject_)
         self.assertResultIsBOOL(Foundation.NSOrderedSet.intersectsOrderedSet_)
@@ -123,8 +114,15 @@ class TestNSOrderedSet(TestCase):
             objc._C_NSInteger + b"@@",
         )
 
-    @min_os_level("10.7")
-    def testCreation(self):
+    @min_os_level("10.15")
+    def test_methods10_15(self):
+        self.assertArgIsBlock(
+            Foundation.NSOrderedSet.differenceFromOrderedSet_withOptions_usingEquivalenceTest_,
+            2,
+            b"Z@@",
+        )
+
+    def test_creation(self):
         self.assertArgIsBOOL(
             Foundation.NSOrderedSet.orderedSetWithOrderedSet_range_copyItems_, 2
         )

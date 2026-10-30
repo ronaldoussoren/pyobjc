@@ -16,9 +16,9 @@ class TestPKPaymentInformationEventExtensionHelper(PassKit.NSObject):
 
 class TestPKPaymentInformationEventExtension(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("PKPaymentInformationRequestHandling")
+        self.assertProtocolExists("PKPaymentInformationRequestHandling", PassKit)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestPKPaymentInformationEventExtensionHelper.handleInformationRequest_completion_,
             1,

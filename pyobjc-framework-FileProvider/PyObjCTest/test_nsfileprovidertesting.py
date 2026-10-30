@@ -18,14 +18,12 @@ class TestNSFileProviderTestingHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderTesting(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(FileProvider.NSFileProviderTestingOperationSide)
-        self.assertIsEnumType(FileProvider.NSFileProviderTestingOperationType)
-
-    def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideDisk, 0)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideFileProvider, 1)
 
+        self.assertIsEnumType(FileProvider.NSFileProviderTestingOperationType)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeIngestion, 0)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeLookup, 1)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeCreation, 2)
@@ -41,17 +39,21 @@ class TestNSFileProviderTesting(TestCase):
 
     @min_sdk_level("11.3")
     def test_protocols(self):
-        self.assertProtocolExists("NSFileProviderTestingOperation")
-        self.assertProtocolExists("NSFileProviderTestingIngestion")
-        self.assertProtocolExists("NSFileProviderTestingLookup")
-        self.assertProtocolExists("NSFileProviderTestingContentFetch")
-        self.assertProtocolExists("NSFileProviderTestingChildrenEnumeration")
-        self.assertProtocolExists("NSFileProviderTestingCreation")
-        self.assertProtocolExists("NSFileProviderTestingModification")
-        self.assertProtocolExists("NSFileProviderTestingDeletion")
-        self.assertProtocolExists("NSFileProviderTestingCollisionResolution")
+        self.assertProtocolExists("NSFileProviderTestingOperation", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingIngestion", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingLookup", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingContentFetch", FileProvider)
+        self.assertProtocolExists(
+            "NSFileProviderTestingChildrenEnumeration", FileProvider
+        )
+        self.assertProtocolExists("NSFileProviderTestingCreation", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingModification", FileProvider)
+        self.assertProtocolExists("NSFileProviderTestingDeletion", FileProvider)
+        self.assertProtocolExists(
+            "NSFileProviderTestingCollisionResolution", FileProvider
+        )
 
-    def test_proto_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSFileProviderTestingHelper.side, objc._C_NSUInteger
         )

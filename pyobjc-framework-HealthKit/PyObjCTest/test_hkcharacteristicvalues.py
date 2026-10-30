@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKCharacteristicValues(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKActivityMoveMode)
         self.assertEqual(HealthKit.HKActivityMoveModeActiveEnergy, 1)
         self.assertEqual(HealthKit.HKActivityMoveModeAppleMoveTime, 2)

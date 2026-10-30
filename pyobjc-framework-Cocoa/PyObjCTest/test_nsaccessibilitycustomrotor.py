@@ -3,14 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSAccessibilityCustomRotor(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorSearchDirection)
-        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionPrevious, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionNext, 1)
 
+        self.assertIsEnumType(AppKit.NSAccessibilityCustomRotorType)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeCustom, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAny, 1)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAnnotation, 2)
@@ -35,5 +33,7 @@ class TestNSAccessibilityCustomRotor(TestCase):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAudiograph, 21)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
-        self.assertProtocolExists("NSAccessibilityCustomRotorItemSearchDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "NSAccessibilityCustomRotorItemSearchDelegate", AppKit
+        )

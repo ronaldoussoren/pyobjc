@@ -1,13 +1,10 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVPlayerItemProtectedContentAdditions(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVContentAuthorizationStatus)
-
-    @min_os_level("10.7")
-    def testConstants(self):
         self.assertEqual(AVFoundation.AVContentAuthorizationUnknown, 0)
         self.assertEqual(AVFoundation.AVContentAuthorizationCompleted, 1)
         self.assertEqual(AVFoundation.AVContentAuthorizationCancelled, 2)
@@ -16,7 +13,7 @@ class TestAVPlayerItemProtectedContentAdditions(TestCase):
         self.assertEqual(AVFoundation.AVContentAuthorizationNotAvailable, 5)
         self.assertEqual(AVFoundation.AVContentAuthorizationNotPossible, 6)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItem.isAuthorizationRequiredForPlayback
         )

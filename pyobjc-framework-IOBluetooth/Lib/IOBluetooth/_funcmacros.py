@@ -103,8 +103,8 @@ def STRIP_RESPONSE_CODE_FINAL_BIT(RESPONSE_CODE):
 
 def IS_REQUEST_PDU(_pduID):
     global IOBluetooth
-    if IOBluetooth is None:
-        import IOBluetooth
+    if IOBluetooth is None:  # pragma: no cover
+        import IOBluetooth  # pragma: no cover
     return (
         (_pduID == IOBluetooth.kBluetoothSDPPDUIDServiceSearchRequest)
         or (_pduID == IOBluetooth.kBluetoothSDPPDUIDServiceAttributeRequest)
@@ -114,8 +114,8 @@ def IS_REQUEST_PDU(_pduID):
 
 def IS_RESPONSE_PDU(_pduID):
     global IOBluetooth
-    if IOBluetooth is None:
-        import IOBluetooth
+    if IOBluetooth is None:  # pragma: no cover
+        import IOBluetooth  # pragma: no cover
     return (
         (_pduID == IOBluetooth.kBluetoothSDPPDUIDErrorResponse)
         or (_pduID == IOBluetooth.kBluetoothSDPPDUIDServiceSearchResponse)

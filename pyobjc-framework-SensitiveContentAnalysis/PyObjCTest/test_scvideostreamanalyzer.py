@@ -6,7 +6,7 @@ SCVideoStreamAnalysisChangeHandler = b"v@@"
 
 
 class TestSCVideoStreamAnalyzer(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             SensitiveContentAnalysis.SCVideoStreamAnalyzerStreamDirection
         )

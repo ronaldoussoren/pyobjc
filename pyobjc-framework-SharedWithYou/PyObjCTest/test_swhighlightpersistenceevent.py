@@ -4,7 +4,7 @@ import SharedWithYou
 
 
 class TestSWHighlightPersistenceEvent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SharedWithYou.SWHighlightPersistenceEventTrigger)
         self.assertEqual(SharedWithYou.SWHighlightPersistenceEventTriggerCreated, 1)
         self.assertEqual(SharedWithYou.SWHighlightPersistenceEventTriggerDeleted, 2)

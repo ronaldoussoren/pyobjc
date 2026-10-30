@@ -5,7 +5,7 @@ import SceneKit
 
 
 class TestSCNPhysicsShape(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(SceneKit.SCNPhysicsShapeOption, str)
         self.assertIsTypedEnum(SceneKit.SCNPhysicsShapeType, str)
 

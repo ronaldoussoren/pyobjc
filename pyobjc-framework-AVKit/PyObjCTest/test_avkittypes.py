@@ -4,7 +4,7 @@ import AVKit
 
 
 class TestAVKitTypes(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVKit.AVVideoFrameAnalysisType)
         self.assertEqual(AVKit.AVVideoFrameAnalysisTypeNone, 0)
         self.assertEqual(AVKit.AVVideoFrameAnalysisTypeDefault, 1 << 0)

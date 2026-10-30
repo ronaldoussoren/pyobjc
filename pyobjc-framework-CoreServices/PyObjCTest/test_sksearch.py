@@ -1,15 +1,15 @@
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestSKSearch(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreServices.SKSearchGroupRef, objc.objc_class)
         self.assertIsInstance(CoreServices.SKSearchResultsRef, objc.objc_class)
         self.assertIsInstance(CoreServices.SKSearchRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kSKSearchRanked, 0)
         self.assertEqual(CoreServices.kSKSearchBooleanRanked, 1)
         self.assertEqual(CoreServices.kSKSearchRequiredRanked, 2)
@@ -20,7 +20,7 @@ class TestSKSearch(TestCase):
         self.assertEqual(CoreServices.kSKSearchOptionSpaceMeansOR, 2)
         self.assertEqual(CoreServices.kSKSearchOptionFindSimilar, 4)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreServices.SKSearchGroupGetTypeID(), int)
         self.assertIsInstance(CoreServices.SKSearchResultsGetTypeID(), int)
         self.assertIsInstance(CoreServices.SKSearchGetTypeID(), int)
@@ -82,12 +82,6 @@ class TestSKSearch(TestCase):
 
         cnt = CoreServices.SKSearchResultsGetCount(orig_res)
         self.assertIsInstance(cnt, int)
-
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            # The API does not work on macOS 10.7 or later.
-            # (Verified with an ObjC reproducer).
-            # See issue #9
-            self.assertGreater(cnt, 0)
 
         res = orig_res
 

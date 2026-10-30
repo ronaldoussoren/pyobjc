@@ -3,7 +3,7 @@ import Intents
 
 
 class TestINStickerType(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INStickerType)
         self.assertEqual(Intents.INStickerTypeUnknown, 0)
         self.assertEqual(Intents.INStickerTypeEmoji, 1)

@@ -98,7 +98,8 @@ static PyObject* _Nullable imp_vectorcall(PyObject* _self,
     assert(pyself != NULL);
     assert(self->callfunc != NULL);
 
-    return self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
+    PyObject* r = self->callfunc((PyObject*)self, pyself, args + 1, nargsf - 1);
+    return r;
 }
 
 static PyObject* _Nullable imp_vectorcall_simple(PyObject* _self,
@@ -303,8 +304,8 @@ static PyType_Spec imp_spec = {
     .basicsize = sizeof(PyObjCIMPObject),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_VECTORCALL,
-    .slots = imp_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_VECTORCALL,
+    .slots     = imp_slots,
 };
 
 PyObject* PyObjCIMP_Type;
@@ -350,6 +351,8 @@ static PyObject* _Nullable call_instanceMethodForSelector_(
     IMP       retval;
     PyObject* attr;
     PyObject* res;
+
+    assert(PyObjCNativeSelector_Check(method));
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;
@@ -441,6 +444,8 @@ static PyObject* _Nullable call_methodForSelector_(PyObject* method, PyObject* s
     IMP               retval;
     PyObject*         attr;
     PyObject*         res;
+
+    assert(PyObjCNativeSelector_Check(method));
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
         return NULL;

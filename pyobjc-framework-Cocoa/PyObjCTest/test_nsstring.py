@@ -6,158 +6,36 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint
 
 
 class TestNSString(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSStringCompareOptions)
-        self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
-        self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
-
-    def testClassTree(self):
-        self.assertTrue(issubclass(objc.pyobjc_unicode, str))
-
-    def testCompare(self):
-        self.assertTrue(
-            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
-            "NSString doesn't compare correctly",
-        )
-        self.assertTrue(
-            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "Foo") == 0,
-            "NSString doesn't compare correctly",
-        )
-
-    def testFormatting(self):
-        # The test on instances is slightly more verbose to avoid warnings
-        obj = Foundation.NSString.alloc().initWithFormat_("foo %d", 42)
-        self.assertEqual(obj, "foo 42")
-
-        obj = Foundation.NSString.alloc().initWithFormat_locale_("foo %d", {}, 42)
-        self.assertEqual(obj, "foo 42")
-
-    def testGetCString(self):
-        # Custom wrappers
-        v = Foundation.NSString.stringWithString_("hello world")
-
-        self.assertEqual(v, "hello world")
-
-        x = v.getCString_maxLength_(None, 16)
-        self.assertEqual(x, b"hello world")
-
-        self.assertRaises(objc.error, v.getCString_maxLength_, None, 4)
-
-        x, loc = v.getCString_maxLength_range_remainingRange_(None, 4, (1, 4), None)
-        self.assertEqual(x, b"ello")
-        self.assertEqual(loc.location, 5)
-        self.assertEqual(loc.length, 0)
-
-
-class TestNSStringBridging(TestCase):
-    def setUp(self):
-        self.nsUniString = Foundation.NSString.stringWithString_("unifoo")
-        self.pyUniString = "unifoo"
-
-    def testBasicComparison(self):
-        self.assertEqual("unifoo", Foundation.NSString.stringWithString_("unifoo"))
-
-        u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
-        self.assertEqual(u, Foundation.NSString.stringWithString_(u))
-
-    def testTypesAndClasses(self):
-        self.assertIsInstance(self.nsUniString, str)
-        self.assertIsInstance(self.pyUniString, str)
-
-    def testNSStringMethodAccess(self):
-        self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
-        v = self.nsUniString.stringByAppendingString_
-        self.assertIsInstance(v, objc.selector)
-
-
-class TestMutable(TestCase):
-    def testSync(self):
-        # Test that python and ObjC string representation are not
-        # automaticly synchronized.
-        pyStr = Foundation.NSMutableString.stringWithString_("hello")
-        ocStr = pyStr.nsstring()
-        self.assertEqual(pyStr, "hello")
-        self.assertIsInstance(ocStr, Foundation.NSMutableString)
-        ocStr.appendString_(" world")
-        self.assertEqual(pyStr, "hello")
-
-
-class TestPickle(TestCase):
-    # Testcases for pickling of Objective-C strings. Those are pickled as
-    # str strings.
-
-    def setUp(self):
-        self.strVal = Foundation.NSTaskDidTerminateNotification
-
-    def testPickle(self):
-        # Check that ObjC-strings pickle as str strings
-        import pickle
-
-        s = pickle.dumps(self.strVal, 0)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-        s = pickle.dumps(self.strVal, 1)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-        s = pickle.dumps(self.strVal, 2)
-        v = pickle.loads(s)
-        self.assertEqual(type(v), str)
-
-    def testFormat(self):
-        v = self.strVal
-
-        d = v.stringByAppendingFormat_("hello")
-        self.assertEqual(d, v + "hello")
-
-        d = v.stringByAppendingFormat_("hello %s %d", b"world", 101)
-        self.assertEqual(d, v + "hello world 101")
-
-        v = Foundation.NSString.alloc().initWithFormat_("%s %d %s", b"a", 44, b"cc")
-        self.assertEqual(v, "a 44 cc")
-
-        v = Foundation.NSString.alloc().initWithFormat_locale_(
-            "%s %d %s", None, b"a", 44, b"cc"
-        )
-        self.assertEqual(v, "a 44 cc")
-
-        v = Foundation.NSString.stringWithFormat_("aap %s mies", b"noot")
-        self.assertEqual(v, "aap noot mies")
-
-        v = Foundation.NSString.localizedStringWithFormat_("aap %s mies", b"noot")
-        self.assertEqual(v, "aap noot mies")
-
-        v = Foundation.NSMutableString.stringWithString_("hello")
-        v.appendFormat_(" bar %s", b"baz")
-        self.assertEqual(v.nsstring(), "hello bar baz")
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(Foundation.NSRegularExpressionSearch, 1024)
-
-    @min_os_level("10.5")
-    def testConstants10_5(self):
-        self.assertEqual(Foundation.NSMaximumStringLength, sys.maxsize)
-        self.assertEqual(Foundation.NSDiacriticInsensitiveSearch, 128)
-        self.assertEqual(Foundation.NSWidthInsensitiveSearch, 256)
-        self.assertEqual(Foundation.NSForcedOrderingSearch, 512)
-
-        self.assertEqual(Foundation.NSProprietaryStringEncoding, 65536)
-
-    def testConstants(self):
-        self.assertIsInstance(Foundation.NSParseErrorException, str)
-        self.assertIsInstance(Foundation.NSCharacterConversionException, str)
-
         self.assertEqual(Foundation.NSCaseInsensitiveSearch, 1)
         self.assertEqual(Foundation.NSLiteralSearch, 2)
         self.assertEqual(Foundation.NSBackwardsSearch, 4)
         self.assertEqual(Foundation.NSAnchoredSearch, 8)
         self.assertEqual(Foundation.NSNumericSearch, 64)
+        self.assertEqual(Foundation.NSDiacriticInsensitiveSearch, 128)
+        self.assertEqual(Foundation.NSWidthInsensitiveSearch, 256)
+        self.assertEqual(Foundation.NSForcedOrderingSearch, 512)
 
+        self.assertEqual(Foundation.NSRegularExpressionSearch, 1024)
+
+        self.assertIsEnumType(Foundation.NSStringEncodingConversionOptions)
+        self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)
+        self.assertEqual(Foundation.NSStringEncodingConversionExternalRepresentation, 2)
+
+        self.assertIsEnumType(Foundation.NSStringEnumerationOptions)
+        self.assertEqual(Foundation.NSStringEnumerationByLines, 0)
+        self.assertEqual(Foundation.NSStringEnumerationByParagraphs, 1)
+        self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
+        self.assertEqual(Foundation.NSStringEnumerationByWords, 3)
+        self.assertEqual(Foundation.NSStringEnumerationBySentences, 4)
+        self.assertEqual(Foundation.NSStringEnumerationByCaretPositions, 5)
+        self.assertEqual(Foundation.NSStringEnumerationByDeletionClusters, 6)
+        self.assertEqual(Foundation.NSStringEnumerationReverse, 1 << 8)
+        self.assertEqual(Foundation.NSStringEnumerationSubstringNotRequired, 1 << 9)
+        self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
+
+        self.assertIsEnumType(Foundation.NSStringEncoding)
         self.assertEqual(Foundation.NSASCIIStringEncoding, 1)
         self.assertEqual(Foundation.NSNEXTSTEPStringEncoding, 2)
         self.assertEqual(Foundation.NSJapaneseEUCStringEncoding, 3)
@@ -191,11 +69,55 @@ class TestPickle(TestCase):
         self.assertEqual(
             Foundation.NSUTF32LittleEndianStringEncoding, cast_uint(0x9C000100)
         )
+        self.assertEqual(Foundation.NSProprietaryStringEncoding, 65536)
 
-        self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)
-        self.assertEqual(Foundation.NSStringEncodingConversionExternalRepresentation, 2)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSStringEncodingDetectionOptionsKey, str)
 
-    def testMethods(self):
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSParseErrorException, str)
+        self.assertIsInstance(Foundation.NSCharacterConversionException, str)
+
+        self.assertEqual(Foundation.NSMaximumStringLength, sys.maxsize)
+
+    @min_os_level("10.11")
+    def test_constants10_11(self):
+        self.assertIsInstance(
+            Foundation.NSStringEncodingDetectionSuggestedEncodingsKey, str
+        )
+        self.assertIsInstance(
+            Foundation.NSStringEncodingDetectionDisallowedEncodingsKey, str
+        )
+        self.assertIsInstance(
+            Foundation.NSStringEncodingDetectionUseOnlySuggestedEncodingsKey, str
+        )
+        self.assertIsInstance(Foundation.NSStringEncodingDetectionAllowLossyKey, str)
+        self.assertIsInstance(Foundation.NSStringEncodingDetectionFromWindowsKey, str)
+        self.assertIsInstance(
+            Foundation.NSStringEncodingDetectionLossySubstitutionKey, str
+        )
+        self.assertIsInstance(
+            Foundation.NSStringEncodingDetectionLikelyLanguageKey, str
+        )
+        self.assertIsInstance(Foundation.NSStringTransformLatinToKatakana, str)
+
+        self.assertIsInstance(Foundation.NSStringTransformLatinToHiragana, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToHangul, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToArabic, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToHebrew, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToThai, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToCyrillic, str)
+        self.assertIsInstance(Foundation.NSStringTransformLatinToGreek, str)
+        self.assertIsInstance(Foundation.NSStringTransformToLatin, str)
+        self.assertIsInstance(Foundation.NSStringTransformMandarinToLatin, str)
+        self.assertIsInstance(Foundation.NSStringTransformHiraganaToKatakana, str)
+        self.assertIsInstance(Foundation.NSStringTransformFullwidthToHalfwidth, str)
+        self.assertIsInstance(Foundation.NSStringTransformToXMLHex, str)
+        self.assertIsInstance(Foundation.NSStringTransformToUnicodeName, str)
+        self.assertIsInstance(Foundation.NSStringTransformStripCombiningMarks, str)
+        self.assertIsInstance(Foundation.NSStringTransformStripDiacritics, str)
+
+    def test_methods(self):
         self.assertArgHasType(
             Foundation.NSString.getCharacters_range_, 0, b"o^" + objc._C_UNICHAR
         )
@@ -392,7 +314,7 @@ class TestPickle(TestCase):
             Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, b"o^v"
         )
         self.assertArgSizeInArg(
-            Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, 1
+            Foundation.NSString.getCString_maxLength_range_remainingRange_, 0, (1, 3)
         )
         self.assertArgIsOut(
             Foundation.NSString.getCString_maxLength_range_remainingRange_, 3
@@ -422,21 +344,6 @@ class TestPickle(TestCase):
         self.assertArgHasType(Foundation.NSString.stringWithCString_, 0, b"n^v")
         self.assertArgIsNullTerminated(Foundation.NSString.stringWithCString_, 0)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(Foundation.NSStringEnumerationByLines, 0)
-        self.assertEqual(Foundation.NSStringEnumerationByParagraphs, 1)
-        self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
-        self.assertEqual(Foundation.NSStringEnumerationByWords, 3)
-        self.assertEqual(Foundation.NSStringEnumerationBySentences, 4)
-        self.assertEqual(Foundation.NSStringEnumerationByCaretPositions, 5)
-        self.assertEqual(Foundation.NSStringEnumerationByDeletionClusters, 6)
-        self.assertEqual(Foundation.NSStringEnumerationReverse, 1 << 8)
-        self.assertEqual(Foundation.NSStringEnumerationSubstringNotRequired, 1 << 9)
-        self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgHasType(
             Foundation.NSString.enumerateSubstringsInRange_options_usingBlock_,
             0,
@@ -455,28 +362,6 @@ class TestPickle(TestCase):
             Foundation.NSString.enumerateLinesUsingBlock_, 0, b"v@o^" + objc._C_NSBOOL
         )
 
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionSuggestedEncodingsKey, str
-        )
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionDisallowedEncodingsKey, str
-        )
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionUseOnlySuggestedEncodingsKey, str
-        )
-        self.assertIsInstance(Foundation.NSStringEncodingDetectionAllowLossyKey, str)
-        self.assertIsInstance(Foundation.NSStringEncodingDetectionFromWindowsKey, str)
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionLossySubstitutionKey, str
-        )
-        self.assertIsInstance(
-            Foundation.NSStringEncodingDetectionLikelyLanguageKey, str
-        )
-
-    @min_os_level("10.10")
-    def testMethods10_10(self):
         self.assertArgHasType(
             Foundation.NSString.stringEncodingForData_encodingOptions_convertedString_usedLossyConversion_,  # noqa: B950
             2,
@@ -489,26 +374,7 @@ class TestPickle(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertIsInstance(Foundation.NSStringTransformLatinToKatakana, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToHiragana, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToHangul, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToArabic, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToHebrew, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToThai, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToCyrillic, str)
-        self.assertIsInstance(Foundation.NSStringTransformLatinToGreek, str)
-        self.assertIsInstance(Foundation.NSStringTransformToLatin, str)
-        self.assertIsInstance(Foundation.NSStringTransformMandarinToLatin, str)
-        self.assertIsInstance(Foundation.NSStringTransformHiraganaToKatakana, str)
-        self.assertIsInstance(Foundation.NSStringTransformFullwidthToHalfwidth, str)
-        self.assertIsInstance(Foundation.NSStringTransformToXMLHex, str)
-        self.assertIsInstance(Foundation.NSStringTransformToUnicodeName, str)
-        self.assertIsInstance(Foundation.NSStringTransformStripCombiningMarks, str)
-        self.assertIsInstance(Foundation.NSStringTransformStripDiacritics, str)
-
-    @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(Foundation.NSString.localizedStandardContainsString_)
         self.assertArgIsBOOL(Foundation.NSString.stringByApplyingTransform_reverse_, 1)
 
@@ -570,3 +436,160 @@ class TestPickle(TestCase):
         # Foundation.NSString.stringWithValidatedFormat_validFormatSpecifiers_locale_error_,
         # 3,
         # )
+
+    def test_class_tree(self):
+        self.assertTrue(issubclass(objc.pyobjc_unicode, str))
+
+    def test_compare(self):
+        self.assertTrue(
+            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
+            "NSString doesn't compare correctly",
+        )
+        self.assertTrue(
+            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "Foo") == 0,
+            "NSString doesn't compare correctly",
+        )
+
+    def test_formatting(self):
+        # The test on instances is slightly more verbose to avoid warnings
+        obj = Foundation.NSString.alloc().initWithFormat_("foo %d", 42)
+        self.assertEqual(obj, "foo 42")
+
+        obj = Foundation.NSString.alloc().initWithFormat_locale_("foo %d", {}, 42)
+        self.assertEqual(obj, "foo 42")
+
+    def test_get_cstring(self):
+        # Custom wrappers
+        v = Foundation.NSString.stringWithString_("hello world")
+
+        self.assertEqual(v, "hello world")
+
+        x = v.getCString_maxLength_(None, 16)
+        self.assertEqual(x, b"hello world")
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            x = v.getCString_maxLength_()
+
+        with self.assertRaisesRegex(ValueError, "buffer must be None"):
+            x = v.getCString_maxLength_(bytearray(40), 16)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            x = v.getCString_maxLength_(None, "foo")
+
+        self.assertRaises(objc.error, v.getCString_maxLength_, None, 4)
+
+        x, loc = v.getCString_maxLength_range_remainingRange_(None, 10, (1, 4), None)
+        self.assertEqual(x, b"ello")
+        self.assertEqual(loc.location, 5)
+        self.assertEqual(loc.length, 0)
+
+        x, loc = v.getCString_maxLength_range_remainingRange_(
+            None, 10, (1, 4), objc.NULL
+        )
+        self.assertEqual(x, b"ello")
+        self.assertIs(loc, objc.NULL)
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            v.getCString_maxLength_range_remainingRange_()
+
+        with self.assertRaisesRegex(
+            TypeError, "depythonifying struct, got no sequence"
+        ):
+            v.getCString_maxLength_range_remainingRange_(None, 4, 42, None)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            v.getCString_maxLength_range_remainingRange_(None, "four", (1, 4), None)
+
+        with self.assertRaisesRegex(ValueError, "output buffer must be None"):
+            v.getCString_maxLength_range_remainingRange_(bytearray(4), 4, (1, 4), None)
+
+        with self.assertRaisesRegex(ValueError, "range buffer must be None or NULL"):
+            v.getCString_maxLength_range_remainingRange_(None, 4, (1, 4), bytearray(8))
+
+
+class TestNSStringBridging(TestCase):
+    def setUp(self):
+        self.nsUniString = Foundation.NSString.stringWithString_("unifoo")
+        self.pyUniString = "unifoo"
+
+    def test_basic_comparision(self):
+        self.assertEqual("unifoo", Foundation.NSString.stringWithString_("unifoo"))
+
+        u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
+        self.assertEqual(u, Foundation.NSString.stringWithString_(u))
+
+    def test_types_and_classes(self):
+        self.assertIsInstance(self.nsUniString, str)
+        self.assertIsInstance(self.pyUniString, str)
+
+    def test_nsstring_method_access(self):
+        self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
+        v = self.nsUniString.stringByAppendingString_
+        self.assertIsInstance(v, objc.selector)
+
+
+class TestMutable(TestCase):
+    def test_sync(self):
+        # Test that python and ObjC string representation are not
+        # automaticly synchronized.
+        pyStr = Foundation.NSMutableString.stringWithString_("hello")
+        ocStr = pyStr.nsstring()
+        self.assertEqual(pyStr, "hello")
+        self.assertIsInstance(ocStr, Foundation.NSMutableString)
+        ocStr.appendString_(" world")
+        self.assertEqual(pyStr, "hello")
+
+
+class TestPickle(TestCase):
+    # Testcases for pickling of Objective-C strings. Those are pickled as
+    # str strings.
+
+    def setUp(self):
+        self.strVal = Foundation.NSTaskDidTerminateNotification
+
+    def test_pickle(self):
+        # Check that ObjC-strings pickle as str strings
+        import pickle
+
+        s = pickle.dumps(self.strVal, 0)
+        v = pickle.loads(s)
+        self.assertEqual(type(v), str)
+
+        s = pickle.dumps(self.strVal, 1)
+        v = pickle.loads(s)
+        self.assertEqual(type(v), str)
+
+        s = pickle.dumps(self.strVal, 2)
+        v = pickle.loads(s)
+        self.assertEqual(type(v), str)
+
+    def test_format(self):
+        v = self.strVal
+
+        d = v.stringByAppendingFormat_("hello")
+        self.assertEqual(d, v + "hello")
+
+        d = v.stringByAppendingFormat_("hello %s %d", b"world", 101)
+        self.assertEqual(d, v + "hello world 101")
+
+        v = Foundation.NSString.alloc().initWithFormat_("%s %d %s", b"a", 44, b"cc")
+        self.assertEqual(v, "a 44 cc")
+
+        v = Foundation.NSString.alloc().initWithFormat_locale_(
+            "%s %d %s", None, b"a", 44, b"cc"
+        )
+        self.assertEqual(v, "a 44 cc")
+
+        v = Foundation.NSString.stringWithFormat_("aap %s mies", b"noot")
+        self.assertEqual(v, "aap noot mies")
+
+        v = Foundation.NSString.localizedStringWithFormat_("aap %s mies", b"noot")
+        self.assertEqual(v, "aap noot mies")
+
+        v = Foundation.NSMutableString.stringWithString_("hello")
+        v.appendFormat_(" bar %s", b"baz")
+        self.assertEqual(v.nsstring(), "hello bar baz")

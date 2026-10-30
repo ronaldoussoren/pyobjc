@@ -3,9 +3,8 @@ import BackgroundAssets
 
 
 class TestBAError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BAErrorCode)
-
         self.assertEqual(BackgroundAssets.BAErrorCodeDownloadInvalid, 0)
         self.assertEqual(BackgroundAssets.BAErrorCodeCallFromExtensionNotAllowed, 50)
         self.assertEqual(

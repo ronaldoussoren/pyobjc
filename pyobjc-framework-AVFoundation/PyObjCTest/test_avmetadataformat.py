@@ -3,12 +3,11 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataFormat(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVMetadataFormat, str)
         self.assertIsTypedEnum(AVFoundation.AVMetadataKey, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceCommon, str)
         self.assertIsInstance(AVFoundation.AVMetadataCommonKeyTitle, str)
         self.assertIsInstance(AVFoundation.AVMetadataCommonKeyCreator, str)
@@ -415,14 +414,10 @@ class TestAVMetadataFormat(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVMetadataID3MetadataKeyUserURL, str)
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeUserDataKeyTaggedCharacteristic, str
         )
 
-    @min_os_level("10.9")
-    def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVMetadataFormatISOUserData, str)
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceISOUserData, str)
         self.assertIsInstance(AVFoundation.AVMetadata3GPUserDataKeyCollection, str)
@@ -436,7 +431,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadata3GPUserDataKeyMediaRating, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataISOUserDataKeyTaggedCharacteristic, str
         )
@@ -448,7 +443,7 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataExtraAttributeBaseURIKey, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyContentIdentifier, str
         )
@@ -456,22 +451,22 @@ class TestAVMetadataFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataExtraAttributeInfoKey, str)
 
     @min_os_level("10.12")
-    def testConstants10_11_3(self):
+    def test_constants10_11_3(self):
         # The documentation says this value is availaable on 10.11.3, but testing
         # shows the value isn't available in 10.11.6.
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceHLSDateRange, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AVFoundation.AVMetadataISOUserDataKeyDate, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceAudioFile, str)
         self.assertIsInstance(AVFoundation.AVMetadataFormatUnknown, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataCommonKeyAccessibilityDescription, str
         )
@@ -486,17 +481,17 @@ class TestAVMetadataFormat(TestCase):
         )
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(AVFoundation.AVMetadataQuickTimeMetadataKeyIsMontage, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyFullFrameRatePlaybackIntent, str
         )
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataQuickTimeMetadataKeyCinematicVideoIntent, str
         )

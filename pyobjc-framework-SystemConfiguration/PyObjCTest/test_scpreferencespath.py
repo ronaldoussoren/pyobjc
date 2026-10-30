@@ -3,7 +3,7 @@ import SystemConfiguration
 
 
 class TestSCPreferencesPath(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         ref = SystemConfiguration.SCPreferencesCreate(
             None, "pyobjc.test", "pyobjc.test"
         )

@@ -4,7 +4,7 @@ import SharedWithYou
 
 
 class TestSWAttributionView(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SharedWithYou.SWAttributionViewDisplayContext)
         self.assertEqual(SharedWithYou.SWAttributionViewDisplayContextSummary, 0)
         self.assertEqual(SharedWithYou.SWAttributionViewDisplayContextDetail, 1)

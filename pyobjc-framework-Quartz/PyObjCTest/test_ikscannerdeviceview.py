@@ -1,22 +1,22 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import Quartz
 
 
 class TestIKScannerDeviceView(TestCase):
-    @min_os_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("IKScannerDeviceViewDelegate")
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.IKScannerDeviceViewTransferMode)
         self.assertEqual(Quartz.IKScannerDeviceViewTransferModeFileBased, 0)
         self.assertEqual(Quartz.IKScannerDeviceViewTransferModeMemoryBased, 1)
 
+        self.assertIsEnumType(Quartz.IKScannerDeviceViewDisplayMode)
         self.assertEqual(Quartz.IKScannerDeviceViewDisplayModeSimple, 0)
         self.assertEqual(Quartz.IKScannerDeviceViewDisplayModeAdvanced, 1)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("IKScannerDeviceViewDelegate", Quartz)
+
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.IKScannerDeviceView.hasDisplayModeSimple)
         self.assertArgIsBOOL(Quartz.IKScannerDeviceView.setHasDisplayModeSimple_, 0)
         self.assertResultIsBOOL(Quartz.IKScannerDeviceView.hasDisplayModeAdvanced)

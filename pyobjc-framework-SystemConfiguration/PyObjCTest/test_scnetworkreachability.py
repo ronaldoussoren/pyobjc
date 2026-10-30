@@ -1,20 +1,60 @@
 import contextlib
 import socket
 import objc
+import subprocess
+import os
+import time
 
 from PyObjCTest.test_scnetwork import resolver_available
-from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
+from PyObjCTools.TestSupport import TestCase, skipUnless, NoObjCClass
 import SystemConfiguration
 
 
 class TestSCNetworkReachability(TestCase):
-    def testTypes(self):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCNetworkReachabilityFlags)
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection,
+            1 << 0,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsReachable, 1 << 1
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionRequired,
+            1 << 2,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
+            1 << 3,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsInterventionRequired,
+            1 << 4,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnDemand,
+            1 << 5,
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsIsLocalAddress, 1 << 16
+        )
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsIsDirect, 1 << 17
+        )
+
+        self.assertEqual(
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionAutomatic,
+            SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
+        )
+
+    def test_types(self):
         self.assertIsInstance(
             SystemConfiguration.SCNetworkReachabilityRef, objc.objc_class
         )
 
     @skipUnless(resolver_available(), "No DNS resolver available")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCNetworkReachabilityCreateWithAddressPair
         )
@@ -31,7 +71,7 @@ class TestSCNetworkReachability(TestCase):
                 SystemConfiguration.SCNetworkReachabilityCreateWithAddress
             )
             ref = v = SystemConfiguration.SCNetworkReachabilityCreateWithAddress(
-                None, sd.getsockname()
+                None, ("www.github.com", 443)
             )
             self.assertIsInstance(v, SystemConfiguration.SCNetworkReachabilityRef)
 
@@ -56,7 +96,19 @@ class TestSCNetworkReachability(TestCase):
             def callout(ref, flags, ctx):
                 lst.append([ref, flags, ctx])
 
+            def callout_raises(ref, flags, ctx):
+                raise RuntimeError("callback error")
+
             ctx = object()
+
+            with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+                SystemConfiguration.SCNetworkReachabilitySetCallback()
+
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    NoObjCClass(), callout, ctx
+                )
+
             v = SystemConfiguration.SCNetworkReachabilitySetCallback(ref, callout, ctx)
             self.assertTrue(v is True)
 
@@ -68,9 +120,22 @@ class TestSCNetworkReachability(TestCase):
                 ref, rl, SystemConfiguration.kCFRunLoopCommonModes
             )
 
+            if os.geteuid() == 0:
+                print("Warning: shutdown interface 'en0' for testing")
+                subprocess.check_call(["ifconfig", "en0", "down"])
+
             SystemConfiguration.CFRunLoopRunInMode(
                 SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
             )
+
+            if os.geteuid() == 0:
+                time.sleep(1)
+                self.assertGreater(len(lst), 0)
+
+            for item in lst:
+                self.assertIs(item[0], ref)
+                self.assertIsInstance(item[1], int)
+                self.assertIs(item[2], ctx)
 
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilityUnscheduleFromRunLoop
@@ -79,44 +144,30 @@ class TestSCNetworkReachability(TestCase):
                 ref, rl, SystemConfiguration.kCFRunLoopCommonModes
             )
 
-        @min_os_level("10.6")
-        def testFunctions10_6(self):
             self.assertResultIsBOOL(
                 SystemConfiguration.SCNetworkReachabilitySetDispatchQueue
             )
 
-        def testConstants(self):
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsTransientConnection,
-                1 << 0,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsReachable, 1 << 1
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionRequired,
-                1 << 2,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
-                1 << 3,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsInterventionRequired,
-                1 << 4,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnDemand,
-                1 << 5,
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsIsLocalAddress, 1 << 16
-            )
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsIsDirect, 1 << 17
-            )
+            if os.geteuid() == 0:
+                lst[:] = []
+                v = SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    ref, callout_raises, ctx
+                )
+                SystemConfiguration.SCNetworkReachabilityScheduleWithRunLoop(
+                    ref, rl, SystemConfiguration.kCFRunLoopDefaultMode
+                )
+                subprocess.check_call(["ifconfig", "en0", "up"])
 
-            self.assertEqual(
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionAutomatic,
-                SystemConfiguration.kSCNetworkReachabilityFlagsConnectionOnTraffic,
-            )
+                with self.assertRaisesRegex(RuntimeError, "callback error"):
+                    SystemConfiguration.CFRunLoopRunInMode(
+                        SystemConfiguration.kCFRunLoopDefaultMode, 15.0, False
+                    )
+
+                self.assertEqual(len(lst), 0)
+
+                SystemConfiguration.SCNetworkReachabilityUnscheduleFromRunLoop(
+                    ref, rl, SystemConfiguration.kCFRunLoopDefaultMode
+                )
+                v = SystemConfiguration.SCNetworkReachabilitySetCallback(
+                    ref, None, None
+                )

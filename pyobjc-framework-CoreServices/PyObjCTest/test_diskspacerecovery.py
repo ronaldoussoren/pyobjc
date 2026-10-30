@@ -1,10 +1,9 @@
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestDiskSpaceRecovery(TestCase):
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertArgIsOut(CoreServices.CSDiskSpaceStartRecovery, 3)
         self.assertArgIsBlock(CoreServices.CSDiskSpaceStartRecovery, 5, b"vZQ@")

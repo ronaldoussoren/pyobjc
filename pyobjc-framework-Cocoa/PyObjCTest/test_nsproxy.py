@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSProxyHelper(Foundation.NSObject):
@@ -11,10 +11,9 @@ class TestNSProxyHelper(Foundation.NSObject):
 
 
 class TestNSProxy(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSProxy.respondsToSelector_)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSProxyHelper.allowsWeakReference)
         self.assertResultIsBOOL(TestNSProxyHelper.retainWeakReference)

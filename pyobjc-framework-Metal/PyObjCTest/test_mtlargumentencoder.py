@@ -86,9 +86,9 @@ class TestMTLArgumentEncoder(TestCase):
 
     @min_sdk_level("10.13")
     def test_protocols10_13(self):
-        self.assertProtocolExists("MTLArgumentEncoder")
+        self.assertProtocolExists("MTLArgumentEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLArgumentEncoderHelper.encodedLength, objc._C_NSUInteger
         )
@@ -213,6 +213,9 @@ class TestMTLArgumentEncoder(TestCase):
             Metal.NSRange.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            TestMTLArgumentEncoderHelper.newArgumentEncoderForBufferAtIndex_
+        )
         self.assertArgHasType(
             TestMTLArgumentEncoderHelper.newArgumentEncoderForBufferAtIndex_,
             0,

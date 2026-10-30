@@ -10,7 +10,7 @@ import objc
 
 
 class TestNSPanel(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsPrintf(AppKit.NSRunAlertPanel, 1)
         self.assertArgIsPrintf(AppKit.NSRunInformationalAlertPanel, 1)
         self.assertArgIsPrintf(AppKit.NSRunCriticalAlertPanel, 1)
@@ -59,7 +59,7 @@ class TestNSPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def test_function_usage(self):
+    def test_functions_usage(self):
         panel = AppKit.NSGetInformationalAlertPanel(
             "title", "fmt %d", "ok", "cancel", "help", 10
         )
@@ -67,7 +67,7 @@ class TestNSPanel(TestCase):
 
         AppKit.NSReleaseAlertPanel(panel)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSAlertDefaultReturn, 1)
         self.assertEqual(AppKit.NSAlertAlternateReturn, 0)
         self.assertEqual(AppKit.NSAlertOtherReturn, -1)
@@ -78,11 +78,9 @@ class TestNSPanel(TestCase):
         self.assertEqual(AppKit.NSDocModalWindowMask, 1 << 6)
         self.assertEqual(AppKit.NSNonactivatingPanelMask, 1 << 7)
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
         self.assertEqual(AppKit.NSHUDWindowMask, 1 << 13)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPanel.isFloatingPanel)
         self.assertArgIsBOOL(AppKit.NSPanel.setFloatingPanel_, 0)
         self.assertResultIsBOOL(AppKit.NSPanel.becomesKeyOnlyIfNeeded)
@@ -91,6 +89,6 @@ class TestNSPanel(TestCase):
         self.assertArgIsBOOL(AppKit.NSPanel.setWorksWhenModal_, 0)
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.isAccessoryViewDisclosed)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setAccessoryViewDisclosed_, 0)

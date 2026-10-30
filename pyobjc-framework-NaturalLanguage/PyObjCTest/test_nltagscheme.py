@@ -3,7 +3,7 @@ import NaturalLanguage
 
 
 class TestNLTagScheme(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(NaturalLanguage.NLTagScheme, str)
         self.assertIsTypedEnum(NaturalLanguage.NLTag, str)
         self.assertIsTypedEnum(NaturalLanguage.NLLanguage, str)

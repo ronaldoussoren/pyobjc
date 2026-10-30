@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKGameActivityState(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKGameActivityState)
         self.assertEqual(GameKit.GKGameActivityStateInitialized, 0)
         self.assertEqual(GameKit.GKGameActivityStateActive, 1)

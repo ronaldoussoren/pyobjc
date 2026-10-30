@@ -4,11 +4,11 @@ import CoreML
 
 class TestMLComputePlan(TestCase):
     @min_os_level("14.4")
-    def testClasses(self):
+    def test_classes(self):
         self.assertTrue(CoreML.MLComputePlan.__objc_final__)
 
     @min_os_level("14.4")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             CoreML.MLComputePlan.loadContentsOfURL_configuration_completionHandler_,
             2,

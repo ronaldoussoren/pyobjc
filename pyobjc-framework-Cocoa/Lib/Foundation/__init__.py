@@ -154,10 +154,7 @@ def _setup():
         "NSIndexPath", (("__len__", lambda self: self.count()),)
     )
 
-    if sys.maxsize > 2**32:
-        NSNotFound = 0x7FFFFFFFFFFFFFFF
-    else:
-        NSNotFound = 0x7FFFFFFF
+    NSNotFound = 0x7FFFFFFFFFFFFFFF
 
     def indexset_iter(self):
         value = self.firstIndex()

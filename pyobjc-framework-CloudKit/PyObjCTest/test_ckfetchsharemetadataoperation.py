@@ -4,7 +4,7 @@ import CloudKit
 
 class TestCKFetchShareMetadataOperation(TestCase):
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             CloudKit.CKFetchShareMetadataOperation.setPerShareMetadataBlock_, 0, b"v@@@"
         )

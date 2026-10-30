@@ -3,5 +3,5 @@ import WebKit
 
 
 class TestWebDataSource(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.WebDataSource.isLoading)

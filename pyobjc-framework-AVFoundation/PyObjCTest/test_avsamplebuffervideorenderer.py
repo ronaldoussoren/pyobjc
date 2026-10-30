@@ -17,6 +17,13 @@ class TestAVSampleBufferVideoRenderer(TestCase):
             str,
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVSampleBufferVideoRendererRequiresFlushToResumeDecodingDidChangeNotificationRequiresFlushKey,
+            str,
+        )
+
     @min_os_level("14.0")
     def test_methods14_0(self):
         self.assertResultIsBOOL(

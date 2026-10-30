@@ -20,15 +20,16 @@ class TestOpenPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def testOpenPanelSignature(self):
+    def test_openpanel_signature(self):
         o = AppKit.NSOpenPanel.openPanel()
+        self.assertIsNot(o, None)
         sig = (
             o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature  # noqa: B950
         )
         sig = b"".join(objc.splitSignature(sig))
         self.assertEqual(sig, b"v@:@@@@@:^v")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.resolvesAliases)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setResolvesAliases_, 0)
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canChooseDirectories)
@@ -61,7 +62,7 @@ class TestOpenPanel(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canResolveUbiquitousConflicts)
         self.assertArgIsBOOL(AppKit.NSOpenPanel.setCanResolveUbiquitousConflicts_, 0)
         self.assertResultIsBOOL(AppKit.NSOpenPanel.canDownloadUbiquitousContents)
@@ -77,6 +78,7 @@ class TestOpenPanel(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Crash on macOS 15 beta",
     )
-    def test_issue_272(self):
+    def test_issue272(self):
         panel = AppKit.NSOpenPanel.openPanel()
+        self.assertIsNot(panel, None)
         panel.setAllowedFileTypes_([".html", ".txt"])

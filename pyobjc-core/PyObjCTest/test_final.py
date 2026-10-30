@@ -1,12 +1,7 @@
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NotBool
 
 NSObject = objc.lookUpClass("NSObject")
-
-
-class NotBool:
-    def __bool__(self):
-        raise RuntimeError("not bool")
 
 
 class TestFinal(TestCase):
@@ -46,5 +41,5 @@ class TestFinal(TestCase):
         ):
             del NonFinalClass.__objc_final__
 
-        with self.assertRaisesRegex(RuntimeError, "not bool"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             NonFinalClass.__objc_final__ = NotBool()

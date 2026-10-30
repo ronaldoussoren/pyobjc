@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPSClient(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PubSub.PSClient.addFeed_)
         self.assertResultIsBOOL(PubSub.PSClient.removeFeed_)
         self.assertResultIsBOOL(PubSub.PSClient.isPrivate)

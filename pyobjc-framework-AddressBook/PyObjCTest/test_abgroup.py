@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestABGroup(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AddressBook.ABGroup.addMember_)
         self.assertResultIsBOOL(AddressBook.ABGroup.removeMember_)
         self.assertResultIsBOOL(AddressBook.ABGroup.addSubgroup_)

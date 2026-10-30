@@ -4,12 +4,12 @@ import objc
 
 
 class TestNSPageLayout(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPageLayoutResult)
         self.assertEqual(AppKit.NSPageLayoutResultCancelled, 0)
         self.assertEqual(AppKit.NSPageLayoutResultChanged, 1)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSPageLayout.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_,  # noqa: B950
             3,

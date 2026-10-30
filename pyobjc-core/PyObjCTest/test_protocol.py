@@ -764,10 +764,23 @@ class TestFormalProtocols2(TestCase):
             def proto4Method(self):
                 return 1
 
+        # Other way of implementing the protocol:
+        class ImplementingProto4B(NSObject, MyProtocol4):
+            def proto4Method(self):
+                return 1
+
         self.assertTrue(ImplementingProto4.conformsToProtocol_(MyProtocol4))
         self.assertTrue(ImplementingProto4A.conformsToProtocol_(MyProtocol4))
+        self.assertTrue(ImplementingProto4B.conformsToProtocol_(MyProtocol4))
 
         self.assertResultHasType(ImplementingProto4A.proto4Method, b"I")
+        self.assertResultHasType(ImplementingProto4B.proto4Method, b"I")
+
+    def test_protocols_invalid(self):
+        with self.assertRaisesRegex(TypeError, "__orig_bases__ is not a tuple"):
+
+            class ImplementingProto5(NSObject):
+                __orig_bases__ = []
 
     def testImplementAnotherObject(self):
         anObject = NSObject.alloc().init()

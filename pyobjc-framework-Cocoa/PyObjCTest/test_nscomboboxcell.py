@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -15,7 +15,7 @@ class TestNSComboBoxCellHelper(AppKit.NSObject):
 
 
 class TestNSComboBoxCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.hasVerticalScroller)
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setHasVerticalScroller_, 0)
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.isButtonBordered)
@@ -25,11 +25,10 @@ class TestNSComboBoxCell(TestCase):
         self.assertResultIsBOOL(AppKit.NSComboBoxCell.completes)
         self.assertArgIsBOOL(AppKit.NSComboBoxCell.setCompletes_, 0)
 
-    @min_sdk_level("10.7")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSComboBoxCellDataSource")
+    def test_protocols(self):
+        self.assertProtocolExists("NSComboBoxCellDataSource", AppKit)
 
-    def testProtocol(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSComboBoxCellHelper.numberOfItemsInComboBoxCell_, objc._C_NSInteger
         )

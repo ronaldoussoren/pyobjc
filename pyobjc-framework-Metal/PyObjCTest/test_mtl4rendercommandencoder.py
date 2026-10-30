@@ -132,7 +132,7 @@ class TestMTL4RenderCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTL4RenderCommandEncoder(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4RenderEncoderOptions)
         self.assertEqual(Metal.MTL4RenderEncoderOptionNone, 0)
         self.assertEqual(Metal.MTL4RenderEncoderOptionSuspending, 1 << 0)
@@ -140,7 +140,7 @@ class TestMTL4RenderCommandEncoder(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4RenderCommandEncoder")
+        self.assertProtocolExists("MTL4RenderCommandEncoder", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTL4RenderCommandEncoderHelper.tileWidth, b"Q")

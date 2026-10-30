@@ -1,20 +1,19 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSCache(TestCase):
-    @min_os_level("10.6")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSCache.evictsObjectsWithDiscardedContent)
         self.assertArgIsBOOL(
             Foundation.NSCache.setEvictsObjectsWithDiscardedContent_, 0
         )
 
     @min_sdk_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("NSCacheDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSCacheDelegate", Foundation)
 
-    def testConvenience(self):
+    def test_convenience(self):
         key = "key"
         value = Foundation.NSObject.alloc().init()
         c = Foundation.NSCache.alloc().init()

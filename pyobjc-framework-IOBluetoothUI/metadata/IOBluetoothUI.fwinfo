@@ -16,33 +16,10 @@
     "methods": [
      {
       "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
        "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setSearchAttributes:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "getSearchAttributes"
-     }
-    ]
-   },
-   "IOBluetoothObjectPushUIController": {
-    "methods": [
-     {
-      "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
      }
     ]
    },
@@ -54,42 +31,11 @@
       },
       "class_method": false,
       "selector": "setSearchAttributes:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "getSearchAttributes"
      }
     ]
    },
    "IOBluetoothServiceBrowserController": {
     "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "browseDevices:options:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "browseDevicesAsSheetForWindow:options:window:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "withServiceBrowserControllerRef:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "getServiceBrowserControllerRef"
-     },
      {
       "args": {
        "0": { "type_modifier": "o" }
@@ -114,41 +60,13 @@
      },
      {
       "args": {
-       "3": {}
-      },
-      "class_method": false,
-      "selector": "beginSheetModalForWindow:modalDelegate:didEndSelector:contextInfo:"
-     },
-     {
-      "args": {
        "0": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "setSearchAttributes:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "getSearchAttributes"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {
-   "IOBluetoothGetDeviceSelectorController": {
-    "retval": {}
-   },
-   "IOBluetoothGetPairingController": {
-    "retval": {}
-   },
-   "IOBluetoothValidateHardwareWithDescription": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   }
-  },
-  "informal_protocols": {}
+  }
  }
 }

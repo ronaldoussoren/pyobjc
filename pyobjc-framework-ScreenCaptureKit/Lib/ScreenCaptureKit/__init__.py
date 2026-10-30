@@ -44,6 +44,10 @@ def _setup():
         ("SCShareableContent", b"new"),
         ("SCContentSharingPicker", b"init"),
         ("SCContentSharingPicker", b"new"),
+        ("SCRecordingEditor", b"init"),
+        ("SCRecordingEditor", b"new"),
+        ("SCVideoEffectOutput", b"init"),
+        ("SCVideoEffectOutput", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

@@ -115,7 +115,7 @@ class TestMEFormatReaderHelper(MediaExtension.NSObject):
 
 
 class TestMEFormatReader(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaExtension.MEFileInfoFragmentsStatus)
         self.assertEqual(MediaExtension.MEFileInfoCouldNotContainFragments, 0)
         self.assertEqual(MediaExtension.MEFileInfoContainsFragments, 1)
@@ -140,10 +140,10 @@ class TestMEFormatReader(TestCase):
         )
 
     def test_protocols(self):
-        self.assertProtocolExists("MEFormatReaderExtension")
-        self.assertProtocolExists("MEFormatReader")
-        self.assertProtocolExists("METrackReader")
-        self.assertProtocolExists("MESampleCursor")
+        self.assertProtocolExists("MEFormatReaderExtension", MediaExtension)
+        self.assertProtocolExists("MEFormatReader", MediaExtension)
+        self.assertProtocolExists("METrackReader", MediaExtension)
+        self.assertProtocolExists("MESampleCursor", MediaExtension)
 
     def test_methods(self):
         self.assertResultIsBOOL(

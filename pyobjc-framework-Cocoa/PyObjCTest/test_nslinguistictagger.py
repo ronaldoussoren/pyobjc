@@ -4,12 +4,21 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLinguisticTagger(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSLinguisticTaggerOptions)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSLinguisticTaggerUnit)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitWords, 1 << 0)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitPunctuation, 1 << 1)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitWhitespace, 1 << 2)
+        self.assertEqual(Foundation.NSLinguisticTaggerOmitOther, 1 << 3)
+        self.assertEqual(Foundation.NSLinguisticTaggerJoinNames, 1 << 4)
 
-    @min_os_level("10.7")
-    def testConstants(self):
+        self.assertIsEnumType(Foundation.NSLinguisticTaggerOptions)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitWord, 0)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitSentence, 1)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitParagraph, 2)
+        self.assertEqual(Foundation.NSLinguisticTaggerUnitDocument, 3)
+
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeTokenType, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeLexicalClass, str)
         self.assertIsInstance(Foundation.NSLinguisticTagSchemeNameType, str)
@@ -51,19 +60,7 @@ class TestNSLinguisticTagger(TestCase):
         self.assertIsInstance(Foundation.NSLinguisticTagPlaceName, str)
         self.assertIsInstance(Foundation.NSLinguisticTagOrganizationName, str)
 
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitWords, 1 << 0)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitPunctuation, 1 << 1)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitWhitespace, 1 << 2)
-        self.assertEqual(Foundation.NSLinguisticTaggerOmitOther, 1 << 3)
-        self.assertEqual(Foundation.NSLinguisticTaggerJoinNames, 1 << 4)
-
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitWord, 0)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitSentence, 1)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitParagraph, 2)
-        self.assertEqual(Foundation.NSLinguisticTaggerUnitDocument, 3)
-
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             Foundation.NSLinguisticTagger.orthographyAtIndex_effectiveRange_,
             1,
@@ -129,7 +126,7 @@ class TestNSLinguisticTagger(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgHasType(
             Foundation.NSLinguisticTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_,
             0,

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 if hasattr(Foundation, "NSMachPort"):
 
     class TestNSMachPort(TestCase):
-        def testAlloc(self):
+        def test_alloc(self):
             obj = Foundation.NSMachPort.alloc()
             self.assertIsNot(obj, None)
 

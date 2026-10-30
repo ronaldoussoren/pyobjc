@@ -1,8 +1,11 @@
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
+#include "pyobjc-api.h"
 #include "structmember.h" /* Why is this needed */
 
-#include "pyobjc-api.h"
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
 
 #import <CoreAudio/CoreAudio.h>
 
@@ -13,17 +16,20 @@
 #include "_CoreAudio_AudioChannelLayout.m"
 #include "_CoreAudio_AudioValueTranslation.m"
 
-static PyObject*
-m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+/* Note: TestAudioFormatNativeEndian is a macro */
+static PyObject* _Nullable m_TestAudioFormatNativeEndian(PyObject*        meth,
+                                                         PyObject* const* args,
+                                                         Py_ssize_t       nargs)
 {
     AudioStreamBasicDescription description;
-    PyObject*                   o;
 
-    if (!PyArg_ParseTuple(args, "O", &o)) {
+    if (PyObjC_CheckArgCount(meth, 1, 1, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), o, &description)
+    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), args[0], &description)
         == -1) {
         return NULL;
     }
@@ -37,7 +43,7 @@ m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObjec
 
 static PyMethodDef mod_methods[] = {
     {"TestAudioFormatNativeEndian", (PyCFunction)m_TestAudioFormatNativeEndian,
-     METH_VARARGS, NULL},
+     METH_FASTCALL, NULL},
 
     {0, 0, 0, 0} /* sentinel */
 };
@@ -45,18 +51,18 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (init_audio_buffer(m) == -1)
-        return -1;
-    if (init_audio_buffer_list(m) == -1)
-        return -1;
-    if (init_audio_value_translation(m) == -1)
-        return -1;
-    if (init_audio_channel_description(m) == -1)
-        return -1;
-    if (init_audio_channel_layout(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)               // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_buffer(m) == -1)              // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_buffer_list(m) == -1)         // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_value_translation(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_channel_description(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
+    if (init_audio_channel_layout(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                               // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -91,10 +97,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreAudio(void);
+PyObject* _Nullable PyInit__CoreAudio(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreAudio(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

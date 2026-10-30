@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
@@ -13,10 +13,9 @@ class TestGKPublicProtocolsHelper(GameCenter.NSObject):
 
 
 class TestGCAchievement(TestCase):
-    @min_os_level("10.8")
-    def testProtocols(self):
-        self.assertProtocolExists("GKSessionDelegate")
-        self.assertProtocolExists("GKVoiceChatClient")
+    def test_protocols(self):
+        self.assertProtocolExists("GKSessionDelegate", GameCenter)
+        self.assertProtocolExists("GKVoiceChatClient", GameCenter)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

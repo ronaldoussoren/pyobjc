@@ -6,8 +6,7 @@ import objc
 from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTest.objectint import OC_NoPythonRepresentation
-from PyObjCTools.TestSupport import TestCase, pyobjc_options
-from PyObjCTest.test_object_proxy import NoObjectiveC
+from PyObjCTools.TestSupport import TestCase, pyobjc_options, NoObjCClass
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
@@ -331,7 +330,7 @@ class TestMisc(TestCase):
     def test_copy_not_in_objc(self):
         class S(set):
             def __copy__(self):
-                return NoObjectiveC()
+                return NoObjCClass()
 
         s = S()
 
@@ -360,7 +359,7 @@ class TestMisc(TestCase):
     def test_anyObject_not_objc(self):
         class S(set):
             def __iter__(self):
-                yield NoObjectiveC()
+                yield NoObjCClass()
 
         s = S({1, 2, 3})
 
@@ -434,7 +433,7 @@ class TestMisc(TestCase):
         with self.assertRaisesRegex(RuntimeError, "whoops"):
             self.assertIs(OC_TestSet.set_member_(s, 99), None)
 
-        s = set({NoObjectiveC()})
+        s = set({NoObjCClass()})
         with self.assertRaisesRegex(TypeError, "Cannot proxy"):
             OC_TestSet.set_member_(s, "")
 

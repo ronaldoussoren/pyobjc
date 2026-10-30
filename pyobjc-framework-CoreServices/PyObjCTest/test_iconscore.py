@@ -4,7 +4,7 @@ import objc
 
 
 class TestIconsCore(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kGenericDocumentIconResource, -4000)
         self.assertEqual(CoreServices.kGenericStationeryIconResource, -3985)
         self.assertEqual(CoreServices.kGenericEditionFileIconResource, -3989)
@@ -348,7 +348,7 @@ class TestIconsCore(TestCase):
         self.assertEqual(CoreServices.kIconServicesUpdateIfNeededFlag, 2)
         self.assertEqual(CoreServices.kIconServicesCatalogInfoMask, 531_550)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsOut(CoreServices.GetIconRef, 3)
         err, icon = CoreServices.GetIconRef(
             0, CoreServices.kSystemIconsCreator, CoreServices.kShortcutIcon, None
@@ -416,5 +416,5 @@ class TestIconsCore(TestCase):
             err = CoreServices.ReleaseIconRef(icon)
             self.assertEqual(err, 0)
 
-    def testOpaque(self):
+    def test_opaque(self):
         self.assertIsOpaquePointer(CoreServices.IconRef)

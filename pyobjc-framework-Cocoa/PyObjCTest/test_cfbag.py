@@ -1,14 +1,42 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+import warnings
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFBag(TestCase):
-    def testCreation(self):
+    def test_creation(self):
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            CoreFoundation.CFBagCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBagCreate(NoObjCClass(), [1, 2], 2)
+
+        with self.assertRaisesRegex(TypeError, "converting to a C array"):
+            CoreFoundation.CFBagCreate(None, 0, 1)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFBagCreate(None, [1, 2], "two")
+
         bag = CoreFoundation.CFBagCreate(None, [1, 1, 2, 3, 4], 5)
         self.assertIsInstance(bag, CoreFoundation.CFBagRef)
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 1), 2)
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 3), 1)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFBagCreateMutable()
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFBagCreateMutable()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBagCreateMutable(NoObjCClass(), 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreFoundation.CFBagCreateMutable(None, "none")
 
         bag = CoreFoundation.CFBagCreateMutable(None, 0)
         self.assertIsInstance(bag, CoreFoundation.CFBagRef)
@@ -18,7 +46,7 @@ class TestCFBag(TestCase):
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 9), 2)
         self.assertEqual(CoreFoundation.CFBagGetCountOfValue(bag, 8), 1)
 
-    def testApplyFunction(self):
+    def test_apply_function(self):
         items = []
         contexts = []
 
@@ -33,11 +61,11 @@ class TestCFBag(TestCase):
         self.assertEqual(items, [1, 1, 4, 9, 16])
         self.assertEqual(contexts, [99, 99, 99, 99, 99])
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFBagGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCopy(self):
+    def test_copy(self):
         bag = CoreFoundation.CFBagCreate(None, [1, 1, 2, 3, 4], 5)
         self.assertIsInstance(bag, CoreFoundation.CFBagRef)
         bag2 = CoreFoundation.CFBagCreateCopy(None, bag)
@@ -46,7 +74,7 @@ class TestCFBag(TestCase):
         self.assertIsInstance(bag3, CoreFoundation.CFBagRef)
         self.assertIsNot(bag3, bag)
 
-    def testInspect(self):
+    def test_inspect(self):
         bag = CoreFoundation.CFBagCreate(
             None, ["Hello", 42, "World", 42, "a", "a", "a"], 7
         )
@@ -68,11 +96,40 @@ class TestCFBag(TestCase):
         exists, value = CoreFoundation.CFBagGetValueIfPresent(bag, "b", None)
         self.assertFalse(exists)
         self.assertIs(value, None)
-        values = set(CoreFoundation.CFBagGetValues(bag))
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFBagGetValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBagGetValues(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'values' must be None"):
+            CoreFoundation.CFBagGetValues(bag, 42)
+
+        values = set(CoreFoundation.CFBagGetValues(bag, None))
         expected = {"Hello", 42, "World", "a"}
         self.assertEqual(values, expected)
 
-    def testMutation(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", category=DeprecationWarning)
+            with self.assertRaisesRegex(
+                DeprecationWarning, "leaving of the second argument is deprecated"
+            ):
+                CoreFoundation.CFBagGetValues(bag)
+
+        with warnings.catch_warnings(record=True) as wrns:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            CoreFoundation.CFBagGetValues(bag)
+
+        with warnings.catch_warnings(record=True) as wrns:
+            warnings.simplefilter("always", category=DeprecationWarning)
+            with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+                CoreFoundation.CFBagGetValues(NoObjCClass())
+
+        self.assertEqual(len(wrns), 1)
+        self.assertEqual(wrns[0].category, DeprecationWarning)
+
+    def test_mutation(self):
         bag = CoreFoundation.CFBagCreateMutable(None, 0)
         self.assertEqual(CoreFoundation.CFBagGetCount(bag), 0)
         CoreFoundation.CFBagAddValue(bag, "hello")
@@ -94,7 +151,7 @@ class TestCFBag(TestCase):
         CoreFoundation.CFBagRemoveAllValues(bag)
         self.assertEqual(CoreFoundation.CFBagGetCount(bag), 0)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgHasType(CoreFoundation.CFBagGetCountOfValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBagContainsValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBagGetValue, 1, b"@")

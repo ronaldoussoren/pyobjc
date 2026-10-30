@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCVBase(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CVSMPTETime()
         self.assertIsInstance(v.subframes, int)
         self.assertIsInstance(v.subframeDivisor, int)
@@ -34,7 +34,7 @@ class TestCVBase(TestCase):
         self.assertIsInstance(v.reserved, int)
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCVSMPTETimeType24, 0)
         self.assertEqual(Quartz.kCVSMPTETimeType25, 1)
         self.assertEqual(Quartz.kCVSMPTETimeType30Drop, 2)

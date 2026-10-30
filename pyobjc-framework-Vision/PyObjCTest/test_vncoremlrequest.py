@@ -7,7 +7,7 @@ class TestVNCoreMLRequest(TestCase):
         self.assertEqual(Vision.VNCoreMLRequestRevision1, 1)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(Vision.VNCoreMLModel.modelForMLModel_error_, 1)
 
         self.assertArgIsBlock(

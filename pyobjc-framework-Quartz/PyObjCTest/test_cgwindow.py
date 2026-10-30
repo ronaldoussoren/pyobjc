@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCGWindow(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGWindowIDCFNumberType, Quartz.kCFNumberSInt32Type)
         self.assertEqual(
             Quartz.kCGWindowSharingCFNumberType, Quartz.kCFNumberSInt32Type
@@ -52,12 +52,25 @@ class TestCGWindow(TestCase):
         self.assertEqual(Quartz.kCGWindowImageBestResolution, (1 << 3))
         self.assertEqual(Quartz.kCGWindowImageNominalResolution, (1 << 4))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGWindowListCopyWindowInfo)
         v = Quartz.CGWindowListCopyWindowInfo(0, 0)
         self.assertIsInstance(v, Quartz.CFArrayRef)
         self.assertTrue(len(v) > 0)
         self.assertIsInstance(v[0], Quartz.CFDictionaryRef)
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGWindowListCreate()
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreate("one", 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreate(0, "one")
 
         v = Quartz.CGWindowListCreate(0, 0)
         self.assertIsInstance(v, tuple)
@@ -66,6 +79,22 @@ class TestCGWindow(TestCase):
 
         aWindowID = v[0]
         windowArray = v
+
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            Quartz.CGWindowListCreateDescriptionFromArray()
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            Quartz.CGWindowListCreateDescriptionFromArray(42)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreateDescriptionFromArray(list(v) + ["root"])
+
+        self.assertEqual(Quartz.CGWindowListCreateDescriptionFromArray(()), ())
+        self.assertEqual(
+            Quartz.CGWindowListCreateDescriptionFromArray((min(v) - 1,)), ()
+        )
 
         v = Quartz.CGWindowListCreateDescriptionFromArray(v)
         self.assertIsInstance(v, Quartz.CFArrayRef)
@@ -78,12 +107,26 @@ class TestCGWindow(TestCase):
             # function requires specific permissions on macOS 15
             self.assertIsInstance(v, Quartz.CGImageRef)
 
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            Quartz.CGWindowListCreateImageFromArray()
+
+        with self.assertRaisesRegex(TypeError, "epythonifying struct, got no sequence"):
+            Quartz.CGWindowListCreateImageFromArray(42, windowArray, 0)
+
+        with self.assertRaisesRegex(TypeError, "'int' object is not iterable"):
+            Quartz.CGWindowListCreateImageFromArray(((0, 0), (100, 100)), 42, 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGWindowListCreateImageFromArray(((0, 0), (100, 100)), (), "none")
+
         v = Quartz.CGWindowListCreateImageFromArray(
             ((0, 0), (100, 100)), windowArray, 0
         )
         self.assertIsInstance(v, (Quartz.CGImageRef, type(None)))
 
     @min_os_level("11.0")
-    def testFunctions10_15(self):
+    def test_functions10_15(self):
         Quartz.CGPreflightScreenCaptureAccess
         Quartz.CGRequestScreenCaptureAccess

@@ -5,10 +5,10 @@ import Quartz
 
 
 class TestCGPDFContentStream(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsOpaquePointer(Quartz.CGPDFContentStreamRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         if os.path.exists(
             "/Library/Documentation//Applications/iWeb/Acknowledgements.pdf"
         ):
@@ -52,5 +52,5 @@ class TestCGPDFContentStream(TestCase):
         self.assertIsInstance(v, Quartz.CGPDFObject)
 
     @expectedFailure
-    def testIncomplete(self):
+    def test_incomplete(self):
         self.fail("CGPDFContentStreamGetStreams")  # Need manual wrapper

@@ -4,4 +4,4 @@ import Virtualization  # noqa: F401
 
 class TestVZVirtualMachineDelegate(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("VZVirtualMachineDelegate")
+        self.assertProtocolExists("VZVirtualMachineDelegate", Virtualization)

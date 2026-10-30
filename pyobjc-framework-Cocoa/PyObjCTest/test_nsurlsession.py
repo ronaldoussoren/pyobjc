@@ -113,32 +113,70 @@ class TestNSURLSessionWebSocketDelegateHelper(Foundation.NSObject):
 
 
 class TestNSURLSession(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSURLSessionAuthChallengeDisposition)
-        self.assertIsEnumType(Foundation.NSURLSessionDelayedRequestDisposition)
-        self.assertIsEnumType(Foundation.NSURLSessionMultipathServiceType)
-        self.assertIsEnumType(Foundation.NSURLSessionResponseDisposition)
-        self.assertIsEnumType(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocol
+        self.assertEqual(Foundation.NSURLSessionAuthChallengeUseCredential, 0)
+        self.assertEqual(Foundation.NSURLSessionAuthChallengePerformDefaultHandling, 1)
+        self.assertEqual(
+            Foundation.NSURLSessionAuthChallengeCancelAuthenticationChallenge, 2
         )
-        self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsResourceFetchType)
-        self.assertIsEnumType(Foundation.NSURLSessionTaskState)
-        self.assertIsEnumType(Foundation.NSURLSessionWebSocketCloseCode)
-        self.assertIsEnumType(Foundation.NSURLSessionWebSocketMessageType)
+        self.assertEqual(Foundation.NSURLSessionAuthChallengeRejectProtectionSpace, 3)
 
-    def testConstants(self):
+        self.assertIsEnumType(Foundation.NSURLSessionDelayedRequestDisposition)
+        self.assertEqual(Foundation.NSURLSessionDelayedRequestContinueLoading, 0)
+        self.assertEqual(Foundation.NSURLSessionDelayedRequestUseNewRequest, 1)
+        self.assertEqual(Foundation.NSURLSessionDelayedRequestCancel, 2)
+
+        self.assertIsEnumType(Foundation.NSURLSessionMultipathServiceType)
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeNone, 0)
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeHandover, 1)
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeInteractive, 2)
         self.assertEqual(Foundation.NSURLSessionMultipathServiceTypeAggregate, 3)
 
-        self.assertEqual(Foundation.NSURLSessionDelayedRequestContinueLoading, 0)
-        self.assertEqual(Foundation.NSURLSessionDelayedRequestUseNewRequest, 1)
-        self.assertEqual(Foundation.NSURLSessionDelayedRequestCancel, 2)
+        self.assertIsEnumType(Foundation.NSURLSessionResponseDisposition)
+        self.assertEqual(Foundation.NSURLSessionResponseCancel, 0)
+        self.assertEqual(Foundation.NSURLSessionResponseAllow, 1)
+        self.assertEqual(Foundation.NSURLSessionResponseBecomeDownload, 2)
+        self.assertEqual(Foundation.NSURLSessionResponseBecomeStream, 3)
 
-        self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeData, 0)
-        self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeString, 1)
+        self.assertIsEnumType(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocol
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUnknown, 0
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS, 4
+        )
 
+        self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsResourceFetchType)
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsResourceFetchTypeUnknown, 0)
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad, 1
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsResourceFetchTypeServerPush, 2
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3
+        )
+
+        self.assertIsEnumType(Foundation.NSURLSessionTaskState)
+        self.assertEqual(Foundation.NSURLSessionTaskStateRunning, 0)
+        self.assertEqual(Foundation.NSURLSessionTaskStateSuspended, 1)
+        self.assertEqual(Foundation.NSURLSessionTaskStateCanceling, 2)
+        self.assertEqual(Foundation.NSURLSessionTaskStateCompleted, 3)
+
+        self.assertIsEnumType(Foundation.NSURLSessionWebSocketCloseCode)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeInvalid, 0)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeNormalClosure, 1000)
         self.assertEqual(Foundation.NSURLSessionWebSocketCloseCodeGoingAway, 1001)
@@ -163,68 +201,26 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionWebSocketCloseCodeTLSHandshakeFailure, 1015
         )
 
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUnknown, 0
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS, 4
-        )
+        self.assertIsEnumType(Foundation.NSURLSessionWebSocketMessageType)
+        self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeData, 0)
+        self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeString, 1)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(Foundation.NSURLSessionTransferSizeUnknown, int)
-
-        self.assertEqual(Foundation.NSURLSessionTaskStateRunning, 0)
-        self.assertEqual(Foundation.NSURLSessionTaskStateSuspended, 1)
-        self.assertEqual(Foundation.NSURLSessionTaskStateCanceling, 2)
-        self.assertEqual(Foundation.NSURLSessionTaskStateCompleted, 3)
 
         self.assertIsInstance(Foundation.NSURLSessionTaskPriorityDefault, float)
         self.assertIsInstance(Foundation.NSURLSessionTaskPriorityLow, float)
         self.assertIsInstance(Foundation.NSURLSessionTaskPriorityHigh, float)
 
-        self.assertEqual(Foundation.NSURLSessionAuthChallengeUseCredential, 0)
-        self.assertEqual(Foundation.NSURLSessionAuthChallengePerformDefaultHandling, 1)
-        self.assertEqual(
-            Foundation.NSURLSessionAuthChallengeCancelAuthenticationChallenge, 2
-        )
-        self.assertEqual(Foundation.NSURLSessionAuthChallengeRejectProtectionSpace, 3)
-
-        self.assertEqual(Foundation.NSURLSessionResponseCancel, 0)
-        self.assertEqual(Foundation.NSURLSessionResponseAllow, 1)
-        self.assertEqual(Foundation.NSURLSessionResponseBecomeDownload, 2)
-        self.assertEqual(Foundation.NSURLSessionResponseBecomeStream, 3)
-
         self.assertIsInstance(Foundation.NSURLSessionDownloadTaskResumeData, str)
 
-    @min_os_level("10.12")
-    def testConstants10_12(self):
-        self.assertEqual(Foundation.NSURLSessionTaskMetricsResourceFetchTypeUnknown, 0)
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad, 1
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsResourceFetchTypeServerPush, 2
-        )
-        self.assertEqual(
-            Foundation.NSURLSessionTaskMetricsResourceFetchTypeLocalCache, 3
-        )
-
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(Foundation.NSURLSessionUploadTaskResumeData, str)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             Foundation.NSURLSession.resetWithCompletionHandler_, 0, b"v"
         )
@@ -367,7 +363,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             Foundation.NSURLSession.getAllTasksWithCompletionHandler_, 0, b"v@"
         )
@@ -391,7 +387,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionTaskTransactionMetrics.isProxyConnection
         )
@@ -400,7 +396,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             TestNSURLSessionHelper.URLSession_task_willBeginDelayedRequest_completionHandler_,
             3,
@@ -414,7 +410,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             Foundation.NSURLSessionWebSocketTask.sendMessage_completionHandler_,
             1,
@@ -445,7 +441,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods10_15_missing(self):
+    def test_methods10_15_missing(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.allowsConstrainedNetworkAccess
         )
@@ -454,7 +450,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.sessionSendsLaunchEvents
         )
@@ -463,7 +459,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.requiresDNSSECValidation
         )
@@ -472,7 +468,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBlock(
             Foundation.NSURLSession.uploadTaskWithResumeData_completionHandler_,
             1,
@@ -485,7 +481,7 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("15.4")
-    def testMethods15_4(self):
+    def test_methods15_4(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.usesClassicLoadingMode
         )
@@ -494,14 +490,14 @@ class TestNSURLSession(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(Foundation.NSURLSessionConfiguration.enablesEarlyData)
         self.assertArgIsBOOL(
             Foundation.NSURLSessionConfiguration.setEnablesEarlyData_, 0
         )
 
     @min_os_level("26.1")
-    def testMethods26_1(self):
+    def test_methods26_1(self):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionConfiguration.allowsUltraConstrainedNetworkAccess
         )
@@ -511,14 +507,14 @@ class TestNSURLSession(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols10_12(self):
-        self.assertProtocolExists("NSURLSessionTaskDelegate")
-        self.assertProtocolExists("NSURLSessionDataDelegate")
-        self.assertProtocolExists("NSURLSessionDownloadDelegate")
+    def test_protocols10_12(self):
+        self.assertProtocolExists("NSURLSessionTaskDelegate", Foundation)
+        self.assertProtocolExists("NSURLSessionDataDelegate", Foundation)
+        self.assertProtocolExists("NSURLSessionDownloadDelegate", Foundation)
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
-        self.assertProtocolExists("NSURLSessionStreamDelegate")
+    def test_protocols10_11(self):
+        self.assertProtocolExists("NSURLSessionStreamDelegate", Foundation)
 
     def test_protocol_methods10_15(self):
         self.assertArgHasType(

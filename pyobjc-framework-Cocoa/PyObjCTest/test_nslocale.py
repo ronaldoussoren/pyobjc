@@ -1,16 +1,36 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLocale(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(Foundation.NSLocaleLanguageDirection)
+        self.assertEqual(
+            Foundation.NSLocaleLanguageDirectionUnknown,
+            CoreFoundation.kCFLocaleLanguageDirectionUnknown,
+        )
+        self.assertEqual(
+            Foundation.NSLocaleLanguageDirectionLeftToRight,
+            CoreFoundation.kCFLocaleLanguageDirectionLeftToRight,
+        )
+        self.assertEqual(
+            Foundation.NSLocaleLanguageDirectionRightToLeft,
+            CoreFoundation.kCFLocaleLanguageDirectionRightToLeft,
+        )
+        self.assertEqual(
+            Foundation.NSLocaleLanguageDirectionTopToBottom,
+            CoreFoundation.kCFLocaleLanguageDirectionTopToBottom,
+        )
+        self.assertEqual(
+            Foundation.NSLocaleLanguageDirectionBottomToTop,
+            CoreFoundation.kCFLocaleLanguageDirectionBottomToTop,
+        )
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSLocaleKey, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSLocaleLanguageDirection)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSCurrentLocaleDidChangeNotification, str)
         self.assertIsInstance(Foundation.NSLocaleIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleLanguageCode, str)
@@ -34,8 +54,6 @@ class TestNSLocale(TestCase):
         self.assertIsInstance(Foundation.NSIslamicCivilCalendar, str)
         self.assertIsInstance(Foundation.NSJapaneseCalendar, str)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
         self.assertIsInstance(Foundation.NSLocaleCollatorIdentifier, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationBeginDelimiterKey, str)
         self.assertIsInstance(Foundation.NSLocaleQuotationEndDelimiterKey, str)
@@ -47,24 +65,3 @@ class TestNSLocale(TestCase):
         self.assertIsInstance(Foundation.NSPersianCalendar, str)
         self.assertIsInstance(Foundation.NSIndianCalendar, str)
         self.assertIsInstance(Foundation.NSISO8601Calendar, str)
-
-        self.assertEqual(
-            Foundation.NSLocaleLanguageDirectionUnknown,
-            CoreFoundation.kCFLocaleLanguageDirectionUnknown,
-        )
-        self.assertEqual(
-            Foundation.NSLocaleLanguageDirectionLeftToRight,
-            CoreFoundation.kCFLocaleLanguageDirectionLeftToRight,
-        )
-        self.assertEqual(
-            Foundation.NSLocaleLanguageDirectionRightToLeft,
-            CoreFoundation.kCFLocaleLanguageDirectionRightToLeft,
-        )
-        self.assertEqual(
-            Foundation.NSLocaleLanguageDirectionTopToBottom,
-            CoreFoundation.kCFLocaleLanguageDirectionTopToBottom,
-        )
-        self.assertEqual(
-            Foundation.NSLocaleLanguageDirectionBottomToTop,
-            CoreFoundation.kCFLocaleLanguageDirectionBottomToTop,
-        )

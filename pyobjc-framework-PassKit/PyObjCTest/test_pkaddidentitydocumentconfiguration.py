@@ -4,7 +4,7 @@ import PassKit
 
 
 class TestPKAddIdentityDocumentConfiguration(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PassKit.PKAddIdentityDocumentType)
         self.assertEqual(PassKit.PKAddIdentityDocumentTypeIDCard, 0)
         self.assertEqual(PassKit.PKAddIdentityDocumentTypeMDL, 1)

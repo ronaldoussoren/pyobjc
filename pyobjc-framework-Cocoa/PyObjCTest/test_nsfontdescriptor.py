@@ -5,11 +5,59 @@ from PyObjCTools.TestSupport import (
     os_level_key,
     os_release,
     skipUnless,
+    cast_int,
 )
 
 
 class TestNSFontDescriptor(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
+        self.assertEqual(AppKit.NSFontDescriptorTraitItalic, 1 << 0)
+        self.assertEqual(AppKit.NSFontDescriptorTraitBold, 1 << 1)
+        self.assertEqual(AppKit.NSFontDescriptorTraitExpanded, 1 << 5)
+        self.assertEqual(AppKit.NSFontDescriptorTraitCondensed, 1 << 6)
+        self.assertEqual(AppKit.NSFontDescriptorTraitMonoSpace, 1 << 10)
+        self.assertEqual(AppKit.NSFontDescriptorTraitVertical, 1 << 11)
+        self.assertEqual(AppKit.NSFontDescriptorTraitUIOptimized, 1 << 12)
+        self.assertEqual(AppKit.NSFontDescriptorTraitTightLeading, 1 << 15)
+        self.assertEqual(AppKit.NSFontDescriptorTraitLooseLeading, 1 << 16)
+        self.assertEqual(AppKit.NSFontDescriptorClassMask, 0xF0000000)
+        self.assertEqual(AppKit.NSFontDescriptorClassUnknown, 0 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassOldStyleSerifs, 1 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassTransitionalSerifs, 2 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassModernSerifs, 3 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassClarendonSerifs, 4 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassSlabSerifs, 5 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassFreeformSerifs, 7 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassSansSerif, 8 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassOrnamentals, 9 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassScripts, 10 << 28)
+        self.assertEqual(AppKit.NSFontDescriptorClassSymbolic, 12 << 28)
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSFontUnknownClass, (0 << 28))
+        self.assertEqual(AppKit.NSFontOldStyleSerifsClass, (1 << 28))
+        self.assertEqual(AppKit.NSFontTransitionalSerifsClass, (2 << 28))
+        self.assertEqual(AppKit.NSFontModernSerifsClass, (3 << 28))
+        self.assertEqual(AppKit.NSFontClarendonSerifsClass, (4 << 28))
+        self.assertEqual(AppKit.NSFontSlabSerifsClass, (5 << 28))
+        self.assertEqual(AppKit.NSFontFreeformSerifsClass, (7 << 28))
+        self.assertEqual(AppKit.NSFontSansSerifClass, cast_int(8 << 28))
+        self.assertEqual(AppKit.NSFontOrnamentalsClass, cast_int(9 << 28))
+        self.assertEqual(AppKit.NSFontScriptsClass, cast_int(10 << 28))
+        self.assertEqual(AppKit.NSFontSymbolicClass, cast_int(12 << 28))
+        self.assertEqual(AppKit.NSFontFamilyClassMask, (0xF0000000))
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSFontItalicTrait, (1 << 0))
+        self.assertEqual(AppKit.NSFontBoldTrait, (1 << 1))
+        self.assertEqual(AppKit.NSFontExpandedTrait, (1 << 5))
+        self.assertEqual(AppKit.NSFontCondensedTrait, (1 << 6))
+        self.assertEqual(AppKit.NSFontMonoSpaceTrait, (1 << 10))
+        self.assertEqual(AppKit.NSFontVerticalTrait, (1 << 11))
+        self.assertEqual(AppKit.NSFontUIOptimizedTrait, (1 << 12))
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSFontDescriptorAttributeName, str)
         self.assertIsTypedEnum(AppKit.NSFontDescriptorFeatureKey, str)
         self.assertIsTypedEnum(AppKit.NSFontDescriptorSystemDesign, str)
@@ -20,47 +68,7 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsTypedEnum(AppKit.NSFontWeight, float)
         self.assertIsTypedEnum(AppKit.NSFontWidth, float)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSFontDescriptorSymbolicTraits)
-
-    @skipUnless(
-        not (
-            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
-        ),
-        "Crash on 10.13, 10.14??",
-    )
-    def testConvenience(self):
-        v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
-        self.assertIsInstance(v, AppKit.NSFontDescriptor)
-        d = v[AppKit.NSFontNameAttribute]
-        self.assertEqual(v.get(AppKit.NSFontNameAttribute), d)
-        self.assertEqual(v.get("no-such-name"), None)
-        with self.assertRaises(KeyError):
-            v["no-such-name"]
-
-    def testConstants(self):
-        self.assertEqual(AppKit.NSFontUnknownClass, (0 << 28))
-        self.assertEqual(AppKit.NSFontOldStyleSerifsClass, (1 << 28))
-        self.assertEqual(AppKit.NSFontTransitionalSerifsClass, (2 << 28))
-        self.assertEqual(AppKit.NSFontModernSerifsClass, (3 << 28))
-        self.assertEqual(AppKit.NSFontClarendonSerifsClass, (4 << 28))
-        self.assertEqual(AppKit.NSFontSlabSerifsClass, (5 << 28))
-        self.assertEqual(AppKit.NSFontFreeformSerifsClass, (7 << 28))
-        self.assertEqual(AppKit.NSFontSansSerifClass, (8 << 28))
-        self.assertEqual(AppKit.NSFontOrnamentalsClass, (9 << 28))
-        self.assertEqual(AppKit.NSFontScriptsClass, (10 << 28))
-        self.assertEqual(AppKit.NSFontSymbolicClass, (12 << 28))
-
-        self.assertEqual(AppKit.NSFontFamilyClassMask, (0xF0000000))
-
-        self.assertEqual(AppKit.NSFontItalicTrait, (1 << 0))
-        self.assertEqual(AppKit.NSFontBoldTrait, (1 << 1))
-        self.assertEqual(AppKit.NSFontExpandedTrait, (1 << 5))
-        self.assertEqual(AppKit.NSFontCondensedTrait, (1 << 6))
-        self.assertEqual(AppKit.NSFontMonoSpaceTrait, (1 << 10))
-        self.assertEqual(AppKit.NSFontVerticalTrait, (1 << 11))
-        self.assertEqual(AppKit.NSFontUIOptimizedTrait, (1 << 12))
-
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSFontFamilyAttribute, str)
         self.assertIsInstance(AppKit.NSFontNameAttribute, str)
         self.assertIsInstance(AppKit.NSFontFaceAttribute, str)
@@ -86,37 +94,14 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontFeatureTypeIdentifierKey, str)
         self.assertIsInstance(AppKit.NSFontFeatureSelectorIdentifierKey, str)
 
-        self.assertEqual(AppKit.NSFontDescriptorTraitItalic, 1 << 0)
-        self.assertEqual(AppKit.NSFontDescriptorTraitBold, 1 << 1)
-        self.assertEqual(AppKit.NSFontDescriptorTraitExpanded, 1 << 5)
-        self.assertEqual(AppKit.NSFontDescriptorTraitCondensed, 1 << 6)
-        self.assertEqual(AppKit.NSFontDescriptorTraitMonoSpace, 1 << 10)
-        self.assertEqual(AppKit.NSFontDescriptorTraitVertical, 1 << 11)
-        self.assertEqual(AppKit.NSFontDescriptorTraitUIOptimized, 1 << 12)
-        self.assertEqual(AppKit.NSFontDescriptorTraitTightLeading, 1 << 15)
-        self.assertEqual(AppKit.NSFontDescriptorTraitLooseLeading, 1 << 16)
-        self.assertEqual(AppKit.NSFontDescriptorClassMask, 0xF0000000)
-
-        self.assertEqual(AppKit.NSFontDescriptorClassUnknown, 0 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassOldStyleSerifs, 1 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassTransitionalSerifs, 2 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassModernSerifs, 3 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassClarendonSerifs, 4 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassSlabSerifs, 5 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassFreeformSerifs, 7 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassSansSerif, 8 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassOrnamentals, 9 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassScripts, 10 << 28)
-        self.assertEqual(AppKit.NSFontDescriptorClassSymbolic, 12 << 28)
-
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AppKit.NSFontWidthCondensed, float)
         self.assertIsInstance(AppKit.NSFontWidthStandard, float)
         self.assertIsInstance(AppKit.NSFontWidthExpanded, float)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSFontWeightUltraLight, float)
         self.assertIsInstance(AppKit.NSFontWeightThin, float)
         self.assertIsInstance(AppKit.NSFontWeightLight, float)
@@ -128,14 +113,14 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontWeightBlack, float)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignDefault, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignSerif, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignMonospaced, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignRounded, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(AppKit.NSFontTextStyleLargeTitle, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle1, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle2, str)
@@ -149,9 +134,24 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontTextStyleCaption2, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(AppKit.NSFontWidthCompressed, float)
 
+    @skipUnless(
+        not (
+            os_level_key("10.13") <= os_level_key(os_release()) < os_level_key("10.15")
+        ),
+        "Crash on 10.13, 10.14??",
+    )
+    def test_convenience(self):
+        v = AppKit.NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
+        self.assertIsInstance(v, AppKit.NSFontDescriptor)
+        d = v[AppKit.NSFontNameAttribute]
+        self.assertEqual(v.get(AppKit.NSFontNameAttribute), d)
+        self.assertEqual(v.get("no-such-name"), None)
+        with self.assertRaises(KeyError):
+            v["no-such-name"]
+
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSFontDescriptor.requiresFontAssetRequest)

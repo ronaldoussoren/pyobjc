@@ -20,7 +20,7 @@ class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderEnumeration(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(FileProvider.NSFileProviderSyncAnchor, NSData)
         self.assertIsTypedEnum(FileProvider.NSFileProviderPage, NSData)
 
@@ -33,13 +33,20 @@ class TestNSFileProviderEnumeration(TestCase):
             FileProvider.NSFileProviderInitialPageSortedByName, FileProvider.NSData
         )
 
+    @min_os_level("11.0")
+    def test_methods11_0(self):
+        self.assertArgIsOut(
+            FileProvider.NSFileProviderExtension.enumeratorForContainerItemIdentifier_error_,
+            1,
+        )
+
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("NSFileProviderEnumerationObserver")
-        self.assertProtocolExists("NSFileProviderChangeObserver")
-        self.assertProtocolExists("NSFileProviderEnumerator")
+        self.assertProtocolExists("NSFileProviderEnumerationObserver", FileProvider)
+        self.assertProtocolExists("NSFileProviderChangeObserver", FileProvider)
+        self.assertProtocolExists("NSFileProviderEnumerator", FileProvider)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestNSFileProviderEnumerationHelper.finishEnumeratingChangesUpToSyncAnchor_moreComing_,  # noqa: B950
             1,
@@ -54,11 +61,4 @@ class TestNSFileProviderEnumeration(TestCase):
         )
         self.assertResultHasType(
             TestNSFileProviderEnumerationHelper.suggestedBatchSize, objc._C_NSUInteger
-        )
-
-    @min_os_level("11.0")
-    def test_methods11_0(self):
-        self.assertArgIsOut(
-            FileProvider.NSFileProviderExtension.enumeratorForContainerItemIdentifier_error_,
-            1,
         )

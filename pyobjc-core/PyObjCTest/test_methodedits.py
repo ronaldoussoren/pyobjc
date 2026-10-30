@@ -20,6 +20,9 @@ class Methods(NSObject):
     def newMethod(self):
         return "<new-method>"
 
+    def boundvalue(self):
+        return "<bound-value>"
+
 
 class MethodsSub(NSObject):
     def description(self):
@@ -409,6 +412,14 @@ class TestClassAsignments(TestCase):
         self.assertEqual(theClass.selectorAlias(), theClass.description())
 
         self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
+
+    def test_setting_bound(self):
+        obj = Methods.alloc().init()
+        NSObject.setting_bound_value = obj.boundvalue
+
+        m = NSObject.setting_bound_value
+        self.assertIsInstance(m, objc.python_selector)
+        self.assertEqual(m, obj.boundvalue.__func__)
 
 
 class TestCategory(TestCase):

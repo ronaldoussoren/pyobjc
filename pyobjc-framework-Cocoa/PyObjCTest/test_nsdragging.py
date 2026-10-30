@@ -113,15 +113,8 @@ class TestNSDraggingHelper(AppKit.NSObject):
 
 
 class TestNSDragging(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSDragOperation)
-        self.assertIsEnumType(AppKit.NSDraggingContext)
-        self.assertIsEnumType(AppKit.NSDraggingFormation)
-        self.assertIsEnumType(AppKit.NSDraggingItemEnumerationOptions)
-        self.assertIsEnumType(AppKit.NSSpringLoadingHighlight)
-        self.assertIsEnumType(AppKit.NSSpringLoadingOptions)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSDragOperationNone, 0)
         self.assertEqual(AppKit.NSDragOperationCopy, 1)
         self.assertEqual(AppKit.NSDragOperationLink, 2)
@@ -131,20 +124,20 @@ class TestNSDragging(TestCase):
         self.assertEqual(AppKit.NSDragOperationMove, 16)
         self.assertEqual(AppKit.NSDragOperationDelete, 32)
         self.assertEqual(AppKit.NSDragOperationEvery, AppKit.NSUIntegerMax)
-
         self.assertEqual(AppKit.NSDragOperationAll, AppKit.NSDragOperationAll_Obsolete)
 
-    @min_os_level("10.7")
-    def testConstant10_7(self):
+        self.assertIsEnumType(AppKit.NSDraggingContext)
+        self.assertEqual(AppKit.NSDraggingContextOutsideApplication, 0)
+        self.assertEqual(AppKit.NSDraggingContextWithinApplication, 1)
+
+        self.assertIsEnumType(AppKit.NSDraggingFormation)
         self.assertEqual(AppKit.NSDraggingFormationDefault, 0)
         self.assertEqual(AppKit.NSDraggingFormationNone, 1)
         self.assertEqual(AppKit.NSDraggingFormationPile, 2)
         self.assertEqual(AppKit.NSDraggingFormationList, 3)
         self.assertEqual(AppKit.NSDraggingFormationStack, 4)
 
-        self.assertEqual(AppKit.NSDraggingContextOutsideApplication, 0)
-        self.assertEqual(AppKit.NSDraggingContextWithinApplication, 1)
-
+        self.assertIsEnumType(AppKit.NSDraggingItemEnumerationOptions)
         self.assertEqual(
             AppKit.NSDraggingItemEnumerationConcurrent, AppKit.NSEnumerationConcurrent
         )
@@ -152,27 +145,26 @@ class TestNSDragging(TestCase):
             AppKit.NSDraggingItemEnumerationClearNonenumeratedImages, 1 << 16
         )
 
-    @min_os_level("10.11")
-    def testConstant10_11(self):
+        self.assertIsEnumType(AppKit.NSSpringLoadingHighlight)
         self.assertEqual(AppKit.NSSpringLoadingHighlightNone, 0)
         self.assertEqual(AppKit.NSSpringLoadingHighlightStandard, 1)
         self.assertEqual(AppKit.NSSpringLoadingHighlightEmphasized, 2)
 
+        self.assertIsEnumType(AppKit.NSSpringLoadingOptions)
         self.assertEqual(AppKit.NSSpringLoadingDisabled, 0)
-        self.assertEqual(AppKit.NSSpringLoadingEnabled, 1)
-        self.assertEqual(AppKit.NSSpringLoadingContinuousActivation, 2)
-        self.assertEqual(AppKit.NSSpringLoadingNoHover, 4)
+        self.assertEqual(AppKit.NSSpringLoadingEnabled, 1 << 0)
+        self.assertEqual(AppKit.NSSpringLoadingContinuousActivation, 1 << 1)
+        self.assertEqual(AppKit.NSSpringLoadingNoHover, 1 << 3)
 
-    @min_sdk_level("10.7")
-    def testProtocols(self):
-        self.assertProtocolExists("NSDraggingDestination")
-        self.assertProtocolExists("NSDraggingSource")
+    def test_protocols(self):
+        self.assertProtocolExists("NSDraggingDestination", AppKit)
+        self.assertProtocolExists("NSDraggingSource", AppKit)
 
     @min_sdk_level("10.11")
-    def testProtocols10_11(self):
-        self.assertProtocolExists("NSSpringLoadingDestination")
+    def test_protocols10_11(self):
+        self.assertProtocolExists("NSSpringLoadingDestination", AppKit)
 
-    def testProtocolImplementations(self):
+    def test_protocols_implementation(self):
         self.assertResultHasType(
             TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger
         )
@@ -238,8 +230,6 @@ class TestNSDragging(TestCase):
             objc._C_NSInteger,
         )
 
-    @min_os_level("10.7")
-    def testProtocols10_7(self):
         self.assertResultIsBOOL(TestNSDraggingHelper.animatesToDestination)
         self.assertArgIsBOOL(TestNSDraggingHelper.setAnimatesToDestination_, 0)
 
@@ -290,7 +280,7 @@ class TestNSDragging(TestCase):
         )
 
     @min_os_level("10.11")
-    def testProtocolMethods10_11(self):
+    def test_protocol_methods10_11(self):
         self.assertArgIsBOOL(
             TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0
         )

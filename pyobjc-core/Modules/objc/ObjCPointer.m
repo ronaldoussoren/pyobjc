@@ -73,8 +73,8 @@ static PyType_Spec ptr_spec = {
     .basicsize = sizeof(PyObjCPointer),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = ptr_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = ptr_slots,
 };
 
 PyObject* PyObjCPointer_Type = (PyObject* _Nonnull)NULL;

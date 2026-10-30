@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestICCameraDevice(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ImageCaptureCore.ICEXIFOrientationType)
-
-    def testConstants(self):
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation1, 1)
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation2, 2)
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation3, 3)
@@ -16,6 +14,7 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation7, 7)
         self.assertEqual(ImageCaptureCore.ICEXIFOrientation8, 8)
 
+        self.assertIsEnumType(ImageCaptureCore.ICReturnCode)
         self.assertEqual(ImageCaptureCore.ICReturnSuccess, 0)
         self.assertEqual(ImageCaptureCore.ICReturnInvalidParam, -9922)
         self.assertEqual(ImageCaptureCore.ICReturnCommunicationTimedOut, -9923)
@@ -89,15 +88,12 @@ class TestICCameraDevice(TestCase):
         )
 
         self.assertEqual(
-            ImageCaptureCore.ICReturnErrorDeviceEjected,
-            ImageCaptureCore.ICReturnCodeSystemOffset,
-        )
-        self.assertEqual(
             ImageCaptureCore.ICReturnConnectionDriverExited,
             ImageCaptureCore.ICReturnCodeDeviceOffset,
         )
         self.assertEqual(ImageCaptureCore.ICReturnMultiErrorDictionary, -30000)
 
+        self.assertIsEnumType(ImageCaptureCore.ICLegacyReturnCode)
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeCommunicationErr, -9900)
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceNotFoundErr, -9901)
         self.assertEqual(ImageCaptureCore.ICLegacyReturnCodeDeviceNotOpenErr, -9902)

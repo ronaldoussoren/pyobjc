@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKStatistics(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKStatisticsOptions)
         self.assertEqual(HealthKit.HKStatisticsOptionNone, 0)
         self.assertEqual(HealthKit.HKStatisticsOptionSeparateBySource, 1 << 0)

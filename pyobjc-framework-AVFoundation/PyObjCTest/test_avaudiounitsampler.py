@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVUnitSampler(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioUnitSampler.loadSoundBankInstrumentAtURL_program_bankMSB_bankLSB_error_  # noqa: B950
         )

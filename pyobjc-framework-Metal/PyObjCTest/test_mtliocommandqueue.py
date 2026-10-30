@@ -9,7 +9,7 @@ class TestMTLIOCommandQueueHelper(Metal.NSObject):
 
 
 class TestMTLIOCommandQueue(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIOPriority)
         self.assertEqual(Metal.MTLIOPriorityHigh, 0)
         self.assertEqual(Metal.MTLIOPriorityNormal, 1)
@@ -29,12 +29,15 @@ class TestMTLIOCommandQueue(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLIOCommandQueue")
-        self.assertProtocolExists("MTLIOScratchBuffer")
-        self.assertProtocolExists("MTLIOScratchBufferAllocator")
-        self.assertProtocolExists("MTLIOFileHandle")
+        self.assertProtocolExists("MTLIOCommandQueue", Metal)
+        self.assertProtocolExists("MTLIOScratchBuffer", Metal)
+        self.assertProtocolExists("MTLIOScratchBufferAllocator", Metal)
+        self.assertProtocolExists("MTLIOFileHandle", Metal)
 
     def test_protocol_methods(self):
+        self.assertResultIsRetained(
+            TestMTLIOCommandQueueHelper.newScratchBufferWithMinimumSize_
+        )
         self.assertArgHasType(
             TestMTLIOCommandQueueHelper.newScratchBufferWithMinimumSize_,
             0,

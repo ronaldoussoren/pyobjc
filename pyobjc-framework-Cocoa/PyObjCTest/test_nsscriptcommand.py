@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScriptCommand(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSNoScriptError, 0)
         self.assertEqual(Foundation.NSReceiverEvaluationScriptError, 1)
         self.assertEqual(Foundation.NSKeySpecifierEvaluationScriptError, 2)
@@ -16,5 +16,5 @@ class TestNSScriptCommand(TestCase):
         self.assertEqual(Foundation.NSOperationNotSupportedForKeyScriptError, 9)
         self.assertEqual(Foundation.NSCannotCreateScriptCommandError, 10)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSScriptCommand.isWellFormed)

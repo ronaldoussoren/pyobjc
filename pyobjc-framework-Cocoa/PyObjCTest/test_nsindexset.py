@@ -1,10 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestNSIndexSet(TestCase):
-    def testConvenience(self):
+    def test_convenience(self):
         v = Foundation.NSIndexSet.indexSetWithIndexesInRange_((5, 10))
         lst = list(v)
         self.assertEqual(lst, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
@@ -27,7 +27,7 @@ class TestNSIndexSet(TestCase):
         self.assertFalse(16 in v)
         self.assertFalse("a" in v)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSIndexSet.isEqualToIndexSet_)
         self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndex_)
         self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndexesInRange_)
@@ -42,8 +42,6 @@ class TestNSIndexSet(TestCase):
             Foundation.NSIndexSet.getIndexes_maxCount_inIndexRange_, 0
         )
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateIndexesUsingBlock_,
             0,
@@ -107,8 +105,6 @@ class TestNSIndexSet(TestCase):
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
-    @min_os_level("10.7")
-    def testMethod10_7(self):
         self.assertArgIsBlock(
             Foundation.NSIndexSet.enumerateRangesUsingBlock_,
             0,

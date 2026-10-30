@@ -8,11 +8,7 @@ class TestAVCaptureOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureOutput(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVCaptureOutputDataDroppedReason)
-
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput.alwaysDiscardsLateVideoFrames
         )
@@ -25,10 +21,6 @@ class TestAVCaptureOutput(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecordingPaused)
 
         self.assertResultIsBOOL(
-            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
-        )
-
-        self.assertResultIsBOOL(
             AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage
         )
         self.assertArgIsBlock(
@@ -38,7 +30,7 @@ class TestAVCaptureOutput(TestCase):
         )
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureVideoDataOutput_Tundra.alwaysDiscardsLateVideoFrames
         )
@@ -61,9 +53,20 @@ class TestAVCaptureOutput(TestCase):
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("AVCaptureVideoDataOutputSampleBufferDelegate")
-        self.assertProtocolExists("AVCaptureAudioDataOutputSampleBufferDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputDelegate")
-        self.assertProtocolExists("AVCaptureMetadataOutputObjectsDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "AVCaptureVideoDataOutputSampleBufferDelegate", AVFoundation
+        )
+        self.assertProtocolExists(
+            "AVCaptureAudioDataOutputSampleBufferDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate", AVFoundation)
+        self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVCaptureMetadataOutputObjectsDelegate", AVFoundation
+        )
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
+        )

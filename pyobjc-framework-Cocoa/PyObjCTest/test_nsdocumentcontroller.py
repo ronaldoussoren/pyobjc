@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSDocumentController(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSDocumentController.openUntitledDocumentAndDisplay_error_, 0
         )
@@ -83,8 +83,6 @@ class TestNSDocumentController(TestCase):
         self.assertArgIsBOOL(AppKit.NSDocumentController.setShouldCreateUI_, 0)
         self.assertResultIsBOOL(AppKit.NSDocumentController.shouldCreateUI)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertArgIsBOOL(
             AppKit.NSDocumentController.openDocumentWithContentsOfURL_display_completionHandler_,  # noqa: B950
             1,
@@ -112,8 +110,6 @@ class TestNSDocumentController(TestCase):
             3,
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertArgIsBlock(
             AppKit.NSDocumentController.beginOpenPanelWithCompletionHandler_, 0, b"v@"
         )
@@ -124,5 +120,5 @@ class TestNSDocumentController(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(AppKit.NSDocumentController.allowsAutomaticShareMenu)

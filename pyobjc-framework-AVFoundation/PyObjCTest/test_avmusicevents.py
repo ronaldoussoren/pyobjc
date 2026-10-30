@@ -3,9 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMusicEvents(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVMIDIControlChangeMessageType)
-
         self.assertEqual(AVFoundation.AVMIDIControlChangeMessageTypeBankSelect, 0)
         self.assertEqual(AVFoundation.AVMIDIControlChangeMessageTypeModWheel, 1)
         self.assertEqual(AVFoundation.AVMIDIControlChangeMessageTypeBreath, 2)

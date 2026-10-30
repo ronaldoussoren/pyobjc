@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestTranslationServices(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.badTranslationRefErr, -3031)
 
         self.assertEqual(HIServices.kTranslationDataTranslation, 1 << 0)
         self.assertEqual(HIServices.kTranslationFileTranslation, 1 << 1)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(HIServices.TranslationGetTypeID(), int)
 
         self.assertArgIsOut(HIServices.TranslationCreate, 3)

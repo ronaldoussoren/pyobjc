@@ -21,21 +21,7 @@
       "class_method": false
      }
     ]
-   },
-   "EPExecutionPolicy": {
-    "methods": [
-     {
-      "args": {
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "addPolicyExceptionForURL:error:"
-     }
-    ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

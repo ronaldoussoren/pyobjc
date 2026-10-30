@@ -17,13 +17,13 @@ class TestNSConnectionHelper(Foundation.NSObject):
 
 
 class TestNSConnection(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSConnectionReplyMode, str)
         self.assertIsInstance(Foundation.NSConnectionDidDieNotification, str)
         self.assertIsInstance(Foundation.NSFailedAuthenticationException, str)
         self.assertIsInstance(Foundation.NSConnectionDidInitializeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Foundation.NSConnection.setIndependentConversationQueueing_, 0
         )
@@ -33,14 +33,14 @@ class TestNSConnection(TestCase):
         self.assertResultIsBOOL(Foundation.NSConnection.registerName_withNameServer_)
         self.assertResultIsBOOL(Foundation.NSConnection.multipleThreadsEnabled)
 
-    def testProtocols(self):
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSConnectionDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSConnectionHelper.makeNewConnection_sender_)
         self.assertResultIsBOOL(
             TestNSConnectionHelper.connection_shouldMakeNewConnection_
         )
         self.assertResultIsBOOL(TestNSConnectionHelper.authenticateComponents_withData_)
         self.assertResultIsBOOL(TestNSConnectionHelper.connection_handleRequest_)
-
-    @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSConnectionDelegate")

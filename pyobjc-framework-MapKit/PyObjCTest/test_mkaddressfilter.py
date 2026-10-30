@@ -4,7 +4,7 @@ import MapKit
 
 
 class TestMKAddressFilter(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKAddressFilterOption)
         self.assertEqual(MapKit.MKAddressFilterOptionCountry, 1 << 0)
         self.assertEqual(MapKit.MKAddressFilterOptionAdministrativeArea, 1 << 1)

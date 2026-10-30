@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -23,33 +23,27 @@ class TestNSTokenFieldCellHelper(AppKit.NSObject):
 
 
 class TestNSTokenFieldCell(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSTokenStyle)
-
-    def testConstants(self):
+    def test_enums(self):
+        # Old aliases:
         self.assertEqual(AppKit.NSDefaultTokenStyle, 0)
         self.assertEqual(AppKit.NSTokenStyleNone, 1)
         self.assertEqual(AppKit.NSTokenStyleRounded, 2)
 
-        self.assertEqual(AppKit.NSPlainTextTokenStyle, 1)  # Deprecated
-        self.assertEqual(AppKit.NSRoundedTokenStyle, 2)  # Deprecated
+        # Old aliases:
+        self.assertEqual(AppKit.NSPlainTextTokenStyle, 1)
+        self.assertEqual(AppKit.NSRoundedTokenStyle, 2)
 
+        self.assertIsEnumType(AppKit.NSTokenStyle)
         self.assertEqual(AppKit.NSTokenStyleDefault, 0)
         self.assertEqual(AppKit.NSTokenStyleNone, 1)
         self.assertEqual(AppKit.NSTokenStyleRounded, 2)
         self.assertEqual(AppKit.NSTokenStyleSquared, 3)
         self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
 
-    @min_os_level("10.10")
-    def testContants10_10(self):
-        self.assertEqual(AppKit.NSTokenStyleSquared, 3)
-        self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
+    def test_protocols(self):
+        self.assertProtocolExists("NSTokenFieldCellDelegate", AppKit)
 
-    @min_sdk_level("10.7")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSTokenFieldCellDelegate")
-
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             2,

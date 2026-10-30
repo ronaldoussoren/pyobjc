@@ -3,13 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileProviderDomain(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(FileProvider.NSFileProviderDomainTestingModes)
-
-    @min_os_level("11.0")
-    def test_constants11_0(self):
-        self.assertIsInstance(FileProvider.NSFileProviderDomainDidChange, str)
-
         self.assertEqual(
             FileProvider.NSFileProviderDomainTestingModeAlwaysEnabled, 1 << 0
         )
@@ -20,6 +15,10 @@ class TestNSFileProviderDomain(TestCase):
         self.assertIsEnumType(FileProvider.NSFileProviderKnownFolders)
         self.assertEqual(FileProvider.NSFileProviderDesktop, 1 << 0)
         self.assertEqual(FileProvider.NSFileProviderDocuments, 1 << 1)
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(FileProvider.NSFileProviderDomainDidChange, str)
 
     @min_os_level("26.0")
     def test_constants26_0(self):

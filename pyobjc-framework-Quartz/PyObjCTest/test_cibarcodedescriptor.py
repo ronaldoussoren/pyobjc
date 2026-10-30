@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCIBarcodeDescriptor(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.CIQRCodeErrorCorrectionLevelL, ord("L"))
         self.assertEqual(Quartz.CIQRCodeErrorCorrectionLevelM, ord("M"))
         self.assertEqual(Quartz.CIQRCodeErrorCorrectionLevelQ, ord("Q"))
@@ -17,6 +17,6 @@ class TestCIBarcodeDescriptor(TestCase):
         self.assertEqual(Quartz.CIDataMatrixCodeECCVersion200, 200)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CIAztecCodeDescriptor.isCompact)
         self.assertResultIsBOOL(Quartz.CIPDF417CodeDescriptor.isCompact)

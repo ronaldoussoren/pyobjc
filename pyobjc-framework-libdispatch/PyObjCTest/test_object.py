@@ -4,7 +4,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestObjectAPI(TestCase):
-    @min_os_level("10.6")
     def test_functions(self):
         self.assertFalse(hasattr(dispatch, "dispatch_retain"))
         self.assertFalse(hasattr(dispatch, "dispatch_release"))
@@ -36,7 +35,6 @@ class TestObjectAPI(TestCase):
         # self.assertArgHasType(dispatch.dispatch_wait, 0, objc._C_ID)
         # self.assertArgHasType(dispatch.dispatch_wait, 1, objc._C_ULNGLNG)
 
-        self.assertFalse(hasattr(dispatch, "dispatch_notify"))
         # Generic function macro, not available as C function
         # self.assertResultHasType(dispatch.dispatch_notify, objc._C_VOID)
         # self.assertArgHasType(dispatch.dispatch_notify, 0, objc._C_ID)

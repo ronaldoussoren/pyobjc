@@ -47,12 +47,12 @@ def CMTIMEMAPPING_IS_EMPTY(mapping):
 
 
 def CMSimpleQueueGetFullness(queue):
-    if _CoreMedia.CMSimpleQueueGetCapacity(queue):
+    if _CoreMedia.CMSimpleQueueGetCapacity(queue):  # pragma: no branch
         return _CoreMedia.CMSimpleQueueGetCount(
             queue
         ) / _CoreMedia.CMSimpleQueueGetCapacity(queue)
     else:
-        return 0.0
+        return 0.0  # pragma: no cover
 
 
 def CMTIME_IS_VALID(time):

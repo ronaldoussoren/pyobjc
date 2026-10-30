@@ -4,13 +4,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVSemanticSegmentationMatte(TestCase):
     @min_os_level("10.15")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeSkin, str)
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeHair, str)
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeTeeth, str)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeGlasses, str)
 
     @min_os_level("10.15")

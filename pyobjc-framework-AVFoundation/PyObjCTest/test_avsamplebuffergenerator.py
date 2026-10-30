@@ -3,8 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVSampleBufferGenerator(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestDirection)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionReverse, -1)
+
+        self.assertIsEnumType(AVFoundation.AVSampleBufferRequestMode)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
+        self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)
+
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVSampleBufferGenerator.notifyOfDataReadyForSampleBuffer_completionHandler_,  # noqa: B950
             1,
@@ -12,11 +22,21 @@ class TestAVSampleBufferGenerator(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_
+        )
+
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_error_
+        )
         self.assertArgIsOut(
             AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_error_, 1
         )
 
+        self.assertResultIsCFRetained(
+            AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_addingToBatch_error_
+        )
         self.assertArgIsOut(
             AVFoundation.AVSampleBufferGenerator.createSampleBufferForRequest_addingToBatch_error_,
             2,
@@ -27,11 +47,3 @@ class TestAVSampleBufferGenerator(TestCase):
             0,
             b"v@",
         )
-
-    def testConstants(self):
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionForward, +1)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionNone, 0)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestDirectionReverse, -1)
-
-        self.assertEqual(AVFoundation.AVSampleBufferRequestModeImmediate, 0)
-        self.assertEqual(AVFoundation.AVSampleBufferRequestModeScheduled, 1)

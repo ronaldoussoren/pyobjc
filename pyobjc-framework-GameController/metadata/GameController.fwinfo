@@ -3,6 +3,50 @@
 {
  "definitions": {
   "classes": {
+   "GCControllerHomeButtonSettingsManager": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "type": "^v"
+         },
+         "1": {
+          "type": "@"
+         }
+        },
+        "retval": {
+         "type": "v"
+        }
+       }
+      },
+      "selector": "settingsDidChangeHandler"
+     },
+     {
+      "arguments": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setSettingsDidChangeHandler:"
+     }
+    ]
+   },
    "GCDualSenseAdaptiveTrigger": {
     "methods": [
      {
@@ -100,13 +144,6 @@
       },
       "class_method": false,
       "selector": "setControllerPausedHandler:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "supportsHIDDevice:"
      }
     ]
    },
@@ -1051,19 +1088,6 @@
      }
     ]
    },
-   "GCRacingWheel": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": false,
-      "selector": "acquireDeviceWithError:"
-     }
-    ]
-   },
    "NSObject": {
     "methods": [
      {
@@ -1415,7 +1439,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "GCExtendedGamepadSnapShotDataV100FromNSData": {
     "args": {
@@ -1488,7 +1511,6 @@
     }
    }
   },
-  "informal_protocols": {},
   "structs": {
    "GCExtendedGamepadSnapShotDataV100": {
     "pack": 1

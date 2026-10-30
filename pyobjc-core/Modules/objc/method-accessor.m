@@ -114,7 +114,7 @@ static PyObject* _Nullable find_selector(PyObject* self, const char* name,
     }
 
     if (meta) {
-        if (PyObjCSelector_Check(meta)) {
+        if (PyObjCSelector_Check(meta) && !PyObjCBoundSelector_Check(meta)) {
             /*
              * KVO complicates things, it will insert an intermediate
              * class that overrides KVO-related methods and those need
@@ -278,7 +278,7 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
                 Py_CLEAR(v);
 
             } else {
-                int cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
+                int cm = PyObjCSelector_IsClassMethod(v);
 
                 if (!cm != !class_method) {
                     Py_CLEAR(v);
@@ -479,10 +479,12 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
                      * descriptor mechanism to
                      * fetch the actual result
                      */
-                    v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
-                    if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
-                        Py_CLEAR(dict);        // LCOV_EXCL_LINE
-                        return NULL;           // LCOV_EXCL_LINE
+                    if (!PyObjCBoundSelector_Check(v)) {
+                        v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
+                        if (unlikely(v == NULL)) { // LCOV_BR_EXCL_LINE
+                            Py_CLEAR(dict);        // LCOV_EXCL_LINE
+                            return NULL;           // LCOV_EXCL_LINE
+                        }
                     }
                     result = v;
                 } else {
@@ -542,7 +544,6 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
 
     if (!self->class_method && PyObjCClass_Check(self->base)) {
         /* Unbound instance method */
-        assert(((PyObjCSelector*)result)->sel_self == NULL);
         return result;
     } else {
         /* Bound instance or class method
@@ -550,8 +551,8 @@ static PyObject* _Nullable methacc_getattro(PyObject* _self, PyObject* name)
          * This needs to create a new selector because the value
          * might be a "hidden" selector.
          */
-        PyObject* tmp =
-            PyObject_CallMethod(result, "__get__", "OO", self->base, Py_TYPE(self->base));
+        assert(PyObjCSelector_Check(result));
+        PyObject* tmp = PyObjCBoundSelector_New(self->base, (PyObjCSelector*)result);
         Py_DECREF(result);
         return tmp;
     }
@@ -608,8 +609,8 @@ static PyType_Spec methacc_spec = {
     .basicsize = sizeof(PyObjCMethodAccessor),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_GC,
-    .slots = methacc_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION | Py_TPFLAGS_HAVE_GC,
+    .slots     = methacc_slots,
 };
 
 static PyObject* PyObjCMethodAccessor_Type;

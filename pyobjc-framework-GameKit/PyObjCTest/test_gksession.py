@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKSession(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameKit.GKSession.isAvailable)
         self.assertArgIsBOOL(GameKit.GKSession.setAvailable_, 0)
 

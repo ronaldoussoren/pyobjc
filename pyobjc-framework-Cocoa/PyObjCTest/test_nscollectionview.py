@@ -70,12 +70,39 @@ class TestNSCollectionViewHelper(AppKit.NSObject):
 
 
 class TestNSCollectionView(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSCollectionViewDropOperation)
-        self.assertIsEnumType(AppKit.NSCollectionViewItemHighlightState)
-        self.assertIsEnumType(AppKit.NSCollectionViewScrollPosition)
+        self.assertEqual(AppKit.NSCollectionViewDropOn, 0)
+        self.assertEqual(AppKit.NSCollectionViewDropBefore, 1)
 
-    def testMethods(self):
+        self.assertIsEnumType(AppKit.NSCollectionViewItemHighlightState)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightNone, 0)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightForSelection, 1)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightForDeselection, 2)
+        self.assertEqual(AppKit.NSCollectionViewItemHighlightAsDropTarget, 3)
+
+        self.assertIsEnumType(AppKit.NSCollectionViewScrollPosition)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionBottom, 1 << 2)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionNearestHorizontalEdge, 1 << 9
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeft, 1 << 3)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionCenteredHorizontally, 1 << 4
+        )
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionRight, 1 << 5)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeadingEdge, 1 << 6)
+        self.assertEqual(AppKit.NSCollectionViewScrollPositionTrailingEdge, 1 << 7)
+        self.assertEqual(
+            AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8
+        )
+
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSCollectionViewItem.isSelected)
         self.assertArgIsBOOL(AppKit.NSCollectionViewItem.setSelected_, 0)
 
@@ -86,8 +113,6 @@ class TestNSCollectionView(TestCase):
         self.assertResultIsBOOL(AppKit.NSCollectionView.allowsMultipleSelection)
         self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsMultipleSelection_, 0)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultHasType(
             AppKit.NSCollectionView.frameForItemAtIndex_, AppKit.NSRect.__typestr__
         )
@@ -100,6 +125,121 @@ class TestNSCollectionView(TestCase):
             b"N^" + AppKit.NSPoint.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            AppKit.NSCollectionView.newItemForRepresentedObject_
+        )
+
+    @min_os_level("10.11")
+    def test_methods10_11(self):
+        self.assertResultIsBOOL(AppKit.NSCollectionView.allowsEmptySelection)
+        self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsEmptySelection_, 0)
+
+        self.assertArgIsBlock(
+            AppKit.NSCollectionView.performBatchUpdates_completionHandler_, 0, b"v"
+        )
+        self.assertArgIsBlock(
+            AppKit.NSCollectionView.performBatchUpdates_completionHandler_, 1, b"vZ"
+        )
+
+        self.assertArgIsInOut(
+            AppKit.NSCollectionView.draggingImageForItemsAtIndexPaths_withEvent_offset_,
+            2,
+        )
+
+        self.assertArgIsBlock(
+            AppKit.NSSet.enumerateIndexPathsWithOptions_usingBlock_, 1, b"v@o^Z"
+        )
+
+    @min_os_level("10.12")
+    def test_methods10_12(self):
+        self.assertResultIsBOOL(
+            AppKit.NSCollectionView.backgroundViewScrollsWithContent
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSCollectionView.setBackgroundViewScrollsWithContent_, 0
+        )
+
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
+
+    @min_sdk_level("10.11")
+    def test_protocols10_11(self):
+        self.assertProtocolExists("NSCollectionViewElement", AppKit)
+
+        self.assertProtocolExists("NSCollectionViewDataSource", AppKit)
+        self.assertResultHasType(
+            TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_,
+            1,
+            objc._C_NSInteger,
+        )
+
+        self.assertResultHasType(
+            TestNSCollectionViewHelper.numberOfSectionsInCollectionView_,
+            objc._C_NSInteger,
+        )
+
+        self.assertProtocolExists("NSCollectionViewDelegate", AppKit)
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexPaths_withEvent_
+        )
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_writeItemsAtIndexPaths_toPasteboard_
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingImageForItemsAtIndexPaths_withEvent_offset_,  # noqa: B950
+            3,
+            b"N^" + AppKit.NSPoint.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndexPath_dropOperation_,  # noqa: B950
+            2,
+            b"N^@",
+        )
+        self.assertResultHasType(
+            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndexPath_dropOperation_,  # noqa: B950
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultIsBOOL(
+            TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_,
+            3,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexPaths_,  # noqa: B950
+            2,
+            AppKit.NSPoint.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_shouldChangeItemsAtIndexPaths_toHighlightState_,  # noqa: B950
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSCollectionViewHelper.collectionView_didChangeItemsAtIndexPaths_toHighlightState_,  # noqa: B950
+            2,
+            objc._C_NSInteger,
+        )
+
+    @min_sdk_level("10.12")
+    def test_protocols10_12(self):
+        self.assertProtocolExists("NSCollectionViewSectionHeaderView", AppKit)
+
+    @min_sdk_level("10.13")
+    def test_protocols10_13(self):
+        self.assertProtocolExists("NSCollectionViewPrefetching", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexes_withEvent_
         )
@@ -161,146 +301,3 @@ class TestNSCollectionView(TestCase):
             3,
             objc._C_NSInteger,
         )
-
-    @min_os_level("10.11")
-    def testMethods10_11(self):
-        self.assertResultIsBOOL(AppKit.NSCollectionView.allowsEmptySelection)
-        self.assertArgIsBOOL(AppKit.NSCollectionView.setAllowsEmptySelection_, 0)
-
-        self.assertArgIsBlock(
-            AppKit.NSCollectionView.performBatchUpdates_completionHandler_, 0, b"v"
-        )
-        self.assertArgIsBlock(
-            AppKit.NSCollectionView.performBatchUpdates_completionHandler_, 1, b"vZ"
-        )
-
-        self.assertArgIsInOut(
-            AppKit.NSCollectionView.draggingImageForItemsAtIndexPaths_withEvent_offset_,
-            2,
-        )
-
-        self.assertArgIsBlock(
-            AppKit.NSSet.enumerateIndexPathsWithOptions_usingBlock_, 1, b"v@o^Z"
-        )
-
-    @min_os_level("10.12")
-    def testMethods10_12(self):
-        self.assertResultIsBOOL(
-            AppKit.NSCollectionView.backgroundViewScrollsWithContent
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSCollectionView.setBackgroundViewScrollsWithContent_, 0
-        )
-
-    def testConstants(self):
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionNone, 0)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionTop, 1 << 0)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionCenteredVertically, 1 << 1
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionBottom, 1 << 2)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionNearestHorizontalEdge, 1 << 9
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeft, 1 << 3)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionCenteredHorizontally, 1 << 4
-        )
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionRight, 1 << 5)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionLeadingEdge, 1 << 6)
-        self.assertEqual(AppKit.NSCollectionViewScrollPositionTrailingEdge, 1 << 7)
-        self.assertEqual(
-            AppKit.NSCollectionViewScrollPositionNearestVerticalEdge, 1 << 8
-        )
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(AppKit.NSCollectionViewDropOn, 0)
-        self.assertEqual(AppKit.NSCollectionViewDropBefore, 1)
-
-    @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightNone, 0)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightForSelection, 1)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightForDeselection, 2)
-        self.assertEqual(AppKit.NSCollectionViewItemHighlightAsDropTarget, 3)
-
-    @min_sdk_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("NSCollectionViewDelegate")
-
-    @min_sdk_level("10.11")
-    def testProtocols10_11(self):
-        self.assertProtocolExists("NSCollectionViewElement")
-
-        self.assertProtocolExists("NSCollectionViewDataSource")
-        self.assertResultHasType(
-            TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_numberOfItemsInSection_,
-            1,
-            objc._C_NSInteger,
-        )
-
-        self.assertResultHasType(
-            TestNSCollectionViewHelper.numberOfSectionsInCollectionView_,
-            objc._C_NSInteger,
-        )
-
-        self.assertProtocolExists("NSCollectionViewDelegate")
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_canDragItemsAtIndexPaths_withEvent_
-        )
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_writeItemsAtIndexPaths_toPasteboard_
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingImageForItemsAtIndexPaths_withEvent_offset_,  # noqa: B950
-            3,
-            b"N^" + AppKit.NSPoint.__typestr__,
-        )
-
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndexPath_dropOperation_,  # noqa: B950
-            2,
-            b"N^@",
-        )
-        self.assertResultHasType(
-            TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndexPath_dropOperation_,  # noqa: B950
-            objc._C_NSUInteger,
-        )
-
-        self.assertResultIsBOOL(
-            TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_acceptDrop_indexPath_dropOperation_,
-            3,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexPaths_,  # noqa: B950
-            2,
-            AppKit.NSPoint.__typestr__,
-        )
-
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_shouldChangeItemsAtIndexPaths_toHighlightState_,  # noqa: B950
-            2,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSCollectionViewHelper.collectionView_didChangeItemsAtIndexPaths_toHighlightState_,  # noqa: B950
-            2,
-            objc._C_NSInteger,
-        )
-
-    @min_sdk_level("10.12")
-    def testProtocol10_12(self):
-        self.assertProtocolExists("NSCollectionViewSectionHeaderView")
-
-    @min_sdk_level("10.13")
-    def testProtocol10_13(self):
-        self.assertProtocolExists("NSCollectionViewPrefetching")

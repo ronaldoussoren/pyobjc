@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSMetaData(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Foundation.NSMetadataQueryDidStartGatheringNotification, str
         )
@@ -22,8 +22,6 @@ class TestNSMetaData(TestCase):
         self.assertIsInstance(Foundation.NSMetadataQueryLocalComputerScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryNetworkScope, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
         self.assertIsInstance(Foundation.NSMetadataQueryLocalDocumentsScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUbiquitousDocumentsScope, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUbiquitousDataScope, str)
@@ -50,8 +48,6 @@ class TestNSMetaData(TestCase):
             Foundation.NSMetadataUbiquitousItemPercentUploadedKey, str
         )
 
-    @min_os_level("10.9")
-    def testConstants10_9(self):
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateAddedItemsKey, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateChangedItemsKey, str)
         self.assertIsInstance(Foundation.NSMetadataQueryUpdateRemovedItemsKey, str)
@@ -59,19 +55,17 @@ class TestNSMetaData(TestCase):
         self.assertIsInstance(Foundation.NSMetadataQueryIndexedNetworkScope, str)
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(
             Foundation.NSMetadataQueryAccessibleUbiquitousExternalDocumentsScope, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.startQuery)
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.isStarted)
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.isGathering)
         self.assertResultIsBOOL(Foundation.NSMetadataQuery.isStopped)
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertArgIsBlock(
             Foundation.NSMetadataQuery.enumerateResultsUsingBlock_,
             0,
@@ -84,5 +78,5 @@ class TestNSMetaData(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSMetadataQueryDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSMetadataQueryDelegate", Foundation)

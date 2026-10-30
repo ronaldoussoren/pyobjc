@@ -13,14 +13,75 @@ def buffer(value):
 
 
 class TestCGImageDestination(TestCase):
-    def testTypes(self):
-        self.assertIsCFType(Quartz.CGImageDestinationRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCGImageDestinationLossyCompressionQuality, str)
         self.assertIsInstance(Quartz.kCGImageDestinationBackgroundColor, str)
 
-    def testFunctions(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationMetadata, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationMergeMetadata, str)
+        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeXMP, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationDateTime, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationOrientation, str)
+
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationImageMaxPixelSize, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEmbedThumbnail, str)
+        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeGPS, str)
+
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationOptimizeColorForSharing, str)
+
+        self.assertIsInstance(Quartz.kCGImagePropertyEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyPVREncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize, str)
+
+    @min_os_level("10.14")
+    def test_constants10_14(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyBCEncoder, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyBCFormat, str)
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationPreserveGainMap, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequest, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToSDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOHDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOGainmap, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequestOptions, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseIsSDR, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeTonemapMode, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize4x4, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize8x8, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeIsBaseImage, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseColorSpace, str)
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeBasePixelFormatRequest, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGenerateGainMapWithBaseImage, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGainMapPixelFormatRequest, str
+        )
+        self.assertIsInstance(
+            Quartz.kCGImageDestinationEncodeGainMapSubsampleFactor, str
+        )
+        self.assertIsInstance(Quartz.kCGImageDestinationEncodeAlternateColorSpace, str)
+
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGImageDestinationRef)
+
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGImageDestinationGetTypeID(), int)
 
         self.assertResultIsCFRetained(Quartz.CGImageDestinationCopyTypeIdentifiers)
@@ -90,74 +151,10 @@ class TestCGImageDestination(TestCase):
         )
         self.assertIsInstance(c, Quartz.CGImageDestinationRef)
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        self.assertIsInstance(Quartz.kCGImageDestinationMetadata, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationMergeMetadata, str)
-        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeXMP, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationDateTime, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationOrientation, str)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(Quartz.kCGImageDestinationImageMaxPixelSize, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEmbedThumbnail, str)
-        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeGPS, str)
-
-    @min_os_level("10.12")
-    def testConstants10_12(self):
-        self.assertIsInstance(Quartz.kCGImageDestinationOptimizeColorForSharing, str)
-
-        self.assertIsInstance(Quartz.kCGImagePropertyEncoder, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyASTCEncoder, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyPVREncoder, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize, str)
-
-    @min_os_level("10.14")
-    def testConstants10_14(self):
-        self.assertIsInstance(Quartz.kCGImagePropertyBCEncoder, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyBCFormat, str)
-
-    @min_os_level("11.0")
-    def testConstants11_0(self):
-        self.assertIsInstance(Quartz.kCGImageDestinationPreserveGainMap, str)
-
-    @min_os_level("15.0")
-    def testConstants15_0(self):
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequest, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToSDR, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOHDR, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeToISOGainmap, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeRequestOptions, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseIsSDR, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeTonemapMode, str)
-
-    @min_os_level("26.0")
-    def testConstants26_0(self):
-        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize4x4, str)
-        self.assertIsInstance(Quartz.kCGImagePropertyASTCBlockSize8x8, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeIsBaseImage, str)
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeBaseColorSpace, str)
-        self.assertIsInstance(
-            Quartz.kCGImageDestinationEncodeBasePixelFormatRequest, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImageDestinationEncodeGenerateGainMapWithBaseImage, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImageDestinationEncodeGainMapPixelFormatRequest, str
-        )
-        self.assertIsInstance(
-            Quartz.kCGImageDestinationEncodeGainMapSubsampleFactor, str
-        )
-        self.assertIsInstance(Quartz.kCGImageDestinationEncodeAlternateColorSpace, str)
-
-    @min_os_level("10.8")
-    def testFunctions10_8(self):
         Quartz.CGImageDestinationAddImageAndMetadata
         self.assertResultHasType(Quartz.CGImageDestinationCopyImageSource, objc._C_BOOL)
         self.assertArgIsOut(Quartz.CGImageDestinationCopyImageSource, 3)
 
     @min_os_level("10.13")
-    def testFunctions10_13(self):
+    def test_functions10_13(self):
         Quartz.CGImageDestinationAddAuxiliaryDataInfo

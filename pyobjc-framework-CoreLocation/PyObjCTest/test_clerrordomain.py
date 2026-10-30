@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCLErrorDomain(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreLocation.kCLErrorDomain, str)

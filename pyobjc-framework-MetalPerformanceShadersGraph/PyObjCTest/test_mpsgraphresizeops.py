@@ -4,16 +4,14 @@ import MetalPerformanceShadersGraph
 
 
 class TestMPSGraphResizeOps(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShadersGraph.MPSGraphResizeMode)
-        self.assertIsEnumType(
-            MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingMode
-        )
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphResizeNearest, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphResizeBilinear, 1)
 
+        self.assertIsEnumType(
+            MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingMode
+        )
         self.assertEqual(
             MetalPerformanceShadersGraph.MPSGraphResizeNearestRoundingModeRoundPreferCeil,
             0,

@@ -5,7 +5,7 @@ import objc
 
 class TestNSTableViewDiffableDataSource(TestCase):
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             AppKit.NSTableViewDiffableDataSource.initWithTableView_cellProvider_,
             1,

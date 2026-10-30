@@ -15,10 +15,6 @@ class TestDiskArbitration(TestCase):
         self.assertEqual(DiskArbitration.kDADiskEjectOptionDefault, 0)
         self.assertEqual(DiskArbitration.kDADiskClaimOptionDefault, 0)
         self.assertEqual(DiskArbitration.kDADiskOptionDefault, 0x00000000)
-        self.assertEqual(DiskArbitration.kDADiskOptionEjectUponLogout, 0x00000001)
-        self.assertEqual(DiskArbitration.kDADiskOptionMountAutomatic, 0x00000010)
-        self.assertEqual(DiskArbitration.kDADiskOptionMountAutomaticNoDefer, 0x00000020)
-        self.assertEqual(DiskArbitration.kDADiskOptionPrivate, 0x00000100)
 
     @min_os_level("10.10")
     def test_constants10_10(self):

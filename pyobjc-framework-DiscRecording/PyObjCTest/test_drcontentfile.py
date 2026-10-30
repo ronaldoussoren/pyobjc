@@ -5,7 +5,7 @@ DRFileProc = b"i^v^{__DRFile=}I^v"
 
 
 class TestDRContentFile(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(DiscRecording.DRFileGetTypeID(), int)
 
         self.assertResultIsCFRetained(DiscRecording.DRFileCreateReal)
@@ -24,7 +24,7 @@ class TestDRContentFile(TestCase):
 
         DiscRecording.DRFileCreateVirtualLink
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecording.kDRLinkTypeHardLink, 1)
         self.assertEqual(DiscRecording.kDRLinkTypeSymbolicLink, 2)
         self.assertEqual(DiscRecording.kDRLinkTypeFinderAlias, 3)
@@ -44,7 +44,7 @@ class TestDRContentFile(TestCase):
         self.assertEqual(DiscRecording.kDRFileForkSizeActual, 0)
         self.assertEqual(DiscRecording.kDRFileForkSizeEstimate, 1)
 
-    def testStructs(self):
+    def test_structs(self):
         v = DiscRecording.DRFileForkSizeInfo()
         self.assertEqual(v.fork, 0)
         self.assertEqual(v.query, 0)

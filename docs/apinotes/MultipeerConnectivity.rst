@@ -14,5 +14,7 @@ These bindings are accessed through the ``MultipeerConnectivity`` package (that 
 
 .. macosadded:: 10.10
 
+.. macosdeprecated:: 27.0
+
 API Notes
 ---------

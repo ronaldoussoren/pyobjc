@@ -15,17 +15,18 @@ def _setup():
     from . import (
         _metadata,
         _callbacks,
-        _doubleindirect,
         _sortandmap,
-        _coregraphics,
+        _CoreGraphics,
         _contextmanager,
     )
     from ._inlines import _inline_list_
 
-    if os.path.exists("/System/Library/Frameworks/CoreGraphics.framework"):
+    if os.path.exists(  # pragma: no branch
+        "/System/Library/Frameworks/CoreGraphics.framework"
+    ):
         frameworkPath = "/System/Library/Frameworks/CoreGraphics.framework"
         frameworkIdentifier = "com.apple.CoreGraphics"
-    else:
+    else:  # pragma: no cover
         frameworkPath = "/System/Library/Frameworks/ApplicationServices.framework"
         frameworkIdentifier = "com.apple.ApplicationServices"
 
@@ -37,9 +38,8 @@ def _setup():
         inline_list=_inline_list_,
         parents=(
             _callbacks,
-            _doubleindirect,
             _sortandmap,
-            _coregraphics,
+            _CoreGraphics,
             _contextmanager,
             CoreFoundation,
         ),
@@ -54,8 +54,8 @@ def _setup():
     # XXX: To be verified
     from . import CGPathElement
 
-    _sortandmap.setCGPathElement(CGPathElement)
-    del _sortandmap.setCGPathElement
+    _sortandmap._setCGPathElement(CGPathElement)
+    del _sortandmap._setCGPathElement
 
     # XXX: Move these to metadata!
 

@@ -5,7 +5,7 @@ import Contacts
 
 class TestContacts(TestCase):
     @min_os_level("10.11")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(Contacts.CNContact, objc.objc_class)
 
 

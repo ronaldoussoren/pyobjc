@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import TestCase
-import objc
 import SystemConfiguration
+import objc
 
 
 class TestDHCPClientPreferences(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertRaises(
             ValueError,
             SystemConfiguration.DHCPClientPreferencesSetApplicationOptions,
@@ -21,5 +21,5 @@ class TestDHCPClientPreferences(TestCase):
         r, count = SystemConfiguration.DHCPClientPreferencesCopyApplicationOptions(
             "com.apple.SystemPreferences", None
         )
-        self.assertTrue(r is objc.NULL)
+        self.assertIs(r, objc.NULL)
         self.assertTrue(count == 0)

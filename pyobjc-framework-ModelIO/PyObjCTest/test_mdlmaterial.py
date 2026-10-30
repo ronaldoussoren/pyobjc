@@ -4,15 +4,30 @@ from objc import simd
 
 
 class TestMDLCamera(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLMaterialFace)
-        self.assertIsEnumType(ModelIO.MDLMaterialMipMapFilterMode)
-        self.assertIsEnumType(ModelIO.MDLMaterialPropertyType)
-        self.assertIsEnumType(ModelIO.MDLMaterialSemantic)
-        self.assertIsEnumType(ModelIO.MDLMaterialTextureFilterMode)
-        self.assertIsEnumType(ModelIO.MDLMaterialTextureWrapMode)
+        self.assertEqual(ModelIO.MDLMaterialFaceFront, 0)
+        self.assertEqual(ModelIO.MDLMaterialFaceBack, 1)
 
-    def testConstants(self):
+        self.assertIsEnumType(ModelIO.MDLMaterialMipMapFilterMode)
+        self.assertEqual(ModelIO.MDLMaterialMipMapFilterModeNearest, 0)
+        self.assertEqual(ModelIO.MDLMaterialMipMapFilterModeLinear, 1)
+
+        self.assertEqual(ModelIO.MDLMaterialFaceDoubleSided, 2)
+        self.assertIsEnumType(ModelIO.MDLMaterialPropertyType)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeNone, 0)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeString, 1)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeURL, 2)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeTexture, 3)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeColor, 4)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat, 5)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat2, 6)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat3, 7)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat4, 8)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeMatrix44, 9)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeBuffer, 10)
+
+        self.assertIsEnumType(ModelIO.MDLMaterialSemantic)
         self.assertEqual(ModelIO.MDLMaterialSemanticBaseColor, 0)
         self.assertEqual(ModelIO.MDLMaterialSemanticSubsurface, 1)
         self.assertEqual(ModelIO.MDLMaterialSemanticMetallic, 2)
@@ -40,34 +55,17 @@ class TestMDLCamera(TestCase):
         self.assertEqual(ModelIO.MDLMaterialSemanticNone, 0x8000)
         self.assertEqual(ModelIO.MDLMaterialSemanticUserDefined, 0x8001)
 
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeNone, 0)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeString, 1)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeURL, 2)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeTexture, 3)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeColor, 4)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat, 5)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat2, 6)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat3, 7)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat4, 8)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeMatrix44, 9)
-        self.assertEqual(ModelIO.MDLMaterialPropertyTypeBuffer, 10)
+        self.assertIsEnumType(ModelIO.MDLMaterialTextureFilterMode)
+        self.assertEqual(ModelIO.MDLMaterialTextureFilterModeNearest, 0)
+        self.assertEqual(ModelIO.MDLMaterialTextureFilterModeLinear, 1)
 
+        self.assertIsEnumType(ModelIO.MDLMaterialTextureWrapMode)
         self.assertEqual(ModelIO.MDLMaterialTextureWrapModeClamp, 0)
         self.assertEqual(ModelIO.MDLMaterialTextureWrapModeRepeat, 1)
         self.assertEqual(ModelIO.MDLMaterialTextureWrapModeMirror, 2)
 
-        self.assertEqual(ModelIO.MDLMaterialTextureFilterModeNearest, 0)
-        self.assertEqual(ModelIO.MDLMaterialTextureFilterModeLinear, 1)
-
-        self.assertEqual(ModelIO.MDLMaterialMipMapFilterModeNearest, 0)
-        self.assertEqual(ModelIO.MDLMaterialMipMapFilterModeLinear, 1)
-
-        self.assertEqual(ModelIO.MDLMaterialFaceFront, 0)
-        self.assertEqual(ModelIO.MDLMaterialFaceBack, 1)
-        self.assertEqual(ModelIO.MDLMaterialFaceDoubleSided, 2)
-
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgHasType(
             ModelIO.MDLMaterialProperty.initWithName_semantic_float2_,
             2,
@@ -126,7 +124,7 @@ class TestMDLCamera(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             ModelIO.MDLMaterialPropertyNode.initWithInputs_outputs_evaluationFunction_,
             2,

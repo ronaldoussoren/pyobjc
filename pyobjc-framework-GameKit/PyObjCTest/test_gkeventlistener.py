@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKEventListener(TestCase):
-    def testProtocols(self):
-        self.assertProtocolExists("GKChallengeListener")
+    def test_protocols(self):
+        self.assertProtocolExists("GKChallengeListener", GameKit)

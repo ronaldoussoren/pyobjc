@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSWindowTabGroup(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         # Use subclass for testing because these methods aren't present
         # on the main class.
 

@@ -3,7 +3,8 @@ import CoreMIDI
 
 
 class TestMIDIServices(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        # OSStatus
         self.assertEqual(CoreMIDI.kMIDIInvalidClient, -10830)
         self.assertEqual(CoreMIDI.kMIDIInvalidPort, -10831)
         self.assertEqual(CoreMIDI.kMIDIWrongEndpointType, -10832)
@@ -21,12 +22,12 @@ class TestMIDIServices(TestCase):
         self.assertEqual(CoreMIDI.kMIDINotPermitted, -10844)
         self.assertEqual(CoreMIDI.kMIDIUnknownError, -10845)
 
+        self.assertIsEnumType(CoreMIDI.MIDIObjectType)
         self.assertEqual(CoreMIDI.kMIDIObjectType_Other, -1)
         self.assertEqual(CoreMIDI.kMIDIObjectType_Device, 0)
         self.assertEqual(CoreMIDI.kMIDIObjectType_Entity, 1)
         self.assertEqual(CoreMIDI.kMIDIObjectType_Source, 2)
         self.assertEqual(CoreMIDI.kMIDIObjectType_Destination, 3)
-
         self.assertEqual(
             CoreMIDI.kMIDIObjectType_ExternalDevice,
             0x10 | CoreMIDI.kMIDIObjectType_Device,
@@ -43,9 +44,9 @@ class TestMIDIServices(TestCase):
             CoreMIDI.kMIDIObjectType_ExternalDestination,
             0x10 | CoreMIDI.kMIDIObjectType_Destination,
         )
-
         self.assertEqual(CoreMIDI.kMIDIObjectType_ExternalMask, 0x10)
 
+        self.assertIsEnumType(CoreMIDI.MIDIProtocolID)
         self.assertEqual(CoreMIDI.kMIDIProtocol_1_0, 1)
         self.assertEqual(CoreMIDI.kMIDIProtocol_2_0, 2)
 
@@ -59,6 +60,7 @@ class TestMIDIServices(TestCase):
         self.assertEqual(CoreMIDI.kMIDIMsgIOError, 7)
         self.assertEqual(CoreMIDI.kMIDIMsgInternalStart, 0x1000)
 
+    def test_constants(self):
         self.assertIsInstance(
             CoreMIDI.kMIDIPropertyFactoryPatchNameFile, (type(None), str)
         )

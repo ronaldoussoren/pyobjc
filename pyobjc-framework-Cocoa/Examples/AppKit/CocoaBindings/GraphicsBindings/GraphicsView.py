@@ -30,7 +30,6 @@ from Cocoa import (
 )
 from objc import super  # noqa: A004
 
-
 PropertyObservationContext = 1091
 GraphicsObservationContext = 1092
 SelectionIndexesObservationContext = 1093

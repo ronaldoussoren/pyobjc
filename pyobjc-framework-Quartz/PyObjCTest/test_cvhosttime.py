@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCVHostTime(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         v = Quartz.CVGetCurrentHostTime()
         self.assertIsInstance(v, int)
 

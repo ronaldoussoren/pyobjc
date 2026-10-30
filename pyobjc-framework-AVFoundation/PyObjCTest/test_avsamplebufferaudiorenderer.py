@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVSampleBufferAudioRenderer(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferAudioRenderer.isMuted
         )  # noqa: B950
@@ -19,7 +19,7 @@ class TestAVSampleBufferAudioRenderer(TestCase):
         )
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferAudioRendererWasFlushedAutomaticallyNotification,  # noqa: B950
             str,
@@ -29,7 +29,7 @@ class TestAVSampleBufferAudioRenderer(TestCase):
         )  # noqa: B950
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferAudioRendererOutputConfigurationDidChangeNotification,  # noqa: B950
             str,

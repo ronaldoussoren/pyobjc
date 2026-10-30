@@ -4,14 +4,16 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetImageGenerator(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AVFoundation.AVAssetImageGeneratorResult)
+        self.assertEqual(AVFoundation.AVAssetImageGeneratorSucceeded, 0)
+        self.assertEqual(AVFoundation.AVAssetImageGeneratorFailed, 1)
+        self.assertEqual(AVFoundation.AVAssetImageGeneratorCancelled, 2)
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVAssetImageGeneratorApertureMode, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVAssetImageGeneratorResult)
-
-    @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVAssetImageGeneratorApertureModeCleanAperture, str
         )
@@ -23,12 +25,8 @@ class TestAVAssetImageGenerator(TestCase):
             AVFoundation.AVAssetImageGeneratorApertureModeEncodedPixels, str
         )
 
-        self.assertEqual(AVFoundation.AVAssetImageGeneratorSucceeded, 0)
-        self.assertEqual(AVFoundation.AVAssetImageGeneratorFailed, 1)
-        self.assertEqual(AVFoundation.AVAssetImageGeneratorCancelled, 2)
-
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             AVFoundation.AVAssetImageGeneratorDynamicRangePolicyForceSDR, str
         )
@@ -36,8 +34,7 @@ class TestAVAssetImageGenerator(TestCase):
             AVFoundation.AVAssetImageGeneratorDynamicRangePolicyMatchSource, str
         )
 
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAssetImageGenerator.appliesPreferredTrackTransform
         )

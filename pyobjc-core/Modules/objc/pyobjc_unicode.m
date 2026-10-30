@@ -151,8 +151,8 @@ static PyType_Spec unic_spec = {
     .basicsize = sizeof(PyObjCUnicodeObject),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = unic_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = unic_slots,
 };
 
 PyObject* PyObjCUnicode_Type;
@@ -266,8 +266,8 @@ PyObject* _Nullable PyObjCUnicode_New(NSString* value)
     for (i = 0; i < length; i++) {
         Py_UCS4 cur = (Py_UCS4)characters[i];
 
-        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1) // LCOV_BR_EXCL_LINE
-            && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1)  // LCOV_BR_EXCL_LINE
+            && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) { // LCOV_BR_EXCL_LINE
 
             Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
             i++;

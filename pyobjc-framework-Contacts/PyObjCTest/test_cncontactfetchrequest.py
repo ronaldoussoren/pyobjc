@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNContactFetchRequest(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Contacts.CNContactFetchRequest.mutableObjects)
         self.assertArgIsBOOL(Contacts.CNContactFetchRequest.setMutableObjects_, 0)
 

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVAudioFile(TestCase):
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(AVFoundation.AVAudioFile.initForReading_error_, 1)
 
         self.assertArgIsBOOL(

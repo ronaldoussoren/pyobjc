@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import SpriteKit
 
 
 class TestSKEffectNode(TestCase):
-    @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(SpriteKit.SKEffectNode.setShouldCenterFilter_, 0)
         self.assertResultIsBOOL(SpriteKit.SKEffectNode.shouldCenterFilter)
         self.assertArgIsBOOL(SpriteKit.SKEffectNode.setShouldEnableEffects_, 0)

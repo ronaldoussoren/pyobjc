@@ -3,10 +3,8 @@ import Intents
 
 
 class TestINIntentErrors(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Intents.INIntentErrorCode)
-
-    def testConstants(self):
         self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
         self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)
         self.assertEqual(Intents.INIntentErrorDeletingAllInteractions, 1902)
@@ -51,5 +49,5 @@ class TestINIntentErrors(TestCase):
         self.assertEqual(Intents.INIntentErrorNoAppIntent, 10001)
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(Intents.INIntentErrorDomain, str)

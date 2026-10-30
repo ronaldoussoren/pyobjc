@@ -37,7 +37,7 @@ AudioDeviceIOBlock = (
 
 
 class TestAudioHardware(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreAudio.kAudioObjectSystemObject, 1)
 
         self.assertEqual(CoreAudio.kAudioObjectPropertyCreator, fourcc(b"oplg"))
@@ -176,6 +176,15 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioDevicePropertyIOThreadOSWorkgroup, fourcc(b"oswg")
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertyProcessMute, fourcc(b"appm"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionEnable, fourcc(b"vAd+")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyVoiceActivityDetectionState, fourcc(b"vAdS")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertySuggestedReferenceDevice, fourcc(b"eord")
+        )
 
         self.assertEqual(CoreAudio.kAudioDevicePropertyJackIsConnected, fourcc(b"jack"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyVolumeScalar, fourcc(b"volm"))
@@ -298,6 +307,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyWantsStreamFormatsRestored, fourcc(b"resf")
         )
+        self.assertEqual(CoreAudio.kAudioDevicePropertySubMute, fourcc(b"smut"))
 
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClassID, fourcc(b"aagg"))
 
@@ -400,7 +410,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioTapPropertyDescription, fourcc(b"tdsc"))
         self.assertEqual(CoreAudio.kAudioTapPropertyFormat, fourcc(b"tfmt"))
 
-    def testFunctions(self):
+    def test_functions(self):
         CoreAudio.AudioObjectShow
 
         self.assertArgIsIn(CoreAudio.AudioObjectHasProperty, 1)
@@ -490,7 +500,7 @@ class TestAudioHardware(TestCase):
         self.assertArgIsOut(CoreAudio.AudioHardwareCreateAggregateDevice, 1)
         CoreAudio.AudioHardwareDestroyAggregateDevice
 
-    def testStructs(self):
+    def test_structs(self):
         # XXX: Requires manual support
         v = CoreAudio.AudioHardwareIOProcStreamUsage()
         self.assertEqual(v.mIOProc, None)

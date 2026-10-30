@@ -40,6 +40,8 @@ def _setup():
         ("GCDeviceLight", b"init"),
         ("GCRacingWheel", b"init"),
         ("GCColor", b"init"),
+        ("GCDeviceHaptics", b"init"),
+        ("GCDeviceType", b"init"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

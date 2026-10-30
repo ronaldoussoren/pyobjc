@@ -15,13 +15,13 @@ class Behaviour(Foundation.NSObject):
 
 
 class TestNSDecimalNumber(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSDecimalNumberExactnessException, str)
         self.assertIsInstance(Foundation.NSDecimalNumberOverflowException, str)
         self.assertIsInstance(Foundation.NSDecimalNumberUnderflowException, str)
         self.assertIsInstance(Foundation.NSDecimalNumberDivideByZeroException, str)
 
-    def testNSDecimal(self):
+    def test_nsdecimal(self):
         dec = Foundation.NSDecimal("55.0")
 
         v = Foundation.NSDecimalNumber.alloc().initWithDecimal_(dec)
@@ -38,12 +38,12 @@ class TestNSDecimalNumber(TestCase):
         o = v.objCType()
         self.assertIsInstance(o, bytes)
 
-    def testNSNumberAsNSDecimal(self):
+    def test_nsnumber_as_nsdecimal(self):
         v = Foundation.NSNumber.numberWithFloat_(33.5)
         o = v.decimalValue()
         self.assertIsInstance(o, Foundation.NSDecimal)
 
-    def testNSScannerWithDecimal(self):
+    def test_nsscanner_with_decimal(self):
         v = Foundation.NSScanner.alloc().initWithString_("55.23")
 
         o, dec = v.scanDecimal_(None)
@@ -51,7 +51,7 @@ class TestNSDecimalNumber(TestCase):
         self.assertIs(o, True)
         self.assertEqual(str(dec), "55.23")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Foundation.NSDecimalNumber.initWithMantissa_exponent_isNegative_, 2
         )
@@ -93,8 +93,8 @@ class TestNSDecimalNumber(TestCase):
             5,
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("NSDecimalNumberBehaviors")
+    def test_protocols(self):
+        self.assertProtocolExists("NSDecimalNumberBehaviors", Foundation)
         self.assertArgHasType(
             Behaviour.exceptionDuringOperation_error_leftOperand_rightOperand_,
             0,

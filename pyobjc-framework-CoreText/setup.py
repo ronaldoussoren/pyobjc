@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = '12.2.3'
+VERSION = "13.0"
 
 setup(
     name="pyobjc-framework-CoreText",
@@ -26,8 +26,8 @@ setup(
     packages=["CoreText"],
     ext_modules=[
         Extension(
-            "CoreText._manual",
-            ["Modules/_manual.m"],
+            "CoreText._CoreText",
+            ["Modules/_CoreText.m"],
             extra_link_args=["-framework", "CoreServices"],
         )
     ],

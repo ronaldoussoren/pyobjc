@@ -9,7 +9,7 @@ class TestNSStoryboardSegueHelper(AppKit.NSObject):
 
 class TestNSStoryboardSegue(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             AppKit.NSStoryboardSegue.segueWithIdentifier_source_destination_performHandler_,
             3,
@@ -20,9 +20,10 @@ class TestNSStoryboardSegue(TestCase):
         self.assertResultIsBlock(AppKit.NSStoryboardSegue.performHandler, b"v")
 
     @min_os_level("10.10")
-    def testProtocols10_10(self):
-        self.assertProtocolExists("NSSeguePerforming")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSSeguePerforming", AppKit)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSStoryboardSegueHelper.shouldPerformSegueWithIdentifier_sender_
         )

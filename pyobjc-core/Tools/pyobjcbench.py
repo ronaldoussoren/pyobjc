@@ -27,6 +27,10 @@ import sys
 import pathlib
 
 import objc
+from objc import super  # noqa: A004
+
+# Ensure that the correct super is picked up
+timeit.super = super
 
 if len(sys.argv) == 2 and sys.argv[1] == "--record":
     records_dir = pathlib.Path(__file__).parent / "results"
@@ -172,32 +176,43 @@ def function_call():
         "python function call",
         timeit.timeit(setup="import math; f=math.sin", stmt="f(5.0)"),
     )
-    setup = textwrap.dedent(
-        """\
+    setup = textwrap.dedent("""\
     import objc
     objc.loadBundleFunctions(None, globals(), [("sin", b"dd")])
     f = sin
-    """
-    )
+    """)
     print_bench(
         "objc function call",
         timeit.timeit(setup=setup, stmt="f(5.0)"),
     )
+    setup = textwrap.dedent("""\
+    import ctypes
+    libc = ctypes.CDLL(None)
+    f = libc.sin
+    f.restype = ctypes.c_double
+    f.argtypes = [ctypes.c_double]
+    """)
+    print_bench(
+        "ctypes function call",
+        timeit.timeit(setup=setup, stmt="f(5.0)"),
+    )
+    print()
 
 
 @benchmark
 def call_from_objc():
     # XXX: This needs a helper module, there's unnecessary
     #      overhead in statement under test.
-    setup = textwrap.dedent(
-        """\
+    setup = textwrap.dedent("""\
     import objc
+    from objc import super
     NSObject = objc.lookUpClass("NSObject")
     NSArray = objc.lookUpClass("NSArray")
     class CallFromObjC1(NSObject):
         __slots__ = ("count",)
 
         def init(self):
+            assert super is objc.super
             self = super().init()
             self.count = 0
             return self
@@ -208,13 +223,14 @@ def call_from_objc():
 
     o = CallFromObjC1.new()
     a = NSArray.arrayWithArray_([o]*10)
-    """
-    )
+    """)
 
     print_bench(
         "call no-args from objc",
-        timeit.timeit(setup=setup, stmt="a.makeObjectsPerformSelector_(b'aSelector')"),
+        timeit.timeit(setup=setup, stmt="a.makeObjectsPerformSelector_(b'aSelector')")
+        / 10,
     )
+    print()
 
 
 # @benchmark
@@ -227,7 +243,7 @@ def hasattr_speed():
     print_bench(
         "hasattr NSObject is True",
         timeit.timeit(
-            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            setup='import objc; from objc import super; NSObject = objc.lookUpClass("NSObject"); '
             "o = NSObject.alloc().init()",
             stmt="hasattr(o, 'description')",
         ),
@@ -235,7 +251,7 @@ def hasattr_speed():
     print_bench(
         "hasattr NSArray is True",
         timeit.timeit(
-            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            setup='import objc; from objc import super; NSArray = objc.lookUpClass("NSArray"); '
             "o = NSArray.alloc().init()",
             stmt="hasattr(o, 'description')",
         ),
@@ -248,7 +264,7 @@ def hasattr_speed():
     print_bench(
         "hasattr NSObject is False",
         timeit.timeit(
-            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            setup='import objc; from objc import super; NSObject = objc.lookUpClass("NSObject"); '
             "o = NSObject.alloc().init()",
             stmt="hasattr(o, 'invalidselector')",
         ),
@@ -256,7 +272,7 @@ def hasattr_speed():
     print_bench(
         "hasattr NSArray is False",
         timeit.timeit(
-            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            setup='import objc; from objc import super; NSArray = objc.lookUpClass("NSArray"); '
             "o = NSArray.alloc().init()",
             stmt="hasattr(o, 'invalidselector')",
         ),

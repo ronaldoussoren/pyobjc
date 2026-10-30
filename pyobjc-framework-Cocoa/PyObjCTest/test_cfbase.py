@@ -4,7 +4,7 @@ import objc
 
 
 class TestBase(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.TRUE, 1)
         self.assertEqual(CoreFoundation.FALSE, 0)
 
@@ -113,20 +113,20 @@ class TestBase(TestCase):
 
         self.assertEqual(CoreFoundation.kCFNotFound, -1)
 
-    def testStructs(self):
+    def test_structs(self):
         o = CoreFoundation.CFRange()
         self.assertHasAttr(o, "location")
         self.assertHasAttr(o, "length")
 
         self.assertPickleRoundTrips(o)
 
-    def testCFRangeMake(self):
+    def test_cfrange_make(self):
         r = CoreFoundation.CFRangeMake(42, 99)
         self.assertIsInstance(r, CoreFoundation.CFRange)
         self.assertEqual(r.location, 42)
         self.assertEqual(r.length, 99)
 
-    def testCFNull(self):
+    def test_cfnull(self):
         self.assertIsInstance(CoreFoundation.CFNullGetTypeID(), int)
         self.assertIsInstance(CoreFoundation.kCFNull, CoreFoundation.CFNullRef)
 
@@ -134,7 +134,7 @@ class TestBase(TestCase):
         if cls is not CoreFoundation.CFNullRef:
             self.assertIsCFType(CoreFoundation.CFNullRef)
 
-    def testCFAllocator(self):
+    def test_cfallocator(self):
         self.assertIsCFType(CoreFoundation.CFAllocatorRef)
 
         self.assertIsInstance(CoreFoundation.CFAllocatorGetTypeID(), int)
@@ -177,7 +177,7 @@ class TestBase(TestCase):
         self.assertIsInstance(r, int)
         self.assertGreaterEqual(r, 15)
 
-    def testGenericFunctions(self):
+    def test_functions_generic(self):
         value = CoreFoundation.CFGetTypeID(CoreFoundation.kCFAllocatorMalloc)
         self.assertEqual(value, CoreFoundation.CFAllocatorGetTypeID())
 
@@ -217,8 +217,6 @@ class TestBase(TestCase):
         if v is not None:
             self.assertIsInstance(v, CoreFoundation.CFAllocatorRef)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_1, 476.00)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_2, 476.10)
@@ -227,8 +225,7 @@ class TestBase(TestCase):
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_5, 476.15)
         self.assertEqual(CoreFoundation.kCFCoreFoundationVersionNumber10_5_6, 476.17)
 
-    @min_os_level("10.9")
-    def testFunctions10_9(self):
+    def test_functions(self):
         obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         CoreFoundation.CFRetain(obj)
         CoreFoundation.CFAutorelease(obj)

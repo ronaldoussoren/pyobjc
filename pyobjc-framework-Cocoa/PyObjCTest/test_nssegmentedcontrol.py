@@ -3,12 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSegmentedControl(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSSegmentDistribution)
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSegmentStyle)
-        self.assertIsEnumType(AppKit.NSSegmentSwitchTracking)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSSegmentStyleAutomatic, 0)
         self.assertEqual(AppKit.NSSegmentStyleRounded, 1)
         self.assertEqual(AppKit.NSSegmentStyleTexturedRounded, 2)
@@ -18,17 +14,24 @@ class TestNSSegmentedControl(TestCase):
         self.assertEqual(AppKit.NSSegmentStyleSmallSquare, 6)
         self.assertEqual(AppKit.NSSegmentStyleSeparated, 8)
 
+        self.assertIsEnumType(AppKit.NSSegmentSwitchTracking)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectOne, 0)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingSelectAny, 1)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingMomentary, 2)
         self.assertEqual(AppKit.NSSegmentSwitchTrackingMomentaryAccelerator, 3)
 
+        self.assertIsEnumType(AppKit.NSSegmentDistribution)
         self.assertEqual(AppKit.NSSegmentDistributionFit, 0)
         self.assertEqual(AppKit.NSSegmentDistributionFill, 1)
         self.assertEqual(AppKit.NSSegmentDistributionFillEqually, 2)
         self.assertEqual(AppKit.NSSegmentDistributionFillProportionally, 3)
 
-    def testMethods(self):
+        self.assertIsEnumType(AppKit.NSSegmentedControlRole)
+        self.assertEqual(AppKit.NSSegmentedControlRoleAutomatic, 0)
+        self.assertEqual(AppKit.NSSegmentedControlRoleTabs, 1)
+        self.assertEqual(AppKit.NSSegmentedControlRoleValueSelection, 2)
+
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.selectSegmentWithTag_)
         self.assertArgIsBOOL(AppKit.NSSegmentedControl.setSelected_forSegment_, 0)
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isSelectedForSegment_)
@@ -36,12 +39,12 @@ class TestNSSegmentedControl(TestCase):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isEnabledForSegment_)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSSegmentedControl.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSSegmentedControl.setSpringLoaded_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsSEL(
             AppKit.NSSegmentedControl.segmentedControlWithLabels_trackingMode_target_action_,
             3,
@@ -54,7 +57,7 @@ class TestNSSegmentedControl(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBOOL(
             AppKit.NSSegmentedControl.setShowsMenuIndicator_forSegment_, 0
         )

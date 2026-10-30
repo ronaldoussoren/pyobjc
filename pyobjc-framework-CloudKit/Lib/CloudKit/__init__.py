@@ -181,8 +181,8 @@ def _setup():
     ):
         try:
             objc.lookUpClass(clsname).__final__ = True
-        except objc.error:
-            pass
+        except objc.error:  # pragma: no cover
+            pass  # pragma: no cover
 
 
 globals().pop("_setup")()

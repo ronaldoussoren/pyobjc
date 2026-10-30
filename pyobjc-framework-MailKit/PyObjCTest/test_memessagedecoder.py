@@ -4,4 +4,4 @@ import MailKit  # noqa: F401
 
 class TestMEMessageDecoder(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("MEMessageDecoder")
+        self.assertProtocolExists("MEMessageDecoder", MailKit)

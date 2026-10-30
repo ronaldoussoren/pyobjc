@@ -1,5 +1,5 @@
 import BrowserEngineKit
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestBEProcessHelper(BrowserEngineKit.NSObject):
@@ -9,12 +9,11 @@ class TestBEProcessHelper(BrowserEngineKit.NSObject):
 
 class TestBEProcess(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("BEProcessCapabilityGrant")
+        self.assertProtocolExists("BEProcessCapabilityGrant", BrowserEngineKit)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestBEProcessHelper.isValid)
 
-    @expectedFailure
     def test_methods(self):
         self.assertArgIsOut(BrowserEngineKit.BEProcessCapability.requestWithError_, 0)
 

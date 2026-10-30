@@ -4,7 +4,7 @@ import PhotosUI
 
 class TestPHProjectExtensionContext(TestCase):
     @min_os_level("10.14")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             PhotosUI.PHProjectExtensionContext.updatedProjectInfoFromProjectInfo_completion_,
             1,

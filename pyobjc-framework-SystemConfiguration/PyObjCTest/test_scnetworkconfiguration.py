@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
+from PyObjCTools.TestSupport import TestCase, max_os_level
 import SystemConfiguration
 import objc
 
 
 class TestSCNetworkConfiguration(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertTrue(
             isinstance(SystemConfiguration.SCNetworkInterfaceRef, objc.objc_class)
         )
@@ -30,7 +30,7 @@ class TestSCNetworkConfiguration(TestCase):
             is SystemConfiguration.SCNetworkInterfaceRef
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkInterfaceType6to4, str)
         )
@@ -105,18 +105,15 @@ class TestSCNetworkConfiguration(TestCase):
             isinstance(SystemConfiguration.kSCNetworkProtocolTypeProxies, str)
         )
         self.assertTrue(isinstance(SystemConfiguration.kSCNetworkProtocolTypeSMB, str))
+        self.assertIsInstance(SystemConfiguration.kSCNetworkInterfaceTypeIPSec, str)
 
     @max_os_level("10.11")
-    def testConstantsUpto10_12(self):
+    def test_constants_upto10_12(self):
         self.assertTrue(
             isinstance(SystemConfiguration.kSCNetworkProtocolTypeAppleTalk, str)
         )
 
-    @min_os_level("10.6")
-    def testConstants10_5(self):
-        self.assertIsInstance(SystemConfiguration.kSCNetworkInterfaceTypeIPSec, str)
-
-    def testFunctions(self):
+    def test_functions(self):
         r = SystemConfiguration.SCNetworkInterfaceGetTypeID()
         self.assertTrue(isinstance(r, int))
 
@@ -457,8 +454,6 @@ class TestSCNetworkConfiguration(TestCase):
 
         self.assertResultIsBOOL(SystemConfiguration.SCNetworkSetRemoveService)
 
-    @min_os_level("10.5")
-    def testFunctions10_5(self):
         prefs = SystemConfiguration.SCPreferencesCreate(
             None, "SystemConfiguration", None
         )

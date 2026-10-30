@@ -7,7 +7,7 @@ class TestITLibMediaEntity(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaEntity, objc.objc_class)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             iTunesLibrary.ITLibMediaEntity.enumerateValuesForProperties_usingBlock_,
             1,
@@ -19,5 +19,5 @@ class TestITLibMediaEntity(TestCase):
             b"v@@o^Z",
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaEntityPropertyPersistentID, str)

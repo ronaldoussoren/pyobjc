@@ -22,12 +22,10 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "NSExceptionHandlerResume": {
     "variadic": false
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

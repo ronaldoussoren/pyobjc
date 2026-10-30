@@ -4,14 +4,14 @@ import objc
 
 
 class TestCGPDFPage(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGPDFMediaBox, 0)
         self.assertEqual(Quartz.kCGPDFCropBox, 1)
         self.assertEqual(Quartz.kCGPDFBleedBox, 2)
         self.assertEqual(Quartz.kCGPDFTrimBox, 3)
         self.assertEqual(Quartz.kCGPDFArtBox, 4)
 
-    def testFunctions(self):
+    def test_functions(self):
         Quartz.CGPDFPageRetain
         Quartz.CGPDFPageRelease
         Quartz.CGPDFPageGetDocument

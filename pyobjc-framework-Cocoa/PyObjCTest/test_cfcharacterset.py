@@ -1,10 +1,11 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestCharacterSet(TestCase):
-    def testTypes(self):
+    def test_types(self):
         cls = None
         try:
             cls = objc.lookUpClass("__NSCFCharacterSet")
@@ -18,11 +19,11 @@ class TestCharacterSet(TestCase):
 
         self.assertIsCFType(CoreFoundation.CFMutableCharacterSetRef)
 
-    def testTypeId(self):
+    def test_typesId(self):
         v = CoreFoundation.CFCharacterSetGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         charset = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -73,7 +74,7 @@ class TestCharacterSet(TestCase):
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
 
-    def testInspection(self):
+    def test_inspect(self):
         letters = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -94,9 +95,9 @@ class TestCharacterSet(TestCase):
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(letters, "9"))
 
         data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, charset)
-        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        self.assertIsInstance(data, Foundation.NSData)
 
-    def testInspectLongUnicode(self):
+    def test_inspect_long_unicode(self):
         letters = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
@@ -116,7 +117,7 @@ class TestCharacterSet(TestCase):
             CoreFoundation.CFCharacterSetIsLongCharacterMember(digits, ord("A"))
         )
 
-    def testMutation(self):
+    def test_mutation(self):
         charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
             None, "abcdef"
         )
@@ -162,7 +163,7 @@ class TestCharacterSet(TestCase):
         self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "e"))
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetControl, 1)
         self.assertEqual(CoreFoundation.kCFCharacterSetWhitespace, 2)
         self.assertEqual(CoreFoundation.kCFCharacterSetWhitespaceAndNewline, 3)
@@ -177,7 +178,4 @@ class TestCharacterSet(TestCase):
         self.assertEqual(CoreFoundation.kCFCharacterSetCapitalizedLetter, 13)
         self.assertEqual(CoreFoundation.kCFCharacterSetSymbol, 14)
         self.assertEqual(CoreFoundation.kCFCharacterSetIllegal, 12)
-
-    @min_os_level("10.5")
-    def testConstants10_5(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetNewline, 15)

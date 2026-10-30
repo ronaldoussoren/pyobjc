@@ -17,10 +17,8 @@ _C_SCNVector4 = (
 
 
 class TestSCNConstraint(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNBillboardAxis)
-
-    def testConstants(self):
         self.assertEqual(SceneKit.SCNBillboardAxisX, 0x1 << 0)
         self.assertEqual(SceneKit.SCNBillboardAxisY, 0x1 << 1)
         self.assertEqual(SceneKit.SCNBillboardAxisZ, 0x1 << 2)
@@ -32,7 +30,7 @@ class TestSCNConstraint(TestCase):
             | SceneKit.SCNBillboardAxisZ,
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNLookAtConstraint.gimbalLockEnabled)
         self.assertArgIsBOOL(SceneKit.SCNLookAtConstraint.setGimbalLockEnabled_, 0)
 
@@ -47,7 +45,7 @@ class TestSCNConstraint(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(SceneKit.SCNConstraint.isEnabled)
         self.assertArgIsBOOL(SceneKit.SCNConstraint.setEnabled_, 0)
 
@@ -78,5 +76,5 @@ class TestSCNConstraint(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesScale_, 0)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
-        self.assertProtocolExists("SCNAvoidOccluderConstraintDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("SCNAvoidOccluderConstraintDelegate", SceneKit)

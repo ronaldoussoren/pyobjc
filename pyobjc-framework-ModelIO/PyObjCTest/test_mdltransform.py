@@ -43,66 +43,7 @@ class TestMDLTransformHelper(ModelIO.NSObject):
 
 
 class TestMDLTransform(TestCase):
-    def testMethods(self):
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.matrix, simd.simd_float4x4.__typestr__
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setMatrix_,
-            0,
-            simd.simd_float4x4.__typestr__,
-        )
-
-        self.assertResultIsBOOL(ModelIO.TestMDLTransformHelper.resetsTransform)
-        self.assertArgIsBOOL(ModelIO.TestMDLTransformHelper.setResetsTransform_, 0)
-
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.minimumTime, objc._C_DBL
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setMinimumTime_, 0, objc._C_DBL
-        )
-
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.maximumTime, objc._C_DBL
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setMaximumTime_, 0, objc._C_DBL
-        )
-
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_,
-            0,
-            simd.simd_float4x4.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 1, objc._C_DBL
-        )
-
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.setLocalTransform_,
-            0,
-            simd.simd_float4x4.__typestr__,
-        )
-
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.localTransformAtTime_,
-            simd.simd_float4x4.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.localTransformAtTime_, 0, objc._C_DBL
-        )
-
-        self.assertResultHasType(
-            ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
-            simd.simd_float4x4.__typestr__,
-        )
-        self.assertArgHasType(
-            ModelIO.TestMDLTransformHelper.globalTransformWithObject_atTime_,
-            1,
-            objc._C_DBL,
-        )
-
+    def test_methods(self):
         self.assertArgHasType(
             ModelIO.MDLTransform.initWithMatrix_, 0, simd.simd_float4x4.__typestr__
         )
@@ -166,7 +107,7 @@ class TestMDLTransform(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgHasType(
             ModelIO.MDLTransform.initWithMatrix_resetsTransform_,
             0,
@@ -180,5 +121,57 @@ class TestMDLTransform(TestCase):
             ModelIO.MDLTransform.initWithTransformComponent_resetsTransform_, 1
         )
 
-    def testProtocolObjects(self):
-        self.assertProtocolExists("MDLTransformComponent")
+    def test_protocols(self):
+        self.assertProtocolExists("MDLTransformComponent", ModelIO)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestMDLTransformHelper.matrix, simd.simd_float4x4.__typestr__
+        )
+        self.assertArgHasType(
+            TestMDLTransformHelper.setMatrix_,
+            0,
+            simd.simd_float4x4.__typestr__,
+        )
+
+        self.assertResultIsBOOL(TestMDLTransformHelper.resetsTransform)
+        self.assertArgIsBOOL(TestMDLTransformHelper.setResetsTransform_, 0)
+
+        self.assertResultHasType(TestMDLTransformHelper.minimumTime, objc._C_DBL)
+        self.assertArgHasType(TestMDLTransformHelper.setMinimumTime_, 0, objc._C_DBL)
+
+        self.assertResultHasType(TestMDLTransformHelper.maximumTime, objc._C_DBL)
+        self.assertArgHasType(TestMDLTransformHelper.setMaximumTime_, 0, objc._C_DBL)
+
+        self.assertArgHasType(
+            TestMDLTransformHelper.setLocalTransform_forTime_,
+            0,
+            simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMDLTransformHelper.setLocalTransform_forTime_, 1, objc._C_DBL
+        )
+
+        self.assertArgHasType(
+            TestMDLTransformHelper.setLocalTransform_,
+            0,
+            simd.simd_float4x4.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestMDLTransformHelper.localTransformAtTime_,
+            simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMDLTransformHelper.localTransformAtTime_, 0, objc._C_DBL
+        )
+
+        self.assertResultHasType(
+            TestMDLTransformHelper.globalTransformWithObject_atTime_,
+            simd.simd_float4x4.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMDLTransformHelper.globalTransformWithObject_atTime_,
+            1,
+            objc._C_DBL,
+        )

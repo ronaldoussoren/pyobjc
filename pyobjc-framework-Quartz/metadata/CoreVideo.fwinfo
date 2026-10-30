@@ -4,7 +4,6 @@
  "definitions": {
   "externs": {
    "kCVPixelFormatContainsGrayscale": { "typestr": "@" },
-   "kCVPixelFormatContainsGrayscale": { "typestr": "@" },
    "kCVImageBufferTransferFunction_Linear": { "typestr": "@" },
    "kCVImageBufferTransferFunction_sRGB": { "typestr": "@" },
    "kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ": { "typestr": "@" },
@@ -28,41 +27,6 @@
   },
   "aliases": {
    "COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH": { "ignore": true }
-  },
-  "enum": {
-   "kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange": { "value": 1937125938 },
-   "kCVPixelFormatType_444YpCbCr16BiPlanarVideoRange": { "value": 1937126452 },
-   "kCVPixelFormatType_444YpCbCr16VideoRange_16A_TriPlanar": { "value": 1932812659 },
-   "kCVPixelFormatType_64RGBALE": { "value": 1815491698 },
-   "kCVPixelFormatType_OneComponent10": { "value": 1278226736 },
-   "kCVPixelFormatType_OneComponent12": { "value": 1278226738 },
-   "kCVPixelFormatType_OneComponent16": { "value": 1278226742 },
-   "kCVPixelFormatType_TwoComponent16": { "value": 843264310 },
-   "kCVPixelFormatType_444YpCbCr8BiPlanarFullRange": { "value": 875836518 },
-   "kCVPixelFormatType_422YpCbCr8BiPlanarVideoRange": { "value": 875704950 },
-   "kCVPixelFormatType_422YpCbCr8BiPlanarFullRange": { "value": 875704934 },
-   "kCVPixelFormatType_444YpCbCr8BiPlanarVideoRange": { "value": 875836534 },
-   "kCVPixelFormatType_DisparityFloat16": { "value": 1751411059 },
-   "kCVPixelFormatType_DisparityFloat32": { "value": 1717856627 },
-   "kCVPixelFormatType_DepthFloat16": { "value": 1751410032 },
-   "kCVPixelFormatType_DepthFloat32": { "value": 1717855600 },
-   "kCVPixelFormatType_420YpCbCr10BiPlanarVideoRange": { "value": 2016686640 },
-   "kCVPixelFormatType_422YpCbCr10BiPlanarVideoRange": { "value": 2016686642 },
-   "kCVPixelFormatType_444YpCbCr10BiPlanarVideoRange": { "value": 2016687156 },
-   "kCVPixelFormatType_420YpCbCr10BiPlanarFullRange": { "value": 2019963440 },
-   "kCVPixelFormatType_422YpCbCr10BiPlanarFullRange": { "value": 2019963442 },
-   "kCVPixelFormatType_444YpCbCr10BiPlanarFullRange": { "value": 2019963956 },
-   "kCVReturnUnsupported": { "value": -6663 },
-   "kCVReturnRetry": { "value": -6692 },
-   "kCVReturnLast": { "value": -6699 },
-   "kCVPixelBufferPoolFlushExcessBuffers": { "value": 1 },
-   "kCVPixelFormatType_30RGBLEPackedWideGamut": { "value": 1999843442 },
-   "kCVPixelFormatType_ARGB2101010LEPacked": { "value": 1815162994 },
-   "kCVPixelFormatType_14Bayer_GRBG": { "value": 1735549492 },
-   "kCVPixelFormatType_14Bayer_RGGB": { "value": 1919379252 },
-   "kCVPixelFormatType_14Bayer_BGGR": { "value": 1650943796 },
-   "kCVPixelFormatType_14Bayer_GBRG": { "value": 1734505012 },
-   "kReturnRetry": { "value": -6692 }
   },
   "cftypes": {
    "CVBufferRef": {
@@ -100,8 +64,6 @@
     "typestr": "^{__CVPixelBuffer=}"
    }
   },
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "CVMetalBufferCacheCreate": {
     "args": {
@@ -115,17 +77,7 @@
    },
    "CVMetalTextureCacheCreateFromImage": {
     "args": {
-     "0": { "type_override": "@" },
-     "1": { "type_override": "@" },
-     "2": { "type_override": "@" },
-     "3": { "type_override": "@" },
-     "4": { "type_override": "Q" },
-     "5": { "type_override": "Q" },
-     "6": { "type_override": "Q" },
-     "7": { "type_override": "^@", "already_cfretained": true, "type_modifier": "o" }
-    },
-    "retval": {
-     "type_override": "i"
+     "7": { "already_cfretained": true, "type_modifier": "o" }
     }
    },
    "CVBufferCopyAttachment": {
@@ -133,176 +85,44 @@
      "2": { "type_modifier": "o" }
     }
    },
-   "CVYCbCrMatrixGetIntegerCodePointForString": {
-    "args": {
-     "0": { "typestr": "^{__CFString=}" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "CVColorPrimariesGetIntegerCodePointForString": {
-    "args": {
-     "0": { "typestr": "^{__CFString=}" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "CVTransferFunctionGetIntegerCodePointForString": {
-    "args": {
-     "0": { "typestr": "^{__CFString=}" }
-    },
-    "retval": { "typestr": "i" }
-   },
-   "CVYCbCrMatrixGetStringForIntegerCodePoint": {
-    "args": {
-     "0": { "typestr": "i" }
-    },
-    "retval": { "typestr": "^{__CFString=}" }
-   },
-   "CVColorPrimariesGetStringForIntegerCodePoint": {
-    "args": {
-     "0": { "typestr": "i" }
-    },
-    "retval": { "typestr": "^{__CFString=}" }
-   },
-   "CVTransferFunctionGetStringForIntegerCodePoint": {
-    "args": {
-     "0": { "typestr": "i" }
-    },
-    "retval": { "typestr": "^{__CFString=}" }
-   },
-   "CVMetalTextureGetTypeID": {
-    "args": { },
-    "retval": { "typestr": "L" }
-   },
-   "CVMetalTextureCacheGetTypeID": {
-    "args": { },
-    "retval": { "typestr": "L" }
-   },
-   "CVPixelBufferPoolFlush": {
-    "args": {
-     "0": { "typestr": "^{__CVPixelBufferPool=}" },
-     "1": { "typestr": "L" }
-    },
-    "retval": { "typestr": "v" }
-   },
    "CVMetalTextureCacheCreate": {
-    "retval": { "typestr": "i" },
     "args": {
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVMetalTextureCacheCreateTextureFromImage": {
-    "retval": { "typestr": "i" },
     "args": {
-     "0": { "typestr": "@" },
-     "1": { "typestr": "@" },
-     "2": { "typestr": "^{__CVBuffer=}" },
-     "3": { "typestr": "@" },
-     "4": { "typestr": "Q" },
-     "5": { "typestr": "L" },
-     "6": { "typestr": "L" },
-     "7": { "typestr": "L" },
-     "8": { "typestr": "^^{__CVBuffer=}", "type_modifier": "o", "already_cfretained": true }
+     "8": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVDisplayLinkSetOutputHandler": {
-    "retval": { "typestr": "i" },
     "args": {
-     "0": { "typestr": "^{__CVDisplayLink=}" },
-     "1": { "typestr": "@?" ,
-         "callable": {
-	  "retval": { "type": "i" },
-	  "arguments": {
-	   "0": { "type": "^v" },
-	   "1": { "type": "^{__CVDisplayLink=}" },
-	   "2": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "3": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
-	   "4": { "type": "Q" },
-	   "5": { "type": "o^Q" }
-	  }
-	 }
+     "1": {
+      "callable": {
+       "retval": { "type": "i" },
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "^{__CVDisplayLink=}" },
+	"2": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	"3": { "type_modifier": "n", "type": "^{CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}" },
+	"4": { "type": "Q" },
+	"5": { "type": "o^Q" }
+       }
+      }
      }
     }
    },
-   "CVMetalTextureCacheFlush": {
-    "retval": { "typestr": "v" },
-    "args": {
-     "0": { "typestr": "@" },
-     "1": { "typestr": "Q" }
-    }
-   },
-   "CVMetalTextureGetTexture": {
-    "retval": { "typestr": "@" },
-    "args": {
-     "0": { "typestr": "^{__CVBuffer=}" }
-    }
-   },
-   "CVMetalTextureIsFlipped": {
-    "retval": { "typestr": "Z" },
-    "args": {
-     "0": { "typestr": "^{__CVBuffer=}" }
-    }
-   },
    "CVMetalTextureGetCleanTexCoords": {
-    "retval": { "typestr": "v" },
     "args": {
-     "0": { "typestr": "^{__CVBuffer=}" },
-     "1": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
-     "2": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
-     "3": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  },
-     "4": { "typestr": "^f", "type_modifier": "o", "c_array_of_fixed_length": 2  }
+     "1": { "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "2": { "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "3": { "type_modifier": "o", "c_array_of_fixed_length": 2  },
+     "4": { "type_modifier": "o", "c_array_of_fixed_length": 2  }
     }
    },
    "CVBufferGetAttachment": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "CVBufferGetAttachments": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVBufferPropagateAttachments": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CVBufferRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVBufferRemoveAllAttachments": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVBufferRemoveAttachment": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CVBufferRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVBufferSetAttachment": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CVBufferSetAttachments": {
-    "args": {
-     "0": {},
-     "1": {}
     }
    },
    "CVDisplayLinkCreateWithActiveCGDisplays": {
@@ -326,63 +146,13 @@
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CVDisplayLinkGetActualOutputVideoRefreshPeriod": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkGetCurrentCGDisplay": {
-    "args": {
-     "0": {}
-    }
-   },
    "CVDisplayLinkGetCurrentTime": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CVDisplayLinkGetNominalOutputVideoRefreshPeriod": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkGetOutputVideoLatency": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkIsRunning": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVDisplayLinkSetCurrentCGDisplay": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CVDisplayLinkSetOutputCallback": {
     "args": {
-     "0": {},
      "1": {
       "callable_retained": true,
       "callable": {
@@ -413,163 +183,39 @@
         "type": "i"
        }
       }
-     },
-     "2": {}
-    }
-   },
-   "CVDisplayLinkStart": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVDisplayLinkStop": {
-    "args": {
-     "0": {}
+     }
     }
    },
    "CVDisplayLinkTranslateTime": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n" },
      "2": { "type_modifier": "o" }
     }
    },
-   "CVImageBufferCreateColorSpaceFromAttachments": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CVImageBufferGetCleanRect": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVImageBufferGetColorSpace": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVImageBufferGetDisplaySize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVImageBufferGetEncodedSize": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVImageBufferIsFlipped": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLBufferAttach": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CVOpenGLBufferCreate": {
     "args": {
-     "0": {},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CVOpenGLBufferGetAttributes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CVOpenGLBufferPoolCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVOpenGLBufferPoolCreateOpenGLBuffer": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true}
     }
    },
-   "CVOpenGLBufferPoolGetAttributes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVOpenGLBufferPoolGetOpenGLBufferAttributes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVOpenGLBufferPoolRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLBufferPoolRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVOpenGLBufferRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLBufferRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CVOpenGLTextureCacheCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVOpenGLTextureCacheCreateTextureFromImage": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
      "4": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CVOpenGLTextureCacheFlush": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureCacheRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureCacheRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
    },
    "CVOpenGLTextureGetCleanTexCoords": {
     "args": {
@@ -579,50 +225,18 @@
      "4": { "type_modifier": "n", "c_array_of_fixed_length": 2}
     }
    },
-   "CVOpenGLTextureGetName": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureGetTarget": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureIsFlipped": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVOpenGLTextureRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CVPixelBufferCreate": {
     "args": {
-     "0": {},
-     "4": {},
      "5": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferCreateResolvedAttributesDictionary": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true  }
     }
    },
    "CVPixelBufferCreateWithBytes": {
     "args": {
-     "0": {},
-     "4": {},
      "6": {
       "callable": {
        "arguments": {
@@ -638,9 +252,7 @@
        }
       }
      },
-     "7": {},
-     "8": {},
-     "9": {}
+     "9": { "type_modifier": "o" }
     }
    },
    "CVGetCurrentHostTime": {
@@ -654,278 +266,40 @@
    },
    "CVPixelBufferCreateWithIOSurface": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferCreateWithPlanarBytes": {
-    "ignore": true,
-    "args": {
-     "0": {},
-     "4": {},
-     "7": {},
-     "8": {},
-     "9": {},
-     "10": {},
-     "11": {
-      "callable": {
-       "arguments": {
-        "0": {
-         "type": "^v"
-        },
-        "1": {
-         "type": "^v" },
-        "2": {
-         "type": "Q"
-        },
-        "3": {
-         "type": "Q"
-        },
-        "4": {
-         "type": "^^v"
-        }
-       },
-       "retval": {
-        "type": "v"
-       }
-      }
-     },
-     "12": {},
-     "13": {},
-     "14": { "type_modifier": "o", "already_cfretained": true }
-    }
-   },
-   "CVPixelBufferFillExtendedPixels": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    },
    "CVPixelBufferGetBaseAddress": {
-    "args": {
-     "0": {}
-    },
     "retval": { "c_array_of_variable_length": true }
    },
    "CVPixelBufferGetBaseAddressOfPlane": {
-    "args": {
-     "0": {}
-    },
     "retval": { "c_array_of_variable_length": true }
-   },
-   "CVPixelBufferGetBytesPerRow": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetBytesPerRowOfPlane": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetDataSize": {
-    "args": {
-     "0": {}
-    }
    },
    "CVPixelBufferGetExtendedPixels": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" },
      "2": { "type_modifier": "o" },
      "3": { "type_modifier": "o" },
      "4": { "type_modifier": "o" }
     }
    },
-   "CVPixelBufferGetHeight": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetHeightOfPlane": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetIOSurface": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVPixelBufferGetPixelFormatType": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetPlaneCount": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetWidth": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferGetWidthOfPlane": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferIsPlanar": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferLockBaseAddress": {
-    "args": {
-     "0": {}
-    }
-   },
    "CVPixelBufferPoolCreate": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferPoolCreatePixelBuffer": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CVPixelBufferPoolCreatePixelBufferWithAuxAttributes": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CVPixelBufferPoolGetAttributes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVPixelBufferPoolGetPixelBufferAttributes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVPixelBufferPoolRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferPoolRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVPixelBufferRelease": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelBufferRetain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CVPixelBufferUnlockBaseAddress": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CVPixelFormatDescriptionCreateWithPixelFormatType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType": {
-    "args": {
-     "0": {}
-    }
-   }
-  },
-  "informal_protocols": {},
-  "structs": {
-   "CVPlanarPixelBufferInfo_YCbCrBiPlanar": {
-    "fieldnames": ["componentInfoY", "componentInfoCbCr"]
-   },
-   "CVFillExtendedPixelsCallBackData": {
-    "ignore": true
-   },
-   "CVPlanarComponentInfo": {
-    "fieldnames": [
-     "offset",
-     "rowBytes"
-    ]
-   },
-   "CVPlanarPixelBufferInfo": {
-    "fieldnames": [
-     "componentInfo"
-    ]
-   },
-   "CVPlanarPixelBufferInfo_YCbCrPlanar": {
-    "fieldnames": [
-     "componentInfoY",
-     "componentInfoCb",
-     "componentInfoCr"
-    ]
-   },
-   "CVSMPTETime": {
-    "fieldnames": [
-     "subframes",
-     "subframeDivisor",
-     "counter",
-     "type",
-     "flags",
-     "hours",
-     "minutes",
-     "seconds",
-     "frames"
-    ]
-   },
-   "CVTime": {
-    "fieldnames": [
-     "timeValue",
-     "timeScale",
-     "flags"
-    ]
-   },
-   "CVTimestamp": {
-    "fieldnames": [
-     "version",
-     "videoTimeScale",
-     "videoTime",
-     "hostTime",
-     "rateScalar",
-     "videoRefreshPeriod",
-     "smpteTime",
-     "flags",
-     "reserved"
-    ]
    }
   }
  }

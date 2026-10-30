@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLIOCompressor(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLIOCompressionStatus)
         self.assertEqual(Metal.MTLIOCompressionStatusComplete, 0)
         self.assertEqual(Metal.MTLIOCompressionStatusError, 1)

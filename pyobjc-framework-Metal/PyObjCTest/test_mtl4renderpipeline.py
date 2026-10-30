@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTL4RenderPipeline(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4LogicalToPhysicalColorAttachmentMappingState)
         self.assertEqual(
             Metal.MTL4LogicalToPhysicalColorAttachmentMappingStateIdentity, 0

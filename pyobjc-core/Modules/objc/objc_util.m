@@ -14,7 +14,6 @@ Class   NSAutoreleasePool_class;
 PyObject* PyObjCExc_Error;
 PyObject* PyObjCExc_NoSuchClassError;
 PyObject* PyObjCExc_InternalError;
-PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 13 */
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
 PyObject* PyObjCExc_BadPrototypeError;
@@ -101,6 +100,8 @@ PyObject* PyObjCNM_tzinfo;
 PyObject* PyObjCNM_update;
 PyObject* PyObjCNM_co_consts;
 PyObject* PyObjCNM___call__;
+PyObject* PyObjCNM___orig_bases__;
+PyObject* PyObjCNM___metadata__;
 
 int
 PyObjCUtil_Init(PyObject* module)
@@ -119,7 +120,6 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
     NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
             PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
@@ -218,6 +218,8 @@ PyObjCUtil_Init(PyObject* module)
     NEW_STR(PyObjCNM_update, "update");
     NEW_STR(PyObjCNM_co_consts, "co_consts");
     NEW_STR(PyObjCNM___call__, "__call__");
+    NEW_STR(PyObjCNM___orig_bases__, "__orig_bases__");
+    NEW_STR(PyObjCNM___metadata__, "__metadata__");
 
 #undef NEW_STR
 

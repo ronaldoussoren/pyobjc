@@ -1,7 +1,6 @@
 from PyObjCTools.TestSupport import (
     TestCase,
     min_sdk_level,
-    expectedFailure,
 )
 import GameController
 
@@ -32,9 +31,8 @@ class TestGCLinearInputHelper(GameController.NSObject):
 class TestGCLinearInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCLinearInput")
+        self.assertProtocolExists("GCLinearInput", GameController)
 
-    @expectedFailure  # value method requires explicit protocol definition
     def test_protocol_methods(self):
         self.assertResultIsBlock(TestGCLinearInputHelper.valueDidChangeHandler, b"v@@f")
         self.assertArgIsBlock(

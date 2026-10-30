@@ -4,7 +4,7 @@ import objc
 
 
 class TestWKError(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKCookiePolicy)
         self.assertEqual(WebKit.WKCookiePolicyAllow, 0)
         self.assertEqual(WebKit.WKCookiePolicyDisallow, 1)
@@ -34,4 +34,10 @@ class TestWKError(TestCase):
     def test_methods26_0(self):
         self.assertArgIsBlock(
             WebKit.WKHTTPCookieStore.setCookies_completionHandler_, 1, b"v"
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(
+            WebKit.WKHTTPCookieStore.getCookiesForURL_completionHandler_, 1, b"v@"
         )

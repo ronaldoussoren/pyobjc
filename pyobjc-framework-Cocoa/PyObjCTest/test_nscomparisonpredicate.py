@@ -4,20 +4,18 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSComparisonPredicate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSComparisonPredicateModifier)
-        self.assertIsEnumType(Foundation.NSComparisonPredicateOptions)
-        self.assertIsEnumType(Foundation.NSPredicateOperatorType)
-
-    def testConstants(self):
-        self.assertEqual(Foundation.NSCaseInsensitivePredicateOption, 1)
-        self.assertEqual(Foundation.NSDiacriticInsensitivePredicateOption, 2)
-        self.assertEqual(Foundation.NSNormalizedPredicateOption, 4)
-
         self.assertEqual(Foundation.NSDirectPredicateModifier, 0)
         self.assertEqual(Foundation.NSAllPredicateModifier, 1)
         self.assertEqual(Foundation.NSAnyPredicateModifier, 2)
 
+        self.assertIsEnumType(Foundation.NSComparisonPredicateOptions)
+        self.assertEqual(Foundation.NSCaseInsensitivePredicateOption, 1)
+        self.assertEqual(Foundation.NSDiacriticInsensitivePredicateOption, 2)
+        self.assertEqual(Foundation.NSNormalizedPredicateOption, 4)
+
+        self.assertIsEnumType(Foundation.NSPredicateOperatorType)
         self.assertEqual(Foundation.NSLessThanPredicateOperatorType, 0)
         self.assertEqual(Foundation.NSLessThanOrEqualToPredicateOperatorType, 1)
         self.assertEqual(Foundation.NSGreaterThanPredicateOperatorType, 2)
@@ -33,7 +31,7 @@ class TestNSComparisonPredicate(TestCase):
         self.assertEqual(Foundation.NSContainsPredicateOperatorType, 99)
         self.assertEqual(Foundation.NSBetweenPredicateOperatorType, 100)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Foundation.NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_,  # noqa: B950
             2,

@@ -33,11 +33,18 @@ class TestIMKInputControllerHelper(InputMethodKit.NSObject):
 
 
 class TestIMKInputController(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(InputMethodKit.kIMKCommandMenuItemName, str)
         self.assertIsInstance(InputMethodKit.kIMKCommandClientName, str)
 
-    def testProtocols(self):
+    def test_methods(self):
+        self.assertArgIsSEL(
+            InputMethodKit.IMKInputController.doCommandBySelector_commandDictionary_,
+            0,
+            b"v@:@",
+        )
+
+    def test_protocol_methods(self):
         # self.assertIsInstance(protocols.IMKServerInput, objc.informal_protocol)
 
         self.assertResultIsBOOL(
@@ -58,7 +65,6 @@ class TestIMKInputController(TestCase):
             TestIMKInputControllerHelper.didCommandBySelector_client_, 0, objc._C_SEL
         )
 
-    def testIMKMouseHandling(self):
         self.assertResultIsBOOL(
             TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_
         )
@@ -120,11 +126,4 @@ class TestIMKInputController(TestCase):
             TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_,
             2,
             objc._C_NSUInteger,
-        )
-
-    def testMethods(self):
-        self.assertArgIsSEL(
-            InputMethodKit.IMKInputController.doCommandBySelector_commandDictionary_,
-            0,
-            b"v@:@",
         )

@@ -1,19 +1,15 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKDirectionsRequest(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MapKit.MKDirectionsRoutePreference)
         self.assertEqual(MapKit.MKDirectionsRoutePreferenceAny, 0)
         self.assertEqual(MapKit.MKDirectionsRoutePreferenceAvoid, 1)
 
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertIsInstance(MapKit.MKDirectionsRequest, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKDirectionsRequest.requestsAlternateRoutes)
         self.assertArgIsBOOL(MapKit.MKDirectionsRequest.setRequestsAlternateRoutes_, 0)
 

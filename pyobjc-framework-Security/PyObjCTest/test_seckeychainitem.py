@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase, fourcc
-import objc
 
 
 class TestKeychainitem(TestCase):
@@ -45,52 +44,29 @@ class TestKeychainitem(TestCase):
     def test_functions(self):
         self.assertIsInstance(Security.SecKeychainItemGetTypeID(), int)
 
-        self.assertResultHasType(Security.SecKeychainItemDelete, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainItemDelete, 0, objc._C_ID)
+        Security.SecKeychainItemDelete
 
-        self.assertResultHasType(Security.SecKeychainItemCopyKeychain, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainItemCopyKeychain, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainItemCopyKeychain,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCopyKeychain, 1)
 
-        self.assertResultHasType(Security.SecKeychainItemCreateCopy, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainItemCreateCopy, 2, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainItemCreateCopy,
             3,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCreateCopy, 3)
 
-        self.assertResultHasType(
-            Security.SecKeychainItemCreatePersistentReference, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecKeychainItemCreatePersistentReference, 0, objc._C_ID
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainItemCreatePersistentReference,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCreatePersistentReference, 1)
 
-        self.assertResultHasType(
-            Security.SecKeychainItemCopyFromPersistentReference, objc._C_INT
-        )
-        self.assertArgHasType(
-            Security.SecKeychainItemCopyFromPersistentReference, 0, objc._C_ID
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainItemCopyFromPersistentReference,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(
             Security.SecKeychainItemCopyFromPersistentReference, 1
@@ -99,18 +75,13 @@ class TestKeychainitem(TestCase):
         self.assertFalse(hasattr(Security, "SecKeychainItemGetDLDBHandle"))
         self.assertFalse(hasattr(Security, "SecKeychainItemGetUniqueRecordID"))
 
-        self.assertResultHasType(Security.SecKeychainItemCopyAccess, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainItemCopyAccess, 0, objc._C_ID)
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecKeychainItemCopyAccess,
             1,
-            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCopyAccess, 1)
 
-        self.assertResultHasType(Security.SecKeychainItemSetAccess, objc._C_INT)
-        self.assertArgHasType(Security.SecKeychainItemSetAccess, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeychainItemSetAccess, 1, objc._C_ID)
+        Security.SecKeychainItemSetAccess
 
     def test_functions_manual(self):
         # Legacy API, not wrapped:

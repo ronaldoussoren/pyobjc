@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestURLAccess(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFURLUnknownError, -10)
         self.assertEqual(CoreFoundation.kCFURLUnknownSchemeError, -11)
         self.assertEqual(CoreFoundation.kCFURLResourceNotFoundError, -12)
@@ -24,7 +24,7 @@ class TestURLAccess(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLHTTPStatusCode, str)
         self.assertIsInstance(CoreFoundation.kCFURLHTTPStatusLine, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None, __file__, CoreFoundation.kCFURLPOSIXPathStyle, False
         )

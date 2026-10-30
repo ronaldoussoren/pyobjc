@@ -5,6 +5,6 @@ import objc
 
 class TestCKQuery(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKQuery")
         self.assertIsInstance(CloudKit.CKQuery, objc.objc_class)

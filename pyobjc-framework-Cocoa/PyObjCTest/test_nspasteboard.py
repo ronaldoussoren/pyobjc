@@ -12,20 +12,33 @@ class TestNSPasteboardHelper(AppKit.NSObject):
 
 
 class TestNSPasteboard(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSPasteboardContentsOptions)
+        self.assertEqual(AppKit.NSPasteboardContentsCurrentHostOnly, 1 << 0)
+
+        self.assertIsEnumType(AppKit.NSPasteboardReadingOptions)
+        self.assertEqual(AppKit.NSPasteboardReadingAsData, 0)
+        self.assertEqual(AppKit.NSPasteboardReadingAsString, 1 << 0)
+        self.assertEqual(AppKit.NSPasteboardReadingAsPropertyList, 1 << 1)
+        self.assertEqual(AppKit.NSPasteboardReadingAsKeyedArchive, 1 << 2)
+
+        self.assertIsEnumType(AppKit.NSPasteboardWritingOptions)
+        self.assertEqual(AppKit.NSPasteboardWritingPromised, 1 << 9)
+
+        self.assertIsEnumType(AppKit.NSPasteboardAccessBehavior)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAsk, 1)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysAllow, 2)
+        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysDeny, 3)
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSPasteboardName, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardReadingOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardType, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardDetectionPattern, str)
         self.assertIsTypedEnum(AppKit.NSPasteboardMetadataType, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSPasteboardContentsOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardReadingOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardWritingOptions)
-        self.assertIsEnumType(AppKit.NSPasteboardAccessBehavior)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSStringPboardType, str)
         self.assertIsInstance(AppKit.NSFilenamesPboardType, str)
         self.assertIsInstance(AppKit.NSPostScriptPboardType, str)
@@ -50,21 +63,12 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSFindPboard, str)
         self.assertIsInstance(AppKit.NSDragPboard, str)
 
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorDefault, 0)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAsk, 1)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysAllow, 2)
-        self.assertEqual(AppKit.NSPasteboardAccessBehaviorAlwaysDeny, 3)
-
-    @min_os_level("10.5")
-    def testConstants10_5(self):
         self.assertIsInstance(AppKit.NSMultipleTextSelectionPboardType, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
         self.assertIsInstance(AppKit.NSPasteboardTypeTextFinderOptions, str)
 
     @min_os_level("15.4")
-    def testConstants15_4(self):
+    def test_constants15_4(self):
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternProbableWebURL, str)
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternProbableWebSearch, str)
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternNumber, str)
@@ -80,28 +84,6 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSPasteboardDetectionPatternMoneyAmount, str)
         self.assertIsInstance(AppKit.NSPasteboardMetadataTypeContentType, str)
 
-    def testFunctions(self):
-        tp = v = AppKit.NSCreateFilenamePboardType("test/jpeg")
-        self.assertIsInstance(v, str)
-
-        v = AppKit.NSCreateFileContentsPboardType("test/jpeg")
-        self.assertIsInstance(v, str)
-
-        v = AppKit.NSGetFileType(tp)
-        self.assertIsInstance(v, str)
-
-        v = AppKit.NSGetFileTypes([tp])
-        self.assertIsInstance(v, AppKit.NSArray)
-
-    def testMethods(self):
-        self.assertResultIsBOOL(AppKit.NSPasteboard.setData_forType_)
-        self.assertResultIsBOOL(AppKit.NSPasteboard.setPropertyList_forType_)
-        self.assertResultIsBOOL(AppKit.NSPasteboard.setString_forType_)
-        self.assertResultIsBOOL(AppKit.NSPasteboard.writeFileContents_)
-        self.assertResultIsBOOL(AppKit.NSPasteboard.writeFileWrapper_)
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
         self.assertIsInstance(AppKit.NSPasteboardTypeString, str)
         self.assertIsInstance(AppKit.NSPasteboardTypePDF, str)
         self.assertIsInstance(AppKit.NSPasteboardTypeTIFF, str)
@@ -122,19 +104,8 @@ class TestNSPasteboard(TestCase):
             AppKit.NSPasteboardURLReadingContentsConformToTypesKey, str
         )
 
-        self.assertEqual(AppKit.NSPasteboardWritingPromised, 1 << 9)
-
-        self.assertEqual(AppKit.NSPasteboardReadingAsData, 0)
-        self.assertEqual(AppKit.NSPasteboardReadingAsString, 1 << 0)
-        self.assertEqual(AppKit.NSPasteboardReadingAsPropertyList, 1 << 1)
-        self.assertEqual(AppKit.NSPasteboardReadingAsKeyedArchive, 1 << 2)
-
-    @min_os_level("10.12")
-    def testConstants10_12(self):
-        self.assertEqual(AppKit.NSPasteboardContentsCurrentHostOnly, 1 << 0)
-
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSPasteboardNameGeneral, str)
         self.assertIsInstance(AppKit.NSPasteboardNameFont, str)
         self.assertIsInstance(AppKit.NSPasteboardNameRuler, str)
@@ -143,8 +114,26 @@ class TestNSPasteboard(TestCase):
         self.assertIsInstance(AppKit.NSPasteboardTypeURL, str)
         self.assertIsInstance(AppKit.NSPasteboardTypeFileURL, str)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_functions(self):
+        tp = v = AppKit.NSCreateFilenamePboardType("test/jpeg")
+        self.assertIsInstance(v, str)
+
+        v = AppKit.NSCreateFileContentsPboardType("test/jpeg")
+        self.assertIsInstance(v, str)
+
+        v = AppKit.NSGetFileType(tp)
+        self.assertIsInstance(v, str)
+
+        v = AppKit.NSGetFileTypes([tp])
+        self.assertIsInstance(v, AppKit.NSArray)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(AppKit.NSPasteboard.setData_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboard.setPropertyList_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboard.setString_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboard.writeFileContents_)
+        self.assertResultIsBOOL(AppKit.NSPasteboard.writeFileWrapper_)
+
         self.assertResultIsBOOL(AppKit.NSPasteboard.writeObjects_)
         self.assertResultIsBOOL(
             AppKit.NSPasteboard.canReadItemWithDataConformingToTypes_
@@ -155,7 +144,7 @@ class TestNSPasteboard(TestCase):
         self.assertResultIsBOOL(AppKit.NSPasteboard.setString_forType_)
 
     @min_os_level("15.4")
-    def testMethods15_4(self):
+    def test_methods15_4(self):
         self.assertArgIsBlock(
             AppKit.NSPasteboard.detectPatternsForPatterns_completionHandler_, 1, b"v@@"
         )
@@ -166,16 +155,15 @@ class TestNSPasteboard(TestCase):
             AppKit.NSPasteboard.detectMetadataForTypes_completionHandler_, 1, b"v@@"
         )
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSPasteboardWriting")
-        self.assertProtocolExists("NSPasteboardReading")
+    def test_protocols(self):
+        self.assertProtocolExists("NSPasteboardWriting", AppKit)
+        self.assertProtocolExists("NSPasteboardReading", AppKit)
 
     @min_sdk_level("10.14")
-    def testProtocolObjects10_14(self):
-        self.assertProtocolExists("NSPasteboardTypeOwner")
+    def test_protocols10_14(self):
+        self.assertProtocolExists("NSPasteboardTypeOwner", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger
         )

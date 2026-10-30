@@ -1,5 +1,5 @@
 import DiscRecordingUI
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRSetupPanelHelper(DiscRecordingUI.NSObject):
@@ -14,15 +14,14 @@ class TestDRSetupPanelHelper(DiscRecordingUI.NSObject):
 
 
 class TestDRSetupPanel(TestCase):
-    @expectedFailure
-    def testConstants(self):
+    def test_constants(self):
         # Documented, but not actually available...
         self.assertIsInstance(
             DiscRecordingUI.DRSetupPanelDeviceSelectionChangedNotification, str
         )
         self.assertIsInstance(DiscRecordingUI.DRSetupPanelSelectedDeviceKey, str)
 
-    def testMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestDRSetupPanelHelper.setupPanel_deviceCouldBeTarget_)
         self.assertResultIsBOOL(
             TestDRSetupPanelHelper.setupPanelShouldHandleMediaReservations_

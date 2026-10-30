@@ -4,7 +4,7 @@ import CryptoTokenKit
 
 class TestTKTokenKeychainItem(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeychainKey.canDecrypt)
         self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeychainKey.canSign)
         self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeychainKey.canPerformKeyExchange)

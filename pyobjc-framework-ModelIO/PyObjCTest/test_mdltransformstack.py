@@ -12,10 +12,8 @@ class TestMDLTransformStackHelper(ModelIO.NSObject):
 
 
 class TestMDLTransformStack(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ModelIO.MDLTransformOpRotationOrder)
-
-    def testConstants(self):
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXYZ, 1)
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderXZY, 2)
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderYXZ, 3)
@@ -24,8 +22,8 @@ class TestMDLTransformStack(TestCase):
         self.assertEqual(ModelIO.MDLTransformOpRotationOrderZYX, 6)
 
     @min_sdk_level("10.13")
-    def testProtocols(self):
-        self.assertProtocolExists("MDLTransformOp")
+    def test_protocols(self):
+        self.assertProtocolExists("MDLTransformOp", ModelIO)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

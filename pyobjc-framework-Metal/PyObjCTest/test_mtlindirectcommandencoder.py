@@ -89,13 +89,13 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
 class TestMTLIndirectCommandEncoder(TestCase):
     @min_sdk_level("10.14")
     def test_protocols(self):
-        self.assertProtocolExists("MTLIndirectRenderCommand")
+        self.assertProtocolExists("MTLIndirectRenderCommand", Metal)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLIndirectComputeCommand")
+        self.assertProtocolExists("MTLIndirectComputeCommand", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setVertexBuffer_offset_atIndex_,
             1,
@@ -265,40 +265,40 @@ class TestMTLIndirectCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setKernelBuffer_offset_atIndex_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.concurrentDispatchThreadgroups_threadsPerThreadgroup_,  # noqa: B950
             0,
-            objc._C_NSInteger,
+            Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.concurrentDispatchThreadgroups_threadsPerThreadgroup_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            Metal.MTLSize.__typestr__,
         )
 
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.concurrentDispatchThreads_threadsPerThreadgroup_,  # noqa: B950
             0,
-            objc._C_NSInteger,
+            Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.concurrentDispatchThreads_threadsPerThreadgroup_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            Metal.MTLSize.__typestr__,
         )
 
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setImageblockWidth_height_,  # noqa: B950
             0,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLIndirectCommandEncoderHelper.setImageblockWidth_height_,  # noqa: B950
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(

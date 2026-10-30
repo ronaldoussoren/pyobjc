@@ -9,14 +9,8 @@ class TestSCStreamHelper(ScreenCaptureKit.NSObject):
 
 
 class TestSCStream(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCFrameStatus)
-        self.assertIsEnumType(ScreenCaptureKit.SCStreamOutputType)
-
-    def test_constants(self):
         self.assertEqual(ScreenCaptureKit.SCFrameStatusComplete, 0)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusIdle, 1)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusBlank, 2)
@@ -24,10 +18,15 @@ class TestSCStream(TestCase):
         self.assertEqual(ScreenCaptureKit.SCFrameStatusStarted, 4)
         self.assertEqual(ScreenCaptureKit.SCFrameStatusStopped, 5)
 
+        self.assertIsEnumType(ScreenCaptureKit.SCStreamOutputType)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeScreen, 0)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeAudio, 1)
         self.assertEqual(ScreenCaptureKit.SCStreamOutputTypeMicrophone, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(ScreenCaptureKit.SCStreamFrameInfo, str)
+
+    def test_constants(self):
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoStatus, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoDisplayTime, str)
         self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoScaleFactor, str)
@@ -88,6 +87,10 @@ class TestSCStream(TestCase):
         self.assertIsInstance(
             ScreenCaptureKit.SCStreamFrameInfoPresenterOverlayContentRect, str
         )
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(ScreenCaptureKit.SCStreamFrameInfoVideoOrientation, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStreamConfiguration.scalesToFit)
@@ -220,11 +223,35 @@ class TestSCStream(TestCase):
         self.assertResultIsBOOL(ScreenCaptureKit.SCStream.removeRecordingOutput_error_)
         self.assertArgIsOut(ScreenCaptureKit.SCStream.removeRecordingOutput_error_, 1)
 
-    def test_protocols(self):
-        self.assertProtocolExists("SCStreamDelegate")
-        self.assertProtocolExists("SCStreamOutput")
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.isMicrophoneEnabled)
+        self.assertResultIsBOOL(ScreenCaptureKit.SCContentFilter.isCameraEnabled)
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.isCapturing)
 
-    def test_proto_methods(self):
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.addClipBufferingOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.addClipBufferingOutput_error_, 1)
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStream.removeClipBufferingOutput_error_
+        )
+        self.assertArgIsOut(
+            ScreenCaptureKit.SCStream.removeClipBufferingOutput_error_, 1
+        )
+
+        self.assertResultIsBOOL(ScreenCaptureKit.SCStream.addVideoEffectOutput_error_)
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.addVideoEffectOutput_error_, 1)
+
+        self.assertResultIsBOOL(
+            ScreenCaptureKit.SCStream.removeVideoEffectOutput_error_
+        )
+        self.assertArgIsOut(ScreenCaptureKit.SCStream.removeVideoEffectOutput_error_, 1)
+
+    def test_protocols(self):
+        self.assertProtocolExists("SCStreamDelegate", ScreenCaptureKit)
+        self.assertProtocolExists("SCStreamOutput", ScreenCaptureKit)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestSCStreamHelper.stream_didOutputSampleBuffer_ofType_,
             1,

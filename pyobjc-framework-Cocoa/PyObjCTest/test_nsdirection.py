@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDirection(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSHorizontalDirections)
         self.assertEqual(AppKit.NSHorizontalDirectionsLeft, 1 << 0)
         self.assertEqual(AppKit.NSHorizontalDirectionsRight, 1 << 1)

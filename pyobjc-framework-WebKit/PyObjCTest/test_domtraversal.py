@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMTraversal(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             WebKit.DOMDocument.createNodeIterator_whatToShow_filter_expandEntityReferences_,
             3,

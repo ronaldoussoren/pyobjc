@@ -3,7 +3,7 @@ import CloudKit
 
 
 class TestCKSyncEngineState(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKSyncEnginePendingRecordZoneChangeType)
         self.assertEqual(CloudKit.CKSyncEnginePendingRecordZoneChangeTypeSaveRecord, 0)
         self.assertEqual(

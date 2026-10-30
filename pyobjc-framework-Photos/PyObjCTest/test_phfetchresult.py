@@ -5,7 +5,7 @@ import Photos
 
 class TestPHFetchResult(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Photos.PHFetchResult.containsObject_)
         self.assertArgIsBlock(
             Photos.PHFetchResult.enumerateObjectsUsingBlock_,

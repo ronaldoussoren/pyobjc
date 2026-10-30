@@ -1,11 +1,12 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVCaptureAudioDataOutput(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         AVFoundation.AVCaptureAudioDataOutput
 
-    @min_sdk_level("10.7")
-    def testProtocols(self):
-        self.assertProtocolExists("AVCaptureAudioDataOutputSampleBufferDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "AVCaptureAudioDataOutputSampleBufferDelegate", AVFoundation
+        )

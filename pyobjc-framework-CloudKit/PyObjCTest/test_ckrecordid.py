@@ -5,6 +5,6 @@ import objc
 
 class TestCKRecordID(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKRecordID")
         self.assertIsInstance(CloudKit.CKRecordID, objc.objc_class)

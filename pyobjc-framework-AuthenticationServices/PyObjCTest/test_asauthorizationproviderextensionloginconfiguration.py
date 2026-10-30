@@ -4,7 +4,7 @@ import objc
 
 
 class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AuthenticationServices.ASAuthorizationProviderExtensionFederationType
         )
@@ -18,6 +18,14 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
         self.assertEqual(
             AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeDynamicWSTrust,
             2,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeOpenID,
+            3,
+        )
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationProviderExtensionFederationTypeDynamicOpenID,
+            4,
         )
 
         self.assertIsEnumType(
@@ -181,4 +189,14 @@ class TestASAuthorizationProviderExtensionLoginConfiguration(TestCase):
         self.assertArgIsOut(
             AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setCustomKeyRequestBodyClaims_returningError_,
             1,
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.includePlatformSSOAuthorizationScopes
+        )
+        self.assertArgIsBOOL(
+            AuthenticationServices.ASAuthorizationProviderExtensionLoginConfiguration.setIncludePlatformSSOAuthorizationScopes_,
+            0,
         )

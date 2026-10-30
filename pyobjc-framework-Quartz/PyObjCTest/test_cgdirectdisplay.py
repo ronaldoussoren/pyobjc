@@ -1,26 +1,15 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
 
 class TestCGDirectDisplay(TestCase):
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        self.assertIsInstance(Quartz.kCGDisplayShowDuplicateLowResolutionModes, str)
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGCaptureOptions)
+        self.assertEqual(Quartz.kCGCaptureNoOptions, 0)
+        self.assertEqual(Quartz.kCGCaptureNoFill, 1)
 
-    @min_os_level("10.8")
-    def testFunctions10_8(self):
-        mainID = Quartz.CGMainDisplayID()
-        mode = Quartz.CGDisplayCopyDisplayMode(mainID)
-        self.assertIsInstance(mode, Quartz.CGDisplayModeRef)
-
-        w = Quartz.CGDisplayModeGetPixelWidth(mode)
-        self.assertIsInstance(w, int)
-
-        h = Quartz.CGDisplayModeGetPixelHeight(mode)
-        self.assertIsInstance(h, int)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGNullDirectDisplay, 0)
 
         self.assertEqual(Quartz.kCGDisplayWidth, "Width")
@@ -48,14 +37,15 @@ class TestCGDirectDisplay(TestCase):
             Quartz.kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput"
         )
 
-        self.assertEqual(Quartz.kCGCaptureNoOptions, 0)
-        self.assertEqual(Quartz.kCGCaptureNoFill, 1)
-
         self.assertNotHasAttr(Quartz, "kCGDirectMainDisplay")
 
         self.assertEqual(Quartz.CGDisplayNoErr, Quartz.kCGErrorSuccess)
+        self.assertIsInstance(Quartz.kCGDisplayShowDuplicateLowResolutionModes, str)
 
-    def testFunctions(self):
+    def test_types(self):
+        self.assertIsCFType(Quartz.CGDisplayModeRef)
+
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGMainDisplayID(), int)
 
         self.assertArgIsOut(Quartz.CGGetDisplaysWithPoint, 2)
@@ -155,18 +145,6 @@ class TestCGDirectDisplay(TestCase):
         self.assertEqual(v, 0)
         v = Quartz.CGDisplaySwitchToMode(Quartz.CGMainDisplayID(), cur)
         self.assertEqual(v, 0)
-
-        v = Quartz.CGDisplayBitsPerPixel(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplayBitsPerSample(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplaySamplesPerPixel(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        v = Quartz.CGDisplayBytesPerRow(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
 
         self.assertArgIsOut(Quartz.CGGetDisplayTransferByFormula, 1)
         self.assertArgIsOut(Quartz.CGGetDisplayTransferByFormula, 2)
@@ -271,16 +249,6 @@ class TestCGDirectDisplay(TestCase):
         v = Quartz.CGShieldingWindowLevel()
         self.assertIsInstance(v, int)
 
-        v = Quartz.CGDisplayBaseAddress(Quartz.CGMainDisplayID())
-        if v is not objc.NULL:
-            self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], bytes)
-
-        v = Quartz.CGDisplayAddressForPosition(Quartz.CGMainDisplayID(), 100, 100)
-        if v is not objc.NULL:
-            self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], bytes)
-
         err = Quartz.CGDisplayHideCursor(Quartz.CGMainDisplayID())
         self.assertEqual(err, 0)
 
@@ -292,23 +260,6 @@ class TestCGDirectDisplay(TestCase):
         dX, dY = Quartz.CGGetLastMouseDelta(None, None)
         self.assertIsInstance(dX, int)
         self.assertIsInstance(dY, int)
-
-        v = Quartz.CGDisplayCanSetPalette(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        err = Quartz.CGDisplayWaitForBeamPositionOutsideLines(
-            Quartz.CGMainDisplayID(), 200, 400
-        )
-        self.assertEqual(err, 0)
-
-        v = Quartz.CGDisplayBeamPosition(Quartz.CGMainDisplayID())
-        self.assertIsInstance(v, int)
-
-        palette = Quartz.CGPaletteCreateDefaultColorPalette()
-        self.assertIsInstance(palette, Quartz.CGDirectPaletteRef)
-
-        err = Quartz.CGDisplaySetPalette(Quartz.CGMainDisplayID(), palette)
-        self.assertIsInstance(err, int)
 
         # Don't actually call Quartz.CGSetDisplayTransferByByteTable, it might have
         # permanent effects.
@@ -328,12 +279,16 @@ class TestCGDirectDisplay(TestCase):
         )
         self.assertArgSizeInArg(Quartz.CGSetDisplayTransferByByteTable, 4, 1)
 
-    @min_os_level("10.6")
-    def testTypes10_6(self):
-        self.assertIsCFType(Quartz.CGDisplayModeRef)
+        mainID = Quartz.CGMainDisplayID()
+        mode = Quartz.CGDisplayCopyDisplayMode(mainID)
+        self.assertIsInstance(mode, Quartz.CGDisplayModeRef)
 
-    @min_os_level("10.6")
-    def testFunction10_6(self):
+        w = Quartz.CGDisplayModeGetPixelWidth(mode)
+        self.assertIsInstance(w, int)
+
+        h = Quartz.CGDisplayModeGetPixelHeight(mode)
+        self.assertIsInstance(h, int)
+
         mainID = Quartz.CGMainDisplayID()
 
         self.assertResultIsCFRetained(Quartz.CGDisplayCopyAllDisplayModes)

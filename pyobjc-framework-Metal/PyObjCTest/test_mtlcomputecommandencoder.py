@@ -132,9 +132,9 @@ class TestMTLComputeCommandEncoder(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLComputeCommandEncoder")
+        self.assertProtocolExists("MTLComputeCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLComputeCommandEncoderHelper.dispatchType, objc._C_NSUInteger
         )
@@ -440,12 +440,12 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             0,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             1,
-            objc._C_NSInteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(

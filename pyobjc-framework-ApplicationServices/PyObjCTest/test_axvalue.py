@@ -1,9 +1,9 @@
 import HIServices
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestAXVAlue(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(HIServices.kAXValueTypeCGPoint, 1)
         self.assertEqual(HIServices.kAXValueTypeCGSize, 2)
         self.assertEqual(HIServices.kAXValueTypeCGRect, 3)
@@ -28,6 +28,27 @@ class TestAXVAlue(TestCase):
         HIServices.AXValueGetType
 
     def test_manual_functions(self):
+        with self.subTest("invalid argcount"):
+            with self.assertRaises(TypeError):
+                HIServices.AXValueCreate()
+
+            with self.assertRaises(TypeError):
+                HIServices.AXValueGetValue()
+
+        with self.subTest("invalid argtype"):
+            with self.assertRaises(ValueError):
+                HIServices.AXValueCreate("foo", 0)
+
+            val = HIServices.AXValueCreate(HIServices.kAXValueTypeCGPoint, (1, 2))
+            with self.assertRaises(ValueError):
+                HIServices.AXValueGetValue(val, "foo", None)
+
+            with self.assertRaises(ValueError):
+                HIServices.AXValueGetValue(val, HIServices.kAXValueTypeCGPoint, 42)
+
+            with self.assertRaises(TypeError):
+                HIServices.AXValueGetValue(NoObjCClass(), "foo", 42)
+
         with self.subTest("CGPoint"):
             val = HIServices.AXValueCreate(HIServices.kAXValueTypeCGPoint, (1, 2))
             self.assertIsInstance(val, HIServices.AXValueRef)

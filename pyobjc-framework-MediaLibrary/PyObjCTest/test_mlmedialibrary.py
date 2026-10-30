@@ -1,19 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 import MediaLibrary
 
 
 class TestMLMediaLibrary(TestCase):
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertIsInstance(MediaLibrary.MLMediaLibrary, objc.objc_class)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(MediaLibrary.MLMediaSourcePhotosIdentifier, str)
-
-    @min_os_level("10.9")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MediaLibrary.MLMediaSourceiPhotoIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLMediaSourceiTunesIdentifier, str)
         self.assertIsInstance(MediaLibrary.MLMediaSourceApertureIdentifier, str)
@@ -28,13 +18,11 @@ class TestMLMediaLibrary(TestCase):
         self.assertIsInstance(
             MediaLibrary.MLMediaSourceAppDefinedFoldersIdentifier, str
         )
+        self.assertIsInstance(MediaLibrary.MLMediaSourcePhotosIdentifier, str)
 
         self.assertIsInstance(MediaLibrary.MLMediaLoadSourceTypesKey, str)
-
         self.assertIsInstance(MediaLibrary.MLMediaLoadIncludeSourcesKey, str)
-
         self.assertIsInstance(MediaLibrary.MLMediaLoadExcludeSourcesKey, str)
-
         self.assertIsInstance(MediaLibrary.MLMediaLoadFoldersKey, str)
 
         self.assertIsInstance(MediaLibrary.MLMediaLoadAppleLoops, str)

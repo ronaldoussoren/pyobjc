@@ -15,7 +15,7 @@ import sys
 
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase, expectedFailureIf
+from PyObjCTools.TestSupport import TestCase, expectedFailureIf, NoObjCClass, NotBool
 from .fnd import NSArray, NSString, NSPredicate, NSObject
 from PyObjCTest.classes import OCTestClasses
 from objc import super  # noqa: A004
@@ -27,17 +27,6 @@ if sys.version_info[:2] >= (3, 15):
     META_DICT = frozendict  # noqa: F821
 else:
     META_DICT = dict
-
-
-class NotBool:
-    def __bool__(self):
-        raise RuntimeError("not bool")
-
-
-class NoObjCClass:
-    @property
-    def __pyobjc_object__(self):
-        raise TypeError("Cannot proxy")
 
 
 deallocated = 0
@@ -67,13 +56,13 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL2:",
-        {"arguments": {2 + 0: {"sel_of_type": "i@:i"}}},
+        {"arguments": {2 + 0: META_DICT({"sel_of_type": "i@:i"})}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"methodWithSEL3:",
-        {"arguments": {2 + 0: {"sel_of_type": 42}}},
+        {"arguments": META_DICT({2 + 0: {"sel_of_type": 42}})},
     )
 
     objc.registerMetaDataForSelector(
@@ -1625,33 +1614,36 @@ def setupMetaData():
         b"callFunction:",
         {
             "arguments": {
-                2 + 0: {"callable": {"arguments": {}, "retval": {"type": "@"}}}
+                2
+                + 0: {"callable": META_DICT({"arguments": {}, "retval": {"type": "@"}})}
             }
         },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"callVectorFunction:",
-        {
-            "arguments": {
-                2
-                + 0: {
-                    "callable": {
-                        "arguments": {0: {"type": "<3f>"}},
-                        "retval": {"type": "@"},
+        META_DICT(
+            {
+                "arguments": {
+                    2
+                    + 0: {
+                        "callable": {
+                            "arguments": {0: {"type": "<3f>"}},
+                            "retval": {"type": "@"},
+                        }
                     }
                 }
             }
-        },
+        ),
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"callFunction3:",
         {
-            "arguments": {
-                2 + 0: {"callable": {"arguments": {}, "retval": {"type": "<2f>"}}}
-            }
+            "arguments": META_DICT(
+                {2 + 0: {"callable": {"arguments": {}, "retval": {"type": "<2f>"}}}}
+            )
         },
     )
 
@@ -3880,7 +3872,7 @@ class TestMisc(TestCase):
             "deref_result_pointer",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"Class", b"selector", {"arguments": {2: {key: NotBool()}}}
                     )
@@ -3891,7 +3883,7 @@ class TestMisc(TestCase):
             "c_array_delimited_by_null",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"Class", b"selector", {key: NotBool()}
                     )
@@ -3902,7 +3894,7 @@ class TestMisc(TestCase):
                     b"Class", b"selector", {"arguments": {2: {"callable": 42}}}
                 )
 
-            with self.assertRaisesRegex(RuntimeError, "not bool"):
+            with self.assertRaisesRegex(TypeError, "this is not a bool"):
                 objc.registerMetaDataForSelector(
                     b"Class",
                     b"selector",
@@ -4199,7 +4191,7 @@ class TestMisc(TestCase):
 
         fn.pyobjc_closure = "hello"
         with self.assertRaisesRegex(TypeError, "Invalid pyobjc_closure attribute"):
-            print(o.callFunction4_(fn))
+            o.callFunction4_(fn)
 
     def test_function_result(self):
         o = OC_MetaDataTest.alloc().init()
@@ -4246,6 +4238,8 @@ class TestMisc(TestCase):
     def test_cfretained(self):
         o = OC_MetaDataTest.alloc().init()
         self.assertResultIsCFRetained(o.cfretainedValue)
+        v = o.cfretainedValue()
+        self.assertIsInstance(v, objc.lookUpClass("NSError"))
         v = o.cfretainedValue()
         self.assertIsInstance(v, objc.lookUpClass("NSError"))
 
@@ -4333,7 +4327,7 @@ class TestInvalidMetadata(TestCase):
             "deref_result_pointer",
         ):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"OC_MetaDataTest",
                         b"invalid%s" % (key.encode()),
@@ -4342,7 +4336,7 @@ class TestInvalidMetadata(TestCase):
 
         for key in ("free_result", "c_array_delimited_by_null", "variadic"):
             with self.subTest(key):
-                with self.assertRaisesRegex(RuntimeError, "not bool"):
+                with self.assertRaisesRegex(TypeError, "this is not a bool"):
                     objc.registerMetaDataForSelector(
                         b"OC_MetaDataTest",
                         b"invalid%s" % (key.encode()),

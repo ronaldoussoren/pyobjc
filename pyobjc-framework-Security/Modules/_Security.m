@@ -2,37 +2,40 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
-static PyObject*
-m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
-                                  PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+/*
+ * XXX: Does this need to be a manual binding?
+ */
+static PyObject* _Nullable m_SecKeychainFindInternetPassword(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     OSStatus              retval;
     id                    keychainOrArray;
-    PyObject*             py_keychainOrArray;
     Py_ssize_t            serverName_length;
     const char*           serverName;
-    PyObject*             py_serverName;
     int                   serverName_token;
     PyObject*             serverName_buffer = NULL;
     Py_buffer             serverName_view;
     Py_ssize_t            securityDomain_length;
     const char*           securityDomain;
-    PyObject*             py_securityDomain;
     int                   securityDomain_token;
     PyObject*             securityDomain_buffer = NULL;
     Py_buffer             securityDomain_view;
     Py_ssize_t            accountName_length;
     const char*           accountName;
-    PyObject*             py_accountName;
     int                   accountName_token;
     PyObject*             accountName_buffer = NULL;
     Py_buffer             accountName_view;
     Py_ssize_t            path_length;
     const char*           path;
-    PyObject*             py_path;
     int                   path_token;
     PyObject*             path_buffer = NULL;
     Py_buffer             path_view;
@@ -40,39 +43,40 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
     SecProtocolType       protocol;
     SecAuthenticationType authenticationType;
     UInt32                password_length = 0;
-    PyObject*             py_password_length;
-    void*                 passwordData = NULL;
-    PyObject*             py_passwordData;
-    SecKeychainItemRef    itemRef = NULL;
-    PyObject*             py_itemRef;
-    const char            string = 't';
+    void*                 passwordData    = NULL;
+    SecKeychainItemRef    itemRef         = NULL;
 
-    if (!PyArg_ParseTuple(args, "OnOnOnOnOHIIOOO", &py_keychainOrArray,
-                          &serverName_length, &py_serverName, &securityDomain_length,
-                          &py_securityDomain, &accountName_length, &py_accountName,
-                          &path_length, &py_path, &port, &protocol, &authenticationType,
-                          &py_password_length, &py_passwordData, &py_itemRef)) {
+    if (PyObjC_CheckArgCount(meth, 15, 15, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_keychainOrArray, &keychainOrArray) == -1) {
+    if (PyObjC_PythonToObjC("@", args[0], &keychainOrArray) == -1) {
+        return NULL;
+    }
+
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &serverName_length) == -1) {
         return NULL;
     }
 
     serverName_token =
-        PyObjC_PythonToCArray(NO, NO, &string, py_serverName, (void**)&serverName,
+        PyObjC_PythonToCArray(NO, NO, "t", args[2], (void**)&serverName,
                               &serverName_length, &serverName_buffer, &serverName_view);
     if (serverName_token == -1) {
         return NULL;
     }
 
-    if (py_securityDomain == Py_None || py_securityDomain == PyObjC_NULL) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[3], &securityDomain_length) == -1) {
+        return NULL;
+    }
+
+    /* XXX: Is PyObjC_NULL correct here? */
+    if (args[4] == Py_None || args[4] == PyObjC_NULL) {
         securityDomain = NULL;
 
     } else {
         securityDomain_token = PyObjC_PythonToCArray(
-            NO, NO, &string, py_securityDomain, (void**)&securityDomain,
-            &securityDomain_length, &securityDomain_buffer, &securityDomain_view);
+            NO, NO, "t", args[4], (void**)&securityDomain, &securityDomain_length,
+            &securityDomain_buffer, &securityDomain_view);
         if (securityDomain_token == -1) {
             PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
@@ -80,64 +84,174 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         }
     }
 
-    if (py_accountName == Py_None || py_accountName == PyObjC_NULL) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[5], &accountName_length) == -1) {
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        return NULL;
+    }
+
+    if (args[6] == Py_None || args[6] == PyObjC_NULL) {
         accountName = NULL;
     } else {
         accountName_token = PyObjC_PythonToCArray(
-            NO, NO, &string, py_accountName, (void**)&accountName, &accountName_length,
+            NO, NO, "t", args[6], (void**)&accountName, &accountName_length,
             &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
             PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
-            if (py_securityDomain != NULL)
+            if (securityDomain != NULL) {
                 PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
-            Py_XDECREF(securityDomain_buffer);
+                Py_XDECREF(securityDomain_buffer);
+            }
             return NULL;
         }
     }
 
-    if (py_path == Py_None || py_path == PyObjC_NULL) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[7], &path_length) == -1) {
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        return NULL;
+    }
+
+    if (args[8] == Py_None || args[8] == PyObjC_NULL) {
         path = NULL;
     } else {
-        path_token = PyObjC_PythonToCArray(NO, NO, &string, py_path, (void**)&path,
+        path_token = PyObjC_PythonToCArray(NO, NO, "t", args[8], (void**)&path,
                                            &path_length, &path_buffer, &path_view);
         if (path_token == -1) {
             PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
-            if (py_securityDomain != NULL)
+            if (securityDomain != NULL) {
                 PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
-            Py_XDECREF(securityDomain_buffer);
-            PyObjC_FreeCArray(accountName_token, &accountName_view);
-            Py_XDECREF(accountName_buffer);
+                Py_XDECREF(securityDomain_buffer);
+            }
+            if (accountName != NULL) {
+                PyObjC_FreeCArray(accountName_token, &accountName_view);
+                Py_XDECREF(accountName_buffer);
+            }
             return NULL;
         }
     }
 
-    if (py_password_length != Py_None && py_password_length != PyObjC_NULL) {
-        PyErr_SetString(PyExc_TypeError, "passwordLength must be None or objc.NULL");
-        PyObjC_FreeCArray(serverName_token, (void*)serverName);
+    if (PyObjC_PythonToObjC(@encode(UInt16), args[9], &port) == -1) {
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
         Py_XDECREF(serverName_buffer);
-        if (py_securityDomain != NULL)
+        if (securityDomain != NULL) {
             PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
-        Py_XDECREF(securityDomain_buffer);
-        PyObjC_FreeCArray(accountName_token, &accountName_view);
-        Py_XDECREF(accountName_buffer);
-        PyObjC_FreeCArray(path_token, &path_view);
-        Py_XDECREF(path_buffer);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_CLEAR(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_CLEAR(path_buffer);
+        }
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(SecProtocolType), args[10], &protocol) == -1) {
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_XDECREF(path_buffer);
+        }
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(SecAuthenticationType), args[11], &authenticationType)
+        == -1) {
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_XDECREF(path_buffer);
+        }
         return NULL;
     }
 
-    if (py_passwordData != Py_None && py_passwordData != PyObjC_NULL) {
+    if (args[12] != Py_None && args[12] != PyObjC_NULL) {
+        PyErr_SetString(PyExc_TypeError, "passwordLength must be None or objc.NULL");
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_XDECREF(path_buffer);
+        }
+        return NULL;
+    }
+
+    if (args[13] != Py_None && args[13] != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordData must be None or objc.NULL");
         PyObjC_FreeCArray(serverName_token, &serverName_view);
         Py_XDECREF(serverName_buffer);
-        if (py_securityDomain != NULL)
+        if (securityDomain != NULL) {
             PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
-        Py_XDECREF(securityDomain_buffer);
-        PyObjC_FreeCArray(accountName_token, &accountName_view);
-        Py_XDECREF(accountName_buffer);
-        PyObjC_FreeCArray(path_token, &path_view);
-        Py_XDECREF(path_buffer);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_XDECREF(path_buffer);
+        }
+        return NULL;
+    }
+
+    if (args[14] != Py_None && args[14] != PyObjC_NULL) {
+        PyErr_SetString(PyExc_TypeError, "item must be None or objc.NULL");
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
+        Py_XDECREF(serverName_buffer);
+        if (securityDomain != NULL) {
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
+            Py_XDECREF(securityDomain_buffer);
+        }
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        if (path != NULL) {
+            PyObjC_FreeCArray(path_token, &path_view);
+            Py_XDECREF(path_buffer);
+        }
         return NULL;
     }
 
@@ -149,31 +263,37 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
                 keychainOrArray, serverName_length, serverName, securityDomain_length,
                 securityDomain, accountName_length, accountName, path_length, path, port,
                 protocol, authenticationType,
-                py_password_length == Py_None ? &password_length : NULL,
-                py_passwordData == Py_None ? &passwordData : NULL,
-                py_itemRef == Py_None ? &itemRef : NULL);
+                args[12] == Py_None ? &password_length : NULL,
+                args[13] == Py_None ? &passwordData : NULL,
+                args[14] == Py_None ? &itemRef : NULL);
 #pragma clang diagnostic pop
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     PyObjC_FreeCArray(serverName_token, &serverName_view);
     Py_XDECREF(serverName_buffer);
-    if (py_securityDomain != NULL)
+    if (securityDomain != NULL) {
         PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
-    Py_XDECREF(securityDomain_buffer);
-    PyObjC_FreeCArray(accountName_token, &accountName_view);
-    Py_XDECREF(accountName_buffer);
-    PyObjC_FreeCArray(path_token, &path_view);
-    Py_XDECREF(path_buffer);
-
-    if (PyErr_Occurred()) {
-        return NULL;
+        Py_XDECREF(securityDomain_buffer);
+    }
+    if (accountName != NULL) {
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
+        Py_XDECREF(accountName_buffer);
+    }
+    if (path != NULL) {
+        PyObjC_FreeCArray(path_token, &path_view);
+        Py_XDECREF(path_buffer);
     }
 
-    if (py_passwordData == Py_None) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
+    }
+
+    PyObject* py_passwordData;
+    if (args[13] == Py_None) {
         if (passwordData == NULL) {
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
@@ -184,18 +304,22 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
             (void)SecKeychainItemFreeContent(NULL, passwordData);
 #pragma clang diagnostic pop
 
-            if (py_passwordData == NULL) {
+            if (py_passwordData == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (itemRef != NULL) {
                     CFRelease(itemRef);
                 }
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
     } else {
+        py_passwordData = PyObjC_NULL;
         Py_INCREF(py_passwordData);
     }
 
-    if (py_itemRef == Py_None) {
+    PyObject* py_itemRef;
+    if (args[14] == Py_None) {
         if (itemRef == nil) {
             py_itemRef = Py_None;
             Py_INCREF(Py_None);
@@ -204,60 +328,64 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
             CFRelease(itemRef);
         }
     } else {
+        py_itemRef = PyObjC_NULL;
         Py_INCREF(py_itemRef);
     }
 
     return Py_BuildValue("iINN", retval, password_length, py_passwordData, py_itemRef);
 }
 
-static PyObject*
-m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
-                                 PyObject* args)
+static PyObject* _Nullable m_SecKeychainFindGenericPassword(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     OSStatus           retval;
     id                 keychainOrArray;
-    PyObject*          py_keychainOrArray;
     Py_ssize_t         serviceName_length;
     const char*        serviceName;
-    PyObject*          py_serviceName;
     int                serviceName_token;
     PyObject*          serviceName_buffer = NULL;
     Py_buffer          serviceName_view;
     Py_ssize_t         accountName_length;
     const char*        accountName;
-    PyObject*          py_accountName;
     int                accountName_token;
     PyObject*          accountName_buffer = NULL;
     Py_buffer          accountName_view;
     UInt32             password_length = 0;
-    PyObject*          py_password_length;
-    void*              passwordData = NULL;
-    PyObject*          py_passwordData;
-    SecKeychainItemRef itemRef = NULL;
-    PyObject*          py_itemRef;
-    const char         string = 't';
+    void*              passwordData    = NULL;
+    SecKeychainItemRef itemRef         = NULL;
 
-    if (!PyArg_ParseTuple(args, "OnOnOOOO", &py_keychainOrArray, &serviceName_length,
-                          &py_serviceName, &accountName_length, &py_accountName,
-                          &py_password_length, &py_passwordData, &py_itemRef)) {
+    if (PyObjC_CheckArgCount(meth, 8, 8, nargs) == -1) {
         return NULL;
     }
 
-    if (depythonify_python_object(py_keychainOrArray, &keychainOrArray) == -1) {
+    if (PyObjC_PythonToObjC(@encode(id), args[0], &keychainOrArray) == -1) {
         return NULL;
     }
-    serviceName_token = PyObjC_PythonToCArray(NO, NO, &string, py_serviceName,
-                                              (void**)&serviceName, &serviceName_length,
-                                              &serviceName_buffer, &serviceName_view);
+
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[1], &serviceName_length) == -1) {
+        return NULL;
+    }
+
+    serviceName_token = PyObjC_PythonToCArray(NO, NO, "t", args[2], (void**)&serviceName,
+                                              &serviceName_length, &serviceName_buffer,
+                                              &serviceName_view);
     if (serviceName_token == -1) {
+        PyObjC_FreeCArray(serviceName_token, &serviceName_view);
+        Py_XDECREF(serviceName_buffer);
         return NULL;
     }
 
-    if (py_accountName == Py_None || py_accountName == PyObjC_NULL) {
+    if (PyObjC_PythonToObjC(@encode(Py_ssize_t), args[3], &accountName_length) == -1) {
+        PyObjC_FreeCArray(serviceName_token, &serviceName_view);
+        Py_XDECREF(serviceName_buffer);
+        return NULL;
+    }
+
+    if (args[4] == Py_None || args[4] == PyObjC_NULL) {
         accountName = NULL;
     } else {
         accountName_token = PyObjC_PythonToCArray(
-            NO, NO, &string, py_accountName, (void**)&accountName, &accountName_length,
+            NO, NO, "t", args[4], (void**)&accountName, &accountName_length,
             &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
             PyObjC_FreeCArray(serviceName_token, &serviceName_view);
@@ -266,21 +394,36 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
         }
     }
 
-    if (py_password_length != Py_None && py_password_length != PyObjC_NULL) {
+    if (args[5] != Py_None && args[5] != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordLength must be None or objc.NULL");
         PyObjC_FreeCArray(serviceName_token, &serviceName_view);
         Py_XDECREF(serviceName_buffer);
-        PyObjC_FreeCArray(accountName_token, &accountName_view);
-        Py_XDECREF(accountName_buffer);
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
         return NULL;
     }
 
-    if (py_passwordData != Py_None && py_passwordData != PyObjC_NULL) {
+    if (args[6] != Py_None && args[6] != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordData must be None or objc.NULL");
         PyObjC_FreeCArray(serviceName_token, &serviceName_view);
         Py_XDECREF(serviceName_buffer);
-        PyObjC_FreeCArray(accountName_token, &accountName_view);
-        Py_XDECREF(accountName_buffer);
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
+        return NULL;
+    }
+
+    if (args[7] != Py_None && args[7] != PyObjC_NULL) {
+        PyErr_SetString(PyExc_TypeError, "item must be None or objc.NULL");
+        PyObjC_FreeCArray(serviceName_token, &serviceName_view);
+        Py_XDECREF(serviceName_buffer);
+        if (accountName != NULL) {
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
+            Py_XDECREF(accountName_buffer);
+        }
         return NULL;
     }
 
@@ -291,26 +434,35 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
 
             retval = SecKeychainFindGenericPassword(
                 keychainOrArray, serviceName_length, serviceName, accountName_length,
-                accountName, py_password_length == Py_None ? &password_length : NULL,
-                py_passwordData == Py_None ? &passwordData : NULL,
-                py_itemRef == Py_None ? &itemRef : NULL);
+                accountName, args[5] == Py_None ? &password_length : NULL,
+                args[6] == Py_None ? &passwordData : NULL,
+                args[7] == Py_None ? &itemRef : NULL);
 
 #pragma clang diagnostic pop
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     PyObjC_FreeCArray(serviceName_token, &serviceName_view);
     Py_XDECREF(serviceName_buffer);
-    PyObjC_FreeCArray(accountName_token, &accountName_view);
-    Py_XDECREF(accountName_buffer);
-
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (accountName != NULL) {
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
+        Py_XDECREF(accountName_buffer);
     }
 
-    if (py_passwordData == Py_None) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+                            // LCOV_EXCL_START
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        (void)SecKeychainItemFreeContent(NULL, passwordData);
+#pragma clang diagnostic pop
+        return NULL;
+        // LCOV_EXCL_STOP
+    }
+
+    PyObject* py_passwordData;
+    if (args[6] == Py_None) {
         if (passwordData == NULL) {
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
@@ -321,18 +473,30 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
             (void)SecKeychainItemFreeContent(NULL, passwordData);
 #pragma clang diagnostic pop
 
-            if (py_passwordData == NULL) {
+            if (py_passwordData == NULL) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 if (itemRef != NULL) {
                     CFRelease(itemRef);
                 }
                 return NULL;
+                // LCOV_EXCL_STOP
             }
         }
     } else {
+#ifdef USE_STATIC_ANALYZER
+        /* passwordData is NULL, block is only present to silence the
+         * static analyzer
+         */
+        (void)SecKeychainItemFreeContent(NULL, passwordData);
+#else
+        assert(passwordData == NULL);
+#endif
+        py_passwordData = PyObjC_NULL;
         Py_INCREF(py_passwordData);
     }
 
-    if (py_itemRef == Py_None) {
+    PyObject* py_itemRef;
+    if (args[7] == Py_None) {
         if (itemRef == nil) {
             py_itemRef = Py_None;
             Py_INCREF(Py_None);
@@ -341,6 +505,7 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
             CFRelease(itemRef);
         }
     } else {
+        py_itemRef = PyObjC_NULL;
         Py_INCREF(py_itemRef);
     }
 
@@ -363,15 +528,74 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         }
         itemset->count = PyTuple_GET_SIZE(seq);
         itemset->items = PyMem_Malloc(sizeof(AuthorizationItem) * PyTuple_GET_SIZE(seq));
-        if (itemset->items == NULL) {
+        if (itemset->items == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             return 0;
+            // LCOV_EXCL_STOP
         }
 
         for (i = 0; i < PyTuple_GET_SIZE(seq); i++) {
-            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PyTuple_GET_ITEM(seq, i), itemset->items + i)
-                < 0) {
+            PyObject* cur_seq = PySequence_Tuple(PyTuple_GET_ITEM(seq, i));
+            if (cur_seq == NULL) {
+                PyErr_Format(PyExc_TypeError, "items[%ld] is not a sequence", (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+            if (PyTuple_GET_SIZE(cur_seq) != 4) {
+                PyErr_Format(PyExc_TypeError, "items[%ld] is not a sequence of 4 items",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            if (!PyBytes_Check(PyTuple_GET_ITEM(cur_seq, 0))) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].name is not a byte string",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            itemset->items[i].name = PyBytes_AsString(PyTuple_GET_ITEM(cur_seq, 0));
+
+            if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(cur_seq, 1),
+                                    &(itemset->items[i].valueLength))
+                == -1) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].valueLength is not an integer",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            if (PyTuple_GET_ITEM(cur_seq, 2) == Py_None) {
+                if (itemset->items[i].valueLength != 0) {
+                    PyErr_Format(PyExc_TypeError,
+                                 "items[%ld].value is None, valueLength != 0", (long)i);
+                    PyMem_Free(itemset->items);
+                    return 0;
+                }
+
+                itemset->items[i].value = NULL;
+
+            } else {
+                if (!PyBytes_Check(PyTuple_GET_ITEM(cur_seq, 2))
+                    || PyBytes_Size(PyTuple_GET_ITEM(cur_seq, 2))
+                           != (Py_ssize_t)itemset->items[i].valueLength) {
+                    PyErr_Format(PyExc_TypeError,
+                                 "items[%ld].value is not a byte string of length %ld",
+                                 (long)i, (long)(itemset->items[i].valueLength));
+                    PyMem_Free(itemset->items);
+                    return 0;
+                }
+
+                itemset->items[i].value = PyBytes_AsString(PyTuple_GET_ITEM(cur_seq, 2));
+            }
+
+            if (PyObjC_PythonToObjC(@encode(UInt32), PyTuple_GET_ITEM(cur_seq, 3),
+                                    &(itemset->items[i].flags))
+                == -1) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].flags is not an integer",
+                             (long)i);
                 PyMem_Free(itemset->items);
                 return 0;
             }
@@ -380,64 +604,123 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
     return 1;
 }
 
-static PyObject*
-build_itemset(AuthorizationItemSet* itemset)
+static void
+free_itemset(AuthorizationItemSet* itemset)
 {
-    PyObject* result;
-
-    if (itemset == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-
-    } else {
-        UInt32 i;
-        result = PyTuple_New(itemset->count);
-        if (result == NULL) {
-            return NULL;
-        }
-
-        for (i = 0; i < itemset->count; i++) {
-            PyObject* t =
-                PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", itemset->items + i);
-            if (t == NULL) {
-                Py_DECREF(result);
-                return NULL;
-            }
-            PyTuple_SetItem(result, i, t);
-        }
-    }
-    return result;
+    PyMem_Free(itemset->items);
 }
 
-static PyObject*
-m_AuthorizationCreate(PyObject* module __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
+{
+    PyObject* result = NULL;
+    PyObject* t      = NULL;
+    PyObject* o      = NULL;
+
+    assert(itemset != NULL);
+
+    UInt32 i;
+    result = PyTuple_New(itemset->count);
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
+
+    for (i = 0; i < itemset->count; i++) {
+        Py_ssize_t         packed = -1;
+        AuthorizationItem* item   = itemset->items + i;
+
+        assert(item != NULL);
+
+        t = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}",
+                                          sizeof("{_AuthorizationItem=^cL^vI}") - 1, NULL,
+                                          &packed);
+        if (t == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        o = PyBytes_FromString(item->name);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 0, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        o = PyLong_FromUnsignedLong(item->valueLength);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 1, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        if (item->value == NULL) {
+            o = Py_None;
+            Py_INCREF(Py_None);
+        } else {
+            o = PyBytes_FromStringAndSize(item->value, item->valueLength);
+            if (o == NULL)  // LCOV_BR_EXCL_LINE
+                goto error; // LCOV_EXCL_LINE
+        }
+
+        if (PySequence_SetItem(t, 2, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        o = PyLong_FromUnsignedLong(item->flags);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 3, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        PyTuple_SET_ITEM(result, i, t);
+    }
+    return result;
+
+error:
+    // LCOV_EXCL_START
+    Py_CLEAR(result);
+    Py_CLEAR(t);
+    Py_CLEAR(o);
+    return NULL;
+    // LCOV_EXCL_STOP
+}
+
+static PyObject* _Nullable m_AuthorizationCreate(PyObject* meth,
+                                                 PyObject* _Nonnull const* _Nonnull args,
+                                                 size_t nargs)
 {
     OSStatus                 retval;
     AuthorizationRights      rights;
-    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject*                py_environment;
     AuthorizationFlags       flags;
     AuthorizationRef         authorization = NULL;
-    PyObject*                py_authorization;
 
     rights.items = environment.items = NULL;
 
-    if (!PyArg_ParseTuple(args, "OOIO", &py_rights, &py_environment, &flags,
-                          &py_authorization)) {
+    if (PyObjC_CheckArgCount(meth, 4, 4, nargs) == -1) {
         return NULL;
     }
 
-    if (!parse_itemset(py_rights, &rights)) {
+    if (!parse_itemset(args[0], &rights)) {
         return NULL;
     }
 
-    if (!parse_itemset(py_environment, &environment)) {
+    if (!parse_itemset(args[1], &environment)) {
         PyMem_Free(rights.items);
         return NULL;
     }
 
-    if (py_authorization != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationFlags), args[2], &flags) == -1) {
+        PyMem_Free(rights.items);
+        PyMem_Free(environment.items);
+        return NULL;
+    }
+
+    if (args[3] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "authorization must be None");
         PyMem_Free(rights.items);
         PyMem_Free(environment.items);
@@ -446,58 +729,53 @@ m_AuthorizationCreate(PyObject* module __attribute__((__unused__)), PyObject* ar
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            retval = AuthorizationCreate(py_rights == Py_None ? NULL : &rights,
-                                         py_environment == Py_None ? NULL : &environment,
-                                         flags, &authorization);
+            retval = AuthorizationCreate(args[0] == Py_None ? NULL : &rights,
+                                         args[1] == Py_None ? NULL : &environment, flags,
+                                         &authorization);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    PyMem_Free(rights.items);
-    PyMem_Free(environment.items);
+    free_itemset(&rights);
+    free_itemset(&environment);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     return Py_BuildValue("iN", retval,
                          PyObjC_ObjCToPython(@encode(AuthorizationRef), &authorization));
 }
 
-static PyObject*
-m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable m_AuthorizationCopyInfo(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     OSStatus              retval;
     AuthorizationRef      authorization;
-    PyObject*             py_authorization;
     char*                 tag;
-    PyObject*             py_tag;
     AuthorizationItemSet* info = NULL;
-    PyObject*             py_info;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_authorization, &py_tag, &py_info)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), args[0], &authorization) == -1) {
         return NULL;
     }
 
-    if (py_tag == Py_None) {
+    if (args[1] == Py_None) {
         tag = NULL;
 
-    } else if (PyBytes_Check(py_tag)) {
-        tag = PyBytes_AsString(py_tag);
+    } else if (PyBytes_Check(args[1])) {
+        tag = PyBytes_AsString(args[1]);
 
     } else {
         PyErr_SetString(PyExc_ValueError, "tag must be byte string or None");
         return NULL;
     }
 
-    if (py_info != Py_None) {
+    if (args[2] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "info must be None");
         return NULL;
     }
@@ -506,16 +784,18 @@ m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* 
         @try {
             retval = AuthorizationCopyInfo(authorization, tag, &info);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    py_info = build_itemset(info);
+    if (info == NULL)   // LCOV_BR_EXCL_LINE
+        Py_RETURN_NONE; // LCOV_EXCL_LINE
+
+    PyObject* py_info = build_itemset(info);
     if (info != NULL) {
         AuthorizationFreeItemSet(info);
     }
@@ -523,38 +803,43 @@ m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* 
     return Py_BuildValue("iN", retval, py_info);
 }
 
-static PyObject*
-m_AuthorizationCopyRights(PyObject* module __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable m_AuthorizationCopyRights(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     OSStatus                 retval;
     AuthorizationRef         authorization;
-    PyObject*                py_authorization;
     AuthorizationRights      rights;
-    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject*                py_environment;
     AuthorizationFlags       flags;
     AuthorizationRights*     authorizedRights = NULL;
-    PyObject*                py_authorizedRights;
 
-    if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment,
-                          &flags, &py_authorizedRights)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), args[0], &authorization) == -1) {
         return NULL;
     }
 
-    if (!parse_itemset(py_rights, &rights)) {
+    if (args[1] == Py_None) {
+        PyErr_SetString(PyExc_ValueError, "rights cannot be None");
         return NULL;
     }
-    if (!parse_itemset(py_environment, &environment)) {
+    if (!parse_itemset(args[1], &rights)) {
+        return NULL;
+    }
+    assert(rights.items != NULL);
+    if (!parse_itemset(args[2], &environment)) {
         PyMem_Free(rights.items);
         return NULL;
     }
-    if (py_authorizedRights != PyObjC_NULL && py_authorizedRights != Py_None) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationFlags), args[3], &flags) == -1) {
+        PyMem_Free(rights.items);
+        PyMem_Free(environment.items);
+        return NULL;
+    }
+
+    if (args[4] != PyObjC_NULL && args[4] != Py_None) {
         PyMem_Free(rights.items);
         PyMem_Free(environment.items);
         PyErr_SetString(PyExc_ValueError, "authorizedRights must be None or objc.NULL");
@@ -564,68 +849,86 @@ m_AuthorizationCopyRights(PyObject* module __attribute__((__unused__)), PyObject
     Py_BEGIN_ALLOW_THREADS
         @try {
             retval = AuthorizationCopyRights(
-                authorization, py_rights == Py_None ? NULL : &rights,
-                py_environment == Py_None ? NULL : &environment, flags,
-                py_authorizedRights == PyObjC_NULL ? NULL : &authorizedRights);
+                authorization, &rights, args[1] == Py_None ? NULL : &environment, flags,
+                args[4] == PyObjC_NULL ? NULL : &authorizedRights);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    PyMem_Free(rights.items);
-    PyMem_Free(environment.items);
+    free_itemset(&rights);
+    free_itemset(&environment);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (py_authorizedRights == PyObjC_NULL) {
+    PyObject* py_authorizedRights;
+    if (args[4] == PyObjC_NULL) {
+        py_authorizedRights = PyObjC_NULL;
         Py_INCREF(py_authorizedRights);
 
     } else {
-        py_authorizedRights = build_itemset(authorizedRights);
-        if (authorizedRights != NULL) {
+        if (authorizedRights != NULL) { // LCOV_BR_EXCL_LINE
+            py_authorizedRights = build_itemset(authorizedRights);
             AuthorizationFreeItemSet(authorizedRights);
+        } else {
+            /* I don't know how to trigger this path */
+            // LCOV_EXCL_START
+            py_authorizedRights = Py_None;
+            Py_INCREF(Py_None);
+            // LCOV_EXCL_STOP
         }
     }
 
     return Py_BuildValue("iN", retval, py_authorizedRights);
 }
 
-static PyObject*
-m_AuthorizationCopyRightsAsync(PyObject* module __attribute__((__unused__)),
-                               PyObject* args)
+static PyObject* _Nullable m_AuthorizationCopyRightsAsync(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     AuthorizationRef         authorization;
-    PyObject*                py_authorization;
     AuthorizationRights      rights;
-    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject*                py_environment;
     AuthorizationFlags       flags;
     PyObject*                py_callback;
 
-    if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment,
-                          &flags, &py_callback)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), args[0], &authorization) == -1) {
         return NULL;
     }
 
-    if (!parse_itemset(py_rights, &rights)) {
+    if (args[1] == Py_None) {
+        PyErr_SetString(PyExc_ValueError, "rights cannot be None");
         return NULL;
     }
-    if (!parse_itemset(py_environment, &environment)) {
+    if (!parse_itemset(args[1], &rights)) {
+        return NULL;
+    }
+    assert(rights.items != NULL);
+    if (!parse_itemset(args[2], &environment)) {
         PyMem_Free(rights.items);
         return NULL;
     }
+    if (PyObjC_PythonToObjC(@encode(AuthorizationFlags), args[3], &flags) == -1) {
+        PyMem_Free(rights.items);
+        if (args[2] != Py_None) {
+            assert(environment.items != NULL);
+            PyMem_Free(environment.items);
+        }
+        return NULL;
+    }
+
+    py_callback = args[4];
     if (!PyCallable_Check(py_callback)) {
         PyMem_Free(rights.items);
-        PyMem_Free(environment.items);
+        if (args[2] != Py_None) {
+            assert(environment.items != NULL);
+            PyMem_Free(environment.items);
+        }
         PyErr_SetString(PyExc_ValueError, "callback must be callable");
         return NULL;
     }
@@ -634,8 +937,7 @@ m_AuthorizationCopyRightsAsync(PyObject* module __attribute__((__unused__)),
     Py_BEGIN_ALLOW_THREADS
         @try {
             AuthorizationCopyRightsAsync(
-                authorization, py_rights == Py_None ? NULL : &rights,
-                py_environment == Py_None ? NULL : &environment, flags,
+                authorization, &rights, args[2] == Py_None ? NULL : &environment, flags,
                 ^(OSStatus err, AuthorizationRights* authorizedRights) {
                   PyObject* py_authorizedRights;
                   PyObject* py_result;
@@ -655,82 +957,101 @@ m_AuthorizationCopyRightsAsync(PyObject* module __attribute__((__unused__)),
                       py_result = PyObject_CallFunction(py_callback, "iO", err,
                                                         py_authorizedRights);
                       if (py_result == NULL) {
-                          PyObjC_GIL_FORWARD_EXC();
+                        /* Don't raise as ObjC exception, will cause hard crash */
+#if PY_VERSION_HEX >= 0x030d00a0
+                          PyErr_FormatUnraisable(
+                              "Exception ignored in AuthorizationCopyRightsAsync "
+                              "callback: %R",
+                              py_callback);
+#else
+                          PyErr_WriteUnraisable(py_callback);
+#endif
                       } else if (py_result != Py_None) {
                           Py_DECREF(py_result);
                           PyErr_SetString(PyExc_TypeError,
                                           "callbackBlock returned value");
-                          PyObjC_GIL_FORWARD_EXC();
+                        /* Don't raise as ObjC exception, will cause hard crash */
+#if PY_VERSION_HEX >= 0x030d00a0
+                          PyErr_FormatUnraisable(
+                              "Exception ignored in AuthorizationCopyRightsAsync "
+                              "callback: %R",
+                              py_callback);
+#else
+                          PyErr_WriteUnraisable(py_callback);
+#endif
                       } else {
                           Py_DECREF(py_result);
                       }
 
                       Py_DECREF(py_callback);
                       PyMem_Free(rights.items);
-                      PyMem_Free(environment.items);
-
+                      if (args[2] != Py_None) {
+                          assert(environment.items != NULL);
+                          PyMem_Free(environment.items);
+                      }
                   PyObjC_END_WITH_GIL
                 });
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(py_callback);
         return NULL;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(Py_None);
     return Py_None;
 }
 
-static PyObject*
-m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)),
-                                     PyObject* args)
+static PyObject* _Nullable m_AuthorizationExecuteWithPrivileges(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
     OSStatus           retval;
     AuthorizationRef   authorization;
-    PyObject*          py_authorization;
     const char*        pathToTool;
     AuthorizationFlags options;
-    PyObject*          py_pathToTool;
     char**             arguments;
-    PyObject*          py_arguments;
     FILE*              communicationsPipe = NULL;
-    PyObject*          py_communicationsPipe;
     PyObject*          seq;
     Py_ssize_t         i;
 
-    if (!PyArg_ParseTuple(args, "OOIOO", &py_authorization, &py_pathToTool, &options,
-                          &py_arguments, &py_communicationsPipe)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), args[0], &authorization) == -1) {
         return NULL;
     }
 
-    if (!PyBytes_Check(py_pathToTool)) {
+    if (!PyBytes_Check(args[1])) {
         PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
         return NULL;
     }
 
-    pathToTool = PyBytes_AsString(py_pathToTool);
+    pathToTool = PyBytes_AsString(args[1]);
 
-    seq = PySequence_Tuple(py_arguments);
+    if (PyObjC_PythonToObjC(@encode(AuthorizationFlags), args[2], &options) == -1) {
+        return NULL;
+    }
+
+    seq = PySequence_Tuple(args[3]);
     if (seq == NULL) {
         return NULL;
     }
 
     arguments = PyMem_Malloc(sizeof(char*) * PyTuple_GET_SIZE(seq) + 1);
-    if (arguments == NULL) {
+    if (arguments == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (py_communicationsPipe != Py_None && py_communicationsPipe != PyObjC_NULL) {
+    if (args[4] != Py_None && args[4] != PyObjC_NULL) {
         PyErr_SetString(PyExc_ValueError, "communicationsPipe must be None or objc.NULL");
         return NULL;
     }
@@ -758,22 +1079,21 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
 
             retval = AuthorizationExecuteWithPrivileges(
                 authorization, pathToTool, options, arguments,
-                py_communicationsPipe == PyObjC_NULL ? NULL : &communicationsPipe);
+                args[4] == PyObjC_NULL ? NULL : &communicationsPipe);
 
 #pragma clang diagnostic pop
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     PyMem_Free(arguments);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (py_communicationsPipe == PyObjC_NULL) {
+    if (args[4] == PyObjC_NULL) {
         return Py_BuildValue("iO", retval, Py_None);
     } else {
         return Py_BuildValue("iN", retval,
@@ -782,29 +1102,47 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
 }
 
 static PyMethodDef mod_methods[] = {
-    {"SecKeychainFindInternetPassword", m_SecKeychainFindInternetPassword, METH_VARARGS,
-     "SecKeychainFindInternetPassword()"},
-    {"SecKeychainFindGenericPassword", m_SecKeychainFindGenericPassword, METH_VARARGS,
-     "SecKeychainFindGenericPassword()"},
-    {"AuthorizationCreate", m_AuthorizationCreate, METH_VARARGS, "AuthorizationCreate()"},
-    {"AuthorizationCopyInfo", m_AuthorizationCopyInfo, METH_VARARGS,
-     "AuthorizationCopyInfo()"},
-    {"AuthorizationCopyRights", m_AuthorizationCopyRights, METH_VARARGS,
-     "AuthorizationCopyRights()"},
-    {"AuthorizationCopyRightsAsync", m_AuthorizationCopyRightsAsync, METH_VARARGS,
-     "AuthorizationCopyRightsAsync()"},
-    {"AuthorizationExecuteWithPrivileges", m_AuthorizationExecuteWithPrivileges,
-     METH_VARARGS, "AuthorizationExecuteWithPrivileges()"},
-
     {0, 0, 0, 0} /* sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
+    if (PyObjCRegister_FunctionCaller(SecKeychainFindInternetPassword,
+                                      m_SecKeychainFindInternetPassword)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(SecKeychainFindGenericPassword,
+                                      m_SecKeychainFindGenericPassword)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(AuthorizationCreate, m_AuthorizationCreate)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(AuthorizationCopyInfo, m_AuthorizationCopyInfo)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(AuthorizationCopyRights, m_AuthorizationCopyRights)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(AuthorizationCopyRightsAsync,
+                                      m_AuthorizationCopyRightsAsync)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(AuthorizationExecuteWithPrivileges,
+                                      m_AuthorizationExecuteWithPrivileges)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
     return 0;
 }
 
@@ -843,10 +1181,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__Security(void);
+PyObject* _Nullable PyInit__Security(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__Security(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

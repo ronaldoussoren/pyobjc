@@ -40,7 +40,6 @@ from .testbndl import (
     pyObjCPy,
 )
 
-
 objc.registerMetaDataForSelector(
     b"OC_ArrayTest",
     b"uniarrayOf12",
@@ -465,6 +464,8 @@ class TestCArray(TestCase):
         code_compatible_codes = "bBuhHiIlLqQfd"
         if sys.version_info[:2] >= (3, 13):
             code_compatible_codes += "w"
+        if sys.version_info[:2] >= (3, 16):
+            code_compatible_codes = code_compatible_codes.replace("u", "")
 
         # Complex floats and _Float16 are not supported by PyObjC
         # XXX: Complex could be supported though
@@ -523,13 +524,13 @@ class TestCArray(TestCase):
             carrayMaker(objc._C_CHAR_AS_INT, object(), 5, True)
 
     def testStringArrays(self):
-        with warnings.catch_warnings():
-            # XXX: To be removed in Python 3.16
-            warnings.filterwarnings("ignore", category=DeprecationWarning)
-            a = array.array("u", "hello")
+        if sys.version_info[:2] < (3, 16):
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=DeprecationWarning)
+                a = array.array("u", "hello")
 
-        res = carrayMaker(objc._C_INT, a, None)
-        self.assertEqual(res, tuple(map(ord, "hello")))
+            res = carrayMaker(objc._C_INT, a, None)
+            self.assertEqual(res, tuple(map(ord, "hello")))
 
         if sys.version_info[:2] >= (3, 13):
             a = array.array("w", "world")

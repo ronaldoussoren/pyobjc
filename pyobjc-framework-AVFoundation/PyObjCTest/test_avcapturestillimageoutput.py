@@ -3,24 +3,25 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureStillImageOutput(TestCase):
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_,  # noqa: B950
             1,
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage
+        )
+
     @min_os_level("12.0")
-    def testMethodsTundra10_7(self):
+    def test_methods_tundra10_7(self):
         self.assertArgIsBlock(
             AVFoundation.AVCaptureStillImageOutput_Tundra.captureStillImageAsynchronouslyFromConnection_completionHandler_,  # noqa: B950
             1,
             b"v^{opaqueCMSampleBuffer=}@",
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage
+            AVFoundation.AVCaptureStillImageOutput_Tundra.isCapturingStillImage
         )

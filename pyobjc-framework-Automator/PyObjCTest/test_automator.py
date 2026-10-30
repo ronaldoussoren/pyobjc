@@ -4,14 +4,14 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestAutomator(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(Automator, "AMAction")
         self.assertIsInstance(Automator.AMAction, objc.objc_class)
 
         self.assertHasAttr(Automator, "AMAppleScriptAction")
         self.assertIsInstance(Automator.AMAppleScriptAction, objc.objc_class)
 
-    def testInformalProtocols(self):
+    def test_informal_protocolsProtocols(self):
         self.assertNotHasAttr(Automator, "protocols")
 
 

@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SyncServices
 import objc
 
 
 class TestISyncRecordSnapshot(TestCase):
-    @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             SyncServices.ISyncRecordSnapshot.recordIdentifierForReference_isModified_,
             1,

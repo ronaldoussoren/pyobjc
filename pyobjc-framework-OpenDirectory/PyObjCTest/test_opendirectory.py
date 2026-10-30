@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestOpenDirectory(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(OpenDirectory.ODFrameworkErrorDomain, str)
 
-    def testProtocols(self):
-        self.assertProtocolExists("ODQueryDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("ODQueryDelegate", OpenDirectory)
 
-    def testIntegration(self):
+    def test_integration(self):
         import CFOpenDirectory
 
         for nm in dir(CFOpenDirectory):

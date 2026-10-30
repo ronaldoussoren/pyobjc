@@ -4,4 +4,4 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestSKRequest(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SKRequestDelegate")
+        self.assertProtocolExists("SKRequestDelegate", StoreKit)

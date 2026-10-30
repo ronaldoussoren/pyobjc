@@ -42,28 +42,26 @@ class TestNSRulerViewHelper(AppKit.NSView):
 
 
 class TestNSRulerView(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSRulerViewUnitName, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSRulerOrientation)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSHorizontalRuler, 0)
         self.assertEqual(AppKit.NSVerticalRuler, 1)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSRulerViewUnitName, str)
+
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSRulerViewUnitInches, str)
         self.assertIsInstance(AppKit.NSRulerViewUnitCentimeters, str)
         self.assertIsInstance(AppKit.NSRulerViewUnitPoints, str)
         self.assertIsInstance(AppKit.NSRulerViewUnitPicas, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRulerView.trackMarker_withMouseEvent_)
         self.assertResultIsBOOL(AppKit.NSRulerView.isFlipped)
 
-    def testProtocols(self):
+    def test_protocols(self):
         self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldMoveMarker_)
 
         self.assertResultHasType(

@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern PyObject* PyObjCIMP_Type;
 
-#define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)PyObjCIMP_Type)
+#define PyObjCIMP_Check(obj) Py_IS_TYPE((obj), (PyTypeObject*)PyObjCIMP_Type)
 
 extern _Nullable IMP PyObjCIMP_GetIMP(PyObject* self) __attribute__((warn_unused_result));
 extern PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self)

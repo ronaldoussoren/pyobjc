@@ -12,42 +12,21 @@ class TestNSImageHelper(AppKit.NSObject):
 
 
 class TestNSImage(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSImageCacheMode)
+        self.assertEqual(AppKit.NSImageCacheDefault, 0)
+        self.assertEqual(AppKit.NSImageCacheAlways, 1)
+        self.assertEqual(AppKit.NSImageCacheBySize, 2)
+        self.assertEqual(AppKit.NSImageCacheNever, 3)
+
         self.assertIsEnumType(AppKit.NSImageLoadStatus)
-        self.assertIsEnumType(AppKit.NSImageResizingMode)
-        self.assertIsEnumType(AppKit.NSImageSymbolScale)
-
-    def test_compositePoint(self):
-        # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
-        ws = AppKit.NSWorkspace.sharedWorkspace()
-        txtIcon = ws.iconForFileType_("txt")
-        txtIcon.setSize_((16, 16))
-        htmlIcon = ws.iconForFileType_("html")
-        htmlIcon.setSize_((16, 16))
-
-        comboIcon = AppKit.NSImage.alloc().initWithSize_((100, 100))
-        comboIcon.lockFocus()
-        txtIcon.compositeToPoint_fromRect_operation_(
-            (0, 0), ((0, 0), (16, 16)), AppKit.NSCompositeCopy
-        )
-        htmlIcon.compositeToPoint_fromRect_operation_(
-            (8, 0), ((8, 0), (8, 16)), AppKit.NSCompositeCopy
-        )
-        comboIcon.unlockFocus()
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSImageLoadStatusCompleted, 0)
         self.assertEqual(AppKit.NSImageLoadStatusCancelled, 1)
         self.assertEqual(AppKit.NSImageLoadStatusInvalidData, 2)
         self.assertEqual(AppKit.NSImageLoadStatusUnexpectedEOF, 3)
         self.assertEqual(AppKit.NSImageLoadStatusReadError, 4)
 
-        self.assertEqual(AppKit.NSImageCacheDefault, 0)
-        self.assertEqual(AppKit.NSImageCacheAlways, 1)
-        self.assertEqual(AppKit.NSImageCacheBySize, 2)
-        self.assertEqual(AppKit.NSImageCacheNever, 3)
-
+        self.assertIsEnumType(AppKit.NSImageResizingMode)
         if objc.arch == "x86_64":
             self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
             self.assertEqual(AppKit.NSImageResizingModeTile, 1)
@@ -55,6 +34,7 @@ class TestNSImage(TestCase):
             self.assertEqual(AppKit.NSImageResizingModeTile, 0)
             self.assertEqual(AppKit.NSImageResizingModeStretch, 1)
 
+        self.assertIsEnumType(AppKit.NSImageSymbolScale)
         self.assertEqual(AppKit.NSImageSymbolScaleSmall, 1)
         self.assertEqual(AppKit.NSImageSymbolScaleMedium, 2)
         self.assertEqual(AppKit.NSImageSymbolScaleLarge, 3)
@@ -69,8 +49,7 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageSymbolColorRenderingModeFlat, 1)
         self.assertEqual(AppKit.NSImageSymbolColorRenderingModeGradient, 2)
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameBluetoothTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameIChatTheaterTemplate, str)
@@ -116,102 +95,6 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameUserGroup, str)
         self.assertIsInstance(AppKit.NSImageNameEveryone, str)
 
-    def testMethods(self):
-        self.assertResultIsBOOL(AppKit.NSImage.setName_)
-        self.assertArgIsBOOL(AppKit.NSImage.setScalesWhenResized_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.scalesWhenResized)
-        self.assertArgIsBOOL(AppKit.NSImage.setDataRetained_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.isDataRetained)
-        self.assertArgIsBOOL(AppKit.NSImage.setCachedSeparately_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.isCachedSeparately)
-        self.assertArgIsBOOL(AppKit.NSImage.setCacheDepthMatchesImageDepth_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.cacheDepthMatchesImageDepth)
-        self.assertArgIsBOOL(AppKit.NSImage.setUsesEPSOnResolutionMismatch_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.usesEPSOnResolutionMismatch)
-        self.assertArgIsBOOL(AppKit.NSImage.setPrefersColorMatch_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.prefersColorMatch)
-        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnMultipleResolution_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.matchesOnMultipleResolution)
-        self.assertResultIsBOOL(AppKit.NSImage.drawRepresentation_inRect_)
-        self.assertResultIsBOOL(AppKit.NSImage.isValid)
-        self.assertResultIsBOOL(AppKit.NSImage.canInitWithPasteboard_)
-        self.assertResultIsBOOL(AppKit.NSImage.isFlipped)
-        self.assertArgIsBOOL(AppKit.NSImage.setFlipped_, 0)
-        self.assertResultIsBOOL(AppKit.NSImage.isTemplate)
-        self.assertArgIsBOOL(AppKit.NSImage.setTemplate_, 0)
-
-    def testProtocols(self):
-        self.assertArgHasType(
-            TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
-            2,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSImageHelper.image_didLoadRepresentation_withStatus_,
-            2,
-            objc._C_NSUInteger,
-        )
-
-    @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSImageDelegate")
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
-        self.assertArgHasType(
-            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
-            0,
-            AppKit.NSRect.__typestr__,
-        )
-        self.assertArgIsBOOL(
-            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
-            4,
-        )
-        self.assertArgIsBOOL(AppKit.NSImage.lockFocusFlipped_, 0)
-        self.assertArgHasType(
-            AppKit.NSImage.initWithCGImage_size_, 1, AppKit.NSSize.__typestr__
-        )
-        self.assertArgHasType(
-            AppKit.NSImage.CGImageForProposedRect_context_hints_,
-            0,
-            b"o^" + AppKit.NSRect.__typestr__,
-        )
-        self.assertArgHasType(
-            AppKit.NSImage.bestRepresentationForRect_context_hints_,
-            0,
-            AppKit.NSRect.__typestr__,
-        )
-
-        self.assertResultIsBOOL(
-            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_
-        )
-        self.assertArgHasType(
-            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
-            0,
-            AppKit.NSRect.__typestr__,
-        )
-        self.assertArgHasType(
-            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
-            1,
-            AppKit.NSRect.__typestr__,
-        )
-
-    @min_os_level("10.7")
-    def testMethods10_7(self):
-        self.assertResultIsBOOL(AppKit.NSImage.matchesOnlyOnBestFittingAxis)
-        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
-
-    @min_os_level("10.8")
-    def testMethods10_8(self):
-        self.assertArgIsBOOL(AppKit.NSImage.imageWithSize_flipped_drawingHandler_, 1)
-        self.assertArgIsBlock(
-            AppKit.NSImage.imageWithSize_flipped_drawingHandler_,
-            2,
-            objc._C_NSBOOL + AppKit.NSRect.__typestr__,
-        )
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
         self.assertIsInstance(AppKit.NSImageHintCTM, str)
         self.assertIsInstance(AppKit.NSImageHintInterpolation, str)
         self.assertIsInstance(AppKit.NSImageNameFolder, str)
@@ -230,12 +113,10 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameStatusUnavailable, str)
         self.assertIsInstance(AppKit.NSImageNameStatusNone, str)
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertIsInstance(AppKit.NSImageNameShareTemplate, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSImageHintUserInterfaceLayoutDirection, str)
         self.assertIsInstance(AppKit.NSImageNameGoForwardTemplate, str)
         self.assertIsInstance(AppKit.NSImageNameGoBackTemplate, str)
@@ -326,5 +207,113 @@ class TestNSImage(TestCase):
         self.assertIsInstance(AppKit.NSImageNameTouchBarVolumeUpTemplate, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AppKit.NSImageNameTouchBarRemoveTemplate, str)
+
+    def test_methods(self):
+        self.assertResultIsBOOL(AppKit.NSImage.setName_)
+        self.assertArgIsBOOL(AppKit.NSImage.setScalesWhenResized_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.scalesWhenResized)
+        self.assertArgIsBOOL(AppKit.NSImage.setDataRetained_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isDataRetained)
+        self.assertArgIsBOOL(AppKit.NSImage.setCachedSeparately_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isCachedSeparately)
+        self.assertArgIsBOOL(AppKit.NSImage.setCacheDepthMatchesImageDepth_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.cacheDepthMatchesImageDepth)
+        self.assertArgIsBOOL(AppKit.NSImage.setUsesEPSOnResolutionMismatch_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.usesEPSOnResolutionMismatch)
+        self.assertArgIsBOOL(AppKit.NSImage.setPrefersColorMatch_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.prefersColorMatch)
+        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnMultipleResolution_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.matchesOnMultipleResolution)
+        self.assertResultIsBOOL(AppKit.NSImage.drawRepresentation_inRect_)
+        self.assertResultIsBOOL(AppKit.NSImage.isValid)
+        self.assertResultIsBOOL(AppKit.NSImage.canInitWithPasteboard_)
+        self.assertResultIsBOOL(AppKit.NSImage.isFlipped)
+        self.assertArgIsBOOL(AppKit.NSImage.setFlipped_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isTemplate)
+        self.assertArgIsBOOL(AppKit.NSImage.setTemplate_, 0)
+
+        self.assertArgHasType(
+            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            0,
+            AppKit.NSRect.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            4,
+        )
+        self.assertArgIsBOOL(AppKit.NSImage.lockFocusFlipped_, 0)
+        self.assertArgHasType(
+            AppKit.NSImage.initWithCGImage_size_, 1, AppKit.NSSize.__typestr__
+        )
+        self.assertArgHasType(
+            AppKit.NSImage.CGImageForProposedRect_context_hints_,
+            0,
+            b"o^" + AppKit.NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            AppKit.NSImage.bestRepresentationForRect_context_hints_,
+            0,
+            AppKit.NSRect.__typestr__,
+        )
+
+        self.assertResultIsBOOL(
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_
+        )
+        self.assertArgHasType(
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            0,
+            AppKit.NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            1,
+            AppKit.NSRect.__typestr__,
+        )
+
+        self.assertResultIsBOOL(AppKit.NSImage.matchesOnlyOnBestFittingAxis)
+        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
+
+        self.assertArgIsBOOL(AppKit.NSImage.imageWithSize_flipped_drawingHandler_, 1)
+        self.assertArgIsBlock(
+            AppKit.NSImage.imageWithSize_flipped_drawingHandler_,
+            2,
+            objc._C_NSBOOL + AppKit.NSRect.__typestr__,
+        )
+
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSImageDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSImageHelper.image_didLoadRepresentation_withStatus_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+
+class TestNSImageUsage(TestCase):
+    def test_composite_point(self):
+        # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
+        ws = AppKit.NSWorkspace.sharedWorkspace()
+        txtIcon = ws.iconForFileType_("txt")
+        txtIcon.setSize_((16, 16))
+        htmlIcon = ws.iconForFileType_("html")
+        htmlIcon.setSize_((16, 16))
+
+        comboIcon = AppKit.NSImage.alloc().initWithSize_((100, 100))
+        comboIcon.lockFocus()
+        txtIcon.compositeToPoint_fromRect_operation_(
+            (0, 0), ((0, 0), (16, 16)), AppKit.NSCompositeCopy
+        )
+        htmlIcon.compositeToPoint_fromRect_operation_(
+            (8, 0), ((8, 0), (8, 16)), AppKit.NSCompositeCopy
+        )
+        comboIcon.unlockFocus()

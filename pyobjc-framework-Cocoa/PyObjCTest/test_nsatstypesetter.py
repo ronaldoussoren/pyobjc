@@ -65,7 +65,7 @@ class TestNSATSTypesetterHelper(AppKit.NSATSTypesetter):
 
 
 class TestNSATSTypesetter(TestCase):
-    def testByRefArguments(self):
+    def test_byref_arguments(self):
         self.assertArgIsOut(
             AppKit.NSATSTypesetter.lineFragmentRectForProposedRect_remainingRect_, 1
         )
@@ -140,7 +140,7 @@ class TestNSATSTypesetter(TestCase):
             AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
         )
 
-    def testSubclassProtocols(self):
+    def test_subclass_protocols(self):
         self.assertResultIsBOOL(
             TestNSATSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_
         )

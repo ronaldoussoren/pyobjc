@@ -14,30 +14,29 @@ class TestNSDrawerHelper(AppKit.NSObject):
 
 
 class TestNSDrawer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSDrawerState)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSDrawerClosedState, 0)
         self.assertEqual(AppKit.NSDrawerOpeningState, 1)
         self.assertEqual(AppKit.NSDrawerOpenState, 2)
         self.assertEqual(AppKit.NSDrawerClosingState, 3)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSDrawerWillOpenNotification, str)
         self.assertIsInstance(AppKit.NSDrawerDidOpenNotification, str)
         self.assertIsInstance(AppKit.NSDrawerWillCloseNotification, str)
         self.assertIsInstance(AppKit.NSDrawerDidCloseNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgHasType(
             AppKit.NSDrawer.setMinContentSize_, 0, AppKit.NSSize.__typestr__
         )
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSDrawerDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSDrawerDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
         self.assertResultHasType(

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTFrameProcessor_FrameRateConversion(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(
             VideoToolbox.VTFrameRateConversionConfigurationQualityPrioritization
         )

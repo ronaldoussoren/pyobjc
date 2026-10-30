@@ -1,15 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import EventKit
 
 
 class TestEKAlarm(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(EventKit.EKErrorCode)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        self.assertIsInstance(EventKit.EKErrorDomain, str)
-
         self.assertEqual(EventKit.EKErrorEventNotMutable, 0)
         self.assertEqual(EventKit.EKErrorNoCalendar, 1)
         self.assertEqual(EventKit.EKErrorNoStartDate, 2)
@@ -48,4 +43,7 @@ class TestEKAlarm(TestCase):
         self.assertEqual(EventKit.EKErrorNotificationSavedWithoutCollection, 35)
         self.assertEqual(EventKit.EKErrorReminderAlarmContainsEmailOrUrl, 36)
 
-        self.assertEqual(EventKit.EKErrorLast, 31)
+        self.assertEqual(EventKit.EKErrorLast, 37)
+
+    def test_constants(self):
+        self.assertIsInstance(EventKit.EKErrorDomain, str)

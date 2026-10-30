@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRContentTrack(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(DiscRecording.DRFilesystemTrackCreate)
 
         DiscRecording.DRFilesystemTrackEstimateOverhead

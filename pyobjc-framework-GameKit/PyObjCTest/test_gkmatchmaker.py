@@ -4,11 +4,8 @@ import objc
 
 
 class TestGKMatchMaker(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKInviteRecipientResponse)
-        self.assertIsEnumType(GameKit.GKMatchType)
-
-    def testConstants(self):
         self.assertEqual(GameKit.GKInviteRecipientResponseAccepted, 0)
         self.assertEqual(GameKit.GKInviteRecipientResponseDeclined, 1)
         self.assertEqual(GameKit.GKInviteRecipientResponseFailed, 2)
@@ -16,6 +13,12 @@ class TestGKMatchMaker(TestCase):
         self.assertEqual(GameKit.GKInviteRecipientResponseUnableToConnect, 4)
         self.assertEqual(GameKit.GKInviteRecipientResponseNoAnswer, 5)
 
+        self.assertIsEnumType(GameKit.GKMatchType)
+        self.assertEqual(GameKit.GKMatchTypePeerToPeer, 0)
+        self.assertEqual(GameKit.GKMatchTypeHosted, 1)
+        self.assertEqual(GameKit.GKMatchTypeTurnBased, 2)
+
+        # Old aliases:
         self.assertEqual(
             GameKit.GKInviteeResponseAccepted, GameKit.GKInviteRecipientResponseAccepted
         )
@@ -37,12 +40,8 @@ class TestGKMatchMaker(TestCase):
             GameKit.GKInviteeResponseNoAnswer, GameKit.GKInviteRecipientResponseNoAnswer
         )
 
-        self.assertEqual(GameKit.GKMatchTypePeerToPeer, 0)
-        self.assertEqual(GameKit.GKMatchTypeHosted, 1)
-        self.assertEqual(GameKit.GKMatchTypeTurnBased, 2)
-
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKMatchmaker.addPlayersToMatch_matchRequest_completionHandler_,
             2,
@@ -60,7 +59,7 @@ class TestGKMatchMaker(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_8(self):
+    def test_methods10_8(self):
         # XXX: These aren't available on 10.9, even though the SDK claims they are
         self.assertResultIsBlock(GameKit.GKMatchmaker.inviteHandler, b"v@@")
         self.assertArgIsBlock(GameKit.GKMatchmaker.setInviteHandler_, 0, b"v@@")
@@ -72,7 +71,7 @@ class TestGKMatchMaker(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_9(self):
+    def test_methods10_9(self):
         # XXX: These aren't available on 10.9, even though the SDK claims they are
         self.assertArgIsBlock(
             GameKit.GKMatchmaker.matchForInvite_completionHandler_, 1, b"v@@"
@@ -89,7 +88,7 @@ class TestGKMatchMaker(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBlock(
             GameKit.GKMatchRequest.recipientResponseHandler, b"v@" + objc._C_NSInteger
         )
@@ -118,18 +117,18 @@ class TestGKMatchMaker(TestCase):
 
     @min_os_level("10.15")
     @expectedFailure
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(GameKit.GKMatchRequest.restrictToAutomatch)
         self.assertArgIsBOOL(GameKit.GKMatchRequest.setRestrictToAutomatch_, 0)
 
     @min_os_level("13.1")
-    def testMethods13_1(self):
+    def test_methods13_1(self):
         self.assertArgIsBlock(
             GameKit.GKMatchmaker.startGroupActivityWithPlayerHandler_, 0, b"v@"
         )
 
     @min_os_level("14.2")
-    def testMethods14_2(self):
+    def test_methods14_2(self):
         self.assertArgIsBlock(
             GameKit.GKMatchmaker.findMatchedPlayers_withCompletionHandler_, 1, b"v@@"
         )
@@ -137,5 +136,5 @@ class TestGKMatchMaker(TestCase):
             GameKit.GKMatchmaker.queryQueueActivity_withCompletionHandler_, 1, b"vq@"
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("GKInviteEventListener")
+    def test_protocols(self):
+        self.assertProtocolExists("GKInviteEventListener", GameKit)

@@ -382,3 +382,8 @@ class TestPMPrintSettingsKeys(TestCase):
             PrintCore.kPMOutputFilenameKey,
             PrintCore.kPMOutputFilenameStr.decode("utf-8"),
         )
+
+        self.assertEqual(
+            PrintCore.kPMCustomPaperListKey,
+            "com.apple.print.CustomPaperListArray",
+        )

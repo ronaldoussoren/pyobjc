@@ -5,7 +5,7 @@ import Contacts
 
 class TestCNContactStore(TestCase):
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Contacts.CNEntityTypeContacts, 0)
 
         self.assertEqual(Contacts.CNAuthorizationStatusNotDetermined, 0)
@@ -14,7 +14,7 @@ class TestCNContactStore(TestCase):
         self.assertEqual(Contacts.CNAuthorizationStatusAuthorized, 3)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             Contacts.CNContactStore.requestAccessForEntityType_completionHandler_,
             1,

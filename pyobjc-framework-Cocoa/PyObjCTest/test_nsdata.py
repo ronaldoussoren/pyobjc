@@ -12,15 +12,62 @@ otherBytes.frombytes(b"12345678901234567890" * 5)
 
 
 class TestNSData(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDataBase64DecodingOptions)
-        self.assertIsEnumType(Foundation.NSDataBase64EncodingOptions)
-        self.assertIsEnumType(Foundation.NSDataCompressionAlgorithm)
-        self.assertIsEnumType(Foundation.NSDataReadingOptions)
-        self.assertIsEnumType(Foundation.NSDataSearchOptions)
-        self.assertIsEnumType(Foundation.NSDataWritingOptions)
+        self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
 
-    def testMethods(self):
+        self.assertIsEnumType(Foundation.NSDataBase64EncodingOptions)
+        self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
+        self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
+        self.assertEqual(
+            Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4
+        )
+        self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
+
+        self.assertIsEnumType(Foundation.NSDataCompressionAlgorithm)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZFSE, 0)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZ4, 1)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZMA, 2)
+        self.assertEqual(Foundation.NSDataCompressionAlgorithmZlib, 3)
+
+        self.assertIsEnumType(Foundation.NSDataReadingOptions)
+        self.assertEqual(Foundation.NSDataReadingMappedIfSafe, 1 << 0)
+        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
+        self.assertEqual(Foundation.NSDataReadingMappedAlways, 1 << 3)
+
+        # Legacy aliases:
+        self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)
+        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
+        self.assertEqual(Foundation.NSMappedRead, 1)
+        self.assertEqual(Foundation.NSUncachedRead, 2)
+
+        self.assertIsEnumType(Foundation.NSDataSearchOptions)
+        self.assertEqual(Foundation.NSDataSearchBackwards, 1 << 0)
+        self.assertEqual(Foundation.NSDataSearchAnchored, 1 << 1)
+
+        self.assertIsEnumType(Foundation.NSDataWritingOptions)
+        self.assertEqual(Foundation.NSDataWritingFileProtectionNone, 0x10000000)
+        self.assertEqual(Foundation.NSDataWritingFileProtectionComplete, 0x20000000)
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteUnlessOpen, 0x30000000
+        )
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication,
+            0x40000000,
+        )
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteWhenUserInactive,
+            0x50000000,
+        )
+        self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
+
+        self.assertEqual(Foundation.NSDataWritingAtomic, 1 << 0)
+        self.assertEqual(Foundation.NSDataWritingWithoutOverwriting, 1 << 1)
+
+        # Old aliases:
+        self.assertEqual(Foundation.NSAtomicWrite, 1)
+
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSData.isEqualToData_)
         self.assertResultIsBOOL(Foundation.NSData.writeToFile_atomically_)
         self.assertArgIsBOOL(Foundation.NSData.writeToFile_atomically_, 1)
@@ -39,66 +86,6 @@ class TestNSData(TestCase):
         self.assertArgIsIn(Foundation.NSData.initWithBytesNoCopy_length_, 0)
         self.assertArgSizeInArg(Foundation.NSData.initWithBytes_length_, 0, 1)
 
-    def testConstants(self):
-        self.assertEqual(Foundation.NSMappedRead, 1)
-        self.assertEqual(Foundation.NSUncachedRead, 2)
-
-        self.assertEqual(Foundation.NSAtomicWrite, 1)
-
-        self.assertEqual(Foundation.NSDataWritingFileProtectionNone, 0x10000000)
-        self.assertEqual(Foundation.NSDataWritingFileProtectionComplete, 0x20000000)
-        self.assertEqual(
-            Foundation.NSDataWritingFileProtectionCompleteUnlessOpen, 0x30000000
-        )
-        self.assertEqual(
-            Foundation.NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication,
-            0x40000000,
-        )
-        self.assertEqual(
-            Foundation.NSDataWritingFileProtectionCompleteWhenUserInactive,
-            0x50000000,
-        )
-        self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)
-        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
-        self.assertEqual(Foundation.NSDataWritingAtomic, 1 << 0)
-        self.assertEqual(Foundation.NSDataSearchBackwards, 1 << 0)
-        self.assertEqual(Foundation.NSDataSearchAnchored, 1 << 1)
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(Foundation.NSDataReadingMappedAlways, 1 << 3)
-
-        self.assertEqual(Foundation.NSDataReadingMappedIfSafe, 1 << 0)
-        self.assertEqual(Foundation.NSDataReadingUncached, 1 << 1)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        self.assertEqual(Foundation.NSDataWritingWithoutOverwriting, 1 << 1)
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
-        self.assertEqual(Foundation.NSDataBase64Encoding64CharacterLineLength, 1 << 0)
-        self.assertEqual(Foundation.NSDataBase64Encoding76CharacterLineLength, 1 << 1)
-        self.assertEqual(
-            Foundation.NSDataBase64EncodingEndLineWithCarriageReturn, 1 << 4
-        )
-        self.assertEqual(Foundation.NSDataBase64EncodingEndLineWithLineFeed, 1 << 5)
-
-        self.assertEqual(Foundation.NSDataBase64DecodingIgnoreUnknownCharacters, 1 << 0)
-
-    @min_os_level("10.15")
-    def testConstants10_15(self):
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZFSE, 0)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZ4, 1)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmLZMA, 2)
-        self.assertEqual(Foundation.NSDataCompressionAlgorithmZlib, 3)
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultHasType(
             Foundation.NSData.rangeOfData_options_range_, Foundation.NSRange.__typestr__
         )
@@ -108,8 +95,6 @@ class TestNSData(TestCase):
             Foundation.NSRange.__typestr__,
         )
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertArgIsBlock(
             Foundation.NSData.enumerateByteRangesUsingBlock_,
             0,
@@ -133,7 +118,7 @@ class TestNSData(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(
             Foundation.NSMutableData.decompressUsingAlgorithm_error_
         )
@@ -158,7 +143,7 @@ class TestNSData(TestCase):
             % (len(d2), len(rawData)),
         )
 
-    def testDataWithBytes_length_(self):
+    def test_dataWithBytes_length_(self):
         # Test +dataWithBytes:length
         data = Foundation.NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = Foundation.NSMutableData.dataWithBytes_length_(
@@ -166,17 +151,17 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testAppendBytes_length_(self):
+    def test_appendbytes_length(self):
         self.assertArgIsIn(Foundation.NSMutableData.appendBytes_length_, 0)
         self.assertArgSizeInArg(Foundation.NSMutableData.appendBytes_length_, 0, 1)
 
-    def testreplaceBytesInRange_withBytes_(self):
+    def test_replace_bytes_in_range_with_bytes(self):
         self.assertArgIsIn(Foundation.NSMutableData.replaceBytesInRange_withBytes_, 1)
         self.assertArgSizeInArg(
             Foundation.NSMutableData.replaceBytesInRange_withBytes_, 1, 0
         )
 
-    def testreplaceBytesInRange_withBytes_length_(self):
+    def test_replace_bytes_in_range_with_bytes_length(self):
         self.assertArgIsIn(
             Foundation.NSMutableData.replaceBytesInRange_withBytes_length_, 1
         )
@@ -184,7 +169,7 @@ class TestNSData(TestCase):
             Foundation.NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2
         )
 
-    def testDataWithBytesNoCopy_length_freeWhenDone_(self):
+    def test_dataWithBytesNoCopy_length_freeWhenDone_(self):
         data = Foundation.NSData.dataWithBytesNoCopy_length_freeWhenDone_(
             rawBytes, len(rawBytes), False
         )
@@ -193,7 +178,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testInitWithBytes_length_(self):
+    def test_initWithBytes_length_(self):
         # Test -initWithBytes:length:
         data = Foundation.NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = Foundation.NSMutableData.alloc().initWithBytes_length_(
@@ -201,7 +186,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testInitWithBytesNoCopy_length_freeWhenDone_(self):
+    def test_initWithBytesNoCopy_length_freeWhenDone_(self):
         # Test -initWithBytesNoCopy:length:
         data = Foundation.NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(
             rawBytes, len(rawBytes), False
@@ -213,7 +198,7 @@ class TestNSData(TestCase):
         )
         self.assertDataContents(data, mutableData, rawBytes)
 
-    def testBytes(self):
+    def test_bytes(self):
         # Test -bytes
         data = Foundation.NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         bytesValue = data.bytes()
@@ -233,7 +218,7 @@ class TestNSData(TestCase):
             else:
                 raise
 
-    def testMutableBytes(self):
+    def test_mutable_bytes(self):
         # Test -mutableBytes
         mutableData = Foundation.NSMutableData.dataWithBytes_length_(
             rawBytes, len(rawBytes)
@@ -263,7 +248,7 @@ class TestNSData(TestCase):
             else:
                 raise
 
-    def testVariousDataLengths(self):
+    def test_various_data_lengths(self):
         # Test data of different lengths.
         #
         # Data of different lengths may be stored in different subclasses
@@ -290,7 +275,7 @@ class TestNSData(TestCase):
 
             mutableBytes[0 : len(mutableBytes)] = bytes_value[0 : len(bytes_value)]
 
-    def testInitWithContents(self):
+    def test_initWithContents(self):
         b, err = Foundation.NSData.alloc().initWithContentsOfFile_options_error_(
             "/etc/hosts", 0, None
         )
@@ -375,15 +360,15 @@ class MyData5(Foundation.NSData):
 
 class TestMyData(TestCase):
     # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
-    def testData(self):
+    def test_data(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
         self.assertEqual(r, ("data", b"hello world", 11))
 
-    def testInit(self):
+    def test_init(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData2, 1)
         self.assertEqual(r, ("init", b"hello world", 11))
 
-    def testBytes(self):
+    def test_bytes(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
         b = PyObjC_TestClass3.getBytes_(r)
 
@@ -396,17 +381,17 @@ class TestMyData(TestCase):
         self.assertEqual(b.getBytes_length_(None, 4), b"hell")
         self.assertEqual(b.getBytes_range_(None, Foundation.NSRange(2, 4)), b"llo ")
 
-    def testBytesNone(self):
+    def test_bytes_none(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData4, 1)
         self.assertEqual(b.bytes(), None)
 
-    def testBytesRaises(self):
+    def test_bytes_raises(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
         self.assertRaises(ValueError, b.bytes)
 
 
 class TestBuffer(TestCase):
-    def testArray(self):
+    def test_array(self):
         pool = Foundation.NSAutoreleasePool.alloc().init()
         a = array.array("b", b"foo")
         m = Foundation.NSMutableData.dataWithData_(a)
@@ -420,7 +405,7 @@ class TestBuffer(TestCase):
         m[3:6] = b"bar"
         self.assertEqual(m[:], b"foobarfoo")
 
-    def testBuffer(self):
+    def test_buffer(self):
         b = b"foo"
         m = Foundation.NSMutableData.dataWithData_(b)
         self.assertEqual(b[:], m[:])
@@ -429,7 +414,7 @@ class TestBuffer(TestCase):
 
 
 class TestRegressions(TestCase):
-    def testDataStr(self):
+    def test_data_string(self):
         input_bytes = b"hello"
         input_str = str(input_bytes)
 

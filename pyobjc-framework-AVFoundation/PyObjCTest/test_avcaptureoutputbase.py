@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureOutputBase(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureOutputDataDroppedReason)
         self.assertEqual(AVFoundation.AVCaptureOutputDataDroppedReasonNone, 0)
         self.assertEqual(AVFoundation.AVCaptureOutputDataDroppedReasonLateData, 1)

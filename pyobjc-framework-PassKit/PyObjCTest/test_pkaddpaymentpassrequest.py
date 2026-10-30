@@ -4,10 +4,8 @@ import PassKit
 
 
 class TestPKAddPaymentPassRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(PassKit.PKAddPaymentPassStyle)
-
-    def test_constants(self):
         self.assertEqual(PassKit.PKAddPaymentPassStylePayment, 0)
         self.assertEqual(PassKit.PKAddPaymentPassStyleAccess, 1)
 

@@ -83,7 +83,7 @@ class TheadingHelperTestHelper(Foundation.NSObject):
 
 
 class TestThreadingHelpers(TestCase):
-    def testAsyncOnThreadNoResult(self):
+    def test_async_on_thread_no_result(self):
         # pyobjc_performSelector_onThread_withObject_waitUntilDone_
         obj = TheadingHelperTestHelper.alloc().init()
         thr = Foundation.NSThread.mainThread()
@@ -122,7 +122,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testAsyncOnThreadNoResultModes(self):
+    def test_async_on_thread_no_result_modes(self):
         # pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_
         obj = TheadingHelperTestHelper.alloc().init()
         thr = Foundation.NSThread.mainThread()
@@ -161,7 +161,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testAsyncWithDelayNoResult(self):
+    def test_async_with_delay_no_result(self):
         # pyobjc_performSelector_withObject_afterDelay_
         obj = TheadingHelperTestHelper.alloc().init()
 
@@ -191,7 +191,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testAsyncWithDelayNoResultModes(self):
+    def test_async_with_delay_no_result_modes(self):
         # pyobjc_performSelector_withObject_afterDelay_inModes_
         obj = TheadingHelperTestHelper.alloc().init()
 
@@ -225,7 +225,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testInBGNoResult(self):
+    def test_in_background_no_result(self):
         # pyobjc_performSelectorInBackground_withObject_
 
         obj = TheadingHelperTestHelper.alloc().init()
@@ -254,7 +254,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnMtNoResultWait(self):
+    def test_on_mainthread_no_result_wait(self):
         # pyobjc_performSelectorInBackground_withObject_waitUntilDone_
 
         obj = TheadingHelperTestHelper.alloc().init()
@@ -293,7 +293,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnMtNoResultWaitModes(self):
+    def test_on_mainthread_no_result_wait_modes(self):
         # pyobjc_performSelectorInBackground_withObject_waitUntilDone_modes_
 
         obj = TheadingHelperTestHelper.alloc().init()
@@ -332,7 +332,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnMtWithResult(self):
+    def test_on_mainthread_with_result(self):
         # pyobjc_performSelectorOnMainThread_withObject_
         obj = TheadingHelperTestHelper.alloc().init()
 
@@ -377,7 +377,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnMtWithResultModes(self):
+    def test_on_mainthread_with_result_modes(self):
         obj = TheadingHelperTestHelper.alloc().init()
 
         r = obj.pyobjc_performSelectorOnMainThread_withObject_modes_("sel2:", 3, 1)
@@ -424,7 +424,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnThreadWithResult(self):
+    def test_on_thread_with_result(self):
         obj = TheadingHelperTestHelper.alloc().init()
         thr = Foundation.NSThread.mainThread()
 
@@ -472,7 +472,7 @@ class TestThreadingHelpers(TestCase):
         finally:
             sys.stderr = orig_stderr
 
-    def testOnThreadWithResultModes(self):
+    def test_on_thread_with_result_modes(self):
         obj = TheadingHelperTestHelper.alloc().init()
         thr = Foundation.NSThread.mainThread()
 

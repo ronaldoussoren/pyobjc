@@ -4,20 +4,8 @@ import PassKit
 
 
 class TestPKPaymentRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(PassKit.PKAddressField)
-        self.assertIsEnumType(PassKit.PKMerchantCapability)
-        self.assertIsEnumType(PassKit.PKShippingContactEditingMode)
-        self.assertIsEnumType(PassKit.PKShippingType)
-        self.assertIsTypedEnum(PassKit.PKMerchantCategoryCode, int)
-
-    def test_constants(self):
-        self.assertEqual(PassKit.PKMerchantCapability3DS, 1 << 0)
-        self.assertEqual(PassKit.PKMerchantCapabilityEMV, 1 << 1)
-        self.assertEqual(PassKit.PKMerchantCapabilityCredit, 1 << 2)
-        self.assertEqual(PassKit.PKMerchantCapabilityDebit, 1 << 3)
-        self.assertEqual(PassKit.PKMerchantCapabilityInstantFundsOut, 1 << 7)
-
         self.assertEqual(PassKit.PKAddressFieldNone, 0)
         self.assertEqual(PassKit.PKAddressFieldPostalAddress, 1 << 0)
         self.assertEqual(PassKit.PKAddressFieldPhone, 1 << 1)
@@ -31,14 +19,14 @@ class TestPKPaymentRequest(TestCase):
             | PassKit.PKAddressFieldName,
         )
 
-        self.assertEqual(PassKit.PKShippingTypeShipping, 0)
-        self.assertEqual(PassKit.PKShippingTypeDelivery, 1)
-        self.assertEqual(PassKit.PKShippingTypeStorePickup, 2)
-        self.assertEqual(PassKit.PKShippingTypeServicePickup, 3)
+        self.assertIsEnumType(PassKit.PKMerchantCapability)
+        self.assertEqual(PassKit.PKMerchantCapability3DS, 1 << 0)
+        self.assertEqual(PassKit.PKMerchantCapabilityEMV, 1 << 1)
+        self.assertEqual(PassKit.PKMerchantCapabilityCredit, 1 << 2)
+        self.assertEqual(PassKit.PKMerchantCapabilityDebit, 1 << 3)
+        self.assertEqual(PassKit.PKMerchantCapabilityInstantFundsOut, 1 << 7)
 
-        self.assertEqual(PassKit.PKPaymentSummaryItemTypeFinal, 0)
-        self.assertEqual(PassKit.PKPaymentSummaryItemTypePending, 1)
-
+        self.assertIsEnumType(PassKit.PKShippingContactEditingMode)
         self.assertEqual(PassKit.PKShippingContactEditingModeAvailable, 1)
         self.assertEqual(PassKit.PKShippingContactEditingModeStorePickup, 2)
         self.assertEqual(
@@ -46,10 +34,23 @@ class TestPKPaymentRequest(TestCase):
             PassKit.PKShippingContactEditingModeAvailable,
         )
 
+        self.assertIsEnumType(PassKit.PKShippingType)
+        self.assertEqual(PassKit.PKShippingTypeShipping, 0)
+        self.assertEqual(PassKit.PKShippingTypeDelivery, 1)
+        self.assertEqual(PassKit.PKShippingTypeStorePickup, 2)
+        self.assertEqual(PassKit.PKShippingTypeServicePickup, 3)
+
+        self.assertIsEnumType(PassKit.PKPaymentSummaryItemType)
+        self.assertEqual(PassKit.PKPaymentSummaryItemTypeFinal, 0)
+        self.assertEqual(PassKit.PKPaymentSummaryItemTypePending, 1)
+
         self.assertIsEnumType(PassKit.PKApplePayLaterAvailability)
         self.assertEqual(PassKit.PKApplePayLaterAvailable, 0)
         self.assertEqual(PassKit.PKApplePayLaterUnavailableItemIneligible, 1)
         self.assertEqual(PassKit.PKApplePayLaterUnavailableRecurringTransaction, 2)
+
+    def test_typed_enum(self):
+        self.assertIsTypedEnum(PassKit.PKMerchantCategoryCode, int)
 
     @min_os_level("15.0")
     def test_constants15_0(self):

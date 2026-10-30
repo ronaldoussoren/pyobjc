@@ -1,10 +1,10 @@
 import CoreFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestSet(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             if objc.lookUpClass("NSSet") is CoreFoundation.CFSetRef:
                 return
@@ -12,10 +12,10 @@ class TestSet(TestCase):
             pass
         self.assertIsCFType(CoreFoundation.CFSetRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         self.assertIsInstance(CoreFoundation.CFSetGetTypeID(), int)
 
-    def testCreation(self):
+    def test_creation(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -34,7 +34,7 @@ class TestSet(TestCase):
         cp = CoreFoundation.CFSetCreateCopy(None, st)
         self.assertIsInstance(cp, CoreFoundation.CFSetRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -64,12 +64,22 @@ class TestSet(TestCase):
         present, value = CoreFoundation.CFSetGetValueIfPresent(st, "c", None)
         self.assertIs(present, True)
         self.assertEqual(value, "c")
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFSetGetValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFSetGetValues(NoObjCClass(), None)
+
+        with self.assertRaisesRegex(ValueError, "'values' must be None"):
+            CoreFoundation.CFSetGetValues(None, 42)
+
         values = CoreFoundation.CFSetGetValues(st, None)
         values = list(values)
         values.sort()
         self.assertEqual(values, ["a", "b", "c"])
 
-    def testApplying(self):
+    def test_applying(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )
@@ -87,7 +97,7 @@ class TestSet(TestCase):
         context.sort()
         self.assertEqual(context, ["a", "b", "c"])
 
-    def testMutation(self):
+    def test_mutation(self):
         st = CoreFoundation.CFSetCreate(
             None, ["a", "b", "c"], 3, CoreFoundation.kCFTypeSetCallBacks
         )

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSPageControllerHelper(AppKit.NSObject):
@@ -8,21 +8,18 @@ class TestNSPageControllerHelper(AppKit.NSObject):
 
 
 class TestNSPageController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPageControllerTransitionStyle)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertEqual(AppKit.NSPageControllerTransitionStyleStackHistory, 0)
         self.assertEqual(AppKit.NSPageControllerTransitionStyleStackBook, 1)
         self.assertEqual(AppKit.NSPageControllerTransitionStyleHorizontalStrip, 2)
 
-    def testProtocols(self):
+    @min_sdk_level("10.10")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSPageControllerDelegate", AppKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSPageControllerHelper.pageController_frameForObject_,
             AppKit.NSRect.__typestr__,
         )
-
-    @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSPageControllerDelegate")

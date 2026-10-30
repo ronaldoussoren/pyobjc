@@ -4,7 +4,7 @@ import WebKit
 
 class TestWKFindConfiguration(TestCase):
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(WebKit.WKFindConfiguration.backwards)
         self.assertArgIsBOOL(WebKit.WKFindConfiguration.setBackwards_, 0)
 

@@ -4,7 +4,7 @@ import objc
 
 
 class TestCIKernel(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Quartz.CIKernel.setROISelector_,
             0,
@@ -12,7 +12,7 @@ class TestCIKernel(TestCase):
         )
 
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         CIKernelROICallback = (
             Quartz.CGRect.__typestr__ + objc._C_INT + Quartz.CGRect.__typestr__
         )
@@ -28,7 +28,7 @@ class TestCIKernel(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(
             Quartz.CIKernel.kernelWithFunctionName_fromMetalLibraryData_error_, 2
         )
@@ -38,5 +38,5 @@ class TestCIKernel(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsOut(Quartz.CIKernel.kernelsWithMetalString_error_, 1)

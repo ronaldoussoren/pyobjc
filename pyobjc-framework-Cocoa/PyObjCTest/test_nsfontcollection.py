@@ -1,23 +1,21 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSFontCollection(TestCase):
-    def test_typed_enum(self):
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
+        self.assertEqual(AppKit.NSFontCollectionVisibilityProcess, 1)
+        self.assertEqual(AppKit.NSFontCollectionVisibilityUser, 2)
+        self.assertEqual(AppKit.NSFontCollectionVisibilityComputer, 4)
+
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSFontCollectionActionTypeKey, str)
         self.assertIsTypedEnum(AppKit.NSFontCollectionMatchingOptionKey, str)
         self.assertIsTypedEnum(AppKit.NSFontCollectionName, str)
         self.assertIsTypedEnum(AppKit.NSFontCollectionUserInfoKey, str)
 
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSFontCollectionVisibility)
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(AppKit.NSFontCollectionVisibilityProcess, 1)
-        self.assertEqual(AppKit.NSFontCollectionVisibilityUser, 2)
-        self.assertEqual(AppKit.NSFontCollectionVisibilityComputer, 4)
-
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSFontCollectionIncludeDisabledFontsOption, str)
         self.assertIsInstance(AppKit.NSFontCollectionRemoveDuplicatesOption, str)
         self.assertIsInstance(AppKit.NSFontCollectionDisallowAutoActivationOption, str)
@@ -34,8 +32,7 @@ class TestNSFontCollection(TestCase):
         self.assertIsInstance(AppKit.NSFontCollectionFavorites, str)
         self.assertIsInstance(AppKit.NSFontCollectionRecentlyUsed, str)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSFontCollection.showFontCollection_withName_visibility_error_
         )

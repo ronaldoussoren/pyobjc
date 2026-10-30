@@ -5,6 +5,6 @@ import objc
 
 class TestCKLocationSortDescriptor(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKLocationSortDescriptor")
         self.assertIsInstance(CloudKit.CKLocationSortDescriptor, objc.objc_class)

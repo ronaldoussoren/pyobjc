@@ -11,18 +11,14 @@ class TestGKTurnBasedMatchHelper(GameKit.NSObject):
 
 
 class TestGKTurnBasedMatch(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(GameKit.GKTurnBasedExchangeStatus)
-        self.assertIsEnumType(GameKit.GKTurnBasedMatchOutcome)
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKTurnBasedMatchStatus)
-        self.assertIsEnumType(GameKit.GKTurnBasedParticipantStatus)
-
-    def testConstants(self):
         self.assertEqual(GameKit.GKTurnBasedMatchStatusUnknown, 0)
         self.assertEqual(GameKit.GKTurnBasedMatchStatusOpen, 1)
         self.assertEqual(GameKit.GKTurnBasedMatchStatusEnded, 2)
         self.assertEqual(GameKit.GKTurnBasedMatchStatusMatching, 3)
 
+        self.assertIsEnumType(GameKit.GKTurnBasedParticipantStatus)
         self.assertEqual(GameKit.GKTurnBasedParticipantStatusUnknown, 0)
         self.assertEqual(GameKit.GKTurnBasedParticipantStatusInvited, 1)
         self.assertEqual(GameKit.GKTurnBasedParticipantStatusDeclined, 2)
@@ -30,6 +26,7 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertEqual(GameKit.GKTurnBasedParticipantStatusActive, 4)
         self.assertEqual(GameKit.GKTurnBasedParticipantStatusDone, 5)
 
+        self.assertIsEnumType(GameKit.GKTurnBasedMatchOutcome)
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeNone, 0)
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeQuit, 1)
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeWon, 2)
@@ -43,35 +40,23 @@ class TestGKTurnBasedMatch(TestCase):
 
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeCustomRange, 0x00FF0000)
 
+        self.assertIsEnumType(GameKit.GKTurnBasedExchangeStatus)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusUnknown, 0)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusActive, 1)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusComplete, 2)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusResolved, 3)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusCanceled, 4)
 
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(GameKit.GKExchangeTimeoutDefault, float)
-        self.assertIsInstance(GameKit.GKExchangeTimeoutNone, float)
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(GameKit.GKTurnTimeoutDefault, float)
         self.assertIsInstance(GameKit.GKTurnTimeoutNone, float)
 
-    def testProtocols(self):
-        self.assertProtocolExists("GKTurnBasedEventListener")
-        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate")
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(GameKit.GKExchangeTimeoutDefault, float)
+        self.assertIsInstance(GameKit.GKExchangeTimeoutNone, float)
 
-    def testMethods(self):
-        self.assertArgIsBOOL(
-            TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
-            2,
-        )
-        self.assertArgIsBOOL(
-            TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
-        )
-
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_,
             1,
@@ -93,8 +78,6 @@ class TestGKTurnBasedMatch(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertArgIsBlock(
             GameKit.GKTurnBasedMatch.loadMatchWithID_withCompletionHandler_, 1, b"v@@"
         )
@@ -121,8 +104,6 @@ class TestGKTurnBasedMatch(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertArgIsBlock(
             GameKit.GKTurnBasedMatch.rematchWithCompletionHandler_, 0, b"v@@"
         )
@@ -148,7 +129,7 @@ class TestGKTurnBasedMatch(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBlock(
             GameKit.GKTurnBasedMatch.endMatchInTurnWithMatchData_scores_achievements_completionHandler_,
             3,
@@ -179,4 +160,17 @@ class TestGKTurnBasedMatch(TestCase):
             GameKit.GKTurnBasedExchange.replyWithLocalizableMessageKey_arguments_data_completionHandler_,
             3,
             b"v@",
+        )
+
+    def test_protocols(self):
+        self.assertProtocolExists("GKTurnBasedEventListener", GameKit)
+        self.assertProtocolExists("GKTurnBasedEventHandlerDelegate", GameKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestGKTurnBasedMatchHelper.player_receivedTurnEventForMatch_didBecomeActive_,
+            2,
+        )
+        self.assertArgIsBOOL(
+            TestGKTurnBasedMatchHelper.handleTurnEventForMatch_didBecomeActive_, 1
         )

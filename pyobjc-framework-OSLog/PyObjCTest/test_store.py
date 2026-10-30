@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestStore(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(OSLog.OSLogStoreScope)
-
-    def test_constants(self):
         self.assertEqual(OSLog.OSLogStoreSystem, 0)
         self.assertEqual(OSLog.OSLogStoreCurrentProcessIdentifier, 1)
 

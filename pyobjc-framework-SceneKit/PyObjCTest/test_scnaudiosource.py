@@ -5,7 +5,7 @@ import SceneKit
 
 class TestSCNAudioSource(TestCase):
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertResultIsBOOL(SceneKit.SCNAudioSource.isPositional)
         self.assertArgIsBOOL(SceneKit.SCNAudioSource.setPositional_, 0)
 

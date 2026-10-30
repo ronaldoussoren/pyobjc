@@ -5,4 +5,4 @@ import ReplayKit  # noqa: F401
 
 class TestRPPreviewViewController(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("RPPreviewViewControllerDelegate")
+        self.assertProtocolExists("RPPreviewViewControllerDelegate", ReplayKit)

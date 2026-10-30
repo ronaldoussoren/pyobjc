@@ -15,14 +15,17 @@ class TestMTLEventHelper(Metal.NSObject):
     def waitUntilSignaledValue_timeoutMS_(self, a, b):
         return 1
 
+    def newSharedEventHandle(self):
+        return 1
+
 
 class TestMTLEvent(TestCase):
     @min_os_level("10.14")
     def test_protocols(self):
-        self.assertProtocolExists("MTLEvent")
-        self.assertProtocolExists("MTLSharedEvent")
+        self.assertProtocolExists("MTLEvent", Metal)
+        self.assertProtocolExists("MTLSharedEvent", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLEventHelper.notifyListener_atValue_block_, 1, objc._C_ULNGLNG
         )
@@ -40,3 +43,5 @@ class TestMTLEvent(TestCase):
         self.assertArgHasType(
             TestMTLEventHelper.waitUntilSignaledValue_timeoutMS_, 1, objc._C_ULNGLNG
         )
+
+        self.assertResultIsRetained(TestMTLEventHelper.newSharedEventHandle)

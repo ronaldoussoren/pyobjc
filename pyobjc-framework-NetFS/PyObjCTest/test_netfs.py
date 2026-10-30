@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNetFS(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(NetFS.kNetFSAuthenticationInfoKey, "AuthenticationInfo")
         self.assertEqual(NetFS.kNetFSServerDisplayNameKey, "ServerDisplayName")
         self.assertEqual(
@@ -70,8 +70,7 @@ class TestNetFS(TestCase):
         self.assertEqual(NetFS.kNetFSOpenURLMountKey, "OpenURLMount")
         self.assertEqual(NetFS.kNetFSMountedURLKey, "MountedURL")
 
-    @min_os_level("10.8")
-    def testFunctions10_8(self):
+    def test_functions(self):
         self.assertArgIsOut(NetFS.NetFSMountURLSync, 6)
 
         NetFSMountURLBlock = b"vi^v@"
@@ -81,12 +80,10 @@ class TestNetFS(TestCase):
 
         NetFS.NetFSMountURLCancel
 
-    @min_os_level("10.9")
-    def testFunctions10_9(self):
         NetFS.NetFSMountURLProbe
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
 
 

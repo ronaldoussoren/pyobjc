@@ -1,6 +1,5 @@
 import Security
 from PyObjCTools.TestSupport import TestCase
-import objc
 
 
 class TestSecEncodeTransform(TestCase):
@@ -15,9 +14,4 @@ class TestSecEncodeTransform(TestCase):
         self.assertIsInstance(Security.kSecCompressionRatio, str)
 
     def test_functions(self):
-        self.assertResultHasType(Security.SecEncodeTransformCreate, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecEncodeTransformCreate)
-        self.assertArgHasType(Security.SecEncodeTransformCreate, 0, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecEncodeTransformCreate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecEncodeTransformCreate, 1)

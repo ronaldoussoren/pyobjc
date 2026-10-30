@@ -3,14 +3,14 @@ import Quartz
 
 
 class TestCVOpenGLBufferPool(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CVOpenGLBufferPoolRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCVOpenGLBufferPoolMinimumBufferCountKey, str)
         self.assertIsInstance(Quartz.kCVOpenGLBufferPoolMaximumBufferAgeKey, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CVOpenGLBufferPoolGetTypeID(), int)
 
         # FIXME: find some good creation parameters

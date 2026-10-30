@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMHTMLImageElement(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLImageElement.isMap)
         self.assertArgIsBOOL(WebKit.DOMHTMLImageElement.setIsMap_, 0)
 

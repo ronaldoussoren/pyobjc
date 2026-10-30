@@ -4,18 +4,13 @@ import PassKit
 
 
 class TestPKPassLibrary(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(PassKit.PKPassLibraryNotificationKey, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(PassKit.PKAutomaticPassPresentationSuppressionResult)
+    def test_enums(self):
         self.assertIsEnumType(PassKit.PKPassLibraryAddPassesStatus)
-
-    def test_constants(self):
         self.assertEqual(PassKit.PKPassLibraryDidAddPasses, 0)
         self.assertEqual(PassKit.PKPassLibraryShouldReviewPasses, 1)
         self.assertEqual(PassKit.PKPassLibraryDidCancelAddPasses, 2)
 
+        self.assertIsEnumType(PassKit.PKAutomaticPassPresentationSuppressionResult)
         self.assertEqual(
             PassKit.PKAutomaticPassPresentationSuppressionResultNotSupported, 0
         )
@@ -28,6 +23,19 @@ class TestPKPassLibrary(TestCase):
         )
         self.assertEqual(PassKit.PKAutomaticPassPresentationSuppressionResultSuccess, 4)
 
+        self.assertIsEnumType(PassKit.PKPassLibraryCapability)
+        self.assertEqual(PassKit.PKPassLibraryCapabilityBackgroundAddPasses, 0)
+
+        self.assertIsEnumType(PassKit.PKPassLibraryAuthorizationStatus)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusNotDetermined, -1)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusDenied, 0)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusAuthorized, 1)
+        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusRestricted, 2)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(PassKit.PKPassLibraryNotificationKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(PassKit.PKPassLibraryDidChangeNotification, str)
         self.assertIsInstance(
             PassKit.PKPassLibraryRemotePaymentPassesDidChangeNotification, str
@@ -39,15 +47,6 @@ class TestPKPassLibrary(TestCase):
 
         self.assertIsInstance(PassKit.PKPassLibraryPassTypeIdentifierUserInfoKey, str)
         self.assertIsInstance(PassKit.PKPassLibrarySerialNumberUserInfoKey, str)
-
-        self.assertIsEnumType(PassKit.PKPassLibraryCapability)
-        self.assertEqual(PassKit.PKPassLibraryCapabilityBackgroundAddPasses, 0)
-
-        self.assertIsEnumType(PassKit.PKPassLibraryAuthorizationStatus)
-        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusNotDetermined, -1)
-        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusDenied, 0)
-        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusAuthorized, 1)
-        self.assertEqual(PassKit.PKPassLibraryAuthorizationStatusRestricted, 2)
 
     def test_methods(self):
         self.assertResultIsBOOL(PassKit.PKPassLibrary.isPassLibraryAvailable)
@@ -111,6 +110,24 @@ class TestPKPassLibrary(TestCase):
     def test_methods26_0(self):
         self.assertArgIsBlock(
             PassKit.PKPassLibrary.requestAuthorizationForCapability_completion_,
+            1,
+            b"vq",
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesWithData_completionHandler_,
+            1,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesFromArchiveAtFileURL_completionHandler_,
+            1,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            PassKit.PKPassLibrary.addPassesFromArchiveWithData_completionHandler_,
             1,
             b"vq",
         )

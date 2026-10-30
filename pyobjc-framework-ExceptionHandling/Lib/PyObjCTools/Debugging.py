@@ -81,32 +81,25 @@ def _run_atos(stack):
         if os.path.exists("/usr/bin/atos"):
             _atos_command = "/usr/bin/atos"
 
-            if os.uname()[2].startswith("13."):
+            if os.uname()[2].startswith("13."):  # pragma: no branch
                 # The atos command on OSX 10.9 gives a usage
                 # warning that's suppressed with the "-d" option.
-                _atos_command += " -d"
+                _atos_command += " -d"  # pragma: no cover
 
-        elif os.path.exists("/usr/bin/xcrun"):
-            _atos_command = "/usr/bin/xcrun atos"
+        elif os.path.exists("/usr/bin/xcrun"):  # pragma: no cover
+            _atos_command = "/usr/bin/xcrun atos"  # pragma: no cover
 
         else:
-            return None
+            return None  # pragma: no cover
 
     return os.popen(f"{_atos_command} -p {os.getpid()} {stack}")
 
 
 def nsLogObjCException(exception):
-    stacktrace = None
-
-    try:
-        stacktrace = exception.callStackSymbols()
-
-    except AttributeError:
-        pass
-
-    if stacktrace is None:
+    stacktrace = exception.callStackSymbols()
+    if stacktrace is None:  # pragma: no branch
         stack = exception.callStackReturnAddresses()
-        if stack:
+        if stack:  # pragma: no cover
             pipe = _run_atos(" ".join(hex(v) for v in stack))
             if pipe is None:
                 return True
@@ -115,15 +108,15 @@ def nsLogObjCException(exception):
             stacktrace.reverse()
             pipe.close()
 
-    if stacktrace is None:
+    if stacktrace is None:  # pragma: no branch
         userInfo = exception.userInfo()
         stack = userInfo.get(NSStackTraceKey)
-        if not stack:
-            return True
+        if not stack:  # pragma: no branch
+            return True  # pragma: no cover
 
         pipe = _run_atos(stack)
-        if pipe is None:
-            return True
+        if pipe is None:  # pragma: no branch
+            return True  # pragma: no cover
 
         stacktrace = pipe.readlines()
         stacktrace.reverse()
@@ -162,7 +155,7 @@ class PyObjCDebuggingDelegate(NSObject):
                 return nsLogObjCException(exception)
             else:
                 return False
-        except:  # noqa: B001, E722
+        except:  # noqa: B001, E722 ; # pragma: no cover
             print(
                 "*** Exception occurred during exception handler ***", file=sys.stderr
             )

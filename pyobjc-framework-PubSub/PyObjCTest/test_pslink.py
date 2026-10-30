@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPSLink(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(PubSub.PSLinkToOther, 0)
         self.assertEqual(PubSub.PSLinkToRSS, 1)
         self.assertEqual(PubSub.PSLinkToAtom, 2)

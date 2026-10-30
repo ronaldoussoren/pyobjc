@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestGKError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKGameSessionErrorCode)
-
-    def testConstants(self):
         self.assertEqual(GameKit.GKGameSessionErrorUnknown, 1)
         self.assertEqual(GameKit.GKGameSessionErrorNotAuthenticated, 2)
         self.assertEqual(GameKit.GKGameSessionErrorSessionConflict, 3)
@@ -25,5 +23,5 @@ class TestGKError(TestCase):
         self.assertEqual(GameKit.GKGameSessionErrorInvalidSession, 16)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(GameKit.GKGameSessionErrorDomain, str)

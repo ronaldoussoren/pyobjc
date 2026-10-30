@@ -1,17 +1,19 @@
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
 import objc
+from .runloophelper import check_cfrunloop_side_effects
 
 
 class TestUserNotification(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFUserNotificationRef)
 
-    def testTypeID(self):
+    def test_typeid(self):
         value = CoreFoundation.CFUserNotificationGetTypeID()
         self.assertIsInstance(value, int)
 
-    def testCreation(self):
+    @check_cfrunloop_side_effects
+    def test_creation(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfusernotificaton"
 
@@ -49,11 +51,18 @@ class TestUserNotification(TestCase):
         )
         self.assertIsInstance(rls, CoreFoundation.CFRunLoopSourceRef)
         CoreFoundation.CFRunLoopAddSource(rl, rls, runloop_mode)
-        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, True)
+        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, False)
 
         CoreFoundation.CFUserNotificationCancel(ref)
-        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, True)
+        CoreFoundation.CFRunLoopRunInMode(runloop_mode, 5.0, False)
         CoreFoundation.CFRunLoopRemoveSource(rl, rls, runloop_mode)
+
+        with self.assertRaisesRegex(ValueError, "retrieved context is not valid"):
+            # The CFRunLoopSourceGetContext bindings can only return the context
+            # for sources created in Python using CFRunLoopSourceCreate
+            # XXX: This test should be elsewhere, but this way of testing is
+            #      slightly more convenient.
+            CoreFoundation.CFRunLoopSourceGetContext(rls, None)
 
         self.assertEqual(len(values), 1)
         self.assertIs(values[0][0], ref)
@@ -77,7 +86,7 @@ class TestUserNotification(TestCase):
         if v is not None:
             self.assertIsInstance(v, str)
 
-    def testAlert(self):
+    def test_alert(self):
         err, flags = CoreFoundation.CFUserNotificationDisplayAlert(
             0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None
         )
@@ -89,13 +98,13 @@ class TestUserNotification(TestCase):
         self.assertEqual(err, 0)
         self.assertIsInstance(flags, int)
 
-    def testNotice(self):
+    def test_notice(self):
         err = CoreFoundation.CFUserNotificationDisplayNotice(
             0.1, 0, None, None, None, "Header", "Message", "Cancel"
         )
         self.assertEqual(err, 0)
 
-    def testInlines(self):
+    def test_functions_inlines(self):
         flag = CoreFoundation.CFUserNotificationCheckBoxChecked(2)
         self.assertEqual(flag, 1 << 10)
         flag = CoreFoundation.CFUserNotificationSecureTextField(2)
@@ -103,7 +112,7 @@ class TestUserNotification(TestCase):
         flag = CoreFoundation.CFUserNotificationPopUpSelection(2)
         self.assertEqual(flag, 2 << 24)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFUserNotificationStopAlertLevel, 0)
         self.assertEqual(CoreFoundation.kCFUserNotificationNoteAlertLevel, 1)
         self.assertEqual(CoreFoundation.kCFUserNotificationCautionAlertLevel, 2)

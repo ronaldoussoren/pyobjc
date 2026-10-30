@@ -3,6 +3,14 @@ import NaturalLanguage
 
 
 class TestNLContextualEmbedding(TestCase):
+    def test_enums(self):
+        self.assertIsEnumType(NaturalLanguage.NLContextualEmbeddingAssetsResult)
+        self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultAvailable, 0)
+        self.assertEqual(
+            NaturalLanguage.NLContextualEmbeddingAssetsResultNotAvailable, 1
+        )
+        self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultError, 2)
+
     @min_os_level("14.0")
     def test_constants(self):
         self.assertIsTypedEnum(NaturalLanguage.NLContextualEmbeddingKey, str)
@@ -10,13 +18,6 @@ class TestNLContextualEmbedding(TestCase):
         self.assertIsInstance(NaturalLanguage.NLContextualEmbeddingKeyLanguages, str)
         self.assertIsInstance(NaturalLanguage.NLContextualEmbeddingKeyScripts, str)
         self.assertIsInstance(NaturalLanguage.NLContextualEmbeddingKeyRevision, str)
-
-        self.assertIsEnumType(NaturalLanguage.NLContextualEmbeddingAssetsResult)
-        self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultAvailable, 0)
-        self.assertEqual(
-            NaturalLanguage.NLContextualEmbeddingAssetsResultNotAvailable, 1
-        )
-        self.assertEqual(NaturalLanguage.NLContextualEmbeddingAssetsResultError, 2)
 
     @min_os_level("14.0")
     def test_methods(self):

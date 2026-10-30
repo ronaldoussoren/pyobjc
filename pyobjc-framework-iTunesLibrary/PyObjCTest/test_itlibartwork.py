@@ -7,7 +7,7 @@ class TestITLibArtwork(TestCase):
     def test_classes(self):
         self.assertIsInstance(iTunesLibrary.ITLibArtwork, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatNone, 0)
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatBitmap, 1)
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatJPEG, 2)

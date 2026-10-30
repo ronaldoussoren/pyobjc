@@ -23,8 +23,8 @@ static PyType_Spec null_spec = {
     .basicsize = sizeof(PyObject),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = null_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = null_slots,
 };
 
 static PyObject* PyObjC_NULL_Type;

@@ -4,7 +4,7 @@ import PHASE
 
 
 class TesPHASETypes(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(PHASE.PHASEUpdateMode)
         self.assertEqual(PHASE.PHASEUpdateModeAutomatic, 0)
         self.assertEqual(PHASE.PHASEUpdateModeManual, 1)
@@ -34,13 +34,9 @@ class TesPHASETypes(TestCase):
         self.assertEqual(PHASE.PHASEReverbPresetLargeHall2, fourcc(b"rLH2"))
         self.assertEqual(PHASE.PHASEReverbPresetCathedral, fourcc(b"rCth"))
 
-        self.assertIsInstance(PHASE.PHASEErrorDomain, str)
-
         self.assertIsEnumType(PHASE.PHASEError)
         self.assertEqual(PHASE.PHASEErrorInitializeFailed, fourcc(b"PHEa"))
         self.assertEqual(PHASE.PHASEErrorInvalidObject, fourcc(b"PHEb"))
-
-        self.assertIsInstance(PHASE.PHASESoundEventErrorDomain, str)
 
         self.assertIsEnumType(PHASE.PHASESoundEventError)
         self.assertEqual(PHASE.PHASESoundEventErrorNotFound, fourcc(b"PHta"))
@@ -51,8 +47,6 @@ class TesPHASETypes(TestCase):
             PHASE.PHASESoundEventErrorSystemNotInitialized, fourcc(b"PHte")
         )
         self.assertEqual(PHASE.PHASESoundEventErrorOutOfMemory, fourcc(b"PHtf"))
-
-        self.assertIsInstance(PHASE.PHASEAssetErrorDomain, str)
 
         self.assertIsEnumType(PHASE.PHASEAssetError)
         self.assertEqual(PHASE.PHASEAssetErrorFailedToLoad, fourcc(b"PHaa"))
@@ -128,3 +122,10 @@ class TesPHASETypes(TestCase):
         self.assertIsEnumType(PHASE.PHASERenderingMode)
         self.assertEqual(PHASE.PHASERenderingModeLocal, 0)
         self.assertEqual(PHASE.PHASERenderingModeClient, 1)
+
+    def test_constants(self):
+        self.assertIsInstance(PHASE.PHASEErrorDomain, str)
+
+        self.assertIsInstance(PHASE.PHASESoundEventErrorDomain, str)
+
+        self.assertIsInstance(PHASE.PHASEAssetErrorDomain, str)

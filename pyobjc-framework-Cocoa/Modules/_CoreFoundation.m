@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreFoundation/CoreFoundation.h>
 
 /* We include the source code here instead of
@@ -26,28 +30,54 @@
 #include "_CoreFoundation_CFTree.m"
 #include "_CoreFoundation_CFWriteStream.m"
 
-static PyMethodDef mod_methods[] = {
-    COREFOUNDATION_CFBAG_METHODS COREFOUNDATION_CFBINARYHEAP_METHODS
-        COREFOUNDATION_BITVECTOR_METHODS COREFOUNDATION_CALENDAR_METHODS
-            COREFOUNDATION_DICTIONARY_METHODS COREFOUNDATION_FILEDESCRIPTOR_METHODS
-                COREFOUNDATION_MACHPORT_METHODS COREFOUNDATION_MESSAGEPORT_METHODS
-                    COREFOUNDATION_NUMBER_METHODS COREFOUNDATION_NUMBERFORMATTER_METHODS
-                        COREFOUNDATION_READSTREAM_METHODS COREFOUNDATION_RUNLOOP_METHODS
-                            COREFOUNDATION_RUNLOOPSOURCE_METHODS
-                                COREFOUNDATION_RUNLOOPTIMER_METHODS
-                                    COREFOUNDATION_SET_METHODS
-                                        COREFOUNDATION_SOCKET_METHODS
-                                            COREFOUNDATION_TREE_METHODS
-                                                COREFOUNDATION_WRITESTREAM_METHODS
+NS_ASSUME_NONNULL_BEGIN
 
+static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
+
+    if (setup_cfbag(m) == -1)           // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_cfbinaryheap(m) == -1)    // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_bitvector(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_calendar(m) == -1)        // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_dictionary(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_filedescriptor(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_machport(m) == -1)        // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_messageport(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_number(m) == -1)          // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_numberformatter(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_readstream(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop(m) == -1)         // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop_source(m) == -1)  // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_runloop_timer(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_set(m) == -1)             // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_socket(m) == -1)          // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_tree(m) == -1)            // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
+    if (setup_writestream(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                      // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -87,10 +117,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreFoundation(void);
+PyObject* _Nullable PyInit__CoreFoundation(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreFoundation(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

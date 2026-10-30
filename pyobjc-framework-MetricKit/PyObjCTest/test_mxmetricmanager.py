@@ -6,12 +6,12 @@ class TestMXMetricManager(TestCase):
     def test_classes(self):
         MetricKit.MXMetricManager
 
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsTypedEnum(MetricKit.MXLaunchTaskID, str)
 
     @min_sdk_level("12.0")
-    def test_protocol(self):
-        self.assertProtocolExists("MXMetricManagerSubscriber")
+    def test_protocols(self):
+        self.assertProtocolExists("MXMetricManagerSubscriber", MetricKit)
 
     @min_os_level("12.0")
     def test_methods(self):

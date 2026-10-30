@@ -2,8 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
-  "formal_protocols": {},
   "functions": {
    "NetFSCFStringtoCString": {
     "args": {
@@ -16,41 +14,11 @@
      "type_override": "^t"
     }
    },
-   "NetFSCopyURLForRemountingVolume": {
-    "args": {
-     "0": {
-      "type_name": "CFURLRef"
-     }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "NetFSMountURLAsync": {
     "args": {
-     "0": {
-      "type_name": "CFURLRef"
-     },
-     "1": {
-      "type_name": "CFURLRef"
-     },
-     "2": {
-      "type_name": "CFStringRef"
-     },
-     "3": {
-      "type_name": "CFStringRef"
-     },
-     "4": {
-      "type_name": "CFMutableDictionaryRef"
-     },
-     "5": {
-      "type_name": "CFMutableDictionaryRef"
-     },
      "6": {
-      "type_modifier": "o",
-      "type_name": "AsyncRequestID *"
+      "type_modifier": "o"
      },
-     "7": {},
      "8": {
       "callable": {
        "arguments": {
@@ -74,49 +42,14 @@
      }
     }
    },
-   "NetFSMountURLCancel": {
-    "args": {
-     "0": {
-      "type_name": "AsyncRequestID"
-     }
-    }
-   },
-   "NetFSMountURLProbe": {
-    "args": {
-     "0": {
-      "type_name": "CFStringRef"
-     }
-    },
-    "retval": {}
-   },
    "NetFSMountURLSync": {
     "args": {
-     "0": {
-      "type_name": "CFURLRef"
-     },
-     "1": {
-      "type_name": "CFURLRef"
-     },
-     "2": {
-      "type_name": "CFStringRef"
-     },
-     "3": {
-      "type_name": "CFStringRef"
-     },
-     "4": {
-      "type_name": "CFMutableDictionaryRef"
-     },
-     "5": {
-      "type_name": "CFMutableDictionaryRef"
-     },
      "6": {
-      "type_modifier": "o",
-      "type_name": "CFArrayRef *"
+      "type_modifier": "o"
      }
     }
    }
   },
-  "informal_protocols": {},
   "literals": {
    "kNAUIOptionAllowUI": {
     "unicode": true

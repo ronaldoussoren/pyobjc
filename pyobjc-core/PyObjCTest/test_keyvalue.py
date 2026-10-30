@@ -44,14 +44,13 @@ from PyObjCTest.keyvaluehelper import (
     PyObjCTest_KVBaseClass,
 )
 from .objectint import OC_ObjectInt
-from .test_metadata import NoObjCClass
 from .keyvalue import OC_RaisingKVC
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
 from PyObjCTest.testbndl import PyObjC_TestClass3 as STUB
 from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 
 
 class KeyValueClass2:

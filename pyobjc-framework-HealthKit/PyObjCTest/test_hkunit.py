@@ -3,9 +3,8 @@ import HealthKit
 
 
 class TestHKUnit(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKMetricPrefix)
-
         self.assertEqual(HealthKit.HKMetricPrefixNone, 0)
         self.assertEqual(HealthKit.HKMetricPrefixFemto, 13)
         self.assertEqual(HealthKit.HKMetricPrefixPico, 1)

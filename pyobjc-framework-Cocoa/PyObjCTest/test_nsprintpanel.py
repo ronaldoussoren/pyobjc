@@ -4,17 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPrintPanel(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSPrintPanelAccessorySummaryKey, str)
-        self.assertIsTypedEnum(AppKit.NSPrintPanelJobStyleHint, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPrintPanelOptions)
-
-    def testProtocols(self):
-        self.assertProtocolExists("NSPrintPanelAccessorizing")
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSPrintPanelShowsCopies, 0x01)
         self.assertEqual(AppKit.NSPrintPanelShowsPageRange, 0x02)
         self.assertEqual(AppKit.NSPrintPanelShowsPaperSize, 0x04)
@@ -22,28 +13,28 @@ class TestNSPrintPanel(TestCase):
         self.assertEqual(AppKit.NSPrintPanelShowsScaling, 0x10)
         self.assertEqual(AppKit.NSPrintPanelShowsPageSetupAccessory, 0x100)
         self.assertEqual(AppKit.NSPrintPanelShowsPreview, 0x20000)
-
-        self.assertIsInstance(AppKit.NSPrintPhotoJobStyleHint, str)
+        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
 
         self.assertIsEnumType(AppKit.NSPrintPanelResult)
         self.assertEqual(AppKit.NSPrintPanelResultCancelled, 0)
         self.assertEqual(AppKit.NSPrintPanelResultPrinted, 1)
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPrintPanelAccessorySummaryKey, str)
+        self.assertIsTypedEnum(AppKit.NSPrintPanelJobStyleHint, str)
+
+    def test_constants(self):
+        self.assertIsInstance(AppKit.NSPrintPhotoJobStyleHint, str)
+
         self.assertIsInstance(AppKit.NSPrintPanelAccessorySummaryItemNameKey, str)
         self.assertIsInstance(
             AppKit.NSPrintPanelAccessorySummaryItemDescriptionKey, str
         )
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(AppKit.NSPrintPanelShowsPrintSelection, 1 << 5)
-
         self.assertIsInstance(AppKit.NSPrintAllPresetsJobStyleHint, str)
         self.assertIsInstance(AppKit.NSPrintNoPresetsJobStyleHint, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_,  # noqa: B950
             3,
@@ -62,3 +53,6 @@ class TestNSPrintPanel(TestCase):
             2,
             b"vq",
         )
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSPrintPanelAccessorizing", AppKit)

@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata, _quartzcore
+    from . import _metadata, _QuartzCore
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="Quartz.QuartzCore",
@@ -22,7 +22,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _quartzcore,
+            _QuartzCore,
             Foundation,
         ),
         metadict=_metadata.__dict__,
@@ -39,7 +39,7 @@ def _setup():
     def CIVector__getitem__(self, idx):
         if isinstance(idx, slice):
             start, stop, step = idx.indices(self.count())
-            return [self[i] for i in range(start, stop, step)]
+            return tuple(self[i] for i in range(start, stop, step))
 
         if idx < 0:
             new = self.count() + idx
@@ -47,6 +47,8 @@ def _setup():
                 raise IndexError(idx)
             idx = new
 
+        if idx >= self.count():
+            raise IndexError(idx)
         return self.valueAtIndex_(idx)
 
     objc.addConvenienceForClass(

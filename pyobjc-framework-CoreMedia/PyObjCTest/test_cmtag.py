@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
 
 
 class TestCMTag(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMedia.CMTagError)
         self.assertEqual(CoreMedia.kCMTagError_ParamErr, -15730)
         self.assertEqual(CoreMedia.kCMTagError_AllocationFailed, -15731)
@@ -125,5 +125,14 @@ class TestCMTag(TestCase):
         self.assertResultIsCFRetained(CoreMedia.CMTagCopyAsDictionary)
         CoreMedia.CMTagMakeFromDictionary
 
-        CoreMedia.CMTAG_IS_VALID
+        tag = CoreMedia.CMTag(dataType=CoreMedia.kCMTagDataType_Invalid)
+        self.assertFalse(CoreMedia.CMTAG_IS_VALID(tag))
+        self.assertFalse(CoreMedia.CMTagIsValid(tag))
+        self.assertTrue(CoreMedia.CMTAG_IS_INVALID(tag))
+
+        tag.dataType = CoreMedia.kCMTagDataType_OSType
+        self.assertTrue(CoreMedia.CMTAG_IS_VALID(tag))
+        self.assertTrue(CoreMedia.CMTagIsValid(tag))
+        self.assertFalse(CoreMedia.CMTAG_IS_INVALID(tag))
+
         CoreMedia.CMTAG_IS_INVALID

@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVPlayerOutputHelper(AVFoundation.NSObject):
@@ -15,13 +15,12 @@ class TestAVPlayerOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVPlayerOutput(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(
             AVFoundation.AVPlayerItemLegibleOutputTextStylingResolution, str
         )
 
-    @min_os_level("10.9")
-    def testConstants10_9(self):
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
             str,  # noqa: B950
@@ -31,8 +30,7 @@ class TestAVPlayerOutput(TestCase):
             str,
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVPlayerItemOutput.suppressesPlayerRendering
         )
@@ -52,12 +50,16 @@ class TestAVPlayerOutput(TestCase):
             1,
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("AVPlayerItemOutputPullDelegate")
-        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemMetadataOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemOutputPushDelegate")
-        self.assertProtocolExists("AVPlayerItemRenderedLegibleOutputPushDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("AVPlayerItemOutputPullDelegate", AVFoundation)
+        self.assertProtocolExists("AVPlayerItemLegibleOutputPushDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVPlayerItemMetadataOutputPushDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVPlayerItemOutputPushDelegate", AVFoundation)
+        self.assertProtocolExists(
+            "AVPlayerItemRenderedLegibleOutputPushDelegate", AVFoundation
+        )
 
     def test_protocol_methods(self):
         self.assertArgHasType(

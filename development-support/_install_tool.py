@@ -68,6 +68,17 @@ def build_project(project: str, extra_arg: str | None) -> bool:
     if os.path.exists(os.path.join(proj_dir, "build")):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
+    # Check that the project is compatible
+    info = subprocess.run(
+        [sys.executable, "setup.py", "build_py"],
+        cwd=proj_dir,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+    )
+    if info.returncode == 1 and b"only supported on" in info.stderr:
+        print(f"{RED}Skipping {project!r}, {info.stderr.decode()}{RESET}")
+        return True
+
     print(f"Installing {project!r} using {sys.executable!r}, {extra_arg}")
     status = subprocess.call(
         [

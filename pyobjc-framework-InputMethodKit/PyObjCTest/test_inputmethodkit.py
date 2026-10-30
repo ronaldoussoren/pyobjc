@@ -8,7 +8,7 @@ import objc
 
 
 class TestInputMethodKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(InputMethodKit, "IMKInputController")
         self.assertIsInstance(InputMethodKit.IMKInputController, objc.objc_class)
 
@@ -16,18 +16,17 @@ class TestInputMethodKit(TestCase):
         self.assertHasAttr(InputMethodKit, "IMKCandidates")
         self.assertIsInstance(InputMethodKit.IMKCandidates, objc.objc_class)
 
-    def testValues(self):
+    def test_constants(self):
         self.assertHasAttr(InputMethodKit, "kIMKScrollingGridCandidatePanel")
         self.assertIsInstance(InputMethodKit.kIMKScrollingGridCandidatePanel, int)
         self.assertEqual(InputMethodKit.kIMKScrollingGridCandidatePanel, 2)
 
-    def testVariables(self):
         self.assertHasAttr(InputMethodKit, "IMKCandidatesOpacityAttributeName")
         self.assertIsInstance(InputMethodKit.IMKCandidatesOpacityAttributeName, str)
 
-    def testProtocols2(self):
-        self.assertProtocolExists("IMKMouseHandling")
-        self.assertProtocolExists("IMKStateSetting")
+    def test_protocols2(self):
+        self.assertProtocolExists("IMKMouseHandling", InputMethodKit)
+        self.assertProtocolExists("IMKStateSetting", InputMethodKit)
 
 
 class TestCallableMetadata(TestCase):

@@ -17,14 +17,14 @@ class TestPLPreviewPanelHelper(Quartz.NSObject):
 
 class TestQLPreviewPanel(TestCase):
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(Quartz.QLPreviewPanel.isInFullScreenMode)
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("QLPreviewPanelDataSource")
+        self.assertProtocolExists("QLPreviewPanelDataSource", Quartz)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestPLPreviewPanelHelper.previewPanel_handleEvent_)
 
         self.assertResultHasType(

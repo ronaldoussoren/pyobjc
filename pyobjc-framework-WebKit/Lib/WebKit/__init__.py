@@ -62,6 +62,10 @@ def _setup():
         ("WKWebExtensionTabConfiguration", b"new"),
         ("WKWebExtensionWindowConfiguration", b"init"),
         ("WKWebExtensionWindowConfiguration", b"new"),
+        ("WKJSHandle", b"init"),
+        ("WKJSHandle", b"new"),
+        ("WKDOMNodeSnapshot", b"init"),
+        ("WKDOMNodeSnapshot", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

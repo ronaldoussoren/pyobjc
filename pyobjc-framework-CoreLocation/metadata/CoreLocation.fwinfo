@@ -21,10 +21,6 @@
    "kCLLocationAccuracyThreeKilometers": { "typestr": "d" },
    "kCLLocationCoordinate2DInvalid": { "typestr": "{CLLocationCoordinate2D=dd}" }
   },
-  "enum": {
-    "CLActivityTypeAirborne": { "value": 5 },
-    "kCLAuthorizationStatusAuthorizedAlways": { "value": 3 }
-  },
   "classes": {
    "CLRegion": {
     "methods": [
@@ -322,7 +318,6 @@
     ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "CLLocationCoordinate2DIsValid": {
     "retval": {
@@ -341,7 +336,6 @@
      "1": { "type_override": "d" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

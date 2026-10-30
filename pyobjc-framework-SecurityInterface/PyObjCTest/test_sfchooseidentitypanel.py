@@ -22,6 +22,8 @@ class TestSFChooseIdentityPanel(TestCase):
         self.assertArgIsBOOL(SecurityInterface.SFChooseIdentityPanel.setShowsHelp_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFChooseIdentityPanel.showsHelp)
 
+    def test_protocol_methods(self):
+        # Informal protocol
         self.assertResultIsBOOL(
             TestSFChooseIdentityPanelHelper.chooseIdentityPanelShowHelp_
         )

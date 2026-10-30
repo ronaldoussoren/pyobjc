@@ -11,6 +11,8 @@ extern PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable, v
                                                           PyObjCMethodSignature*);
 extern PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject*);
 
+extern void* PyObjCFunc_GetCallable(PyObject*);
+
 extern int PyObjCFunc_Setup(PyObject* module);
 
 NS_ASSUME_NONNULL_END

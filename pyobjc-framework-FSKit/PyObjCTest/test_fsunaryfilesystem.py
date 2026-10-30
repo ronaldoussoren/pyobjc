@@ -16,7 +16,7 @@ class TestFSUnaryFileSystemHelper(FSKit.NSObject):
 
 class TestFSUnaryFileSystem(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("FSUnaryFileSystemOperations")
+        self.assertProtocolExists("FSUnaryFileSystemOperations", FSKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

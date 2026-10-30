@@ -4,10 +4,10 @@ import objc
 
 
 class TestCTRubyAnnotation(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTRubyAnnotationRef, objc.objc_class)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreText.kCTRubyAlignmentInvalid, 255)
         self.assertEqual(CoreText.kCTRubyAlignmentAuto, 0)
         self.assertEqual(CoreText.kCTRubyAlignmentStart, 1)
@@ -29,12 +29,12 @@ class TestCTRubyAnnotation(TestCase):
         self.assertEqual(CoreText.kCTRubyPositionInline, 3)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(CoreText.kCTRubyAnnotationSizeFactorAttributeName, str)
         self.assertIsInstance(CoreText.kCTRubyAnnotationScaleToFitAttributeName, str)
 
     @min_os_level("10.10")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreText.CTRubyAnnotationGetTypeID(), int)
 
         self.assertResultIsCFRetained(CoreText.CTRubyAnnotationCreate)
@@ -54,5 +54,5 @@ class TestCTRubyAnnotation(TestCase):
         self.assertResultIsNotCFRetained(CoreText.CTRubyAnnotationGetTextForPosition)
 
     @min_os_level("10.12")
-    def testFunctions10_12(self):
+    def test_functions10_12(self):
         self.assertResultIsCFRetained(CoreText.CTRubyAnnotationCreateWithAttributes)

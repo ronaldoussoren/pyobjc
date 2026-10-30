@@ -1,6 +1,6 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTypesetterHelper(AppKit.NSTypesetter):
@@ -38,10 +38,8 @@ class TestNSTypesetterHelper(AppKit.NSTypesetter):
 
 
 class TestNSTypesetter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTypesetterControlCharacterAction)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSTypesetterZeroAdvancementAction, (1 << 0))
         self.assertEqual(AppKit.NSTypesetterWhitespaceAction, (1 << 1))
         self.assertEqual(AppKit.NSTypesetterHorizontalTabAction, (1 << 2))
@@ -49,7 +47,7 @@ class TestNSTypesetter(TestCase):
         self.assertEqual(AppKit.NSTypesetterParagraphBreakAction, (1 << 4))
         self.assertEqual(AppKit.NSTypesetterContainerBreakAction, (1 << 5))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsIn(AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
         self.assertArgSizeInArg(
             AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
@@ -295,8 +293,6 @@ class TestNSTypesetter(TestCase):
             objc._C_CGFloat,
         )
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
         self.assertArgHasType(
             AppKit.NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,  # noqa: B950
             2,

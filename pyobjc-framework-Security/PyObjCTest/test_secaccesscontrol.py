@@ -25,15 +25,9 @@ class TestSecAccessControl(TestCase):
 
     @min_os_level("10.10")
     def test_functions(self):
-        self.assertResultHasType(Security.SecAccessControlCreateWithFlags, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecAccessControlCreateWithFlags)
-        self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecAccessControlCreateWithFlags, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecAccessControlCreateWithFlags, 2, objc._C_NSUInteger
-        )
-        self.assertArgHasType(
+        self.assertArgIsOut(
             Security.SecAccessControlCreateWithFlags,
             3,
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
+        self.assertArgIsCFRetained(Security.SecAccessControlCreateWithFlags, 3)

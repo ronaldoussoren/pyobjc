@@ -7,7 +7,7 @@ import objc
 
 
 class TestCGLayer(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGLayerRef)
 
     def setUp(self):
@@ -29,7 +29,7 @@ class TestCGLayer(TestCase):
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(Quartz.CGLayerCreateWithContext)
         layer = Quartz.CGLayerCreateWithContext(
             self.context, Quartz.CGSize(50, 100), None

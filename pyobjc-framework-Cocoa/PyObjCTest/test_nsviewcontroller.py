@@ -4,11 +4,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSViewController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSViewControllerTransitionOptions)
+        self.assertEqual(AppKit.NSViewControllerTransitionNone, 0x0)
+        self.assertEqual(AppKit.NSViewControllerTransitionCrossfade, 0x1)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideUp, 0x10)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideDown, 0x20)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideLeft, 0x40)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideRight, 0x80)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideForward, 0x140)
+        self.assertEqual(AppKit.NSViewControllerTransitionSlideBackward, 0x180)
+        self.assertEqual(AppKit.NSViewControllerTransitionAllowUserInteraction, 0x1000)
 
-    @min_os_level("10.5")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             AppKit.NSViewController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
             1,
@@ -23,7 +31,7 @@ class TestNSViewController(TestCase):
         self.assertResultIsBOOL(AppKit.NSViewController.commitEditing)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSViewController.isViewLoaded)
 
         self.assertArgIsBlock(
@@ -33,24 +41,12 @@ class TestNSViewController(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsBOOL(
             AppKit.NSViewController.presentViewController_asPopoverRelativeToRect_ofView_preferredEdge_behavior_hasFullSizeContent_,
             5,
         )
 
     @min_os_level("10.10")
-    def testProtocols10_10(self):
-        self.assertProtocolExists("NSViewControllerPresentationAnimator")
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertEqual(AppKit.NSViewControllerTransitionNone, 0x0)
-        self.assertEqual(AppKit.NSViewControllerTransitionCrossfade, 0x1)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideUp, 0x10)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideDown, 0x20)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideLeft, 0x40)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideRight, 0x80)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideForward, 0x140)
-        self.assertEqual(AppKit.NSViewControllerTransitionSlideBackward, 0x180)
-        self.assertEqual(AppKit.NSViewControllerTransitionAllowUserInteraction, 0x1000)
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSViewControllerPresentationAnimator", AppKit)

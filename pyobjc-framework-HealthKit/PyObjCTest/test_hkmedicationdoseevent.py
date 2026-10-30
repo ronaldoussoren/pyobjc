@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKMedicationDoseEvent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKMedicationDoseEventLogStatus)
         self.assertEqual(HealthKit.HKMedicationDoseEventLogStatusNotInteracted, 1)
         self.assertEqual(HealthKit.HKMedicationDoseEventLogStatusNotificationNotSent, 2)

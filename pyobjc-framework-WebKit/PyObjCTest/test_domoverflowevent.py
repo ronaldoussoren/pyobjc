@@ -3,12 +3,12 @@ import WebKit
 
 
 class TestDOMOverflowEvent(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_HORIZONTAL, 0)
         self.assertEqual(WebKit.DOM_VERTICAL, 1)
         self.assertEqual(WebKit.DOM_BOTH, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMOverflowEvent.horizontalOverflow)
         self.assertResultIsBOOL(WebKit.DOMOverflowEvent.verticalOverflow)
 

@@ -26,6 +26,10 @@ class TestMEExtensionPlugin(TestCase):
             MediaExtension.kMEFormatReaderFileNameExtensionArrayKey,
             "MTFileNameExtensionArray",
         )
+        self.assertEqual(
+            MediaExtension.kMEFormatReaderSidecarFileNameExtensionArrayKey,
+            "MTSidecarFileNameExtensionArray",
+        )
         self.assertEqual(MediaExtension.kMEFormatReaderObjectNameKey, "ObjectName")
         self.assertEqual(
             MediaExtension.kMEVideoDecoderClassImplementationIDKey,

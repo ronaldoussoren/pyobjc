@@ -1,25 +1,31 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestNSObjCRuntime(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Foundation.NSExceptionName, str)
-        self.assertIsTypedEnum(Foundation.NSRunLoopMode, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSComparisonResult)
-        self.assertIsEnumType(Foundation.NSEnumerationOptions)
-        self.assertIsEnumType(Foundation.NSQualityOfService)
-        self.assertIsEnumType(Foundation.NSSortOptions)
+        self.assertEqual(Foundation.NSOrderedAscending, -1)
+        self.assertEqual(Foundation.NSOrderedSame, 0)
+        self.assertEqual(Foundation.NSOrderedDescending, 1)
 
-    def testConstants(self):
+        self.assertIsEnumType(Foundation.NSEnumerationOptions)
+        self.assertEqual(Foundation.NSEnumerationConcurrent, 1 << 0)
+        self.assertEqual(Foundation.NSEnumerationReverse, 1 << 1)
+
+        self.assertIsEnumType(Foundation.NSSortOptions)
+        self.assertEqual(Foundation.NSSortConcurrent, 1 << 0)
+        self.assertEqual(Foundation.NSSortStable, 1 << 4)
+
+        self.assertIsEnumType(Foundation.NSQualityOfService)
         self.assertEqual(Foundation.NSQualityOfServiceUserInteractive, 0x21)
         self.assertEqual(Foundation.NSQualityOfServiceUserInitiated, 0x19)
         self.assertEqual(Foundation.NSQualityOfServiceUtility, 0x11)
         self.assertEqual(Foundation.NSQualityOfServiceBackground, 0x09)
         self.assertEqual(Foundation.NSQualityOfServiceDefault, -1)
+
+    def test_defines(self):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_0, 397.40)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_1, 425.00)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_1_1, 425.00)
@@ -97,6 +103,24 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.NSFoundationVersionNumber10_11_3, 1256.1)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_11_4, 1258)
         self.assertEqual(Foundation.NSFoundationVersionNumber10_11_Max, 1299)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5, 677.00)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_1, 677.10)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_2, 677.15)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_3, 677.19)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_4, 677.19)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_5, 677.21)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_6, 677.22)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_7, 833.10)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_1, 833.10)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_2, 833.20)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_3, 833.24)
+        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_4, 833.25)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSExceptionName, str)
+        self.assertIsTypedEnum(Foundation.NSRunLoopMode, str)
+
+    def test_constants(self):
 
         self.assertIsInstance(Foundation.NSFoundationVersionNumber, float)
         self.assertIsInstance(Foundation.NSIntegerMax, int)
@@ -109,36 +133,9 @@ class TestNSObjCRuntime(TestCase):
         self.assertTrue(objc.YES)
         self.assertFalse(objc.NO)
 
-        self.assertEqual(Foundation.NSOrderedAscending, -1)
-        self.assertEqual(Foundation.NSOrderedSame, 0)
-        self.assertEqual(Foundation.NSOrderedDescending, 1)
-
         self.assertEqual(Foundation.NSNotFound, Foundation.NSIntegerMax)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5, 677.00)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_1, 677.10)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_2, 677.15)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_3, 677.19)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_4, 677.19)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_5, 677.21)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_5_6, 677.22)
-
-        self.assertEqual(Foundation.NSEnumerationConcurrent, 1 << 0)
-        self.assertEqual(Foundation.NSEnumerationReverse, 1 << 1)
-        self.assertEqual(Foundation.NSSortConcurrent, 1 << 0)
-        self.assertEqual(Foundation.NSSortStable, 1 << 4)
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_7, 833.10)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_1, 833.10)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_2, 833.20)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_3, 833.24)
-        self.assertEqual(Foundation.NSFoundationVersionNumber10_7_4, 833.25)
-
-    def testSelectorAccess(self):
+    def test_selector_access(self):
         v = Foundation.NSStringFromSelector("description")
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
@@ -147,7 +144,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 
-    def testClassAccess(self):
+    def test_class_access(self):
         v = Foundation.NSStringFromClass(Foundation.NSObject)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "NSObject")
@@ -156,20 +153,20 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, objc.objc_class)
         self.assertEqual(v, Foundation.NSDictionary)
 
-    def testProtocolAccess(self):
+    def test_protocols_access(self):
         p = Foundation.NSProtocolFromString("NSObject")
         self.assertIsInstance(p, objc.formal_protocol)
         v = Foundation.NSStringFromProtocol(p)
         self.assertIsInstance(v, str)
         self.assertEqual(v, "NSObject")
 
-    def testTypeInfo(self):
+    def test_typesInfo(self):
         rest, size, align = Foundation.NSGetSizeAndAlignment(b"ii", None, None)
         self.assertEqual(rest, b"i")
         self.assertIsInstance(size, int)
         self.assertIsInstance(align, int)
 
-    def testMinMax(self):
+    def test_min_max(self):
         self.assertEqual(Foundation.MAX(1, 2), 2)
         self.assertEqual(Foundation.MAX(2, 1), 2)
         self.assertEqual(Foundation.MAX("a", "b"), "b")
@@ -180,5 +177,5 @@ class TestNSObjCRuntime(TestCase):
         self.assertEqual(Foundation.ABS(-1), 1)
         self.assertEqual(Foundation.ABS(-1.0), 1.0)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgIsPrintf(Foundation.NSLog, 0)

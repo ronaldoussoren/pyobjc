@@ -4,38 +4,37 @@ import SceneKit
 
 
 class TestSCNGeometry(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNGeometryPrimitiveType)
-        self.assertIsEnumType(SceneKit.SCNTessellationSmoothingMode)
-
-    def testConstants(self):
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangles, 0)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeTriangleStrip, 1)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypeLine, 2)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePoint, 3)
         self.assertEqual(SceneKit.SCNGeometryPrimitiveTypePolygon, 4)
 
+        self.assertIsEnumType(SceneKit.SCNTessellationSmoothingMode)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModeNone, 0)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModePNTriangles, 1)
+        self.assertEqual(SceneKit.SCNTessellationSmoothingModePhong, 2)
+
+    def test_constants(self):
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertex, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticNormal, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticColor, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticTexcoord, str)
 
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModeNone, 0)
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModePNTriangles, 1)
-        self.assertEqual(SceneKit.SCNTessellationSmoothingModePhong, 2)
-
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertexCrease, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticEdgeCrease, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneWeights, str)
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneIndices, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticTangent, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             SceneKit.SCNGeometrySource.geometrySourceWithData_semantic_vectorCount_floatComponents_componentsPerVector_bytesPerComponent_dataOffset_dataStride_,  # noqa: B950
             3,
@@ -65,7 +64,7 @@ class TestSCNGeometry(TestCase):
         self.assertResultIsBOOL(SceneKit.SCNGeometrySource.floatComponents)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(SceneKit.SCNGeometry.wantsAdaptiveSubdivision)
         self.assertArgIsBOOL(SceneKit.SCNGeometry.setWantsAdaptiveSubdivision_, 0)
 
@@ -76,7 +75,7 @@ class TestSCNGeometry(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNGeometryTessellator.setScreenSpace_, 0)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsBOOL(
             SceneKit.SCNGeometryElement.geometryElementWithData_primitiveType_primitiveCount_indicesChannelCount_interleavedIndicesChannels_bytesPerIndex_,
             4,

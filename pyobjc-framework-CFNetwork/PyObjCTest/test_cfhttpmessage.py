@@ -1,40 +1,35 @@
 import CFNetwork
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCFHTTPMessage(TestCase):
-    @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_constants(self):
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNTLM, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate, str)
+
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate2, str)
         self.assertIsInstance(
             CFNetwork.kCFHTTPAuthenticationSchemeXMobileMeAuthToken, str
         )
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNTLM, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate, str)
-
-    @expectedFailure
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)
-        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeKerberos, str)
-
-    @min_os_level("11.0")
-    def testConstants11_0(self):
-        self.assertIsInstance(CFNetwork.kCFHTTPVersion3_0, str)
-
-    def testConstants(self):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion1_0, str)
         self.assertIsInstance(CFNetwork.kCFHTTPVersion1_1, str)
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeBasic, str)
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeDigest, str)
 
-    def testTypes(self):
+    @min_os_level("10.10")
+    def test_constants10_10(self):
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeKerberos, str)
+
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion3_0, str)
+
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFHTTPMessageRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CFNetwork.CFHTTPMessageGetTypeID(), int)
 
         url = CFNetwork.CFURLCreateWithString(None, "http://www.python.org/", None)

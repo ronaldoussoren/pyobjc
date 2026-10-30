@@ -46,18 +46,18 @@ class TestMTLFXSpatialScalerHelper(MetalFX.NSObject):
 
 
 class TestMTLFXSpatialScaler(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalFX.MTLFXSpatialScalerColorProcessingMode)
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModePerceptual, 0)
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeLinear, 1)
         self.assertEqual(MetalFX.MTLFXSpatialScalerColorProcessingModeHDR, 2)
 
     def test_protocols(self):
-        self.assertProtocolExists("MTLFXSpatialScaler")
+        self.assertProtocolExists("MTLFXSpatialScaler", MetalFX)
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("MTLFXSpatialScalerBase")
+        self.assertProtocolExists("MTLFXSpatialScalerBase", MetalFX)
 
     def test_protocol_methods(self):
         self.assertResultHasType(
@@ -104,3 +104,10 @@ class TestMTLFXSpatialScaler(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsMetal4FX_)
         self.assertResultIsBOOL(MetalFX.MTLFXSpatialScalerDescriptor.supportsDevice_)
+
+        self.assertResultIsRetained(
+            MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_
+        )
+        self.assertResultIsRetained(
+            MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_compiler_
+        )

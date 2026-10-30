@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata, _callbacks
+    from . import _metadata, _FSEvents
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="FSEvents",
@@ -22,7 +22,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _callbacks,
+            _FSEvents,
             Foundation,
         ),
         metadict=_metadata.__dict__,

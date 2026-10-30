@@ -26,318 +26,47 @@
     "gettypeid_func": "CFNetServiceGetTypeID"
    }
   },
-  "classes": {},
-  "enum": {
-   "kCFNetServicesErrorMissingRequiredConfiguration": { "value": -72008 },
-   "kCFStreamSocketSecurityNone": {
-    "value": 0
-   },
-   "kCFStreamSocketSecuritySSLv2": {
-    "value": 1
-   },
-   "kCFStreamSocketSecuritySSLv3": {
-    "value": 2
-   },
-   "kCFStreamSocketSecuritySSLv23": {
-    "value": 3
-   },
-   "kCFStreamSocketSecurityTLSv1": {
-    "value": 4
-   },
-   "kCFURLErrorAppTransportSecurityRequiresSecureConnection": {
-    "value": -1022
-   },
-   "kCFURLErrorFileOutsideSafeArea": {
-    "value": -1104
-   }
-  },
   "externs": {
-   "kCFHTTPAuthenticationSchemeOAuth1": { "typestr": "@" },
-   "kCFStreamErrorDomainSOCKS": { "typestr": "i" },
-   "kCFStreamErrorDomainSSL": { "typestr": "i" },
-   "kCFStreamPropertySOCKSPassword": { "typestr": "@" },
-   "kCFStreamPropertySOCKSProxy": { "typestr": "@" },
-   "kCFStreamPropertySOCKSProxyHost": { "typestr": "@" },
-   "kCFStreamPropertySOCKSProxyPort": { "typestr": "@" },
-   "kCFStreamPropertySOCKSUser": { "typestr": "@" },
-   "kCFStreamPropertySOCKSVersion": { "typestr": "@" },
-   "kCFStreamPropertyShouldCloseNativeSocket": { "typestr": "@" },
-   "kCFStreamPropertySocketSecurityLevel": { "typestr": "@" },
-   "kCFStreamSocketSOCKSVersion4": { "typestr": "@" },
-   "kCFStreamSocketSOCKSVersion5": { "typestr": "@" },
-   "kCFStreamSocketSecurityLevelNegotiatedSSL": { "typestr": "@" },
-   "kCFStreamSocketSecurityLevelNone": { "typestr": "@" },
-   "kCFStreamSocketSecurityLevelSSLv2": { "typestr": "@" },
-   "kCFStreamSocketSecurityLevelSSLv3": { "typestr": "@" },
-   "kCFStreamSocketSecurityLevelTLSv1": { "typestr": "@" },
-   "kCFHTTPVersion2_0": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamNetworkServiceTypeAVStreaming": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamNetworkServiceTypeCallSignaling": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamNetworkServiceTypeResponsiveAV": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamNetworkServiceTypeResponsiveData": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamPropertyAllowConstrainedNetworkAccess": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamPropertyAllowExpensiveNetworkAccess": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamPropertyConnectionIsExpensive": {
-    "typestr": "^{__CFString=}"
-   },
-   "kCFStreamPropertySocketExtendedBackgroundIdleMode": {
-    "typestr": "^{__CFString=}"
-   }
+   "kCFHTTPAuthenticationSchemeOAuth1": { "typestr": "@", "removed": 1013 }
   },
-  "formal_protocols": {},
   "functions": {
    "CFFTPCreateParsedResourceListing": {
     "args": {
-     "0": {},
      "1": { "type_override": "n^v", "type_modifier":"n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CFHTTPAuthenticationAppliesToRequest": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CFHTTPAuthenticationCopyDomains": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPAuthenticationCopyMethod": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPAuthenticationCopyRealm": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPAuthenticationCreateFromResponse": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CFHTTPAuthenticationIsValid": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    }
-   },
-   "CFHTTPAuthenticationRequiresAccountDomain": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPAuthenticationRequiresOrderedRequests": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPAuthenticationRequiresUserNameAndPassword": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPMessageAddAuthentication": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
-     "4": {}
     }
    },
    "CFHTTPMessageAppendBytes": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "type_override": "^v" }
     }
    },
    "CFHTTPMessageApplyCredentialDictionary": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
    "CFHTTPMessageApplyCredentials": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {},
      "4": { "type_modifier": "o" }
-    }
-   },
-   "CFHTTPMessageCopyAllHeaderFields": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyBody": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyHeaderFieldValue": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyRequestMethod": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyRequestURL": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyResponseStatusLine": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopySerializedMessage": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCopyVersion": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCreateCopy": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCreateEmpty": {
-    "args": {
-     "0": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCreateRequest": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageCreateResponse": {
-    "args": {
-     "0": {},
-     "2": {},
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHTTPMessageGetResponseStatusCode": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPMessageIsHeaderComplete": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPMessageIsRequest": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHTTPMessageSetBody": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CFHTTPMessageSetHeaderFieldValue": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CFHTTPReadStreamSetProxy": {
     "args": {
      "0": {
-      "type_override": "^{__CFReadStream=}"
+      "type_override": "^{__CFAllocator=}"
      },
      "1": {
       "type_override": "@"
      }
+    },
+    "retval": {
+      "type_override": "^{__CFReadStream=}"
     }
    },
    "CFHTTPReadStreamSetRedirectsAutomatically": {
@@ -347,69 +76,23 @@
      }
     }
    },
-   "CFHostCancelInfoResolution": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFHostCreateCopy": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHostCreateWithAddress": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFHostCreateWithName": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
    "CFHostGetAddressing": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "CFHostGetNames": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    },
-    "retval": {}
+    }
    },
    "CFHostGetReachability": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
-    },
-    "retval": {}
-   },
-   "CFHostScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CFHostSetClient": {
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -430,63 +113,21 @@
         "type": "v"
        }
       }
-     },
-     "2": {}
+     }
     }
    },
    "CFHostStartInfoResolution": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
-    }
-   },
-   "CFHostUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CFNetDiagnosticCopyNetworkStatusPassively": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
-   "CFNetDiagnosticCreateWithStreams": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetDiagnosticCreateWithURL": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetDiagnosticDiagnoseProblemInteractively": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFNetDiagnosticSetName": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
    "CFNetServiceBrowserCreate": {
-    "ignore": true,
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -511,35 +152,16 @@
        }
       }
      },
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceBrowserInvalidate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFNetServiceBrowserScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "2": { "type_override": "@", "doc": "Can be an arbitrary object, the C context is managed automaticly"}
     }
    },
    "CFNetServiceBrowserSearchForDomains": {
     "args": {
-     "0": {},
      "2": {"type_modifier": "o" }
     }
    },
    "CFNetServiceBrowserSearchForServices": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {},
      "3": { "type_modifier": "o" }
     }
    },
@@ -547,79 +169,6 @@
     "args": {
      "0": {},
      "1": {"type_modifier": "o" }
-    }
-   },
-   "CFNetServiceBrowserUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
-   "CFNetServiceCancel": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFNetServiceCreate": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {},
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceCreateCopy": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceCreateDictionaryWithTXTData": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceCreateTXTDataWithDictionary": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceGetAddressing": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CFNetServiceGetDomain": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CFNetServiceGetName": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CFNetServiceGetPortNumber": {
-    "args": {
-     "0": {}
     }
    },
    "CFNetServiceGetProtocolSpecificInformation": {
@@ -632,29 +181,8 @@
      "type_override": "@"
     }
    },
-   "CFNetServiceGetTXTData": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CFNetServiceGetTargetHost": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
-   "CFNetServiceGetType": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
-   },
    "CFNetServiceMonitorCreate": {
-    "ignore": true,
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -682,78 +210,41 @@
        }
       }
      },
-     "3": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetServiceMonitorInvalidate": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFNetServiceMonitorScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "3": { "type_override": "@", "doc": "Can be an arbitrary object, the C context is managed automaticly"}
     }
    },
    "CFNetServiceMonitorStart": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o"}
     }
    },
    "CFNetServiceMonitorStop": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o"}
-    }
-   },
-   "CFNetServiceMonitorUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
     }
    },
    "CFNetServiceRegister": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o" }
     }
    },
    "CFNetServiceRegisterWithOptions": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
    "CFNetServiceResolve": {
     "args": {
-     "0": {},
      "1": { "type_modifier": "o"}
     }
    },
    "CFNetServiceResolveWithTimeout": {
     "args": {
-     "0": {},
      "2": { "type_modifier": "o" }
     }
    },
-   "CFNetServiceScheduleWithRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
    "CFNetServiceSetClient": {
-    "ignore": true,
     "args": {
-     "0": {},
      "1": {
       "callable": {
        "arguments": {
@@ -772,7 +263,7 @@
        }
       }
      },
-     "2": {}
+     "2": { "type_override": "@", "doc": "Can be an arbitrary object, the C context is managed automaticly"}
     }
    },
    "CFNetServiceSetProtocolSpecificInformation": {
@@ -785,51 +276,17 @@
      }
     }
    },
-   "CFNetServiceSetTXTData": {
-    "args": {
-     "0": {},
-     "1": {}
-    }
-   },
-   "CFNetServiceUnscheduleFromRunLoop": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    }
-   },
    "CFNetworkCopyProxiesForAutoConfigurationScript": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "already_cfretained": true,
       "null_accepted": true,
       "type_modifier": "o"
      }
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetworkCopyProxiesForURL": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFNetworkCopySystemProxySettings": {
-    "retval": {
-     "already_cfretained": true
     }
    },
    "CFNetworkExecuteProxyAutoConfigurationScript": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -848,14 +305,11 @@
        }
       }
      },
-     "3": {}
-    },
-    "retval": {}
+     "3": { "type_override": "@", "doc": "Can be an arbitrary object, the C context is managed automaticly"}
+    }
    },
    "CFNetworkExecuteProxyAutoConfigurationURL": {
     "args": {
-     "0": {},
-     "1": {},
      "2": {
       "callable": {
        "arguments": {
@@ -874,36 +328,7 @@
        }
       }
      },
-     "3": {}
-    },
-    "retval": {}
-   },
-   "CFReadStreamCreateForHTTPRequest": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFReadStreamCreateForStreamedHTTPRequest": {
-    "args": {
-     "0": {},
-     "1": {},
-     "2": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
-   },
-   "CFReadStreamCreateWithFTPURL": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
+     "3": { "type_override": "@", "doc": "Can be an arbitrary object, the C context is managed automaticly"}
     }
    },
    "CFSocketStreamPairSetSecurityProtocol": {
@@ -916,42 +341,18 @@
      }
     }
    },
-   "CFSocketStreamSOCKSGetError": {
-    "args": {
-     "0": {}
-    }
-   },
-   "CFSocketStreamSOCKSGetErrorSubdomain": {
-    "args": {
-     "0": {}
-    }
-   },
    "CFStreamCreatePairWithSocketToCFHost": {
     "args": {
-     "0": {},
-     "1": {},
      "3": { "type_modifier": "o", "already_cfretained": true  },
      "4": { "type_modifier": "o" , "already_cfretained": true }
     }
    },
    "CFStreamCreatePairWithSocketToNetService": {
     "args": {
-     "0": {},
-     "1": {},
      "2": { "type_modifier": "o", "already_cfretained": true },
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
-   },
-   "CFWriteStreamCreateWithFTPURL": {
-    "args": {
-     "0": {},
-     "1": {}
-    },
-    "retval": {
-     "already_cfretained": true
-    }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

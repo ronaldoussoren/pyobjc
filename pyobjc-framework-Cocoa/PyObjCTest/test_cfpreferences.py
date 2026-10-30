@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPreferences(TestCase):
-    def testGetting(self):
+    def test_getting(self):
         v = CoreFoundation.CFPreferencesCopyAppValue(
             "Default Window Settings", "com.apple.Terminal"
         )
@@ -50,7 +50,7 @@ class TestPreferences(TestCase):
         )
         self.assertIs(v is True or v, False)
 
-    def testSetting(self):
+    def test_setting(self):
         prefsFn = os.path.expanduser("~/Library/Preferences/PyObjCTest.plist")
         if os.path.exists(prefsFn):
             os.unlink(prefsFn)
@@ -155,7 +155,7 @@ class TestPreferences(TestCase):
         self.assertIsInstance(keys, CoreFoundation.CFArrayRef)
         self.assertTrue("region" in keys or "version" in keys)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreFoundation.kCFPreferencesAnyApplication, str)
         self.assertIsInstance(CoreFoundation.kCFPreferencesCurrentApplication, str)
         self.assertIsInstance(CoreFoundation.kCFPreferencesAnyHost, str)

@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import FSKit
 
 
 class TestFSItem(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSItemAttribute)
         self.assertEqual(FSKit.FSItemAttributeType, 1 << 0)
         self.assertEqual(FSKit.FSItemAttributeMode, 1 << 1)
@@ -52,3 +52,7 @@ class TestFSItem(TestCase):
         self.assertResultIsBOOL(FSKit.FSItemSetAttributesRequest.wasAttributeConsumed_)
 
         self.assertResultIsBOOL(FSKit.FSItemGetAttributesRequest.isAttributeWanted_)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(FSKit.FSItem.tryReclaimWithBlock_, 0, b"v")

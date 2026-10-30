@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSFErrors(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(Speech.SFSpeechErrorCode)
         self.assertEqual(Speech.SFSpeechErrorCodeInternalServiceError, 1)
         self.assertEqual(Speech.SFSpeechErrorCodeAudioReadFailed, 2)

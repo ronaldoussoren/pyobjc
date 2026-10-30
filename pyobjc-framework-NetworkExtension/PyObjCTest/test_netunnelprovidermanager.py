@@ -4,9 +4,13 @@ import NetworkExtension
 
 class TestNETunnelProviderManager(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NETunnelProviderManager.loadAllFromPreferencesWithCompletionHandler_,
             0,
             b"v@@",
+        )
+
+        self.assertResultIsRetained(
+            NetworkExtension.NETunnelProviderManager.copyAppRules
         )

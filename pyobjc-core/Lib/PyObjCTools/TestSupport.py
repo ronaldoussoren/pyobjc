@@ -19,13 +19,23 @@ from sysconfig import get_config_var as _get_config_var
 
 import objc
 
-
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest
 __unittest = False
 
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
+
+
+class NoObjCClass(str):
+    @property
+    def __pyobjc_object__(self):
+        raise TypeError("Cannot proxy")
+
+
+class NotBool(int):
+    def __bool__(self):
+        raise TypeError("this is not a bool")
 
 
 def _typemap(tp):
@@ -244,7 +254,7 @@ def max_sdk_level(release):
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
     return _unittest.skipUnless(
-        v <= os_level_key(release), f"Requires build with SDK {release} or later"
+        v <= os_level_key(release), f"Requires build with SDK {release} or earlier"
     )
 
 
@@ -334,15 +344,19 @@ class TestCase(_unittest.TestCase):
         if hasattr(func, "__metadata__"):
             self.fail(f"{func} has automatic bindings")
 
-    def assertIsCFType(self, tp, message=None):
+    def assertIsCFType(self, tp, message=None, *, unique=True):
         if not isinstance(tp, objc.objc_class):
             self.fail(message or f"{tp!r} is not a CFTypeRef type")
 
-        if any(x is tp for x in _nscftype):
-            self.fail(message or f"{tp!r} is not a unique CFTypeRef type")
+        if unique:
+            if any(x is tp for x in _nscftype):
+                self.fail(message or f"{tp!r} is not a unique CFTypeRef type")
 
-        for cls in tp.__bases__:
-            if "NSCFType" in cls.__name__:
+            for cls in tp.__bases__:
+                if "NSCFType" in cls.__name__:
+                    return
+        else:
+            if "NSCFType" in tp.__name__:
                 return
 
         self.fail(message or f"{tp!r} is not a CFTypeRef type")
@@ -617,6 +631,15 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
+
             if not info["arguments"][argno + offset]["already_cfretained"]:
                 self.fail(
                     message or f"Argument {argno} of {method!r} is not cfretained"
@@ -630,7 +653,16 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
+
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
             if info["arguments"][argno + offset]["already_cfretained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is cfretained")
         except (KeyError, IndexError):
@@ -639,11 +671,27 @@ class TestCase(_unittest.TestCase):
     def assertResultIsCFRetained(self, method, message=None):
         info = method.__metadata__()
 
+        if not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval']['type']})"
+            )
+
         if not info.get("retval", {}).get("already_cfretained", False):
             self.fail(message or f"{method!r} is not cfretained")
 
     def assertResultIsNotCFRetained(self, method, message=None):
         info = method.__metadata__()
+        if not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval']['type']})"
+            )
+
         if info.get("retval", {}).get("already_cfretained", False):
             self.fail(message or f"{method!r} is cfretained")
 
@@ -655,6 +703,15 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
+
             if not info["arguments"][argno + offset]["already_retained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is not retained")
         except (KeyError, IndexError):
@@ -698,7 +755,16 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
+
         try:
+            if not any(
+                info["arguments"][argno + offset]["type"].startswith(tp)
+                for tp in (b"@", b"^", b"o^@", b"o^^")
+            ):
+                self.fail(
+                    message
+                    or f"Argument {argno} of {method!r} is not an object ({info['arguments'][argno + offset]['type']})"
+                )
             if info["arguments"][argno + offset]["already_retained"]:
                 self.fail(message or f"Argument {argno} of {method!r} is retained")
         except (KeyError, IndexError):
@@ -706,11 +772,29 @@ class TestCase(_unittest.TestCase):
 
     def assertResultIsRetained(self, method, message=None):
         info = method.__metadata__()
+
+        if "type" not in info["retval"] or not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^", b"o^@", b"o^^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval'].get('type')})"
+            )
+
         if not info.get("retval", {}).get("already_retained", False):
             self.fail(message or f"Result of {method!r} is not retained")
 
     def assertResultIsNotRetained(self, method, message=None):
         info = method.__metadata__()
+
+        if "type" not in info["retval"] or not any(
+            info["retval"]["type"].startswith(tp) for tp in (b"@", b"^")
+        ):
+            self.fail(
+                message
+                or f"Result of {method!r} is not an object ({info['retval'].get('type')})"
+            )
+
         if info.get("retval", {}).get("already_retained", False):
             self.fail(message or f"Result of {method!r} is retained")
 
@@ -1178,7 +1262,7 @@ class TestCase(_unittest.TestCase):
         elif not cls.__objc_final__:
             self.fail(f"{cls} is not a final class")
 
-    def assertProtocolExists(self, name):
+    def assertProtocolExists(self, name, mod=None, modalias=None):
         ok = True
         try:
             proto = objc.protocolNamed(name)
@@ -1192,6 +1276,20 @@ class TestCase(_unittest.TestCase):
         if not isinstance(proto, objc.formal_protocol):
             # Should never happen
             self.fail(f"Protocol {name!r} is not a protocol, but {type(proto)}")
+
+        if mod is not None:
+            if modalias is None:
+                modalias = name
+            try:
+                v = getattr(mod, modalias)
+            except AttributeError:
+                self.fail(f"{mod.__name__}.{modalias} does not exist")
+
+            else:
+                if v is not proto:
+                    self.fail(
+                        f"{mod.__name__}.{modalias} is not objc.protocolNamed({name!r}), but {v!r}"
+                    )
 
     def assertPickleRoundTrips(self, value):
         try:
@@ -1475,6 +1573,7 @@ class TestCase(_unittest.TestCase):
         exclude_attrs.add("CLFindMyAccessoryManager")
         exclude_attrs.add("CLGNSSStateQueryAssertionResponse")
         exclude_attrs.add("CLGnssDisablementAssertion")
+        exclude_attrs.add("CLSimulationManager")
         exclude_attrs.add("CLGnssExtensionsClient")
         exclude_attrs.add("CLIntersiloProxy")
         exclude_attrs.add("CLIntersiloProxyToInitiator")
@@ -1603,6 +1702,7 @@ class TestCase(_unittest.TestCase):
         exclude_attrs.add("MSVSegmentedDecoder")
         exclude_attrs.add("MSVSegmentedEncoder")
         exclude_attrs.add("MSVXPCConnection")
+        exclude_attrs.add("NSAdminPreference")
         exclude_attrs.add("NSAttributeDictionary")
         exclude_attrs.add("NSCTFont")
         exclude_attrs.add("NSCoreTypesetter")

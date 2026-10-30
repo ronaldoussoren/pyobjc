@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestBETextSelectionTypes(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BrowserEngineKit.BEGestureType)
         self.assertEqual(BrowserEngineKit.BEGestureTypeLoupe, 0)
         self.assertEqual(BrowserEngineKit.BEGestureTypeOneFingerTap, 1)

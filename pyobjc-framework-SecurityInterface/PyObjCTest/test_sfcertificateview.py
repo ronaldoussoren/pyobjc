@@ -1,9 +1,8 @@
 import SecurityInterface
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSFCertificateView(TestCase):
-    @expectedFailure
     def test_constants(self):
         # Constant is not present on 10.12
         self.assertHasAttr(

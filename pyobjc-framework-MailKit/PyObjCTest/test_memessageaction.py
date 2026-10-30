@@ -3,10 +3,8 @@ import MailKit
 
 
 class TestMEMessageAction(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(MailKit.MEMessageActionFlag)
-
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(MailKit.MEMessageActionMessageColor)
         self.assertEqual(MailKit.MEMessageActionMessageColorNone, 0)
         self.assertEqual(MailKit.MEMessageActionMessageColorGreen, 1)
         self.assertEqual(MailKit.MEMessageActionMessageColorYellow, 2)
@@ -16,6 +14,7 @@ class TestMEMessageAction(TestCase):
         self.assertEqual(MailKit.MEMessageActionMessageColorBlue, 6)
         self.assertEqual(MailKit.MEMessageActionMessageColorGray, 7)
 
+        self.assertIsEnumType(MailKit.MEMessageActionFlag)
         self.assertEqual(MailKit.MEMessageActionFlagNone, 0)
         self.assertEqual(MailKit.MEMessageActionFlagDefaultColor, 1)
         self.assertEqual(MailKit.MEMessageActionFlagRed, 2)

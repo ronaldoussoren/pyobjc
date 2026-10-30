@@ -14,9 +14,9 @@ class TestMTLFunctionHandleHelper(Metal.NSObject):
 class TestMTLFunctionHandle(TestCase):
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLFunctionHandle")
+        self.assertProtocolExists("MTLFunctionHandle", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLFunctionHandleHelper.functionType, objc._C_NSUInteger
         )

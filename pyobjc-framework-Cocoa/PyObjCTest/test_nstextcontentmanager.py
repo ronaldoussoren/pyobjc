@@ -27,7 +27,7 @@ class TestNSTextContentManagerHelper(AppKit.NSObject):
 
 
 class TestNSTextContentManager(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTextContentManagerEnumerationOptions)
         self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsNone, 0)
         self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsReverse, 1 << 0)
@@ -40,9 +40,9 @@ class TestNSTextContentManager(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("NSTextElementProvider")
-        self.assertProtocolExists("NSTextContentManagerDelegate")
-        self.assertProtocolExists("NSTextContentStorageDelegate")
+        self.assertProtocolExists("NSTextElementProvider", AppKit)
+        self.assertProtocolExists("NSTextContentManagerDelegate", AppKit)
+        self.assertProtocolExists("NSTextContentStorageDelegate", AppKit)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

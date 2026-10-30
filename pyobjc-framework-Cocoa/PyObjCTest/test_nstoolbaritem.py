@@ -8,16 +8,22 @@ class TestNSToolbarItemHelper(AppKit.NSObject):
 
 
 class TestNSToolbarItem(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSToolbarItemVisibilityPriority, int)
-        self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
+    def test_enums(self):
+        self.assertIsEnumType(AppKit.NSToolbarItemStyle)
+        self.assertEqual(AppKit.NSToolbarItemStylePlain, 0)
+        self.assertEqual(AppKit.NSToolbarItemStyleProminent, 1)
 
-    def testConstants(self):
+    def test_defines(self):
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityStandard, 0)
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityLow, -1000)
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityHigh, 1000)
         self.assertEqual(AppKit.NSToolbarItemVisibilityPriorityUser, 2000)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSToolbarItemVisibilityPriority, int)
+        self.assertIsTypedEnum(AppKit.NSToolbarItemIdentifier, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSToolbarSeparatorItemIdentifier, str)
         self.assertIsInstance(AppKit.NSToolbarSpaceItemIdentifier, str)
         self.assertIsInstance(AppKit.NSToolbarFlexibleSpaceItemIdentifier, str)
@@ -27,26 +33,22 @@ class TestNSToolbarItem(TestCase):
         self.assertIsInstance(AppKit.NSToolbarCustomizeToolbarItemIdentifier, str)
         self.assertIsInstance(AppKit.NSToolbarPrintItemIdentifier, str)
 
-        self.assertIsEnumType(AppKit.NSToolbarItemStyle)
-        self.assertEqual(AppKit.NSToolbarItemStylePlain, 0)
-        self.assertEqual(AppKit.NSToolbarItemStyleProminent, 1)
-
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(AppKit.NSToolbarToggleSidebarItemIdentifier, str)
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(AppKit.NSToolbarCloudSharingItemIdentifier, str)
 
     @min_os_level("14.0")
-    def testConstants14_0(self):
+    def test_constants14_0(self):
         self.assertIsInstance(AppKit.NSToolbarToggleInspectorItemIdentifier, str)
         self.assertIsInstance(
             AppKit.NSToolbarInspectorTrackingSeparatorItemIdentifier, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isEnabled)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSToolbarItem.autovalidates)
@@ -54,31 +56,31 @@ class TestNSToolbarItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.allowsDuplicatesInToolbar)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isBordered)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setBordered_, 0)
 
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isNavigational)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setNavigational_, 0)
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isVisible)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isHidden)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setHidden_, 0)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
     @min_sdk_level("10.12")
-    def testProtocolObject(self):
-        self.assertProtocolExists("NSCloudSharingValidation")
+    def test_protocols10_12(self):
+        self.assertProtocolExists("NSCloudSharingValidation", AppKit)
 
     @min_sdk_level("10.14")
-    def testProtocolObject10_14(self):
-        self.assertProtocolExists("NSToolbarItemValidation")
+    def test_protocols10_14(self):
+        self.assertProtocolExists("NSToolbarItemValidation", AppKit)

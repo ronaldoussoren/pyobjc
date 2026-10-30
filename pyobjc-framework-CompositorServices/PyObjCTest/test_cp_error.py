@@ -4,11 +4,7 @@ import CompositorServices
 
 
 class TestCPError(TestCase):
-    def test_constants(self):
-        self.assertIsInstance(
-            CompositorServices.cp_layer_renderer_configuration_error_domain, str
-        )
-
+    def test_enums(self):
         self.assertIsEnumType(
             CompositorServices.cp_layer_renderer_configuration_error_code
         )
@@ -75,4 +71,9 @@ class TestCPError(TestCase):
         self.assertEqual(
             CompositorServices.cp_layer_renderer_configuration_error_code_unsupported_render_quality,
             -18,
+        )
+
+    def test_constants(self):
+        self.assertIsInstance(
+            CompositorServices.cp_layer_renderer_configuration_error_domain, str
         )

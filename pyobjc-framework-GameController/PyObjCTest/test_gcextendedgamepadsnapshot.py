@@ -4,10 +4,8 @@ import GameController
 
 
 class TestGCExtendedGamepadSnapshot(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCExtendedGamepadSnapshotDataVersion)
-
-    def test_constants(self):
         self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion1, 0x0100)
         self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion2, 0x0101)
 
@@ -17,12 +15,10 @@ class TestGCExtendedGamepadSnapshot(TestCase):
             GameController.GCCurrentExtendedGamepadSnapshotDataVersion, int
         )
 
-    @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCExtendedGamepadSnapshot, objc.objc_class)
 
-    @min_os_level("10.9")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsBOOL(
             GameController.GCExtendedGamepadSnapShotDataV100FromNSData
         )
@@ -34,7 +30,6 @@ class TestGCExtendedGamepadSnapshot(TestCase):
             GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
         )
 
-    @min_os_level("10.9")
     def test_structs(self):
         self.assertEqual(
             GameController.GCExtendedGamepadSnapShotDataV100.__struct_pack__, 1

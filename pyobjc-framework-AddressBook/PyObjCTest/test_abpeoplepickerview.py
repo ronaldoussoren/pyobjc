@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestABPeoplePickerView(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AddressBook.ABNoValueSelection, 0)
         self.assertEqual(AddressBook.ABSingleValueSelection, 1)
         self.assertEqual(AddressBook.ABMultipleValueSelection, 2)
@@ -21,7 +21,7 @@ class TestABPeoplePickerView(TestCase):
             AddressBook.ABPeoplePickerDisplayedPropertyDidChangeNotification, str
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AddressBook.ABPeoplePickerView.selectGroup_byExtendingSelection_, 1
         )

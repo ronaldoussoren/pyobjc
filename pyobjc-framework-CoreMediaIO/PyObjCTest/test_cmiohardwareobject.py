@@ -6,14 +6,14 @@ CMIOObjectPropertyListenerBlock = b"vIn^{CMIOObjectPropertyAddress=III}"
 
 
 class TestCMIOHardwareObject(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = CoreMediaIO.CMIOObjectPropertyAddress()
         self.assertEqual(v.mSelector, 0)
         self.assertEqual(v.mScope, 0)
         self.assertEqual(v.mElement, 0)
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             CoreMediaIO.kCMIOObjectPropertySelectorWildcard, fourcc(b"****")
         )
@@ -45,7 +45,7 @@ class TestCMIOHardwareObject(TestCase):
             CoreMediaIO.kCMIOObjectPropertyListenerRemoved, fourcc(b"lisr")
         )
 
-    def testFunctions(self):
+    def test_functions(self):
         CoreMediaIO.CMIOObjectShow
         self.assertArgIsIn(CoreMediaIO.CMIOObjectHasProperty, 1)
 

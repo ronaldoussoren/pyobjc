@@ -6,16 +6,17 @@ import objc
 
 
 class TestCTRun(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreText.CTRunRef)
 
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreText.CTRunStatus)
         self.assertEqual(CoreText.kCTRunStatusNoStatus, 0)
         self.assertEqual(CoreText.kCTRunStatusRightToLeft, (1 << 0))
         self.assertEqual(CoreText.kCTRunStatusNonMonotonic, (1 << 1))
         self.assertEqual(CoreText.kCTRunStatusHasNonIdentityMatrix, (1 << 2))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CoreText.CTRunGetTypeID(), int)
 
         line = CoreText.CTLineCreateWithAttributedString(
@@ -92,8 +93,6 @@ class TestCTRun(TestCase):
         v = CoreText.CTRunDraw(run, ctx, CoreText.CFRange(0, 5))
         self.assertTrue(v is None)
 
-    @min_os_level("10.5")
-    def testFunctions10_5(self):
         self.assertArgIsOut(CoreText.CTRunGetAdvances, 2)
         self.assertArgSizeInArg(CoreText.CTRunGetAdvances, 2, 1)
 
@@ -117,7 +116,7 @@ class TestCTRun(TestCase):
             self.assertIsInstance(v[0], CGSize)
 
     @min_os_level("10.11")
-    def testFunctions10_11(self):
+    def test_functions10_11(self):
         self.assertArgIsOut(CoreText.CTRunGetBaseAdvancesAndOrigins, 2)
         self.assertArgSizeInArg(CoreText.CTRunGetBaseAdvancesAndOrigins, 2, 1)
         self.assertArgIsOut(CoreText.CTRunGetBaseAdvancesAndOrigins, 3)

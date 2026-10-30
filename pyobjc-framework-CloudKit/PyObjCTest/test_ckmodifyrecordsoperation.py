@@ -4,22 +4,19 @@ import objc
 
 
 class TestCKModifyRecordsOperation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CloudKit.CKRecordSavePolicy)
-
-    @min_os_level("10.10")
-    def testClasses(self):
-        self.assertHasAttr(CloudKit, "CKModifyRecordsOperation")
-        self.assertIsInstance(CloudKit.CKModifyRecordsOperation, objc.objc_class)
-
-    @min_os_level("10.10")
-    def testConstants(self):
         self.assertEqual(CloudKit.CKRecordSaveIfServerRecordUnchanged, 0)
         self.assertEqual(CloudKit.CKRecordSaveChangedKeys, 1)
         self.assertEqual(CloudKit.CKRecordSaveAllKeys, 2)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_classes(self):
+        self.assertHasAttr(CloudKit, "CKModifyRecordsOperation")
+        self.assertIsInstance(CloudKit.CKModifyRecordsOperation, objc.objc_class)
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
         self.assertResultIsBOOL(CloudKit.CKModifyRecordsOperation.atomic)
         self.assertArgIsBOOL(CloudKit.CKModifyRecordsOperation.setAtomic_, 0)
 
@@ -45,7 +42,7 @@ class TestCKModifyRecordsOperation(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBlock(
             CloudKit.CKModifyRecordsOperation.perRecordSaveBlock, b"v@@@"
         )

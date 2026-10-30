@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestCVBuffer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCVBufferPropagatedAttachmentsKey, str)
         self.assertIsInstance(Quartz.kCVBufferNonPropagatedAttachmentsKey, str)
         self.assertIsInstance(Quartz.kCVBufferMovieTimeKey, str)
@@ -14,11 +14,11 @@ class TestCVBuffer(TestCase):
         self.assertEqual(Quartz.kCVAttachmentMode_ShouldPropagate, 1)
 
     @expectedFailure
-    def testTypes(self):
+    def test_types(self):
         # Needs work...
         self.assertIsCFType(Quartz.CVBufferRef)
 
-    def testFunctions(self):
+    def test_functions(self):
         rv, buf = Quartz.CVOpenGLBufferCreate(None, 100, 100, {"a": "b"}, None)
         if rv == 0:
             self.assertIsInstance(buf, Quartz.CVOpenGLBufferRef)
@@ -104,7 +104,7 @@ class TestCVBuffer(TestCase):
             self.assertFalse("pyobjc.test2" in v)
 
     @min_os_level("12.0")
-    def testFunctions12_0(self):
+    def test_functions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachments)
         self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachment)
 

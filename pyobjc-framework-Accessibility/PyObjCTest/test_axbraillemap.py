@@ -20,9 +20,9 @@ class TestAXBrailleMapHelper(Accessibility.NSObject):
 class TestAXBrailleMap(TestCase):
     @min_sdk_level("12.1")
     def test_protocols(self):
-        self.assertProtocolExists("AXBrailleMapRenderer")
+        self.assertProtocolExists("AXBrailleMapRenderer", Accessibility)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestAXBrailleMapHelper.accessibilityBrailleMapRenderRegion,
             Accessibility.CGRect.__typestr__,

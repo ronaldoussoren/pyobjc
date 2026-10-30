@@ -1,18 +1,13 @@
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import GameCenter
 
 
 class TestGKMatchmakerViewController(TestCase):
-    @min_os_level("10.8")
-    def testProtocols(self):
-        self.assertProtocolExists("GKMatchmakerViewControllerDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("GKMatchmakerViewControllerDelegate", GameCenter)
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
-        self.assertIsInstance(GameCenter.GKMatchmakerViewController, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(GameCenter.GKMatchmakerViewController.isHosted)
         self.assertArgIsBOOL(GameCenter.GKMatchmakerViewController.setHosted_, 0)
         self.assertArgIsBOOL(
@@ -20,7 +15,7 @@ class TestGKMatchmakerViewController(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertArgIsBOOL(
             GameCenter.GKMatchmakerViewController.setHostedPlayer_didConnect_, 1
         )

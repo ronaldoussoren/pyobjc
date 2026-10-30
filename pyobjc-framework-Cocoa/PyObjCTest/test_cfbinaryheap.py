@@ -1,13 +1,13 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import objc
 
 
 class TestCFBinaryHeap(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CoreFoundation.CFBinaryHeapRef)
 
-    def testCreation(self):
+    def test_creation(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 
@@ -18,7 +18,7 @@ class TestCFBinaryHeap(TestCase):
         self.assertTrue(CoreFoundation.CFBinaryHeapContainsValue(heap, "hello"))
         self.assertFalse(CoreFoundation.CFBinaryHeapContainsValue(heap, "niemand"))
 
-    def testApply(self):
+    def test_apply(self):
         def compare(a, b, info):
             if a < b:
                 return -1
@@ -26,6 +26,17 @@ class TestCFBinaryHeap(TestCase):
                 return 1
             else:
                 return 0
+
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            CoreFoundation.CFBinaryHeapCreate()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBinaryHeapCreate(NoObjCClass(), 0)
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 4"
+        ):
+            CoreFoundation.CFBinaryHeapCreate(None, "zero")
 
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
@@ -53,11 +64,11 @@ class TestCFBinaryHeap(TestCase):
         CoreFoundation.CFBinaryHeapApplyFunction(heap, function, ctx)
         self.assertEqual(ctx[0], "aapjeshelloworld")
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFBinaryHeapGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testCopy(self):
+    def test_copy(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 
@@ -68,7 +79,7 @@ class TestCFBinaryHeap(TestCase):
         heap2 = CoreFoundation.CFBinaryHeapCreateCopy(None, 0, heap)
         self.assertIsInstance(heap2, CoreFoundation.CFBinaryHeapRef)
 
-    def testInspect(self):
+    def test_inspect(self):
         heap = CoreFoundation.CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CoreFoundation.CFBinaryHeapRef)
 
@@ -98,6 +109,12 @@ class TestCFBinaryHeap(TestCase):
         count = CoreFoundation.CFBinaryHeapGetCount(heap)
         self.assertEqual(count, 3)
 
+        with self.assertRaisesRegex(TypeError, "expected 1 arguments, got 0"):
+            CoreFoundation.CFBinaryHeapGetValues()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreFoundation.CFBinaryHeapGetValues(NoObjCClass())
+
         values = CoreFoundation.CFBinaryHeapGetValues(heap)
         self.assertEqual(values, ("aapjes", "hello", "world"))
 
@@ -109,7 +126,7 @@ class TestCFBinaryHeap(TestCase):
         values = CoreFoundation.CFBinaryHeapGetValues(heap)
         self.assertEqual(values, ())
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertArgHasType(CoreFoundation.CFBinaryHeapGetCountOfValue, 1, b"@")
         self.assertArgHasType(CoreFoundation.CFBinaryHeapContainsValue, 1, b"@")
         self.assertResultHasType(CoreFoundation.CFBinaryHeapGetMinimum, b"@")

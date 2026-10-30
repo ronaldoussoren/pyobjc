@@ -2,59 +2,12 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "TKTokenOperationNone": { "value": 0 },
-   "TKTokenOperationReadData": { "value": 1 },
-   "TKTokenOperationSignData": { "value": 2 },
-   "TKTokenOperationDecryptData": { "value": 3 },
-   "TKTokenOperationPerformKeyExchange": { "value": 4 },
-   "TKSmartCardPINCharsetNumeric": { "value": 0 },
-   "TKSmartCardPINCharsetAlphanumeric": { "value": 1 },
-   "TKSmartCardPINCharsetUpperAlphanumeric": { "value": 2 },
-   "TKSmartCardPINEncodingBinary": { "value": 0 },
-   "TKSmartCardPINEncodingASCII": { "value": 1 },
-   "TKSmartCardPINEncodingBCD": { "value": 2 },
-   "TKSmartCardPINJustificationLeft": { "value": 0 },
-   "TKSmartCardPINJustificationRight": { "value": 1 },
-   "TKSmartCardPINCompletionKey": { "value": 2 },
-   "TKSmartCardPINCompletionTimeout": { "value": 4 },
-   "TKErrorCodeAuthenticationFailed": { "value": -5 },
-   "TKErrorCodeObjectNotFound": { "value": -6 },
-   "TKErrorCodeTokenNotFound": { "value": -7 },
-   "TKErrorCodeBadParameter": { "value": -8 },
-   "TKErrorCodeAuthenticationNeeded": { "value": -9 },
-   "TKSmartCardPINCompletionMaxLength": { "value": 1 },
-   "TKSmartCardPINConfirmationNone": { "value": 0 },
-   "TKSmartCardPINConfirmationCurrent": { "value": 2 },
-   "TKSmartCardPINConfirmationNew": { "value": 1 }
-  },
   "classes": {
-   "TKTokenConfiguration": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "certificateForObjectID:error:",
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "keyForObjectID:error:",
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
    "TKTokenAuthOperation": {
     "methods": [
      {
       "class_method": false,
       "selector": "finishWithError:",
-      "args": {
-       "0": { "type_modifier": "o" }
-      },
       "retval": { "type_override": "Z" }
      }
     ]
@@ -185,39 +138,19 @@
      }
     ]
    },
-   "TKTokenKeychainContents": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "keyForObjectID:error:",
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "certificateForObjectID:error:",
-      "args": {
-       "1": { "type_modifier": "o" }
-      }
-     }
-    ]
-   },
    "TKSmartCard": {
     "methods": [
      {
       "class_method": false,
       "selector": "sendIns:p1:p2:data:le:sw:error:",
       "args": {
-       "5": { "type_modifier": "o" },
-       "6": { "type_modifier": "o" }
+       "5": { "type_modifier": "o" }
       }
      },
      {
       "class_method": false,
       "selector": "inSessionWithError:executeBlock:",
       "args": {
-       "0": { "type_modifier": "o" },
        "1": {
         "callable": {
 	 "arguments": {
@@ -399,9 +332,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

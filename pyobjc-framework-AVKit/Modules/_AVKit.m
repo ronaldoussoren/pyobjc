@@ -2,12 +2,18 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <AVKit/AVKit.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_AVKit_protocols.m"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static int
 mod_exec_module(PyObject* m)
@@ -54,10 +60,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__AVKit(void);
+PyObject* _Nullable PyInit__AVKit(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__AVKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

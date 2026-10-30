@@ -9,23 +9,20 @@ class TestNSHapticFeedbackHelper(AppKit.NSObject):
 
 
 class TestNSHapticFeedback(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSHapticFeedbackPattern)
-        self.assertIsEnumType(AppKit.NSHapticFeedbackPerformanceTime)
-
-    @min_os_level("10.11")
-    def testConstants(self):
         self.assertEqual(AppKit.NSHapticFeedbackPatternGeneric, 0)
         self.assertEqual(AppKit.NSHapticFeedbackPatternAlignment, 1)
         self.assertEqual(AppKit.NSHapticFeedbackPatternLevelChange, 2)
 
+        self.assertIsEnumType(AppKit.NSHapticFeedbackPerformanceTime)
         self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeDefault, 0)
         self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeNow, 1)
         self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeDrawCompleted, 2)
 
     @min_os_level("10.11")
-    def testProtocols10_11(self):
-        self.assertProtocolExists("NSHapticFeedbackPerformer")
+    def test_protocols10_11(self):
+        self.assertProtocolExists("NSHapticFeedbackPerformer", AppKit)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

@@ -8,6 +8,8 @@
  */
 #include "pyobjc.h"
 
+extern void objc_destroyWeak(id* value);
+
 NS_ASSUME_NONNULL_BEGIN
 
 PyDoc_STRVAR(weakref_cls_doc,
@@ -35,7 +37,8 @@ weakref_dealloc(PyObject* object)
 {
     PyObjC_WeakRef* self = (PyObjC_WeakRef*)object;
 
-    objc_storeWeak(&self->object, nil);
+    // objc_storeWeak(&self->object, nil);
+    objc_destroyWeak(&self->object);
     PyTypeObject* tp = Py_TYPE(object);
     PyObject_Del(object);
     Py_DECREF(tp);
@@ -137,8 +140,8 @@ static PyType_Spec weakref_spec = {
     .basicsize = sizeof(PyObjC_WeakRef),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_HAVE_VECTORCALL,
-    .slots = weakref_slots,
+                 | Py_TPFLAGS_HAVE_VECTORCALL,
+    .slots     = weakref_slots,
 };
 
 int

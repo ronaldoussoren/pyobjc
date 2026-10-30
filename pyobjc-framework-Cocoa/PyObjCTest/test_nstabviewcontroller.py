@@ -3,18 +3,15 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTabViewController(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSTabViewControllerTabStyle)
-
-    @min_os_level("10.10")
-    def testConstants(self):
         self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnTop, 0)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnBottom, 1)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleToolbar, 2)
         self.assertEqual(AppKit.NSTabViewControllerTabStyleUnspecified, -1)
 
     @min_os_level("10.10")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AppKit.NSTabViewController.canPropagateSelectedChildViewControllerTitle
         )

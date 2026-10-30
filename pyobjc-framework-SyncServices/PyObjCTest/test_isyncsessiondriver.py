@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import SyncServices
 import objc
 
@@ -62,31 +62,30 @@ class TestISyncSessionDriverHelper(SyncServices.NSObject):
 
 
 class TestISyncSessionDriver(TestCase):
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(SyncServices.ISyncSessionDriverMode)
         self.assertEqual(SyncServices.ISyncSessionDriverModeFast, 1)
         self.assertEqual(SyncServices.ISyncSessionDriverModeSlow, 2)
         self.assertEqual(SyncServices.ISyncSessionDriverModeRefresh, 3)
 
+        self.assertIsEnumType(SyncServices.ISyncSessionDriverChangeResult)
         self.assertEqual(SyncServices.ISyncSessionDriverChangeRefused, 0)
         self.assertEqual(SyncServices.ISyncSessionDriverChangeAccepted, 1)
         self.assertEqual(SyncServices.ISyncSessionDriverChangeIgnored, 2)
         self.assertEqual(SyncServices.ISyncSessionDriverChangeError, 3)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.handlesSyncAlerts)
         self.assertArgIsBOOL(SyncServices.ISyncSessionDriver.setHandlesSyncAlerts_, 0)
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
+    def test_methods10_5(self):
         self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.sync)
         self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.startAsynchronousSync_)
         self.assertArgIsOut(SyncServices.ISyncSessionDriver.startAsynchronousSync_, 0)
         self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.handlesSyncAlerts)
 
-    @min_os_level("10.5")
-    def testProtocols(self):
-        self.assertProtocolExists("ISyncSessionDriverDataSource")
+    def test_protocols(self):
+        self.assertProtocolExists("ISyncSessionDriverDataSource", SyncServices)
 
     def test_protocol_methods(self):
         self.assertResultHasType(

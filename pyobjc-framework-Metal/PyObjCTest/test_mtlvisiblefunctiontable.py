@@ -17,9 +17,9 @@ class TestMTLVisibleFunctionTableHelper(Metal.NSObject):
 class TestMTLVisibleFunctionTable(TestCase):
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLVisibleFunctionTable")
+        self.assertProtocolExists("MTLVisibleFunctionTable", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLVisibleFunctionTableHelper.setFunction_atIndex_,
             1,

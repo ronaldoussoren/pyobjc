@@ -14,11 +14,11 @@ def _setup():
     import objc
     from . import _metadata
 
-    if objc.macos_available(14, 0):
+    if objc.macos_available(14, 0):  # pragma: no branch
         identifier = "com.apple.quartzframework"
-    elif objc.macos_available(13, 0):
+    elif objc.macos_available(13, 0):  # pragma: no cover
         identifier = "com.apple.Quartz"
-    else:
+    else:  # pragma: no cover
         identifier = "com.apple.quartzframework"
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(

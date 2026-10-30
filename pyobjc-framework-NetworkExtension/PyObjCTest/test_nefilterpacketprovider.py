@@ -16,10 +16,8 @@ NEFilterPacketHandler = (
 
 
 class TestNEFilterPacketProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEFilterPacketProviderVerdict)
-
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEFilterPacketProviderVerdictAllow, 0)
         self.assertEqual(NetworkExtension.NEFilterPacketProviderVerdictDrop, 1)
         self.assertEqual(NetworkExtension.NEFilterPacketProviderVerdictDelay, 2)

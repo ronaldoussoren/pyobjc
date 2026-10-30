@@ -8,7 +8,7 @@ class TestNSScriptCommandDescriptionHelper(Foundation.NSScriptCommandDescription
 
 
 class TestNSScriptCommandDescription(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         # This should be tested on the actual Foundation.NSScriptCommandDescription class,
         # but for some reason that class doesn't seem to have the
         # required method (at least not without instantating the class)

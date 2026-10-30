@@ -1,12 +1,11 @@
 from Foundation import NSValue
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 import objc
 
 
 class TestCATransform3D(TestCase):
-    @min_os_level("10.5")
-    def testStructs(self):
+    def test_structs(self):
         v = Quartz.CATransform3D()
         self.assertIsInstance(v.m11, float)
         self.assertIsInstance(v.m12, float)
@@ -29,12 +28,10 @@ class TestCATransform3D(TestCase):
         self.assertIsInstance(v.m44, float)
         self.assertPickleRoundTrips(v)
 
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.CATransform3DIdentity, Quartz.CATransform3D)
 
-    @min_os_level("10.5")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(Quartz.CATransform3DIsIdentity, objc._C_BOOL)
         v = Quartz.CATransform3DIsIdentity(Quartz.CATransform3DIdentity)
         self.assertTrue(v is True)

@@ -9,7 +9,7 @@ class TestMTLLogStateHelper(Metal.NSObject):
 
 
 class TestMTLLogState(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLLogLevel)
         self.assertEqual(Metal.MTLLogLevelUndefined, 0)
         self.assertEqual(Metal.MTLLogLevelDebug, 1)
@@ -28,7 +28,7 @@ class TestMTLLogState(TestCase):
 
     @min_sdk_level("15.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLLogState")
+        self.assertProtocolExists("MTLLogState", Metal)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(TestMTLLogStateHelper.addLogHandler_, 0, b"v@@q@")

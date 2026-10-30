@@ -12,7 +12,8 @@ class TestAPIImportingFailure(TestCase):
             del objc.__C_API__
 
             with self.assertRaisesRegex(
-                AttributeError, "module 'objc' has no attribute '__C_API__'"
+                AttributeError,
+                r"(module 'objc' has no attribute '__C_API__')|(\"objc.__C_API__\" is not valid)",
             ):
                 import PyObjCTest.missing1  # noqa: F401
 

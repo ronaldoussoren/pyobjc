@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEAppProxyTCPFlow(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEAppProxyTCPFlow.readDataWithCompletionHandler_, 0, b"v@@"
         )

@@ -1,3 +1,5 @@
+NS_ASSUME_NONNULL_BEGIN
+
 static const void*
 mod_messageport_retain(const void* info)
 {
@@ -28,8 +30,9 @@ mod_CFMessagePortCallBack(CFMessagePortRef f, SInt32 msgid, CFDataRef data, void
     PyObject* py_msgid = PyObjC_ObjCToPython(@encode(SInt32), &msgid);
     PyObject* py_data  = PyObjC_ObjCToPython(@encode(CFDataRef), &data);
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_f,
-                                             py_msgid, py_data, PyTuple_GetItem(info, 1));
+    PyObject* result =
+        PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "NNNO", py_f, py_msgid, py_data,
+                              PyTuple_GET_ITEM(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -42,64 +45,63 @@ mod_CFMessagePortCallBack(CFMessagePortRef f, SInt32 msgid, CFDataRef data, void
 
     Py_DECREF(result);
     PyGILState_Release(state);
-
+    CFRetain(rv);
     return rv;
 }
 
-static PyObject*
-mod_CFMessagePortCreateLocal(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFMessagePortCreateLocal(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*      py_allocator;
-    PyObject*      py_name;
-    PyObject*      callout;
-    PyObject*      info;
-    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
     CFStringRef    name;
     Boolean        shouldFree;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &callout, &info,
-                          &py_shouldFree)) {
+    if (PyObjC_CheckArgCount(meth, 5, 5, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), args[0], &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFStringRef), py_name, &name) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFStringRef), args[1], &name) < 0) {
         return NULL;
     }
-    if (py_shouldFree != Py_None && py_shouldFree != PyObjC_NULL) {
-        PyErr_SetString(PyExc_ValueError, "shouldFree not None or NULL");
+    if (args[4] != Py_None && args[4] != PyObjC_NULL) {
+        PyErr_SetString(PyExc_ValueError, "'shouldFree' should be None or NULL");
         return NULL;
     }
 
     CFMessagePortContext context = mod_CFMessagePortContext;
-    context.info                 = Py_BuildValue("OO", callout, info);
-    if (context.info == NULL) {
-        return NULL;
+    context.info                 = PyTuple_Pack(2, args[2], args[3]);
+    if (context.info == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;            // LCOV_EXCL_LINE
     }
 
     CFMessagePortRef rv = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
             rv = CFMessagePortCreateLocal(allocator, name, mod_CFMessagePortCallBack,
-                                          &context, &shouldFree);
+                                          &context,
+                                          args[4] == PyObjC_NULL ? NULL : &shouldFree);
 
-        } @catch (NSException* localException) {
-            rv = NULL;
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            rv = NULL;                           // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
     Py_DECREF((PyObject*)context.info);
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    PyObject* result =
-        Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
-                      PyBool_FromLong(shouldFree));
+    PyObject* result;
+    if (args[4] == PyObjC_NULL) {
+        result = Py_BuildValue("NO", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyObjC_NULL);
+    } else {
+        result = Py_BuildValue("NN", PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+                               PyBool_FromLong(shouldFree));
+    }
 
     if (rv != NULL) {
         CFRelease(rv);
@@ -108,24 +110,22 @@ mod_CFMessagePortCreateLocal(PyObject* self __attribute__((__unused__)), PyObjec
     return result;
 }
 
-static PyObject*
-mod_CFMessagePortGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable mod_CFMessagePortGetContext(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*            py_f;
-    PyObject*            py_context;
     CFMessagePortRef     f;
     CFMessagePortContext context;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (py_context != NULL && py_context != Py_None) {
-        PyErr_SetString(PyExc_ValueError, "invalid context");
+    if (PyObjC_PythonToObjC(@encode(CFMessagePortRef), args[0], &f) < 0) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFMessagePortRef), py_f, &f) < 0) {
+    if (args[1] != Py_None) {
+        PyErr_SetString(PyExc_ValueError, "'context' must be None");
         return NULL;
     }
 
@@ -135,31 +135,46 @@ mod_CFMessagePortGetContext(PyObject* self __attribute__((__unused__)), PyObject
         @try {
             CFMessagePortGetContext(f, &context);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
-    if (context.version != 0) {
+    if (context.version != 0) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not valid");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
-    if (context.retain != mod_messageport_retain) {
+    if (context.retain != mod_messageport_retain) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_SetString(PyExc_ValueError, "retrieved context is not supported");
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
     return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
-#define COREFOUNDATION_MESSAGEPORT_METHODS                                               \
-    {"CFMessagePortCreateLocal", (PyCFunction)mod_CFMessagePortCreateLocal,              \
-     METH_VARARGS, NULL},                                                                \
-        {"CFMessagePortGetContext", (PyCFunction)mod_CFMessagePortGetContext,            \
-         METH_VARARGS, NULL},
+static int
+setup_messageport(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFMessagePortCreateLocal,
+                                      mod_CFMessagePortCreateLocal)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(CFMessagePortGetContext,
+                                      mod_CFMessagePortGetContext)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

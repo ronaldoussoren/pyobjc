@@ -28,11 +28,16 @@ class TestGKGameModelHelper(GameplayKit.NSObject):
 
 
 class TestGKGameModel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(GameplayKit.GKGameModelMaxScore, 1 << 24)
         self.assertEqual(GameplayKit.GKGameModelMinScore, -(1 << 24))
 
-    def testMethods(self):
+    def test_protocols(self):
+        self.assertProtocolExists("GKGameModelUpdate", GameplayKit)
+        self.assertProtocolExists("GKGameModelPlayer", GameplayKit)
+        self.assertProtocolExists("GKGameModel", GameplayKit)
+
+    def test_protocol_methods(self):
         self.assertResultHasType(TestGKGameModelHelper.value, objc._C_NSInteger)
         self.assertArgHasType(TestGKGameModelHelper.setValue_, 0, objc._C_NSInteger)
 
@@ -44,8 +49,3 @@ class TestGKGameModel(TestCase):
         )
         self.assertResultIsBOOL(TestGKGameModelHelper.isWinForPlayer_)
         self.assertResultIsBOOL(TestGKGameModelHelper.isLossForPlayer_)
-
-    def testProtocols(self):
-        self.assertProtocolExists("GKGameModelUpdate")
-        self.assertProtocolExists("GKGameModelPlayer")
-        self.assertProtocolExists("GKGameModel")

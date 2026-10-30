@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLNode(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSXMLNodeKind)
-
-    def testConstants(self):
         self.assertEqual(Foundation.NSXMLInvalidKind, 0)
         self.assertEqual(Foundation.NSXMLDocumentKind, 1)
         self.assertEqual(Foundation.NSXMLElementKind, 2)
@@ -21,7 +19,7 @@ class TestXMLNode(TestCase):
         self.assertEqual(Foundation.NSXMLElementDeclarationKind, 11)
         self.assertEqual(Foundation.NSXMLNotationDeclarationKind, 12)
 
-    def testOutputArgs(self):
+    def test_output(self):
         self.assertArgIsOut(Foundation.NSXMLNode.nodesForXPath_error_, 1)
         self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_constants_error_, 2)
         self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_error_, 1)

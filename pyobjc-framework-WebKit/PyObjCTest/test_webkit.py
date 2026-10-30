@@ -4,18 +4,18 @@ Some simple tests to check that the framework is properly wrapped.
 
 import objc
 import WebKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestWebKit(TestCase):
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(WebKit, "WebResource")
         self.assertIsInstance(WebKit.WebResource, objc.objc_class)
 
         self.assertHasAttr(WebKit, "DOMHTMLObjectElement")
         self.assertIsInstance(WebKit.DOMHTMLObjectElement, objc.objc_class)
 
-    def testValues(self):
+    def test_constants(self):
         self.assertHasAttr(WebKit, "DOM_CSS_PERCENTAGE")
         self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, int)
         self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)
@@ -27,23 +27,25 @@ class TestWebKit(TestCase):
         self.assertHasAttr(WebKit, "WebViewInsertActionDropped")
         self.assertIsInstance(WebKit.WebViewInsertActionDropped, int)
 
-    def testVariables(self):
         self.assertHasAttr(WebKit, "DOMRangeException")
         self.assertIsInstance(WebKit.DOMRangeException, str)
 
-    @min_sdk_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("DOMEventListener")
-        self.assertProtocolExists("DOMEventTarget")
-        self.assertProtocolExists("DOMNodeFilter")
-        self.assertProtocolExists("DOMXPathNSResolver")
-        self.assertProtocolExists("WebDocumentRepresentation")
-        self.assertProtocolExists("WebDocumentSearching")
-        self.assertProtocolExists("WebDocumentText")
-        self.assertProtocolExists("WebDocumentView")
-        self.assertProtocolExists("WebOpenPanelResultListener")
-        self.assertProtocolExists("WebPlugInViewFactory")
-        self.assertProtocolExists("WebPolicyDecisionListener")
+    def test_protocols(self):
+        self.assertProtocolExists("DOMEventListener", WebKit)
+        self.assertProtocolExists("DOMEventTarget", WebKit)
+        self.assertProtocolExists("DOMNodeFilter", WebKit, "DOMNodeFilterProtocol")
+        self.assertProtocolExists("DOMXPathNSResolver", WebKit)
+        self.assertProtocolExists("WebDocumentRepresentation", WebKit)
+        self.assertProtocolExists("WebDocumentSearching", WebKit)
+        self.assertProtocolExists("WebDocumentText", WebKit)
+        self.assertProtocolExists("WebDocumentView", WebKit)
+        self.assertProtocolExists(
+            "WebOpenPanelResultListener", WebKit, "WebOpenPanelResultListenerProtocol"
+        )
+        self.assertProtocolExists("WebPlugInViewFactory", WebKit)
+        self.assertProtocolExists(
+            "WebPolicyDecisionListener", WebKit, "WebPolicyDecisionListenerProtocol"
+        )
 
 
 class TestCallableMetadata(TestCase):

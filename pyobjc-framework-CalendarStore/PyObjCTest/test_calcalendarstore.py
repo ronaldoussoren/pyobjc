@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalCalendarStore(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CalendarStore.CalSpanThisEvent, 0)
         self.assertEqual(CalendarStore.CalSpanFutureEvents, 1)
         self.assertEqual(CalendarStore.CalSpanAllEvents, 2)
@@ -22,7 +22,7 @@ class TestCalCalendarStore(TestCase):
         self.assertIsInstance(CalendarStore.CalSenderProcessIDKey, str)
         self.assertIsInstance(CalendarStore.CalUserUIDKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CalendarStore.CalCalendarStore.saveCalendar_error_)
         self.assertResultIsBOOL(CalendarStore.CalCalendarStore.removeCalendar_error_)
         self.assertArgIsOut(CalendarStore.CalCalendarStore.saveCalendar_error_, 1)

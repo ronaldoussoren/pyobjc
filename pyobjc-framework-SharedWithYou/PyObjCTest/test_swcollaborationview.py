@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import SharedWithYou
 
@@ -10,7 +10,7 @@ class TestSWAttributionViewHelper(SharedWithYou.NSObject):
 
 class TestSWAttributionView(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("SWCollaborationViewDelegate")
+        self.assertProtocolExists("SWCollaborationViewDelegate", SharedWithYou)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(
@@ -22,3 +22,10 @@ class TestSWAttributionView(TestCase):
             SharedWithYou.SWCollaborationView.dismissPopover_, 0, b"v"
         )
         self.assertArgIsBOOL(SharedWithYou.SWCollaborationView.setShowManageButton_, 0)
+
+    @min_os_level("27.2")
+    def test_methods27_2(self):
+        self.assertResultIsBOOL(SharedWithYou.SWCollaborationView.showsParticipantCount)
+        self.assertArgIsBOOL(
+            SharedWithYou.SWCollaborationView.setShowsParticipantCount_, 0
+        )

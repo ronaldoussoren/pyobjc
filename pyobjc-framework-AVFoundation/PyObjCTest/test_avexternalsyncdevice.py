@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestAVExternalSyncDevice(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVExternalSyncDeviceStatus)
         self.assertEqual(AVFoundation.AVExternalSyncDeviceStatusUnavailable, 0)
         self.assertEqual(AVFoundation.AVExternalSyncDeviceStatusReady, 1)
@@ -17,6 +17,12 @@ class TestAVExternalSyncDevice(TestCase):
             AVFoundation.AVExternalSyncDeviceDiscoverySession.isSupported
         )
 
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVExternalSyncDevice.isSignalCompensationDelaySupported
+        )
+
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVExternalSyncDeviceDelegate")
+        self.assertProtocolExists("AVExternalSyncDeviceDelegate", AVFoundation)

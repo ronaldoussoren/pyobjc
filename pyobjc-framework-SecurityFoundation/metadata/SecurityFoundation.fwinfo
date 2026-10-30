@@ -26,9 +26,6 @@
       "class_method": false,
       "retval": {
        "type_override": "Z"
-      },
-      "args": {
-       "2": { "type_modifier": "o" }
       }
      },
      {
@@ -39,9 +36,7 @@
       },
       "args": {
        "0": {"type_override": "^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}"},
-       "4": { "type_override": "^{_AuthorizationEnvironment=I^{_AuthorizationItem=^cQ^vI}}" },
-       "3": { "type_modifier": "o", "type_override": "^^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}" },
-       "4": { "type_modifier": "o" }
+       "3": { "type_modifier": "o", "type_override": "^^{_AuthorizationRights=I^{_AuthorizationItem=^cQ^vI}}" }
       }
      },
      {
@@ -55,9 +50,6 @@
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

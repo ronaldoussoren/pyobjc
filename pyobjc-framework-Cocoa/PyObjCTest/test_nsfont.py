@@ -9,9 +9,25 @@ from PyObjCTools.TestSupport import (
 
 
 class TestNSFont(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSFontRenderingMode)
+        self.assertEqual(AppKit.NSFontDefaultRenderingMode, 0)
+        self.assertEqual(AppKit.NSFontAntialiasedRenderingMode, 1)
+        self.assertEqual(AppKit.NSFontIntegerAdvancementsRenderingMode, 2)
+        self.assertEqual(AppKit.NSFontAntialiasedIntegerAdvancementsRenderingMode, 3)
+
         self.assertIsEnumType(AppKit.NSMultibyteGlyphPacking)
+        self.assertEqual(AppKit.NSNativeShortGlyphPacking, 5)
+
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
+        self.assertEqual(AppKit.NSNullGlyph, 0)
+
+    def test_constants(self):
+        self.assertEqual(AppKit.NSFontIdentityMatrix, None)
+
+        self.assertIsInstance(AppKit.NSAntialiasThresholdChangedNotification, str)
+        self.assertIsInstance(AppKit.NSFontSetChangedNotification, str)
 
     def matrixEquals(self, value1, value2):
         self.assertEqual(len(value1), len(value2))
@@ -29,7 +45,7 @@ class TestNSFont(TestCase):
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("15.1")),
         "Error on 15.0 in full test run",
     )
-    def testMatrixMethods(self):
+    def test_methods_simd(self):
         o = AppKit.NSFont.boldSystemFontOfSize_(10)
         m = o.matrix()
         self.assertTrue(isinstance(m, tuple))
@@ -70,38 +86,7 @@ class TestNSFont(TestCase):
             (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0),
         )
 
-    def testConstants(self):
-        self.assertEqual(AppKit.NSFontIdentityMatrix, None)
-
-        self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
-        self.assertEqual(AppKit.NSNullGlyph, 0)
-        self.assertEqual(AppKit.NSNativeShortGlyphPacking, 5)
-
-        self.assertEqual(AppKit.NSFontDefaultRenderingMode, 0)
-        self.assertEqual(AppKit.NSFontAntialiasedRenderingMode, 1)
-        self.assertEqual(AppKit.NSFontIntegerAdvancementsRenderingMode, 2)
-        self.assertEqual(AppKit.NSFontAntialiasedIntegerAdvancementsRenderingMode, 3)
-
-        self.assertIsInstance(AppKit.NSAntialiasThresholdChangedNotification, str)
-        self.assertIsInstance(AppKit.NSFontSetChangedNotification, str)
-
-    @min_os_level("10.13")
-    def testMethods10_13(self):
-        self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0)
-        self.assertArgIsIn(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 1)
-        self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0, 2)
-        self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 1, 2)
-
-        self.assertArgIsOut(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 0)
-        self.assertArgIsIn(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 1)
-        self.assertArgSizeInArg(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 0, 2)
-        self.assertArgSizeInArg(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 1, 2)
-
-    @min_os_level("10.7")
-    def testMethods10_7(self):
-        self.assertResultIsBOOL(AppKit.NSFont.isVertical)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSFont.isFixedPitch)
         self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forGlyphs_count_, 0)
         self.assertArgHasType(
@@ -123,8 +108,49 @@ class TestNSFont(TestCase):
             AppKit.NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2
         )
 
-    def testFunctions(self):
+        self.assertResultIsBOOL(AppKit.NSFont.isVertical)
+
+    @min_os_level("10.13")
+    def test_methods10_13(self):
+        self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0)
+        self.assertArgIsIn(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 1)
+        self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0, 2)
+        self.assertArgSizeInArg(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 1, 2)
+
+        self.assertArgIsOut(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 0)
+        self.assertArgIsIn(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 1)
+        self.assertArgSizeInArg(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 0, 2)
+        self.assertArgSizeInArg(AppKit.NSFont.getAdvancements_forCGGlyphs_count_, 1, 2)
+
+    def test_functions(self):
         glyphs = [ord("A"), ord("B"), ord("9"), ord("a")]
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            AppKit.NSConvertGlyphsToPackedGlyphs()
+
+        with self.assertRaisesRegex(TypeError, "converting to a C array"):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                42, len(glyphs), AppKit.NSNativeShortGlyphPacking, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str' of 2"
+        ):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, "42", AppKit.NSNativeShortGlyphPacking, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, len(glyphs), "42", None
+            )
+
+        with self.assertRaisesRegex(ValueError, "packedGlyphs argument must be None"):
+            rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
+                glyphs, len(glyphs), AppKit.NSNativeShortGlyphPacking, bytearray(100)
+            )
 
         rv, packed = AppKit.NSConvertGlyphsToPackedGlyphs(
             glyphs, len(glyphs), AppKit.NSNativeShortGlyphPacking, None

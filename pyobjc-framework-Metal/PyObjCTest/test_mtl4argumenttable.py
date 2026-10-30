@@ -37,7 +37,7 @@ class TestMTL4ArgumentTable(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4ArgumentTable")
+        self.assertProtocolExists("MTL4ArgumentTable", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

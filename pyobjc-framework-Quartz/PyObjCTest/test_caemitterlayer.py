@@ -1,15 +1,14 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCAEmitterLayer(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Quartz.CAEmitterLayerEmitterMode, str)
         self.assertIsTypedEnum(Quartz.CAEmitterLayerEmitterShape, str)
         self.assertIsTypedEnum(Quartz.CAEmitterLayerRenderMode, str)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAEmitterLayerPoint, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerLine, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerRectangle, str)
@@ -26,8 +25,7 @@ class TestCAEmitterLayer(TestCase):
         self.assertIsInstance(Quartz.kCAEmitterLayerBackToFront, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerAdditive, str)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
+    def test_methods(self):
         self.assertResultHasType(
             Quartz.CAEmitterLayer.emitterPosition, Quartz.CGPoint.__typestr__
         )

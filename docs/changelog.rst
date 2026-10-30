@@ -3,6 +3,1100 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 13.0.1
+--------------
+
+* :issue:`694`: Fix reference leak in the CGEventTap callback.
+
+Version 13.0
+------------
+
+* Main features
+
+  * Framework bindings updated for macOS 27 SDK
+
+  * Add support for the following frameworks (all new in macOS 27):
+
+    * :doc:`LinkSecurity </apinotes/LinkSecurity>`
+
+    * :doc:`StateReporting </apinotes/StateReporting>`
+
+  * ``objc.formal_protocol`` can now be used as an additional base class
+    to indicate that a class implements a protocol.
+
+    The following two definitions are equivalent:
+
+    .. sourcecode:: python
+
+       class MyClass(NSObject, protocols=[NSFilePresenter]):
+           ...
+
+    and:
+
+    .. sourcecode:: python
+
+       class MyClass(NSObject, NSFilePresenter):
+           ...
+
+    The formal protocols that are used as a base class do not end
+    up in the MRO, but will be added to ``__pyobjc_protocols__``.
+
+    Mixing the two definition styles is supported as well, although
+    this will lead to less understandable code.
+
+  * :issue:`359`: Introduce a :class:`objc.bound_selector` for bound
+    selector objects.
+
+    In previous versions bound selectors used the same type as
+    unbound selectors (:class:`objc.python_selector` or
+    :class:`objc.native_selector`).
+
+    Using a separate bound selector results in slightly better
+    performance due to not creating the bound selector object
+    during regular method calls.
+
+    A :class:`objc.bound_selector` is a subclass of :class:`objc.selector`,
+    just like the other two classes and has the same attributes
+    as the selector value it binds. The only user-visible behaviour
+    change w.r.t. previous versions is that it is no longer
+    possible to test the flavour of a bound selector using
+    and :func:`isinstance` check.
+
+* Incompatible changes:
+
+  * This release drops support for Python 3.10
+
+  * It is no longer possible to use :class:`objc.native_selector`
+    the create new selector values, it used to behave the same
+    as invoking :class:`objc.selector`.
+
+  * :class:`objc.formal_protocol` no longer accepts native of
+    bound selectors in the lists of required and optional
+    selectors.
+
+  * A number of framework bindings used to expose some complex
+    Apple API functions as regular Python builtin functions, those
+    are now instances of :class:`objc.function`.
+
+    In regular usage the only side effect of this is that keyword
+    arguments are no longer supported for such functions.
+
+  * :class:`objc.UninitializedDeallocWarning` was removed.
+
+    The bridge already never emitted this warning starting from
+    version 11.1.
+
+  * A number of functions in framework bindings used to accept
+    keyword arguments and no longer do due to a changed implementation
+    strategy.
+
+    .. dropdown:: List of such functions
+
+       * CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets
+
+       * CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets
+
+       * CoreMediaIO.CMIODeviceProcessAVCCommand
+
+       * CoreMediaIO.CMIODeviceProcessRS422Command
+
+       * MediaToolbox.MTAudioProcessingTapCreate
+
+       * MediaToolbox.MTAudioProcessingTapCreateWithPreferredFormat
+
+       * MediaToolbox.MTAudioProcessingTapGetStorage
+
+       * Foundation.NSFileTypeForHFSTypeCode
+
+       * AppKit.NSApplicationMain
+
+  * The first argument of :func:`CoreText.CTRunDelegateCreate` must now
+    be a tuple, earlier versions accepted arbitrary sequences.
+
+  * The last argument of :func:`CoreText.CTParagraphStyleGetValueForSpecifier`
+    must be :data:`None` and can no longer be a mutable buffer object.
+
+  * :func:`Quartz.CGReleaseScreenRefreshRects` will now raise an exception. It
+    was already a no-op.
+
+  * :func:`Foundation.NSHFSFTypeCodeFromFileType` is longer present,
+    this was a type for :func:`Foundation.NSHFSTypeCodeFromFileType`.
+
+  * :func:`AppKit.NSConvertGlyphsToPackedGlyphs` now returns ``(0, None)`` instead
+    of :data:`None` when the ObjC function returns 0. The previous behaviour was
+    an unintended deviation from the PyObjC convention.
+
+  * :func:`CFDictionaryGetKeysAndValues` now includes :data:`objc.NULL` instead
+    of :data:`None` in the return tuple when the *keys* or *values* arguments are
+    :data:`objc.NULL`. This matches the behaviour of automatic bindings.
+
+  * :func:`AppKit.NSBezierPath.elementAtIndex_associatedPoints_` allows leaving
+    of the last argument. This feature is deprecated, starting PyObjC 14 the
+    second argument must be present (and :data:`None`) to match default behaviour
+    of the bridge.
+
+  * The addresses in the return value  of :meth:`AppKit.NSNetService.addresses` are
+    now strings instead of byte strings (to match the socket module).
+
+  * It is currently possible to call :meth:`AppKit.NSBitmapImageRep.getBitmapDataPlanes_`
+    without arguments. This behaviour is deprecated, passing :data:`None` is required
+    starting PyObjC 14.
+
+  * When overriding :meth:`AppKit.NSBezierPath.elementAtIndex_associatedPoints_` in
+    a subclass specify both parameters, previous versions required just one parameter.
+
+  * :meth:`Quartz.CIVector.__getitem__` now consistently raises when the index is
+    out of range. In previous versions a positive out of range value would return
+    0.0 (inherited from :meth:`valueAtIndex_ <Quartz.CIVector.valueAtIndex_>`.
+
+  * :func:`Quartz.CGWaitForScreenRefreshRects`,
+    :func:`Quartz.CGWaitForScreenUpdateRects`,
+    :func:`Quartz.CGScreenRegisterMoveCallback`,
+    :func:`Quartz.CGScreenUnregisterMoveCallback` are no longer supported.
+
+    The first two had manual bindings that were removed because
+    the system API hangs forever since at least macOS 10.9. The latter
+    two required, dit not have, manual bindings.
+
+  * The metadata for a number of functions in the Quartz bindings were dropped,
+    in particular those for functions that were dropped in or before macOS 10.9.
+
+  * Dropped
+    :data:`CFNetwork.kCFStreamSocketSecurityNone`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv2`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv3`,
+    :data:`CFNetwork.kCFStreamSocketSecuritySSLv23`, and
+    :data:`CFNetwork.kCFStreamSocketSecurityTLSv1`. All constants were
+    deprecated in macOS 10.5 and removed later.
+
+  * Dropped
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordCreation`,
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordDeletion`,
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnRecordUpdate`, and
+    :data:`CloudKit.CKSubscriptionOptionsFiresOnce`, all of them
+    removed in the macOS 10.11 SDK.
+
+  * Dropped
+    :data:`CoreWLAN.kCWScanTypeActive`,
+    :data:`CoreWLAN.kCWScanTypePassive`,
+    :data:`CoreWLAN.kCWScanTypeFast`,
+    :data:`CoreWLAN.kCWInterfaceStateInactive`,
+    :data:`CoreWLAN.kCWInterfaceStateScanning`,
+    :data:`CoreWLAN.kCWInterfaceStateAuthenticating`,
+    :data:`CoreWLAN.kCWInterfaceStateAssociating`,
+    :data:`CoreWLAN.kCWInterfaceStateRunning`,
+    :data:`CoreWLAN.kCWSecurityModeOpen`,
+    :data:`CoreWLAN.kCWSecurityModeWEP`,
+    :data:`CoreWLAN.kCWSecurityModeWPA_PSK`,
+    :data:`CoreWLAN.kCWSecurityModeWPA2_PSK`,
+    :data:`CoreWLAN.kCWSecurityModeDynamicWEP`,
+    :data:`CoreWLAN.kCWSecurityModeWPA_Enterprise`,
+    :data:`CoreWLAN.kCWSecurityModeWPA2_Enterprise`,
+    :data:`CoreWLAN.kCWSecurityModeWPS`,
+    :data:`CoreWLAN.kCWOpModeStation`,
+    :data:`CoreWLAN.kCWOpModeIBSS`,
+    :data:`CoreWLAN.kCWOpModeHostAP`,
+    :data:`CoreWLAN.kCWOpModeMonitorMode`,
+    :data:`CoreWLAN.CoreWLANFrameworkVersionNumber2_0`,
+    :data:`CoreWLAN.CWEventTypeVirtualInterfaceStateChanged`,
+    :data:`CoreWLAN.CWEventTypeRangingReportEvent`,
+    :data:`CoreWLAN.CWServiceDidChangeNotification`,
+    :data:`CoreWLAN.kCWErrorDomain`,
+    :data:`CoreWLAN.kCWModeDidChangeNotification`,
+    :data:`CoreWLAN.kCWPowerDidChangeNotification`,
+    :data:`CoreWLAN.kCWSSIDDidChangeNotification`,
+    :data:`CoreWLAN.kCWScanKeyBSSID`,
+    :data:`CoreWLAN.CWScanKeyDwellTime`,
+    :data:`CoreWLAN.kCWScanKeyMerge`,
+    :data:`CoreWLAN.kCWScanKeyRestTime`,
+    :data:`CoreWLAN.kCWScanKeySSID`,
+    :data:`CoreWLAN.kCWScanKeyScanType`,
+    :data:`CoreWLAN.kCWPHYMode11ax`,
+    :data:`CoreWLAN.kCWPHYMode11A`,
+    :data:`CoreWLAN.kCWPHYMode11B`,
+    :data:`CoreWLAN.kCWPHYMode11G`, and
+    :data:`CoreWLAN.kCWPHYMode11N`.
+    All of these were removed in the macOS 10.9 SDK or earlier.
+
+  * Dropped
+    :data:`ImageCaptureCore.ICReturnErrorDeviceEjected`,
+    symbol was removed a log time ago.
+
+  * Dropped
+    :data:`Intents.INShortcutAvailabilityOptionSleepPrepareForTomorrow`,
+    :data:`Intents.INChargingConnectorTypeOptionCCS1`,
+    :data:`Intents.INChargingConnectorTypeOptionCCS2`,
+    :data:`Intents.INChargingConnectorTypeOptionCHAdeMO`,
+    :data:`Intents.INChargingConnectorTypeOptionGBTAC`,
+    :data:`Intents.INChargingConnectorTypeOptionGBTDC`,
+    :data:`Intents.INChargingConnectorTypeOptionJ1772`,
+    :data:`Intents.INChargingConnectorTypeOptionMennekes`,
+    :data:`Intents.INChargingConnectorTypeOptionNone`, and
+    :data:`Intents.INChargingConnectorTypeOptionTesla`.
+    All of these were only present in a beta SDK.
+
+    Also dropped
+    :data:`Intents.INSendMessageIntentResponseCodeFailureMessageAttachmentError`    and
+    :data:`Intents.INSendMessageIntentResponseCodeFailureMessageLocationNotAllowed`
+    which aren't present in any recent SDK.
+
+  * Dropped
+    :data:`LocationAuthentication.kLACredentialTypePasscode` and
+    :data:`LocationAutentication.kLACredentialTypePassphrase` which
+    were only present in a beta SDK.
+
+  * Dropped
+    :data:`Metal.MDLPrimitiveTypeCapsule`,
+    :data:`Metal.MDLPrimitiveTypeCone`,
+    :data:`Metal.MDLPrimitiveTypeCube`,
+    :data:`Metal.MDLPrimitiveTypeCylinder`,
+    :data:`Metal.MDLPrimitiveTypeNone`, and
+    :data:`Metal.MDLPrimitiveTypeSphere`,
+    which were only present in a beta SDK.
+
+  * Dropped
+    :data:`NetworkExtension.NEVPNIKEv2DiffieHellmanGroup0`,
+    which was only in a beta SDK.
+
+  * Dropped
+    :data:`SafariServices.SFSafariServicesVersion10_0`,
+    :data:`SafariServices.SFSafariServicesVersion10_1`,
+    :data:`SafariServices.SFSafariServicesVersion11_0`,
+    :data:`SafariServices.SFSafariServicesVersion12_0`,
+    :data:`SafariServices.SFSafariServicesVersion12_1`,
+    :data:`SafariServices.SFSafariServicesVersion13_0`, and
+    :data:`SafariServices.SFSafariServicesVersion27_0`.
+    All of these are not part of the public API, but are
+    present in a separate header used for Swift support.
+
+  * Dropped
+    :data:`UserNotifications.UNNotificationGroupingSettingDefault`,
+    :data:`UserNotifications.UNNotificationGroupingSettingSource`,
+    :data:`UserNotifications.UNNotificationGroupingSettingOff`.
+    All of these were only in a beta SDK.
+
+  * Dropped
+    :data:`DiskArbitration.kDADiskOptionEjectUponLogout`,
+    :data:`DiskArbitration.kDADiskOptionMountAutomatic`,
+    :data:`DiskArbitration.kDADiskOptionMountAutomaticNoDefer`,
+    :data:`DiskArbitration.kDADiskOptionPrivate`, all which were
+    removed before macOS 10.9.
+
+  * Dropped :data:`FileProvider.NSFileProviderErrorCausedByErrorsKey`
+    which was only in a beta SDK.
+
+  * Dropped
+    :data:`Vision.VNAnimalDetectorDog`,
+    :data:`Vision.VNAnimalDetectorCat`, which
+    were only in a beta SDK.
+
+* Deprecations:
+
+  * The attribute :data:`objc.platform` is deprecated and will be removed
+     in PyObjC 14. Its value is always ``"MACOSX"``.
+
+  * :func`Quartz.CVPixelBufferCreateWithBytes` currently has an
+    optional last argument. That feature is deprecated, the argument
+    will be required in PyObjC 14.
+
+  * The last argument of :func:`CoreFoundation.CFBagGetValues` and
+    :func:`CoreFpundation.CFRunLoopTimerGetContext`  is
+    currently optional. That feature is deprecated and the last
+    argument will be required in PyObjC 14.
+
+
+* The following frameworks are deprecated in macOS 27:
+
+  * :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`
+
+  * :doc:`AVRouting </apinotes/AVRouting>`
+
+* All formal protocols (``@protocol ...`` in Objective-C) are exposed
+  as attributes on module that implements the binding for the framework
+  that defines the protocol, e.g. ``Foundation.NSFastEnumeration`` for
+  ``@protocol(NSFastEnumeration)``.
+
+  A number of protocols have the same name as an Objective-C classes, in
+  those cases the protocol is bound to a name ending with "Protocol".
+
+  .. dropdown:: List of exceptions
+
+     * ``Foundation.NSObjectProtocol`` for ``@protocol(NSObject)``.
+
+     * ``AppKit.NSAccessibilityElementProtocol`` for ``@protocol(NSAccessibilityElement)``.
+
+     * ``AppKit.NSCollectionLayoutContainerProtocol`` for ``@protocol(NSCollectionLayoutContainer)``.
+
+     * ``AppKit.NSTextAttachmentCellProtocol`` for ``@protocol(NSTextAttachmentCell)``.
+
+     * ``AppKit.NSCollectionLayoutEnvironmentProtocol`` for ``@protocol(NSCollectionLayoutEnvironment)``.
+
+     * ``AppKit.NSCollectionLayoutVisibleItemProtocol`` for ``@protocol(NSCollectionLayoutVisibleItem)``.
+
+     * ``AVFoundation.AVVideoCompositionInstructionProtocol`` for ``@protocol(AVVideoCompositionInstructiol)``.
+
+     * ``FinderSync.FIFinderSyncProtocol`` for ``@protocol(FIFinderSync)``.
+
+     * ``WebKit.DOMNodeFilterProtocol`` for ``@protocol(DOMNodeFilter)``.
+
+     * ``WebKit.WebPolicyDecisionListenerProtocol`` for ``@protocol(WebPolicyDecisionListener)``.
+
+     * ``WebKit.WebOpenPanelResultListenerProtocol`` for ``@protocol(WebOpenPanelResultListener)``.
+
+     * ``JavaScriptCore.JSExportProtocol`` for ``@protocol(JSExportProtocol)``.
+
+     * ``Quartz.CAMetalDrawableProtocol`` for ``@protocol(CAMetalDrawable)``.
+
+     * ``Quartz.CIFilterProtocol`` for ``@protocol(CIFilter)``.
+
+     * ``Quartz.CISystemToneMapProtocol`` for ``@protocol(CISystemToneMap)``.
+
+     * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``.
+
+     * ``Quartz.CIAccordionFoldTransitionProtocol`` for ``@protocol(CIAccordionFoldTransition)``
+
+     * ``Quartz.CIAffineClampProtocol`` for ``@protocol(CIAffineClamp)``
+
+     * ``Quartz.CIAffineTileProtocol`` for ``@protocol(CIAffineTile)``
+
+     * ``Quartz.CIAreaAverageProtocol`` for ``@protocol(CIAreaAverage)``
+
+     * ``Quartz.CIAreaAverageMaximumRedProtocol`` for ``@protocol(CIAreaAverageMaximumRed)``
+
+     * ``Quartz.CIAreaBoundsRedProtocol`` for ``@protocol(CIAreaBoundsRed)``
+
+     * ``Quartz.CIAreaHistogramProtocol`` for ``@protocol(CIAreaHistogram)``
+
+     * ``Quartz.CIAreaMaximumProtocol`` for ``@protocol(CIAreaMaximum)``
+
+     * ``Quartz.CIAreaMaximumAlphaProtocol`` for ``@protocol(CIAreaMaximumAlpha)``
+
+     * ``Quartz.CIAreaMinMaxProtocol`` for ``@protocol(CIAreaMinMax)``
+
+     * ``Quartz.CIAreaMinMaxRedProtocol`` for ``@protocol(CIAreaMinMaxRed)``
+
+     * ``Quartz.CIAreaMinimumProtocol`` for ``@protocol(CIAreaMinimum)``
+
+     * ``Quartz.CIAreaMinimumAlphaProtocol`` for ``@protocol(CIAreaMinimumAlpha)``
+
+     * ``Quartz.CIAreaReductionFilterProtocol`` for ``@protocol(CIAreaReductionFilter)``
+
+     * ``Quartz.CIAttributedTextImageGeneratorProtocol`` for ``@protocol(CIAttributedTextImageGenerator)``
+
+     * ``Quartz.CIAztecCodeGeneratorProtocol`` for ``@protocol(CIAztecCodeGenerator)``
+
+     * ``Quartz.CIBarcodeGeneratorProtocol`` for ``@protocol(CIBarcodeGenerator)``
+
+     * ``Quartz.CIBarsSwipeTransitionProtocol`` for ``@protocol(CIBarsSwipeTransition)``
+
+     * ``Quartz.CIBicubicScaleTransformProtocol`` for ``@protocol(CIBicubicScaleTransform)``
+
+     * ``Quartz.CIBlendWithMaskProtocol`` for ``@protocol(CIBlendWithMask)``
+
+     * ``Quartz.CIBloomProtocol`` for ``@protocol(CIBloom)``
+
+     * ``Quartz.CIBlurredRectangleGeneratorProtocol`` for ``@protocol(CIBlurredRectangleGenerator)``
+
+     * ``Quartz.CIBlurredRoundedRectangleGeneratorProtocol`` for ``@protocol(CIBlurredRoundedRectangleGenerator)``
+
+     * ``Quartz.CIBokehBlurProtocol`` for ``@protocol(CIBokehBlur)``
+
+     * ``Quartz.CIBoxBlurProtocol`` for ``@protocol(CIBoxBlur)``
+
+     * ``Quartz.CIBumpDistortionProtocol`` for ``@protocol(CIBumpDistortion)``
+
+     * ``Quartz.CIBumpDistortionLinearProtocol`` for ``@protocol(CIBumpDistortionLinear)``
+
+     * ``Quartz.CICMYKHalftoneProtocol`` for ``@protocol(CICMYKHalftone)``
+
+     * ``Quartz.CICannyEdgeDetectorProtocol`` for ``@protocol(CICannyEdgeDetector)``
+
+     * ``Quartz.CICheckerboardGeneratorProtocol`` for ``@protocol(CICheckerboardGenerator)``
+
+     * ``Quartz.CICircleSplashDistortionProtocol`` for ``@protocol(CICircleSplashDistortion)``
+
+     * ``Quartz.CICircularScreenProtocol`` for ``@protocol(CICircularScreen)``
+
+     * ``Quartz.CICircularWrapProtocol`` for ``@protocol(CICircularWrap)``
+
+     * ``Quartz.CICode128BarcodeGeneratorProtocol`` for ``@protocol(CICode128BarcodeGenerator)``
+
+     * ``Quartz.CIColorAbsoluteDifferenceProtocol`` for ``@protocol(CIColorAbsoluteDifference)``
+
+     * ``Quartz.CIColorClampProtocol`` for ``@protocol(CIColorClamp)``
+
+     * ``Quartz.CIColorControlsProtocol`` for ``@protocol(CIColorControls)``
+
+     * ``Quartz.CIColorCrossPolynomialProtocol`` for ``@protocol(CIColorCrossPolynomial)``
+
+     * ``Quartz.CIColorCubeProtocol`` for ``@protocol(CIColorCube)``
+
+     * ``Quartz.CIColorCubeWithColorSpaceProtocol`` for ``@protocol(CIColorCubeWithColorSpace)``
+
+     * ``Quartz.CIColorCubesMixedWithMaskProtocol`` for ``@protocol(CIColorCubesMixedWithMask)``
+
+     * ``Quartz.CIColorCurvesProtocol`` for ``@protocol(CIColorCurves)``
+
+     * ``Quartz.CIColorInvertProtocol`` for ``@protocol(CIColorInvert)``
+
+     * ``Quartz.CIColorMapProtocol`` for ``@protocol(CIColorMap)``
+
+     * ``Quartz.CIColorMatrixProtocol`` for ``@protocol(CIColorMatrix)``
+
+     * ``Quartz.CIColorMonochromeProtocol`` for ``@protocol(CIColorMonochrome)``
+
+     * ``Quartz.CIColorPolynomialProtocol`` for ``@protocol(CIColorPolynomial)``
+
+     * ``Quartz.CIColorPosterizeProtocol`` for ``@protocol(CIColorPosterize)``
+
+     * ``Quartz.CIColorThresholdProtocol`` for ``@protocol(CIColorThreshold)``
+
+     * ``Quartz.CIColorThresholdOtsuProtocol`` for ``@protocol(CIColorThresholdOtsu)``
+
+     * ``Quartz.CIColumnAverageProtocol`` for ``@protocol(CIColumnAverage)``
+
+     * ``Quartz.CIComicEffectProtocol`` for ``@protocol(CIComicEffect)``
+
+     * ``Quartz.CICompositeOperationProtocol`` for ``@protocol(CICompositeOperation)``
+
+     * ``Quartz.CIConvolutionProtocol`` for ``@protocol(CIConvolution)``
+
+     * ``Quartz.CICopyMachineTransitionProtocol`` for ``@protocol(CICopyMachineTransition)``
+
+     * ``Quartz.CICoreMLModelProtocol`` for ``@protocol(CICoreMLModel)``
+
+     * ``Quartz.CICrystallizeProtocol`` for ``@protocol(CICrystallize)``
+
+     * ``Quartz.CIDepthOfFieldProtocol`` for ``@protocol(CIDepthOfField)``
+
+     * ``Quartz.CIDepthToDisparityProtocol`` for ``@protocol(CIDepthToDisparity)``
+
+     * ``Quartz.CIDiscBlurProtocol`` for ``@protocol(CIDiscBlur)``
+
+     * ``Quartz.CIDisintegrateWithMaskTransitionProtocol`` for ``@protocol(CIDisintegrateWithMaskTransition)``
+
+     * ``Quartz.CIDisparityToDepthProtocol`` for ``@protocol(CIDisparityToDepth)``
+
+     * ``Quartz.CIDisplacementDistortionProtocol`` for ``@protocol(CIDisplacementDistortion)``
+
+     * ``Quartz.CIDissolveTransitionProtocol`` for ``@protocol(CIDissolveTransition)``
+
+     * ``Quartz.CIDitherProtocol`` for ``@protocol(CIDither)``
+
+     * ``Quartz.CIDocumentEnhancerProtocol`` for ``@protocol(CIDocumentEnhancer)``
+
+     * ``Quartz.CIDotScreenProtocol`` for ``@protocol(CIDotScreen)``
+
+     * ``Quartz.CIDrosteProtocol`` for ``@protocol(CIDroste)``
+
+     * ``Quartz.CIEdgePreserveUpsampleProtocol`` for ``@protocol(CIEdgePreserveUpsample)``
+
+     * ``Quartz.CIEdgeWorkProtocol`` for ``@protocol(CIEdgeWork)``
+
+     * ``Quartz.CIEdgesProtocol`` for ``@protocol(CIEdges)``
+
+     * ``Quartz.CIEightfoldReflectedTileProtocol`` for ``@protocol(CIEightfoldReflectedTile)``
+
+     * ``Quartz.CIExposureAdjustProtocol`` for ``@protocol(CIExposureAdjust)``
+
+     * ``Quartz.CIFalseColorProtocol`` for ``@protocol(CIFalseColor)``
+
+     * ``Quartz.CIFlashTransitionProtocol`` for ``@protocol(CIFlashTransition)``
+
+     * ``Quartz.CIFourCoordinateGeometryFilterProtocol`` for ``@protocol(CIFourCoordinateGeometryFilter)``
+
+     * ``Quartz.CIFourfoldReflectedTileProtocol`` for ``@protocol(CIFourfoldReflectedTile)``
+
+     * ``Quartz.CIFourfoldRotatedTileProtocol`` for ``@protocol(CIFourfoldRotatedTile)``
+
+     * ``Quartz.CIFourfoldTranslatedTileProtocol`` for ``@protocol(CIFourfoldTranslatedTile)``
+
+     * ``Quartz.CIGaborGradientsProtocol`` for ``@protocol(CIGaborGradients)``
+
+     * ``Quartz.CIGammaAdjustProtocol`` for ``@protocol(CIGammaAdjust)``
+
+     * ``Quartz.CIGaussianBlurProtocol`` for ``@protocol(CIGaussianBlur)``
+
+     * ``Quartz.CIGaussianGradientProtocol`` for ``@protocol(CIGaussianGradient)``
+
+     * ``Quartz.CIGlassDistortionProtocol`` for ``@protocol(CIGlassDistortion)``
+
+     * ``Quartz.CIGlassLozengeProtocol`` for ``@protocol(CIGlassLozenge)``
+
+     * ``Quartz.CIGlideReflectedTileProtocol`` for ``@protocol(CIGlideReflectedTile)``
+
+     * ``Quartz.CIGloomProtocol`` for ``@protocol(CIGloom)``
+
+     * ``Quartz.CIHatchedScreenProtocol`` for ``@protocol(CIHatchedScreen)``
+
+     * ``Quartz.CIHeightFieldFromMaskProtocol`` for ``@protocol(CIHeightFieldFromMask)``
+
+     * ``Quartz.CIHexagonalPixellateProtocol`` for ``@protocol(CIHexagonalPixellate)``
+
+     * ``Quartz.CIHighlightShadowAdjustProtocol`` for ``@protocol(CIHighlightShadowAdjust)``
+
+     * ``Quartz.CIHistogramDisplayProtocol`` for ``@protocol(CIHistogramDisplay)``
+
+     * ``Quartz.CIHoleDistortionProtocol`` for ``@protocol(CIHoleDistortion)``
+
+     * ``Quartz.CIHueAdjustProtocol`` for ``@protocol(CIHueAdjust)``
+
+     * ``Quartz.CIHueSaturationValueGradientProtocol`` for ``@protocol(CIHueSaturationValueGradient)``
+
+     * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``
+
+     * ``Quartz.CIKMeansProtocol`` for ``@protocol(CIKMeans)``
+
+     * ``Quartz.CIKaleidoscopeProtocol`` for ``@protocol(CIKaleidoscope)``
+
+     * ``Quartz.CIKeystoneCorrectionCombinedProtocol`` for ``@protocol(CIKeystoneCorrectionCombined)``
+
+     * ``Quartz.CIKeystoneCorrectionHorizontalProtocol`` for ``@protocol(CIKeystoneCorrectionHorizontal)``
+
+     * ``Quartz.CIKeystoneCorrectionVerticalProtocol`` for ``@protocol(CIKeystoneCorrectionVertical)``
+
+     * ``Quartz.CILabDeltaEProtocol`` for ``@protocol(CILabDeltaE)``
+
+     * ``Quartz.CILanczosScaleTransformProtocol`` for ``@protocol(CILanczosScaleTransform)``
+
+     * ``Quartz.CILenticularHaloGeneratorProtocol`` for ``@protocol(CILenticularHaloGenerator)``
+
+     * ``Quartz.CILightTunnelProtocol`` for ``@protocol(CILightTunnel)``
+
+     * ``Quartz.CILineOverlayProtocol`` for ``@protocol(CILineOverlay)``
+
+     * ``Quartz.CILineScreenProtocol`` for ``@protocol(CILineScreen)``
+
+     * ``Quartz.CILinearGradientProtocol`` for ``@protocol(CILinearGradient)``
+
+     * ``Quartz.CILinearToSRGBToneCurveProtocol`` for ``@protocol(CILinearToSRGBToneCurve)``
+
+     * ``Quartz.CIMaskToAlphaProtocol`` for ``@protocol(CIMaskToAlpha)``
+
+     * ``Quartz.CIMaskedVariableBlurProtocol`` for ``@protocol(CIMaskedVariableBlur)``
+
+     * ``Quartz.CIMaximumComponentProtocol`` for ``@protocol(CIMaximumComponent)``
+
+     * ``Quartz.CIMedianProtocol`` for ``@protocol(CIMedian)``
+
+     * ``Quartz.CIMeshGeneratorProtocol`` for ``@protocol(CIMeshGenerator)``
+
+     * ``Quartz.CIMinimumComponentProtocol`` for ``@protocol(CIMinimumComponent)``
+
+     * ``Quartz.CIMixProtocol`` for ``@protocol(CIMix)``
+
+     * ``Quartz.CIModTransitionProtocol`` for ``@protocol(CIModTransition)``
+
+     * ``Quartz.CIMorphologyGradientProtocol`` for ``@protocol(CIMorphologyGradient)``
+
+     * ``Quartz.CIMorphologyMaximumProtocol`` for ``@protocol(CIMorphologyMaximum)``
+
+     * ``Quartz.CIMorphologyMinimumProtocol`` for ``@protocol(CIMorphologyMinimum)``
+
+     * ``Quartz.CIMorphologyRectangleMaximumProtocol`` for ``@protocol(CIMorphologyRectangleMaximum)``
+
+     * ``Quartz.CIMorphologyRectangleMinimumProtocol`` for ``@protocol(CIMorphologyRectangleMinimum)``
+
+     * ``Quartz.CIMotionBlurProtocol`` for ``@protocol(CIMotionBlur)``
+
+     * ``Quartz.CINinePartStretchedProtocol`` for ``@protocol(CINinePartStretched)``
+
+     * ``Quartz.CINinePartTiledProtocol`` for ``@protocol(CINinePartTiled)``
+
+     * ``Quartz.CINoiseReductionProtocol`` for ``@protocol(CINoiseReduction)``
+
+     * ``Quartz.CIOpTileProtocol`` for ``@protocol(CIOpTile)``
+
+     * ``Quartz.CIPDF417BarcodeGeneratorProtocol`` for ``@protocol(CIPDF417BarcodeGenerator)``
+
+     * ``Quartz.CIPageCurlTransitionProtocol`` for ``@protocol(CIPageCurlTransition)``
+
+     * ``Quartz.CIPageCurlWithShadowTransitionProtocol`` for ``@protocol(CIPageCurlWithShadowTransition)``
+
+     * ``Quartz.CIPaletteCentroidProtocol`` for ``@protocol(CIPaletteCentroid)``
+
+     * ``Quartz.CIPalettizeProtocol`` for ``@protocol(CIPalettize)``
+
+     * ``Quartz.CIParallelogramTileProtocol`` for ``@protocol(CIParallelogramTile)``
+
+     * ``Quartz.CIPerspectiveCorrectionProtocol`` for ``@protocol(CIPerspectiveCorrection)``
+
+     * ``Quartz.CIPerspectiveRotateProtocol`` for ``@protocol(CIPerspectiveRotate)``
+
+     * ``Quartz.CIPerspectiveTileProtocol`` for ``@protocol(CIPerspectiveTile)``
+
+     * ``Quartz.CIPerspectiveTransformProtocol`` for ``@protocol(CIPerspectiveTransform)``
+
+     * ``Quartz.CIPerspectiveTransformWithExtentProtocol`` for ``@protocol(CIPerspectiveTransformWithExtent)``
+
+     * ``Quartz.CIPhotoEffectProtocol`` for ``@protocol(CIPhotoEffect)``
+
+     * ``Quartz.CIPinchDistortionProtocol`` for ``@protocol(CIPinchDistortion)``
+
+     * ``Quartz.CIPixellateProtocol`` for ``@protocol(CIPixellate)``
+
+     * ``Quartz.CIPointillizeProtocol`` for ``@protocol(CIPointillize)``
+
+     * ``Quartz.CIQRCodeGeneratorProtocol`` for ``@protocol(CIQRCodeGenerator)``
+
+     * ``Quartz.CIRadialGradientProtocol`` for ``@protocol(CIRadialGradient)``
+
+     * ``Quartz.CIRandomGeneratorProtocol`` for ``@protocol(CIRandomGenerator)``
+
+     * ``Quartz.CIRippleTransitionProtocol`` for ``@protocol(CIRippleTransition)``
+
+     * ``Quartz.CIRoundedQRCodeGeneratorProtocol`` for ``@protocol(CIRoundedQRCodeGenerator)``
+
+     * ``Quartz.CIRoundedRectangleGeneratorProtocol`` for ``@protocol(CIRoundedRectangleGenerator)``
+
+     * ``Quartz.CIRoundedRectangleStrokeGeneratorProtocol`` for ``@protocol(CIRoundedRectangleStrokeGenerator)``
+
+     * ``Quartz.CIRowAverageProtocol`` for ``@protocol(CIRowAverage)``
+
+     * ``Quartz.CISRGBToneCurveToLinearProtocol`` for ``@protocol(CISRGBToneCurveToLinear)``
+
+     * ``Quartz.CISaliencyMapProtocol`` for ``@protocol(CISaliencyMap)``
+
+     * ``Quartz.CISepiaToneProtocol`` for ``@protocol(CISepiaTone)``
+
+     * ``Quartz.CIShadedMaterialProtocol`` for ``@protocol(CIShadedMaterial)``
+
+     * ``Quartz.CISharpenLuminanceProtocol`` for ``@protocol(CISharpenLuminance)``
+
+     * ``Quartz.CISixfoldReflectedTileProtocol`` for ``@protocol(CISixfoldReflectedTile)``
+
+     * ``Quartz.CISixfoldRotatedTileProtocol`` for ``@protocol(CISixfoldRotatedTile)``
+
+     * ``Quartz.CISmoothLinearGradientProtocol`` for ``@protocol(CISmoothLinearGradient)``
+
+     * ``Quartz.CISobelGradientsProtocol`` for ``@protocol(CISobelGradients)``
+
+     * ``Quartz.CISpotColorProtocol`` for ``@protocol(CISpotColor)``
+
+     * ``Quartz.CISpotLightProtocol`` for ``@protocol(CISpotLight)``
+
+     * ``Quartz.CIStarShineGeneratorProtocol`` for ``@protocol(CIStarShineGenerator)``
+
+     * ``Quartz.CIStraightenProtocol`` for ``@protocol(CIStraighten)``
+
+     * ``Quartz.CIStretchCropProtocol`` for ``@protocol(CIStretchCrop)``
+
+     * ``Quartz.CIStripesGeneratorProtocol`` for ``@protocol(CIStripesGenerator)``
+
+     * ``Quartz.CISunbeamsGeneratorProtocol`` for ``@protocol(CISunbeamsGenerator)``
+
+     * ``Quartz.CISwipeTransitionProtocol`` for ``@protocol(CISwipeTransition)``
+
+     * ``Quartz.CITemperatureAndTintProtocol`` for ``@protocol(CITemperatureAndTint)``
+
+     * ``Quartz.CITextImageGeneratorProtocol`` for ``@protocol(CITextImageGenerator)``
+
+     * ``Quartz.CIThermalProtocol`` for ``@protocol(CIThermal)``
+
+     * ``Quartz.CIToneCurveProtocol`` for ``@protocol(CIToneCurve)``
+
+     * ``Quartz.CIToneMapHeadroomProtocol`` for ``@protocol(CIToneMapHeadroom)``
+
+     * ``Quartz.CITorusLensDistortionProtocol`` for ``@protocol(CITorusLensDistortion)``
+
+     * ``Quartz.CITransitionFilterProtocol`` for ``@protocol(CITransitionFilter)``
+
+     * ``Quartz.CITriangleKaleidoscopeProtocol`` for ``@protocol(CITriangleKaleidoscope)``
+
+     * ``Quartz.CITriangleTileProtocol`` for ``@protocol(CITriangleTile)``
+
+     * ``Quartz.CITwelvefoldReflectedTileProtocol`` for ``@protocol(CITwelvefoldReflectedTile)``
+
+     * ``Quartz.CITwirlDistortionProtocol`` for ``@protocol(CITwirlDistortion)``
+
+     * ``Quartz.CIUnsharpMaskProtocol`` for ``@protocol(CIUnsharpMask)``
+
+     * ``Quartz.CIVibranceProtocol`` for ``@protocol(CIVibrance)``
+
+     * ``Quartz.CIVignetteProtocol`` for ``@protocol(CIVignette)``
+
+     * ``Quartz.CIVignetteEffectProtocol`` for ``@protocol(CIVignetteEffect)``
+
+     * ``Quartz.CIVortexDistortionProtocol`` for ``@protocol(CIVortexDistortion)``
+
+     * ``Quartz.CIWhitePointAdjustProtocol`` for ``@protocol(CIWhitePointAdjust)``
+
+     * ``Quartz.CIXRayProtocol`` for ``@protocol(CIXRay)``
+
+     * ``Quartz.CIZoomBlurProtocol`` for ``@protocol(CIZoomBlur)``
+
+     * ``Quartz.CIImageProcessorInputProtocol`` for ``@protocol(CIImageProcessorInput)``
+
+     * ``Quartz.CIImageProcessorOutputProtocol`` for ``@protocol(CIImageProcessorOutput)``
+
+     * ``Metal.MTLCaptureScopeProtocol`` for ``@protocol(MTLCaptureScope)``
+
+     * ``GameCenter.GKViewControllerObject`` for ``@protocol(GKViewController)``
+
+
+* The test suite for the framework wrappers has been reworked with
+  more consistent test naming. Tests now assume macOS 10.9 or later.
+
+* The CoreAudio bindings no longer contain a C++ extension because
+  Xcode 27 can no longer target macOS 10.15 or earlier when using
+  C++.
+
+
+* Improved error message when the *self* argument in
+  calls to a class selector is invalid.
+
+* The SIMD functions in the ARKit bindings are now supported as well.
+
+* Added an internal API to override how C functions are called
+  by :class:`objc.function`, similar to an override system used
+  for calling selectors.
+
+  This enabled adding support for SIMD values in :class:`objc.functions`,
+  and enabled using :class:`objc.function` for functions with interfaces
+  that cannot be described fully using the metadata system.
+
+* :issue:`680`: The change in the previous item causes problems
+  with :func:`SystemConfiguration.SCDynamicStoreCreate`. Implemented
+  a workaround for that.
+
+* Add support for C APIs that pass a function pointer to a callback
+  function (when that callback is implemented in Python).
+
+* :func:`CoreText.CTParagraphStyleGetValueForSpecifier` will now
+  automatically size the buffer when passing 0 for the *size* parameter,
+  and will in that case also return the retrieved value with the expected
+  type instead of as bytes object.
+
+  The passed in buffer must now be :data:`None` and cannot be a mutable
+  buffer type.
+
+* :func:`Quartz.CGPSConverterCreate` will now accept :data:`None` for
+  individual callbacks in the *callbacks* argument.
+
+* :func:`CoreFoundation.CFMachPortCreate`, :func:`CoreFoundation.CFMachPortCreateWithPort`,
+  and :func:`CoreFoundation.`CFMessagePortCreateLocal`
+  now correctly handle :data:`objc.NULL` for the last argument.
+
+* The callback for :func:`CFMessagePortCreateLocal` now actually works,
+  in previous versions the process would crash hard when the callback
+  was invoked and returned a buffer.
+
+  .. note::
+
+     The 'data' argument for the callback is an :class:`NSData` object
+     that is invalidated by the system when the callback returns. Use
+     a copy of the buffer (e.g. ``bytes(data)``) when the value
+     is used after the callback returns.
+
+
+* :func:`CoreFoundation.CFReadStreamSetClient` now correctly handles
+  a callback value of :data:`None` (removes the current callback)
+  and accepts :data:`None` of the context (with the same semantics
+  as :data:`objc.NULL`).
+
+* I already regularly run the testsuite for pyobjc-core with coverage testing
+  (both Python and Objective-C) and have extended this to the framework
+  bindings.
+
+  This resulted in more functional tests for the framework bindings to
+  get better test coverage, and fixed a small number of bugs.
+
+* :func:`Foundation.NSLocalizedAttributedStringWithDefaultValue` now
+  actually works.
+
+* :meth:`CoreAudio.AudioValueTranslation.create_input_buffer` and
+  :func:`CoreAudio.create_buffer`
+  used to give an internal error when passed the wrong number or types
+  of arguments.
+
+* Fix handling exceptions in the callback for :func:`Quartz.CGPathApply`.
+
+* Fix handling exceptions and reference counts in callbacks for
+  :func:`MediaToolbox.MTAudioProcessingTapCreate`.
+
+* Calling :func:`Quartz.CGEventTapCreateForPid` is now supported.
+
+* Fix crash when calling :func:`Security.SecKeychainFindInternetPassword`
+  with arguments of the incorrect type.
+
+* Any exception raised in the callback for :func:`Security.AuthorizationCopyRightsAsync`
+  is now reported as an unraisable exception because the application will crash
+  hard when raising Objective-C exceptions in this context.
+
+* Port 'scan-build' target from pyobjc-core to the framework bindings and
+  fix issues found by the Clang static analyzer.
+
+* Any exception raised in the callbacks for :func:`Quartz.CGDataProviderCreateSequential`
+  is now reported as an unraisable exception because the application will crash
+  hard when raising Objective-C exceptions in this context.
+
+* Correct metadata for :func:`Security.sec_protocol_options_set_tls_tickets_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_ocsp_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_false_start_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_resumption_enabled`,
+  :func:`Security.sec_protocol_options_set_tls_is_fallback_attempt`,
+  :func:`Security.sec_protocol_options_set_tls_sct_enabled`, and
+  :func:`Security.sec_protocol_options_set_tls_renegotiation_enabled`,
+
+* Correct metadata for :func:`ARKit.ar_anchor_get_identifier`.
+
+* Correct metadata for :mod:`CFOpenDirectory`, a number of functions
+  had incorrect type encodings for CoreFoundation object types defined
+  by the framework.
+
+* Correct metadata for :func:`Quartz.CGFontCreatePostScriptEncoding`.
+
+* Correct metadata for various functions in the :mod:`Security` bindings.
+
+* Cleanup the metadata overrides for framework metadata, which should make
+  it easier to maintain these overrides going forward.
+
+* Fixed metadata for
+  :meth:`CoreData.NSCustomMigrationStage.willMigrateHandler`,
+  :meth:`CoreData.NSCustomMigrationStage.setWillMigrateHandler_`,
+  :meth:`CoreData.NSCustomMigrationStage.didMigrateHandler`, and
+  :meth:`CoreData.NSCustomMigrationStage.setDidMigrateHandler_`.
+
+* Fix value of the (deprecated) constant :data:`Quartz.CGGlyphMax`.
+
+* Fix value of the constant :data:`dispatch.DISPATCH_WALLTIME_NOW`.
+
+* Fix type encoding for :class:`ColorSync.ColorSync.ColorSyncMD5`.
+
+* Fix type encoding for :class:`Metal.MTLMapIndirectArguments`.
+
+* Fix type encoding for :class:`libdispatch.timespec`.
+
+* :issue:`689`: Fix reference leak in :meth:`Foundation.NSData.bytes`,
+  :meth:`Foundation.NSData.mutableBytes`, and
+  :meth:`objc.varlist.as_buffer`.
+
+* Create more accurate metadata for selectors
+  in the "copy" category, and for functions with "Copy" or "Create"
+  in their name.
+
+  .. dropdown:: Affected functions and methods
+
+     * :meth:`BackgroundAssets.BADownload.copyAsNonEssential`
+     * :meth:`Foundation.NSObject.copyScriptingObjectOfClass_forValueForKey_withContentsValue_properties_` (informal protocol)
+     * :meth:`MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSAccelerationStructure.copyWithZone_group_`
+     * :meth:`MetalPerformanceShaders.MPSFunction.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSKernel.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixBatchNormalization.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixBatchNormalizationGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFindTopK.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFullyConnected.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixFullyConnectedGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixNeuron.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixNeuronGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixSoftMax.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSMatrixSoftMaxGradient.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSNDArrayMultiaryBase.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNImageInferenceLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNMatrixInferenceLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRNNMatrixTrainingLayer.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSRayIntersector.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSSVGF.copyWithZone_device_`
+     * :meth:`MetalPerformanceShaders.MPSTemporalAA.copyWithZone_device_`
+
+* issue:`690`: Fix reference count handling for selectors in
+  the "new" category.
+
+  Before this fix calling methods like ``newBufferWithLength_options_``
+  on a Metal device would leak memory due to the result object
+  having a +1 reference count that the bridge didn't account for.
+
+  In 12.2.3 a minimal fix was added to ``pyobjc-core``, in this release
+  a more comprehensive fix was done, in particular creating and
+  overview of the affected methods. All of these are already fixed
+  in release 12.2.3.
+
+  .. dropdown:: Affected methods
+
+     * :meth:`AVFoundation.AVCaptureSpatialAudioMetadataSampleGenerator.newTimedMetadataSampleBufferAndResetAnalyzer`,
+     * :meth:`AppKit.NSCollectionView.newItemForRepresentedObject`
+     * :meth:`AppKit.NSDictionaryController.newObject`
+     * :meth:`AppKit.NSMenuItemBadge.newItemsWithCount_`
+     * :meth:`AppKit.NSObjectController.newObject`
+     * :meth:`CoreData.NSAtomicStore.newCacheNodeForManagedObject_`
+     * :meth:`CoreData.NSAtomicStore.newReferenceObjectForManagedObject_`
+     * :meth:`CoreData.NSIncrementalStore.newObjectIDForEntity_referenceObject_`
+     * :meth:`CoreData.NSIncrementalStore.newValueForRelationship_forObjectWithID_withContext_error_`
+     * :meth:`CoreData.NSIncrementalStore.newValuesForObjectWithID_withContext_error_`
+     * :meth:`CoreData.NSPersistentContainer.newBackgroundContext`
+     * :meth:`CoreML.MLModel.newState`
+     * :meth:`Foundation.NSObject.newScriptingObjectOfClass_forValueForKey_withContentsValue_properties_` (informal protocol)
+     * :meth:`MDLMesh.newBoxWithDimensions_segments_geometryType_inwardNormals_allocator_`
+     * :meth:`Metal.MTL4Archive.newBinaryFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Archive.newComputePipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newBinaryFunctionWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newBinaryFunctionWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newComputePipelineStateWithDescriptor_dynamicLinkingDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibraryWithURL_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibraryWithURL_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibrary_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newDynamicLibrary_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newLibraryWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newLibraryWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newMachineLearningPipelineStateWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newMachineLearningPipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateBySpecializationWithDescriptor_pipeline_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateBySpecializationWithDescriptor_pipeline_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_completionHandler_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_compilerTaskOptions_error_` (protocol)
+     * :meth:`Metal.MTL4Compiler.newRenderPipelineStateWithDescriptor_dynamicLinkingDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLArgumentEncoder.newArgumentEncoderForBufferAtIndex_` (protocol)
+     * :meth:`Metal.MTLBuffer.newRemoteBufferViewForDevice_` (protocol)
+     * :meth:`Metal.MTLBuffer.newRemoteTextureViewForDevice_` (protocol)
+     * :meth:`Metal.MTLBuffer.newTensorWithDescriptor_offset_error_` (protocol)
+     * :meth:`Metal.MTLBuffer.newTextureWithDescriptor_offset_bytesPerRow_` (protocol)
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithCommandQueue_`
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithDevice_`
+     * :meth:`Metal.MTLCaptureManager.newCaptureScopeWithMTL4CommandQueue_`
+     * :meth:`Metal.MTLComputePipeline.newComputePipelineStateWithAdditionalBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLComputePipeline.newComputePipelineStateWithBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newAccelerationStructureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newArchiveWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentEncoderWithArguments_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentEncoderWithBufferBinding_` (protocol)
+     * :meth:`Metal.MTLDevice.newArgumentTableWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newBinaryArchiveWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithBytesNoCopy_length_options_deallocator_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithBytes_length_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithLength_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newBufferWithLength_options_placementSparsePageSize_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandAllocatorWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandAllocator` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandBuffer` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueueWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueueWithMaxCommandBufferCount_` (protocol)
+     * :meth:`Metal.MTLDevice.newCommandQueue` (protocol)
+     * :meth:`Metal.MTLDevice.newCompilerWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newComputePipelineStateWithFunction_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCounterHeapWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newCounterSampleBufferWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newDefaultLibraryWithBundle_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newDefaultLibrary` (protocol)
+     * :meth:`Metal.MTLDevice.newDepthStencilStateWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newDynamicLibrary_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newEvent` (protocol)
+     * :meth:`Metal.MTLDevice.newFence` (protocol)
+     * :meth:`Metal.MTLDevice.newHeapWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOCommandQueueWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOFileHandleWithURL_compressionMethod_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOFileHandleWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOHandleWithURL_compressionMethod_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIOHandleWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithData_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithFile_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithSource_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithSource_options_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithStitchedDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLibraryWithURL_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newLogStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newMTL4CommandQueueWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newMTL4CommandQueue` (protocol)
+     * :meth:`Metal.MTLDevice.newPipelineDataSetSerializerWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newRasterizationRateMapWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithMeshDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithTileDescriptor_options_completionHandler_` (protocol)
+     * :meth:`Metal.MTLDevice.newRenderPipelineStateWithTileDescriptor_options_reflection_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newResidencySetWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newSamplerStateWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedEventWithHandle_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedEvent` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedTextureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newSharedTextureWithHandle_` (protocol)
+     * :meth:`Metal.MTLDevice.newTensorWithDescriptor_attachments_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTensorWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureViewPoolWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLDevice.newTextureWithDescriptor_iosurface_plane_` (protocol)
+     * :meth:`Metal.MTLEvent.newSharedEventHandle` (protocol)
+     * :meth:`Metal.MTLFunction.newArgumentEncoderWithBufferIndex_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithDescriptor_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithSize_` (protocol)
+     * :meth:`Metal.MTLHeap.newAccelerationStructureWithSize_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newBufferWithLength_options_offset_` (protocol)
+     * :meth:`Metal.MTLHeap.newTextureWithDescriptor_offset_` (protocol)
+     * :meth:`Metal.MTLIOCommandQueue.newScratchBufferWithMinimumSize_` (protocol)
+     * :meth:`Metal.MTLLibrary.newArgumentEncoderWithBufferIndex_` (protocol)
+     * :meth:`Metal.MTLLibrary.newArgumentEncoderWithBufferIndex_reflection_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_constantValues_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newFunctionWithName_constantValues_error_` (protocol)
+     * :meth:`Metal.MTLLibrary.newIntersectionFunctionWithDescriptor_completionHandler_` (protocol)
+     * :meth:`Metal.MTLLibrary.newIntersectionFunctionWithDescriptor_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newIntersectionFunctionTableWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newIntersectionFunctionTableWithDescriptor_stage_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineDescriptorForSpecialization` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineStateWithAdditionalBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newRenderPipelineStateWithBinaryFunctions_error_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newVisibleFunctionTableWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLRenderPipeline.newVisibleFunctionTableWithDescriptor_stage_` (protocol)
+     * :meth:`Metal.MTLTexture.newSharedTextureHandle` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithDescriptor_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_textureType_levels_slices_` (protocol)
+     * :meth:`Metal.MTLTexture.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_` (protocol)
+     * :meth:`MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_`
+     * :meth:`MetalFX.MTLFXFrameInterpolatorDescriptor.newFrameInterpolatorWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXSpatialScalerDescriptor.newSpatialScalerWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXTemporalDenoisedScalerDescriptor.newTemporalDenoisedScalerWithDevice_compiler_`
+     * :meth:`MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_`
+     * :meth:`MetalFX.MTLFXTemporalScalerDescriptor.newTemporalScalerWithDevice_compiler_`
+     * :meth:`MetalKit.MTKMesh.newMeshesFromAsset_device_sourceMeshes_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithCGImage_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithData_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithMDLTexture_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_`
+     * :meth:`MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_`
+     * :meth:`MetalPerformanceShaders.MPSHeapProvider.newHeapWithDescriptor_` (protocol)
+     * :meth:`ModelIO.MDLMesh.newCapsuleWithHeight_radii_radialSegments_verticalSegments_hemisphereSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newCylinderWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newEllipsoidWithRadii_radialSegments_verticalSegments_geometryType_inwardNormals_hemisphere_allocator_`
+     * :meth:`ModelIO.MDLMesh.newEllipticalConeWithHeight_radii_radialSegments_verticalSegments_geometryType_inwardNormals_allocator_`
+     * :meth:`ModelIO.MDLMesh.newIcosahedronWithRadius_inwardNormals_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newMeshWithPrimitive_segments_inwardNormals_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newPlaneWithDimensions_segments_geometryType_allocator_`
+     * :meth:`ModelIO.MDLMesh.newSubdividedMesh_submeshIndex_subdivisionLevels_`
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferFromZone_data_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferFromZone_length_type:` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBufferWithData_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newBuffer_type_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newZoneForBuffersWithSize_andType_` (protocol)
+     * :meth:`ModelIO.MDLMeshBufferAllocator.newZone_` (protocol)
+     * :meth:`NetworkExtension.NETunnelProviderManager.copyAppRules`
+     * :meth:`Quartz.CAOpenGLLayer.copyCGLContextForPixelFormat_`
+     * :meth:`Quartz.CAOpenGLLayer.copyCGLPixelFormatForDisplayMask_`
+     * :meth:`Quartz.IKImageBrowserView.newCellForRepresentedItem_`
+     * :meth:`WebKit.DOMMutationEvent.newValue`
+
+
 Version 12.2.3
 --------------
 
@@ -30,6 +1124,9 @@ Version 12.2.2
 
 * The project can now be build using Xcode 27.
 
+* The CoreAudio bindings no longer contain a C++ extension because
+  Xcode 27 can no longer target macOS 10.15 or earlier when using
+  C++.
 
 Version 12.2.1
 --------------
@@ -51,6 +1148,7 @@ Version 12.2.1
      The ``Network`` framework builds upon grand central dispatch
      (the ``pyobjc-framework-libdispatch`` package), and because of that
      exceptions in callback handlers will cause a hard crash.
+
 
 Version 12.2
 ------------
@@ -3758,6 +4856,10 @@ Version 5.0b1
   when run separately. Because of this I've disabled an
   optimization that uses alloca instead of PyMem_Malloc to
   allocate memory for now.
+
+* Fix bug in the manual bindings for :func:`Quartz.CGPDFDictionaryApplyFunction`
+  that resulted in passing invalid :class:`CGPDFObjectRef` values
+  to the Python callback.
 
 
 Version 5.0a0

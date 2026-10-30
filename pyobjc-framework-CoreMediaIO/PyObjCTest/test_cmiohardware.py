@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc
 
 
 class TestCMIOHardware(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreMediaIO.kCMIOHardwareNoError, 0)
         self.assertEqual(CoreMediaIO.kCMIOHardwareNotStoppedError, fourcc(b"run "))
         self.assertEqual(CoreMediaIO.kCMIOHardwareNotRunningError, fourcc(b"stop"))

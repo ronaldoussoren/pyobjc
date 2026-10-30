@@ -35,7 +35,7 @@ class TestMTL4CommandQueueHelper(Metal.NSObject):
 
 
 class TestMTL4CommandQueue(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4CommandQueueError)
         self.assertEqual(Metal.MTL4CommandQueueErrorNone, 0)
         self.assertEqual(Metal.MTL4CommandQueueErrorTimeout, 1)
@@ -72,8 +72,8 @@ class TestMTL4CommandQueue(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLTextureViewPool")
-        self.assertProtocolExists("MTL4CommandQueue")
+        self.assertProtocolExists("MTLTextureViewPool", Metal)
+        self.assertProtocolExists("MTL4CommandQueue", Metal)
 
     def test_protocol_methods(self):
         self.assertArgHasType(TestMTL4CommandQueueHelper.commit_count_, 0, b"n^@")

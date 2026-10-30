@@ -2,7 +2,6 @@ import AppKit
 from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
-    min_sdk_level,
     skipUnless,
     os_level_key,
     os_release,
@@ -40,11 +39,11 @@ class TestNSSavePanelHelper(AppKit.NSObject):
 
 
 class TestNSSavePanel(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AppKit.NSFileHandlingPanelCancelButton, AppKit.NSCancelButton)
         self.assertEqual(AppKit.NSFileHandlingPanelOKButton, AppKit.NSOKButton)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsHiddenFiles)
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsHiddenFiles_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.allowsOtherFileTypes)
@@ -70,27 +69,6 @@ class TestNSSavePanel(TestCase):
             b"^v",
         )
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSOpenSavePanelDelegate")
-
-    def testProtocol(self):
-        self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldShowFilename_)
-        self.assertResultHasType(
-            TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_,
-            objc._C_NSInteger,
-        )
-        self.assertArgIsBOOL(
-            TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_, 3
-        )
-        self.assertResultIsBOOL(TestNSSavePanelHelper.panel_isValidFilename_)
-        self.assertArgIsBOOL(
-            TestNSSavePanelHelper.panel_userEnteredFilename_confirmed_, 2
-        )
-        self.assertArgIsBOOL(TestNSSavePanelHelper.panel_willExpand_, 1)
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsBlock(
             AppKit.NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
         )
@@ -108,10 +86,26 @@ class TestNSSavePanel(TestCase):
             AppKit.NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
         )
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsTagField_, 0)
         self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
+
+    def test_protocols(self):
+        self.assertProtocolExists("NSOpenSavePanelDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldShowFilename_)
+        self.assertResultHasType(
+            TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_,
+            objc._C_NSInteger,
+        )
+        self.assertArgIsBOOL(
+            TestNSSavePanelHelper.panel_compareFilename_with_caseSensitive_, 3
+        )
+        self.assertResultIsBOOL(TestNSSavePanelHelper.panel_isValidFilename_)
+        self.assertArgIsBOOL(
+            TestNSSavePanelHelper.panel_userEnteredFilename_confirmed_, 2
+        )
+        self.assertArgIsBOOL(TestNSSavePanelHelper.panel_willExpand_, 1)
 
     @skipUnless(
         not (os_level_key("15.0") <= os_level_key(os_release()) < os_level_key("16.0")),
@@ -119,5 +113,7 @@ class TestNSSavePanel(TestCase):
     )
     @min_os_level("10.15")
     def test_issue282(self):
+        app = AppKit.NSApplication.sharedApplication()  # noqa: F841
+
         panel = AppKit.NSSavePanel.savePanel()
         self.assertIsInstance(panel, AppKit.NSSavePanel)

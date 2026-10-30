@@ -4,7 +4,7 @@ import ModelIO
 
 class TestMDLObject(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             ModelIO.MDLObject.boundingBoxAtTime_,
             ModelIO.MDLAxisAlignedBoundingBox.__typestr__,

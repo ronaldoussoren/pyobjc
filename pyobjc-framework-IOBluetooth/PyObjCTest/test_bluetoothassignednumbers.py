@@ -4,7 +4,7 @@ import IOBluetooth
 
 
 class TestBluetoothAssignedNumbers(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(IOBluetooth.BluetoothCompanyIdentifers)
         self.assertEqual(
             IOBluetooth.kBluetoothCompanyIdentiferEricssonTechnologyLicensing, 0

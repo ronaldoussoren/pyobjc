@@ -3,13 +3,12 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMediaFormat(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AVFoundation.AVFileTypeProfile, str)
         self.assertIsTypedEnum(AVFoundation.AVVideoRange, str)
         self.assertIsTypedEnum(AVFoundation.AVMediaCharacteristic, str)
 
-    @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeVideo, str)
         self.assertIsInstance(AVFoundation.AVMediaTypeAudio, str)
         self.assertIsInstance(AVFoundation.AVMediaTypeText, str)
@@ -31,8 +30,6 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVFileTypeAIFC, str)
         self.assertIsInstance(AVFoundation.AVFileTypeAMR, str)
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeMetadata, str)
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicIsMainProgramContent, str
@@ -53,15 +50,12 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicDescribesVideoForAccessibility, str
         )
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVFileTypeMPEGLayer3, str)
         self.assertIsInstance(AVFoundation.AVFileTypeSunAU, str)
         self.assertIsInstance(AVFoundation.AVFileTypeAC3, str)
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicLanguageTranslation, str
         )
@@ -78,14 +72,14 @@ class TestAVMediaFormat(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants10_12(self):
+    def test_constants10_12(self):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicUsesWideGamutColorSpace, str
         )
         self.assertIsInstance(AVFoundation.AVMediaTypeHaptic, str)
 
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(AVFoundation.AVMediaTypeDepthData, str)
         self.assertIsInstance(AVFoundation.AVFileTypeJPEG, str)
         self.assertIsInstance(AVFoundation.AVFileTypeDNG, str)
@@ -96,23 +90,23 @@ class TestAVMediaFormat(TestCase):
 
     # @min_os_level("10.14") # Not actually present on 10.14...
     @min_os_level("10.15")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicIsOriginalContent, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicContainsAlphaChannel, str
         )
 
     @min_os_level("11.0")
-    def testConstants11_0(self):
+    def test_constants11_0(self):
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicContainsHDRVideo, str)
         self.assertIsInstance(AVFoundation.AVFileTypeProfileMPEG4AppleHLS, str)
         self.assertIsInstance(AVFoundation.AVFileTypeProfileMPEG4CMAFCompliant, str)
 
     @min_os_level("12.0")
-    def testConstants12_0(self):
+    def test_constants12_0(self):
         self.assertIsInstance(AVFoundation.AVFileTypeAppleiTT, str)
         self.assertIsInstance(AVFoundation.AVFileTypeSCC, str)
 
@@ -144,3 +138,10 @@ class TestAVMediaFormat(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVMediaCharacteristicMachineGenerated, str)
         self.assertIsInstance(AVFoundation.AVFileTypeQuickTimeAudio, str)
+
+    @min_os_level("27.2")
+    def test_constants27_2(self):
+        self.assertIsInstance(
+            AVFoundation.AVMediaCharacteristicSignLanguageInterpretationForAccessibility,
+            str,
+        )

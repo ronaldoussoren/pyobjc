@@ -1,9 +1,18 @@
 import OSAKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestOSAScript(TestCase):
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(OSAKit.OSAStorageOptions)
+        self.assertEqual(OSAKit.OSANull, 0x00000000)
+        self.assertEqual(OSAKit.OSAPreventGetSource, 0x00000001)
+        self.assertEqual(OSAKit.OSACompileIntoContext, 0x00000002)
+        self.assertEqual(OSAKit.OSADontSetScriptLocation, 0x01000000)
+        self.assertEqual(OSAKit.OSAStayOpenApplet, 0x10000000)
+        self.assertEqual(OSAKit.OSAShowStartupScreen, 0x20000000)
+
+    def test_constants(self):
         self.assertIsInstance(OSAKit.OSAScriptErrorMessageKey, str)
         self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessageKey, str)
         self.assertIsInstance(OSAKit.OSAScriptErrorNumberKey, str)
@@ -24,18 +33,9 @@ class TestOSAScript(TestCase):
         self.assertIsInstance(OSAKit.OSAStorageApplicationBundleType, str)
         self.assertIsInstance(OSAKit.OSAStorageTextType, str)
 
-        self.assertEqual(OSAKit.OSANull, 0x00000000)
-        self.assertEqual(OSAKit.OSAPreventGetSource, 0x00000001)
-        self.assertEqual(OSAKit.OSACompileIntoContext, 0x00000002)
-        self.assertEqual(OSAKit.OSADontSetScriptLocation, 0x01000000)
-        self.assertEqual(OSAKit.OSAStayOpenApplet, 0x10000000)
-        self.assertEqual(OSAKit.OSAShowStartupScreen, 0x20000000)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithCompiledData_error_, 1)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithContentsOfURL_error_, 1)
         self.assertArgIsOut(
             OSAKit.OSAScript.initWithContentsOfURL_languageInstance_usingStorageOptions_error_,

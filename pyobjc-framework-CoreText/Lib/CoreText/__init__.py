@@ -12,7 +12,7 @@ def _setup():
     import CoreFoundation
     import Quartz
     import objc
-    from . import _metadata, _manual
+    from . import _metadata, _CoreText
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="CoreText",
@@ -22,7 +22,7 @@ def _setup():
         ),
         globals_dict=globals(),
         inline_list=None,
-        parents=(_manual, CoreFoundation, Quartz),
+        parents=(_CoreText, CoreFoundation, Quartz),
         metadict=_metadata.__dict__,
     )
 
@@ -33,3 +33,15 @@ def _setup():
 
 
 globals().pop("_setup")()
+
+# Force resolution of globals used by kCTParagraphStyleSpecifierTabStops
+__getattr__("CTParagraphStyleGetValueForSpecifier")  # noqa: F821
+__getattr__("kCTParagraphStyleSpecifierTabStops")  # noqa: F821
+__getattr__("sizeof_id")  # noqa: F821
+
+
+def CTParagraphStyleGetTabStops(style, /):
+    """Returns the value of the kCTParagraphStyleSpecifierTabStops specifier"""
+    return CTParagraphStyleGetValueForSpecifier(  # noqa: F821
+        style, kCTParagraphStyleSpecifierTabStops, sizeof_id, None  # noqa: F821
+    )

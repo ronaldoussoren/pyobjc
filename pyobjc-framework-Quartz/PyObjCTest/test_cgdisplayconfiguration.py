@@ -1,9 +1,41 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestCGDisplayConfiguration(TestCase):
-    def testTypes(self):
+    def test_constants(self):
+        self.assertEqual(Quartz.kCGConfigureForAppOnly, 0)
+        self.assertEqual(Quartz.kCGConfigureForSession, 1)
+        self.assertEqual(Quartz.kCGConfigurePermanently, 2)
+
+        self.assertEqual(Quartz.kCGDisplayBeginConfigurationFlag, (1 << 0))
+        self.assertEqual(Quartz.kCGDisplayMovedFlag, (1 << 1))
+        self.assertEqual(Quartz.kCGDisplaySetMainFlag, (1 << 2))
+        self.assertEqual(Quartz.kCGDisplaySetModeFlag, (1 << 3))
+        self.assertEqual(Quartz.kCGDisplayAddFlag, (1 << 4))
+        self.assertEqual(Quartz.kCGDisplayRemoveFlag, (1 << 5))
+        self.assertEqual(Quartz.kCGDisplayEnabledFlag, (1 << 8))
+        self.assertEqual(Quartz.kCGDisplayDisabledFlag, (1 << 9))
+        self.assertEqual(Quartz.kCGDisplayMirrorFlag, (1 << 10))
+        self.assertEqual(Quartz.kCGDisplayUnMirrorFlag, (1 << 11))
+        self.assertEqual(Quartz.kCGDisplayDesktopShapeChangedFlag, (1 << 12))
+
+    def test_functions(self):
+        self.assertResultHasType(Quartz.CGConfigureDisplayWithDisplayMode, b"i")
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
+        )
+        self.assertArgHasType(Quartz.CGConfigureDisplayWithDisplayMode, 1, b"I")
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}"
+        )
+        self.assertArgHasType(
+            Quartz.CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}"
+        )
+
+
+class TestCGDisplayConfigurationUsage(TestCase):
+    def test_usage(self):
         self.assertIsOpaquePointer(Quartz.CGDisplayConfigRef)
 
         err, config = Quartz.CGBeginDisplayConfiguration(None)
@@ -34,7 +66,6 @@ class TestCGDisplayConfiguration(TestCase):
         self.assertEqual(err, 0)
         config = None
 
-        myInfo = object()
         info = []
 
         def reconfig(display, flags, userInfo):
@@ -43,30 +74,76 @@ class TestCGDisplayConfiguration(TestCase):
             self.assertTrue(userInfo is myInfo)
             info.append((display, flags, userInfo))
 
-        try:
-            err, config = Quartz.CGBeginDisplayConfiguration(None)
-            self.assertEqual(err, 0)
-            self.assertIsInstance(config, Quartz.CGDisplayConfigRef)
+        def reconfig_raises(display, flags, userInfo):
+            raise RuntimeError("reconfig raises")
 
-            err = Quartz.CGDisplayRegisterReconfigurationCallback(reconfig, myInfo)
-            self.assertEqual(err, 0)
+        with self.assertRaisesRegex(TypeError, "expected 2 arguments, got 0"):
+            Quartz.CGDisplayRegisterReconfigurationCallback()
 
-            err = Quartz.CGConfigureDisplayMode(
-                config,
-                Quartz.CGMainDisplayID(),
-                Quartz.CGDisplayAvailableModes(Quartz.CGMainDisplayID())[0],
-            )
+        with self.assertRaisesRegex(TypeError, "callback not callable"):
+            Quartz.CGDisplayRegisterReconfigurationCallback(42, object())
 
-            Quartz.CGCompleteDisplayConfiguration(config, Quartz.kCGConfigureForAppOnly)
+        for callback in (reconfig, reconfig_raises):
+            myInfo = object()
+            with self.subTest(callback=callback):
+                info[:] = []
 
-        finally:
-            err = Quartz.CGDisplayRemoveReconfigurationCallback(reconfig, myInfo)
-            self.assertEqual(err, 0)
-            ln = len(info)
+                try:
+                    err, config = Quartz.CGBeginDisplayConfiguration(None)
+                    self.assertEqual(err, 0)
+                    self.assertIsInstance(config, Quartz.CGDisplayConfigRef)
 
-            Quartz.CGRestorePermanentDisplayConfiguration()
+                    err = Quartz.CGDisplayRegisterReconfigurationCallback(
+                        callback, myInfo
+                    )
+                    self.assertEqual(err, 0)
 
-            self.assertEqual(len(info), ln)
+                    err = Quartz.CGConfigureDisplayMode(
+                        config,
+                        Quartz.CGMainDisplayID(),
+                        Quartz.CGDisplayAvailableModes(Quartz.CGMainDisplayID())[0],
+                    )
+
+                    if callback == reconfig_raises:
+                        with self.assertRaisesRegex(RuntimeError, "reconfig raises"):
+                            Quartz.CGCompleteDisplayConfiguration(
+                                config, Quartz.kCGConfigureForAppOnly
+                            )
+                    else:
+                        Quartz.CGCompleteDisplayConfiguration(
+                            config, Quartz.kCGConfigureForAppOnly
+                        )
+
+                finally:
+                    err = Quartz.CGDisplayRemoveReconfigurationCallback(
+                        callback, myInfo
+                    )
+                    try:
+                        with self.assertRaisesRegex(
+                            TypeError, "expected 2 arguments, got 0"
+                        ):
+                            Quartz.CGDisplayRemoveReconfigurationCallback()
+                        with self.assertRaisesRegex(
+                            ValueError, "Cannot find callback info"
+                        ):
+                            Quartz.CGDisplayRemoveReconfigurationCallback(42, myInfo)
+
+                        self.assertEqual(err, 0)
+                        if callback == reconfig:
+                            self.assertGreater(len(info), 0)
+                            for item in info:
+                                self.assertIsInstance(item[0], int)
+                                self.assertIsInstance(item[1], int)
+                                self.assertIs(item[2], myInfo)
+
+                        else:
+                            self.assertEqual(info, [])
+                    finally:
+                        Quartz.CGCancelDisplayConfiguration(config)
+                        Quartz.CGRestorePermanentDisplayConfiguration()
+                        Quartz.CGCompleteDisplayConfiguration(
+                            config, Quartz.kCGConfigureForAppOnly
+                        )
 
         err = Quartz.CGDisplaySetStereoOperation(
             Quartz.CGMainDisplayID(), False, False, Quartz.kCGConfigureForAppOnly
@@ -132,34 +209,3 @@ class TestCGDisplayConfiguration(TestCase):
 
         v = Quartz.CGDisplayCopyColorSpace(Quartz.CGMainDisplayID())
         self.assertIsInstance(v, Quartz.CGColorSpaceRef)
-
-    def testContents(self):
-        self.assertEqual(Quartz.kCGConfigureForAppOnly, 0)
-        self.assertEqual(Quartz.kCGConfigureForSession, 1)
-        self.assertEqual(Quartz.kCGConfigurePermanently, 2)
-
-        self.assertEqual(Quartz.kCGDisplayBeginConfigurationFlag, (1 << 0))
-        self.assertEqual(Quartz.kCGDisplayMovedFlag, (1 << 1))
-        self.assertEqual(Quartz.kCGDisplaySetMainFlag, (1 << 2))
-        self.assertEqual(Quartz.kCGDisplaySetModeFlag, (1 << 3))
-        self.assertEqual(Quartz.kCGDisplayAddFlag, (1 << 4))
-        self.assertEqual(Quartz.kCGDisplayRemoveFlag, (1 << 5))
-        self.assertEqual(Quartz.kCGDisplayEnabledFlag, (1 << 8))
-        self.assertEqual(Quartz.kCGDisplayDisabledFlag, (1 << 9))
-        self.assertEqual(Quartz.kCGDisplayMirrorFlag, (1 << 10))
-        self.assertEqual(Quartz.kCGDisplayUnMirrorFlag, (1 << 11))
-        self.assertEqual(Quartz.kCGDisplayDesktopShapeChangedFlag, (1 << 12))
-
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
-        self.assertResultHasType(Quartz.CGConfigureDisplayWithDisplayMode, b"i")
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
-        )
-        self.assertArgHasType(Quartz.CGConfigureDisplayWithDisplayMode, 1, b"I")
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}"
-        )
-        self.assertArgHasType(
-            Quartz.CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}"
-        )

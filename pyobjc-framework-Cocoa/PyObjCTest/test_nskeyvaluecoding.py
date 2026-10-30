@@ -16,10 +16,10 @@ class TestNSKeyValueCodingHelper(Foundation.NSObject):
 
 
 class TestNSKeyValueCoding(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(Foundation.NSKeyValueOperator, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSUndefinedKeyException, str)
         self.assertIsInstance(Foundation.NSAverageKeyValueOperator, str)
         self.assertIsInstance(Foundation.NSCountKeyValueOperator, str)
@@ -33,7 +33,7 @@ class TestNSKeyValueCoding(TestCase):
         self.assertIsInstance(Foundation.NSUnionOfObjectsKeyValueOperator, str)
         self.assertIsInstance(Foundation.NSUnionOfSetsKeyValueOperator, str)
 
-    def testDefineValidation(self):
+    def test_define_validation(self):
         o = Foundation.NSObject.alloc().init()
 
         m = o.validateValue_forKey_error_.__metadata__()
@@ -42,9 +42,10 @@ class TestNSKeyValueCoding(TestCase):
         m = o.validateValue_forKeyPath_error_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"o^@")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSObject.accessInstanceVariablesDirectly)
 
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKey_error_, 2)
         self.assertResultIsBOOL(

@@ -3,7 +3,6 @@ import email
 from Cocoa import NSURL, NSData, NSString
 from WebKit import WebArchive, WebResource
 
-
 # def loadMHT(filename):
 #     """
 #     Load a .HMT HTML archive and return the WebArchive representation.

@@ -43,7 +43,7 @@ def _setup():
 
     try:
         mod.SCNMatrix4Identity
-    except AttributeError:
+    except AttributeError:  # pragma: no cover
         # Two "inline" functions that use a symbol that is available on 10.10 or later,
         # avoid crashes by removing the inline function wrappers when that symbol
         # is not available.

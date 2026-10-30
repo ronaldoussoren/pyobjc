@@ -13,24 +13,24 @@ class TestAVCaptureFileOutputHelper(AVFoundation.NSObject):
 
 
 class TestAVCaptureFileOutput(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecording)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureFileOutput.isRecordingPaused
         )  # noqa: B950
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput_Tundra.isRecording)
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureFileOutput_Tundra.isRecordingPaused
         )  # noqa: B950
 
-    def testProtocols(self):
-        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate")
-        self.assertProtocolExists("AVCaptureFileOutputDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("AVCaptureFileOutputRecordingDelegate", AVFoundation)
+        self.assertProtocolExists("AVCaptureFileOutputDelegate", AVFoundation)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestAVCaptureFileOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
         )
@@ -41,7 +41,7 @@ class TestAVCaptureFileOutput(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.isPrimaryConstituentDeviceSwitchingBehaviorForRecordingEnabled
         )
@@ -58,7 +58,7 @@ class TestAVCaptureFileOutput(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.isSpatialVideoCaptureSupported
         )
@@ -67,5 +67,34 @@ class TestAVCaptureFileOutput(TestCase):
         )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureMovieFileOutput.setSpatialVideoCaptureEnabled_,
+            0,
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.usesProVideoStorage
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setUsesProVideoStorage_, 0
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isCinematicVideoMetadataCaptureSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.automaticallyAdjustsCinematicVideoMetadataCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setAutomaticallyAdjustsCinematicVideoMetadataCaptureEnabled_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.isCinematicVideoMetadataCaptureEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureMovieFileOutput.setCinematicVideoMetadataCaptureEnabled_,
             0,
         )

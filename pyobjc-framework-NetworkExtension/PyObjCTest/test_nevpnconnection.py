@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNEVPNConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEVPNStatus)
-        self.assertIsEnumType(NetworkExtension.NEVPNConnectionError)
-
-    def testConstants(self):
         self.assertEqual(NetworkExtension.NEVPNStatusInvalid, 0)
         self.assertEqual(NetworkExtension.NEVPNStatusDisconnected, 1)
         self.assertEqual(NetworkExtension.NEVPNStatusConnecting, 2)
@@ -15,6 +12,7 @@ class TestNEVPNConnection(TestCase):
         self.assertEqual(NetworkExtension.NEVPNStatusReasserting, 4)
         self.assertEqual(NetworkExtension.NEVPNStatusDisconnecting, 5)
 
+        self.assertIsEnumType(NetworkExtension.NEVPNConnectionError)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorOverslept, 1)
         self.assertEqual(NetworkExtension.NEVPNConnectionErrorNoNetworkAvailable, 2)
         self.assertEqual(
@@ -52,17 +50,17 @@ class TestNEVPNConnection(TestCase):
         )
 
     @min_os_level("10.11")
-    def testConstants10_11(self):
+    def test_constants10_11(self):
         self.assertIsInstance(NetworkExtension.NEVPNStatusDidChangeNotification, str)
         self.assertIsInstance(NetworkExtension.NEVPNConnectionStartOptionUsername, str)
         self.assertIsInstance(NetworkExtension.NEVPNConnectionStartOptionPassword, str)
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(NetworkExtension.NEVPNConnectionErrorDomain, str)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEVPNConnection.startVPNTunnelAndReturnError_
         )
@@ -79,7 +77,7 @@ class TestNEVPNConnection(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             NetworkExtension.NEVPNConnection.fetchLastDisconnectErrorWithCompletionHandler_,
             0,

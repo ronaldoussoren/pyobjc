@@ -10,6 +10,22 @@ class TestCallableMetadata(TestCase):
             exclude_attrs={
                 "NSColor",
                 ("NSColor", "scn_C3DColorIgnoringColorSpace_success_"),
+                "IOGPUMetalIOHandleRaw",
+                "IOGPUMetalDevice",
+                "IOGPUMetalIOHandleCompressed",
+                "IOGPUMetalDebugCommandEncoder",
+                "IOGPUMetalCommandBuffer",
+                "AGXG13GFamilyDevice",
+                "AGXG13GDevice",
+                "AGXG13GFamilyDebugContext",
+                "AGXG13GFamilyBinaryArchive",
+                "AGXG13GFamilyCommandBuffer",
+                "_MTLDevice",
+                "RC_EspressoWrapper",
+                "AppleParavirtDevice",
+                "AppleParavirtCommandBuffer",
+                "AppleParavirtAllocator",
+                "PGSerializer",
             },
         )
 

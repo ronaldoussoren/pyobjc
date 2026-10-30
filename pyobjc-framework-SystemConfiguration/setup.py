@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = '12.2.3'
+VERSION = "13.0"
 
 setup(
     name="pyobjc-framework-SystemConfiguration",
@@ -23,8 +23,8 @@ setup(
     packages=["SystemConfiguration"],
     ext_modules=[
         Extension(
-            "SystemConfiguration._manual",
-            ["Modules/_manual.m"],
+            "SystemConfiguration._SystemConfiguration",
+            ["Modules/_SystemConfiguration.m"],
         )
     ],
     version=VERSION,

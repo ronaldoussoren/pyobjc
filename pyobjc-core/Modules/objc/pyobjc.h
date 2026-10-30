@@ -6,7 +6,7 @@
  *
  */
 
-#define OBJC_VERSION "12.2.3"
+#define OBJC_VERSION "13.0"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
@@ -117,6 +117,8 @@
 
 #import "selector.h"
 
+#import "bound-selector.h"
+
 #import "libffi_extra.h"
 #import "libffi_support.h"
 
@@ -130,6 +132,7 @@
 #import "file_wrapper.h"
 #import "formal-protocol.h"
 #import "fsref.h"
+#import "function-call.h"
 #import "function.h"
 #import "helpers.h"
 #import "instance-var.h"

@@ -4,7 +4,7 @@ import Contacts
 
 class TestCNSocialProfile(TestCase):
     @min_os_level("10.11")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Contacts.CNSocialProfileURLStringKey, str)
         self.assertIsInstance(Contacts.CNSocialProfileUsernameKey, str)
         self.assertIsInstance(Contacts.CNSocialProfileUserIdentifierKey, str)

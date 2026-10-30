@@ -1,52 +1,54 @@
-static PyObject*
-mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
-                                 PyObject* args)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable mod_CFDictionaryGetKeysAndValues(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    PyObject*       pyDict;
-    PyObject*       pyKeys;
-    PyObject*       pyValues;
     PyObject*       result;
     CFDictionaryRef dict;
     void*           keys;
     void*           values;
     CFIndex         count;
 
-    if (!PyArg_ParseTuple(args, "OOO", &pyDict, &pyKeys, &pyValues)) {
+    if (PyObjC_CheckArgCount(meth, 3, 3, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), pyDict, &dict) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), args[0], &dict) < 0) {
         return NULL;
     }
 
     count = -1;
-    if (pyKeys == PyObjC_NULL) {
+    if (args[1] == PyObjC_NULL) {
         keys = NULL;
-    } else if (pyKeys == Py_None) {
+    } else if (args[1] == Py_None) {
         count = CFDictionaryGetCount(dict);
         keys  = malloc(sizeof(void*) * count);
-        if (keys == NULL) {
+        if (keys == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     } else {
         PyErr_SetString(PyExc_ValueError, "keys must be None of NULL");
         return NULL;
     }
 
-    if (pyValues == PyObjC_NULL) {
+    if (args[2] == PyObjC_NULL) {
         values = NULL;
-    } else if (pyValues == Py_None) {
+    } else if (args[2] == Py_None) {
         if (count == -1) {
             count = CFDictionaryGetCount(dict);
         }
         values = malloc(sizeof(void*) * count);
-        if (values == NULL) {
+        if (values == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             if (keys != NULL) {
                 free(keys);
             }
             PyErr_NoMemory();
             return NULL;
+            // LCOV_EXCL_STOP
         }
     } else {
         PyErr_SetString(PyExc_ValueError, "values must be None of NULL");
@@ -57,12 +59,13 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
         @try {
             CFDictionaryGetKeysAndValues(dict, keys, values);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
+    if (PyErr_Occurred()) { // LCOV_EXCL_LINE
+        // LCOV_EXCL_START
         if (keys != NULL) {
             free(keys);
         }
@@ -70,21 +73,24 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
             free(values);
         }
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
+    PyObject* pyKeys;
     if (keys != NULL) {
         pyKeys = PyObjC_CArrayToPython(@encode(id), keys, count);
         free(keys);
     } else {
-        pyKeys = Py_None;
+        pyKeys = PyObjC_NULL;
         Py_INCREF(pyKeys);
     }
 
+    PyObject* pyValues;
     if (values != NULL) {
         pyValues = PyObjC_CArrayToPython(@encode(id), values, count);
         free(values);
     } else {
-        pyValues = Py_None;
+        pyValues = PyObjC_NULL;
         Py_INCREF(pyValues);
     }
 
@@ -92,6 +98,15 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
     return result;
 }
 
-#define COREFOUNDATION_DICTIONARY_METHODS                                                \
-    {"CFDictionaryGetKeysAndValues", (PyCFunction)mod_CFDictionaryGetKeysAndValues,      \
-     METH_VARARGS, NULL},
+static int
+setup_dictionary(PyObject* m __attribute__((__unused__)))
+{
+    if (PyObjCRegister_FunctionCaller(CFDictionaryGetKeysAndValues,
+                                      mod_CFDictionaryGetKeysAndValues)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    return 0;
+}
+
+NS_ASSUME_NONNULL_END

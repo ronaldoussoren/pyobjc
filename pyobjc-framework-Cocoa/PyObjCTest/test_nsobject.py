@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -28,26 +28,26 @@ class TestNSObjectHelper(Foundation.NSObject):
 
 
 class TestNSObjectFunctions(TestCase):
-    def testAllocation(self):
+    def test_allocation(self):
         o = Foundation.NSAllocateObject(Foundation.NSObject, 0, None)
         self.assertIsInstance(o, Foundation.NSObject)
         o = Foundation.NSAllocateObject(Foundation.NSObject, 50, None)
         self.assertIsInstance(o, Foundation.NSObject)
         Foundation.NSDeallocateObject(None)
 
-    def testCopy(self):
+    def test_copy(self):
         o = Foundation.NSObject.alloc().init()
         self.assertIsInstance(o, Foundation.NSObject)
         o2 = Foundation.NSCopyObject(o, 50, None)
         self.assertIsInstance(o2, Foundation.NSObject)
 
-    def testShouldRetain(self):
+    def test_should_retain(self):
         o = Foundation.NSObject.alloc().init()
         self.assertIsInstance(o, Foundation.NSObject)
         v = Foundation.NSShouldRetainWithZone(o, None)
         self.assertTrue((v is True) or (v is False))
 
-    def testRefCounts(self):
+    def test_refcounts(self):
         o = Foundation.NSObject.alloc().init()
 
         cnt = Foundation.NSExtraRefCount(o)
@@ -61,21 +61,20 @@ class TestNSObjectFunctions(TestCase):
         v = Foundation.NSExtraRefCount(o)
         self.assertEqual(v, cnt)
 
-    @min_os_level("10.7")
-    def testFunctions10_7(self):
+    def test_functions(self):
         # No further testing needed:
         Foundation.CFBridgingRetain
         Foundation.CFBridgingRelease
 
 
 class TestNSObjectInteraction(TestCase):
-    def testCallingInstanceMethodWithClassSelf(self):
+    def test_calling_instance_method_with_class(self):
         self.assertRaises(
             TypeError, Foundation.NSObject.description, Foundation.NSObject
         )
         self.assertRaises(TypeError, Foundation.NSObject.description, "hello")
 
-    def testNSObjectClassMethod(self):
+    def test_nsobject_classmethod(self):
         # Check that -class is accesible as 'class__' and 'class' (the latter
         # only through getattr because it is a Python keyword)
         self.assertTrue(hasattr(Foundation.NSObject, "class__"))
@@ -89,7 +88,7 @@ class TestNSObjectInteraction(TestCase):
         )
         self.assertTrue(getattr(o, "class")() is o.__class__)
 
-    def testNSObjectClass(self):
+    def test_nsobject_class(self):
         self.assertTrue(
             Foundation.NSObject.instancesRespondToSelector_("description"),
             "NSObject class claims it doesn't respond to a selector that it does.",
@@ -103,7 +102,7 @@ class TestNSObjectInteraction(TestCase):
             "NSObject class failed to respond to +description selector.",
         )
 
-    def testNSObjectInstance(self):
+    def test_nsobject_instance(self):
         instance = Foundation.NSObject.new()
 
         self.assertTrue(instance, "Failed to instantiate an instance")
@@ -122,11 +121,11 @@ class TestNSObjectInteraction(TestCase):
         self.assertEqual(instance, instance, "Python identity check failed.")
         self.assertTrue(instance.isEqual_(instance), "Obj-C identity check failed.")
 
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSObject.alloc().init()
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSObject.isEqual_)
         self.assertResultIsBOOL(Foundation.NSObject.isProxy)
         self.assertResultIsBOOL(Foundation.NSObject.isKindOfClass_)
@@ -146,31 +145,24 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(o.conformsToProtocol_)
         self.assertResultIsBOOL(o.respondsToSelector_)
 
+    def test_protocols(self):
+        self.assertProtocolExists("NSCopying", Foundation)
+        self.assertProtocolExists("NSMutableCopying", Foundation)
+        self.assertProtocolExists("NSCoding", Foundation)
+
+        self.assertProtocolExists("NSDiscardableContent", Foundation)
+
+        self.assertProtocolExists("NSSecureCoding", Foundation)
+
+    def test_protocol_methods(self):
         a = TestNSObjectHelper.alloc().init()
         self.assertArgHasType(a.copyWithZone_, 0, b"^{_NSZone=}")
         self.assertArgHasType(a.mutableCopyWithZone_, 0, b"^{_NSZone=}")
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(TestNSObjectHelper.beginContentAccess)
         self.assertResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertResultIsBOOL(TestNSObjectHelper.allowsWeakReference)
         self.assertResultIsBOOL(TestNSObjectHelper.retainWeakReference)
 
         self.assertResultIsBOOL(TestNSObjectHelper.supportsSecureCoding)
-
-    def testProtocols(self):
-        self.assertProtocolExists("NSCopying")
-        self.assertProtocolExists("NSMutableCopying")
-        self.assertProtocolExists("NSCoding")
-
-    @min_sdk_level("10.6")
-    def testProtocols10_6(self):
-        self.assertProtocolExists("NSDiscardableContent")
-
-    @min_sdk_level("10.7")
-    def testProtocols10_7(self):
-        self.assertProtocolExists("NSSecureCoding")

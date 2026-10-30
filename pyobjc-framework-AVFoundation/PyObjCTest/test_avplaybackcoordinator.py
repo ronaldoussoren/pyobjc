@@ -17,17 +17,16 @@ class TestAVPlaybackCoordinatorHelper(AVFoundation.NSObject):
 
 
 class TestAVPlaybackCoordinator(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(
             AVFoundation.AVDelegatingPlaybackCoordinatorRateChangeOptions
         )
-        self.assertIsEnumType(AVFoundation.AVDelegatingPlaybackCoordinatorSeekOptions)
-
-    def test_constants(self):
         self.assertEqual(
             AVFoundation.AVDelegatingPlaybackCoordinatorRateChangeOptionPlayImmediately,
             1 << 0,
         )
+
+        self.assertIsEnumType(AVFoundation.AVDelegatingPlaybackCoordinatorSeekOptions)
         self.assertEqual(
             AVFoundation.AVDelegatingPlaybackCoordinatorSeekOptionResumeImmediately,
             1 << 0,
@@ -62,28 +61,6 @@ class TestAVPlaybackCoordinator(TestCase):
             str,
         )
 
-    def test_methods(self):
-        self.assertArgIsBlock(
-            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssuePlayCommand_completionHandler_,
-            2,
-            b"v",
-        )
-        self.assertArgIsBlock(
-            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssuePauseCommand_completionHandler_,
-            2,
-            b"v",
-        )
-        self.assertArgIsBlock(
-            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssueSeekCommand_completionHandler_,
-            2,
-            b"v",
-        )
-        self.assertArgIsBlock(
-            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssueBufferingCommand_completionHandler_,
-            2,
-            b"v",
-        )
-
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertResultIsBOOL(
@@ -115,5 +92,29 @@ class TestAVPlaybackCoordinator(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("AVPlaybackCoordinatorPlaybackControlDelegate")
-        self.assertProtocolExists("AVPlayerPlaybackCoordinatorDelegate")
+        self.assertProtocolExists(
+            "AVPlaybackCoordinatorPlaybackControlDelegate", AVFoundation
+        )
+        self.assertProtocolExists("AVPlayerPlaybackCoordinatorDelegate", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBlock(
+            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssuePlayCommand_completionHandler_,
+            2,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssuePauseCommand_completionHandler_,
+            2,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssueSeekCommand_completionHandler_,
+            2,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            TestAVPlaybackCoordinatorHelper.playbackCoordinator_didIssueBufferingCommand_completionHandler_,
+            2,
+            b"v",
+        )

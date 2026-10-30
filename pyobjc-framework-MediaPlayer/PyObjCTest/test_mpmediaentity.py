@@ -4,7 +4,7 @@ import MediaPlayer
 
 class TestMPMediaEntity(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MediaPlayer.MPMediaEntity.canFilterByProperty_)
 
         self.assertArgIsBlock(
@@ -14,5 +14,5 @@ class TestMPMediaEntity(TestCase):
         )
 
     @min_os_level("10.12")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(MediaPlayer.MPMediaEntityPropertyPersistentID, str)

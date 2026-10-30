@@ -8,14 +8,15 @@ class TestQCRendererHelper(Quartz.NSObject):
 
 
 class TestQCRenderer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.QCRendererEventKey, str)
         self.assertIsInstance(Quartz.QCRendererMouseLocationKey, str)
 
-    def testProtocols(self):
-        self.assertProtocolExists("QCCompositionRenderer")
-
-    def testMethods(self):
-        self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)
-
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.QCRenderer.renderAtTime_arguments_)
+
+    def test_protocols(self):
+        self.assertProtocolExists("QCCompositionRenderer", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)

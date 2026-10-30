@@ -2,15 +2,20 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #include <objc/objc-runtime.h>
 
 #import <SpriteKit/SpriteKit.h>
 
 #include "_SpriteKit_protocols.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if PyObjC_BUILD_RELEASE >= 1012
-static vector_float2*
-parse_v2f_array(NSInteger vertexCount, PyObject* value)
+static vector_float2* _Nullable parse_v2f_array(NSInteger vertexCount, PyObject* value)
 {
     vector_float2* result;
     NSInteger      i;
@@ -24,17 +29,21 @@ parse_v2f_array(NSInteger vertexCount, PyObject* value)
         return NULL;
     }
 
-    result = PyMem_Malloc(sizeof(vector_float2) * vertexCount);
-    if (result == NULL) {
+    result = PyMem_Calloc(vertexCount, sizeof(vector_float2));
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyErr_NoMemory();
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     for (i = 0; i < vertexCount; i++) {
         PyObject* item = PySequence_GetItem(value, i);
-        if (item == NULL) {
+        if (item == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyMem_Free(result);
             return NULL;
+            // LCOV_EXCL_STOP
         }
         if (PyObjC_PythonToObjC("<2f>", item, result + i) == -1) {
             Py_DECREF(item);
@@ -89,12 +98,17 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositi
         }
     }
 
-    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver) == -1) {
-        PyMem_Free(srcPos);
-        PyMem_Free(dstPos);
+    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver)
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        if (srcPos != NULL)
+            PyMem_Free(srcPos);
+        if (dstPos != NULL)
+            PyMem_Free(dstPos);
         return NULL;
+        // LCOV_EXCL_STOP
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     SEL sel = PyObjCSelector_GetSelector(method);
 
@@ -104,9 +118,9 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositi
                           vector_float2*))objc_msgSendSuper)(&super, sel, rows, columns,
                                                              srcPos, dstPos);
 
-        } @catch (NSException* localException) {
-            NSLog(@"failed with %@", localException);
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) {      // LCOV_EXCL_LINE
+            NSLog(@"failed with %@", localException); // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);       // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
@@ -117,8 +131,8 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositi
         PyMem_Free(dstPos);
     }
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     return PyObjC_IdToPython(rv);
@@ -139,13 +153,13 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_gridByReplacingPositions_(
     Py_BEGIN_ALLOW_THREADS
         @try {
             vertexCount = [(SKWarpGeometryGrid*)PyObjCObject_GetObject(self) vertexCount];
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     /* Not Nullable */
@@ -154,11 +168,14 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_gridByReplacingPositions_(
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver) == -1) {
+    if (PyObjC_PythonToObjC(@encode(id), self, &super.receiver)
+        == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         PyMem_Free(pos);
         return NULL;
+        // LCOV_EXCL_STOP
     }
-    super.super_class = object_getClass(super.receiver);
+    super.super_class = (Class _Nonnull)object_getClass(super.receiver);
 
     SEL sel = PyObjCSelector_GetSelector(method);
 
@@ -167,17 +184,17 @@ static PyObject* _Nullable mod_SKWarpGeometryGrid_gridByReplacingPositions_(
             rv = ((id (*)(struct objc_super*, SEL, vector_float2*))objc_msgSendSuper)(
                 &super, sel, pos);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (pos != NULL) {
+    if (pos != NULL) { // LCOV_BR_EXCL_LINE
         PyMem_Free(pos);
     }
 
-    if (PyErr_Occurred()) {
-        return NULL;
+    if (PyErr_Occurred()) { // LCOV_BR_EXCL_LINE
+        return NULL;        // LCOV_EXCL_LINE
     }
 
     return PyObjC_IdToPython(rv);
@@ -192,19 +209,19 @@ static PyMethodDef mod_methods[] = {
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
 #if PyObjC_BUILD_RELEASE >= 1012
     Class classSKWarpGeometryGrid = objc_lookUpClass("SKWarpGeometryGrid");
-    if (classSKWarpGeometryGrid != NULL) {
+    if (classSKWarpGeometryGrid != NULL) { // LCOV_BR_EXCL_LINE
         if (PyObjC_RegisterMethodMapping(
                 classSKWarpGeometryGrid,
                 @selector(gridWithColumns:rows:sourcePositions:destPositions:),
                 mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositions_destPositions_,
                 PyObjCUnsupportedMethod_IMP)
-            == -1) {
-            return -1;
+            == -1) {   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
 
         if (PyObjC_RegisterMethodMapping(
@@ -212,24 +229,24 @@ mod_exec_module(PyObject* m)
                 @selector(initWithColumns:rows:sourcePositions:destPositions:),
                 mod_SKWarpGeometryGrid_xWithColumns_rows_sourcePositions_destPositions_,
                 PyObjCUnsupportedMethod_IMP)
-            == -1) {
-            return -1;
+            == -1) {   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
 
         if (PyObjC_RegisterMethodMapping(classSKWarpGeometryGrid,
                                          @selector(gridByReplacingSourcePositions:),
                                          mod_SKWarpGeometryGrid_gridByReplacingPositions_,
                                          PyObjCUnsupportedMethod_IMP)
-            == -1) {
-            return -1;
+            == -1) {   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
 
         if (PyObjC_RegisterMethodMapping(classSKWarpGeometryGrid,
                                          @selector(gridByReplacingDestPositions:),
                                          mod_SKWarpGeometryGrid_gridByReplacingPositions_,
                                          PyObjCUnsupportedMethod_IMP)
-            == -1) {
-            return -1;
+            == -1) {   // LCOV_BR_EXCL_LINE
+            return -1; // LCOV_EXCL_LINE
         }
     }
 #endif
@@ -268,10 +285,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__SpriteKit(void);
+PyObject* _Nullable PyInit__SpriteKit(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__SpriteKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

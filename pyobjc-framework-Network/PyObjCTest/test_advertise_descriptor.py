@@ -72,7 +72,7 @@ class TestAdvertiseDescriptor(TestCase):
             Network.nw_advertise_descriptor_get_application_service_name
         )
 
-    def test_functional(self):
+    def test_functionsal(self):
         value = Network.nw_advertise_descriptor_create_bonjour_service(
             b"pyobjctest", b"_http._tcp", None
         )

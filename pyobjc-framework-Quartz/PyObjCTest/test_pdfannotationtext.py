@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFAnnotationText(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kPDFTextAnnotationIconComment, 0)
         self.assertEqual(Quartz.kPDFTextAnnotationIconKey, 1)
         self.assertEqual(Quartz.kPDFTextAnnotationIconNote, 2)

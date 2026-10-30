@@ -38,16 +38,29 @@ class TestWKUIDelegateHelper(WebKit.NSObject):
     ):
         pass
 
+    def webView_requestGeolocationPermissionForOrigin_initiatedByFrame_decisionHandler_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestWKUIDelegate(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(WebKit.WKMediaCaptureType)
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKPermissionDecision)
+        self.assertEqual(WebKit.WKPermissionDecisionPrompt, 0)
+        self.assertEqual(WebKit.WKPermissionDecisionGrant, 1)
+        self.assertEqual(WebKit.WKPermissionDecisionDeny, 2)
+
+        self.assertIsEnumType(WebKit.WKMediaCaptureType)
+        self.assertEqual(WebKit.WKMediaCaptureTypeCamera, 0)
+        self.assertEqual(WebKit.WKMediaCaptureTypeMicrophone, 1)
+        self.assertEqual(WebKit.WKMediaCaptureTypeCameraAndMicrophone, 2)
 
     @min_os_level("10.10")
-    def testProtocols10_10(self):
-        self.assertProtocolExists("WKUIDelegate")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("WKUIDelegate", WebKit)
 
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestWKUIDelegateHelper.webView_runJavaScriptAlertPanelWithMessage_initiatedByFrame_completionHandler_,  # noqa: B950
             3,
@@ -79,12 +92,8 @@ class TestWKUIDelegate(TestCase):
             4,
             b"vq",
         )
-
-    def test_constants(self):
-        self.assertEqual(WebKit.WKPermissionDecisionPrompt, 0)
-        self.assertEqual(WebKit.WKPermissionDecisionGrant, 1)
-        self.assertEqual(WebKit.WKPermissionDecisionDeny, 2)
-
-        self.assertEqual(WebKit.WKMediaCaptureTypeCamera, 0)
-        self.assertEqual(WebKit.WKMediaCaptureTypeMicrophone, 1)
-        self.assertEqual(WebKit.WKMediaCaptureTypeCameraAndMicrophone, 2)
+        self.assertArgIsBlock(
+            TestWKUIDelegateHelper.webView_requestGeolocationPermissionForOrigin_initiatedByFrame_decisionHandler_,  # noqa: B950
+            3,
+            b"vq",
+        )

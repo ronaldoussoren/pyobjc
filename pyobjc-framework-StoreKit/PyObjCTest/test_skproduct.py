@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSKDownload(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(StoreKit.SKProductPeriodUnit)
-
-    def test_constants(self):
         self.assertEqual(StoreKit.SKProductPeriodUnitDay, 0)
         self.assertEqual(StoreKit.SKProductPeriodUnitWeek, 1)
         self.assertEqual(StoreKit.SKProductPeriodUnitMonth, 2)

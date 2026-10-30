@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBrowserCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSBrowserCell.isLeaf)
         self.assertArgIsBOOL(AppKit.NSBrowserCell.setLeaf_, 0)
         self.assertResultIsBOOL(AppKit.NSBrowserCell.isLoaded)

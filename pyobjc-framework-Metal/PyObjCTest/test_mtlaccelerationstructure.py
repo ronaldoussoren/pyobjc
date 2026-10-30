@@ -3,11 +3,73 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestMTLAccelerationStructure(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceDescriptorType)
-        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceOptions)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLAccelerationStructureUsage)
+        self.assertEqual(Metal.MTLAccelerationStructureUsageNone, 0)
+        self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
+        self.assertEqual(Metal.MTLAccelerationStructureUsagePreferFastBuild, 1 << 1)
+        self.assertEqual(Metal.MTLAccelerationStructureUsageExtendedLimits, 1 << 2)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureUsagePreferFastIntersection, 1 << 4
+        )
+        self.assertEqual(Metal.MTLAccelerationStructureUsageMinimizeMemory, 1 << 5)
+
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNone, 0)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceOptionDisableTriangleCulling, 1 << 0
+        )
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceOptionTriangleFrontFacingWindingCounterClockwise,
+            1 << 1,
+        )
+
+        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceOptions)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionOpaque, 1 << 2)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNonOpaque, 1 << 3)
+
         self.assertIsEnumType(Metal.MTLMotionBorderMode)
+        self.assertEqual(Metal.MTLMotionBorderModeClamp, 0)
+        self.assertEqual(Metal.MTLMotionBorderModeVanish, 1)
+
+        self.assertIsEnumType(Metal.MTLAccelerationStructureInstanceDescriptorType)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeDefault, 0)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeUserID, 1)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeMotion, 2)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirect, 3
+        )
+        self.assertEqual(
+            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirectMotion, 4
+        )
+
+        self.assertIsEnumType(Metal.MTLCurveType)
+        self.assertEqual(Metal.MTLCurveTypeRound, 0)
+        self.assertEqual(Metal.MTLCurveTypeFlat, 1)
+
+        self.assertIsEnumType(Metal.MTLCurveBasis)
+        self.assertEqual(Metal.MTLCurveBasisBSpline, 0)
+        self.assertEqual(Metal.MTLCurveBasisCatmullRom, 1)
+        self.assertEqual(Metal.MTLCurveBasisLinear, 2)
+        self.assertEqual(Metal.MTLCurveBasisBezier, 3)
+
+        self.assertIsEnumType(Metal.MTLCurveEndCaps)
+        self.assertEqual(Metal.MTLCurveEndCapsNone, 0)
+        self.assertEqual(Metal.MTLCurveEndCapsDisk, 1)
+        self.assertEqual(Metal.MTLCurveEndCapsSphere, 2)
+
+        self.assertIsEnumType(Metal.MTLMatrixLayout)
+        self.assertEqual(Metal.MTLMatrixLayoutColumnMajor, 0)
+        self.assertEqual(Metal.MTLMatrixLayoutRowMajor, 1)
+
+        self.assertIsEnumType(Metal.MTLTransformType)
+        self.assertEqual(Metal.MTLTransformTypePackedFloat4x3, 0)
+        self.assertEqual(Metal.MTLTransformTypeComponent, 1)
+
+        self.assertIsEnumType(Metal.MTLAccelerationStructureRefitOptions)
+        self.assertEqual(Metal.MTLAccelerationStructureRefitOptionVertexData, 1 << 0)
+        self.assertEqual(
+            Metal.MTLAccelerationStructureRefitOptionPerPrimitiveData, 1 << 1
+        )
 
     def test_structs(self):
         v = Metal.MTLAccelerationStructureInstanceDescriptor()
@@ -58,70 +120,6 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertIsInstance(v.motionEndBorderMode, int)
         self.assertIsInstance(v.motionStartTime, float)
         self.assertIsInstance(v.motionEndTime, float)
-
-    def test_constants(self):
-        self.assertEqual(Metal.MTLAccelerationStructureUsageNone, 0)
-        self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
-        self.assertEqual(Metal.MTLAccelerationStructureUsagePreferFastBuild, 1 << 1)
-        self.assertEqual(Metal.MTLAccelerationStructureUsageExtendedLimits, 1 << 2)
-        self.assertEqual(
-            Metal.MTLAccelerationStructureUsagePreferFastIntersection, 1 << 4
-        )
-        self.assertEqual(Metal.MTLAccelerationStructureUsageMinimizeMemory, 1 << 5)
-
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNone, 0)
-        self.assertEqual(
-            Metal.MTLAccelerationStructureInstanceOptionDisableTriangleCulling, 1 << 0
-        )
-        self.assertEqual(
-            Metal.MTLAccelerationStructureInstanceOptionTriangleFrontFacingWindingCounterClockwise,
-            1 << 1,
-        )
-
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionOpaque, 1 << 2)
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNonOpaque, 1 << 3)
-
-        self.assertEqual(Metal.MTLMotionBorderModeClamp, 0)
-        self.assertEqual(Metal.MTLMotionBorderModeVanish, 1)
-
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeDefault, 0)
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeUserID, 1)
-        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeMotion, 2)
-        self.assertEqual(
-            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirect, 3
-        )
-        self.assertEqual(
-            Metal.MTLAccelerationStructureInstanceDescriptorTypeIndirectMotion, 4
-        )
-
-        self.assertIsEnumType(Metal.MTLCurveType)
-        self.assertEqual(Metal.MTLCurveTypeRound, 0)
-        self.assertEqual(Metal.MTLCurveTypeFlat, 1)
-
-        self.assertIsEnumType(Metal.MTLCurveBasis)
-        self.assertEqual(Metal.MTLCurveBasisBSpline, 0)
-        self.assertEqual(Metal.MTLCurveBasisCatmullRom, 1)
-        self.assertEqual(Metal.MTLCurveBasisLinear, 2)
-        self.assertEqual(Metal.MTLCurveBasisBezier, 3)
-
-        self.assertIsEnumType(Metal.MTLCurveEndCaps)
-        self.assertEqual(Metal.MTLCurveEndCapsNone, 0)
-        self.assertEqual(Metal.MTLCurveEndCapsDisk, 1)
-        self.assertEqual(Metal.MTLCurveEndCapsSphere, 2)
-
-        self.assertIsEnumType(Metal.MTLMatrixLayout)
-        self.assertEqual(Metal.MTLMatrixLayoutColumnMajor, 0)
-        self.assertEqual(Metal.MTLMatrixLayoutRowMajor, 1)
-
-        self.assertIsEnumType(Metal.MTLTransformType)
-        self.assertEqual(Metal.MTLTransformTypePackedFloat4x3, 0)
-        self.assertEqual(Metal.MTLTransformTypeComponent, 1)
-
-        self.assertIsEnumType(Metal.MTLAccelerationStructureRefitOptions)
-        self.assertEqual(Metal.MTLAccelerationStructureRefitOptionVertexData, 1 << 0)
-        self.assertEqual(
-            Metal.MTLAccelerationStructureRefitOptionPerPrimitiveData, 1 << 1
-        )
 
     @min_os_level("11.0")
     def test_methods11_0(self):

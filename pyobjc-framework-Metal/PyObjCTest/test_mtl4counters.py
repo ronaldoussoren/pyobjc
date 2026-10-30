@@ -17,7 +17,7 @@ class TestMTL4CountersHelper(Metal.NSObject):
 
 
 class TestMTL4Counters(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4CounterHeapType)
         self.assertEqual(Metal.MTL4CounterHeapTypeInvalid, 0)
         self.assertEqual(Metal.MTL4CounterHeapTypeTimestamp, 1)
@@ -32,7 +32,7 @@ class TestMTL4Counters(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CounterHeap")
+        self.assertProtocolExists("MTL4CounterHeap", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTL4CountersHelper.count, b"Q")

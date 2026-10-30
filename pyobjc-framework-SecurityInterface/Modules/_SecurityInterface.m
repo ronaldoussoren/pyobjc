@@ -2,8 +2,14 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Foundation/Foundation.h>
 #import <SecurityInterface/SFAuthorizationView.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static int
 parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
@@ -21,59 +27,178 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         }
         itemset->count = PyTuple_GET_SIZE(seq);
         itemset->items = PyMem_Malloc(sizeof(AuthorizationItem) * PyTuple_GET_SIZE(seq));
-        if (itemset->items == NULL) {
+        if (itemset->items == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_EXCL_START
             PyErr_NoMemory();
-            Py_DECREF(seq);
             return 0;
+            // LCOV_EXCL_STOP
         }
 
         for (i = 0; i < PyTuple_GET_SIZE(seq); i++) {
-            if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PyTuple_GET_ITEM(seq, i), itemset->items + i)
-                < 0) {
+            PyObject* cur_seq = PySequence_Tuple(PyTuple_GET_ITEM(seq, i));
+            if (cur_seq == NULL) {
+                PyErr_Format(PyExc_TypeError, "items[%ld] is not a sequence", (long)i);
                 PyMem_Free(itemset->items);
-                Py_DECREF(seq);
+                return 0;
+            }
+            if (PyTuple_GET_SIZE(cur_seq) != 4) {
+                PyErr_Format(PyExc_TypeError, "items[%ld] is not a sequence of 4 items",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            if (!PyBytes_Check(PyTuple_GET_ITEM(cur_seq, 0))) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].name is not a byte string",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            itemset->items[i].name = PyBytes_AsString(PyTuple_GET_ITEM(cur_seq, 0));
+
+            if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GET_ITEM(cur_seq, 1),
+                                    &(itemset->items[i].valueLength))
+                == -1) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].valueLength is not an integer",
+                             (long)i);
+                PyMem_Free(itemset->items);
+                return 0;
+            }
+
+            if (PyTuple_GET_ITEM(cur_seq, 2) == Py_None) {
+                if (itemset->items[i].valueLength != 0) {
+                    PyErr_Format(PyExc_TypeError,
+                                 "items[%ld].value is None, valueLength != 0", (long)i);
+                    PyMem_Free(itemset->items);
+                    return 0;
+                }
+
+                itemset->items[i].value = NULL;
+
+            } else {
+                if (!PyBytes_Check(PyTuple_GET_ITEM(cur_seq, 2))
+                    || PyBytes_Size(PyTuple_GET_ITEM(cur_seq, 2))
+                           != (Py_ssize_t)itemset->items[i].valueLength) {
+                    PyErr_Format(PyExc_TypeError,
+                                 "items[%ld].value is not a byte string of length %ld",
+                                 (long)i, (long)(itemset->items[i].valueLength));
+                    PyMem_Free(itemset->items);
+                    return 0;
+                }
+
+                itemset->items[i].value = PyBytes_AsString(PyTuple_GET_ITEM(cur_seq, 2));
+            }
+
+            if (PyObjC_PythonToObjC(@encode(UInt32), PyTuple_GET_ITEM(cur_seq, 3),
+                                    &(itemset->items[i].flags))
+                == -1) {
+                PyErr_Format(PyExc_TypeError, "items[%ld].flags is not an integer",
+                             (long)i);
+                PyMem_Free(itemset->items);
                 return 0;
             }
         }
-        Py_DECREF(seq);
     }
     return 1;
 }
 
-static PyObject*
-build_itemset(AuthorizationItemSet* itemset)
+static void
+free_itemset(AuthorizationItemSet* itemset)
 {
-    PyObject* result;
-
-    if (itemset == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-
-    } else {
-        UInt32 i;
-        result = PyTuple_New(itemset->count);
-        if (result == NULL) {
-            return NULL;
-        }
-
-        for (i = 0; i < itemset->count; i++) {
-            PyObject* t =
-                PyObjC_ObjCToPython("{_AuthorizationItem=^cL^vI}", itemset->items + i);
-            if (t == NULL) {
-                Py_DECREF(result);
-                return NULL;
-            }
-            PyTuple_SetItem(result, i, t);
-        }
-    }
-    return result;
+    PyMem_Free(itemset->items);
 }
 
-static PyObject*
-call_authorizationRights(PyObject* method, PyObject* self,
-                         PyObject* const* arguments __attribute__((__unused__)),
-                         size_t           nargs)
+static PyObject* _Nullable build_itemset(AuthorizationItemSet* _Nonnull itemset)
+{
+    PyObject* result; // = NULL;
+    PyObject* t = NULL;
+    PyObject* o = NULL;
+
+    assert(itemset != NULL);
+
+    UInt32 i;
+    result = PyTuple_New(itemset->count);
+    if (result == NULL) // LCOV_BR_EXCL_LINE
+        return NULL;    // LCOV_EXCL_LINE
+
+    for (i = 0; i < itemset->count; i++) {
+        Py_ssize_t         packed = -1;
+        AuthorizationItem* item   = itemset->items + i;
+
+        assert(item != NULL);
+
+        t = PyObjC_CreateRegisteredStruct("{AuthorizationItem=^cQ^vI}",
+                                          sizeof("{AuthorizationItem=^cQ^vI}") - 1, NULL,
+                                          &packed);
+        if (t == NULL) { // LCOV_BR_EXCL_LINE
+            // LCOV_BR_EXCL_START
+            if (!PyErr_Occurred()) {
+                PyErr_SetString(PyExc_RuntimeError, "No binding for 'AuthorizationItem'");
+            }
+            goto error;
+            // LCOV_BR_EXCL_STOP
+        }
+
+        o = PyBytes_FromString(item->name);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 0, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        o = PyLong_FromUnsignedLong(item->valueLength);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 1, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        if (item->value == NULL) {
+            o = Py_None;
+            Py_INCREF(Py_None);
+        } else {
+            o = PyBytes_FromStringAndSize(item->value, item->valueLength);
+            if (o == NULL)  // LCOV_BR_EXCL_LINE
+                goto error; // LCOV_EXCL_LINE
+        }
+
+        if (PySequence_SetItem(t, 2, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        o = PyLong_FromUnsignedLong(item->flags);
+        if (o == NULL)  // LCOV_BR_EXCL_LINE
+            goto error; // LCOV_EXCL_LINE
+
+        if (PySequence_SetItem(t, 3, o) == -1) // LCOV_BR_EXCL_LINE
+            goto error;                        // LCOV_EXCL_LINE
+
+        Py_CLEAR(o);
+
+        PyTuple_SET_ITEM(result, i, t);
+    }
+    return result;
+
+error:
+    // LCOV_EXCL_START
+    // as
+    Py_CLEAR(result);
+    Py_CLEAR(t);
+    Py_CLEAR(o);
+    return NULL;
+    // LCOV_EXCL_STOP
+}
+
+static PyObject* _Nullable call_authorizationRights(PyObject* method, PyObject* self,
+                                                    PyObject* const* arguments
+                                                    __attribute__((__unused__)),
+                                                    size_t nargs)
 {
     struct objc_super    super;
     AuthorizationRights* rights;
@@ -91,26 +216,25 @@ call_authorizationRights(PyObject* method, PyObject* self,
             rights = ((AuthorizationRights * (*)(struct objc_super*, SEL))
                           objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
+
+    if (rights == NULL)
+        Py_RETURN_NONE;
 
     py_rights = build_itemset(rights);
-    if (rights != NULL) {
-        /* XXX: Not sure if this is needed */
-        AuthorizationFreeItemSet(rights);
-    }
+    assert(py_rights || PyErr_Occurred());
     return py_rights;
 }
 
-static PyObject*
-call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* const* arguments,
-                             size_t nargs)
+static PyObject* _Nullable call_setAuthorizationRights_(PyObject* method, PyObject* self,
+                                                        PyObject* const* arguments,
+                                                        size_t           nargs)
 {
     struct objc_super   super;
     AuthorizationRights rights;
@@ -135,16 +259,15 @@ call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* const* 
             ((void (*)(struct objc_super*, SEL, AuthorizationRights*))objc_msgSendSuper)(
                 &super, PyObjCSelector_GetSelector(method), &rights);
 
-        } @catch (NSException* localException) {
-            PyObjCErr_FromObjC(localException);
+        } @catch (NSException* localException) { // LCOV_EXCL_LINE
+            PyObjCErr_FromObjC(localException);  // LCOV_EXCL_LINE
         }
     Py_END_ALLOW_THREADS
 
-    PyMem_Free(rights.items);
+    free_itemset(&rights);
 
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
+    if (PyErr_Occurred()) // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -159,28 +282,28 @@ mod_exec_module(PyObject* m)
 {
     Class cls;
 
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
     cls = objc_lookUpClass("SFAuthorizationView");
-    if (cls == Nil) {
-        return 0;
+    if (cls == Nil) { // LCOV_BR_EXCL_LINE
+        return 0;     // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationRights),
                                      call_authorizationRights,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationRights:),
                                      call_setAuthorizationRights_,
                                      PyObjCUnsupportedMethod_IMP)
-        < 0) {
+        < 0) { // LCOV_BR_EXCL_LINE
 
-        return -1;
+        return -1; // LCOV_EXCL_LINE
     }
 
     return 0;
@@ -221,10 +344,11 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__SecurityInterface(void);
+PyObject* _Nullable PyInit__SecurityInterface(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__SecurityInterface(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+NS_ASSUME_NONNULL_END

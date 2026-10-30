@@ -11,7 +11,7 @@ def _setup():
 
     import Foundation
     import objc
-    from . import _metadata, _manual
+    from . import _metadata, _SystemConfiguration
 
     dir_func, getattr_func = objc.createFrameworkDirAndGetattr(
         name="SystemConfiguration",
@@ -22,7 +22,7 @@ def _setup():
         globals_dict=globals(),
         inline_list=None,
         parents=(
-            _manual,
+            _SystemConfiguration,
             Foundation,
         ),
         metadict=_metadata.__dict__,

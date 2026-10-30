@@ -3,7 +3,7 @@ import ScreenCaptureKit
 
 
 class TestSCShareableContent(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCShareableContentStyle)
         self.assertEqual(ScreenCaptureKit.SCShareableContentStyleNone, 0)
         self.assertEqual(ScreenCaptureKit.SCShareableContentStyleWindow, 1)

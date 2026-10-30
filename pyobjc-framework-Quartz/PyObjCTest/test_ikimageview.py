@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import Quartz
 
 
 class TestIKImageView(TestCase):
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.IKToolModeNone, str)
         self.assertIsInstance(Quartz.IKToolModeMove, str)
         self.assertIsInstance(Quartz.IKToolModeSelect, str)
@@ -14,13 +13,11 @@ class TestIKImageView(TestCase):
         self.assertIsInstance(Quartz.IKOverlayTypeBackground, str)
         self.assertIsInstance(Quartz.IKOverlayTypeImage, str)
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
         self.assertIsInstance(Quartz.IKToolModeSelectRect, str)
         self.assertIsInstance(Quartz.IKToolModeSelectEllipse, str)
         self.assertIsInstance(Quartz.IKToolModeSelectLasso, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.IKImageView.autoresizes)
         self.assertArgIsBOOL(Quartz.IKImageView.setAutoresizes_, 0)
 

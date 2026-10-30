@@ -31,11 +31,17 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
     def requiredThreadsPerThreadgroup(self):
         return 1
 
+    def recommendedPersistentThreadgroupsPerGridForThreadsPerThreadgroup_(self, a):
+        return 1
+
+    def forwardProgressUsage(self):
+        return 1
+
 
 class TestMTLComputePipeline(TestCase):
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLComputePipelineState")
+        self.assertProtocolExists("MTLComputePipelineState", Metal)
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -59,7 +65,21 @@ class TestMTLComputePipeline(TestCase):
             .supportIndirectCommandBuffers
         )
 
-    def test_methods(self):
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLComputePipelineDescriptor.alloc()
+            .init()
+            .optimizeForPersistentKernel
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLComputePipelineDescriptor.alloc()
+            .init()
+            .setOptimizeForPersistentKernel_,
+            0,
+        )
+
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLComputePipelineHelper.maxTotalThreadsPerThreadgroup,
             objc._C_NSUInteger,
@@ -71,10 +91,18 @@ class TestMTLComputePipeline(TestCase):
             TestMTLComputePipelineHelper.staticThreadgroupMemoryLength,
             objc._C_NSUInteger,
         )
+
+        self.assertResultIsRetained(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_
+        )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithBinaryFunctions_error_
         )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithBinaryFunctions_error_,
@@ -90,4 +118,18 @@ class TestMTLComputePipeline(TestCase):
         self.assertResultHasType(
             TestMTLComputePipelineHelper.requiredThreadsPerThreadgroup,
             Metal.MTLSize.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestMTLComputePipelineHelper.recommendedPersistentThreadgroupsPerGridForThreadsPerThreadgroup_,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputePipelineHelper.recommendedPersistentThreadgroupsPerGridForThreadsPerThreadgroup_,
+            0,
+            Metal.MTLSize.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestMTLComputePipelineHelper.forwardProgressUsage, objc._C_NSInteger
         )

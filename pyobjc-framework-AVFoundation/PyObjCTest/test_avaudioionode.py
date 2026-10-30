@@ -2,10 +2,12 @@ import AVFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioIONodeInputBlock = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
+AVAudioIONodeInputBlockRealtimeSafe = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
+AVAudioNodeTapBlock = b"v@@"
 
 
 class TestAVAudioIONode(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioVoiceProcessingSpeechActivityEvent)
         self.assertEqual(AVFoundation.AVAudioVoiceProcessingSpeechActivityStarted, 0)
         self.assertEqual(AVFoundation.AVAudioVoiceProcessingSpeechActivityEnded, 1)
@@ -24,8 +26,10 @@ class TestAVAudioIONode(TestCase):
             AVFoundation.AVAudioVoiceProcessingOtherAudioDuckingLevelMax, 30
         )
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVLayerVideoGravity, str)
+
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)
         self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, str)
@@ -37,7 +41,7 @@ class TestAVAudioIONode(TestCase):
         self.assertIsInstance(v.duckingLevel, int)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioInputNode.setManualRenderingInputPCMFormat_inputBlock_
         )
@@ -48,7 +52,7 @@ class TestAVAudioIONode(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioIONode.isVoiceProcessingEnabled)
 
         self.assertResultIsBOOL(
@@ -61,4 +65,28 @@ class TestAVAudioIONode(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioInputNode.isVoiceProcessingBypassed)
         self.assertArgIsBOOL(
             AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioInputNode.setRealtimeSafeManualRenderingInputPCMFormat_inputBlock_
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioInputNode.setRealtimeSafeManualRenderingInputPCMFormat_inputBlock_,
+            1,
+            AVAudioIONodeInputBlockRealtimeSafe,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_,
+            3,
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioInputNode.installTapOnBus_bufferSize_format_error_block_,
+            4,
+            AVAudioNodeTapBlock,
         )

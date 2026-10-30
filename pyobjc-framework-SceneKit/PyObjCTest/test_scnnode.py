@@ -5,11 +5,17 @@ from objc import simd
 
 
 class TestSCNMaterialProperty(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNMovabilityHint)
-        self.assertIsEnumType(SceneKit.SCNNodeFocusBehavior)
+        self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
+        self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
 
-    def testConstants(self):
+        self.assertIsEnumType(SceneKit.SCNNodeFocusBehavior)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorNone, 0)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorOccluding, 1)
+        self.assertEqual(SceneKit.SCNNodeFocusBehaviorFocusable, 2)
+
+    def test_constants(self):
         self.assertIsInstance(SceneKit.SCNModelTransform, str)
         self.assertIsInstance(SceneKit.SCNViewTransform, str)
         self.assertIsInstance(SceneKit.SCNProjectionTransform, str)
@@ -17,14 +23,7 @@ class TestSCNMaterialProperty(TestCase):
         self.assertIsInstance(SceneKit.SCNModelViewTransform, str)
         self.assertIsInstance(SceneKit.SCNModelViewProjectionTransform, str)
 
-        self.assertEqual(SceneKit.SCNMovabilityHintFixed, 0)
-        self.assertEqual(SceneKit.SCNMovabilityHintMovable, 1)
-
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorNone, 0)
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorOccluding, 1)
-        self.assertEqual(SceneKit.SCNNodeFocusBehaviorFocusable, 2)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(SceneKit.SCNNode.isHidden)
         self.assertArgIsBOOL(SceneKit.SCNNode.setHidden_, 0)
 
@@ -33,7 +32,7 @@ class TestSCNMaterialProperty(TestCase):
         self.assertArgIsBlock(SceneKit.SCNNode.childNodesPassingTest_, 0, b"Z@o^Z")
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(SceneKit.SCNNode.castsShadow)
         self.assertArgIsBOOL(SceneKit.SCNNode.setCastsShadow_, 0)
 
@@ -45,13 +44,13 @@ class TestSCNMaterialProperty(TestCase):
         self.assertArgIsBOOL(SceneKit.SCNNode.setPaused_, 0)
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertArgIsBlock(
             SceneKit.SCNNode.enumerateHierarchyUsingBlock_, 0, b"v@o^Z"
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultHasType(
             SceneKit.SCNNode.simdTransform, simd.simd_float4x4.__typestr__
         )
@@ -207,5 +206,5 @@ class TestSCNMaterialProperty(TestCase):
         )
 
     @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("SCNNodeRendererDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("SCNNodeRendererDelegate", SceneKit)

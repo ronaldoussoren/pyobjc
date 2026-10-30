@@ -6,10 +6,8 @@ CMPedometerEventHandler = b"v@@"
 
 
 class TestCMPedometer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMotion.CMPedometerEventType)
-
-    def test_constants(self):
         self.assertEqual(CoreMotion.CMPedometerEventTypePause, 0)
         self.assertEqual(CoreMotion.CMPedometerEventTypeResume, 1)
 

@@ -3,14 +3,12 @@ import NetworkExtension
 
 
 class TestNEFilterDataProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEFilterDataAttribute)
-
-    def test_constants(self):
         self.assertEqual(NetworkExtension.NEFilterDataAttributeHasIPHeader, 0x00000001)
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertArgIsBlock(
             NetworkExtension.NEFilterDataProvider.applySettings_completionHandler_,
             1,

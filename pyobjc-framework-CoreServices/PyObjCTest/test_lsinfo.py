@@ -1,6 +1,6 @@
 import os
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -19,7 +19,7 @@ class TestLSInfo(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(CoreServices.kLSInitializeDefaults, 0x00000001)
         self.assertEqual(CoreServices.kLSMinCatInfoBitmap, 6154)
@@ -64,7 +64,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(CoreServices.kLSHandlerOptionsDefault, 0)
         self.assertEqual(CoreServices.kLSHandlerOptionsIgnoreCreator, 1)
 
-    def testStructs(self):
+    def test_structs(self):
         v = CoreServices.LSItemInfoRecord()
         self.assertHasAttr(v, "flags")
         self.assertHasAttr(v, "filetype")
@@ -74,7 +74,7 @@ class TestLSInfo(TestCase):
         self.assertNotHasAttr(v, "kindID")
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         url = CoreServices.CFURLCreateFromFileSystemRepresentation(
             None, self.bpath, len(self.bpath), True
         )
@@ -191,11 +191,7 @@ class TestLSInfo(TestCase):
         default_role = CoreServices.LSCopyDefaultRoleHandlerForContentType(
             "public.plain-text", CoreServices.kLSRolesAll
         )
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_role is not None:
-                self.assertIsInstance(default_role, str)
-        else:
-            self.assertIsInstance(default_role, str)
+        self.assertIsInstance(default_role, str)
 
         v = CoreServices.LSCopyAllRoleHandlersForContentType(
             "public.plain-text", CoreServices.kLSRolesAll
@@ -217,11 +213,7 @@ class TestLSInfo(TestCase):
 
         self.assertResultIsCFRetained(CoreServices.LSCopyDefaultHandlerForURLScheme)
         default_handler = CoreServices.LSCopyDefaultHandlerForURLScheme("http")
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_handler is not None:
-                self.assertIsInstance(default_handler, str)
-        else:
-            self.assertIsInstance(default_handler, str)
+        self.assertIsInstance(default_handler, str)
 
         self.assertResultIsCFRetained(CoreServices.LSCopyAllHandlersForURLScheme)
         v = CoreServices.LSCopyAllHandlersForURLScheme("http")
@@ -232,7 +224,7 @@ class TestLSInfo(TestCase):
         ok = CoreServices.LSSetDefaultHandlerForURLScheme("http", default_handler)
         self.assertIsInstance(ok, int)
 
-    def testFSRef(self):
+    def test_fsref(self):
         ref = objc.FSRef.from_pathname(self.path)
         self.assertIsInstance(ref, objc.FSRef)
 
@@ -300,7 +292,7 @@ class TestLSInfo(TestCase):
         self.assertIsInstance(ok, int)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(CoreServices.LSCopyDefaultApplicationURLForURL)
         self.assertArgIsOut(CoreServices.LSCopyDefaultApplicationURLForURL, 2)
 

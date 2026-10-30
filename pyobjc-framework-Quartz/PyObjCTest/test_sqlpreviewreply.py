@@ -5,7 +5,7 @@ import Quartz
 
 class TestQLPreviewReply(TestCase):
     @min_os_level("12.0")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             Quartz.QLPreviewReply.initWithContextSize_isBitmap_drawingBlock_, 1
         )

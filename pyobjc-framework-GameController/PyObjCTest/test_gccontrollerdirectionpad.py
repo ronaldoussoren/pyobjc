@@ -5,11 +5,11 @@ import GameController
 
 class TestGCControllerDirectionPad(TestCase):
     @min_os_level("10.9")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(GameController.GCControllerDirectionPad, objc.objc_class)
 
     @min_os_level("10.9")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBlock(
             GameController.GCControllerDirectionPad.valueChangedHandler, b"v@ff"
         )

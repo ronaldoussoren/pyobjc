@@ -14,3 +14,14 @@ class TestVZMacOSVirtualMachineStartOptions(TestCase):
             Virtualization.VZMacOSVirtualMachineStartOptions.setStartUpFromMacOSRecovery_,
             0,
         )
+
+    @min_os_level("27.0")
+    @arch_only("arm64")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            Virtualization.VZMacOSVirtualMachineStartOptions.setGuestProvisioningOptions_error_
+        )
+        self.assertArgIsOut(
+            Virtualization.VZMacOSVirtualMachineStartOptions.setGuestProvisioningOptions_error_,
+            1,
+        )

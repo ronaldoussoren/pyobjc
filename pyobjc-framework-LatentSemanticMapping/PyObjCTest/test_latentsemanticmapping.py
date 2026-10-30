@@ -4,7 +4,7 @@ import objc
 
 
 class TestLatentSemanticMapping(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LatentSemanticMapping.kLSMMapOutOfState, -6640)
         self.assertEqual(LatentSemanticMapping.kLSMMapNoSuchCategory, -6641)
         self.assertEqual(LatentSemanticMapping.kLSMMapWriteError, -6642)
@@ -46,12 +46,12 @@ class TestLatentSemanticMapping(TestCase):
         self.assertEqual(LatentSemanticMapping.kLSMTextPreserveAcronyms, 2)
         self.assertEqual(LatentSemanticMapping.kLSMTextApplySpamHeuristics, 4)
 
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(LatentSemanticMapping.LSMMapRef, objc.objc_class)
         self.assertIsInstance(LatentSemanticMapping.LSMTextRef, objc.objc_class)
         self.assertIsInstance(LatentSemanticMapping.LSMResultRef, objc.objc_class)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(LatentSemanticMapping.LSMMapGetTypeID(), int)
         self.assertIsInstance(LatentSemanticMapping.LSMTextGetTypeID(), int)
         self.assertIsInstance(LatentSemanticMapping.LSMResultGetTypeID(), int)

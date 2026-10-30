@@ -8,7 +8,7 @@ with warnings.catch_warnings():
 
 
 class TestLSQuarantine(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(LaunchServices.kLSQuarantineAgentNameKey, str)
         self.assertIsInstance(LaunchServices.kLSQuarantineAgentBundleIdentifierKey, str)
         self.assertIsInstance(LaunchServices.kLSQuarantineTimeStampKey, str)

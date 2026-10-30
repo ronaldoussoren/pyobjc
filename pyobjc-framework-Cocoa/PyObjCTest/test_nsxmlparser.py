@@ -1,13 +1,10 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSXMLParser(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSXMLParserError)
-        self.assertIsEnumType(Foundation.NSXMLParserExternalEntityResolvingPolicy)
-
-    def testConstants(self):
         self.assertEqual(Foundation.NSXMLParserInternalError, 1)
         self.assertEqual(Foundation.NSXMLParserOutOfMemoryError, 2)
         self.assertEqual(Foundation.NSXMLParserDocumentStartError, 3)
@@ -104,14 +101,16 @@ class TestNSXMLParser(TestCase):
         self.assertEqual(Foundation.NSXMLParserNoDTDError, 94)
         self.assertEqual(Foundation.NSXMLParserDelegateAbortedParseError, 512)
 
-        self.assertIsInstance(Foundation.NSXMLParserErrorDomain, str)
-
+        self.assertIsEnumType(Foundation.NSXMLParserExternalEntityResolvingPolicy)
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesNever, 0)
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesNoNetwork, 1)
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesSameOriginOnly, 2)
         self.assertEqual(Foundation.NSXMLParserResolveExternalEntitiesAlways, 3)
 
-    def testMethods(self):
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSXMLParserErrorDomain, str)
+
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSXMLParser.setShouldProcessNamespaces_, 0)
         self.assertArgIsBOOL(
             Foundation.NSXMLParser.setShouldReportNamespacePrefixes_, 0
@@ -124,6 +123,5 @@ class TestNSXMLParser(TestCase):
         self.assertResultIsBOOL(Foundation.NSXMLParser.shouldResolveExternalEntities)
         self.assertResultIsBOOL(Foundation.NSXMLParser.parse)
 
-    @min_sdk_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("NSXMLParserDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSXMLParserDelegate", Foundation)

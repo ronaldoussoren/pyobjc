@@ -38,6 +38,7 @@ extensions = [
     "sphinx_sitemap",
     "sphinx_copybutton",
     "sphinx_design",
+    "sphinx_iconify",
     "sphinx_tabs.tabs",
     "sphinx_togglebutton",
     "sphinxcontrib.mermaid",
@@ -50,6 +51,7 @@ extensions = [
 extlinks = {
     "issue": ("https://github.com/ronaldoussoren/pyobjc/issues/%s", "#%s"),
     "pr": ("https://github.com/ronaldoussoren/pyobjc/pull/%s", "#%s"),
+    "pypi": ("https://pypi.org/project/%s", "%s"),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -73,7 +75,7 @@ copyright = "2017-2025, Ronald Oussoren"  # noqa: A001
 # built documents.
 #
 # The short X.Y version.
-version = "12.2.3"
+version = "13.0"
 
 # The full version, including alpha/beta/rc tags.
 release = version
@@ -279,4 +281,6 @@ datatables_options = {
     "pageLength": -1,
     "language": {"lengthLabels": {"-1": "Show all"}},
     "lengthMenu": [10, 25, 50, 100, -1],
+    "order": [],
+    # "search": "^[^_]",
 }

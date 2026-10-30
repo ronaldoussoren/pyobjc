@@ -1,5 +1,4 @@
-import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 import GameCenter
 
@@ -16,13 +15,8 @@ class GKChallengeEventHandlerDelegateHelper(GameCenter.NSObject):
 
 
 class TestGKChallengeEventHandler(TestCase):
-    @min_os_level("10.8")
-    def testClasses10_8(self):
-        self.assertIsInstance(GameCenter.GKChallengeEventHandler, objc.objc_class)
-
-    @min_os_level("10.8")
-    def testProtocols10_8(self):
-        self.assertProtocolExists("GKChallengeEventHandlerDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("GKChallengeEventHandlerDelegate", GameCenter)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

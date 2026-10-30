@@ -12,19 +12,17 @@ class TestMTLCountersHelper(Metal.NSObject):
 
 
 class TestMTLCounters(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLCounterSampleBufferError)
-
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Metal.MTLCommonCounter, str)
-        self.assertIsTypedEnum(Metal.MTLCommonCounterSet, str)
-
-    def test_constants(self):
-        self.assertEqual(Metal.MTLCounterErrorValue, 0xFFFFFFFFFFFFFFFF)
-
         self.assertEqual(Metal.MTLCounterSampleBufferErrorOutOfMemory, 0)
         self.assertEqual(Metal.MTLCounterSampleBufferErrorInvalid, 1)
         self.assertEqual(Metal.MTLCounterSampleBufferErrorInternal, 2)
+
+        self.assertEqual(Metal.MTLCounterErrorValue, 0xFFFFFFFFFFFFFFFF)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Metal.MTLCommonCounter, str)
+        self.assertIsTypedEnum(Metal.MTLCommonCounterSet, str)
 
     @min_os_level("10.15")
     def test_constants10_15(self):
@@ -79,11 +77,11 @@ class TestMTLCounters(TestCase):
 
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("MTLCounter")
-        self.assertProtocolExists("MTLCounterSet")
-        self.assertProtocolExists("MTLCounterSampleBuffer")
+        self.assertProtocolExists("MTLCounter", Metal)
+        self.assertProtocolExists("MTLCounterSet", Metal)
+        self.assertProtocolExists("MTLCounterSampleBuffer", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLCountersHelper.sampleCount, objc._C_NSUInteger)
         self.assertArgHasType(
             TestMTLCountersHelper.resolveCounterRange_, 0, Metal.NSRange.__typestr__

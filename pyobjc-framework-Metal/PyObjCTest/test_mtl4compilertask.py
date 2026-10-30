@@ -8,7 +8,7 @@ class TestlMTL4CompilerTaskHelper(Metal.NSObject):
 
 
 class TestlMTL4CompilerTask(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4CompilerTaskStatus)
         self.assertEqual(Metal.MTL4CompilerTaskStatusNone, 0)
         self.assertEqual(Metal.MTL4CompilerTaskStatusScheduled, 1)
@@ -17,7 +17,7 @@ class TestlMTL4CompilerTask(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CompilerTask")
+        self.assertProtocolExists("MTL4CompilerTask", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestlMTL4CompilerTaskHelper.status, b"q")

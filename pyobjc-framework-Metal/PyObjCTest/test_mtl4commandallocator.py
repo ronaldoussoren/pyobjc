@@ -10,7 +10,7 @@ class TestMTL4CommandAllocatorHelper(Metal.NSObject):
 class TestMTL4CommandAllocator(TestCase):
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4CommandAllocator")
+        self.assertProtocolExists("MTL4CommandAllocator", Metal)
 
     def test_protocol_methods(self):
         self.assertResultHasType(TestMTL4CommandAllocatorHelper.allocatedSize, b"Q")

@@ -16,6 +16,8 @@ static PyObject* _Nullable call_NSObject_alloc(PyObject* method, PyObject* self,
     Class             aClass;
     SEL               aSel;
 
+    assert(PyObjCNativeSelector_Check(method) || PyObjCIMP_Check(method));
+
     if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
         return NULL;
 
@@ -126,8 +128,8 @@ mkimp_NSObject_alloc(PyObject*              callable,
           } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, v};
-          result            = PyObject_Vectorcall((PyObject*)callable, args + 1,
-                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall((PyObject*)callable, args + 1,
+                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
           Py_CLEAR(v);
           if (unlikely(result == NULL)) {
@@ -233,8 +235,8 @@ mkimp_NSObject_dealloc(PyObject*              callable,
           } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
-          result            = PyObject_Vectorcall(callable, args + 1,
-                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall(callable, args + 1,
+                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (unlikely(result == NULL)) {
               PyObjC_GIL_FORWARD_EXC();
@@ -388,8 +390,8 @@ mkimp_NSObject_release(PyObject*              callable,
           } // LCOV_EXCL_LINE
 
           PyObject* args[2] = {NULL, pyself};
-          result            = PyObject_Vectorcall(callable, args + 1,
-                                                  1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall(callable, args + 1,
+                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           if (result == NULL) {
               PyObjCObject_ReleaseTransient(pyself, cookie);
               PyObjC_GIL_FORWARD_EXC();
@@ -430,8 +432,8 @@ mkimp_NSObject_retain(PyObject*              callable,
           } // LCOV_EXCL_LINE
 
           PyObject* pyargs[2] = {NULL, pyself};
-          result              = PyObject_Vectorcall(callable, pyargs + 1,
-                                                    1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+          result = PyObject_Vectorcall(callable, pyargs + 1,
+                                       1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
           PyObjCObject_ReleaseTransient(pyself, cookie);
           if (result == NULL) {
               PyObjC_GIL_FORWARD_EXC();

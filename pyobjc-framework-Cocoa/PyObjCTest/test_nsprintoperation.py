@@ -1,27 +1,24 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPrintOperation(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPrintRenderingQuality)
-        self.assertIsEnumType(AppKit.NSPrintingPageOrder)
+        self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
+        self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
 
-    def testConstants(self):
+        self.assertIsEnumType(AppKit.NSPrintingPageOrder)
         self.assertEqual(AppKit.NSDescendingPageOrder, -1)
         self.assertEqual(AppKit.NSSpecialPageOrder, 0)
         self.assertEqual(AppKit.NSAscendingPageOrder, 1)
         self.assertEqual(AppKit.NSUnknownPageOrder, 2)
 
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPrintOperationExistsException, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(AppKit.NSPrintRenderingQualityBest, 0)
-        self.assertEqual(AppKit.NSPrintRenderingQualityResponsive, 1)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrintOperation.isCopyingOperation)
         self.assertResultIsBOOL(AppKit.NSPrintOperation.showsPrintPanel)
         self.assertArgIsBOOL(AppKit.NSPrintOperation.setShowsPrintPanel_, 0)

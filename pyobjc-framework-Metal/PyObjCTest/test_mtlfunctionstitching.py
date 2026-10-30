@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestTMLFunctionStitching(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLStitchedLibraryOptions)
         self.assertEqual(Metal.MTLStitchedLibraryOptionNone, 0)
         self.assertEqual(Metal.MTLStitchedLibraryOptionFailOnBinaryArchiveMiss, 1 << 0)
@@ -13,5 +13,5 @@ class TestTMLFunctionStitching(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLFunctionStitchingAttribute")
-        self.assertProtocolExists("MTLFunctionStitchingNode")
+        self.assertProtocolExists("MTLFunctionStitchingAttribute", Metal)
+        self.assertProtocolExists("MTLFunctionStitchingNode", Metal)

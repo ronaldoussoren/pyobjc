@@ -2,21 +2,21 @@ import socket
 
 import CFNetwork
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 
 
 class TestCFHost(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(CFNetwork.CFHostRef)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainNetDB, int)
         self.assertIsInstance(CFNetwork.kCFStreamErrorDomainSystemConfiguration, int)
         self.assertEqual(CFNetwork.kCFHostAddresses, 0)
         self.assertEqual(CFNetwork.kCFHostNames, 1)
         self.assertEqual(CFNetwork.kCFHostReachability, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(CFNetwork.CFHostGetTypeID(), int)
 
         self.assertResultIsCFRetained(CFNetwork.CFHostCreateWithName)
@@ -68,15 +68,24 @@ class TestCFHost(TestCase):
         self.assertIsInstance(ok, bool)
         # self.assertIn(value, lst)
 
-    def testCallbacks(self):
+    def test_callbacks(self):
         lst = []
         ctx = object()
 
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
+        def callback_raises(host, typeinfo, error, ctx):
+            raise RuntimeError("callback error")
+
         host = CFNetwork.CFHostCreateWithName(None, "localhost")
         CFNetwork.CFHostSetClient(host, callback, ctx)
+
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 2"):
+            CFNetwork.CFHostSetClient(host, callback)
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CFNetwork.CFHostSetClient(NoObjCClass(), callback, ctx)
 
         rl = CFNetwork.CFRunLoopGetCurrent()
         CFNetwork.CFHostScheduleWithRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
@@ -103,3 +112,23 @@ class TestCFHost(TestCase):
         self.assertIsInstance(lst, CFNetwork.CFArrayRef)
         self.assertIsInstance(lst[0], CFNetwork.CFDataRef)
         self.assertIsInstance(ok, bool)
+
+        CFNetwork.CFHostSetClient(host, None, 42)
+
+        lst[:] = []
+        host = CFNetwork.CFHostCreateWithName(None, "localhost")
+        CFNetwork.CFHostSetClient(host, callback_raises, ctx)
+        CFNetwork.CFHostScheduleWithRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
+
+        ok, err = CFNetwork.CFHostStartInfoResolution(
+            host, CFNetwork.kCFHostAddresses, None
+        )
+        self.assertTrue(ok)
+        self.assertIsInstance(ok, bool)
+        self.assertIsInstance(err, CFNetwork.CFStreamError)
+
+        with self.assertRaisesRegex(RuntimeError, "callback error"):
+            CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 4.0, False)
+
+        CFNetwork.CFHostUnscheduleFromRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
+        self.assertEqual(len(lst), 0)

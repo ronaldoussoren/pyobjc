@@ -10,7 +10,8 @@ PyObjC supports the Python versions that will be supported by the CPython core
 developers uhtil the next the major release of PyObjC will be released
 (generally in October), and will add new versions of Python when they come available.
 
-Currently PyObjC supports Python 3.10 upto and including 3.15.
+Currently PyObjC supports Python 3.11 upto and including 3.15. Python 3.16 (alpha)
+is supported experimentally.
 
 Free-threading as introduced in Python 3.13 is supported, see :doc:`notes/free-threading`
 for more information.
@@ -23,6 +24,7 @@ for more information.
    ====== ======
    Python PyObjC
    ====== ======
+   3.10   12.2.3
    3.9    11.1
    3.8    10.3
    3.7    9.2
@@ -41,9 +43,22 @@ means that wheels for Python 3.10 and 3.11 support macOS 10.9, while wheels for 
 versions support macOS 10.13 (or later).
 
 Binary wheels will include support for x86_64 as long as it is possible to do so using the
-latest Apple SDK, or as long as I have access to hardware where I can test such support.  I've
+latest Apple SDK, and as long as I have access to hardware where I can test such support.  I've
 not yet determined if there will be a separate set of x86_64 wheels
 once Xcode drops support for building for x86_64.
+
+.. note::
+
+   Binary wheels for PyObjC are build using the version of Xcode that supports the latest SDK
+   whose APIs are bound by the various framework bindings.
+
+   Apple's compilers have limited support for older deployment targets, although the binaries
+   tend to work on older releases in practice.
+
+   Binary wheels for PyObjC 13 are build using the latest version Xcode 27, which offers support
+   for deployment to macOS 12 or later. Wheels claim support for older releases than that, but
+   I don't regularly test if wheels actually work on those releases.
+
 
 Objective-C Garbage Collection
 ------------------------------

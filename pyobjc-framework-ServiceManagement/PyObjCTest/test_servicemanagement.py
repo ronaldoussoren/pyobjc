@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import ServiceManagement
 
 
 class TestServiceManagement(TestCase):
-    @min_os_level("10.6")
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             ServiceManagement.kSMRightBlessPrivilegedHelper,
             b"com.apple.ServiceManagement.blesshelper",
@@ -19,8 +18,7 @@ class TestServiceManagement(TestCase):
         self.assertIsInstance(ServiceManagement.kSMInfoKeyPrivilegedExecutables, str)
         self.assertIsInstance(ServiceManagement.kSMInfoKeyAuthorizedClients, str)
 
-    @min_os_level("10.6")
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultHasType(
             ServiceManagement.SMJobCopyDictionary, b"^{__CFDictionary=}"
         )
@@ -54,7 +52,7 @@ class TestServiceManagement(TestCase):
         self.assertArgHasType(
             ServiceManagement.SMJobSubmit, 2, b"^{AuthorizationOpaqueRef=}"
         )
-        self.assertArgHasType(ServiceManagement.SMJobSubmit, 3, b"o^^{__CFError}")
+        self.assertArgHasType(ServiceManagement.SMJobSubmit, 3, b"o^^{__CFError=}")
 
         self.assertResultIsBOOL(ServiceManagement.SMJobRemove)
         self.assertArgHasType(ServiceManagement.SMJobRemove, 0, b"^{__CFString=}")
@@ -63,7 +61,7 @@ class TestServiceManagement(TestCase):
             ServiceManagement.SMJobRemove, 2, b"^{AuthorizationOpaqueRef=}"
         )
         self.assertArgIsBOOL(ServiceManagement.SMJobRemove, 3)
-        self.assertArgHasType(ServiceManagement.SMJobRemove, 4, b"o^^{__CFError}")
+        self.assertArgHasType(ServiceManagement.SMJobRemove, 4, b"o^^{__CFError=}")
 
         self.assertResultIsBOOL(ServiceManagement.SMJobBless)
         self.assertArgHasType(ServiceManagement.SMJobBless, 0, b"^{__CFString=}")
@@ -71,7 +69,7 @@ class TestServiceManagement(TestCase):
         self.assertArgHasType(
             ServiceManagement.SMJobBless, 2, b"^{AuthorizationOpaqueRef=}"
         )
-        self.assertArgHasType(ServiceManagement.SMJobBless, 3, b"o^^{__CFError}")
+        self.assertArgHasType(ServiceManagement.SMJobBless, 3, b"o^^{__CFError=}")
 
 
 class TestCallableMetadata(TestCase):

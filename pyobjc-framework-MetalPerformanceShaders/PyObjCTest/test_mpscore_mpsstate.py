@@ -4,8 +4,11 @@ import MetalPerformanceShaders
 
 
 class TestMPSCore_MPSState(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSStateResourceType)
+        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeNone, 0)
+        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeBuffer, 1)
+        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeTexture, 2)
 
     def test_structs(self):
         v = MetalPerformanceShaders.MPSStateTextureInfo()
@@ -17,11 +20,6 @@ class TestMPSCore_MPSState(TestCase):
         self.assertIsInstance(v.textureType, int)
         self.assertIsInstance(v.usage, int)
         self.assertPickleRoundTrips(v)
-
-    def test_constants(self):
-        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeNone, 0)
-        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeBuffer, 1)
-        self.assertEqual(MetalPerformanceShaders.MPSStateResourceTypeTexture, 2)
 
     @min_os_level("10.13")
     def test_methods(self):

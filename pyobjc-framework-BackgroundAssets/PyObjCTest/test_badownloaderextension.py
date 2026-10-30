@@ -9,14 +9,14 @@ class TestBADownloaderExtensionHelper(BackgroundAssets.NSObject):
 
 
 class TestBADownloaderExtension(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BackgroundAssets.BAContentRequest)
         self.assertEqual(BackgroundAssets.BAContentRequestInstall, 1)
         self.assertEqual(BackgroundAssets.BAContentRequestUpdate, 2)
         self.assertEqual(BackgroundAssets.BAContentRequestPeriodic, 3)
 
     def test_protocols(self):
-        self.assertProtocolExists("BADownloaderExtension")
+        self.assertProtocolExists("BADownloaderExtension", BackgroundAssets)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

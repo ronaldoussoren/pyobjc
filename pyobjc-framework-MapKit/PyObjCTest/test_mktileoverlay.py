@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
-import objc
+from PyObjCTools.TestSupport import TestCase
 
 import MapKit
 
 
 class TestMKTileOverlay(TestCase):
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertIsInstance(MapKit.MKTileOverlay, objc.objc_class)
-
+    def test_methods(self):
         self.assertResultIsBOOL(MapKit.MKTileOverlay.isGeometryFlipped)
         self.assertArgIsBOOL(MapKit.MKTileOverlay.setGeometryFlipped_, 0)
 
@@ -17,8 +13,7 @@ class TestMKTileOverlay(TestCase):
 
         self.assertArgIsBlock(MapKit.MKTileOverlay.loadTileAtPath_result_, 1, b"v@@")
 
-    @min_os_level("10.9")
-    def testStructs(self):
+    def test_structs(self):
         c = MapKit.MKTileOverlayPath()
         self.assertIsInstance(c.x, int)
         self.assertIsInstance(c.y, int)

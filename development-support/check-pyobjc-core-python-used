@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.12
+#!/usr/bin/env python3.14
 """
 Pre-commit hook to check that all CPython APIs used
 by pyobjc-core are in its 'python-api-used.h' header

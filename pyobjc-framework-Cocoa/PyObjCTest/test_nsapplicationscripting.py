@@ -8,7 +8,7 @@ class TestNSApplicationScriptingHelper(AppKit.NSObject):
 
 
 class TestNSApplicationScripting(TestCase):
-    def testMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestNSApplicationScriptingHelper.application_delegateHandlesKey_
         )

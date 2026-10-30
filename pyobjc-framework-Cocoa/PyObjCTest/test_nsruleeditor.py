@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -20,22 +20,21 @@ class TestNSRuleEditorHelper(AppKit.NSObject):
 
 
 class TestNSRuleEditor(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSRuleEditorPredicatePartKey, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSRuleEditorNestingMode)
-        self.assertIsEnumType(AppKit.NSRuleEditorRowType)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSRuleEditorNestingModeSingle, 0)
         self.assertEqual(AppKit.NSRuleEditorNestingModeList, 1)
         self.assertEqual(AppKit.NSRuleEditorNestingModeCompound, 2)
         self.assertEqual(AppKit.NSRuleEditorNestingModeSimple, 3)
 
+        self.assertIsEnumType(AppKit.NSRuleEditorRowType)
         self.assertEqual(AppKit.NSRuleEditorRowTypeSimple, 0)
         self.assertEqual(AppKit.NSRuleEditorRowTypeCompound, 1)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSRuleEditorPredicatePartKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSRuleEditorPredicateLeftExpression, str)
         self.assertIsInstance(AppKit.NSRuleEditorPredicateRightExpression, str)
         self.assertIsInstance(AppKit.NSRuleEditorPredicateComparisonModifier, str)
@@ -46,7 +45,7 @@ class TestNSRuleEditor(TestCase):
         self.assertIsInstance(AppKit.NSRuleEditorPredicateCompoundType, str)
         self.assertIsInstance(AppKit.NSRuleEditorRowsDidChangeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSRuleEditor.isEditable)
         self.assertArgIsBOOL(AppKit.NSRuleEditor.setEditable_, 0)
         self.assertResultIsBOOL(AppKit.NSRuleEditor.canRemoveAllRows)
@@ -59,11 +58,10 @@ class TestNSRuleEditor(TestCase):
             AppKit.NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1
         )
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSRuleEditorDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSRuleEditorDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_,
             objc._C_NSInteger,

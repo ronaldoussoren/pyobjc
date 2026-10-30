@@ -48,7 +48,7 @@ class TestBrowseDescriptor(TestCase):
             Network.nw_browse_descriptor_get_application_service_name
         )
 
-    def test_functional(self):
+    def test_functionsal(self):
         v = Network.nw_browse_descriptor_create_bonjour_service(b"_ssh._tcp", b"local")
         self.assertIsInstance(v, objc.objc_object)
 

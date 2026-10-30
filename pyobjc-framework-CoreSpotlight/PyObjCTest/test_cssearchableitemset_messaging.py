@@ -5,7 +5,7 @@ import CoreSpotlight
 
 
 class TestCSSearchableItemAttributeSet_Messaging(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CoreSpotlight.CSMailboxInbox, str)
         self.assertIsInstance(CoreSpotlight.CSMailboxDrafts, str)
         self.assertIsInstance(CoreSpotlight.CSMailboxSent, str)

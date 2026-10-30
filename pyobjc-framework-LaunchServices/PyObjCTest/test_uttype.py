@@ -8,7 +8,7 @@ with warnings.catch_warnings():
 
 
 class TestUTType(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(LaunchServices.kUTExportedTypeDeclarationsKey, str)
         self.assertIsInstance(LaunchServices.kUTImportedTypeDeclarationsKey, str)
         self.assertIsInstance(LaunchServices.kUTTypeIdentifierKey, str)
@@ -23,7 +23,7 @@ class TestUTType(TestCase):
         self.assertIsInstance(LaunchServices.kUTTagClassNSPboardType, str)
         self.assertIsInstance(LaunchServices.kUTTagClassOSType, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertResultIsCFRetained(
             LaunchServices.UTTypeCreatePreferredIdentifierForTag
         )
@@ -80,7 +80,7 @@ class TestUTType(TestCase):
         self.assertEqual(v, 24353)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(LaunchServices.UTTypeCopyAllTagsWithClass)
         v = LaunchServices.UTTypeCopyAllTagsWithClass(
             LaunchServices.kUTTypeArchive, LaunchServices.kUTTagClassFilenameExtension

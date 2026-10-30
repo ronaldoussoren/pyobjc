@@ -4,16 +4,14 @@ import NaturalLanguage
 
 
 class TestNLTokenizer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NaturalLanguage.NLTokenUnit)
-        self.assertIsEnumType(NaturalLanguage.NLTokenizerAttributes)
-
-    def test_constants(self):
         self.assertEqual(NaturalLanguage.NLTokenUnitWord, 0)
         self.assertEqual(NaturalLanguage.NLTokenUnitSentence, 1)
         self.assertEqual(NaturalLanguage.NLTokenUnitParagraph, 2)
         self.assertEqual(NaturalLanguage.NLTokenUnitDocument, 3)
 
+        self.assertIsEnumType(NaturalLanguage.NLTokenizerAttributes)
         self.assertEqual(NaturalLanguage.NLTokenizerAttributeNumeric, 1 << 0)
         self.assertEqual(NaturalLanguage.NLTokenizerAttributeSymbolic, 1 << 1)
         self.assertEqual(NaturalLanguage.NLTokenizerAttributeEmoji, 1 << 2)

@@ -3,12 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPersistentCloudKitContainer(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(
             CoreData.NSPersistentCloudKitContainerSchemaInitializationOptions
         )
-
-    def test_constants(self):
         self.assertEqual(
             CoreData.NSPersistentCloudKitContainerSchemaInitializationOptionsNone, 0
         )

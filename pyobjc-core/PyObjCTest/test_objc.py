@@ -1,8 +1,6 @@
-import sys
-
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, NotBool
 
 from .fnd import NSArray, NSAttributedString, NSObject
 
@@ -30,6 +28,10 @@ class TestClassLookup(TestCase):
             objc.lookUpClass("ThisClassReallyShouldNotExist")
         with self.assertRaisesRegex(TypeError, "argument 1 must be str, not int"):
             objc.lookUpClass(1)
+
+    def test_lookup_class_invalid(self):
+        with self.assertRaisesRegex(TypeError, "argument 1 must be str, not int"):
+            objc.lookUpClass(42)
 
     def testClassList(self):
         NSObject = objc.lookUpClass("NSObject")
@@ -100,32 +102,6 @@ class TestDescription(TestCase):
             self.assertEqual(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
 
 
-class TestPrivate(TestCase):
-    def test_resolve_name(self):
-        resolve = objc._resolve_name
-
-        with self.assertRaisesRegex(ValueError, r"^sys$"):
-            resolve("sys")
-
-        self.assertIs(resolve("sys.path"), sys.path)
-
-        v = resolve("distutils.command.sdist.show_formats")
-
-        from distutils.command.sdist import show_formats
-
-        self.assertIs(v, show_formats)
-
-        with self.assertRaisesRegex(
-            AttributeError,
-            "module 'distutils.command.sdist' has no attribute 'dont_show_formats'",
-        ):
-            resolve("distutils.command.sdist.dont_show_formats")
-        with self.assertRaisesRegex(
-            AttributeError, "module 'sys' has no attribute 'does_not_exist'"
-        ):
-            resolve("sys.does_not_exist")
-
-
 class TestLoadBundle(TestCase):
     def test_invalid(self):
         with self.assertRaisesRegex(TypeError, "required argument"):
@@ -147,11 +123,7 @@ class TestLoadBundle(TestCase):
         with self.assertRaisesRegex(TypeError, "bundle_identifier is not a string"):
             objc.loadBundle("foo", {}, bundle_identifier=42)
 
-        class NotBool:
-            def __bool__(self):
-                raise RuntimeError("foo")
-
-        with self.assertRaisesRegex(RuntimeError, "foo"):
+        with self.assertRaisesRegex(TypeError, "this is not a bool"):
             objc.loadBundle(
                 "foo",
                 {},

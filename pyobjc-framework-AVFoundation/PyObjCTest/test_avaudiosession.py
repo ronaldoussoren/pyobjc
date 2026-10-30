@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc, min_os_level
 
 
 class TestAVAudioSession(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(
             AVFoundation.AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation,
             1,  # noqa: B950

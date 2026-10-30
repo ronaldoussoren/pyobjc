@@ -6,5 +6,4 @@ import TLayerDemo  # noqa: F401
 import TLayerView  # noqa: F401
 from PyObjCTools import AppHelper
 
-
 AppHelper.runEventLoop()

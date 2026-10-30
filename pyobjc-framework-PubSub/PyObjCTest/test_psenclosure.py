@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPSEnclosure(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(PubSub.PSEnclosureDownloadIsIdle, 0)
         self.assertEqual(PubSub.PSEnclosureDownloadIsQueued, 1)
         self.assertEqual(PubSub.PSEnclosureDownloadIsActive, 2)
@@ -13,6 +13,6 @@ class TestPSEnclosure(TestCase):
 
         self.assertIsInstance(PubSub.PSEnclosureDownloadStateDidChangeNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PubSub.PSEnclosure.download_)
         self.assertArgIsOut(PubSub.PSEnclosure.download_, 0)

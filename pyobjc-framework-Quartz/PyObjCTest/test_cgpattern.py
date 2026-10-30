@@ -6,12 +6,12 @@ import objc
 
 
 class TestCGPattern(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGPatternTilingNoDistortion, 0)
         self.assertEqual(Quartz.kCGPatternTilingConstantSpacingMinimalDistortion, 1)
         self.assertEqual(Quartz.kCGPatternTilingConstantSpacing, 2)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(Quartz.CGPatternGetTypeID(), int)
 
         myInfo = object()

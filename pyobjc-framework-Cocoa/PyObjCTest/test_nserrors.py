@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSErrors(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSTextLineTooLongException, str)
         self.assertIsInstance(AppKit.NSTextNoSelectionException, str)
         self.assertIsInstance(AppKit.NSWordTablesWriteException, str)

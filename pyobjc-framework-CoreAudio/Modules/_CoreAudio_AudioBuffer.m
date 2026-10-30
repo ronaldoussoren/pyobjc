@@ -4,6 +4,7 @@
  * These are basic bindings to the AudioBuffer type,
  * basically a buffer with extra attributes.
  */
+NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* audio_buffer_type;
 
@@ -33,8 +34,8 @@ static PyMemberDef ab_members[] = {
     {.name = NULL} /* Sentinel */
 };
 
-static PyObject*
-ab_get_mNumberChannels(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ab_get_mNumberChannels(PyObject* _self, void* closure
+                                                  __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
     PyObject*            result;
@@ -46,8 +47,8 @@ ab_get_mNumberChannels(PyObject* _self, void* closure __attribute__((__unused__)
 }
 
 static int
-ab_set_mNumberChannels(PyObject* _self, PyObject* value,
-                       void* closure __attribute__((__unused__)))
+ab_set_mNumberChannels(PyObject* _self, PyObject* _Nullable value,
+                       void*     closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
     int                  result;
@@ -64,8 +65,8 @@ ab_set_mNumberChannels(PyObject* _self, PyObject* value,
     return result;
 }
 
-static PyObject*
-ab_get_mDataByteSize(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ab_get_mDataByteSize(PyObject* _self,
+                                                void* closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
     PyObject*            result;
@@ -76,8 +77,8 @@ ab_get_mDataByteSize(PyObject* _self, void* closure __attribute__((__unused__)))
     return result;
 }
 
-static PyObject*
-ab_get_data(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ab_get_data(PyObject* _self,
+                                       void*     closure __attribute__((__unused__)))
 {
     struct audio_buffer* self = (struct audio_buffer*)_self;
     PyObject*            result;
@@ -115,8 +116,8 @@ PyDoc_STRVAR(ab_create_buffer_doc,
              "Create a (new) buffer for storing audio samples. This replaces \n"
              "the previous buffer. After calling this method the memoryview \n"
              "retrieved from the mData attribute are no longer valid.");
-static PyObject*
-ab_create_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable ab_create_buffer(PyObject* _self, PyObject* args,
+                                            PyObject* kwds)
 {
     static char* keywords[] = {"buffer_size", NULL};
 
@@ -125,15 +126,18 @@ ab_create_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     void*                new_buf;
     PyObject*            result;
 
-    if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size)) {
         return NULL;
     }
 
     Py_BEGIN_CRITICAL_SECTION(self);
 
     new_buf = PyMem_Malloc(buf_size);
-    if (new_buf == NULL) {
+    if (new_buf == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        PyErr_NoMemory();
         result = NULL;
+        // LCOV_EXCL_STOP
     } else {
         if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
             PyMem_Free(self->ab_buf_pointer);
@@ -160,8 +164,7 @@ static PyMethodDef ab_methods[] = {
     {.ml_name = NULL} /* Sentinel */
 };
 
-static PyObject*
-ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"num_channels", "buffer_size", NULL};
     /* Args: channels (default to 1), size (default: no buffer) */
@@ -180,17 +183,19 @@ ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     }
 
     result = PyObject_New(struct audio_buffer, (PyTypeObject*)audio_buffer_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->ab_owns_storage = 1;
     result->ab_owns_buffer  = 0;
     result->ab_buf_pointer  = NULL;
     result->ab_buf          = PyMem_Malloc(sizeof(AudioBuffer));
-    if (result == NULL) {
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
         Py_DECREF(result);
         return NULL;
+        // LCOV_EXCL_STOP
     }
 
     result->ab_buf->mNumberChannels = num_channels;
@@ -218,7 +223,7 @@ ab_dealloc(PyObject* object)
     if (self->ab_owns_buffer && self->ab_buf_pointer != NULL) {
         PyMem_Free(self->ab_buf_pointer);
     }
-    if (self->ab_owns_storage) {
+    if (self->ab_owns_storage && self->ab_buf) {
         PyMem_Free(self->ab_buf);
     }
     Py_TYPE(object)->tp_free(object);
@@ -249,14 +254,13 @@ static PyType_Spec ab_spec = {
     .slots     = ab_slots,
 };
 
-static PyObject*
-ab_create(AudioBuffer* item)
+static PyObject* _Nullable ab_create(AudioBuffer* item)
 {
     struct audio_buffer* result;
 
     result = PyObject_New(struct audio_buffer, (PyTypeObject*)audio_buffer_type);
-    if (result == NULL) {
-        return NULL;
+    if (result == NULL) { // LCOV_BR_EXCL_LINE
+        return NULL;      // LCOV_EXCL_LINE
     }
 
     result->ab_owns_storage = 0;
@@ -267,8 +271,7 @@ ab_create(AudioBuffer* item)
     return (PyObject*)result;
 }
 
-static PyObject*
-pythonify_audio_buffer(void* pointer)
+static PyObject* _Nullable pythonify_audio_buffer(void* pointer)
 {
     AudioBuffer* buf_pointer = (AudioBuffer*)pointer;
 
@@ -304,32 +307,39 @@ init_audio_buffer(PyObject* module)
     int r;
 
     PyObject* tmp = PyType_FromSpec(&ab_spec);
-    if (tmp == NULL) {
-        return -1;
+    if (tmp == NULL) { // LCOV_BR_EXCL_LINE
+        return -1;     // LCOV_EXCL_LINE
     }
     audio_buffer_type = tmp;
 
     PyObject* ts = PyBytes_FromString(@encode(AudioBuffer));
-    if (ts == NULL) {
-        Py_CLEAR(audio_buffer_type);
+    if (ts == NULL) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     r = PyObject_SetAttrString(audio_buffer_type, "__typestr__", ts);
     Py_DECREF(ts);
-    if (r == -1) {
-        Py_CLEAR(audio_buffer_type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
 
     r = PyModule_AddObject(module, "AudioBuffer", audio_buffer_type);
-    if (r == -1) {
-        Py_CLEAR(audio_buffer_type);
+    if (r == -1) { // LCOV_BR_EXCL_LINE
+        // LCOV_EXCL_START
+        Py_DECREF(audio_buffer_type);
         return -1;
+        // LCOV_EXCL_STOP
     }
     Py_INCREF(audio_buffer_type);
 
-    r = PyObjCPointerWrapper_Register("AudioBuffer*", @encode(AudioBuffer*),
-                                      pythonify_audio_buffer, depythonify_audio_buffer);
-
-    return r;
+    return PyObjCPointerWrapper_Register("AudioBuffer*", @encode(AudioBuffer*),
+                                         pythonify_audio_buffer,
+                                         depythonify_audio_buffer);
 }
+
+NS_ASSUME_NONNULL_END

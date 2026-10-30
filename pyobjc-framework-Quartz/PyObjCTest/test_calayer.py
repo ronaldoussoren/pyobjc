@@ -8,15 +8,8 @@ class TestCALayerHelper(Quartz.NSObject):
 
 
 class TestCALayer(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
-        self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
-        self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
-        self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
-        self.assertIsTypedEnum(Quartz.CADynamicRange, str)
-
-    @min_os_level("10.5")
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CAAutoresizingMask)
         self.assertEqual(Quartz.kCALayerNotSizable, 0)
         self.assertEqual(Quartz.kCALayerMinXMargin, 1)
         self.assertEqual(Quartz.kCALayerWidthSizable, 2)
@@ -29,6 +22,20 @@ class TestCALayer(TestCase):
         self.assertEqual(Quartz.kCALayerBottomEdge, 4)
         self.assertEqual(Quartz.kCALayerTopEdge, 8)
 
+        self.assertIsEnumType(Quartz.CACornerMask)
+        self.assertEqual(Quartz.kCALayerMinXMinYCorner, 1 << 0)
+        self.assertEqual(Quartz.kCALayerMaxXMinYCorner, 1 << 1)
+        self.assertEqual(Quartz.kCALayerMinXMaxYCorner, 1 << 2)
+        self.assertEqual(Quartz.kCALayerMaxXMaxYCorner, 1 << 3)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Quartz.CALayerContentsFilter, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsFormat, str)
+        self.assertIsTypedEnum(Quartz.CALayerContentsGravity, str)
+        self.assertIsTypedEnum(Quartz.CALayerCornerCurve, str)
+        self.assertIsTypedEnum(Quartz.CADynamicRange, str)
+
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCAGravityCenter, str)
         self.assertIsInstance(Quartz.kCAGravityTop, str)
         self.assertIsInstance(Quartz.kCAGravityBottom, str)
@@ -47,13 +54,38 @@ class TestCALayer(TestCase):
         self.assertIsInstance(Quartz.kCAOnOrderOut, str)
         self.assertIsInstance(Quartz.kCATransition, str)
 
-        self.assertEqual(Quartz.kCALayerMinXMinYCorner, 1 << 0)
-        self.assertEqual(Quartz.kCALayerMaxXMinYCorner, 1 << 1)
-        self.assertEqual(Quartz.kCALayerMinXMaxYCorner, 1 << 2)
-        self.assertEqual(Quartz.kCALayerMaxXMaxYCorner, 1 << 3)
+        self.assertIsInstance(Quartz.kCAFilterTrilinear, str)
 
-    @min_os_level("10.5")
-    def testMethods(self):
+    @min_os_level("10.12")
+    def test_constants10_12(self):
+        self.assertIsInstance(Quartz.kCAContentsFormatRGBA8Uint, str)
+        self.assertIsInstance(Quartz.kCAContentsFormatRGBA16Float, str)
+        self.assertIsInstance(Quartz.kCAContentsFormatGray8Uint, str)
+
+    @min_os_level("10.14")
+    def test_constants10_14(self):
+        self.assertIsInstance(Quartz.kCAContentsFormatAutomatic, str)
+
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(Quartz.kCACornerCurveCircular, str)
+        self.assertIsInstance(Quartz.kCACornerCurveContinuous, str)
+
+    @min_os_level("15.0")
+    def test_constants15_0(self):
+        self.assertIsTypedEnum(Quartz.CAToneMapMode, str)
+        self.assertIsInstance(Quartz.CAToneMapModeAutomatic, str)
+        self.assertIsInstance(Quartz.CAToneMapModeNever, str)
+        self.assertIsInstance(Quartz.CAToneMapModeIfSupported, str)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.CADynamicRangeAutomatic, str)
+        self.assertIsInstance(Quartz.CADynamicRangeStandard, str)
+        self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
+        self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
+
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CALayer.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(Quartz.CALayer.isHidden)
         self.assertArgIsBOOL(Quartz.CALayer.setHidden_, 0)
@@ -67,12 +99,6 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplayOnBoundsChange)
         self.assertArgIsBOOL(Quartz.CALayer.setNeedsDisplayOnBoundsChange_, 0)
 
-        self.assertResultHasType(
-            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
-        )
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(Quartz.CALayer.isGeometryFlipped)
         self.assertArgIsBOOL(Quartz.CALayer.setGeometryFlipped_, 0)
@@ -87,18 +113,14 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.needsDisplay)
         self.assertResultIsBOOL(Quartz.CALayer.needsLayout)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertResultIsBOOL(Quartz.CALayer.shouldRasterize)
         self.assertArgIsBOOL(Quartz.CALayer.setShouldRasterize_, 0)
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
         self.assertResultIsBOOL(Quartz.CALayer.drawsAsynchronously)
         self.assertArgIsBOOL(Quartz.CALayer.setDrawsAsynchronously_, 0)
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(Quartz.CALayer.allowsEdgeAntialiasing)
         self.assertArgIsBOOL(Quartz.CALayer.setAllowsEdgeAntialiasing_, 0)
         self.assertResultIsBOOL(Quartz.CALayer.allowsGroupOpacity)
@@ -114,44 +136,15 @@ class TestCALayer(TestCase):
         self.assertResultIsBOOL(Quartz.CALayer.wantsDynamicContentScaling)
         self.assertArgIsBOOL(Quartz.CALayer.setWantsDynamicContentScaling_, 0)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertIsInstance(Quartz.kCAFilterTrilinear, str)
-
-    @min_os_level("10.12")
-    def testConstants10_12(self):
-        self.assertIsInstance(Quartz.kCAContentsFormatRGBA8Uint, str)
-        self.assertIsInstance(Quartz.kCAContentsFormatRGBA16Float, str)
-        self.assertIsInstance(Quartz.kCAContentsFormatGray8Uint, str)
-
-    @min_os_level("10.14")
-    def testConstants10_14(self):
-        self.assertIsInstance(Quartz.kCAContentsFormatAutomatic, str)
-
-    @min_os_level("10.15")
-    def testConstants10_15(self):
-        self.assertIsInstance(Quartz.kCACornerCurveCircular, str)
-        self.assertIsInstance(Quartz.kCACornerCurveContinuous, str)
-
-    @min_os_level("15.0")
-    def testConstants15_0(self):
-        self.assertIsTypedEnum(Quartz.CAToneMapMode, str)
-        self.assertIsInstance(Quartz.CAToneMapModeAutomatic, str)
-        self.assertIsInstance(Quartz.CAToneMapModeNever, str)
-        self.assertIsInstance(Quartz.CAToneMapModeIfSupported, str)
-
-    @min_os_level("26.0")
-    def testConstants26_0(self):
-        self.assertIsInstance(Quartz.CADynamicRangeAutomatic, str)
-        self.assertIsInstance(Quartz.CADynamicRangeStandard, str)
-        self.assertIsInstance(Quartz.CADynamicRangeConstrainedHigh, str)
-        self.assertIsInstance(Quartz.CADynamicRangeHigh, str)
-
-    @min_sdk_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("CAAction")
+    def test_protocols(self):
+        self.assertProtocolExists("CAAction", Quartz)
 
     @min_sdk_level("10.12")
-    def testProtocols10_12(self):
-        self.assertProtocolExists("CALayerDelegate")
-        self.assertProtocolExists("CALayoutManager")
+    def test_protocols10_12(self):
+        self.assertProtocolExists("CALayerDelegate", Quartz)
+        self.assertProtocolExists("CALayoutManager", Quartz)
+
+    def test_protocol_methods(self):
+        self.assertResultHasType(
+            TestCALayerHelper.preferredSizeOfLayer_, Quartz.CGSize.__typestr__
+        )

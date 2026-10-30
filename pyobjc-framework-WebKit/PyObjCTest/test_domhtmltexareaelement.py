@@ -3,5 +3,5 @@ import WebKit
 
 
 class TestDOMHTMLTextAreaElement(TestCase):
-    def testMehods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMHTMLTextAreaElement.willValidate)

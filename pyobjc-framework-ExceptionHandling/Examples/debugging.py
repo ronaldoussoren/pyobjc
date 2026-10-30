@@ -3,6 +3,7 @@
 This script shows how to use PyObjCTools.Debugging to show a dump of all
 (Cocoa) exceptions (handled and unhandled).
 """
+
 from Foundation import NSArray, NSObject, NSTimer
 from PyObjCTools import AppHelper, Debugging
 

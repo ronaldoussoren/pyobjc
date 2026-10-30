@@ -63,7 +63,8 @@ find_end_of_structname(const char* signature)
 
         if (end == NULL) {
             end = strchr(signature, _C_STRUCT_E);
-            /* XXX: What if end is NULL */
+            if (unlikely(end == NULL))    // LCOV_BR_EXCL_LINE
+                return strlen(signature); // LCOV_EXCL_LINE
             return (size_t)(end - signature);
 
         } else {
@@ -74,10 +75,6 @@ find_end_of_structname(const char* signature)
     return strlen(signature);
 }
 
-/* XXX: This is unsafe in free threaded mode, options:
- * 1. Return 'struct wrapper' (e.g. a copy of the found entry)
- * 2. Add variants returning the fields used by other parts of this file
- */
 static int
 FindWrapper(const char* signature, pythonify_func* _Nullable pythonify,
             depythonify_func* _Nullable depythonify, const char** _Nullable name)
@@ -240,23 +237,6 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     PyObjCPointerWrapper_ToPythonFunc   cur_pythonify;
     PyObjCPointerWrapper_FromPythonFunc cur_depythonify;
 
-#if 0
-    /* XXX: Disabled because this is inherently problematic for
-     *      the free threaded build.
-     *
-     *      It should be possibly to implement this in a way that's
-     *      compatible with free threading, but that's only needed
-     *      if the code is actually needed.
-     */
-    struct wrapper* value = FindWrapper(signature);
-
-    if (value != NULL) {
-        /* Update existing registration */
-        value->pythonify   = pythonify;
-        value->depythonify = depythonify;
-        return 0;
-    }
-#else
     if (FindWrapper(signature, &cur_pythonify, &cur_depythonify, NULL) == 0) {
         if (unlikely(cur_pythonify != pythonify // LCOV_BR_EXCL_LINE
                      || cur_depythonify != depythonify)) {
@@ -269,7 +249,6 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
             // LCOV_EXCL_STOP
         }
     }
-#endif
 
 #ifdef Py_GIL_DISABLED
     PyMutex_Lock(&items_mutex);

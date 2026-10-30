@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import WebKit
 import objc
 
@@ -21,27 +21,45 @@ class TestWKNavigationDelegateHelper(WebKit.NSObject):
     ):
         pass
 
+    def webView_willSubmitForm_submissionHandler_(self, a, b, c):
+        pass
+
 
 class TestWKNavigationDelegate(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKNavigationActionPolicy)
-        self.assertIsEnumType(WebKit.WKNavigationResponsePolicy)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(WebKit.WKErrorDomain, str)
-
         self.assertEqual(WebKit.WKNavigationActionPolicyCancel, 0)
         self.assertEqual(WebKit.WKNavigationActionPolicyAllow, 1)
         self.assertEqual(WebKit.WKNavigationActionPolicyDownload, 2)
 
+        self.assertIsEnumType(WebKit.WKNavigationResponsePolicy)
         self.assertEqual(WebKit.WKNavigationResponsePolicyCancel, 0)
         self.assertEqual(WebKit.WKNavigationResponsePolicyAllow, 1)
         self.assertEqual(WebKit.WKNavigationResponsePolicyDownload, 2)
 
     @min_os_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("WKNavigationDelegate")
+    def test_constants10_10(self):
+        self.assertIsInstance(WebKit.WKErrorDomain, str)
+
+    @min_sdk_level("11.0")
+    def test_methods11_0(self):
+        self.assertArgIsBlock(
+            TestWKNavigationDelegateHelper.webView_authenticationChallenge_shouldAllowDeprecatedTLS_,
+            2,
+            b"vZ",
+        )
+
+    @min_sdk_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBlock(
+            TestWKNavigationDelegateHelper.webView_willSubmitForm_submissionHandler_,
+            2,
+            b"v",
+        )
+
+    @min_os_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("WKNavigationDelegate", WebKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(
@@ -68,12 +86,4 @@ class TestWKNavigationDelegate(TestCase):
             TestWKNavigationDelegateHelper.webView_shouldGoToBackForwardListItem_willUseInstantBack_completionHandler_,  # noqa: B950
             3,
             objc._C_VOID + objc._C_NSBOOL,
-        )
-
-    @min_os_level("11.0")
-    def testMethods11_0(self):
-        self.assertArgIsBlock(
-            TestWKNavigationDelegateHelper.webView_authenticationChallenge_shouldAllowDeprecatedTLS_,
-            2,
-            b"vZ",
         )

@@ -25,7 +25,7 @@ class TestConnectionReport(TestCase):
         self.assertEqual(Network.nw_report_resolution_protocol_https, 4)
 
     @min_os_level("10.15")
-    def test_contants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(Network.NW_ALL_PATHS, int)
 
     @min_os_level("10.15")
@@ -96,7 +96,6 @@ class TestConnectionReport(TestCase):
         self.assertResultIsRetained(
             Network.nw_resolution_report_copy_preferred_endpoint
         )
-        self.assertResultIsRetained(Network.nw_resolution_report_get_protocol)
 
         nw_report_resolution_report_enumerator_t = b"B@"
 

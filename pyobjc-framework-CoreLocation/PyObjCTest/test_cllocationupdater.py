@@ -3,15 +3,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLLocationUpdater(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreLocation.CLLiveUpdateConfiguration)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationDefault, 0)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationAutomotiveNavigation, 1)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationOtherNavigation, 2)
         self.assertEqual(CoreLocation.CLLiveUpdateConfigurationFitness, 3)
+        self.assertEqual(CoreLocation.CLLiveUpdateConfigurationAirborne, 4)
+        self.assertEqual(CoreLocation.CLLiveUpdateConfigurationMaritime, 5)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(CoreLocation.CLUpdate.isStationary)
 
         self.assertArgIsBlock(
@@ -24,7 +26,7 @@ class TestCLLocationUpdater(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDenied)
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationDeniedGlobally)
         self.assertResultIsBOOL(CoreLocation.CLUpdate.authorizationRestricted)

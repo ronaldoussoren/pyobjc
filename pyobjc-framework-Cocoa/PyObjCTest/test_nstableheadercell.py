@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTableHeaderCell(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSTableHeaderCell.drawSortIndicatorWithFrame_inView_ascending_priority_,
             2,

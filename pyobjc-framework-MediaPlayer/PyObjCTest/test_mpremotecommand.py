@@ -4,11 +4,8 @@ import objc
 
 
 class TestMPRemoteCommand(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPRemoteCommandHandlerStatus)
-
-    @min_os_level("10.12")
-    def testConstants(self):
         self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusSuccess, 0)
         self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusNoSuchContent, 100)
         self.assertEqual(
@@ -18,7 +15,7 @@ class TestMPRemoteCommand(TestCase):
         self.assertEqual(MediaPlayer.MPRemoteCommandHandlerStatusCommandFailed, 200)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(MediaPlayer.MPRemoteCommand.isEnabled)
         self.assertArgIsBOOL(MediaPlayer.MPRemoteCommand.setEnabled_, 0)
 

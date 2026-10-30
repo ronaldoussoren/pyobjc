@@ -1,9 +1,9 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestNSHashTable(TestCase):
-    def testConvenience(self):
+    def test_convenience(self):
         v = Foundation.NSHashTable.hashTableWithOptions_(
             Foundation.NSPointerFunctionsObjectPersonality
         )
@@ -46,7 +46,7 @@ class TestNSHashTable(TestCase):
         self.assertEqual(o, None)
         self.assertEqual(len(v), 0)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Foundation.NSHashTableStrongMemory, 0)
         self.assertEqual(
             Foundation.NSHashTableZeroingWeakMemory,
@@ -60,17 +60,15 @@ class TestNSHashTable(TestCase):
             Foundation.NSPointerFunctionsObjectPointerPersonality,
         )
 
-    @min_os_level("10.8")
-    def testConstants10_8(self):
         self.assertEqual(
             Foundation.NSHashTableWeakMemory, Foundation.NSPointerFunctionsWeakMemory
         )
 
     @expectedFailure
-    def testFunctions(self):
+    def test_functions(self):
         self.fail("NSHasTable functions")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSHashTable.containsObject_)
         self.assertResultIsBOOL(Foundation.NSHashTable.intersectsHashTable_)
         self.assertResultIsBOOL(Foundation.NSHashTable.isEqualToHashTable_)

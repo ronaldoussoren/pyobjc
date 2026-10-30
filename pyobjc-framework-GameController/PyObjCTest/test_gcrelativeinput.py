@@ -28,7 +28,7 @@ class TestGCRelativeInputHelper(GameController.NSObject):
 class TestGCRelativeInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCRelativeInput")
+        self.assertProtocolExists("GCRelativeInput", GameController)
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(

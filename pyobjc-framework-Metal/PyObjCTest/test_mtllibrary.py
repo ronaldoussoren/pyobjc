@@ -19,6 +19,9 @@ class TestMTLLibraryHelper(Metal.NSObject):
     def newArgumentEncoderWithBufferIndex_reflection_(self, a, b):
         return 1
 
+    def newFunctionWithName_(self, a):
+        return 1
+
     def newFunctionWithName_constantValues_error_(self, a, b, c):
         return 1
 
@@ -48,20 +51,8 @@ class TestMTLLibraryHelper(Metal.NSObject):
 
 
 class TestMTLLibrary(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLFunctionType)
-        self.assertIsEnumType(Metal.MTLLanguageVersion)
-        self.assertIsEnumType(Metal.MTLLibraryError)
-        self.assertIsEnumType(Metal.MTLLibraryType)
-        self.assertIsEnumType(Metal.MTLPatchType)
-        self.assertIsEnumType(Metal.MTLLibraryOptimizationLevel)
-        self.assertIsEnumType(Metal.MTLCompileSymbolVisibility)
-
-    def test_constants(self):
-        self.assertEqual(Metal.MTLPatchTypeNone, 0)
-        self.assertEqual(Metal.MTLPatchTypeTriangle, 1)
-        self.assertEqual(Metal.MTLPatchTypeQuad, 2)
-
         self.assertEqual(Metal.MTLFunctionTypeVertex, 1)
         self.assertEqual(Metal.MTLFunctionTypeFragment, 2)
         self.assertEqual(Metal.MTLFunctionTypeKernel, 3)
@@ -70,6 +61,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLFunctionTypeMesh, 7)
         self.assertEqual(Metal.MTLFunctionTypeObject, 8)
 
+        self.assertIsEnumType(Metal.MTLLanguageVersion)
         self.assertEqual(Metal.MTLLanguageVersion1_0, (1 << 16))
         self.assertEqual(Metal.MTLLanguageVersion1_1, (1 << 16) + 1)
         self.assertEqual(Metal.MTLLanguageVersion1_2, (1 << 16) + 2)
@@ -82,7 +74,9 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion3_1, (3 << 16) + 1)
         self.assertEqual(Metal.MTLLanguageVersion3_2, (3 << 16) + 2)
         self.assertEqual(Metal.MTLLanguageVersion4_0, (4 << 16) + 0)
+        self.assertEqual(Metal.MTLLanguageVersion4_1, (4 << 16) + 1)
 
+        self.assertIsEnumType(Metal.MTLLibraryError)
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
         self.assertEqual(Metal.MTLLibraryErrorCompileFailure, 3)
@@ -90,9 +84,20 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLibraryErrorFunctionNotFound, 5)
         self.assertEqual(Metal.MTLLibraryErrorFileNotFound, 6)
 
+        self.assertIsEnumType(Metal.MTLLibraryType)
+        self.assertEqual(Metal.MTLLibraryTypeExecutable, 0)
+        self.assertEqual(Metal.MTLLibraryTypeDynamic, 1)
+
+        self.assertIsEnumType(Metal.MTLPatchType)
+        self.assertEqual(Metal.MTLPatchTypeNone, 0)
+        self.assertEqual(Metal.MTLPatchTypeTriangle, 1)
+        self.assertEqual(Metal.MTLPatchTypeQuad, 2)
+
+        self.assertIsEnumType(Metal.MTLLibraryOptimizationLevel)
         self.assertEqual(Metal.MTLLibraryOptimizationLevelDefault, 0)
         self.assertEqual(Metal.MTLLibraryOptimizationLevelSize, 1)
 
+        self.assertIsEnumType(Metal.MTLCompileSymbolVisibility)
         self.assertEqual(Metal.MTLCompileSymbolVisibilityDefault, 0)
         self.assertEqual(Metal.MTLCompileSymbolVisibilityHidden, 1)
 
@@ -105,26 +110,36 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLMathFloatingPointFunctionsFast, 0)
         self.assertEqual(Metal.MTLMathFloatingPointFunctionsPrecise, 1)
 
+        self.assertIsEnumType(Metal.MTLFloatingPointConversionRoundingMode)
+        self.assertEqual(Metal.MTLFloatingPointConversionRoundingModeToNearestEven, 0)
+        self.assertEqual(Metal.MTLFloatingPointConversionRoundingModeTowardZero, 1)
+
     @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(Metal.MTLLibraryErrorDomain, str)
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLFunction")
-        self.assertProtocolExists("MTLLibrary")
+        self.assertProtocolExists("MTLFunction", Metal)
+        self.assertProtocolExists("MTLLibrary", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLLibraryHelper.functionType, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLLibraryHelper.patchType, objc._C_NSUInteger)
         self.assertResultHasType(
             TestMTLLibraryHelper.patchControlPointCount, objc._C_NSInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_
+        )
         self.assertArgHasType(
             TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_,
             0,
             objc._C_NSUInteger,
+        )
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_
         )
         self.assertArgHasType(
             TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_,
@@ -132,6 +147,11 @@ class TestMTLLibrary(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(TestMTLLibraryHelper.newFunctionWithName_)
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newFunctionWithName_constantValues_error_
+        )
         self.assertArgIsOut(
             TestMTLLibraryHelper.newFunctionWithName_constantValues_error_, 2
         )
@@ -141,14 +161,24 @@ class TestMTLLibrary(TestCase):
             b"v@@",
         )
         self.assertResultHasType(TestMTLLibraryHelper.options, objc._C_NSUInteger)
+
         self.assertArgIsBlock(
             TestMTLLibraryHelper.newFunctionWithDescriptor_completionHandler_, 1, b"v@@"
         )
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newFunctionWithDescriptor_error_
+        )
         self.assertArgIsOut(TestMTLLibraryHelper.newFunctionWithDescriptor_error_, 1)
+
         self.assertArgIsBlock(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_completionHandler_,
             1,
             b"v@@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_
         )
         self.assertArgIsOut(
             TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_, 1

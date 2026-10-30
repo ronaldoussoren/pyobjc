@@ -7,7 +7,7 @@ MTKTextureLoaderArrayCallback = b"v@@"
 
 
 class TestMTKTextureLoading(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(MetalKit.MTKTextureLoaderCubeLayout, str)
         self.assertIsTypedEnum(MetalKit.MTKTextureLoaderError, str)
         self.assertIsTypedEnum(MetalKit.MTKTextureLoaderOption, str)
@@ -45,22 +45,35 @@ class TestMTKTextureLoading(TestCase):
             2,
             MTKTextureLoaderCallback,
         )
+
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithData_options_completionHandler_,
             2,
             MTKTextureLoaderCallback,
         )
+
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithCGImage_options_completionHandler_,
             2,
             MTKTextureLoaderCallback,
         )
 
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_error_
+        )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_error_, 2
         )
+
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithData_options_error_
+        )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithData_options_error_, 2
+        )
+
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithCGImage_options_error_
         )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithCGImage_options_error_, 2
@@ -73,16 +86,19 @@ class TestMTKTextureLoading(TestCase):
             4,
             MTKTextureLoaderCallback,
         )
+
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler_,  # noqa: B950
             5,
             MTKTextureLoaderCallback,
         )
+
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_completionHandler_,  # noqa: B950
             2,
             MTKTextureLoaderArrayCallback,
         )
+
         self.assertArgIsBlock(
             MetalKit.MTKTextureLoader.newTexturesWithNames_scaleFactor_bundle_options_completionHandler_,  # noqa: B950
             4,
@@ -99,16 +115,31 @@ class TestMTKTextureLoading(TestCase):
             MTKTextureLoaderCallback,
         )
 
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_
+        )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_, 2
         )
+
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithMDLTexture_options_error_
+        )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithMDLTexture_options_error_, 2
+        )
+
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_error_
         )
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_error_,
             4,
         )
+
+        self.assertResultIsRetained(
+            MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_
+        )  # noqa: B950
         self.assertArgIsOut(
             MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_,  # noqa: B950
             5,

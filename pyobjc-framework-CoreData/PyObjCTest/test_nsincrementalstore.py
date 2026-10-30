@@ -1,10 +1,9 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSIncrementalStore(TestCase):
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreData.NSIncrementalStore.loadMetadata_)
         self.assertArgIsOut(CoreData.NSIncrementalStore.loadMetadata_, 0)
         self.assertArgIsOut(
@@ -19,4 +18,14 @@ class TestNSIncrementalStore(TestCase):
         )
         self.assertArgIsOut(
             CoreData.NSIncrementalStore.obtainPermanentIDsForObjects_error_, 1
+        )
+
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newObjectIDForEntity_referenceObject_
+        )
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newValueForRelationship_forObjectWithID_withContext_error_
+        )
+        self.assertResultIsRetained(
+            CoreData.NSIncrementalStore.newValuesForObjectWithID_withContext_error_
         )

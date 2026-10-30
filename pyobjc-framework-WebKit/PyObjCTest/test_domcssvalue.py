@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMCSSValue(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(WebKit.DOM_CSS_INHERIT, 0)
         self.assertEqual(WebKit.DOM_CSS_PRIMITIVE_VALUE, 1)
         self.assertEqual(WebKit.DOM_CSS_VALUE_LIST, 2)

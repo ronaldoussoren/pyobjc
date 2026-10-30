@@ -4,7 +4,7 @@ import GameplayKit
 
 
 class TestGKPrimitives(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         self.assertEqual(GameplayKit.GKBox.__typestr__, b"{GKBox=<3f><3f>}")
         v = GameplayKit.GKBox()
         self.assertIs(v.boxMin, None)

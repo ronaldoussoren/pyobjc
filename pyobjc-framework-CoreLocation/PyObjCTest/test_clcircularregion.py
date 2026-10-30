@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCLCircularRegion(TestCase):
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(CoreLocation.CLCircularRegion.containsCoordinate_)
         self.assertArgHasType(
             CoreLocation.CLCircularRegion.containsCoordinate_,

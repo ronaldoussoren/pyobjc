@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestDOMMouseEvent(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(WebKit.DOMMouseEvent.ctrlKey)
         self.assertResultIsBOOL(WebKit.DOMMouseEvent.shiftKey)
         self.assertResultIsBOOL(WebKit.DOMMouseEvent.altKey)

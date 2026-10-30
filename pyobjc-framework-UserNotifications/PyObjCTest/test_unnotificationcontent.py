@@ -3,10 +3,8 @@ import UserNotifications
 
 
 class TestUNNotificationContent(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(UserNotifications.UNNotificationInterruptionLevel)
-
-    def test_constants(self):
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelPassive, 0)
         self.assertEqual(UserNotifications.UNNotificationInterruptionLevelActive, 1)
         self.assertEqual(
@@ -16,7 +14,7 @@ class TestUNNotificationContent(TestCase):
 
     @min_sdk_level("12.0")
     def test_protocols12_0(self):
-        self.assertProtocolExists("UNNotificationContentProviding")
+        self.assertProtocolExists("UNNotificationContentProviding", UserNotifications)
 
     @min_os_level("12.0")
     def test_methods12_0(self):

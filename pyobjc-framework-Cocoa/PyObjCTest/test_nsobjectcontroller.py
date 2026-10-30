@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSObjectController(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSObjectController.automaticallyPreparesContent)
         self.assertArgIsBOOL(
             AppKit.NSObjectController.setAutomaticallyPreparesContent_, 0
@@ -18,3 +18,5 @@ class TestNSObjectController(TestCase):
         self.assertArgIsOut(AppKit.NSObjectController.fetchWithRequest_merge_error_, 2)
         self.assertResultIsBOOL(AppKit.NSObjectController.usesLazyFetching)
         self.assertArgIsBOOL(AppKit.NSObjectController.setUsesLazyFetching_, 0)
+
+        self.assertResultIsRetained(AppKit.NSObjectController.newObject)

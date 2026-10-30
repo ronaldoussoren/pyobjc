@@ -85,8 +85,6 @@ class TestJSContextRef(TestCase):
             JavaScriptCore.JSContextGetGroup, 0, JavaScriptCore.JSContextRef.__typestr__
         )
 
-    @min_os_level("10.7")
-    def test_functions10_7(self):
         self.assertResultHasType(
             JavaScriptCore.JSContextGetGlobalContext,
             JavaScriptCore.JSGlobalContextRef.__typestr__,

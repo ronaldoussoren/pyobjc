@@ -57,11 +57,26 @@ Unlike informal protocols, it is necessary to explicitly declare
 conformance to formal protocols.  However, all formal protocols in Cocoa
 are also described using ``objc.informal_protocol`` objects.
 
-Protocol conformance is declared by using a ``protocols`` keyword to
-the class definitions:
+Protocol conformance is declared by including the protocol(s) in the
+base classes:
 
  .. sourcecode:: python
-    :linenos:
+
+	NSLocking = objc.protocolNamed('NSLocking')
+
+	class MyLockingObject(NSObject, NSLocking):
+		def lock(self):
+			pass
+
+		def unlock(self):
+			pass
+
+.. versionchanged:: 13.0 Added support for inheriting from a protocol in class definitions.
+
+Alternatively, protocol conformance is declared by using a
+``protocols`` keyword to the class definitions:
+
+ .. sourcecode:: python
 
 	NSLocking = objc.protocolNamed('NSLocking')
 
@@ -76,7 +91,6 @@ Alternatively, it is also possible to specify the protocols that the class
 conforms to using an attribute named ``__pyobjc_protocols__`` in the class body.
 
  .. sourcecode:: python
-    :linenos:
 
 	NSLocking = objc.protocolNamed('NSLocking')
 
@@ -89,6 +103,15 @@ conforms to using an attribute named ``__pyobjc_protocols__`` in the class body.
 		def unlock(self):
 			pass
 
+.. note::
+
+   The three alternatives can be mixed in the same class definition, but
+   that leads to unreadable code.
+
+   Including protocols in the list of base classes is preferred as of PyObjC 13,
+   code that should work with older versions should prefer using the keyword
+   argument. The last option is a left over from the transition from Python 2.
+
 The class now formally implements the ``NSLocking`` protocol, this can be
 verified using the Objective-C introspection methods:
 
@@ -96,6 +119,3 @@ verified using the Objective-C introspection methods:
 
 	>>> MyLockingObject.pyobjc_classMethods.conformsToProtocol_(NSLocking)
 	1
-
-This is useful for API's that require (and check) the implementation of formal
-protocols.

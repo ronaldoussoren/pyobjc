@@ -3,5 +3,5 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKDialogController(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameKit.GKDialogController.presentViewController_)

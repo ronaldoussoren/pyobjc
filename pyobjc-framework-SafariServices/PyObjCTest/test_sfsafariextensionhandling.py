@@ -18,11 +18,10 @@ class TestSFSafariExtensionHandlingHelper(SafariServices.NSObject):
 
 class TestSFSafariExtensionHandling(TestCase):
     @min_os_level("10.12")
-    def testProtocols(self):
-        self.assertProtocolExists("SFSafariExtensionHandling")
+    def test_protocols(self):
+        self.assertProtocolExists("SFSafariExtensionHandling", SafariServices)
 
-    @min_os_level("10.12")
-    def testMethods(self):
+    def test_protocol_methods(self):
         self.assertArgIsBlock(
             TestSFSafariExtensionHandlingHelper.validateToolbarItemInWindow_validationHandler_,
             1,

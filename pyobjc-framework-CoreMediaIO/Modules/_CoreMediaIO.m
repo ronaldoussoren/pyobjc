@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <CoreMediaIO/CMIOHardwareDevice.h>
 
 #if PyObjC_BUILD_RELEASE >= 1203
@@ -9,6 +13,12 @@
 #import <CoreMediaIO/CMIOExtensionProvider.h>
 #import <CoreMediaIO/CMIOExtensionStream.h>
 #endif
+
+NS_ASSUME_NONNULL_BEGIN
+
+// LCOV_EXCL_START
+// This function is only present to ensure protocols are
+// available at runtime.
 
 static void __attribute__((__used__))
 use_protocols(void)
@@ -24,26 +34,24 @@ use_protocols(void)
     Py_XDECREF(p);
 #endif
 }
+// LCOV_EXCL_STOP
 
-static PyObject*
-m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObject* args,
-                              PyObject* kwds)
+static PyObject* _Nullable m_CMIODeviceProcessAVCCommand(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    static char* keywords[] = {"deviceID", "ioAVCCommand", NULL};
-
     CMIODeviceID         deviceID;
     CMIODeviceAVCCommand avcCommand;
-    PyObject*            py_avcCommand;
     PyObject*            t;
     OSStatus             r;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
-                                     &py_avcCommand)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), py_avcCommand, &avcCommand)
-        == -1) {
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceID), args[0], &deviceID) == -1) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), args[1], &avcCommand) == -1) {
         return NULL;
     }
 
@@ -54,34 +62,31 @@ m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObje
         return NULL;
     }
 
-    if (PySequence_SetItem(py_avcCommand, 4, t) == -1) {
+    if (PySequence_SetItem(args[1], 4, t) == -1) {
         Py_DECREF(t);
         return NULL;
     }
 
     Py_DECREF(t);
-    return Py_BuildValue("iN", r, py_avcCommand);
+    return Py_BuildValue("iN", r, args[1]);
 }
 
-static PyObject*
-m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)),
-                                PyObject* args, PyObject* kwds)
+static PyObject* _Nullable m_CMIODeviceProcessRS422Command(
+    PyObject* meth, PyObject* _Nonnull const* _Nonnull args, size_t nargs)
 {
-    static char* keywords[] = {"deviceID", "ioRS422Command", NULL};
-
     CMIODeviceID           deviceID;
     CMIODeviceRS422Command rs422Command;
-    PyObject*              py_rs422Command;
     PyObject*              t;
     OSStatus               r;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
-                                     &py_rs422Command)) {
+    if (PyObjC_CheckArgCount(meth, 2, 2, nargs) == -1) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CMIODeviceRS422Command), py_rs422Command,
-                            &rs422Command)
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceID), args[0], &deviceID) == -1) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceRS422Command), args[1], &rs422Command)
         == -1) {
         return NULL;
     }
@@ -93,29 +98,36 @@ m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PySequence_SetItem(py_rs422Command, 4, t) == -1) {
+    if (PySequence_SetItem(args[1], 4, t) == -1) {
         Py_DECREF(t);
         return NULL;
     }
 
     Py_DECREF(t);
-    return Py_BuildValue("iN", r, py_rs422Command);
+    return Py_BuildValue("iN", r, args[1]);
 }
 
 static PyMethodDef mod_methods[] = {
-    {"CMIODeviceProcessAVCCommand", (PyCFunction)m_CMIODeviceProcessAVCCommand,
-     METH_VARARGS | METH_KEYWORDS, NULL},
-    {"CMIODeviceProcessRS422Command", (PyCFunction)m_CMIODeviceProcessRS422Command,
-     METH_VARARGS | METH_KEYWORDS, NULL},
-
     {NULL} /* Sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
+
+    if (PyObjCRegister_FunctionCaller(CMIODeviceProcessAVCCommand,
+                                      m_CMIODeviceProcessAVCCommand)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+    if (PyObjCRegister_FunctionCaller(CMIODeviceProcessRS422Command,
+                                      m_CMIODeviceProcessRS422Command)
+        == -1) {   // LCOV_BR_EXCL_LINE
+        return -1; // LCOV_EXCL_LINE
+    }
+
     return 0;
 }
 
@@ -154,10 +166,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__CoreMediaIO(void);
+PyObject* _Nullable PyInit__CoreMediaIO(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__CoreMediaIO(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

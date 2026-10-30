@@ -2,31 +2,5 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {
-   "AAAttribution": {
-    "methods": [
-     {
-      "args": {
-       "0": {
-        "type_modifier": "o"
-       }
-      },
-      "class_method": true,
-      "selector": "attributionTokenWithError:"
-     }
-    ]
-   }
-  },
-  "enum": {
-   "AAAttributionErrorCodeInternalError": {
-    "value": 2
-   },
-   "AAAttributionErrorCodeNetworkError": {
-    "value": 1
-   },
-   "AAAttributionErrorCodePlatformNotSupported": {
-    "value": 3
-   }
-  }
  }
 }

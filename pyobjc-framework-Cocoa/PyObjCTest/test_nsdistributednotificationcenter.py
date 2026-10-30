@@ -3,15 +3,16 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDistributedNotificationCenter(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Foundation.NSDistributedNotificationCenterType, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDistributedNotificationOptions)
-        self.assertIsEnumType(Foundation.NSNotificationSuspensionBehavior)
+        self.assertEqual(Foundation.NSDistributedNotificationDeliverImmediately, 1)
+        self.assertEqual(Foundation.NSDistributedNotificationPostToAllSessions, 2)
 
-    def testConstants(self):
-        self.assertIsInstance(Foundation.NSLocalNotificationCenterType, str)
+        # Legacy aliases:
+        self.assertEqual(Foundation.NSNotificationDeliverImmediately, 1)
+        self.assertEqual(Foundation.NSNotificationPostToAllSessions, 2)
+
+        self.assertIsEnumType(Foundation.NSNotificationSuspensionBehavior)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDrop, 1)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorCoalesce, 2)
         self.assertEqual(Foundation.NSNotificationSuspensionBehaviorHold, 3)
@@ -19,13 +20,13 @@ class TestNSDistributedNotificationCenter(TestCase):
             Foundation.NSNotificationSuspensionBehaviorDeliverImmediately, 4
         )
 
-        self.assertEqual(Foundation.NSNotificationDeliverImmediately, 1)
-        self.assertEqual(Foundation.NSNotificationPostToAllSessions, 2)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Foundation.NSDistributedNotificationCenterType, str)
 
-        self.assertEqual(Foundation.NSDistributedNotificationDeliverImmediately, 1)
-        self.assertEqual(Foundation.NSDistributedNotificationPostToAllSessions, 2)
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSLocalNotificationCenterType, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsSEL(
             Foundation.NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_,  # noqa: B950
             1,

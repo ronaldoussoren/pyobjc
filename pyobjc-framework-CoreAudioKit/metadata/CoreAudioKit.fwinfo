@@ -3,37 +3,6 @@
 {
  "definitions": {
   "classes": {
-   "AUGenericView": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithAudioUnit:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithAudioUnit:displayFlags:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "audioUnit"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "audioUnit"
-     }
-    ]
-   },
    "AUAudioUnit": {
     "methods": [
      {
@@ -52,34 +21,7 @@
       }
      }
     ]
-   },
-   "AUPannerView": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": true,
-      "selector": "AUPannerViewWithAudioUnit:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "audioUnit"
-     }
-    ],
-    "properties": [
-     {
-      "attributes": [
-       "readonly"
-      ],
-      "name": "audioUnit"
-     }
-    ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

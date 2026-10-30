@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSValue(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSNumber.numberWithBool_, 0)
         self.assertArgIsBOOL(Foundation.NSNumber.initWithBool_, 0)
         self.assertResultIsBOOL(Foundation.NSNumber.boolValue)

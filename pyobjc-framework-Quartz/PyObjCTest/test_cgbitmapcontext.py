@@ -1,15 +1,157 @@
 import array
 import objc
+import os
+import tempfile
 
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NoObjCClass
 import Quartz
 
 
 class TestCGBitmapContext(TestCase):
-    def testFunctions(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGColorModel)
+        self.assertEqual(Quartz.kCGColorModelNoColorant, 0 << 0)
+        self.assertEqual(Quartz.kCGColorModelGray, 1 << 0)
+        self.assertEqual(Quartz.kCGColorModelRGB, 1 << 1)
+        self.assertEqual(Quartz.kCGColorModelCMYK, 1 << 2)
+        self.assertEqual(Quartz.kCGColorModelLab, 1 << 3)
+        self.assertEqual(Quartz.kCGColorModelDeviceN, 1 << 4)
+
+        self.assertIsEnumType(Quartz.CGComponent)
+        self.assertEqual(Quartz.kCGComponentUnknown, 0)
+        self.assertEqual(Quartz.kCGComponentInteger8Bit, 1)
+        self.assertEqual(Quartz.kCGComponentInteger10Bit, 6)
+        self.assertEqual(Quartz.kCGComponentInteger16Bit, 2)
+        self.assertEqual(Quartz.kCGComponentInteger32Bit, 3)
+        self.assertEqual(Quartz.kCGComponentFloat16Bit, 5)
+        self.assertEqual(Quartz.kCGComponentFloat32Bit, 4)
+
+        self.assertIsEnumType(Quartz.CGBitmapLayout)
+        self.assertEqual(Quartz.kCGBitmapLayoutAlphaOnly, 0)
+        self.assertEqual(Quartz.kCGBitmapLayoutGray, 1)
+        self.assertEqual(Quartz.kCGBitmapLayoutGrayAlpha, 2)
+        self.assertEqual(Quartz.kCGBitmapLayoutRGBA, 3)
+        self.assertEqual(Quartz.kCGBitmapLayoutARGB, 4)
+        self.assertEqual(Quartz.kCGBitmapLayoutRGBX, 5)
+        self.assertEqual(Quartz.kCGBitmapLayoutXRGB, 6)
+        self.assertEqual(Quartz.kCGBitmapLayoutBGRA, 7)
+        self.assertEqual(Quartz.kCGBitmapLayoutBGRX, 8)
+        self.assertEqual(Quartz.kCGBitmapLayoutABGR, 9)
+        self.assertEqual(Quartz.kCGBitmapLayoutXBGR, 10)
+        self.assertEqual(Quartz.kCGBitmapLayoutCMYK, 11)
+
+    @min_os_level("26.0")
+    def test_constants26_0(self):
+        self.assertIsInstance(Quartz.kCGAdaptiveMaximumBitDepth, str)
+
+    def test_functions(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
         self.assertIsInstance(bytes_val, array.array)
         self.assertEqual(len(bytes_val), 100 * 80 * 4)
+
+        with self.assertRaisesRegex(TypeError, "expected 7 arguments, got 0"):
+            Quartz.CGBitmapContextCreate()
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'float"
+        ):
+            Quartz.CGBitmapContextCreate(
+                0.5,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(TypeError, "cannot use str as backing store"):
+            Quartz.CGBitmapContextCreate(
+                "bytes_val",
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                "100",
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                "80",
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                "8",
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                "400",
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                NoObjCClass(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreate(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                "Quartz.kCGImageAlphaPremultipliedLast",
+            )
+
         ctx = Quartz.CGBitmapContextCreate(
             bytes_val,
             100,
@@ -43,9 +185,140 @@ class TestCGBitmapContext(TestCase):
         img = Quartz.CGBitmapContextCreateImage(ctx)
         self.assertIsInstance(img, Quartz.CGImageRef)
 
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
         bytes_val = array.array("B", (0 for i in range(100 * 80 * 4)))
+
+        with self.assertRaisesRegex(TypeError, "expected 9 arguments, got 0"):
+            Quartz.CGBitmapContextCreateWithData()
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'float"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                0.5,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "cannot use str as backing store"):
+            Quartz.CGBitmapContextCreateWithData(
+                "bytes_val",
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                "100",
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                "80",
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                "8",
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned long long', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                "400",
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                NoObjCClass(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                None,
+                None,
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'unsigned int', got 'str'"
+        ):
+            Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                "Quartz.kCGImageAlphaPremultipliedLast",
+                None,
+                None,
+            )
+
+        ctx = Quartz.CGBitmapContextCreateWithData(
+            bytes_val,
+            100,
+            80,
+            8,
+            400,
+            Quartz.CGColorSpaceCreateDeviceRGB(),
+            0,
+            None,
+            None,
+        )
+        self.assertIs(ctx, None)
+
         ctx = Quartz.CGBitmapContextCreateWithData(
             bytes_val,
             100,
@@ -84,41 +357,38 @@ class TestCGBitmapContext(TestCase):
         self.assertIs(a_list[0][0], release_info)
         self.assertIs(a_list[0][1], bytes_val)
 
-    def test_constants(self):
-        self.assertIsEnumType(Quartz.CGColorModel)
-        self.assertEqual(Quartz.kCGColorModelNoColorant, 0 << 0)
-        self.assertEqual(Quartz.kCGColorModelGray, 1 << 0)
-        self.assertEqual(Quartz.kCGColorModelRGB, 1 << 1)
-        self.assertEqual(Quartz.kCGColorModelCMYK, 1 << 2)
-        self.assertEqual(Quartz.kCGColorModelLab, 1 << 3)
-        self.assertEqual(Quartz.kCGColorModelDeviceN, 1 << 4)
+        def callback_raises(info, data):
+            raise RuntimeError("callback error")
 
-        self.assertIsEnumType(Quartz.CGComponent)
-        self.assertEqual(Quartz.kCGComponentUnknown, 0)
-        self.assertEqual(Quartz.kCGComponentInteger8Bit, 1)
-        self.assertEqual(Quartz.kCGComponentInteger10Bit, 6)
-        self.assertEqual(Quartz.kCGComponentInteger16Bit, 2)
-        self.assertEqual(Quartz.kCGComponentInteger32Bit, 3)
-        self.assertEqual(Quartz.kCGComponentFloat16Bit, 5)
-        self.assertEqual(Quartz.kCGComponentFloat32Bit, 4)
+        with objc.autorelease_pool():
+            ctx = Quartz.CGBitmapContextCreateWithData(
+                bytes_val,
+                100,
+                80,
+                8,
+                400,
+                Quartz.CGColorSpaceCreateDeviceRGB(),
+                Quartz.kCGImageAlphaPremultipliedLast,
+                callback_raises,
+                release_info,
+            )
+            self.assertIsInstance(ctx, Quartz.CGContextRef)
 
-        self.assertIsEnumType(Quartz.CGBitmapLayout)
-        self.assertEqual(Quartz.kCGBitmapLayoutAlphaOnly, 0)
-        self.assertEqual(Quartz.kCGBitmapLayoutGray, 1)
-        self.assertEqual(Quartz.kCGBitmapLayoutGrayAlpha, 2)
-        self.assertEqual(Quartz.kCGBitmapLayoutRGBA, 3)
-        self.assertEqual(Quartz.kCGBitmapLayoutARGB, 4)
-        self.assertEqual(Quartz.kCGBitmapLayoutRGBX, 5)
-        self.assertEqual(Quartz.kCGBitmapLayoutXRGB, 6)
-        self.assertEqual(Quartz.kCGBitmapLayoutBGRA, 7)
-        self.assertEqual(Quartz.kCGBitmapLayoutBGRX, 8)
-        self.assertEqual(Quartz.kCGBitmapLayoutABGR, 9)
-        self.assertEqual(Quartz.kCGBitmapLayoutXBGR, 10)
-        self.assertEqual(Quartz.kCGBitmapLayoutCMYK, 11)
+        with tempfile.TemporaryFile() as fp:
+            saved_stderr = os.dup(2)
+            try:
+                os.dup2(fp.fileno(), 2)
 
-    @min_os_level("26.0")
-    def test_constants26_0(self):
-        self.assertIsInstance(Quartz.kCGAdaptiveMaximumBitDepth, str)
+                del ctx
+            finally:
+                os.dup2(saved_stderr, 2)
+                fp.seek(0)
+                stderr = fp.read().decode()
+
+        self.assertIn(
+            "PyObjC: Exception during dealloc of proxy: <class 'RuntimeError'>: callback error",
+            stderr,
+        )
 
     def test_structs(self):
         v = Quartz.CGContentInfo()

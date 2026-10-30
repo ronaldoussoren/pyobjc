@@ -8,10 +8,8 @@ class TestMTLAccelerationStructureHelper(Metal.NSObject):
 
 
 class TestMTLAccelerationStructure(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLDynamicLibraryError)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLDynamicLibraryErrorNone, 0)
         self.assertEqual(Metal.MTLDynamicLibraryErrorInvalidFile, 1)
         self.assertEqual(Metal.MTLDynamicLibraryErrorCompilationFailure, 2)
@@ -21,9 +19,9 @@ class TestMTLAccelerationStructure(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLDynamicLibrary")
+        self.assertProtocolExists("MTLDynamicLibrary", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(
             TestMTLAccelerationStructureHelper.serializeToURL_error_
         )

@@ -1,14 +1,15 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import SystemConfiguration
+import os
 
 
-# from SecurityFoundation import SFAuthorization
 class TestSCPreferences(TestCase):
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCPreferencesNotification)
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationCommit, 1 << 0)
         self.assertEqual(SystemConfiguration.kSCPreferencesNotificationApply, 1 << 1)
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertIsInstance(SystemConfiguration.SCPreferencesGetTypeID(), int)
 
         ref = SystemConfiguration.SCPreferencesCreate(
@@ -41,13 +42,25 @@ class TestSCPreferences(TestCase):
 
         lst = []
 
-        def callback(ref, key, ctx):
-            lst.append([ref, key, ctx])
+        def callback(ref, tp, ctx):
+            lst.append((ref, tp, ctx))
 
         ctx = object()
 
+        with self.assertRaisesRegex(TypeError, "expected 3 arguments, got 0"):
+            SystemConfiguration.SCPreferencesSetCallback()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            SystemConfiguration.SCPreferencesSetCallback(NoObjCClass(), callback, ctx)
+
         v = SystemConfiguration.SCPreferencesSetCallback(ref, callback, ctx)
         self.assertTrue(v is True)
+
+        rl = SystemConfiguration.CFRunLoopGetCurrent()
+        self.assertResultIsBOOL(SystemConfiguration.SCPreferencesScheduleWithRunLoop)
+        r = SystemConfiguration.SCPreferencesScheduleWithRunLoop(
+            ref, rl, SystemConfiguration.kCFRunLoopCommonModes
+        )
 
         self.assertResultIsBOOL(SystemConfiguration.SCPreferencesAddValue)
         r = SystemConfiguration.SCPreferencesAddValue(ref, "use_python3", False)
@@ -68,14 +81,35 @@ class TestSCPreferences(TestCase):
         self.assertResultIsBOOL(SystemConfiguration.SCPreferencesRemoveValue)
         r = SystemConfiguration.SCPreferencesRemoveValue(ref, "use_python3")
 
-        self.assertResultIsBOOL(SystemConfiguration.SCPreferencesScheduleWithRunLoop)
-        rl = SystemConfiguration.CFRunLoopGetCurrent()
-        r = SystemConfiguration.SCPreferencesScheduleWithRunLoop(
-            ref, rl, SystemConfiguration.kCFRunLoopCommonModes
-        )
+        SystemConfiguration.SCPreferencesApplyChanges(ref)
+
         SystemConfiguration.CFRunLoopRunInMode(
             SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
         )
+
+        if os.geteuid() == 0:
+            self.assertGreater(len(lst), 0)
+
+            for item in lst:
+                self.assertEqual(len(item), 3)
+                self.assertIs(item[0], ref)
+                self.assertIs(
+                    item[1], SystemConfiguration.kSCPreferencesNotificationApply
+                )
+                self.assertIs(item[2], ctx)
+
+            def callback_raises(*args):
+                raise RuntimeError("callback error")
+
+            v = SystemConfiguration.SCPreferencesSetCallback(ref, callback_raises, ctx)
+            self.assertTrue(v is True)
+
+            SystemConfiguration.SCPreferencesApplyChanges(ref)
+
+            with self.assertRaisesRegex(RuntimeError, "callback error"):
+                SystemConfiguration.CFRunLoopRunInMode(
+                    SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
+                )
 
         self.assertResultIsBOOL(SystemConfiguration.SCPreferencesUnscheduleFromRunLoop)
         r = SystemConfiguration.SCPreferencesUnscheduleFromRunLoop(
@@ -84,11 +118,9 @@ class TestSCPreferences(TestCase):
 
         SystemConfiguration.SCPreferencesSynchronize(ref)
 
-    def testSecurityIntegreation(self):
+        SystemConfiguration.SCPreferencesSetDispatchQueue
+
+    def test_security_integration(self):
         self.assertResultIsCFRetained(
             SystemConfiguration.SCPreferencesCreateWithAuthorization
         )
-
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
-        SystemConfiguration.SCPreferencesSetDispatchQueue

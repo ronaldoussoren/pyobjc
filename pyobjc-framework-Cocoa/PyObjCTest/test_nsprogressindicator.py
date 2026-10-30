@@ -3,23 +3,22 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSProgressIndicator(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSProgressIndicatorStyle)
-        self.assertIsEnumType(AppKit.NSProgressIndicatorThickness)
+        self.assertEqual(AppKit.NSProgressIndicatorStyleBar, 0)
+        self.assertEqual(AppKit.NSProgressIndicatorStyleSpinning, 1)
 
-    def testConstants(self):
+        # Old aliases:
+        self.assertEqual(AppKit.NSProgressIndicatorBarStyle, 0)
+        self.assertEqual(AppKit.NSProgressIndicatorSpinningStyle, 1)
+
+        self.assertIsEnumType(AppKit.NSProgressIndicatorThickness)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredThickness, 14)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredSmallThickness, 10)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredLargeThickness, 18)
         self.assertEqual(AppKit.NSProgressIndicatorPreferredAquaThickness, 12)
 
-        self.assertEqual(AppKit.NSProgressIndicatorBarStyle, 0)
-        self.assertEqual(AppKit.NSProgressIndicatorSpinningStyle, 1)
-
-        self.assertEqual(AppKit.NSProgressIndicatorStyleBar, 0)
-        self.assertEqual(AppKit.NSProgressIndicatorStyleSpinning, 1)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSProgressIndicator.isIndeterminate)
         self.assertArgIsBOOL(AppKit.NSProgressIndicator.setIndeterminate_, 0)
         self.assertResultIsBOOL(AppKit.NSProgressIndicator.isBezeled)

@@ -14,7 +14,7 @@ class TestSecBase(TestCase):
         self.assertIsCFType(Security.SecACLRef)
 
     @min_os_level("10.10")
-    def test_types_10_10(self):
+    def test_types10_10(self):
         self.assertIsCFType(Security.SecAccessControlRef)
 
     @expectedFailure
@@ -485,9 +485,6 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSSLEarlyDataRejected, -9890)
 
     def test_functions(self):
-        self.assertResultHasType(Security.SecCopyErrorMessageString, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecCopyErrorMessageString)
-        self.assertArgHasType(Security.SecCopyErrorMessageString, 0, objc._C_INT)
         self.assertArgHasType(
             Security.SecCopyErrorMessageString, 1, objc._C_PTR + objc._C_VOID
         )

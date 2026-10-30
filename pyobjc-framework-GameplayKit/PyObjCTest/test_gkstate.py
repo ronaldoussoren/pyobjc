@@ -3,5 +3,5 @@ import GameplayKit
 
 
 class TestGKState(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameplayKit.GKState.isValidNextState_)

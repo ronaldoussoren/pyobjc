@@ -8,30 +8,20 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSDictionarySubclassing(TestCase):
     # These tests seem to be specific for macOS
-    def testExceptionInInit(self):
+    def test_exception_in_init(self):
         if objc.platform != "MACOSX":
             return
 
         class DictTestExceptionClass(Foundation.NSDictionary):
             pass
 
-        # Don't use self.assertRaises here, we once had a bug that
-        # causes this to fail, while the assertRaises version would
-        # (probably) have worked.
-        import warnings
-
-        warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
         try:
-            try:
-                _ = DictTestExceptionClass.alloc().initWithDictionary_({})
-                self.fail()
-            except ValueError:
-                pass
-        finally:
-            del warnings.filters[0]
+            _ = DictTestExceptionClass.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
 
-    def testAnotherExceptionInInit(self):
+    def test_another_exception_in_init(self):
         if objc.platform != "MACOSX":
             return
 
@@ -41,20 +31,13 @@ class TestNSDictionarySubclassing(TestCase):
                     DictTestExceptionClass2, self
                 ).initWithObjects_forKeys_count_(o, k, c)
 
-        import warnings
-
-        warnings.filterwarnings("ignore", category=objc.UninitializedDeallocWarning)
-
         try:
-            try:
-                _ = DictTestExceptionClass2.alloc().initWithDictionary_({})
-                self.fail()
-            except ValueError:
-                pass
-        finally:
-            del warnings.filters[0]
+            _ = DictTestExceptionClass2.alloc().initWithDictionary_({})
+            self.fail()
+        except ValueError:
+            pass
 
-    def testExceptionInInitClsMeth(self):
+    def test_exception_in_initClsMeth(self):
         if objc.platform != "MACOSX":
             return
 
@@ -72,7 +55,7 @@ class TestNSDictionarySubclassing(TestCase):
 
 
 class TestNSDictionaryInteraction(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         for nm in dir(dict):
             if nm.startswith("__"):
                 continue
@@ -88,11 +71,11 @@ class TestNSDictionaryInteraction(TestCase):
                 f"NSMutableDictionary has no method '{nm}'",
             )
 
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSDictionary.alloc().init()
 
-    def testBasicInteraction(self):
+    def test_basic_interaction(self):
         d = Foundation.NSMutableDictionary.dictionary()
         d["a"] = "foo"
         d["b"] = "bar"
@@ -108,7 +91,7 @@ class TestNSDictionaryInteraction(TestCase):
         except KeyError:
             pass
 
-    def testPythonIteraction(self):
+    def test_python_interaction(self):
         d = Foundation.NSMutableDictionary.dictionary()
         d["a"] = "foo"
         d["b"] = "bar"
@@ -125,7 +108,7 @@ class TestNSDictionaryInteraction(TestCase):
         k.sort()
         self.assertTrue(k == [("a", "foo"), ("b", "bar")])
 
-    def testIn(self):
+    def test_in(self):
         d = Foundation.NSMutableDictionary.dictionary()
         d["a"] = "foo"
         d["b"] = "bar"
@@ -147,7 +130,7 @@ class TestNSDictionaryInteraction(TestCase):
         del d["a"]
         self.assertTrue("a" not in d)
 
-    def test_varargConstruction(self):
+    def test_vararg_construction(self):
         u = Foundation.NSDictionary.dictionaryWithObjects_forKeys_(
             [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
@@ -181,7 +164,7 @@ class TestNSDictionaryInteraction(TestCase):
         self.assertEqual(y["two"], 2)
         self.assertEqual(z["four"], 4)
 
-    def test_varargConstruction2(self):
+    def test_vararg_construction2(self):
         u = Foundation.NSMutableDictionary.dictionaryWithObjects_forKeys_(
             [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
@@ -252,7 +235,7 @@ class MyDictionary2(MyDictionaryBase):
 
 
 class TestSubclassing(TestCase):
-    def testInitWithObjects(self):
+    def test_initWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
 
         self.assertIsInstance(o, MyDictionary1)
@@ -260,7 +243,7 @@ class TestSubclassing(TestCase):
         self.assertEqual(len(o._keys), 4)
         self.assertEqual(len(o._objects), 4)
 
-    def testDictWithObjects(self):
+    def test_dict_with_objects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary2, 0)
 
         self.assertIsInstance(o, tuple)
@@ -270,7 +253,7 @@ class TestSubclassing(TestCase):
 
 
 class TestVariadic(TestCase):
-    def testDictionaryWithObjectsAndKeys(self):
+    def test_dict_with_objects_and_keys(self):
         o = Foundation.NSDictionary.dictionaryWithObjectsAndKeys_(42, "a", 43, "b")
         self.assertEqual(o, {"a": 42, "b": 43})
         self.assertIsInstance(o, Foundation.NSDictionary)
@@ -281,7 +264,7 @@ class TestVariadic(TestCase):
         self.assertEqual(o, {"a": 42, "b": 43})
         self.assertIsInstance(o, Foundation.NSMutableDictionary)
 
-    def testInitWithObjectsAndKeys(self):
+    def test_initWithObjectsAndKeys(self):
         o = Foundation.NSDictionary.alloc().initWithObjectsAndKeys_(42, "a", 43, "b")
         self.assertEqual(o, {"a": 42, "b": 43})
         self.assertIsInstance(o, Foundation.NSDictionary)
@@ -294,7 +277,7 @@ class TestVariadic(TestCase):
 
 
 class TestNSDictionary(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSDictionary.isEqualToDictionary_)
         self.assertResultIsBOOL(Foundation.NSDictionary.writeToFile_atomically_)
         self.assertArgIsBOOL(Foundation.NSDictionary.writeToFile_atomically_, 1)
@@ -334,8 +317,6 @@ class TestNSDictionary(TestCase):
             Foundation.NSDictionary.dictionaryWithObjectsAndKeys_
         )
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsBlock(
             Foundation.NSDictionary.enumerateKeysAndObjectsUsingBlock_,
             0,
@@ -367,7 +348,7 @@ class TestNSDictionary(TestCase):
         )
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsOut(Foundation.NSDictionary.writeToURL_error_, 1)
         self.assertResultIsBOOL(Foundation.NSDictionary.writeToURL_error_)
 

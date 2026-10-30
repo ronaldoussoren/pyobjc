@@ -3,21 +3,19 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCLRegion(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(CoreLocation.CLProximity)
-
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreLocation.CLRegionState)
         self.assertEqual(CoreLocation.CLRegionStateUnknown, 0)
         self.assertEqual(CoreLocation.CLRegionStateInside, 1)
         self.assertEqual(CoreLocation.CLRegionStateOutside, 2)
 
+        self.assertIsEnumType(CoreLocation.CLProximity)
         self.assertEqual(CoreLocation.CLProximityUnknown, 0)
         self.assertEqual(CoreLocation.CLProximityImmediate, 1)
         self.assertEqual(CoreLocation.CLProximityNear, 2)
         self.assertEqual(CoreLocation.CLProximityFar, 3)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreLocation.CLRegion.containsCoordinate_)
         self.assertArgHasType(
             CoreLocation.CLRegion.containsCoordinate_,
@@ -26,7 +24,7 @@ class TestCLRegion(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(CoreLocation.CLRegion.notifyOnEntry)
         self.assertArgIsBOOL(CoreLocation.CLRegion.setNotifyOnEntry_, 0)
         self.assertResultIsBOOL(CoreLocation.CLRegion.notifyOnExit)

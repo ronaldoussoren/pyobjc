@@ -10,8 +10,10 @@ class TestSecAccess(TestCase):
     @min_os_level("11.0")
     def test_functions11_0(self):
         # XXX: This crashes the bridge
-        self.assertArgIsBlock(Security.SecAddSharedWebCredential, 3, b"v@")
+        self.assertArgIsBlock(Security.SecAddSharedWebCredential, 3, b"v^{__CFError=}")
 
-        self.assertArgIsBlock(Security.SecRequestSharedWebCredential, 2, b"v@@")
+        self.assertArgIsBlock(
+            Security.SecRequestSharedWebCredential, 2, b"v^{__CFArray=}^{__CFError=}"
+        )
 
         Security.SecCreateSharedWebCredentialPassword

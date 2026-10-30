@@ -5,7 +5,7 @@ import CoreServices
 
 
 class TestCoreServices(TestCase):
-    def testBasicImport(self):
+    def test_basic_import(self):
         # DictionaryServices
         self.assertHasAttr(CoreServices, "DCSCopyTextDefinition")
 
@@ -24,9 +24,22 @@ class TestCallableMetadata(TestCase):
         self.assertCallableMetadataIsSane(
             CoreServices,
             exclude_attrs=(
+                "BiometricKit",
+                "BiometricKitXPCClient",
+                "BKAccessory",
+                "BKDevice",
+                "BKDeviceManager",
+                "BKDevicePearl",
+                "BKDeviceTouchID",
+                "CBTDSAdvertisingData",
+                "CLBackgroundInertialOdometrySample",
+                "CLSmootherAltitudeSample",
+                "CULogHandle",
+                "DSSandboxingURLWrapper",
+                "IMLogging",
+                "LACIOKitHelper",
                 "MDQuerySetCreateResultFunction",
                 "MDQuerySetCreateValueFunction",
-                "CULogHandle",
-                "IMLogging",
+                "TKLoginHelper",
             ),
         )

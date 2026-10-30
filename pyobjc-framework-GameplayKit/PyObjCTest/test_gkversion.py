@@ -3,5 +3,5 @@ import GameplayKit
 
 
 class TestGKVersion(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertNotHasAttr(GameplayKit, "GK_VERSION")

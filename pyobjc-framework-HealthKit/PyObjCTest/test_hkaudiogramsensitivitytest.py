@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKAudiogramSensitivityTest(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKAudiogramConductionType)
         self.assertEqual(HealthKit.HKAudiogramConductionTypeAir, 0)
 

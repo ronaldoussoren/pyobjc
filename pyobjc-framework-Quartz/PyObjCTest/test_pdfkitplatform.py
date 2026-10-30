@@ -3,7 +3,7 @@ import Quartz
 
 
 class TestPDFKitPlatform(TestCase):
-    def testAliases(self):
+    def test_aliases(self):
         self.assertIs(Quartz.PDFKitPlatformView, Quartz.NSView)
         self.assertIs(Quartz.PDFKitPlatformViewController, Quartz.NSViewController)
         self.assertIs(Quartz.PDFKitPlatformScrollView, Quartz.NSScrollView)

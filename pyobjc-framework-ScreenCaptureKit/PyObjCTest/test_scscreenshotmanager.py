@@ -4,7 +4,7 @@ import ScreenCaptureKit
 
 
 class TestSCScreenshotManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCScreenshotDisplayIntent)
         self.assertEqual(ScreenCaptureKit.SCScreenshotDisplayIntentCanonical, 0)
         self.assertEqual(ScreenCaptureKit.SCScreenshotDisplayIntentLocal, 1)

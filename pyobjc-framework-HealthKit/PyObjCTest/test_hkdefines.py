@@ -3,7 +3,7 @@ import HealthKit
 
 
 class TestHKDefines(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(HealthKit.HKErrorCode)
         self.assertEqual(HealthKit.HKUnknownError, 0)
         self.assertEqual(HealthKit.HKNoError, HealthKit.HKUnknownError)

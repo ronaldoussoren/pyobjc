@@ -6,33 +6,31 @@ AVAudioConverterInputBlock = b"@Io^" + objc._C_NSInteger
 
 
 class TestAVAudioConverter(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVAudioConverterInputStatus)
-        self.assertIsEnumType(AVFoundation.AVAudioConverterOutputStatus)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudioConverterPrimeMethod)
-
-    def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Pre, 0)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Normal, 1)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_None, 2)
 
+        self.assertIsEnumType(AVFoundation.AVAudioConverterInputStatus)
         self.assertEqual(AVFoundation.AVAudioConverterInputStatus_HaveData, 0)
         self.assertEqual(AVFoundation.AVAudioConverterInputStatus_NoDataNow, 1)
         self.assertEqual(AVFoundation.AVAudioConverterInputStatus_EndOfStream, 2)
 
+        self.assertIsEnumType(AVFoundation.AVAudioConverterOutputStatus)
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_HaveData, 0)
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_InputRanDry, 1)
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_EndOfStream, 2)
         self.assertEqual(AVFoundation.AVAudioConverterOutputStatus_Error, 3)
 
-    def testStructs(self):
+    def test_structs(self):
         v = AVFoundation.AVAudioConverterPrimeInfo()
         self.assertEqual(v.leadingFrames, 0)
         self.assertEqual(v.trailingFrames, 0)
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.downmix)
         self.assertArgIsBOOL(AVFoundation.AVAudioConverter.setDownmix_, 0)
 

@@ -67,13 +67,8 @@ class TestMTLArgumentHelper(Metal.NSObject):
 
 
 class TestMTLArgument(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLArgumentAccess)
-        self.assertIsEnumType(Metal.MTLArgumentType)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLDataType)
-        self.assertIsEnumType(Metal.MTLBindingType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLDataTypeNone, 0)
         self.assertEqual(Metal.MTLDataTypeStruct, 1)
         self.assertEqual(Metal.MTLDataTypeArray, 2)
@@ -171,6 +166,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLDataTypeBFloat3, 123)
         self.assertEqual(Metal.MTLDataTypeBFloat4, 124)
 
+        self.assertIsEnumType(Metal.MTLArgumentType)
         self.assertEqual(Metal.MTLArgumentTypeBuffer, 0)
         self.assertEqual(Metal.MTLArgumentTypeThreadgroupMemory, 1)
         self.assertEqual(Metal.MTLArgumentTypeTexture, 2)
@@ -182,6 +178,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLArgumentTypeInstanceAccelerationStructure, 26)
         self.assertEqual(Metal.MTLArgumentTypeIntersectionFunctionTable, 27)
 
+        self.assertIsEnumType(Metal.MTLArgumentAccess)
         self.assertEqual(Metal.MTLBindingAccessReadOnly, 0)
         self.assertEqual(Metal.MTLBindingAccessReadWrite, 1)
         self.assertEqual(Metal.MTLBindingAccessWriteOnly, 2)
@@ -195,6 +192,7 @@ class TestMTLArgument(TestCase):
             Metal.MTLArgumentAccessWriteOnly, Metal.MTLBindingAccessWriteOnly
         )
 
+        self.assertIsEnumType(Metal.MTLBindingType)
         self.assertEqual(Metal.MTLBindingTypeBuffer, 0)
         self.assertEqual(Metal.MTLBindingTypeThreadgroupMemory, 1)
         self.assertEqual(Metal.MTLBindingTypeTexture, 2)
@@ -213,15 +211,15 @@ class TestMTLArgument(TestCase):
 
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTLBinding")
-        self.assertProtocolExists("MTLBufferBinding")
-        self.assertProtocolExists("MTLThreadgroupBinding")
-        self.assertProtocolExists("MTLTextureBinding")
-        self.assertProtocolExists("MTLObjectPayloadBinding")
+        self.assertProtocolExists("MTLBinding", Metal)
+        self.assertProtocolExists("MTLBufferBinding", Metal)
+        self.assertProtocolExists("MTLThreadgroupBinding", Metal)
+        self.assertProtocolExists("MTLTextureBinding", Metal)
+        self.assertProtocolExists("MTLObjectPayloadBinding", Metal)
 
     @min_sdk_level("26.0")
     def test_protocols26_0(self):
-        self.assertProtocolExists("MTLTensorBinding")
+        self.assertProtocolExists("MTLTensorBinding", Metal)
 
     @min_os_level("10.11")
     def test_methods10_11(self):

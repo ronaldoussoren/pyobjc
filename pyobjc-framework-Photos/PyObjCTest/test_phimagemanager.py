@@ -7,30 +7,35 @@ PHAssetVideoProgressHandler = b"vd@o^Z@"
 
 
 class TestPHImageManager(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Photos.PHImageRequestOptionsDeliveryMode)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2)
+        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
+
         self.assertIsEnumType(Photos.PHImageRequestOptionsResizeMode)
-        self.assertIsEnumType(Photos.PHImageRequestOptionsVersion)
-        self.assertIsEnumType(Photos.PHVideoRequestOptionsDeliveryMode)
-        self.assertIsEnumType(Photos.PHVideoRequestOptionsVersion)
-        self.assertIsEnumType(Photos.UIImageOrientation)
-
-    @min_os_level("10.13")
-    def testConstants(self):
-        self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)
-        self.assertEqual(Photos.PHImageRequestOptionsVersionUnadjusted, 1)
-        self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
-
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeOpportunistic, 0)
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1)
-        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeFastFormat, 2)
-
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeNone, 0)
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeFast, 1)
         self.assertEqual(Photos.PHImageRequestOptionsResizeModeExact, 2)
 
+        self.assertIsEnumType(Photos.PHImageRequestOptionsVersion)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionCurrent, 0)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionUnadjusted, 1)
+        self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
+
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsDeliveryMode)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeOpportunistic, 0)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1)
+        self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeFastFormat, 2)
+
+        self.assertIsEnumType(Photos.PHVideoRequestOptionsVersion)
+        self.assertIsEnumType(Photos.UIImageOrientation)
+
         self.assertEqual(Photos.PHInvalidImageRequestID, 0)
 
+    @min_os_level("10.13")
+    def test_constants(self):
         self.assertIsInstance(Photos.PHImageManagerMaximumSize, Quartz.CGSize)
 
         self.assertIsInstance(Photos.PHImageResultIsInCloudKey, str)
@@ -39,13 +44,8 @@ class TestPHImageManager(TestCase):
         self.assertIsInstance(Photos.PHImageCancelledKey, str)
         self.assertIsInstance(Photos.PHImageErrorKey, str)
 
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2)
-        self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeFastFormat, 3)
-
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(Photos.PHImageRequestOptions.isNetworkAccessAllowed)
         self.assertArgIsBOOL(Photos.PHImageRequestOptions.setNetworkAccessAllowed_, 0)
 
@@ -73,7 +73,7 @@ class TestPHImageManager(TestCase):
         )
 
     @min_os_level("10.15")
-    def testMethods10_15(self):
+    def test_methods10_15(self):
         self.assertResultIsBOOL(Photos.PHLivePhotoRequestOptions.isNetworkAccessAllowed)
         self.assertArgIsBOOL(
             Photos.PHLivePhotoRequestOptions.setNetworkAccessAllowed_, 0
@@ -128,10 +128,13 @@ class TestPHImageManager(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             Photos.PHImageRequestOptions.allowSecondaryDegradedImage
         )
         self.assertArgIsBOOL(
             Photos.PHImageRequestOptions.setAllowSecondaryDegradedImage_, 0
         )
+
+        self.assertResultIsBOOL(Photos.PHImageRequestOptions.preferHDR)
+        self.assertArgIsBOOL(Photos.PHImageRequestOptions.setPreferHDR_, 0)

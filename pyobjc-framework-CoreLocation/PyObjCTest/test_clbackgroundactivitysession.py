@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCLBackgroundActivitySession(TestCase):
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             CoreLocation.CLBackgroundActivitySessionDiagnostic.authorizationDenied
         )

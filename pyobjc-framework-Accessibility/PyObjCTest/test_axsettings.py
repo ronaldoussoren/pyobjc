@@ -4,7 +4,7 @@ import Accessibility
 
 
 class TestAXSettings(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Accessibility.AXSettingsFeature)
         self.assertEqual(
             Accessibility.AXSettingsFeaturePersonalVoiceAllowAppsToRequestToUse, 1
@@ -16,7 +16,7 @@ class TestAXSettings(TestCase):
         self.assertEqual(Accessibility.AXSettingsFeatureCaptionStyles, 6)
 
     @min_os_level("14.0")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(
             Accessibility.AXAnimatedImagesEnabledDidChangeNotification, str
         )
@@ -25,14 +25,14 @@ class TestAXSettings(TestCase):
         )
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             Accessibility.AXPrefersNonBlinkingTextInsertionIndicatorDidChangeNotification,
             str,
         )
 
     @min_os_level("26.1")
-    def testConstants26_1(self):
+    def test_constants26_1(self):
         self.assertIsInstance(
             Accessibility.AXPrefersActionSliderAlternativeDidChangeNotification,
             str,
@@ -43,9 +43,16 @@ class TestAXSettings(TestCase):
         )
 
     @min_os_level("26.4")
-    def testConstants26_4(self):
+    def test_constants26_4(self):
         self.assertIsInstance(
             Accessibility.AXReduceHighlightingEffectsEnabledDidChangeNotification,
+            str,
+        )
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            Accessibility.AXApplicationAccessibilityEnabledDidChangeNotification,
             str,
         )
 
@@ -67,3 +74,7 @@ class TestAXSettings(TestCase):
     def test_functions26_4(self):
         self.assertResultIsBOOL(Accessibility.AXOpenSettingsFeatureIsSupported)
         self.assertResultIsBOOL(Accessibility.AXReduceHighlightingEffectsEnabled)
+
+    @min_os_level("27.0")
+    def test_functions27_0(self):
+        self.assertResultIsBOOL(Accessibility.AXApplicationAccessibilityEnabled)

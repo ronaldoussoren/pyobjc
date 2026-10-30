@@ -1,5 +1,8 @@
 import Foundation
+import re
+import os
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from .runloophelper import check_cfrunloop_side_effects
 
 
 class TestNSNetServicesHelper(Foundation.NSObject):
@@ -17,13 +20,8 @@ class TestNSNetServicesHelper(Foundation.NSObject):
 
 
 class TestNSNetservices(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Foundation.NSNetServiceOptions)
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSNetServicesError)
-
-    def testConstants(self):
-        self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
-        self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)
         self.assertEqual(Foundation.NSNetServicesUnknownError, -72000)
         self.assertEqual(Foundation.NSNetServicesCollisionError, -72001)
         self.assertEqual(Foundation.NSNetServicesNotFoundError, -72002)
@@ -35,13 +33,16 @@ class TestNSNetservices(TestCase):
         self.assertEqual(
             Foundation.NSNetServicesMissingRequiredConfigurationError, -72008
         )
-        self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
 
-    @min_os_level("10.9")
-    def testConstants10_9(self):
+        self.assertIsEnumType(Foundation.NSNetServiceOptions)
+        self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
         self.assertEqual(Foundation.NSNetServiceListenForConnections, 1 << 1)
 
-    def testOutput(self):
+    def test_constants(self):
+        self.assertIsInstance(Foundation.NSNetServicesErrorCode, str)
+        self.assertIsInstance(Foundation.NSNetServicesErrorDomain, str)
+
+    def test_output(self):
         o = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(
             "", "_http._tcp.", "", 0
         )
@@ -51,12 +52,26 @@ class TestNSNetservices(TestCase):
         self.assertEqual(m["arguments"][2]["type"], b"o^@")
         self.assertEqual(m["arguments"][3]["type"], b"o^@")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSNetService.getInputStream_outputStream_)
         self.assertArgIsOut(Foundation.NSNetService.getInputStream_outputStream_, 0)
         self.assertArgIsOut(Foundation.NSNetService.getInputStream_outputStream_, 1)
         self.assertResultIsBOOL(Foundation.NSNetService.setTXTRecordData_)
 
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(Foundation.NSNetService.includesPeerToPeer)
+        self.assertArgIsBOOL(Foundation.NSNetService.setIncludesPeerToPeer_, 0)
+
+        self.assertResultIsBOOL(Foundation.NSNetServiceBrowser.includesPeerToPeer)
+        self.assertArgIsBOOL(Foundation.NSNetServiceBrowser.setIncludesPeerToPeer_, 0)
+
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("NSNetServiceDelegate", Foundation)
+        self.assertProtocolExists("NSNetServiceBrowserDelegate", Foundation)
+
+    def test_protocol_methods(self):
         self.assertArgIsBOOL(
             TestNSNetServicesHelper.netServiceBrowser_didFindDomain_moreComing_, 2
         )
@@ -70,15 +85,39 @@ class TestNSNetservices(TestCase):
             TestNSNetServicesHelper.netServiceBrowser_didRemoveService_moreComing_, 2
         )
 
-    @min_os_level("10.10")
-    def testMethods10_10(self):
-        self.assertResultIsBOOL(Foundation.NSNetService.includesPeerToPeer)
-        self.assertArgIsBOOL(Foundation.NSNetService.setIncludesPeerToPeer_, 0)
+    @check_cfrunloop_side_effects
+    def test_manual(self):
+        p = os.getpid()
+        ns1 = Foundation.NSNetService.alloc().initWithDomain_type_name_port_(
+            "local.", "_http._tcp", f"pyobjctest{p}", 10000
+        )
+        ns1.publish()
 
-        self.assertResultIsBOOL(Foundation.NSNetServiceBrowser.includesPeerToPeer)
-        self.assertArgIsBOOL(Foundation.NSNetServiceBrowser.setIncludesPeerToPeer_, 0)
+        ns2 = Foundation.NSNetService.alloc().initWithDomain_type_name_(
+            "local.", "_http._tcp", f"pyobjctest{p}"
+        )
+        ns2.resolve()
 
-    @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSNetServiceDelegate")
-        self.assertProtocolExists("NSNetServiceBrowserDelegate")
+        with self.assertRaisesRegex(TypeError, "expected no arguments, got 1"):
+            ns1.addresses(42)
+
+        Foundation.CFRunLoopRunInMode(Foundation.kCFRunLoopDefaultMode, 5.0, False)
+
+        a1 = ns1.addresses()
+        a2 = ns2.addresses()
+        self.assertIsInstance(a1, tuple)
+        self.assertIsInstance(a2, tuple)
+        self.assertGreater(len(a1) + len(a2), 0)
+
+        for item in a1 + a2:
+            self.assertIsInstance(item[0], str)
+            for p in item[1:]:
+                self.assertIsInstance(p, int)
+
+            if re.match(r"^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$", item[0]):
+                # IPv4
+                self.assertEqual(len(item), 2)
+                self.assertEqual(item[1], 10000)
+            else:
+                self.assertEqual(len(item), 4)
+                self.assertEqual(item[1], 10000)

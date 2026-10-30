@@ -3,7 +3,7 @@ import SystemConfiguration
 
 
 class TestSCDynamicStoreCopySpecific(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         def callback(st, keys, info):
             pass
 

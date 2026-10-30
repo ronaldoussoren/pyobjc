@@ -149,8 +149,8 @@ static PyType_Spec fsref_spec = {
     .basicsize = sizeof(PyObjCFSRefObject),
     .itemsize  = 0,
     .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE | Py_TPFLAGS_IMMUTABLETYPE
-             | Py_TPFLAGS_DISALLOW_INSTANTIATION,
-    .slots = fsref_slots,
+                 | Py_TPFLAGS_DISALLOW_INSTANTIATION,
+    .slots     = fsref_slots,
 };
 
 PyObject* PyObjCFSRef_Type;

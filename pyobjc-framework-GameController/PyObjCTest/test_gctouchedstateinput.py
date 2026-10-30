@@ -25,7 +25,7 @@ class TestGCTouchedStateInputHelper(GameController.NSObject):
 class TestGCTouchedStateInput(TestCase):
     @min_sdk_level("13.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCTouchedStateInput")
+        self.assertProtocolExists("GCTouchedStateInput", GameController)
 
     def test_protocol_methods(self):
         self.assertResultIsBlock(

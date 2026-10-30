@@ -3,7 +3,7 @@ import ServiceManagement
 
 
 class TestSMAppService(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(ServiceManagement.SMAppServiceStatus)
         self.assertEqual(ServiceManagement.SMAppServiceStatusNotRegistered, 0)
         self.assertEqual(ServiceManagement.SMAppServiceStatusEnabled, 1)

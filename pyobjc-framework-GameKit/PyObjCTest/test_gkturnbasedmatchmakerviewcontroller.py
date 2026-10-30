@@ -1,13 +1,14 @@
 import GameKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKTurnBasedMatchmakerViewController(TestCase):
-    def testProtocols(self):
-        self.assertProtocolExists("GKTurnBasedMatchmakerViewControllerDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "GKTurnBasedMatchmakerViewControllerDelegate", GameKit
+        )
 
-    @min_os_level("10.8")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             GameKit.GKTurnBasedMatchmakerViewController.showExistingMatches
         )

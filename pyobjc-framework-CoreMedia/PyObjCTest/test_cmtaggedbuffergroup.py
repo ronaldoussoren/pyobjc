@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCMTaggedBufferGroup(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreMedia.CMTaggedBufferGroupError)
         self.assertEqual(CoreMedia.kCMTaggedBufferGroupError_ParamErr, -15780)
         self.assertEqual(CoreMedia.kCMTaggedBufferGroupError_AllocationFailed, -15781)

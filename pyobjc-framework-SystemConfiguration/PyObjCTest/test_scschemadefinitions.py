@@ -3,8 +3,7 @@ import SystemConfiguration
 
 
 class TestSCSchemaDefinitions(TestCase):
-    @min_os_level("10.5")
-    def testConstants10_5(self):
+    def test_constants(self):
         self.assertIsInstance(SystemConfiguration.kSCEntNetIPSec, str)
         self.assertIsInstance(SystemConfiguration.kSCEntNetSMB, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecLocalIdentifier, str)
@@ -55,13 +54,10 @@ class TestSCSchemaDefinitions(TestCase):
             SystemConfiguration.kSCValNetSMBNetBIOSNodeTypeHybrid, str
         )
 
-    @min_os_level("10.6")
-    def testConstants10_5_missing(self):
         self.assertIsInstance(
             SystemConfiguration.kSCValNetIPSecAuthenticationMethodHybrid, str
         )
 
-    def testConstants(self):
         self.assertIsInstance(SystemConfiguration.kSCResvLink, str)
         self.assertIsInstance(SystemConfiguration.kSCResvInactive, str)
         self.assertIsInstance(SystemConfiguration.kSCPropInterfaceName, str)
@@ -367,8 +363,35 @@ class TestSCSchemaDefinitions(TestCase):
         self.assertIsInstance(SystemConfiguration.kSCPropUsersConsoleUserUID, str)
         self.assertIsInstance(SystemConfiguration.kSCPropUsersConsoleUserGID, str)
 
+        self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceTypeIPSec, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecConnectTime, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecRemoteAddress, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecStatus, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthEnabled, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthName, str)
+        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthPassword, str)
+        self.assertIsInstance(
+            SystemConfiguration.kSCPropNetIPSecXAuthPasswordEncryption, str
+        )
+        self.assertIsInstance(
+            SystemConfiguration.kSCValNetIPSecXAuthPasswordEncryptionKeychain, str
+        )
+        self.assertIsInstance(
+            SystemConfiguration.kSCValNetIPSecXAuthPasswordEncryptionPrompt, str
+        )
+        self.assertIsInstance(
+            SystemConfiguration.kSCValNetIPv4ConfigMethodAutomatic, str
+        )
+
+        self.assertIsInstance(
+            SystemConfiguration.kSCValNetIPv6ConfigMethodLinkLocal, str
+        )
+        self.assertIsInstance(
+            SystemConfiguration.kSCPropNetProxiesProxyAutoConfigJavaScript, str
+        )
+
     @max_os_level("10.11")
-    def testConstantsUpto10_12(self):
+    def test_constants_upto10_12(self):
         self.assertIsInstance(SystemConfiguration.kSCPropNetAppleTalkComputerName, str)
         self.assertIsInstance(
             SystemConfiguration.kSCPropNetAppleTalkComputerNameEncoding, str
@@ -408,39 +431,8 @@ class TestSCSchemaDefinitions(TestCase):
         )
         self.assertIsInstance(SystemConfiguration.kSCValNetNetInfoDefaultServerTag, str)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertIsInstance(SystemConfiguration.kSCValNetInterfaceTypeIPSec, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecConnectTime, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecRemoteAddress, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecStatus, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthEnabled, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthName, str)
-        self.assertIsInstance(SystemConfiguration.kSCPropNetIPSecXAuthPassword, str)
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetIPSecXAuthPasswordEncryption, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPSecXAuthPasswordEncryptionKeychain, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPSecXAuthPasswordEncryptionPrompt, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv4ConfigMethodAutomatic, str
-        )
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertIsInstance(
-            SystemConfiguration.kSCValNetIPv6ConfigMethodLinkLocal, str
-        )
-        self.assertIsInstance(
-            SystemConfiguration.kSCPropNetProxiesProxyAutoConfigJavaScript, str
-        )
-
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesFTPUser, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesGopherUser, str)
         self.assertIsInstance(SystemConfiguration.kSCPropNetProxiesHTTPUser, str)

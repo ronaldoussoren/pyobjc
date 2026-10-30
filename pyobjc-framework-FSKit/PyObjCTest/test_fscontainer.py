@@ -4,7 +4,7 @@ import FSKit
 
 
 class TestFSContainer(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSContainerState)
         self.assertEqual(FSKit.FSContainerStateNotReady, 0)
         self.assertEqual(FSKit.FSContainerStateBlocked, 1)

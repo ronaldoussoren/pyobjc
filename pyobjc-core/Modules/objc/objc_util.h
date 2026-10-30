@@ -7,7 +7,6 @@ extern NSNull*   NSNull_null;
 extern Class     NSAutoreleasePool_class;
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
-extern PyObject* PyObjCExc_UnInitDeallocWarning; /* XXX: Drop in PyObjC 13 */
 extern PyObject* PyObjCExc_ObjCRevivalWarning;
 extern PyObject* PyObjCExc_LockError;
 extern PyObject* PyObjCExc_BadPrototypeError;
@@ -178,6 +177,8 @@ extern PyObject* PyObjCNM_tzinfo;
 extern PyObject* PyObjCNM_update;
 extern PyObject* PyObjCNM_co_consts;
 extern PyObject* PyObjCNM___call__;
+extern PyObject* PyObjCNM___orig_bases__;
+extern PyObject* PyObjCNM___metadata__;
 
 extern int PyObjC_RemoveInternalTypeCodes(char*);
 

@@ -1,7 +1,7 @@
 import sys
 
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, skipUnless
+from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
 import objc
 
 try:
@@ -56,38 +56,76 @@ class TestNSWindowHelper(AppKit.NSObject):
 
 
 class TestNSWindow(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSWindowLevel, int)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSSelectionDirection)
-        self.assertIsEnumType(AppKit.NSTitlebarSeparatorStyle)
-        self.assertIsEnumType(AppKit.NSWindowAnimationBehavior)
-        self.assertIsEnumType(AppKit.NSWindowBackingLocation)
-        self.assertIsEnumType(AppKit.NSWindowButton)
-        self.assertIsEnumType(AppKit.NSWindowCollectionBehavior)
-        self.assertIsEnumType(AppKit.NSWindowNumberListOptions)
-        self.assertIsEnumType(AppKit.NSWindowOcclusionState)
-        self.assertIsEnumType(AppKit.NSWindowSharingType)
-        self.assertIsEnumType(AppKit.NSWindowStyleMask)
-        self.assertIsEnumType(AppKit.NSWindowTabbingMode)
-        self.assertIsEnumType(AppKit.NSWindowTitleVisibility)
-        self.assertIsEnumType(AppKit.NSWindowToolbarStyle)
-        self.assertIsEnumType(AppKit.NSWindowUserTabbingPreference)
+        self.assertEqual(AppKit.NSDirectSelection, 0)
+        self.assertEqual(AppKit.NSSelectingNext, 1)
+        self.assertEqual(AppKit.NSSelectingPrevious, 2)
 
-    def testConstants(self):
-        self.assertEqual(AppKit.NSEventDurationForever, sys.float_info.max)
-        self.assertEqual(AppKit.NSAppKitVersionNumberWithCustomSheetPosition, 686.0)
+        self.assertIsEnumType(AppKit.NSTitlebarSeparatorStyle)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleNone, 1)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleLine, 2)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleShadow, 3)
+
+        self.assertIsEnumType(AppKit.NSWindowAnimationBehavior)
+        self.assertEqual(AppKit.NSWindowAnimationBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSWindowAnimationBehaviorNone, 2)
+        self.assertEqual(AppKit.NSWindowAnimationBehaviorDocumentWindow, 3)
+        self.assertEqual(AppKit.NSWindowAnimationBehaviorUtilityWindow, 4)
+        self.assertEqual(AppKit.NSWindowAnimationBehaviorAlertPanel, 5)
+        self.assertEqual(AppKit.NSWindowDocumentVersionsButton, 6)
+        self.assertEqual(AppKit.NSWindowFullScreenButton, 7)
+
+        self.assertIsEnumType(AppKit.NSWindowBackingLocation)
+        self.assertEqual(AppKit.NSWindowBackingLocationDefault, 0)
+        self.assertEqual(AppKit.NSWindowBackingLocationVideoMemory, 1)
+        self.assertEqual(AppKit.NSWindowBackingLocationMainMemory, 2)
+
+        self.assertIsEnumType(AppKit.NSWindowButton)
+        self.assertEqual(AppKit.NSWindowCloseButton, 0)
+        self.assertEqual(AppKit.NSWindowMiniaturizeButton, 1)
+        self.assertEqual(AppKit.NSWindowZoomButton, 2)
+        self.assertEqual(AppKit.NSWindowToolbarButton, 3)
+        self.assertEqual(AppKit.NSWindowDocumentIconButton, 4)
+
+        self.assertIsEnumType(AppKit.NSWindowCollectionBehavior)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorCanJoinAllSpaces, 1 << 0)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorMoveToActiveSpace, 1 << 1)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorManaged, 1 << 2)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorTransient, 1 << 3)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorStationary, 1 << 4)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorParticipatesInCycle, 1 << 5)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorIgnoresCycle, 1 << 6)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenPrimary, 1 << 7)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenAuxiliary, 1 << 8)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenNone, 1 << 9)
         self.assertEqual(
-            AppKit.NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0
+            AppKit.NSWindowCollectionBehaviorFullScreenAllowsTiling, 1 << 11
+        )
+        self.assertEqual(
+            AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
+        )
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorPrimary, 1 << 16)
+        self.assertEqual(AppKit.NSWindowCollectionBehaviorAuxiliary, 1 << 17)
+        self.assertEqual(
+            AppKit.NSWindowCollectionBehaviorCanJoinAllApplications, 1 << 18
         )
 
-        self.assertEqual(AppKit.NSBorderlessWindowMask, 0)
-        self.assertEqual(AppKit.NSTitledWindowMask, 1 << 0)
-        self.assertEqual(AppKit.NSClosableWindowMask, 1 << 1)
-        self.assertEqual(AppKit.NSMiniaturizableWindowMask, 1 << 2)
-        self.assertEqual(AppKit.NSResizableWindowMask, 1 << 3)
+        self.assertIsEnumType(AppKit.NSWindowNumberListOptions)
+        self.assertEqual(AppKit.NSWindowNumberListAllApplications, 1 << 0)
+        self.assertEqual(AppKit.NSWindowNumberListAllSpaces, 1 << 4)
 
+        self.assertIsEnumType(AppKit.NSWindowOcclusionState)
+        self.assertEqual(AppKit.NSWindowOcclusionStateVisible, 2)
+
+        self.assertIsEnumType(AppKit.NSWindowSharingType)
+        self.assertEqual(AppKit.NSWindowSharingNone, 0)
+        self.assertEqual(AppKit.NSWindowSharingReadOnly, 1)
+        self.assertEqual(AppKit.NSWindowSharingReadWrite, 2)
+
+        self.assertIsEnumType(AppKit.NSWindowStyleMask)
         self.assertEqual(AppKit.NSWindowStyleMaskBorderless, 0)
         self.assertEqual(AppKit.NSWindowStyleMaskTitled, 1 << 0)
         self.assertEqual(AppKit.NSWindowStyleMaskClosable, 1 << 1)
@@ -101,46 +139,62 @@ class TestNSWindow(TestCase):
         self.assertEqual(AppKit.NSWindowStyleMaskDocModalWindow, 1 << 6)
         self.assertEqual(AppKit.NSWindowStyleMaskNonactivatingPanel, 1 << 7)
         self.assertEqual(AppKit.NSWindowStyleMaskHUDWindow, 1 << 13)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenNone, 1 << 9)
 
-        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceManual, 0)
-        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceAlways, 1)
-        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceInFullScreen, 2)
+        # Old aliases:
+        self.assertEqual(AppKit.NSBorderlessWindowMask, 0)
+        self.assertEqual(AppKit.NSTitledWindowMask, 1 << 0)
+        self.assertEqual(AppKit.NSClosableWindowMask, 1 << 1)
+        self.assertEqual(AppKit.NSMiniaturizableWindowMask, 1 << 2)
+        self.assertEqual(AppKit.NSResizableWindowMask, 1 << 3)
+        self.assertEqual(AppKit.NSTexturedBackgroundWindowMask, 1 << 8)
+        self.assertEqual(AppKit.NSUnscaledWindowMask, 1 << 11)
+        self.assertEqual(AppKit.NSUnifiedTitleAndToolbarWindowMask, 1 << 12)
+        self.assertEqual(AppKit.NSFullScreenWindowMask, 1 << 14)
+        self.assertEqual(AppKit.NSFullSizeContentViewWindowMask, 1 << 15)
 
+        self.assertIsEnumType(AppKit.NSWindowTabbingMode)
         self.assertEqual(AppKit.NSWindowTabbingModeAutomatic, 0)
         self.assertEqual(AppKit.NSWindowTabbingModePreferred, 1)
         self.assertEqual(AppKit.NSWindowTabbingModeDisallowed, 2)
 
-        self.assertEqual(AppKit.NSTexturedBackgroundWindowMask, 1 << 8)
+        self.assertIsEnumType(AppKit.NSWindowTitleVisibility)
+        self.assertEqual(AppKit.NSWindowTitleVisible, 0)
+        self.assertEqual(AppKit.NSWindowTitleHidden, 1)
 
-        self.assertEqual(AppKit.NSUnscaledWindowMask, 1 << 11)
+        self.assertIsEnumType(AppKit.NSWindowToolbarStyle)
+        self.assertEqual(AppKit.NSWindowToolbarStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSWindowToolbarStyleExpanded, 1)
+        self.assertEqual(AppKit.NSWindowToolbarStylePreference, 2)
+        self.assertEqual(AppKit.NSWindowToolbarStyleUnified, 3)
+        self.assertEqual(AppKit.NSWindowToolbarStyleUnifiedCompact, 4)
 
-        self.assertEqual(AppKit.NSUnifiedTitleAndToolbarWindowMask, 1 << 12)
+        self.assertIsEnumType(AppKit.NSWindowUserTabbingPreference)
+        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceManual, 0)
+        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceAlways, 1)
+        self.assertEqual(AppKit.NSWindowUserTabbingPreferenceInFullScreen, 2)
 
+        # Unnamed enum:
         self.assertEqual(AppKit.NSDisplayWindowRunLoopOrdering, 600_000)
         self.assertEqual(AppKit.NSResetCursorRectsRunLoopOrdering, 700_000)
 
-        self.assertEqual(AppKit.NSWindowSharingNone, 0)
-        self.assertEqual(AppKit.NSWindowSharingReadOnly, 1)
-        self.assertEqual(AppKit.NSWindowSharingReadWrite, 2)
+        # Unnamed enum:
+        self.assertEqual(AppKit.NSModalResponseOK, 1)
+        self.assertEqual(AppKit.NSModalResponseCancel, 0)
 
-        self.assertEqual(AppKit.NSWindowBackingLocationDefault, 0)
-        self.assertEqual(AppKit.NSWindowBackingLocationVideoMemory, 1)
-        self.assertEqual(AppKit.NSWindowBackingLocationMainMemory, 2)
+    def test_defines(self):
+        self.assertEqual(AppKit.NSAppKitVersionNumberWithCustomSheetPosition, 686.0)
+        self.assertEqual(
+            AppKit.NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0
+        )
+        self.assertEqual(
+            AppKit.NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0
+        )
 
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorDefault, 0)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorCanJoinAllSpaces, 1 << 0)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorMoveToActiveSpace, 1 << 1)
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSWindowLevel, int)
 
-        self.assertEqual(AppKit.NSDirectSelection, 0)
-        self.assertEqual(AppKit.NSSelectingNext, 1)
-        self.assertEqual(AppKit.NSSelectingPrevious, 2)
-
-        self.assertEqual(AppKit.NSWindowCloseButton, 0)
-        self.assertEqual(AppKit.NSWindowMiniaturizeButton, 1)
-        self.assertEqual(AppKit.NSWindowZoomButton, 2)
-        self.assertEqual(AppKit.NSWindowToolbarButton, 3)
-        self.assertEqual(AppKit.NSWindowDocumentIconButton, 4)
+    def test_constants(self):
+        self.assertEqual(AppKit.NSEventDurationForever, sys.float_info.max)
 
         self.assertIsInstance(AppKit.NSWindowDidBecomeKeyNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidBecomeMainNotification, str)
@@ -159,53 +213,11 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowWillBeginSheetNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidEndSheetNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidChangeScreenProfileNotification, str)
-
-        self.assertEqual(AppKit.NSWindowToolbarStyleAutomatic, 0)
-        self.assertEqual(AppKit.NSWindowToolbarStyleExpanded, 1)
-        self.assertEqual(AppKit.NSWindowToolbarStylePreference, 2)
-        self.assertEqual(AppKit.NSWindowToolbarStyleUnified, 3)
-        self.assertEqual(AppKit.NSWindowToolbarStyleUnifiedCompact, 4)
-
-        self.assertEqual(AppKit.NSTitlebarSeparatorStyleAutomatic, 0)
-        self.assertEqual(AppKit.NSTitlebarSeparatorStyleNone, 1)
-        self.assertEqual(AppKit.NSTitlebarSeparatorStyleLine, 2)
-        self.assertEqual(AppKit.NSTitlebarSeparatorStyleShadow, 3)
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(
-            AppKit.NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0
-        )
-
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorManaged, 1 << 2)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorTransient, 1 << 3)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorStationary, 1 << 4)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorParticipatesInCycle, 1 << 5)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorIgnoresCycle, 1 << 6)
-        self.assertEqual(AppKit.NSWindowNumberListAllApplications, 1 << 0)
-        self.assertEqual(AppKit.NSWindowNumberListAllSpaces, 1 << 4)
-
         self.assertIsInstance(AppKit.NSWindowWillStartLiveResizeNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidEndLiveResizeNotification, str)
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
-        self.assertEqual(AppKit.NSFullScreenWindowMask, 1 << 14)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenPrimary, 1 << 7)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorFullScreenAuxiliary, 1 << 8)
-        self.assertEqual(AppKit.NSWindowAnimationBehaviorDefault, 0)
-        self.assertEqual(AppKit.NSWindowAnimationBehaviorNone, 2)
-        self.assertEqual(AppKit.NSWindowAnimationBehaviorDocumentWindow, 3)
-        self.assertEqual(AppKit.NSWindowAnimationBehaviorUtilityWindow, 4)
-        self.assertEqual(AppKit.NSWindowAnimationBehaviorAlertPanel, 5)
-        self.assertEqual(AppKit.NSWindowDocumentVersionsButton, 6)
-        self.assertEqual(AppKit.NSWindowFullScreenButton, 7)
-
         self.assertIsInstance(
             AppKit.NSWindowDidChangeBackingPropertiesNotification, str
         )
-        self.assertIsInstance(AppKit.NSBackingPropertyOldScaleFactorKey, str)
-        self.assertIsInstance(AppKit.NSBackingPropertyOldColorSpaceKey, str)
         self.assertIsInstance(AppKit.NSWindowWillEnterFullScreenNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidEnterFullScreenNotification, str)
         self.assertIsInstance(AppKit.NSWindowWillExitFullScreenNotification, str)
@@ -214,39 +226,13 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowDidEnterVersionBrowserNotification, str)
         self.assertIsInstance(AppKit.NSWindowWillExitVersionBrowserNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidExitVersionBrowserNotification, str)
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
-        self.assertEqual(AppKit.NSModalResponseOK, 1)
-        self.assertEqual(AppKit.NSModalResponseCancel, 0)
-
-        self.assertEqual(AppKit.NSWindowOcclusionStateVisible, 2)
-
         self.assertIsInstance(AppKit.NSWindowDidChangeOcclusionStateNotification, str)
 
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertEqual(AppKit.NSFullSizeContentViewWindowMask, 1 << 15)
-
-        self.assertEqual(AppKit.NSWindowTitleVisible, 0)
-        self.assertEqual(AppKit.NSWindowTitleHidden, 1)
-
-    @min_os_level("10.11")
-    def testConstants10_11(self):
-        self.assertEqual(
-            AppKit.NSWindowCollectionBehaviorFullScreenAllowsTiling, 1 << 11
-        )
-        self.assertEqual(
-            AppKit.NSWindowCollectionBehaviorFullScreenDisallowsTiling, 1 << 12
-        )
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorPrimary, 1 << 16)
-        self.assertEqual(AppKit.NSWindowCollectionBehaviorAuxiliary, 1 << 17)
-        self.assertEqual(
-            AppKit.NSWindowCollectionBehaviorCanJoinAllApplications, 1 << 18
-        )
+        self.assertIsInstance(AppKit.NSBackingPropertyOldScaleFactorKey, str)
+        self.assertIsInstance(AppKit.NSBackingPropertyOldColorSpaceKey, str)
 
     @skipUnless(Quartz is not None, "test requires Quartz")
-    def testMagicConstants(self):
+    def test_constants_magic(self):
         self.assertEqual(AppKit.NSNormalWindowLevel, Quartz.kCGNormalWindowLevel)
         self.assertEqual(AppKit.NSFloatingWindowLevel, Quartz.kCGFloatingWindowLevel)
         self.assertEqual(AppKit.NSSubmenuWindowLevel, Quartz.kCGTornOffMenuWindowLevel)
@@ -264,7 +250,7 @@ class TestNSWindow(TestCase):
             AppKit.NSScreenSaverWindowLevel, Quartz.kCGScreenSaverWindowLevel
         )
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             AppKit.NSWindow.nextEventMatchingMask_untilDate_inMode_dequeue_, 3
         )
@@ -344,8 +330,6 @@ class TestNSWindow(TestCase):
             AppKit.NSWindow.dragImage_at_offset_event_pasteboard_source_slideBack_, 6
         )
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
         self.assertResultIsBOOL(
             AppKit.NSWindow.autorecalculatesContentBorderThicknessForEdge_
         )
@@ -357,8 +341,6 @@ class TestNSWindow(TestCase):
         self.assertResultIsBOOL(AppKit.NSWindow.canBeVisibleOnAllSpaces)
         self.assertArgIsBOOL(AppKit.NSWindow.setCanBeVisibleOnAllSpaces_, 0)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSWindow.inLiveResize)
         self.assertResultIsBOOL(AppKit.NSWindow.isOnActiveSpace)
         self.assertResultIsBOOL(AppKit.NSWindow.isMovable)
@@ -376,8 +358,6 @@ class TestNSWindow(TestCase):
             AppKit.NSPoint.__typestr__,
         )
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertArgIsBlock(
             AppKit.NSWindow.beginSheet_completionHandler_, 1, b"v" + objc._C_NSInteger
         )
@@ -388,7 +368,7 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSWindow.titlebarAppearsTransparent)
         self.assertArgIsBOOL(AppKit.NSWindow.setTitlebarAppearsTransparent_, 0)
 
@@ -397,14 +377,14 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSWindow.canRepresentDisplayGamut_)
 
         self.assertResultIsBOOL(AppKit.NSWindow.allowsAutomaticWindowTabbing)
         self.assertArgIsBOOL(AppKit.NSWindow.setAllowsAutomaticWindowTabbing_, 0)
 
     @min_os_level("13.3")
-    def testMethods13_3(self):
+    def test_methods13_3(self):
         self.assertResultIsBOOL(AppKit.NSWindow.hasActiveWindowSharingSession)
 
         self.assertArgIsBlock(
@@ -412,11 +392,11 @@ class TestNSWindow(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertArgIsSEL(AppKit.NSWindow.displayLinkWithTarget_selector_, 1, b"v@:@")
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertArgIsBlock(
             AppKit.NSWindow.requestSharingOfWindow_completionHandler_, 1, b"v@"
         )
@@ -426,11 +406,10 @@ class TestNSWindow(TestCase):
             b"v@",
         )
 
-    @min_sdk_level("10.6")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSWindowDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSWindowDelegate", AppKit)
 
-    def testProtocols(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSWindowHelper.windowShouldClose_)
         self.assertResultHasType(
             TestNSWindowHelper.windowWillResize_toSize_, AppKit.NSSize.__typestr__
@@ -470,8 +449,6 @@ class TestNSWindow(TestCase):
             AppKit.NSPoint.__typestr__,
         )
 
-    @min_os_level("10.7")
-    def testProtocols10_7(self):
         self.assertArgHasType(
             TestNSWindowHelper.window_willUseFullScreenContentSize_,
             1,
@@ -511,8 +488,6 @@ class TestNSWindow(TestCase):
             AppKit.NSSize.__typestr__,
         )
 
-    @min_os_level("10.9")
-    def testProtocols10_9(self):
         self.assertArgHasType(
             TestNSWindowHelper.window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_,  # noqa: B950
             2,

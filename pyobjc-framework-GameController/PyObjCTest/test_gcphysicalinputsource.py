@@ -4,7 +4,7 @@ import GameController
 
 
 class TestGCPhysicalInputSource(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameController.GCPhysicalInputSourceDirection)
         self.assertEqual(GameController.GCPhysicalInputSourceDirectionNotApplicable, 0)
         self.assertEqual(GameController.GCPhysicalInputSourceDirectionUp, 1 << 0)
@@ -14,4 +14,4 @@ class TestGCPhysicalInputSource(TestCase):
 
     @min_sdk_level("14.0")
     def test_protocols(self):
-        self.assertProtocolExists("GCPhysicalInputSource")
+        self.assertProtocolExists("GCPhysicalInputSource", GameController)

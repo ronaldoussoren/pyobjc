@@ -3,10 +3,8 @@ import ScreenCaptureKit
 
 
 class TestSCError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(ScreenCaptureKit.SCStreamErrorCode)
-
-    def test_constants(self):
         self.assertEqual(ScreenCaptureKit.SCStreamErrorUserDeclined, -3801)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorFailedToStart, -3802)
         self.assertEqual(ScreenCaptureKit.SCStreamErrorMissingEntitlements, -3803)
@@ -38,3 +36,6 @@ class TestSCError(TestCase):
             ScreenCaptureKit.SCStreamErrorFailedToStartMicrophoneCapture, -3820
         )
         self.assertEqual(ScreenCaptureKit.SCStreamErrorSystemStoppedStream, -3821)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorInsufficientStorage, -3822)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorNotSupported, -3823)
+        self.assertEqual(ScreenCaptureKit.SCStreamErrorMissingBackgroundMode, -3824)

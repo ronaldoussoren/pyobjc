@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRFSObject(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(DiscRecording.DRFSObject.isVirtual)
 
         self.assertArgIsBOOL(
@@ -15,7 +15,7 @@ class TestDRFSObject(TestCase):
             1,
         )
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(DiscRecording.DRFilesystemInclusionMaskISO9660, 1 << 0)
         self.assertEqual(DiscRecording.DRFilesystemInclusionMaskJoliet, 1 << 1)
         self.assertEqual(DiscRecording.DRFilesystemInclusionMaskUDF, 1 << 2)

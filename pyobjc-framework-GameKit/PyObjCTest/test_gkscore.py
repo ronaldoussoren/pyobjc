@@ -1,10 +1,9 @@
 import GameKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestGKScore(TestCase):
-    @min_os_level("10.8")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(GameKit.GKScore.shouldSetDefaultLeaderboard)
         self.assertArgIsBOOL(GameKit.GKScore.setShouldSetDefaultLeaderboard_, 0)
 

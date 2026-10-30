@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestPSFeed(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(PubSub.PSErrorDomain, str)
 
         self.assertEqual(PubSub.PSInternalError, 1)
@@ -20,7 +20,7 @@ class TestPSFeed(TestCase):
         self.assertIsInstance(PubSub.PSFeedUpdatedEntriesKey, str)
         self.assertIsInstance(PubSub.PSFeedDidChangeEntryFlagsKey, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PubSub.PSFeed.isRefreshing)
         self.assertResultIsBOOL(PubSub.PSFeed.refresh_)
         self.assertArgIsOut(PubSub.PSFeed.refresh_, 0)

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, fourcc
 
 
 class TestAudioHardwareBase(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = CoreAudio.AudioObjectPropertyAddress()
         self.assertEqual(v.mSelector, 0)
         self.assertEqual(v.mScope, 0)
@@ -15,7 +15,7 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(v.mSampleRateRange, CoreAudio.AudioValueRange())
         self.assertPickleRoundTrips(v)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreAudio.kAudioHardwareNoError, 0)
         self.assertEqual(CoreAudio.kAudioHardwareNotRunningError, fourcc(b"stop"))
         self.assertEqual(CoreAudio.kAudioHardwareUnspecifiedError, fourcc(b"what"))
@@ -137,6 +137,12 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioDeviceTransportTypeContinuityCapture, fourcc(b"ccap")
         )
         self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeRemoteScreen, fourcc(b"rscr")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeRemoteStreaming, fourcc(b"rstr")
+        )
+        self.assertEqual(
             CoreAudio.kAudioDeviceTransportTypeContinuityCaptureWired, fourcc(b"ccwd")
         )
         self.assertEqual(
@@ -178,6 +184,12 @@ class TestAudioHardwareBase(TestCase):
         )
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyPreferredChannelLayout, fourcc(b"srnd")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsControlsRestored, fourcc(b"resc")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyWantsStreamFormatsRestored, fourcc(b"resf")
         )
 
         self.assertEqual(CoreAudio.kAudioClockDeviceClassID, fourcc(b"aclk"))

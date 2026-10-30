@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -17,16 +17,14 @@ class NSPortHelper(Foundation.NSPort):
 
 
 class TestNSPort(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSMachPortOptions)
-
-    def testConstants(self):
         self.assertIsInstance(Foundation.NSPortDidBecomeInvalidNotification, str)
         self.assertEqual(Foundation.NSMachPortDeallocateNone, 0)
         self.assertEqual(Foundation.NSMachPortDeallocateSendRight, (1 << 0))
         self.assertEqual(Foundation.NSMachPortDeallocateReceiveRight, (1 << 1))
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSPort.isValid)
 
         self.assertResultIsBOOL(
@@ -49,7 +47,6 @@ class TestNSPort(TestCase):
 
         self.assertArgHasType(PortDelegate.handleMachMessage_, 0, b"^v")
 
-    @min_sdk_level("10.6")
-    def testProtocols(self):
-        self.assertProtocolExists("NSPortDelegate")
-        self.assertProtocolExists("NSMachPortDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("NSPortDelegate", Foundation)
+        self.assertProtocolExists("NSMachPortDelegate", Foundation)

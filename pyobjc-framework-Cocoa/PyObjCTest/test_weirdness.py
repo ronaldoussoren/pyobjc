@@ -39,7 +39,7 @@ class TestWeirdness(TestCase):
         "crash on 10.13",
     )
     @max_sdk_level("10.14")
-    def testWeirdness1(self):
+    def test_weirdness1(self):
         self.doWeirdness("NSButtonCell", "setEnabled_")
 
     @skipUnless(
@@ -50,5 +50,5 @@ class TestWeirdness(TestCase):
     )
     @max_sdk_level("10.14")
     @max_sdk_level("10.14")
-    def testWeirdness2(self):
+    def test_weirdness2(self):
         self.doWeirdness("NSTextView", "setEditable_")

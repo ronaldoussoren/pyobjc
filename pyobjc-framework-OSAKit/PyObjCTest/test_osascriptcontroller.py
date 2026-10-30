@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestOSAScriptController(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(OSAKit.OSAScriptStopped, 0)
         self.assertEqual(OSAKit.OSAScriptRunning, 1)
         self.assertEqual(OSAKit.OSAScriptRecording, 2)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(OSAKit.OSAScriptController.isCompiling)

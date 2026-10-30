@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDRContentProperties(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(DiscRecording.kDRISOLevel, str)
         self.assertIsInstance(DiscRecording.kDRVolumeSet, str)
         self.assertIsInstance(DiscRecording.kDRPublisher, str)

@@ -3,13 +3,13 @@ import Quartz
 
 
 class TestCGDisplayFade(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(Quartz.kCGDisplayFadeReservationInvalidToken, 0)
         self.assertEqual(Quartz.kCGDisplayBlendNormal, 0.0)
         self.assertEqual(Quartz.kCGDisplayBlendSolidColor, 1.0)
         self.assertEqual(Quartz.kCGMaxDisplayReservationInterval, 15.0)
 
-    def testFunctions(self):
+    def test_functions(self):
         err, config = Quartz.CGBeginDisplayConfiguration(None)
         self.assertEqual(err, 0)
         self.assertIsInstance(config, Quartz.CGDisplayConfigRef)

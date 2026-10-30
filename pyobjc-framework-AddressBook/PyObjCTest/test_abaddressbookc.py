@@ -8,20 +8,20 @@ _C_ABPersonRef = b"^{__ABPerson=}"
 _C_ABGroupRef = b"^{__ABGroup=}"
 _C_ABSearchElementRef = b"^{__ABSearchElementRef=}"
 _C_CFStringRef = b"^{__CFString=}"
-_C_CFStringRefPtr = b"^^{__CFString}"
+_C_CFStringRefPtr = b"^^{__CFString=}"
 _C_CFDictionaryRef = b"^{__CFDictionary=}"
 _C_CFArrayRef = b"^{__CFArray=}"
 _C_CFDataRef = b"^{__CFData=}"
 
 
 class TestABAddressBookC(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertTrue(AddressBook.ABAddressBookRef is AddressBook.ABAddressBook)
         self.assertTrue(AddressBook.ABPersonRef is AddressBook.ABPerson)
         self.assertTrue(AddressBook.ABSearchElementRef is AddressBook.ABSearchElement)
         self.assertTrue(AddressBook.ABGroupRef is AddressBook.ABGroup)
 
-    def testFunctions(self):
+    def test_functions(self):
         ref = AddressBook.ABGetSharedAddressBook()
         self.assertIsInstance(ref, AddressBook.ABAddressBookRef)
 

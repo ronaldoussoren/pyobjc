@@ -3,11 +3,8 @@ import WebKit
 
 
 class TestWKNavigationAction(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKNavigationType)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
         self.assertEqual(WebKit.WKNavigationTypeLinkActivated, 0)
         self.assertEqual(WebKit.WKNavigationTypeFormSubmitted, 1)
         self.assertEqual(WebKit.WKNavigationTypeBackForward, 2)
@@ -16,9 +13,9 @@ class TestWKNavigationAction(TestCase):
         self.assertEqual(WebKit.WKNavigationTypeOther, -1)
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(WebKit.WKNavigationAction.shouldPerformDownload)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(WebKit.WKNavigationAction.isContentRuleListRedirect)

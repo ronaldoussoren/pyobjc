@@ -9,21 +9,21 @@ import MediaPlayer
 
 
 class TestMPNowPlayingInfoCenter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MediaPlayer.MPNowPlayingInfoMediaType)
-        self.assertIsEnumType(MediaPlayer.MPNowPlayingPlaybackState)
-
-    @min_os_level("10.12")
-    def testConstants(self):
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeNone, 0)
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeAudio, 1)
         self.assertEqual(MediaPlayer.MPNowPlayingInfoMediaTypeVideo, 2)
+
+        self.assertIsEnumType(MediaPlayer.MPNowPlayingPlaybackState)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateUnknown, 0)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStatePlaying, 1)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStatePaused, 2)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateStopped, 3)
         self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateInterrupted, 4)
 
+    @min_os_level("10.12")
+    def test_constants(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime, str
         )
@@ -61,24 +61,24 @@ class TestMPNowPlayingInfoCenter(TestCase):
     @expectedFailureIf(
         os_level_key(os_release()) < os_level_key("10.14")
     )  # Documented for 10.13, but doesn't work there
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, str
         )
 
     @min_os_level("10.13.1")
-    def testConstants10_13_1(self):
+    def test_constants10_13_1(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
         )
 
     @min_os_level("13.0")
-    def testConstants13_0(self):
+    def test_constants13_0(self):
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAdTimeRanges, str)
         self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyCreditsStartTime, str)
 
     @min_os_level("15.0")
-    def testConstants15_0(self):
+    def test_constants15_0(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyInternationalStandardRecordingCode, str
         )
@@ -87,10 +87,16 @@ class TestMPNowPlayingInfoCenter(TestCase):
         )
 
     @min_os_level("26.0")
-    def testConstants26_0(self):
+    def test_constants26_0(self):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoProperty1x1AnimatedArtwork, str
         )
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoProperty3x4AnimatedArtwork, str
+        )
+
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            MediaPlayer.MPNowPlayingInfoPropertyAppEntityIdentifiers, str
         )

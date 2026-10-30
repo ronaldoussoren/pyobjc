@@ -4,10 +4,6 @@
  "definitions": {
   "typed_enum":{
    "BCParameterName": { "type": "@", "type_name": "NSString" }
-  },
-  "classes": {},
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

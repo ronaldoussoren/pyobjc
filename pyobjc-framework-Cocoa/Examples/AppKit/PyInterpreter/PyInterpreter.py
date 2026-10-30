@@ -489,7 +489,7 @@ class PyInterpreter(NSObject):
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(
         self, aTextView, completions, word_range, index
     ):
-        (begin, length) = word_range
+        begin, length = word_range
         txt = self.textView.textStorage().mutableString()
         end = begin + length
         while (begin > 0) and (txt[begin].isalnum() or txt[begin] in "._"):

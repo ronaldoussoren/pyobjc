@@ -19,10 +19,8 @@ class TestMTLResourceStateCommandEncoderHelper(Metal.NSObject):
 
 
 class TestMTLResourceStateCommandEncoder(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLSparseTextureMappingMode)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLSparseTextureMappingModeMap, 0)
         self.assertEqual(Metal.MTLSparseTextureMappingModeUnmap, 1)
 
@@ -45,9 +43,9 @@ class TestMTLResourceStateCommandEncoder(TestCase):
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):
-        self.assertProtocolExists("MTLResourceStateCommandEncoder")
+        self.assertProtocolExists("MTLResourceStateCommandEncoder", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestMTLResourceStateCommandEncoderHelper.updateTextureMappings_mode_regions_mipLevels_slices_numRegions_,  # noqa: B950
             1,

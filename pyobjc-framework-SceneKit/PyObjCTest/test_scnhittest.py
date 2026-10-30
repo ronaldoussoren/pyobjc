@@ -5,23 +5,22 @@ from objc import simd
 
 
 class TestSCNHitTest(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(SceneKit.SCNHitTestSearchMode)
-
-    def testConstants(self):
         self.assertEqual(SceneKit.SCNHitTestSearchModeClosest, 0)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAll, 1)
         self.assertEqual(SceneKit.SCNHitTestSearchModeAny, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(SceneKit.SCNHitTestOption, str)
+
     @min_os_level("10.13")
-    def testConstants10_13(self):
+    def test_constants10_13(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionSearchMode, str)
 
     @min_os_level("10.15")
-    def testConstants10_15(self):
+    def test_constants10_15(self):
         self.assertIsInstance(SceneKit.SCNHitTestOptionIgnoreLightArea, str)
 
     @min_os_level("10.15")

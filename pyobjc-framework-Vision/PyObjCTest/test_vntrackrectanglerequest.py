@@ -4,7 +4,7 @@ import Vision
 
 class TestVNTrackRectangleRequest(TestCase):
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertArgIsBlock(
             Vision.VNTrackRectangleRequest.initWithRectangleObservation_completionHandler_,
             1,

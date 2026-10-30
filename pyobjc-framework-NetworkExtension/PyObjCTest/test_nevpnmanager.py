@@ -4,11 +4,8 @@ import NetworkExtension
 
 
 class TestNEVPNConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NEVPNError)
-
-    @min_os_level("10.11")
-    def testConstants(self):
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationInvalid, 1)
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationDisabled, 2)
         self.assertEqual(NetworkExtension.NEVPNErrorConnectionFailed, 3)
@@ -16,13 +13,15 @@ class TestNEVPNConnection(TestCase):
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationReadWriteFailed, 5)
         self.assertEqual(NetworkExtension.NEVPNErrorConfigurationUnknown, 6)
 
+    @min_os_level("10.11")
+    def test_constants(self):
         self.assertIsInstance(NetworkExtension.NEVPNErrorDomain, str)
         self.assertIsInstance(
             NetworkExtension.NEVPNConfigurationChangeNotification, str
         )
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEVPNManager.loadFromPreferencesWithCompletionHandler_,
             0,

@@ -4,10 +4,8 @@ import MetalPerformanceShaders
 
 
 class TestMPSMatrix_MPSMatrixDecomposition(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(MetalPerformanceShaders.MPSMatrixDecompositionStatus)
-
-    def test_constants(self):
         self.assertEqual(MetalPerformanceShaders.MPSMatrixDecompositionStatusSuccess, 0)
         self.assertEqual(
             MetalPerformanceShaders.MPSMatrixDecompositionStatusFailure, -1

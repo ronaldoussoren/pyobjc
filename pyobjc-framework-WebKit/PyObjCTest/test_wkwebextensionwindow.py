@@ -26,7 +26,7 @@ class TestWKWebExtensionWindowHelper(WebKit.NSObject):
 
 
 class TestWKWebExtensionWindow(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionWindowType)
         self.assertEqual(WebKit.WKWebExtensionWindowTypeNormal, 0)
         self.assertEqual(WebKit.WKWebExtensionWindowTypePopup, 1)
@@ -39,7 +39,7 @@ class TestWKWebExtensionWindow(TestCase):
 
     @min_sdk_level("15.4")
     def test_protocols(self):
-        self.assertProtocolExists("WKWebExtensionWindow")
+        self.assertProtocolExists("WKWebExtensionWindow", WebKit)
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalAlarm(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(CalendarStore.CalAlarmActionDisplay, str)
         self.assertIsInstance(CalendarStore.CalAlarmActionEmail, str)
         self.assertIsInstance(CalendarStore.CalAlarmActionProcedure, str)

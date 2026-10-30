@@ -8,21 +8,21 @@ import objc
 
 
 class TestString(TestCase):
-    def testType(self):
+    def test_types(self):
         self.assertTrue(issubclass(CoreFoundation.CFStringRef, Foundation.NSString))
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFStringGetTypeID()
         self.assertIsInstance(v, int)
 
-    def testNoPascalStrings(self):
+    def test_no_pascal_strings(self):
         self.assertNotHasAttr(CoreFoundation, "CFStringCreateWithPascalString")
         self.assertNotHasAttr(CoreFoundation, "CFStringCreateWithPascalStringNoCopy")
         self.assertNotHasAttr(CoreFoundation, "CFStringGetPascalString")
         self.assertNotHasAttr(CoreFoundation, "CFStringGetPascalStringPtr")
         self.assertNotHasAttr(CoreFoundation, "CFStringAppendPascalString")
 
-    def testCreation(self):
+    def test_creation(self):
         s = CoreFoundation.CFStringCreateWithCString(
             None, b"hello world", CoreFoundation.kCFStringEncodingASCII
         )
@@ -94,7 +94,7 @@ class TestString(TestCase):
             hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments")
         )
 
-    def testCreateMutable(self):
+    def test_create_mutable(self):
         s = CoreFoundation.CFStringCreateMutable(None, 0)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, "")
@@ -131,7 +131,7 @@ class TestString(TestCase):
             b2[0] = "X"
             self.assertEqual(s, "X" + (" " * (len(b) - 1)))
 
-    def testFunctions(self):
+    def test_functions(self):
         self.assertNotHasAttr(
             CoreFoundation, "CFStringCreateStringWithValidatedFormatAndArguments"
         )
@@ -164,11 +164,11 @@ class TestString(TestCase):
         s = CoreFoundation.CFStringGetCStringPtr(
             "apenootjes", CoreFoundation.kCFStringEncodingASCII
         )
-        if s is not objc.NULL:
+        if s not in (objc.NULL, None):
             self.assertEqual(s, b"apenootjes")
             self.assertIsInstance(s, str)
         s = CoreFoundation.CFStringGetCharactersPtr("apenootjes")
-        if s is not objc.NULL:
+        if s not in (objc.NULL, None):
             self.assertEqual(s, "apenootjes")
             self.assertIsInstance(s, str)
         idx, buf, used = CoreFoundation.CFStringGetBytes(
@@ -340,7 +340,7 @@ class TestString(TestCase):
         v = CoreFoundation.CFStringGetDoubleValue("1000.5")
         self.assertEqual(v, 1000.5)
 
-    def testMutableFunctions(self):
+    def test_functions_mutable(self):
         s = CoreFoundation.CFStringCreateMutable(None, 0)
         s = s.nsstring()
         CoreFoundation.CFStringAppend(s, "hello")
@@ -450,7 +450,7 @@ class TestString(TestCase):
         self.assertIs(ok, True)
         self.assertEqual(rng, CoreFoundation.CFRange(0, 3))
 
-    def testStringEncoding(self):
+    def test_stringEncoding(self):
         ok = CoreFoundation.CFStringIsEncodingAvailable(
             CoreFoundation.kCFStringEncodingUTF8
         )
@@ -494,12 +494,12 @@ class TestString(TestCase):
         )
         self.assertEqual(v, CoreFoundation.kCFStringEncodingMacRoman)
 
-    def testNoInlineBuffer(self):
+    def test_no_inline_bufer(self):
         self.assertNotHasAttr(CoreFoundation, "CFStringInlineBuffer")
         self.assertNotHasAttr(CoreFoundation, "CFStringInitInlineBuffer")
         self.assertNotHasAttr(CoreFoundation, "CFStringGetCharacterFromInlineBuffer")
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingInvalidId, 0xFFFFFFFF)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacRoman, 0)
         self.assertEqual(CoreFoundation.kCFStringEncodingWindowsLatin1, 0x0500)
@@ -545,21 +545,16 @@ class TestString(TestCase):
         self.assertIsInstance(CoreFoundation.kCFStringTransformToUnicodeName, str)
         self.assertIsInstance(CoreFoundation.kCFStringTransformStripDiacritics, str)
 
-    def testNoPrivate(self):
+    def no_private(self):
         self.assertNotHasAttr(CoreFoundation, "__CFStringMakeConstantString")
 
-    def testCFSTR(self):
+    def test_cfstr(self):
         v = CoreFoundation.CFSTR("hello")
         self.assertIsInstance(v, str)
 
 
 class TestStringEncodingExt(TestCase):
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
-        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
-
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFStringEncodingMacJapanese, 1)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacChineseTrad, 2)
         self.assertEqual(CoreFoundation.kCFStringEncodingMacKorean, 3)
@@ -690,8 +685,10 @@ class TestStringEncodingExt(TestCase):
         self.assertEqual(CoreFoundation.kCFStringEncodingEBCDIC_CP037, 0x0C02)
         self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213_00, 0x0628)
 
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
+
+    def test_functions(self):
         self.assertResultIsBOOL(CoreFoundation.CFStringIsSurrogateHighCharacter)
         self.assertTrue(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0xD800)))
         self.assertFalse(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0x0600)))
@@ -723,8 +720,6 @@ class TestStringEncodingExt(TestCase):
             # an array of UCS2 codepoints to a Pytho str object
             pass
 
-    @min_os_level("10.7")
-    def testFunctions10_7(self):
         loc = CoreFoundation.CFLocaleCopyCurrent()
 
         self.assertArgIsOut(CoreFoundation.CFStringGetHyphenationLocationBeforeIndex, 5)

@@ -10,27 +10,9 @@
    "MKAnnotationViewZPriorityDefaultSelected": { "value": 1000.0 },
    "MKAnnotationViewZPriorityDefaultUnselected": { "value": 500.0 },
    "MKAnnotationViewZPriorityMin": { "value": 0.0 },
-   "MKFeatureVisibilityAdaptive": { "value": 0 },
-   "MKFeatureVisibilityHidden": { "value": 1 },
-   "MKFeatureVisibilityVisible": { "value": 2 },
    "MKFeatureDisplayPriorityRequired": { "value": 1000 },
    "MKFeatureDisplayPriorityDefaultHigh": { "value": 750 },
-   "MKFeatureDisplayPriorityDefaultLow": { "value": 250 },
-   "MKAnnotationViewCollisionModeRectangle": { "value": 0 },
-   "MKAnnotationViewCollisionModeCircle": { "value": 1 },
-   "MKDirectionsTransportTypeTransit": { "value": 4 },
-   "MKMapTypeSatelliteFlyover": { "value": 3 },
-   "MKMapTypeHybridFlyover": { "value": 4 },
-   "MKMapTypeMutedStandard": { "value": 5 },
-   "MKSearchCompletionFilterTypeLocationsAndQueries": { "value": 0 },
-   "MKSearchCompletionFilterTypeLocationsOnly": { "value": 1 }
-  },
-  "externs": {
-   "MKLaunchOptionsDirectionsModeTransit": { "typestr": "@" },
-   "MKLaunchOptionsDirectionsModeDefault": { "typestr": "@" },
-   "MKMapItemTypeIdentifier": { "typestr": "@" },
-   "MKMapViewDefaultAnnotationViewReuseIdentifier": { "typestr": "@" },
-   "MKMapViewDefaultClusterAnnotationViewReuseIdentifier": { "typestr": "@" }
+   "MKFeatureDisplayPriorityDefaultLow": { "value": 250 }
   },
   "classes": {
    "NSValue": {
@@ -519,7 +501,6 @@
      ]
    }
   },
-  "formal_protocols": {},
   "functions": {
    "MKMapRectDivide": {
     "args": {
@@ -527,7 +508,6 @@
      "2": { "type_modifier": "o" }
     }
    }
-  },
-  "informal_protocols": {}
+  }
  }
 }

@@ -3,7 +3,7 @@ import VideoSubscriberAccount
 
 
 class TestVSUserAccountManager(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(VideoSubscriberAccount.VSUserAccountQueryOptions)
         self.assertEqual(VideoSubscriberAccount.VSUserAccountQueryNone, 0)
         self.assertEqual(VideoSubscriberAccount.VSUserAccountQueryAllDevices, 1)

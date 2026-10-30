@@ -4,5 +4,5 @@ import PushKit
 
 
 class TestPKDefines(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(PushKit.PKPushType, str)

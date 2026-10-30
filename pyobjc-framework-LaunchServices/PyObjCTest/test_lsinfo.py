@@ -1,7 +1,7 @@
 import os
 import warnings
 
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 with warnings.catch_warnings():
@@ -24,7 +24,7 @@ class TestLSInfo(TestCase):
         if os.path.exists(self.path):
             os.unlink(self.path)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(LaunchServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(LaunchServices.kLSAppInTrashErr, -10660)
         self.assertEqual(LaunchServices.kLSExecutableIncorrectFormat, -10661)
@@ -101,7 +101,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(LaunchServices.kLSHandlerOptionsDefault, 0)
         self.assertEqual(LaunchServices.kLSHandlerOptionsIgnoreCreator, 1)
 
-    def testStructs(self):
+    def test_structs(self):
         v = LaunchServices.LSItemInfoRecord()
         self.assertHasAttr(v, "flags")
         self.assertHasAttr(v, "filetype")
@@ -110,7 +110,7 @@ class TestLSInfo(TestCase):
         self.assertNotHasAttr(v, "iconFileName")
         self.assertNotHasAttr(v, "kindID")
 
-    def testFunctions(self):
+    def test_functions(self):
         LaunchServices.LSInit(LaunchServices.kLSInitializeDefaults)
         LaunchServices.LSTerm()
 
@@ -230,11 +230,7 @@ class TestLSInfo(TestCase):
         default_role = LaunchServices.LSCopyDefaultRoleHandlerForContentType(
             "public.plain-text", LaunchServices.kLSRolesAll
         )
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_role is not None:
-                self.assertIsInstance(default_role, str)
-        else:
-            self.assertIsInstance(default_role, str)
+        self.assertIsInstance(default_role, str)
 
         v = LaunchServices.LSCopyAllRoleHandlersForContentType(
             "public.plain-text", LaunchServices.kLSRolesAll
@@ -256,11 +252,7 @@ class TestLSInfo(TestCase):
 
         self.assertResultIsCFRetained(LaunchServices.LSCopyDefaultHandlerForURLScheme)
         default_handler = LaunchServices.LSCopyDefaultHandlerForURLScheme("http")
-        if os_level_key(os_release()) < os_level_key("10.7"):
-            if default_handler is not None:
-                self.assertIsInstance(default_handler, str)
-        else:
-            self.assertIsInstance(default_handler, str)
+        self.assertIsInstance(default_handler, str)
 
         self.assertResultIsCFRetained(LaunchServices.LSCopyAllHandlersForURLScheme)
         v = LaunchServices.LSCopyAllHandlersForURLScheme("http")
@@ -271,7 +263,7 @@ class TestLSInfo(TestCase):
         ok = LaunchServices.LSSetDefaultHandlerForURLScheme("http", default_handler)
         self.assertIsInstance(ok, int)
 
-    def testFSRef(self):
+    def test_fsref(self):
         ref = objc.FSRef.from_pathname(self.path)
         self.assertIsInstance(ref, objc.FSRef)
 
@@ -346,7 +338,7 @@ class TestLSInfo(TestCase):
         self.assertIsInstance(ok, int)
 
     @min_os_level("10.10")
-    def testFunctions10_10(self):
+    def test_functions10_10(self):
         self.assertResultIsCFRetained(LaunchServices.LSCopyDefaultApplicationURLForURL)
         self.assertArgIsOut(LaunchServices.LSCopyDefaultApplicationURLForURL, 2)
 

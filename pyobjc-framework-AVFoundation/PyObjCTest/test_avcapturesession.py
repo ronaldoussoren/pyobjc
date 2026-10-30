@@ -8,13 +8,17 @@ from PyObjCTools.TestSupport import (
 
 
 class TestAVCaptureSession(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVCaptureSessionInterruptionReason)
-        self.assertIsEnumType(AVFoundation.AVCaptureVideoOrientation)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVVideoFieldMode)
+        self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
+        self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
+        self.assertEqual(AVFoundation.AVVideoFieldModeBottomOnly, 2)
+        self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
 
-    @min_os_level("10.7")
-    def testConstants(self):
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AVFoundation.AVCaptureSessionPreset, str)
+
+    def test_constants(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionRuntimeErrorNotification, str
         )
@@ -26,11 +30,6 @@ class TestAVCaptureSession(TestCase):
             AVFoundation.AVCaptureSessionDidStopRunningNotification, str
         )
 
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortraitUpsideDown, 2)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
-        self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
-
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetHigh, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetMedium, str)
@@ -40,19 +39,11 @@ class TestAVCaptureSession(TestCase):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset640x480, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, str)
-
-        self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
-        self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
-        self.assertEqual(AVFoundation.AVVideoFieldModeBottomOnly, 2)
-        self.assertEqual(AVFoundation.AVVideoFieldModeDeinterlace, 3)
-
-    @min_os_level("10.9")
-    def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, str)
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, str)
 
     @min_os_level("10.14")
-    def testConstants10_14(self):
+    def test_constants10_14(self):
         self.assertIsInstance(
             AVFoundation.AVCaptureSessionWasInterruptedNotification, str
         )
@@ -61,15 +52,14 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_sdk_level("15.2")
-    def test_protocools(self):
-        self.assertProtocolExists("AVCaptureSessionControlsDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("AVCaptureSessionControlsDelegate", AVFoundation)
 
     @min_sdk_level("26.0")
-    def test_protocools26_0(self):
-        self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate")
+    def test_protocols26_0(self):
+        self.assertProtocolExists("AVCaptureSessionDeferredStartDelegate", AVFoundation)
 
-    @min_os_level("10.7")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canSetSessionPreset_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddInput_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddOutput_)
@@ -106,7 +96,7 @@ class TestAVCaptureSession(TestCase):
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
 
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureSession_Tundra.canSetSessionPreset_
         )
@@ -149,7 +139,7 @@ class TestAVCaptureSession(TestCase):
 
     @expectedFailure
     @min_os_level("11.0")
-    def testMethods11_0(self):
+    def test_methods11_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureConnection.isHighResolutionStillImageOutputEnabled
         )
@@ -159,7 +149,7 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureConnection.automaticallyAdjustsVideoMirroring
         )
@@ -173,15 +163,36 @@ class TestAVCaptureSession(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.supportsControls)
         self.assertResultIsBOOL(AVFoundation.AVCaptureSession.canAddControl_)
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureSession.automaticallyRunsDeferredStart
         )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureSession.setAutomaticallyRunsDeferredStart_, 0
+        )
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isLowLightVideoNoiseReductionSupported
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.automaticallyEnablesLowLightVideoNoiseReduction
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setAutomaticallyEnablesLowLightVideoNoiseReduction_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.isLowLightVideoNoiseReductionEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setLowLightVideoNoiseReductionEnabled_, 0
         )

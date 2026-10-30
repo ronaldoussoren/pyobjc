@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 class TestASAuthorizationProvider(TestCase):
     @min_sdk_level("10.15")
     def test_protocols(self):
-        self.assertProtocolExists("ASAuthorizationProvider")
+        self.assertProtocolExists("ASAuthorizationProvider", AuthenticationServices)
 
     @min_os_level("10.15")
     def test_methods10_15(self):

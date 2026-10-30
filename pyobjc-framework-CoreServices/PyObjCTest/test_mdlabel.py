@@ -1,36 +1,14 @@
 import CoreServices
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestMDLabel(TestCase):
-    @expectedFailure
-    @min_os_level("10.7")
-    def test_types(self):
-        self.assertIsCFType(CoreServices.MDLabelRef)
-
-    @min_os_level("10.7")
-    def test_functions(self):
-        self.assertIsInstance(CoreServices.MDLabelGetTypeID(), int)
-
-        self.assertResultIsCFRetained(CoreServices.MDItemCopyLabels)
-        self.assertResultIsBOOL(CoreServices.MDItemSetLabel)
-        self.assertResultIsBOOL(CoreServices.MDItemRemoveLabel)
-        self.assertResultIsCFRetained(CoreServices.MDLabelCreate)
-        self.assertResultIsCFRetained(CoreServices.MDLabelCopyAttribute)
-        self.assertResultIsCFRetained(CoreServices.MDLabelCopyAttributeName)
-        self.assertResultIsBOOL(CoreServices.MDLabelDelete)
-        self.assertResultIsBOOL(CoreServices.MDLabelSetAttributes)
-        self.assertResultIsCFRetained(CoreServices.MDCopyLabelKinds)
-        self.assertResultIsCFRetained(CoreServices.MDCopyLabelsMatchingExpression)
-        self.assertResultIsCFRetained(CoreServices.MDCopyLabelsWithKind)
-        self.assertResultIsCFRetained(CoreServices.MDCopyLabelWithUUID)
-
-    def test_constants(self):
+    def test_enums(self):
+        self.assertIsEnumType(CoreServices.MDLabelDomain)
         self.assertEqual(CoreServices.kMDLabelUserDomain, 0)
         self.assertEqual(CoreServices.kMDLabelLocalDomain, 1)
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(CoreServices.kMDLabelBundleURL, str)
         self.assertIsInstance(CoreServices.kMDLabelContentChangeDate, str)
         self.assertIsInstance(CoreServices.kMDLabelDisplayName, str)
@@ -48,3 +26,23 @@ class TestMDLabel(TestCase):
         self.assertIsInstance(CoreServices.kMDLabelAddedNotification, str)
         self.assertIsInstance(CoreServices.kMDLabelChangedNotification, str)
         self.assertIsInstance(CoreServices.kMDLabelRemovedNotification, str)
+
+    @expectedFailure
+    def test_types(self):
+        self.assertIsCFType(CoreServices.MDLabelRef)
+
+    def test_functions(self):
+        self.assertIsInstance(CoreServices.MDLabelGetTypeID(), int)
+
+        self.assertResultIsCFRetained(CoreServices.MDItemCopyLabels)
+        self.assertResultIsBOOL(CoreServices.MDItemSetLabel)
+        self.assertResultIsBOOL(CoreServices.MDItemRemoveLabel)
+        self.assertResultIsCFRetained(CoreServices.MDLabelCreate)
+        self.assertResultIsCFRetained(CoreServices.MDLabelCopyAttribute)
+        self.assertResultIsCFRetained(CoreServices.MDLabelCopyAttributeName)
+        self.assertResultIsBOOL(CoreServices.MDLabelDelete)
+        self.assertResultIsBOOL(CoreServices.MDLabelSetAttributes)
+        self.assertResultIsCFRetained(CoreServices.MDCopyLabelKinds)
+        self.assertResultIsCFRetained(CoreServices.MDCopyLabelsMatchingExpression)
+        self.assertResultIsCFRetained(CoreServices.MDCopyLabelsWithKind)
+        self.assertResultIsCFRetained(CoreServices.MDCopyLabelWithUUID)

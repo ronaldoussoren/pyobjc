@@ -1,18 +1,15 @@
 import CoreText
-from PyObjCTools.TestSupport import TestCase, min_os_level, skipUnless
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
-try:
-    from Quartz import CGSize
-except ImportError:
-    CGSize = None, None
+from Quartz import CGSize
 
 
 class TestCTFramesetter(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsInstance(CoreText.CTFramesetterRef, objc.objc_class)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = CoreText.CTFramesetterGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -26,9 +23,7 @@ class TestCTFramesetter(TestCase):
         v = CoreText.CTFramesetterGetTypesetter(setter)
         self.assertIsInstance(v, CoreText.CTTypesetterRef)
 
-    @min_os_level("10.5")
-    @skipUnless(CGSize is not None, "CoreGraphics not available")
-    def testMethods10_5(self):
+    def test_methods(self):
         setter = CoreText.CTFramesetterCreateWithAttributedString(
             CoreText.CFAttributedStringCreate(None, "hello", None)
         )
@@ -48,5 +43,5 @@ class TestCTFramesetter(TestCase):
         self.assertIsInstance(a_range, CoreText.CFRange)
 
     @min_os_level("10.14")
-    def testMethods10_14(self):
+    def test_methods10_14(self):
         self.assertResultIsCFRetained(CoreText.CTFramesetterCreateWithTypesetter)

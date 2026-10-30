@@ -3,13 +3,13 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRange(TestCase):
-    def testStructs(self):
+    def test_structs(self):
         v = Foundation.NSRange()
         self.assertHasAttr(v, "location")
         self.assertHasAttr(v, "length")
         self.assertPickleRoundTrips(v)
 
-    def testFunctions(self):
+    def test_functions(self):
         v = Foundation.NSMakeRange(1, 4)
         self.assertIsInstance(v, Foundation.NSRange)
         self.assertIsInstance(v.location, int)

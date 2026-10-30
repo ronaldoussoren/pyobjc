@@ -3,11 +3,11 @@ import Quartz
 
 
 class TestCIFilterGenerator(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Quartz.kCIFilterGeneratorExportedKey, str)
         self.assertIsInstance(Quartz.kCIFilterGeneratorExportedKeyTargetObject, str)
         self.assertIsInstance(Quartz.kCIFilterGeneratorExportedKeyName, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Quartz.CIFilterGenerator.writeToURL_atomically_)
         self.assertArgIsBOOL(Quartz.CIFilterGenerator.writeToURL_atomically_, 1)

@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWKWebExtensionMatchPattern(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionMatchPatternError)
         self.assertEqual(WebKit.WKWebExtensionMatchPatternErrorUnknown, 1)
         self.assertEqual(WebKit.WKWebExtensionMatchPatternErrorInvalidScheme, 2)

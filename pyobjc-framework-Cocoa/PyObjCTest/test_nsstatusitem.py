@@ -1,16 +1,28 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+
+
+class TestNSStatusItemHelper(AppKit.NSObject):
+    def statusItemDidEndExpandedInterfaceSession_animated_(self, a, b):
+        pass
 
 
 class TestNSStatusItem(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSStatusItemBehavior)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSStatusItemBehaviorRemovalAllowed, 1 << 1)
         self.assertEqual(AppKit.NSStatusItemBehaviorTerminationOnRemoval, 1 << 2)
 
-    def testMethods(self):
+    @min_sdk_level("27.0")
+    def test_protocols(self):
+        self.assertProtocolExists("NSStatusItemExpandedInterfaceDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertArgIsBOOL(
+            TestNSStatusItemHelper.statusItemDidEndExpandedInterfaceSession_animated_, 1
+        )
+
+    def test_methods(self):
         m = AppKit.NSStatusItem.setAction_.__metadata__()
         self.assertEqual(m["arguments"][2]["sel_of_type"], b"v@:@")
 
@@ -26,6 +38,6 @@ class TestNSStatusItem(TestCase):
         )
 
     @min_os_level("10.12")
-    def testMethods10_12(self):
+    def test_methods10_12(self):
         self.assertResultIsBOOL(AppKit.NSStatusItem.isVisible)
         self.assertArgIsBOOL(AppKit.NSStatusItem.setVisible_, 0)

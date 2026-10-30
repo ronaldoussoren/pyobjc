@@ -3,61 +3,18 @@
 {
  "definitions": {
   "classes": {
-   "SFAuthorizationPluginView": {
-    "methods": [
-     {
-      "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "initWithCallbacks:andEngineRef:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "engineRef"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "callbacks"
-     }
-    ]
-   },
-   "SFAuthorizationView": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setString:"
-     }
-    ]
-   },
    "SFCertificatePanel": {
     "methods": [
      {
       "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "runModalForTrust:showGroup:"
-     },
-     {
-      "args": {
-       "2": { "sel_of_type": "v@:@q^v" },
-       "3": {},
-       "4": {}
+       "2": { "sel_of_type": "v@:@q^v" }
       },
       "class_method": false,
       "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:showGroup:"
      },
      {
       "args": {
-       "2": { "sel_of_type": "v@:@q^v"},
-       "3": {}
+       "2": { "sel_of_type": "v@:@q^v"}
       },
       "class_method": false,
       "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:certificates:showGroup:"
@@ -68,35 +25,10 @@
     "methods": [
      {
       "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "runModalForTrust:message:"
-     },
-     {
-      "args": {
-       "2": { "sel_of_type": "v@:@q^v"},
-       "3": {},
-       "4": {}
+       "2": { "sel_of_type": "v@:@q^v"}
       },
       "class_method": false,
       "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:trust:message:"
-     }
-    ]
-   },
-   "SFCertificateView": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "setCertificate:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "certificate"
      }
     ]
    },
@@ -104,30 +36,18 @@
     "methods": [
      {
       "args": {
-       "2": { "sel_of_type": "v@:@q^v"},
-       "3": {}
+       "2": { "sel_of_type": "v@:@q^v"}
       },
       "class_method": false,
       "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:"
-     },
-     {
-      "class_method": false,
-      "retval": {},
-      "selector": "identity"
      }
     ]
    },
    "SFKeychainSavePanel": {
     "methods": [
      {
-      "class_method": false,
-      "retval": {},
-      "selector": "keychain"
-     },
-     {
       "args": {
-       "4": { "sel_of_type": "v@:@q^v"},
-       "5": {}
+       "4": { "sel_of_type": "v@:@q^v"}
       },
       "class_method": false,
       "selector": "beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
@@ -138,27 +58,13 @@
     "methods": [
      {
       "args": {
-       "0": {},
-       "1": {}
-      },
-      "class_method": false,
-      "selector": "runModalForSettings:keychain:"
-     },
-     {
-      "args": {
-       "2": { "sel_of_type": "v@:@q^v"},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "sel_of_type": "v@:@q^v"}
       },
       "class_method": false,
       "selector": "beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:settings:keychain:"
      }
     ]
    }
-  },
-  "formal_protocols": {},
-  "functions": {},
-  "informal_protocols": {}
+  }
  }
 }

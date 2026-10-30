@@ -19,7 +19,7 @@ class TestNSPredicateValidatingHelper(Foundation.NSObject):
 class TestNSPredicateValidating(TestCase):
     @min_sdk_level("26.4")
     def test_protocols(self):
-        self.assertProtocolExists("NSPredicateValidating")
+        self.assertProtocolExists("NSPredicateValidating", Foundation)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSPredicateValidatingHelper.visitPredicate_error_)

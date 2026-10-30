@@ -24,7 +24,7 @@ class ThreadingTest(TestCase):
         else:
             sys.setcheckinterval(self._int)
 
-    def testNSObjectString(self):
+    def test_nsobject_string(self):
         class PyObjCTestThreadRunnerString(Foundation.NSObject):
             def init(self):
                 self = objc.super(PyObjCTestThreadRunnerString, self).init()
@@ -47,7 +47,7 @@ class ThreadingTest(TestCase):
         time.sleep(2)
         self.assertEqual(myObj.storage[0], "hello world")
 
-    def testNSObject(self):
+    def test_nsobject(self):
         class PyObjCTestThreadRunner(Foundation.NSObject):
             def run_(self, argument):
                 Foundation.NSAutoreleasePool.alloc().init()
@@ -68,7 +68,7 @@ class ThreadingTest(TestCase):
         time.sleep(2)
         self.assertEqual(lst, list(range(100)))
 
-    def testPyObject(self):
+    def test_pyobject(self):
         import os
 
         class TestThreadRunner:
@@ -101,7 +101,7 @@ class ThreadingTest(TestCase):
         finally:
             os.dup2(dupped, 2)
 
-    def testCalling(self):
+    def test_calling(self):
         class Dummy:
             pass
 

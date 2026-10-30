@@ -3,7 +3,7 @@ import GameKit
 
 
 class TestGKGameActivityPlayStyle(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKGameActivityPlayStyle)
         self.assertEqual(GameKit.GKGameActivityPlayStyleUnspecified, 0)
         self.assertEqual(GameKit.GKGameActivityPlayStyleSynchronous, 1)

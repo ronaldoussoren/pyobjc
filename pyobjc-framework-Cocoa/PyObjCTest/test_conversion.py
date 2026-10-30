@@ -9,13 +9,13 @@ import objc
 
 
 class TestConversion(TestCase):
-    def test_toPythonDecimal(self):
+    def test_to_python_decimal(self):
         v = Cocoa.NSDecimalNumber.decimalNumberWithString_("42.5")
         d = Conversion.toPythonDecimal(v)
         self.assertIsInstance(d, decimal.Decimal)
         self.assertEqual(str(d), "42.5")
 
-    def test_fromPythonDecimal(self):
+    def test_from_python_decimal(self):
         d = decimal.Decimal("42.5")
         self.assertIsInstance(d, decimal.Decimal)
 
@@ -23,7 +23,7 @@ class TestConversion(TestCase):
         self.assertIsInstance(v, Cocoa.NSDecimalNumber)
         self.assertEqual(str(v), "42.5")
 
-    def test_serializePropertyList(self):
+    def test_serialize_propertylist(self):
         self.assertRaises(ValueError, Conversion.serializePropertyList, {}, "invalid")
 
         v = Conversion.serializePropertyList({"a": 42}, "xml")
@@ -43,7 +43,7 @@ class TestConversion(TestCase):
             "xml",
         )
 
-    def test_deserializePropertyList(self):
+    def test_deserialize_propertylist(self):
         in_val = {"a": 42}
 
         for fmt in ("xml", "binary"):
@@ -65,7 +65,7 @@ class TestConversion(TestCase):
 
             self.assertRaises(ValueError, Conversion.deserializePropertyList, data[:-2])
 
-    def test_propertyListFromPythonCollection(self):
+    def test_propertylist_from_python_collection(self):
         for value, result_type in (
             ({"a": 42}, Cocoa.NSDictionary),
             ([42], Cocoa.NSArray),
@@ -119,7 +119,7 @@ class TestConversion(TestCase):
             self.assertIsInstance(v[2], Cocoa.NSSet)
             self.assertIsInstance(next(iter(v[2])), Cocoa.NSArray)
 
-    def test_pythonCollectionFromPropertyList(self):
+    def test_python_collection_from_propertylist(self):
         with self.subTest("dict"):
             value = Cocoa.NSDictionary.dictionaryWithDictionary_({"a": 42})
             self.assertIsInstance(value, Cocoa.NSDictionary)

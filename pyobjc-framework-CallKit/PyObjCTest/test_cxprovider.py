@@ -3,10 +3,8 @@ import CallKit
 
 
 class TestCXProvider(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CallKit.CXCallEndedReason)
-
-    def test_constants(self):
         self.assertEqual(CallKit.CXCallEndedReasonFailed, 1)
         self.assertEqual(CallKit.CXCallEndedReasonRemoteEnded, 2)
         self.assertEqual(CallKit.CXCallEndedReasonUnanswered, 3)
@@ -14,7 +12,7 @@ class TestCXProvider(TestCase):
         self.assertEqual(CallKit.CXCallEndedReasonDeclinedElsewhere, 5)
 
     def test_protocols(self):
-        self.assertProtocolExists("CXProviderDelegate")
+        self.assertProtocolExists("CXProviderDelegate", CallKit)
 
     def test_methods(self):
         self.assertArgIsBlock(

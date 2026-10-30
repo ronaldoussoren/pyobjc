@@ -55,9 +55,15 @@ class TestBEAccessibilityHelper(BrowserEngineKit.NSObject):
     def accessibilityLineRangeForPosition_(self, a):
         pass
 
+    def browserAccessibilityOrientation(self):
+        return 1
+
+    def setBrowserAccessibilityOrientation_(self, a):
+        pass
+
 
 class TestBEAccessibility(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(BrowserEngineKit.BEAccessibilityPressedState)
         self.assertEqual(BrowserEngineKit.BEAccessibilityPressedStateUndefined, 0)
         self.assertEqual(BrowserEngineKit.BEAccessibilityPressedStateFalse, 1)
@@ -85,7 +91,13 @@ class TestBEAccessibility(TestCase):
             BrowserEngineKit.BEAccessibilityContainerTypeDescriptionList, 1 << 11
         )
 
-    def test_methods(self):
+        self.assertIsEnumType(BrowserEngineKit.BEAccessibilityOrientation)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationUnknown, 0)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationVertical, 1)
+        self.assertEqual(BrowserEngineKit.BEAccessibilityOrientationHorizontal, 2)
+
+    def test_protocol_methods(self):
+        # These are part of an informal protocol
         self.assertResultIsBOOL(
             TestBEAccessibilityHelper.browserAccessibilityIsRequired
         )
@@ -151,4 +163,13 @@ class TestBEAccessibility(TestCase):
         self.assertResultHasType(
             TestBEAccessibilityHelper.accessibilityLineRangeForPosition_,
             BrowserEngineKit.NSRange.__typestr__,
+        )
+
+        self.assertResultHasType(
+            TestBEAccessibilityHelper.browserAccessibilityOrientation, objc._C_NSInteger
+        )
+        self.assertArgHasType(
+            TestBEAccessibilityHelper.setBrowserAccessibilityOrientation_,
+            0,
+            objc._C_NSInteger,
         )

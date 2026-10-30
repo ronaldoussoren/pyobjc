@@ -3,11 +3,8 @@ import NetworkExtension
 
 
 class TestNWTCPConnection(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(NetworkExtension.NWUDPSessionState)
-
-    @min_os_level("10.11")
-    def testConstants(self):
         self.assertEqual(NetworkExtension.NWUDPSessionStateInvalid, 0)
         self.assertEqual(NetworkExtension.NWUDPSessionStateWaiting, 1)
         self.assertEqual(NetworkExtension.NWUDPSessionStatePreparing, 2)
@@ -16,7 +13,7 @@ class TestNWTCPConnection(TestCase):
         self.assertEqual(NetworkExtension.NWUDPSessionStateCancelled, 5)
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(NetworkExtension.NWUDPSession.isViable)
         self.assertResultIsBOOL(NetworkExtension.NWUDPSession.hasBetterPath)
 

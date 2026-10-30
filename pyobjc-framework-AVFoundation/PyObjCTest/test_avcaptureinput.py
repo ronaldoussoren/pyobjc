@@ -3,12 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureInput(TestCase):
-    @min_os_level("10.7")
-    def testConstants(self):
-        self.assertIsInstance(
-            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
-        )
-
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVCaptureMultichannelAudioMode)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeNone, 0)
         self.assertEqual(AVFoundation.AVCaptureMultichannelAudioModeStereo, 1)
@@ -16,7 +11,12 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureMultichannelAudioModeFirstOrderAmbisonics, 2
         )
 
-    def testMethods(self):
+    def test_constants(self):
+        self.assertIsInstance(
+            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
+        )
+
+    def test_methods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureInputPort.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureInputPort.setEnabled_, 0)
 
@@ -30,8 +30,18 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0
         )
 
+        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
+        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
+        )
+
     @min_os_level("12.0")
-    def test_methodsTundra(self):
+    def test_methods_tundra(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureScreenInput_Tundra.capturesMouseClicks
         )
@@ -48,25 +58,13 @@ class TestAVCaptureInput(TestCase):
             AVFoundation.AVCaptureDeviceInput_Tundra.initWithDevice_error_, 1
         )
 
-    @min_os_level("10.8")
-    def testMethods10_8(self):
-        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
-        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
-
-        self.assertResultIsBOOL(
-            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
-        )
-        self.assertArgIsBOOL(
-            AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
-        )
-
-    @min_os_level("12.0")
-    def testMethods12_0(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput_Tundra.capturesCursor)
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput_Tundra.setCapturesCursor_, 0
         )
 
+    @min_os_level("12.0")
+    def test_methods12_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
         )
@@ -75,7 +73,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isMultichannelAudioModeSupported_
         )
@@ -91,7 +89,7 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("26.0")
-    def testMethods26_0(self):
+    def test_methods26_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceInput.isCinematicVideoCaptureSupported
         )
@@ -110,6 +108,6 @@ class TestAVCaptureInput(TestCase):
         )
 
     @min_os_level("26.4")
-    def testMethods26_4(self):
+    def test_methods26_4(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDeviceInput.isAudioZoomEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureDeviceInput.setAudioZoomEnabled_, 0)

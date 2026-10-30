@@ -17,14 +17,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = '12.2.3'
+VERSION = "13.0"
 
 setup(
     name="pyobjc-framework-FSEvents",
     description="Wrappers for the framework FSEvents on macOS",
     min_os_level="10.5",
     packages=["FSEvents"],
-    ext_modules=[Extension("FSEvents._callbacks", ["Modules/_callbacks.m"])],
+    ext_modules=[Extension("FSEvents._FSEvents", ["Modules/_FSEvents.m"])],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,

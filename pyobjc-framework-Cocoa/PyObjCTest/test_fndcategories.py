@@ -7,7 +7,7 @@ class TestFndKitCategories(TestCase):
     # XXX: These tests don't actually test anything beyond asserting that
     # the code doesn't crash...
 
-    def testNSAffineTransform(self):
+    def test_affinetransform(self):
         t = Cocoa.NSAffineTransform.alloc().init()
         t.rotateByDegrees_atPoint_(40, Cocoa.NSPoint(1, 2))
 

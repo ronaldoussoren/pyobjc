@@ -1,10 +1,10 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
 class TestData(TestCase):
-    def testTypes(self):
+    def test_types(self):
         try:
             NSCFData = objc.lookUpClass("__NSCFData")
         except objc.error:
@@ -12,11 +12,11 @@ class TestData(TestCase):
 
         self.assertIs(CoreFoundation.CFDataRef, NSCFData)
 
-    def testTypeID(self):
+    def test_typeid(self):
         v = CoreFoundation.CFDataGetTypeID()
         self.assertTrue(v, int)
 
-    def testCreation(self):
+    def test_creation(self):
         self.assertArgHasType(CoreFoundation.CFDataCreate, 1, b"n^v")
         self.assertArgSizeInArg(CoreFoundation.CFDataCreate, 1, 2)
         data = CoreFoundation.CFDataCreate(None, b"hello", 5)
@@ -39,7 +39,7 @@ class TestData(TestCase):
         mut = CoreFoundation.CFDataCreateMutable(None, 0)
         self.assertIsInstance(mut, CoreFoundation.CFDataRef)
 
-    def testInspection(self):
+    def test_inspect(self):
         data = CoreFoundation.CFDataCreate(None, b"hello", 5)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         mutableData = CoreFoundation.CFDataCreateMutableCopy(None, 0, data)
@@ -85,13 +85,11 @@ class TestData(TestCase):
             CoreFoundation.CFDataGetBytes(mutableData, (0, 5), None), b"world"
         )
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
+    def test_constants(self):
         self.assertEqual(CoreFoundation.kCFDataSearchBackwards, 1 << 0)
         self.assertEqual(CoreFoundation.kCFDataSearchAnchored, 1 << 1)
 
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
+    def test_functions(self):
         data = CoreFoundation.CFDataCreate(None, b"hello world", 11)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         src = CoreFoundation.CFDataCreate(None, b"wor", 3)

@@ -1,28 +1,32 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
+from PyObjCTools.TestSupport import TestCase, max_os_level
 
 
 class TestNSPrintInfo(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSPrintInfoAttributeKey, str)
-        self.assertIsTypedEnum(AppKit.NSPrintJobDispositionValue, str)
-
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPaperOrientation)
-        self.assertIsEnumType(AppKit.NSPrintingOrientation)
-        self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
-
-    def testConstants(self):
-        self.assertEqual(AppKit.NSPortraitOrientation, 0)
-        self.assertEqual(AppKit.NSLandscapeOrientation, 1)
-
         self.assertEqual(AppKit.NSPaperOrientationPortrait, 0)
         self.assertEqual(AppKit.NSPaperOrientationLandscape, 1)
 
+        self.assertIsEnumType(AppKit.NSPrintingOrientation)
+        self.assertEqual(AppKit.NSPortraitOrientation, 0)
+        self.assertEqual(AppKit.NSLandscapeOrientation, 1)
+
+        self.assertIsEnumType(AppKit.NSPrintingPaginationMode)
+        self.assertEqual(AppKit.NSPrintingPaginationModeAutomatic, 0)
+        self.assertEqual(AppKit.NSPrintingPaginationModeFit, 1)
+        self.assertEqual(AppKit.NSPrintingPaginationModeClip, 2)
+
+        # Legacy aliases:
         self.assertEqual(AppKit.NSAutoPagination, 0)
         self.assertEqual(AppKit.NSFitPagination, 1)
         self.assertEqual(AppKit.NSClipPagination, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPrintInfoAttributeKey, str)
+        self.assertIsTypedEnum(AppKit.NSPrintJobDispositionValue, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPrintSpoolJob, str)
         self.assertIsInstance(AppKit.NSPrintPreviewJob, str)
         self.assertIsInstance(AppKit.NSPrintSaveJob, str)
@@ -66,12 +70,12 @@ class TestNSPrintInfo(TestCase):
         self.assertIsInstance(AppKit.NSPrintPagesPerSheet, str)
         self.assertIsInstance(AppKit.NSPrintPaperFeed, str)
 
-        self.assertEqual(AppKit.NSPrintingPaginationModeAutomatic, 0)
-        self.assertEqual(AppKit.NSPrintingPaginationModeFit, 1)
-        self.assertEqual(AppKit.NSPrintingPaginationModeClip, 2)
+        self.assertIsInstance(AppKit.NSPrintSelectionOnly, str)
+        self.assertIsInstance(AppKit.NSPrintJobSavingURL, str)
+        self.assertIsInstance(AppKit.NSPrintJobSavingFileNameExtensionHidden, str)
 
     @max_os_level("10.13")
-    def testConstants_not10_14(self):
+    def test_constants_not10_14(self):
         self.assertIsInstance(AppKit.NSPrintFaxCoverSheetName, str)
         self.assertIsInstance(AppKit.NSPrintFaxHighResolution, str)
         self.assertIsInstance(AppKit.NSPrintFaxModem, str)
@@ -83,19 +87,11 @@ class TestNSPrintInfo(TestCase):
         self.assertIsInstance(AppKit.NSPrintFaxUseCoverSheet, str)
         self.assertIsInstance(AppKit.NSPrintFaxJob, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isHorizontallyCentered)
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isVerticallyCentered)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setHorizontallyCentered_, 0)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setVerticallyCentered_, 0)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertIsInstance(AppKit.NSPrintSelectionOnly, str)
-        self.assertIsInstance(AppKit.NSPrintJobSavingURL, str)
-        self.assertIsInstance(AppKit.NSPrintJobSavingFileNameExtensionHidden, str)
-
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSPrintInfo.isSelectionOnly)
         self.assertArgIsBOOL(AppKit.NSPrintInfo.setSelectionOnly_, 0)

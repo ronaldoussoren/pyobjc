@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -27,12 +27,12 @@ class TestNSSpellServerHelper(Foundation.NSObject):
 
 
 class TestNSSpellServer(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSGrammarRange, str)
         self.assertIsInstance(Foundation.NSGrammarUserDescription, str)
         self.assertIsInstance(Foundation.NSGrammarCorrections, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSSpellServer.registerLanguage_byVendor_)
         self.assertResultIsBOOL(
             Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_
@@ -41,7 +41,26 @@ class TestNSSpellServer(TestCase):
             Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_, 1
         )
 
-    def testDelegate(self):
+    def test_protocols(self):
+        self.assertProtocolExists("NSSpellServerDelegate", Foundation)
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
+            3,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
+            6,
+            b"o^" + objc._C_NSInteger,
+        )
+
         self.assertResultHasType(
             TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,  # noqa: B950
             Foundation.NSRange.__typestr__,
@@ -72,25 +91,3 @@ class TestNSSpellServer(TestCase):
             3,
             b"o^@",
         )
-
-    @min_os_level("10.6")
-    def testDelegate10_6(self):
-        self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
-            2,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
-            3,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
-            6,
-            b"o^" + objc._C_NSInteger,
-        )
-
-    @min_sdk_level("10.10")
-    def testProtocolObjects(self):
-        self.assertProtocolExists("NSSpellServerDelegate")

@@ -1,21 +1,19 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, NoObjCClass
 import SystemConfiguration
 import objc
 
 
 class TestSCNetworkConnection(TestCase):
-    def testTypes(self):
-        self.assertIsInstance(
-            SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
-        )
 
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(SystemConfiguration.SCNetworkConnectionStatus)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionInvalid, -1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionDisconnected, 0)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionConnecting, 1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionConnected, 2)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionDisconnecting, 3)
 
+        self.assertIsEnumType(SystemConfiguration.SCNetworkConnectionPPPStatus)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPDisconnected, 0)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPInitializing, 1)
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPPPConnectingLink, 2)
@@ -39,6 +37,7 @@ class TestSCNetworkConnection(TestCase):
             SystemConfiguration.kSCNetworkConnectionPPPWaitingForRedial, 13
         )
 
+    def test_constants(self):
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesIn, "BytesIn")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionBytesOut, "BytesOut")
         self.assertEqual(SystemConfiguration.kSCNetworkConnectionPacketsIn, "PacketsIn")
@@ -57,7 +56,12 @@ class TestSCNetworkConnection(TestCase):
             "OnDemandRetry",
         )
 
-    def testFunctions(self):
+    def test_types(self):
+        self.assertIsInstance(
+            SystemConfiguration.SCNetworkConnectionRef, objc.objc_class
+        )
+
+    def test_functions(self):
         v = SystemConfiguration.SCNetworkConnectionGetTypeID()
         self.assertIsInstance(v, int)
 
@@ -84,12 +88,39 @@ class TestSCNetworkConnection(TestCase):
             self.assertTrue(servId is None)
             self.assertTrue(userOpts is None)
 
+        lst = []
+
         def callout(ref, status, info):
-            pass
+            lst.apppend((ref, status, info))
 
         ctx = object()
+
+        with self.assertRaisesRegex(TypeError, "expected 4 arguments, got 0"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
+                NoObjCClass(), "pyobjc.test.id", callout, ctx
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
+                None, NoObjCClass(), callout, ctx
+            )
+
         v = SystemConfiguration.SCNetworkConnectionCreateWithServiceID(
             None, "pyobjc.test.id", callout, ctx
+        )
+
+        rl = SystemConfiguration.CFRunLoopGetCurrent()
+        SystemConfiguration.SCNetworkConnectionScheduleWithRunLoop(
+            v, rl, SystemConfiguration.kCFRunLoopCommonModes
+        )
+        SystemConfiguration.CFRunLoopRunInMode(
+            SystemConfiguration.kCFRunLoopDefaultMode, 1.0, False
+        )
+        SystemConfiguration.SCNetworkConnectionUnscheduleFromRunLoop(
+            v, rl, SystemConfiguration.kCFRunLoopCommonModes
         )
 
         self.assertResultIsCFRetained(
@@ -116,6 +147,4 @@ class TestSCNetworkConnection(TestCase):
             SystemConfiguration.SCNetworkConnectionUnscheduleFromRunLoop
         )
 
-    @min_os_level("10.6")
-    def testFunctions10_6(self):
         self.assertResultIsBOOL(SystemConfiguration.SCNetworkConnectionSetDispatchQueue)

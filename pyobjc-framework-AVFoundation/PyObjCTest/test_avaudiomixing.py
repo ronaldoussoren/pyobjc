@@ -57,12 +57,37 @@ class TestAVAudioMixingHelper(AVFoundation.NSObject):
 
 
 class TestAkAudioMixing(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(AVFoundation.AVAudio3DMixingPointSourceInHeadMode)
+    def test_enums(self):
         self.assertIsEnumType(AVFoundation.AVAudio3DMixingRenderingAlgorithm)
-        self.assertIsEnumType(AVFoundation.AVAudio3DMixingSourceMode)
+        self.assertEqual(
+            AVFoundation.AVAudio3DMixingRenderingAlgorithmEqualPowerPanning, 0
+        )
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmSphericalHead, 1)
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTF, 2)
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmSoundField, 3)
+        self.assertEqual(
+            AVFoundation.AVAudio3DMixingRenderingAlgorithmStereoPassThrough, 5
+        )
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTFHQ, 6)
+        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmAuto, 7)
 
-    def testMethods(self):
+        self.assertIsEnumType(AVFoundation.AVAudio3DMixingSourceMode)
+        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeSpatializeIfMono, 0)
+        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeBypass, 1)
+        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModePointSource, 2)
+        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeAmbienceBed, 3)
+
+        self.assertIsEnumType(AVFoundation.AVAudio3DMixingPointSourceInHeadMode)
+        self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeMono, 0)
+        self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeBypass, 1)
+
+    @min_sdk_level("10.10")
+    def test_protocols(self):
+        self.assertProtocolExists("AVAudioMixing", AVFoundation)
+        self.assertProtocolExists("AVAudioStereoMixing", AVFoundation)
+        self.assertProtocolExists("AVAudio3DMixing", AVFoundation)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestAVAudioMixingHelper.destinationForMixer_bus_, 1, objc._C_NSUInteger
         )
@@ -100,30 +125,3 @@ class TestAkAudioMixing(TestCase):
         self.assertResultHasType(
             TestAVAudioMixingHelper.position, AVFoundation.AVAudio3DPoint.__typestr__
         )
-
-    def testConstants(self):
-        self.assertEqual(
-            AVFoundation.AVAudio3DMixingRenderingAlgorithmEqualPowerPanning, 0
-        )
-        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmSphericalHead, 1)
-        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTF, 2)
-        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmSoundField, 3)
-        self.assertEqual(
-            AVFoundation.AVAudio3DMixingRenderingAlgorithmStereoPassThrough, 5
-        )
-        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmHRTFHQ, 6)
-        self.assertEqual(AVFoundation.AVAudio3DMixingRenderingAlgorithmAuto, 7)
-
-        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeSpatializeIfMono, 0)
-        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeBypass, 1)
-        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModePointSource, 2)
-        self.assertEqual(AVFoundation.AVAudio3DMixingSourceModeAmbienceBed, 3)
-
-        self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeMono, 0)
-        self.assertEqual(AVFoundation.AVAudio3DMixingPointSourceInHeadModeBypass, 1)
-
-    @min_sdk_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("AVAudioMixing")
-        self.assertProtocolExists("AVAudioStereoMixing")
-        self.assertProtocolExists("AVAudio3DMixing")

@@ -83,8 +83,22 @@ class TestMTLTextureHelper(Metal.NSObject):
     def newTextureViewWithPixelFormat_textureType_levels_slices_(self, a, b, c, d):
         pass
 
+    def newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_(
+        self, a, b, c, d, e
+    ):
+        pass
+
     def swizzle(self):
         return 1
+
+    def setSwizzle_(self, a):
+        pass
+
+    def minLOD(self):
+        return 1
+
+    def setMinLOD_(self, a):
+        pass
 
     def firstMipmapInTail(self):
         return 1
@@ -95,15 +109,16 @@ class TestMTLTextureHelper(Metal.NSObject):
     def isSparse(self):
         return 1
 
+    def newSharedTextureHandle(self):
+        return 1
+
+    def newTextureViewWithDescriptor_(self, a):
+        return 1
+
 
 class TestMTLArgument(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLTextureSwizzle)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLTextureType)
-        self.assertIsEnumType(Metal.MTLTextureUsage)
-        self.assertIsEnumType(Metal.MTLTextureCompressionType)
-
-    def test_constants(self):
         self.assertEqual(Metal.MTLTextureType1D, 0)
         self.assertEqual(Metal.MTLTextureType1DArray, 1)
         self.assertEqual(Metal.MTLTextureType2D, 2)
@@ -115,6 +130,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLTextureType2DMultisampleArray, 8)
         self.assertEqual(Metal.MTLTextureTypeTextureBuffer, 9)
 
+        self.assertIsEnumType(Metal.MTLTextureSwizzle)
         self.assertEqual(Metal.MTLTextureSwizzleZero, 0)
         self.assertEqual(Metal.MTLTextureSwizzleOne, 1)
         self.assertEqual(Metal.MTLTextureSwizzleRed, 2)
@@ -122,6 +138,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLTextureSwizzleBlue, 4)
         self.assertEqual(Metal.MTLTextureSwizzleAlpha, 5)
 
+        self.assertIsEnumType(Metal.MTLTextureUsage)
         self.assertEqual(Metal.MTLTextureUsageUnknown, 0x0000)
         self.assertEqual(Metal.MTLTextureUsageShaderRead, 0x0001)
         self.assertEqual(Metal.MTLTextureUsageShaderWrite, 0x0002)
@@ -129,6 +146,7 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLTextureUsagePixelFormatView, 0x0010)
         self.assertEqual(Metal.MTLTextureUsageShaderAtomic, 0x0020)
 
+        self.assertIsEnumType(Metal.MTLTextureCompressionType)
         self.assertEqual(Metal.MTLTextureCompressionTypeLossless, 0)
         self.assertEqual(Metal.MTLTextureCompressionTypeLossy, 1)
 
@@ -158,11 +176,20 @@ class TestMTLArgument(TestCase):
             ),
         )
 
+    @min_os_level("10.14")
+    def test_methods10_14(self):
+        self.assertResultIsBOOL(
+            Metal.MTLTextureDescriptor.alloc().init().allowGPUOptimizedContents
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLTextureDescriptor.alloc().init().setAllowGPUOptimizedContents_, 0
+        )
+
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLTexture")
+        self.assertProtocolExists("MTLTexture", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(
             TestMTLTextureHelper.parentRelativeLevel, objc._C_NSUInteger
         )
@@ -305,10 +332,14 @@ class TestMTLArgument(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(TestMTLTextureHelper.newTextureViewWithPixelFormat_)
         self.assertArgHasType(
             TestMTLTextureHelper.newTextureViewWithPixelFormat_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_
+        )
         self.assertArgHasType(
             TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
             0,
@@ -333,26 +364,41 @@ class TestMTLArgument(TestCase):
         self.assertResultHasType(
             TestMTLTextureHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__
         )
+        # self.assertArgHasType(
+        #    TestMTLTextureHelper.setSwizzle_, 0,
+        #    Metal.MTLTextureSwizzleChannels.__typestr__,
+        # )
 
+        self.assertResultHasType(TestMTLTextureHelper.minLOD, objc._C_FLT)
+        # self.assertArgHasType(TestMTLTextureHelper.setMinLOD_, 0, objc._C_FLT)
+
+        self.assertResultIsRetained(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_
+        )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             2,
             Metal.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_,
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
             3,
             Metal.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLTextureHelper.newTextureViewWithPixelFormat_textureType_levels_slices_swizzle_,
+            4,
+            Metal.MTLTextureSwizzleChannels.__typestr__,
         )
 
         self.assertResultHasType(
@@ -363,11 +409,6 @@ class TestMTLArgument(TestCase):
         )
         self.assertResultIsBOOL(TestMTLTextureHelper.isSparse)
 
-    @min_os_level("10.14")
-    def test_methods10_14(self):
-        self.assertResultIsBOOL(
-            Metal.MTLTextureDescriptor.alloc().init().allowGPUOptimizedContents
-        )
-        self.assertArgIsBOOL(
-            Metal.MTLTextureDescriptor.alloc().init().setAllowGPUOptimizedContents_, 0
-        )
+        self.assertResultIsRetained(TestMTLTextureHelper.newSharedTextureHandle)
+
+        self.assertResultIsRetained(TestMTLTextureHelper.newTextureViewWithDescriptor_)

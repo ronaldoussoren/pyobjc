@@ -15,26 +15,24 @@ class TestPHLivePhotoViewHelper(PhotosUI.NSObject):
 
 
 class TestPHLivePhotoView(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
+    def test_enums(self):
         self.assertIsEnumType(PhotosUI.PHLivePhotoViewPlaybackStyle)
-
-    def test_constants(self):
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleUndefined, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleFull, 1)
         self.assertEqual(PhotosUI.PHLivePhotoViewPlaybackStyleHint, 2)
 
+        self.assertIsEnumType(PhotosUI.PHLivePhotoViewContentMode)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFit, 0)
         self.assertEqual(PhotosUI.PHLivePhotoViewContentModeAspectFill, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(PhotosUI.PHLivePhotoView.isMuted)
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.setMuted_, 0)
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.stopPlaybackAnimated_, 0)
 
     @min_sdk_level("10.12")
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestPHLivePhotoViewHelper.livePhotoView_willBeginPlaybackWithStyle_,
             1,
@@ -57,5 +55,5 @@ class TestPHLivePhotoView(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocols(self):
-        self.assertProtocolExists("PHLivePhotoViewDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists("PHLivePhotoViewDelegate", PhotosUI)

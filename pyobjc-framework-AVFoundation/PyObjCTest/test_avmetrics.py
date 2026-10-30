@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 
 class TestAVMetrics(TestCase):
-    @min_sdk_level("15.0")
-    def test_protocols(self):
-        self.assertProtocolExists("AVMetricEventStreamPublisher")
-        self.assertProtocolExists("AVMetricEventStreamSubscriber")
+    def test_enums(self):
+        self.assertIsEnumType(AVFoundation.AVMetricPlaybackMode)
+        self.assertEqual(AVFoundation.AVMetricPlaybackModeLocal, 0)
+        self.assertEqual(AVFoundation.AVMetricPlaybackModeAirPlayVideo, 1)
 
     @min_os_level("15.0")
     def test_methods(self):
@@ -31,3 +31,8 @@ class TestAVMetrics(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVMetricPlayerItemVariantSwitchEvent.didSucceed
         )
+
+    @min_sdk_level("15.0")
+    def test_protocols(self):
+        self.assertProtocolExists("AVMetricEventStreamPublisher", AVFoundation)
+        self.assertProtocolExists("AVMetricEventStreamSubscriber", AVFoundation)

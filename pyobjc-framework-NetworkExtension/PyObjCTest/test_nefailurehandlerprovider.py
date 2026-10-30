@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEFailureHandlerProvider(TestCase):
     @os_level_between("14.0", "14.1")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             NetworkExtension.NEFailureHandlerProvider.handleFailure_completionHandler_,
             1,

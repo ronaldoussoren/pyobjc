@@ -19,3 +19,10 @@ class TestMTL4ComputePipeline(TestCase):
         self.assertArgIsBOOL(
             Metal.MTL4ComputePipelineDescriptor.setSupportBinaryLinking_, 0
         )
+
+        self.assertResultIsBOOL(
+            Metal.MTL4ComputePipelineDescriptor.optimizeForPersistentKernel
+        )
+        self.assertArgIsBOOL(
+            Metal.MTL4ComputePipelineDescriptor.setOptimizeForPersistentKernel_, 0
+        )

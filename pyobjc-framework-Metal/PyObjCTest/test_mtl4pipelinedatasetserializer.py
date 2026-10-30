@@ -11,7 +11,7 @@ class TestMTL4PipelineDataSetSerializerHelper(Metal.NSObject):
 
 
 class TestMTL4PipelineDataSetSerializer(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTL4PipelineDataSetSerializerConfiguration)
         self.assertEqual(
             Metal.MTL4PipelineDataSetSerializerConfigurationCaptureDescriptors, 1 << 0
@@ -22,7 +22,7 @@ class TestMTL4PipelineDataSetSerializer(TestCase):
 
     @min_sdk_level("26.0")
     def test_protocols(self):
-        self.assertProtocolExists("MTL4PipelineDataSetSerializer")
+        self.assertProtocolExists("MTL4PipelineDataSetSerializer", Metal)
 
     def test_protocol_methods(self):
         self.assertResultIsBOOL(

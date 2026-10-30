@@ -5,7 +5,7 @@ import Photos
 
 class TestPHAssetChangeRequest(TestCase):
     @min_os_level("10.15")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Photos.PHAssetChangeRequest.isFavorite)
         self.assertArgIsBOOL(Photos.PHAssetChangeRequest.setFavorite_, 0)
 
@@ -37,3 +37,16 @@ class TestPHAssetChangeRequest(TestCase):
         self.assertIsInstance(Photos.PHContentEditingInputResultIsInCloudKey, str)
         self.assertIsInstance(Photos.PHContentEditingInputCancelledKey, str)
         self.assertIsInstance(Photos.PHContentEditingInputErrorKey, str)
+
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsBOOL(
+            Photos.PHAssetChangeRequest.setLivePhotoVideoPlaybackEnabled_, 0
+        )
+
+        self.assertResultIsBOOL(
+            Photos.PHContentEditingInputRequestOptions.skipsDisplaySizeImage
+        )
+        self.assertArgIsBOOL(
+            Photos.PHContentEditingInputRequestOptions.setSkipsDisplaySizeImage_, 0
+        )

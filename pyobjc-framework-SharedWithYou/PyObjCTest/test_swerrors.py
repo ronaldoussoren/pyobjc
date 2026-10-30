@@ -4,7 +4,7 @@ import SharedWithYou
 
 
 class TestSWErrors(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SharedWithYou.SWHighlightCenterErrorCode)
         self.assertEqual(SharedWithYou.SWHighlightCenterErrorCodeNoError, 0)
         self.assertEqual(SharedWithYou.SWHighlightCenterErrorCodeInternalError, 1)

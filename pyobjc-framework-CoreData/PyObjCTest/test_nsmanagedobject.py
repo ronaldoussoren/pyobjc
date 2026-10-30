@@ -1,12 +1,18 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSManagedObject(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(CoreData.NSSnapshotEventType)
+        self.assertEqual(CoreData.NSSnapshotEventUndoInsertion, 1 << 1)
+        self.assertEqual(CoreData.NSSnapshotEventUndoDeletion, 1 << 2)
+        self.assertEqual(CoreData.NSSnapshotEventUndoUpdate, 1 << 3)
+        self.assertEqual(CoreData.NSSnapshotEventRollback, 1 << 4)
+        self.assertEqual(CoreData.NSSnapshotEventRefresh, 1 << 5)
+        self.assertEqual(CoreData.NSSnapshotEventMergePolicy, 1 << 6)
 
-    def testMethods(self):
+    def test_methods(self):
         descr = CoreData.NSEntityDescription.alloc().init()
         descr.setName_("Name")
         o = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
@@ -30,29 +36,12 @@ class TestNSManagedObject(TestCase):
         self.assertResultIsBOOL(CoreData.NSManagedObject.validateForUpdate_)
         self.assertArgIsOut(CoreData.NSManagedObject.validateForUpdate_, 0)
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasFaultForRelationshipNamed_)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(
             CoreData.NSManagedObject.contextShouldIgnoreUnmodeledPropertyChanges
         )
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasChanges)
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertResultIsBOOL(CoreData.NSManagedObject.hasPersistentChangedValues)
-
-    @min_os_level("10.6")
-    def testConstants10_6(self):
-        self.assertEqual(CoreData.NSSnapshotEventUndoInsertion, 1 << 1)
-        self.assertEqual(CoreData.NSSnapshotEventUndoDeletion, 1 << 2)
-        self.assertEqual(CoreData.NSSnapshotEventUndoUpdate, 1 << 3)
-        self.assertEqual(CoreData.NSSnapshotEventRollback, 1 << 4)
-        self.assertEqual(CoreData.NSSnapshotEventRefresh, 1 << 5)
-        self.assertEqual(CoreData.NSSnapshotEventMergePolicy, 1 << 6)

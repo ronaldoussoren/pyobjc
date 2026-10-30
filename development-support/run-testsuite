@@ -276,7 +276,7 @@ def run_tests(
     except IndexError:
         status = {
             "message": "Cannot fetch status line",
-            "stdout": stdout.decode("utf-8"),
+            "stdout": stdout,
         }
 
     status["exitcode"] = exitcode

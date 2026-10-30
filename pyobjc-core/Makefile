@@ -89,5 +89,8 @@ c-coverage:
 #-arch -arm64 build/cov-env/bin/python3 setup.py test -v
 #-arch -x86_64 build/cov-env/bin/python3 setup.py test -v
 
+leaks:
+	env PYTHONMALLOC=malloc MallocStackLogging=1 python setup.py test --leaks
 
-.PHONY: info all test sanitize-test clean scan-build c-coverage test-no-gil
+
+.PHONY: info all test sanitize-test clean scan-build c-coverage test-no-gil leaks

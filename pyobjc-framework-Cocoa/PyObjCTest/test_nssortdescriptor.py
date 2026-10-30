@@ -1,9 +1,9 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSSortDescriptor(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSSortDescriptor.initWithKey_ascending_, 1)
         self.assertArgIsBOOL(
             Foundation.NSSortDescriptor.initWithKey_ascending_selector_, 1
@@ -14,8 +14,6 @@ class TestNSSortDescriptor(TestCase):
 
         self.assertResultIsBOOL(Foundation.NSSortDescriptor.ascending)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertArgIsBOOL(
             Foundation.NSSortDescriptor.sortDescriptorWithKey_ascending_, 1
         )

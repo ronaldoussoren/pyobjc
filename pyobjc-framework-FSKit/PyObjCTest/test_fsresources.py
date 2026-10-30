@@ -12,7 +12,7 @@ class TestFSResourceHelper(FSKit.NSObject):
 
 
 class TestFSResource(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(FSKit.FSMatchResult)
         self.assertEqual(FSKit.FSMatchResultNotRecognized, 0)
         self.assertEqual(FSKit.FSMatchResultRecognized, 1)
@@ -20,7 +20,7 @@ class TestFSResource(TestCase):
         self.assertEqual(FSKit.FSMatchResultUsable, 3)
 
     def test_protocols(self):
-        self.assertProtocolExists("FSManageableResourceMaintenanceOperations")
+        self.assertProtocolExists("FSManageableResourceMaintenanceOperations", FSKit)
 
     def test_protocol_methods(self):
 

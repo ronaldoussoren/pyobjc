@@ -7,7 +7,7 @@ from objc import simd
 
 class TestGKNoise(TestCase):
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(
             GameplayKit.GKNoise.remapValuesToTerracesWithPeaks_terracesInverted_, 1
         )

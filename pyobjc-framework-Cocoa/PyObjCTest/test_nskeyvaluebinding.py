@@ -1,7 +1,6 @@
 import AppKit
 from PyObjCTools.TestSupport import (
     TestCase,
-    min_os_level,
     min_sdk_level,
 )
 
@@ -18,12 +17,12 @@ class TestNSKeyValueBindingHelper(AppKit.NSObject):
 
 
 class TestNSKeyValueBinding(TestCase):
-    def test_typed_enum(self):
+    def test_typed_enums(self):
         self.assertIsTypedEnum(AppKit.NSBindingInfoKey, str)
         self.assertIsTypedEnum(AppKit.NSBindingName, str)
         self.assertIsTypedEnum(AppKit.NSBindingOption, str)
 
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSMultipleValuesMarker, AppKit.NSObject)
         self.assertIsInstance(AppKit.NSNoSelectionMarker, AppKit.NSObject)
         self.assertIsInstance(AppKit.NSNotApplicableMarker, AppKit.NSObject)
@@ -136,8 +135,6 @@ class TestNSKeyValueBinding(TestCase):
         self.assertIsInstance(AppKit.NSValueTransformerNameBindingOption, str)
         self.assertIsInstance(AppKit.NSValueTransformerBindingOption, str)
 
-    @min_os_level("10.5")
-    def testConstants10_5(self):
         self.assertIsInstance(AppKit.NSContentDictionaryBinding, str)
         self.assertIsInstance(AppKit.NSExcludedKeysBinding, str)
         self.assertIsInstance(AppKit.NSIncludedKeysBinding, str)
@@ -147,30 +144,26 @@ class TestNSKeyValueBinding(TestCase):
         self.assertIsInstance(AppKit.NSTransparentBinding, str)
         self.assertIsInstance(AppKit.NSContentPlacementTagBindingOption, str)
 
-    @min_os_level("10.7")
-    def testConstants10_7(self):
         self.assertIsInstance(AppKit.NSPositioningRectBinding, str)
 
-    def testFunctions(self):
+    def test_functions(self):
         o = AppKit.NSObject.alloc().init()
         self.assertIs(AppKit.NSIsControllerMarker(o), False)
         self.assertIs(AppKit.NSIsControllerMarker(AppKit.NSMultipleValuesMarker), True)
 
-    def testMethods(self):
+    @min_sdk_level("10.14")
+    def test_protocols(self):
+        self.assertProtocolExists("NSEditor", AppKit)
+        self.assertProtocolExists("NSEditorRegistration", AppKit)
+
+    def test_protocol_methods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
         self.assertEqual(m["arguments"][3]["sel_of_type"], b"v@:@Z^v")
 
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
         self.assertResultIsBOOL(
             TestNSKeyValueBindingHelper.commitEditingAndReturnError_
         )
         self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
-
-    @min_sdk_level("10.14")
-    def test_protocols(self):
-        self.assertProtocolExists("NSEditor")
-        self.assertProtocolExists("NSEditorRegistration")

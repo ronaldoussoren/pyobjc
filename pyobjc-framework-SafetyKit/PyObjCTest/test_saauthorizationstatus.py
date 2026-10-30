@@ -4,7 +4,7 @@ import SafetyKit
 
 
 class TestSAAuthorizationStatus(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(SafetyKit.SAAuthorizationStatus)
         self.assertEqual(SafetyKit.SAAuthorizationStatusNotDetermined, 0)
         self.assertEqual(SafetyKit.SAAuthorizationStatusDenied, 1)

@@ -3,10 +3,8 @@ import Vision
 
 
 class TestVNError(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNErrorCode)
-
-    def testConstants(self):
         self.assertEqual(Vision.VNErrorOK, 0)
         self.assertEqual(Vision.VNErrorRequestCancelled, 1)
         self.assertEqual(Vision.VNErrorInvalidFormat, 2)
@@ -30,3 +28,5 @@ class TestVNError(TestCase):
         self.assertEqual(Vision.VNErrorTimeout, 20)
         self.assertEqual(Vision.VNErrorUnsupportedComputeStage, 21)
         self.assertEqual(Vision.VNErrorUnsupportedComputeDevice, 22)
+        self.assertEqual(Vision.VNErrorResourceUnavailable, 23)
+        self.assertEqual(Vision.VNErrorResourceCorrupted, 24)

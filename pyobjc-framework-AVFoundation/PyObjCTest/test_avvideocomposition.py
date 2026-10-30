@@ -40,8 +40,7 @@ class TestAVVideoComposition(TestCase):
             AVFoundation.AVVideoCompositionPerFrameHDRDisplayMetadataPolicyGenerate, str
         )
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             AVFoundation.AVVideoCompositionInstruction.enablePostProcessing
         )
@@ -101,32 +100,8 @@ class TestAVVideoComposition(TestCase):
             3,
         )
 
-        self.assertResultIsBOOL(
-            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey_  # noqa: B950
-        )
-        self.assertResultIsBOOL(
-            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_  # noqa: B950
-        )
-        self.assertArgHasType(
-            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_,  # noqa: B950
-            1,
-            b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
-        )
-        self.assertResultIsBOOL(
-            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_  # noqa: B950
-        )
-        self.assertResultIsBOOL(
-            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTrackIDInInstruction_layerInstruction_asset_  # noqa: B950
-        )
-
-    @min_os_level("10.8")
-    def testMethods10_8(self):
-        self.assertResultIsBOOL(
-            AVFoundation.AVVideoComposition.isValidForAsset_timeRange_validationDelegate_  # noqa: B950
-        )
-
     @min_os_level("10.11")
-    def testMethods10_11(self):
+    def test_methods10_11(self):
         self.assertArgIsBlock(
             AVFoundation.AVVideoComposition.videoCompositionWithAsset_applyingCIFiltersWithHandler_,  # noqa: B950
             1,
@@ -139,7 +114,7 @@ class TestAVVideoComposition(TestCase):
         )
 
     @min_os_level("12.0")
-    def testMethods12_0(self):
+    def test_methods12_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVAsset.findUnusedTrackIDWithCompletionHandler_,  # noqa: B950
             0,
@@ -147,7 +122,7 @@ class TestAVVideoComposition(TestCase):
         )
 
     @min_os_level("13.0")
-    def testMethods13_0(self):
+    def test_methods13_0(self):
         self.assertArgIsBlock(
             AVFoundation.AVVideoComposition.videoCompositionWithPropertiesOfAsset_completionHandler_,  # noqa: B950
             1,
@@ -189,10 +164,33 @@ class TestAVVideoComposition(TestCase):
         )
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(
             AVFoundation.AVMutableVideoComposition.isValidForTracks_assetDuration_timeRange_validationDelegate_
         )
 
-    def testProtocols(self):
-        self.assertProtocolExists("AVVideoCompositionValidationHandling")
+    def test_protocols(self):
+        self.assertProtocolExists("AVVideoCompositionValidationHandling", AVFoundation)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(
+            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey_  # noqa: B950
+        )
+        self.assertResultIsBOOL(
+            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_  # noqa: B950
+        )
+        self.assertArgHasType(
+            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_,  # noqa: B950
+            1,
+            b"{CMTimeRange={CMTime=qiIq}{CMTime=qiIq}}",
+        )
+        self.assertResultIsBOOL(
+            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_  # noqa: B950
+        )
+        self.assertResultIsBOOL(
+            TestAVVideoCompositionHelper.videoComposition_shouldContinueValidatingAfterFindingInvalidTrackIDInInstruction_layerInstruction_asset_  # noqa: B950
+        )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVVideoComposition.isValidForAsset_timeRange_validationDelegate_  # noqa: B950
+        )

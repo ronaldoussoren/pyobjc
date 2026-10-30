@@ -3,10 +3,10 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPopUpButton(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPopUpButtonWillPopUpNotification, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(AppKit.NSPopUpButton.initWithFrame_pullsDown_, 1)
         self.assertResultIsBOOL(AppKit.NSPopUpButton.pullsDown)
         self.assertArgIsBOOL(AppKit.NSPopUpButton.setPullsDown_, 0)
@@ -15,7 +15,7 @@ class TestNSPopUpButton(TestCase):
         self.assertResultIsBOOL(AppKit.NSPopUpButton.selectItemWithTag_)
 
     @min_os_level("15.0")
-    def testMethods15_0(self):
+    def test_methods15_0(self):
         self.assertResultIsBOOL(AppKit.NSPopUpButton.usesItemFromMenu)
         self.assertArgIsBOOL(AppKit.NSPopUpButton.setUsesItemFromMenu_, 0)
 

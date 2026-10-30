@@ -4,10 +4,12 @@ import Carbon
 
 
 class TestHelp_AppleHelp(TestCase):
-    def test_enum(self):
+    def test_enums(self):
+        # Unnamed enum:
         self.assertEqual(Carbon.kAHInternalErr, -10790)
         self.assertEqual(Carbon.kAHInternetConfigPrefErr, -10791)
 
+        # Unnamed enum:
         self.assertEqual(Carbon.kAHTOCTypeUser, 0)
         self.assertEqual(Carbon.kAHTOCTypeDeveloper, 1)
 

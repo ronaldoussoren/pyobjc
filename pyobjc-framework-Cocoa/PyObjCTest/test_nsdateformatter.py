@@ -1,14 +1,37 @@
 import Foundation
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDateFormatter(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Foundation.NSDateFormatterBehavior)
-        self.assertIsEnumType(Foundation.NSDateFormatterStyle)
+        self.assertEqual(Foundation.NSDateFormatterBehaviorDefault, 0)
+        self.assertEqual(Foundation.NSDateFormatterBehavior10_0, 1000)
+        self.assertEqual(Foundation.NSDateFormatterBehavior10_4, 1040)
 
-    def testOutput(self):
+        self.assertIsEnumType(Foundation.NSDateFormatterStyle)
+        self.assertEqual(
+            Foundation.NSDateFormatterNoStyle, CoreFoundation.kCFDateFormatterNoStyle
+        )
+        self.assertEqual(
+            Foundation.NSDateFormatterShortStyle,
+            CoreFoundation.kCFDateFormatterShortStyle,
+        )
+        self.assertEqual(
+            Foundation.NSDateFormatterMediumStyle,
+            CoreFoundation.kCFDateFormatterMediumStyle,
+        )
+        self.assertEqual(
+            Foundation.NSDateFormatterLongStyle,
+            CoreFoundation.kCFDateFormatterLongStyle,
+        )
+        self.assertEqual(
+            Foundation.NSDateFormatterFullStyle,
+            CoreFoundation.kCFDateFormatterFullStyle,
+        )
+
+    def test_output(self):
         formatter = Foundation.NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
 
@@ -41,32 +64,7 @@ class TestNSDateFormatter(TestCase):
             Foundation.NSDateFormatter.getObjectValue_forString_range_error_, 3
         )
 
-    def testConstants(self):
-        self.assertEqual(
-            Foundation.NSDateFormatterNoStyle, CoreFoundation.kCFDateFormatterNoStyle
-        )
-        self.assertEqual(
-            Foundation.NSDateFormatterShortStyle,
-            CoreFoundation.kCFDateFormatterShortStyle,
-        )
-        self.assertEqual(
-            Foundation.NSDateFormatterMediumStyle,
-            CoreFoundation.kCFDateFormatterMediumStyle,
-        )
-        self.assertEqual(
-            Foundation.NSDateFormatterLongStyle,
-            CoreFoundation.kCFDateFormatterLongStyle,
-        )
-        self.assertEqual(
-            Foundation.NSDateFormatterFullStyle,
-            CoreFoundation.kCFDateFormatterFullStyle,
-        )
-
-        self.assertEqual(Foundation.NSDateFormatterBehaviorDefault, 0)
-        self.assertEqual(Foundation.NSDateFormatterBehavior10_0, 1000)
-        self.assertEqual(Foundation.NSDateFormatterBehavior10_4, 1040)
-
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.generatesCalendarDates)
         self.assertArgIsBOOL(Foundation.NSDateFormatter.setGeneratesCalendarDates_, 0)
         self.assertResultIsBOOL(Foundation.NSDateFormatter.isLenient)
@@ -77,8 +75,6 @@ class TestNSDateFormatter(TestCase):
         )
         self.assertResultIsBOOL(Foundation.NSDateFormatter.allowsNaturalLanguage)
 
-    @min_os_level("10.6")
-    def testMethods10_6(self):
         self.assertResultIsBOOL(Foundation.NSDateFormatter.doesRelativeDateFormatting)
         self.assertArgIsBOOL(
             Foundation.NSDateFormatter.setDoesRelativeDateFormatting_, 0

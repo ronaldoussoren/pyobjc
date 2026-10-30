@@ -1,16 +1,16 @@
 import Foundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSExceptionInteraction(TestCase):
-    def testRepeatedAllocInit(self):
+    def test_repeated_alloc_init(self):
         for _ in range(1, 1000):
             _ = Foundation.NSException.alloc().initWithName_reason_userInfo_(
                 "Bogus", "A bad reason", {"foo": "bar"}
             )
 
-    def testFormat(self):
+    def test_format(self):
         try:
             Foundation.NSException.raise_format_(
                 "ExceptionName", "Format: %s %d", b"hello", 42
@@ -25,7 +25,7 @@ class TestNSExceptionInteraction(TestCase):
 
 
 class TestNSException(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(Foundation.NSGenericException, str)
         self.assertIsInstance(Foundation.NSRangeException, str)
         self.assertIsInstance(Foundation.NSInvalidArgumentException, str)
@@ -41,17 +41,15 @@ class TestNSException(TestCase):
         self.assertIsInstance(Foundation.NSPortReceiveException, str)
         self.assertIsInstance(Foundation.NSOldStyleException, str)
 
-    @min_os_level("10.6")
-    def testConstants10_6(self):
         self.assertIsInstance(Foundation.NSAssertionHandlerKey, str)
 
-    def testUncaughtExceptionHandler(self):
+    def test_uncaught_exception_handler(self):
         self.assertArgIsFunction(
             Foundation.NSSetUncaughtExceptionHandler, 0, b"v@", True
         )
         self.assertResultIsFunction(Foundation.NSGetUncaughtExceptionHandler, b"v@")
 
-    def testNoAssert(self):
+    def test_no_assert(self):
         self.assertNotHasAttr(Foundation, "NSAssert5")
         self.assertNotHasAttr(Foundation, "NSAssert4")
         self.assertNotHasAttr(Foundation, "NSAssert3")
@@ -67,7 +65,7 @@ class TestNSException(TestCase):
         self.assertNotHasAttr(Foundation, "NSCAssert")
         self.assertNotHasAttr(Foundation, "NSCParameterAssert")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsPrintf(Foundation.NSException.raise_format_, 1)
 
         self.assertArgIsPrintf(

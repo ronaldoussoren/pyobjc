@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestABTypedefs(TestCase):
-    def testConstants(self):
+    def test_constants(self):
         self.assertEqual(AddressBook.kABMultiValueMask, 0x100)
 
         self.assertEqual(AddressBook.kABErrorInProperty, 0x0)

@@ -103,6 +103,8 @@ def _setup():
         ("HKMedicationDoseEvent", b"new"),
         ("HKUserAnnotatedMedication", b"init"),
         ("HKUserAnnotatedMedication", b"new"),
+        ("HKLiveWorkoutZoneUpdate", b"init"),
+        ("HKLiveWorkoutZoneUpdate", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

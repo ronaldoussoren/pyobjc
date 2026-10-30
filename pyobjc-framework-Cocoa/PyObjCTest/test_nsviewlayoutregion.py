@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSViewLayoutRegion(TestCase):
-    def test_enum(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSViewLayoutRegionAdaptivityAxis)
         self.assertEqual(AppKit.NSViewLayoutRegionAdaptivityAxisNone, 0)
         self.assertEqual(AppKit.NSViewLayoutRegionAdaptivityAxisHorizontal, 1)

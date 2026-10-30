@@ -15,7 +15,7 @@ class TestBADownloaderHelper(BackgroundAssets.NSObject):
 
 class TestBADownloadManager(TestCase):
     def test_protocols(self):
-        self.assertProtocolExists("BADownloadManagerDelegate")
+        self.assertProtocolExists("BADownloadManagerDelegate", BackgroundAssets)
 
     def test_protocol_methods(self):
         self.assertArgHasType(

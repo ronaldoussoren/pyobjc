@@ -1,12 +1,12 @@
 import dispatch
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 dispatch_io_handler_t = b"vB@i"
 
 
 class TestIoAPI(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertEqual(dispatch.DISPATCH_IO_STREAM, 0)
         self.assertEqual(dispatch.DISPATCH_IO_RANDOM, 1)
 
@@ -14,7 +14,6 @@ class TestIoAPI(TestCase):
 
         self.assertEqual(dispatch.DISPATCH_IO_STRICT_INTERVAL, 0x1)
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertResultHasType(dispatch.dispatch_read, objc._C_VOID)
         self.assertArgHasType(dispatch.dispatch_read, 0, objc._C_INT)

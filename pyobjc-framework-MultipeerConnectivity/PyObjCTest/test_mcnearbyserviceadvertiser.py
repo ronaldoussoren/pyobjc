@@ -12,14 +12,16 @@ class TestMCNearbyServiceAdvertiserDelegateHelper(MultipeerConnectivity.NSObject
 
 class TestMCNearbyServiceAdvertiser(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertIsInstance(
             MultipeerConnectivity.MCNearbyServiceAdvertiser, objc.objc_class
         )
 
     @min_os_level("10.10")
-    def testProtocols(self):
-        self.assertProtocolExists("MCNearbyServiceAdvertiserDelegate")
+    def test_protocols(self):
+        self.assertProtocolExists(
+            "MCNearbyServiceAdvertiserDelegate", MultipeerConnectivity
+        )
 
     def test_protocol_methods(self):
         self.assertArgIsBlock(

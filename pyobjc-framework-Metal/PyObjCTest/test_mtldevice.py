@@ -137,6 +137,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def sampleTimestamps_gpuTimestamp_(self, a, b):
         pass
 
+    def newTextureWithDescriptor_(self, a):
+        return 1
+
     def newTextureWithDescriptor_iosurface_plane_(self, a, b, c):
         return 1
 
@@ -335,7 +338,19 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newTensorWithDescriptor_error_(self, a, b):
         return 1
 
+    def newTensorWithDescriptor_attachments_error_(self, a, b, c):
+        pass
+
+    def newCommandBuffer(self):
+        return 1
+
+    def newCommandAllocator(self):
+        return 1
+
     def newCommandAllocatorWithDescriptor_error_(self, a, b):
+        return 1
+
+    def newMTL4CommandQueue(self):
         return 1
 
     def newMTL4CommandQueueWithDescriptor_error_(self, a, b):
@@ -362,24 +377,69 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def sizeOfCounterHeapEntry_(self, a):
         return 1
 
+    def newAccelerationStructureWithDescriptor_(self, a):
+        return 1
+
+    def newArgumentEncoderWithArguments_(self, a):
+        return 1
+
+    def newPipelineDataSetSerializerWithDescriptor_(self, a):
+        return 1
+
+    def newRasterizationRateMapWithDescriptor_(self, a):
+        return 1
+
+    def newSharedTextureWithHandle_(self, a):
+        return 1
+
+    def newSharedTextureWithDescriptor_(self, a):
+        return 1
+
+    def newSharedEvent(self):
+        return 1
+
+    def newSharedEventWithHandle_(self, a):
+        return 1
+
+    def newSamplerStateWithDescriptor_(self, a):
+        return 1
+
+    def newArgumentEncoderWithBufferBinding_(self, a):
+        return 1
+
+    def newArgumentEncoderWithBufferIndex_(self, a):
+        return 1
+
+    def newCommandQueue(self):
+        return 1
+
+    def newCommandQueueWithDescriptor_(self, a):
+        return 1
+
+    def newDefaultLibrary(self):
+        return 1
+
+    def newDepthStencilStateWithDescriptor_(self, a):
+        return 1
+
+    def newHeapWithDescriptor_(self, a):
+        return 1
+
+    def newEvent(self):
+        return 1
+
+    def newFence(self):
+        return 1
+
 
 class TestMTLDevice(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
-        self.assertIsEnumType(Metal.MTLCounterSamplingPoint)
-        self.assertIsEnumType(Metal.MTLDeviceLocation)
-        self.assertIsEnumType(Metal.MTLFeatureSet)
-        self.assertIsEnumType(Metal.MTLGPUFamily)
-        self.assertIsEnumType(Metal.MTLPipelineOption)
-        self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
-        self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
-        self.assertIsEnumType(Metal.MTLIOCompressionMethod)
+    def test_enums(self):
         self.assertIsEnumType(Metal.MTLSparsePageSize)
+        self.assertEqual(Metal.MTLSparsePageSize16, 101)
+        self.assertEqual(Metal.MTLSparsePageSize64, 102)
+        self.assertEqual(Metal.MTLSparsePageSize256, 103)
 
-    def test_constants(self):
+        self.assertIsEnumType(Metal.MTLFeatureSet)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v1, 0)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily2_v1, 1)
         self.assertEqual(Metal.MTLFeatureSet_iOS_GPUFamily1_v2, 2)
@@ -423,6 +483,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLFeatureSet_tvOS_GPUFamily1_v3, 30002)
         self.assertEqual(Metal.MTLFeatureSet_tvOS_GPUFamily1_v4, 30004)
 
+        self.assertIsEnumType(Metal.MTLGPUFamily)
         self.assertEqual(Metal.MTLGPUFamilyApple1, 1001)
         self.assertEqual(Metal.MTLGPUFamilyApple2, 1002)
         self.assertEqual(Metal.MTLGPUFamilyApple3, 1003)
@@ -433,60 +494,63 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple8, 1008)
         self.assertEqual(Metal.MTLGPUFamilyApple9, 1009)
         self.assertEqual(Metal.MTLGPUFamilyApple10, 1010)
-
+        self.assertEqual(Metal.MTLGPUFamilyApple11, 1011)
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
-
         self.assertEqual(Metal.MTLGPUFamilyCommon1, 3001)
         self.assertEqual(Metal.MTLGPUFamilyCommon2, 3002)
         self.assertEqual(Metal.MTLGPUFamilyCommon3, 3003)
-
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst1, 4001)
         self.assertEqual(Metal.MTLGPUFamilyMacCatalyst2, 4002)
-
         self.assertEqual(Metal.MTLGPUFamilyMetal3, 5001)
         self.assertEqual(Metal.MTLGPUFamilyMetal4, 5002)
 
+        self.assertIsEnumType(Metal.MTLDeviceLocation)
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)
         self.assertEqual(Metal.MTLDeviceLocationExternal, 2)
         self.assertEqual(Metal.MTLDeviceLocationUnspecified, 0xFFFFFFFFFFFFFFFF)
 
+        self.assertIsEnumType(Metal.MTLPipelineOption)
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBindingInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBufferTypeInfo, 1 << 1)
         self.assertEqual(Metal.MTLPipelineOptionFailOnBinaryArchiveMiss, 1 << 2)
 
+        self.assertIsEnumType(Metal.MTLReadWriteTextureTier)
         self.assertEqual(Metal.MTLReadWriteTextureTierNone, 0)
         self.assertEqual(Metal.MTLReadWriteTextureTier1, 1)
         self.assertEqual(Metal.MTLReadWriteTextureTier2, 2)
 
+        self.assertIsEnumType(Metal.MTLArgumentBuffersTier)
         self.assertEqual(Metal.MTLArgumentBuffersTier1, 0)
         self.assertEqual(Metal.MTLArgumentBuffersTier2, 1)
 
+        self.assertIsEnumType(Metal.MTLCounterSamplingPoint)
         self.assertEqual(Metal.MTLCounterSamplingPointAtStageBoundary, 0)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDrawBoundary, 1)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDispatchBoundary, 2)
         self.assertEqual(Metal.MTLCounterSamplingPointAtTileDispatchBoundary, 3)
         self.assertEqual(Metal.MTLCounterSamplingPointAtBlitBoundary, 4)
 
+        self.assertIsEnumType(Metal.MTLSparseTextureRegionAlignmentMode)
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeOutward, 0)
         self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeInward, 1)
 
+        self.assertIsEnumType(Metal.MTLIOCompressionMethod)
         self.assertEqual(Metal.MTLIOCompressionMethodZlib, 0)
         self.assertEqual(Metal.MTLIOCompressionMethodLZFSE, 1)
         self.assertEqual(Metal.MTLIOCompressionMethodLZ4, 2)
         self.assertEqual(Metal.MTLIOCompressionMethodLZMA, 3)
         self.assertEqual(Metal.MTLIOCompressionMethodLZBitmap, 4)
 
-        self.assertEqual(Metal.MTLSparsePageSize16, 101)
-        self.assertEqual(Metal.MTLSparsePageSize64, 102)
-        self.assertEqual(Metal.MTLSparsePageSize256, 103)
-
         self.assertIsEnumType(Metal.MTLDeviceError)
         self.assertEqual(Metal.MTLDeviceErrorNone, 0)
         self.assertEqual(Metal.MTLDeviceErrorNotSupported, 1)
+
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(Metal.MTLDeviceNotificationName, str)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -511,12 +575,12 @@ class TestMTLDevice(TestCase):
         self.assertPickleRoundTrips(v)
 
     @min_os_level("10.11")
-    def test_funtions10_11(self):
-        self.assertResultIsCFRetained(Metal.MTLCreateSystemDefaultDevice)
-        self.assertResultIsCFRetained(Metal.MTLCopyAllDevices)
+    def test_functions10_11(self):
+        self.assertResultIsRetained(Metal.MTLCreateSystemDefaultDevice)
+        self.assertResultIsRetained(Metal.MTLCopyAllDevices)
 
     @min_os_level("10.13")
-    def test_funtions10_13(self):
+    def test_functions10_13(self):
         self.assertResultIsCFRetained(Metal.MTLCopyAllDevicesWithObserver)
         self.assertArgIsOut(Metal.MTLCopyAllDevicesWithObserver, 0)
         self.assertArgIsBlock(
@@ -527,9 +591,9 @@ class TestMTLDevice(TestCase):
 
     @min_sdk_level("10.11")
     def test_protocols(self):
-        self.assertProtocolExists("MTLDevice")
+        self.assertProtocolExists("MTLDevice", Metal)
 
-    def test_methods(self):
+    def test_protocol_methods(self):
         self.assertResultHasType(TestMTLDeviceHelper.registryID, objc._C_ULNGLNG)
         self.assertResultHasType(
             TestMTLDeviceHelper.maxThreadsPerThreadgroup, Metal.MTLSize.__typestr__
@@ -565,11 +629,16 @@ class TestMTLDevice(TestCase):
         self.assertResultHasType(
             TestMTLDeviceHelper.currentAllocatedSize, objc._C_NSUInteger
         )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newCommandQueueWithMaxCommandBufferCount_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newCommandQueueWithMaxCommandBufferCount_,
             0,
             objc._C_NSUInteger,
         )
+
         self.assertResultHasType(
             TestMTLDeviceHelper.heapBufferSizeAndAlignWithLength_options_,
             Metal.MTLSizeAndAlign.__typestr__,
@@ -584,10 +653,15 @@ class TestMTLDevice(TestCase):
             1,
             objc._C_NSUInteger,
         )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newBufferWithLength_options_)
         self.assertArgHasType(
             TestMTLDeviceHelper.newBufferWithLength_options_, 0, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newBufferWithBytes_length_options_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newBufferWithBytes_length_options_, 0, b"n^v"
         )
@@ -605,6 +679,9 @@ class TestMTLDevice(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_,
             0,
@@ -631,16 +708,34 @@ class TestMTLDevice(TestCase):
             b"vn^v" + objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newDefaultLibraryWithBundle_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newDefaultLibraryWithBundle_error_, 1, b"o^@"
         )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newLibraryWithFile_error_)
         self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithFile_error_, 1, b"o^@")
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newLibraryWithURL_error_)
         self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithURL_error_, 1, b"o^@")
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newLibraryWithData_error_)
         self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithData_error_, 1, b"o^@")
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newLibraryWithSource_options_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newLibraryWithSource_options_error_, 2, b"o^@"
         )
 
+        self.assertResultIsRetained(TestMTLDeviceHelper.newTextureWithDescriptor_)
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newTextureWithDescriptor_iosurface_plane_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newTextureWithDescriptor_iosurface_plane_,
             1,
@@ -658,10 +753,16 @@ class TestMTLDevice(TestCase):
             b"v@@",
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_error_, 1, b"o^@"
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_reflection_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_reflection_error_,
             1,
@@ -690,8 +791,15 @@ class TestMTLDevice(TestCase):
             b"v@@",
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newComputePipelineStateWithFunction_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newComputePipelineStateWithFunction_error_, 1, b"o^@"
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_reflection_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_reflection_error_,
@@ -721,6 +829,9 @@ class TestMTLDevice(TestCase):
             b"v@@",
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,  # noqa: B950
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,  # noqa: B950
             1,
@@ -798,6 +909,9 @@ class TestMTLDevice(TestCase):
             TestMTLDeviceHelper.getDefaultSamplePositions_count_, 1, objc._C_NSUInteger
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_,
             1,
@@ -829,9 +943,14 @@ class TestMTLDevice(TestCase):
         self.assertResultHasType(
             TestMTLDeviceHelper.maxBufferLength, objc._C_NSUInteger
         )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newCounterSampleBufferWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newCounterSampleBufferWithDescriptor_error_, 1, b"o^@"
         )
+
         self.assertArgHasType(
             TestMTLDeviceHelper.sampleTimestamps_gpuTimestamp_,
             0,
@@ -852,13 +971,20 @@ class TestMTLDevice(TestCase):
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsDynamicLibraries)
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRenderDynamicLibraries)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newDynamicLibrary_error_)
         self.assertArgHasType(TestMTLDeviceHelper.newDynamicLibrary_error_, 1, b"o^@")
         self.assertArgHasType(
             TestMTLDeviceHelper.newDynamicLibraryWithURL_error_, 1, b"o^@"
         )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newBinaryArchiveWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newBinaryArchiveWithDescriptor_error_, 1, b"o^@"
         )
+
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPlacementSparse)
 
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracing)
@@ -870,6 +996,9 @@ class TestMTLDevice(TestCase):
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointersFromRender)
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracingFromRender)
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_,
             1,
@@ -990,6 +1119,9 @@ class TestMTLDevice(TestCase):
             objc._C_NSUInteger,
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithMeshDescriptor_options_reflection_error_,
             3,
@@ -1002,12 +1134,19 @@ class TestMTLDevice(TestCase):
             MTLNewRenderPipelineStateWithReflectionCompletionHandler,
         )
 
+        self.assertResultIsRetained(TestMTLDeviceHelper.newIOHandleWithURL_error_)
         self.assertArgHasType(TestMTLDeviceHelper.newIOHandleWithURL_error_, 1, b"o^@")
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newIOCommandQueueWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOCommandQueueWithDescriptor_error_, 1, b"o^@"
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newIOHandleWithURL_compressionMethod_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOHandleWithURL_compressionMethod_error_, 2, b"o^@"
         )
@@ -1063,8 +1202,13 @@ class TestMTLDevice(TestCase):
             Metal.MTLSizeAndAlign.__typestr__,
         )
 
+        self.assertResultIsRetained(TestMTLDeviceHelper.newIOFileHandleWithURL_error_)
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOFileHandleWithURL_error_, 1, b"o^@"
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newIOFileHandleWithURL_compressionMethod_error_,
@@ -1077,10 +1221,17 @@ class TestMTLDevice(TestCase):
             b"o^@",
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newLogStateWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newLogStateWithDescriptor_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newResidencySetWithDescriptor_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newResidencySetWithDescriptor_error_,
@@ -1088,40 +1239,82 @@ class TestMTLDevice(TestCase):
             b"o^@",
         )
 
+        self.assertResultIsRetained(TestMTLDeviceHelper.newTensorWithDescriptor_error_)
         self.assertArgHasType(
             TestMTLDeviceHelper.newTensorWithDescriptor_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newTensorWithDescriptor_attachments_error_
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newTensorWithDescriptor_attachments_error_,
+            2,
+            b"o^@",
+        )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newCommandBuffer)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newCommandAllocator)
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newCommandAllocatorWithDescriptor_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newCommandAllocatorWithDescriptor_error_,
             1,
             b"o^@",
         )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newMTL4CommandQueue)
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newMTL4CommandQueueWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newMTL4CommandQueueWithDescriptor_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newArgumentTableWithDescriptor_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newArgumentTableWithDescriptor_error_,
             1,
             b"o^@",
         )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newTextureViewPoolWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newTextureViewPoolWithDescriptor_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newCompilerWithDescriptor_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newCompilerWithDescriptor_error_,
             1,
             b"o^@",
         )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newArchiveWithURL_error_)
         self.assertArgHasType(
             TestMTLDeviceHelper.newArchiveWithURL_error_,
             1,
             b"o^@",
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newCounterHeapWithDescriptor_error_
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.newCounterHeapWithDescriptor_error_,
@@ -1134,6 +1327,9 @@ class TestMTLDevice(TestCase):
             Metal.MTLSizeAndAlign.__typestr__,
         )
 
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newBufferWithLength_options_placementSparsePageSize_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.newBufferWithLength_options_placementSparsePageSize_,
             1,
@@ -1150,3 +1346,49 @@ class TestMTLDevice(TestCase):
             b"q",
         )
         self.assertResultHasType(TestMTLDeviceHelper.sizeOfCounterHeapEntry_, b"Q")
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newAccelerationStructureWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newArgumentEncoderWithArguments_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newArgumentEncoderWithBufferBinding_
+        )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newCommandQueueWithDescriptor_)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newCommandQueue)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newDefaultLibrary)
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newDepthStencilStateWithDescriptor_
+        )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newEvent)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newFence)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newHeapWithDescriptor_)
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newPipelineDataSetSerializerWithDescriptor_
+        )
+
+        self.assertResultIsRetained(
+            TestMTLDeviceHelper.newRasterizationRateMapWithDescriptor_
+        )
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newSamplerStateWithDescriptor_)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newSharedEventWithHandle_)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newSharedEvent)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newSharedTextureWithDescriptor_)
+
+        self.assertResultIsRetained(TestMTLDeviceHelper.newSharedTextureWithHandle_)

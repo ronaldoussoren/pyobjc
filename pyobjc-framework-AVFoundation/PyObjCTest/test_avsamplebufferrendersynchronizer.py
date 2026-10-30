@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestAVSampleBufferRenderSynchronizer(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVSampleBufferRenderSynchronizer.addPeriodicTimeObserverForInterval_queue_usingBlock_,  # noqa: B950
             2,
@@ -17,7 +17,7 @@ class TestAVSampleBufferRenderSynchronizer(TestCase):
         )
 
     @min_os_level("11.3")
-    def testMethods11_3(self):
+    def test_methods11_3(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferRenderSynchronizer.delaysRateChangeUntilHasSufficientMediaData
         )

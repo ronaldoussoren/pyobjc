@@ -1,9 +1,9 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSScannerUsage(TestCase):
-    def testUsage(self):
+    def test_usage(self):
         obj = Foundation.NSScanner.scannerWithString_("1.2 2.5")
 
         didConvert, value = obj.scanDouble_(None)
@@ -43,7 +43,7 @@ class TestNSScannerUsage(TestCase):
         self.assertTrue(didConvert)
         self.assertEqual(value, "1234 ")
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBOOL(Foundation.NSScanner.setCaseSensitive_, 0)
         self.assertResultIsBOOL(Foundation.NSScanner.caseSensitive)
         self.assertResultIsBOOL(Foundation.NSScanner.scanInt_)
@@ -78,7 +78,5 @@ class TestNSScannerUsage(TestCase):
         )
         self.assertResultIsBOOL(Foundation.NSScanner.isAtEnd)
 
-    @min_os_level("10.9")
-    def testMethods10_9(self):
         self.assertResultIsBOOL(Foundation.NSScanner.scanUnsignedLongLong_)
         self.assertArgIsOut(Foundation.NSScanner.scanUnsignedLongLong_, 0)

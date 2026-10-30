@@ -3,11 +3,14 @@ import Quartz
 
 
 class TestCIRenderDestination(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Quartz.CIRenderDestinationAlphaMode)
+        self.assertEqual(Quartz.CIRenderDestinationAlphaNone, 0)
+        self.assertEqual(Quartz.CIRenderDestinationAlphaPremultiplied, 1)
+        self.assertEqual(Quartz.CIRenderDestinationAlphaUnpremultiplied, 2)
 
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             Quartz.CIRenderDestination.initWithWidth_height_pixelFormat_commandBuffer_mtlTextureProvider_,
             4,
@@ -46,7 +49,9 @@ class TestCIRenderDestination(TestCase):
 
         self.assertArgIsOut(Quartz.CIContext.startTaskToClear_error_, 1)
 
-    def testConstants(self):
-        self.assertEqual(Quartz.CIRenderDestinationAlphaNone, 0)
-        self.assertEqual(Quartz.CIRenderDestinationAlphaPremultiplied, 1)
-        self.assertEqual(Quartz.CIRenderDestinationAlphaUnpremultiplied, 2)
+    @min_os_level("27.0")
+    def test_methods27_0(self):
+        self.assertArgIsOut(
+            Quartz.CIContext.estimateRender_fromRect_toDestination_atPoint_error_,
+            4,
+        )

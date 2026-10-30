@@ -4,6 +4,8 @@ import textwrap
 import warnings
 import sys
 from PyObjCTools.TestSupport import TestCase
+from .function import function_list as function_list2
+from .test_deprecations import deprecation_warnings
 
 from PyObjCTest.test_metadata_function import (
     getDoubleFunc,
@@ -15,8 +17,6 @@ from PyObjCTest.test_metadata_function import (
     get2ndGetter,
     function_list,
 )
-from PyObjCTest.test_deprecations import deprecation_warnings
-
 
 bundle = objc.lookUpClass("NSBundle").bundleWithPath_(
     "/System/Library/Frameworks/AppKit.framework"
@@ -103,12 +103,10 @@ class TestFunctions(TestCase):
 
         self.assertEqual(
             NSRectClipList.__doc__,  # noqa: F821
-            textwrap.dedent(
-                f"""\
+            textwrap.dedent(f"""\
             void NSRectClipList(in {recttype}* arg0, long long arg1);
 
-            arg0: array with length in arg1"""
-            ),
+            arg0: array with length in arg1"""),
         )
 
         self.assertEqual(
@@ -324,7 +322,12 @@ class TestFunctions(TestCase):
             bundle,
             gl,
             [
-                ("NSFrameAddress", b"Q" * 600, ""),
+                (
+                    "NSFrameAddress",
+                    b"Q" * 600,
+                    "",
+                    {"retval": {"sel_of_type": b"v@:@"}},
+                ),
             ],
             True,
         )
@@ -636,3 +639,115 @@ class TestFunctions(TestCase):
                 False,
             )
             self.assertArgHasType(m["kill"], 0, b"i")
+
+    def test_function_override(self):
+        m = {}
+        objc.loadFunctionList(
+            function_list2,
+            m,
+            [
+                (
+                    "sum4ints",
+                    b"i[4I]",
+                    "",
+                    {
+                        "arguments": {
+                            0: {
+                                "type_override": "^i",
+                                "type_modifier": "n",
+                                "c_array_of_fixed_length": 4,
+                            }
+                        }
+                    },
+                ),
+                ("distance", b"d[2{pt=dd}]"),
+                ("doubleInt", b"ii"),
+                ("trippleInt", b"ii", "", {"suggestion": "no valid api"}),
+                ("quadrupleInt", b"ii", "", {"deprecated": 2600}),
+                (
+                    "passFunction",
+                    b"v^?",
+                    "",
+                    {
+                        "arguments": {
+                            0: {
+                                "callable_retained": False,
+                                "callable": {
+                                    "arguments": {
+                                        0: {
+                                            "type": "^?",
+                                            "callable": {
+                                                "arguments": {0: {"type": "i"}},
+                                                "retval": {"type": "i"},
+                                            },
+                                        },
+                                    },
+                                    "retval": {"type": "v"},
+                                },
+                            }
+                        },
+                    },
+                ),
+                (
+                    "retainedFromVector",
+                    b"@{simd_float4x4=[4<4f>]}",
+                    "",
+                    {"retval": {"already_retained": True}},
+                ),
+                (
+                    "cfretainedFromVector",
+                    b"@{simd_float4x4=[4<4f>]}",
+                    "",
+                    {"retval": {"already_cfretained": True}},
+                ),
+            ],
+            skip_undefined=False,
+        )
+        self.assertEqual(m["doubleInt"](9), -18)
+
+        with self.assertRaisesRegex(TypeError, "no valid api"):
+            m["trippleInt"](9)
+
+        self.assertEqual(m["quadrupleInt"](9), -18)
+        with deprecation_warnings("27.0"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error")
+                with self.assertRaises(objc.ApiDeprecationWarning):
+                    m["quadrupleInt"](9)
+
+            with warnings.catch_warnings(record=True) as cm:
+                warnings.simplefilter("always")
+                m["quadrupleInt"](9)
+
+            self.assertEqual(len(cm), 1)
+            self.assertEqual(cm[0].category, objc.ApiDeprecationWarning)
+
+        stored = None
+
+        self.assertEqual(m["sum4ints"]((1, 2, 3, 4)), 10)
+        with self.assertRaisesRegex(ValueError, "expecting 4 values got 3"):
+            m["sum4ints"]((1, 2, 3))
+        del m["sum4ints"]
+
+        pt1 = (2, 4)
+        pt2 = (6, 8)
+        r = m["distance"]((pt1, pt2))
+        self.assertIsInstance(r, float)
+        del m["distance"]
+
+        def fun(v):
+            nonlocal stored
+            stored = v
+
+        m["passFunction"](fun)
+        self.assertIsInstance(stored, objc.function)
+        self.assertEqual(stored(4), -8)
+
+        vec = (((3.0, 4.5, 5.5, 9.0),) * 4,)
+        self.assertResultIsRetained(m["retainedFromVector"])
+        v = m["retainedFromVector"](vec)
+        self.assertEqual(v, "3.0 4.5 5.5")
+
+        self.assertResultIsCFRetained(m["cfretainedFromVector"])
+        v = m["cfretainedFromVector"](vec)
+        self.assertEqual(v, "3.0 4.5 5.5")

@@ -1,12 +1,10 @@
 import CoreData
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSEntityDescription(TestCase):
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(CoreData.NSEntityDescription.isAbstract)
         self.assertArgIsBOOL(CoreData.NSEntityDescription.setAbstract_, 0)
 
-    @min_os_level("10.5")
-    def testMethods10_5(self):
         self.assertResultIsBOOL(CoreData.NSEntityDescription.isKindOfEntity_)

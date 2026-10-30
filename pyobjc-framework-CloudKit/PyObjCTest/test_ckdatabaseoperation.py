@@ -5,6 +5,6 @@ import objc
 
 class TestCKDatabaseOperation(TestCase):
     @min_os_level("10.10")
-    def testClasses(self):
+    def test_classes(self):
         self.assertHasAttr(CloudKit, "CKDatabaseOperation")
         self.assertIsInstance(CloudKit.CKDatabaseOperation, objc.objc_class)

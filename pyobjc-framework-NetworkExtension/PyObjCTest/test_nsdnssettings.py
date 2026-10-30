@@ -4,7 +4,7 @@ import NetworkExtension
 
 class TestNEDNSSettings(TestCase):
     @min_os_level("10.11")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(
             NetworkExtension.NEDNSSettings.matchDomainsNoSearch, b"Z"
         )

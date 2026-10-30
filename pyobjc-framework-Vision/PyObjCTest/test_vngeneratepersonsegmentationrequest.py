@@ -3,10 +3,8 @@ import Vision
 
 
 class TestVNGeneratePersonSegmentationRequest(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(Vision.VNGeneratePersonSegmentationRequestQualityLevel)
-
-    def test_constants(self):
         self.assertEqual(
             Vision.VNGeneratePersonSegmentationRequestQualityLevelAccurate, 0
         )

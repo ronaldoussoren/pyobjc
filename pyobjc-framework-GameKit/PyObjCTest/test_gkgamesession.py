@@ -3,19 +3,17 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestGKGameSession(TestCase):
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(GameKit.GKConnectionState)
-        self.assertIsEnumType(GameKit.GKTransportType)
-
-    def testConstants(self):
         self.assertEqual(GameKit.GKConnectionStateNotConnected, 0)
         self.assertEqual(GameKit.GKConnectionStateConnected, 1)
 
+        self.assertIsEnumType(GameKit.GKTransportType)
         self.assertEqual(GameKit.GKTransportTypeUnreliable, 0)
         self.assertEqual(GameKit.GKTransportTypeReliable, 1)
 
     @min_os_level("10.12")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             GameKit.GKGameSession.createSessionInContainer_withTitle_maxConnectedPlayers_completionHandler_,
             3,

@@ -11,22 +11,21 @@ class PopoverHelper(AppKit.NSObject):
 
 
 class TestNSPopover(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSPopoverCloseReasonValue, str)
 
-    def test_enum_types(self):
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSPopoverAppearance)
-        self.assertIsEnumType(AppKit.NSPopoverBehavior)
-
-    @min_os_level("10.7")
-    def testConstants10_7(self):
         self.assertEqual(AppKit.NSPopoverAppearanceMinimal, 0)
         self.assertEqual(AppKit.NSPopoverAppearanceHUD, 1)
 
+        self.assertIsEnumType(AppKit.NSPopoverBehavior)
         self.assertEqual(AppKit.NSPopoverBehaviorApplicationDefined, 0)
         self.assertEqual(AppKit.NSPopoverBehaviorTransient, 1)
         self.assertEqual(AppKit.NSPopoverBehaviorSemitransient, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSPopoverCloseReasonValue, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSPopoverCloseReasonKey, str)
         self.assertIsInstance(AppKit.NSPopoverCloseReasonStandard, str)
         self.assertIsInstance(AppKit.NSPopoverCloseReasonDetachToWindow, str)
@@ -35,8 +34,7 @@ class TestNSPopover(TestCase):
         self.assertIsInstance(AppKit.NSPopoverWillCloseNotification, str)
         self.assertIsInstance(AppKit.NSPopoverDidCloseNotification, str)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSPopover.animates)
         self.assertArgIsBOOL(AppKit.NSPopover.setAnimates_, 0)
 
@@ -50,20 +48,19 @@ class TestNSPopover(TestCase):
         )
 
     @min_os_level("10.10")
-    def testMethods10_10(self):
+    def test_methods10_10(self):
         self.assertResultIsBOOL(AppKit.NSPopover.isDetached)
         # self.assertArgIsBOOL(AppKit.NSPopover.setDetached_, 0)
 
     @min_os_level("14.0")
-    def testMethods14_0(self):
+    def test_methods14_0(self):
         self.assertResultIsBOOL(AppKit.NSPopover.hasFullSizeContent)
         self.assertArgIsBOOL(AppKit.NSPopover.setHasFullSizeContent_, 0)
 
-    @min_os_level("10.7")
-    def testProtocols10_7(self):
-        self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
-
     @min_os_level("10.10")
-    def testProtocols10_10(self):
-        self.assertProtocolExists("NSPopoverDelegate")
+    def test_protocols10_10(self):
+        self.assertProtocolExists("NSPopoverDelegate", AppKit)
+
+    def test_protocol_methods(self):
+        self.assertResultIsBOOL(PopoverHelper.popoverShouldClose_)
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)

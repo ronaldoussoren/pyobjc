@@ -14,18 +14,8 @@ class TestCBCentralManagerHelper(CoreBluetooth.NSObject):
 
 
 class TestCBCentralManager(TestCase):
-    def test_enum_types(self):
-        self.assertIsEnumType(CoreBluetooth.CBCentralManagerFeature)
+    def test_enums(self):
         self.assertIsEnumType(CoreBluetooth.CBCentralManagerState)
-        self.assertIsEnumType(CoreBluetooth.CBConnectionEvent)
-
-    @min_os_level("10.9")
-    def testClasses(self):
-        self.assertHasAttr(CoreBluetooth, "CBCentralManager")
-        self.assertIsInstance(CoreBluetooth.CBCentralManager, objc.objc_class)
-
-    @min_os_level("10.9")
-    def testConstants(self):
         self.assertEqual(CoreBluetooth.CBCentralManagerStateUnknown, 0)
         self.assertEqual(CoreBluetooth.CBCentralManagerStateResetting, 1)
         self.assertEqual(CoreBluetooth.CBCentralManagerStateUnsupported, 2)
@@ -33,23 +23,32 @@ class TestCBCentralManager(TestCase):
         self.assertEqual(CoreBluetooth.CBCentralManagerStatePoweredOff, 4)
         self.assertEqual(CoreBluetooth.CBCentralManagerStatePoweredOn, 5)
 
+        self.assertIsEnumType(CoreBluetooth.CBConnectionEvent)
         self.assertEqual(CoreBluetooth.CBConnectionEventPeerDisconnected, 0)
         self.assertEqual(CoreBluetooth.CBConnectionEventPeerConnected, 1)
 
+        self.assertIsEnumType(CoreBluetooth.CBCentralManagerFeature)
         self.assertEqual(
             CoreBluetooth.CBCentralManagerFeatureExtendedScanAndConnect, 1 << 0
         )
+        self.assertEqual(CoreBluetooth.CBCentralManagerFeatureChannelSounding, 1 << 10)
 
-    @min_os_level("10.9")
-    def testProtocols(self):
-        self.assertProtocolExists("CBCentralManagerDelegate")
+    def test_classes(self):
+        self.assertHasAttr(CoreBluetooth, "CBCentralManager")
+        self.assertIsInstance(CoreBluetooth.CBCentralManager, objc.objc_class)
 
     @min_os_level("10.13")
-    def testMethods10_13(self):
+    def test_methods10_13(self):
         self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.isScanning)
 
-    @min_os_level("10.15")
-    def testMethods10_15(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
+        self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.supportsFeatures_)
+
+    def test_protocols(self):
+        self.assertProtocolExists("CBCentralManagerDelegate", CoreBluetooth)
+
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestCBCentralManagerHelper.centralManager_connectionEventDidOccur_forPeripheral_,  # noqa: B950
             1,
@@ -65,7 +64,3 @@ class TestCBCentralManager(TestCase):
             TestCBCentralManagerHelper.centralManager_didDisconnectPeripheral_timestamp_isReconnecting_error_,
             3,
         )
-
-    @min_os_level("11.0")
-    def testMethods11_0(self):
-        self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.supportsFeatures_)

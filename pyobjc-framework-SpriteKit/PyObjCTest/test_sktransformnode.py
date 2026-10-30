@@ -6,7 +6,7 @@ import SpriteKit
 
 class TestSKTransformNode(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultHasType(
             SpriteKit.SKTransformNode.eulerAngles, simd.simd_float3.__typestr__
         )

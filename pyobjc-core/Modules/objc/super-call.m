@@ -516,6 +516,8 @@ PyObjC_CallFunc _Nullable PyObjC_FindCallFunc(Class class, SEL sel, const char* 
 extern IMP
 PyObjC_MakeIMP(Class class, PyObject* sel)
 {
+    assert(!PyObjCBoundSelector_Check(sel));
+
     struct registry*        generic;
     struct registry*        special;
     SEL                     aSelector = PyObjCSelector_GetSelector(sel);

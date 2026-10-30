@@ -83,21 +83,11 @@ class TestSecImportExport(TestCase):
             + objc._C_PTR
             + Security.SecItemImportExportKeyParameters.__typestr__,
         )
-        self.assertArgHasType(
-            Security.SecItemExport, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecItemExport, 4)
         self.assertArgIsCFRetained(Security.SecItemExport, 4)
 
-        self.assertResultHasType(Security.SecItemImport, objc._C_INT)
-        self.assertArgHasType(Security.SecItemImport, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecItemImport, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecItemImport, 2, objc._C_INOUT + objc._C_PTR + objc._C_UINT
-        )
-        self.assertArgHasType(
-            Security.SecItemImport, 3, objc._C_INOUT + objc._C_PTR + objc._C_UINT
-        )
-        self.assertArgHasType(Security.SecItemImport, 4, objc._C_UINT)
+        self.assertArgIsInOut(Security.SecItemImport, 2)
+        self.assertArgIsInOut(Security.SecItemImport, 3)
         self.assertArgHasType(
             Security.SecItemImport,
             5,
@@ -105,16 +95,8 @@ class TestSecImportExport(TestCase):
             + objc._C_PTR
             + Security.SecItemImportExportKeyParameters.__typestr__,
         )
-        self.assertArgHasType(Security.SecItemImport, 6, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecItemImport, 7, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecItemImport, 7)
         self.assertArgIsCFRetained(Security.SecItemImport, 7)
 
-        self.assertResultHasType(Security.SecPKCS12Import, objc._C_INT)
-        self.assertArgHasType(Security.SecPKCS12Import, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecPKCS12Import, 1, objc._C_ID)
-        self.assertArgHasType(
-            Security.SecPKCS12Import, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgIsOut(Security.SecPKCS12Import, 2)
         self.assertArgIsCFRetained(Security.SecPKCS12Import, 2)

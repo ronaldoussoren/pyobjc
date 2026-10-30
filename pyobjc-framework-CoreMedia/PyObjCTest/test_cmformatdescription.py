@@ -1,15 +1,23 @@
 import CoreMedia
 import CoreAudio
-from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure, fourcc
+from PyObjCTools.TestSupport import (
+    TestCase,
+    min_os_level,
+    expectedFailure,
+    fourcc,
+    NoObjCClass,
+)
 import objc
 
 
 class TestCMFormatDescription(TestCase):
-    def test_constants(self):
+    def test_enums(self):
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_InvalidParameter, -12710)
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_AllocationFailed, -12711)
         self.assertEqual(CoreMedia.kCMFormatDescriptionError_ValueNotAvailable, -12718)
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMMediaType_Video, fourcc(b"vide"))
         self.assertEqual(CoreMedia.kCMMediaType_Audio, fourcc(b"soun"))
         self.assertEqual(CoreMedia.kCMMediaType_Muxed, fourcc(b"muxx"))
@@ -20,6 +28,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMMediaType_Metadata, fourcc(b"meta"))
         self.assertEqual(CoreMedia.kCMMediaType_TaggedBufferGroup, fourcc(b"tbgr"))
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
         self.assertEqual(
@@ -27,16 +36,55 @@ class TestCMFormatDescription(TestCase):
         )
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DisparityHEVC, fourcc(b"dish"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DepthHEVC, fourcc(b"deph"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AV1, fourcc(b"av01"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_Animation, fourcc(b"rle "))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_Cinepak, fourcc(b"cvid"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG, fourcc(b"jpeg"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_OpenDML, fourcc(b"dmb1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_XL, fourcc(b"jxlc"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo, fourcc(b"SVQ1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo3, fourcc(b"SVQ3"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b"h263"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b"avc1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b"hvc1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b"muxa"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DolbyVisionHEVC, fourcc(b"dvh1"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_VP9, fourcc(b"vp09"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCNTSC, fourcc(b"dvc "))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPAL, fourcc(b"dvcp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCProPAL, fourcc(b"dvpp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50NTSC, fourcc(b"dv5n"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50PAL, fourcc(b"dv5p"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p60, fourcc(b"dvhp"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p50, fourcc(b"dvhq"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i60, fourcc(b"dvh6"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i50, fourcc(b"dvh5"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p30, fourcc(b"dvh3"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p25, fourcc(b"dvh2"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444XQ, fourcc(b"ap4x"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444, fourcc(b"ap4h"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422HQ, fourcc(b"apch"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
+        self.assertEqual(
+            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
+        )
 
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
+
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMAudioCodecType_AAC_LCProtected, fourcc(b"paac"))
         self.assertEqual(
             CoreMedia.kCMAudioCodecType_AAC_AudibleProtected, fourcc(b"aaac")
         )
 
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DisparityHEVC, fourcc(b"dish"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DepthHEVC, fourcc(b"deph"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AV1, fourcc(b"av01"))
-
+        # Unnamed enum
         self.assertEqual(
             CoreMedia.kCMAudioFormatDescriptionMask_StreamBasicDescription, 1 << 0
         )
@@ -51,6 +99,7 @@ class TestCMFormatDescription(TestCase):
             | CoreMedia.kCMAudioFormatDescriptionMask_Extensions,
         )
 
+        # Unnamed enum
         self.assertEqual(CoreMedia.kCMPixelFormat_32ARGB, 32)
         self.assertEqual(CoreMedia.kCMPixelFormat_32BGRA, fourcc(b"BGRA"))
         self.assertEqual(CoreMedia.kCMPixelFormat_24RGB, 24)
@@ -71,46 +120,6 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(
             CoreMedia.kCMVideoCodecType_422YpCbCr8, CoreMedia.kCMPixelFormat_422YpCbCr8
         )
-        self.assertEqual(CoreMedia.kCMVideoCodecType_Animation, fourcc(b"rle "))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_Cinepak, fourcc(b"cvid"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG, fourcc(b"jpeg"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_OpenDML, fourcc(b"dmb1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_JPEG_XL, fourcc(b"jxlc"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo, fourcc(b"SVQ1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_SorensonVideo3, fourcc(b"SVQ3"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_H263, fourcc(b"h263"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b"avc1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b"hvc1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b"muxa"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DolbyVisionHEVC, fourcc(b"dvh1"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_VP9, fourcc(b"vp09"))
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCNTSC, fourcc(b"dvc "))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPAL, fourcc(b"dvcp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCProPAL, fourcc(b"dvpp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50NTSC, fourcc(b"dv5n"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPro50PAL, fourcc(b"dv5p"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p60, fourcc(b"dvhp"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD720p50, fourcc(b"dvhq"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i60, fourcc(b"dvh6"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080i50, fourcc(b"dvh5"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p30, fourcc(b"dvh3"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPROHD1080p25, fourcc(b"dvh2"))
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444XQ, fourcc(b"ap4x"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes4444, fourcc(b"ap4h"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422HQ, fourcc(b"apch"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
-        self.assertEqual(
-            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
-        )
-
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
 
         self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_HDV_720p30, fourcc(b"hdv1"))
         self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_HDV_1080i60, fourcc(b"hdv2"))
@@ -271,8 +280,7 @@ class TestCMFormatDescription(TestCase):
 
         self.assertEqual(CoreMedia.kCMMediaType_AuxiliaryPicture, fourcc(b"auxv"))
 
-    @min_os_level("10.7")
-    def test_constants10_7(self):
+    def test_constants(self):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_OriginalCompressionSettings, str
         )
@@ -382,8 +390,6 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_Value, str)
         self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_LocalID, str)
 
-    @min_os_level("10.8")
-    def test_constants10_8(self):
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionColorPrimaries_P22, str)
 
     @min_os_level("10.10")
@@ -739,6 +745,19 @@ class TestCMFormatDescription(TestCase):
             str,
         )
 
+    @min_os_level("27.0")
+    def test_constants27_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionLogTransferFunction_AppleLog2, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionKey_HumanReadableString, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionMetadataSpecificationKey_HumanReadableString,
+            str,
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)
@@ -749,23 +768,18 @@ class TestCMFormatDescription(TestCase):
         self.assertIsCFType(CoreMedia.CMFormatDescriptionRef)
 
     @expectedFailure
-    @min_os_level("10.7")
     def test_functions_manual(self):
-        self.assertNotIsInstance(
-            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets, objc.function
-        )
-        self.assertNotIsInstance(
-            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets, objc.function
-        )
-
         self.fail(
             "CMVideoFormatDescriptionGetH264ParameterSetAtIndex"
         )  # Needs manual wrapper
+
+    @min_os_level("10.13")
+    @expectedFailure
+    def test_functions_manual10_13(self):
         self.fail(
             "CMVideoFormatDescriptionGetHEVCParameterSetAtIndex"
         )  # Needs manual wrapper
 
-    @min_os_level("10.7")
     def test_functions(self):
         self.assertArgIsOut(CoreMedia.CMFormatDescriptionCreate, 4)
         self.assertArgIsCFRetained(CoreMedia.CMFormatDescriptionCreate, 4)
@@ -919,8 +933,7 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.CMVideoFormatDescriptionCopyTagCollectionArray, 1
         )
 
-    def no_test_functions_usage(self):
-        # XXX: Test disabled due to periodic crashes in system libraries.
+    def test_functions_usage(self):
         asbd = CoreAudio.AudioStreamBasicDescription(
             mSampleRate=44000.0,
             mFormatID=1819304813,
@@ -959,3 +972,281 @@ class TestCMFormatDescription(TestCase):
             # XXX: Seems to return NULL at all times...
             pass
             # self.fail("did not find richest format")
+
+    def test_manual_h264(self):
+        with self.assertRaisesRegex(TypeError, "expected 6 arguments, got 0"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                NoObjCClass(), 0, [], [], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, "0", [], [], 4, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "parameterSetCount out of range"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, -1, [], [], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "parameterSetPointers must be sequence of buffers"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, 42, [10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "expecting 1 parameterSetPointers, got 0"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [], [10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [40], [10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 2, [b"\x00", 40], [1, 10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetPointers is not a buffer"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, ["\x00" * 9], [10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetPointers is too small"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 9], [10], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "parameterSetSizes must be sequence of integers"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 10], 42, 4, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "expecting 1 parameterSetSizes, got 0"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 10], [], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetSizes is not an integer"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 10], ["ten"], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetSizes is negative"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 10], [-6], 4, None
+            )
+
+        with self.assertRaisesRegex(
+            OverflowError, "Python int too large to convert to C long"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 1, [b"\x00" * 10], [2**100], 4, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 0, [], [], "4", None
+            )
+
+        with self.assertRaisesRegex(ValueError, "formatDescriptionOut must be None"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+                None, 0, [], [], 4, 42
+            )
+
+        err, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+            None, 0, [], [], 4, None
+        )
+        self.assertIsNot(err, 0)
+        self.assertIs(fmt, None)
+
+        res, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+            None, 1, [b"\x00" * 9], [9], 4, None
+        )
+
+        self.assertNotEqual(res, 0)
+        self.assertIs(fmt, None)
+
+        # The values of rawSPS and rawPPS are from
+        # https://stackoverflow.com/questions/32005775/cmvideoformatdescriptioncreatefromh264parametersets-in-swift
+        # Their contents are irrelevant, other than that they are accepted by the system.
+        rawSPS = (
+            b"\x00\x00\x00\x01\x67\x64\x00\x32\xac\xb4\x02\x80\x2d\xd2\xa4\x00\x00\x0f\xa4\x00"
+            b"\x03\xa9\x85\x81\x00\x00\x63\x2e\x80\x01\x65\x0e\xf7\xbe\x17\x84\x42\x35"
+        )
+        rawPPS = b"\x00\x00\x00\x01\x68\xee\x3c\xb0"
+
+        res, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromH264ParameterSets(
+            None,
+            2,
+            [rawSPS[4:], rawPPS[4:]],
+            [len(rawSPS) - 4, len(rawPPS) - 4],
+            4,
+            None,
+        )
+        self.assertEqual(res, 0)
+        self.assertIsNot(fmt, None)
+
+    @min_os_level("10.13")
+    def test_manual_hevc(self):
+        with self.assertRaisesRegex(TypeError, "expected 7 arguments, got 0"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets()
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                NoObjCClass(), 0, [], [], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "depythonifying 'long long', got 'str'"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, "0", [], [], 4, None, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "parameterSetCount out of range"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, -1, [], [], 4, None, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "parameterSetPointers must be sequence of buffers"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, 42, [10], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            ValueError, "expecting 1 parameterSetPointers, got 0"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [], [10], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "a bytes-like object is required, not 'int'"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [40], [10], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetPointers is not a buffer"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, ["\x00" * 9], [10], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetPointers is too small"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00" * 9], [10], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "parameterSetSizes must be sequence of integers"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00"], 42, 4, {}, None
+            )
+        with self.assertRaisesRegex(ValueError, "expecting 1 parameterSetSizes, got 0"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00" * 10], [], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetSizes is not an integer"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00" * 10], ["ten"], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            TypeError, "Element 0 of parameterSetSizes is negative"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00" * 10], [-6], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(
+            OverflowError, "Python int too large to convert to C long"
+        ):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 1, [b"\x00" * 10], [2**100], 4, {}, None
+            )
+
+        with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 0, [], [], "4", {}, None
+            )
+
+        with self.assertRaisesRegex(TypeError, "Cannot proxy"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 0, [], [], 4, NoObjCClass(), None
+            )
+
+        with self.assertRaisesRegex(ValueError, "formatDescriptionOut must be None"):
+            CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+                None, 0, [], [], 4, {}, 42
+            )
+
+        err, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+            None, 0, [], [], 4, {}, None
+        )
+        self.assertIsNot(err, 0)
+        self.assertIs(fmt, None)
+
+        res, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+            None, 1, [b"\x00" * 9], [9], 4, {}, None
+        )
+
+        self.assertNotEqual(res, 0)
+        self.assertIs(fmt, None)
+
+        # The raw values below were regurgitated by Google's search LLM, used only
+        # because I need some values that result in a valid format description for
+        # testing.
+        rawVPS = b"\x40\x01\x0c\x01\xff\xff\x01\x60\x00\x00\x03\x00\x90\x00\x00\x03\x00\x00\x03\x00\x5d\x95\x98\x09"
+        rawSPS = (
+            b"\x42\x01\x01\x01\x60\x00\x00\x03\x00\x90\x00\x00\x03\x00\x00\x03\x00\x5d\xa0\x02\x80\x80\x2d\x1f"
+            b"\xe3\x6e\x25\x89\x28\x6e\x26\x3f\x9b\x9b\x93\x2b\xc4\x84\x00\x00\x03\x00\x04\x00\x00\x03\x00\x64\x20"
+        )
+        rawPPS = b"\x44\x01\xc1\x73\xd1\x89"
+
+        res, fmt = CoreMedia.CMVideoFormatDescriptionCreateFromHEVCParameterSets(
+            None,
+            3,
+            [rawVPS, rawSPS, rawPPS],
+            [len(rawVPS), len(rawSPS), len(rawPPS)],
+            4,
+            {},
+            None,
+        )
+        self.assertEqual(res, 0)
+        self.assertIsNot(fmt, None)

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestNSAccessibilityCustomAction(TestCase):
     @min_os_level("10.13")
-    def testMethods(self):
+    def test_methods(self):
         self.assertArgIsBlock(
             AppKit.NSAccessibilityCustomAction.initWithName_handler_, 1, b"Z"
         )

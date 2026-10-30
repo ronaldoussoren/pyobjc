@@ -3,8 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVError(TestCase):
-    @min_os_level("10.7")
-    def testConstants(self):
+    def test_constants(self):
         self.assertIsInstance(AVFoundation.AVFoundationErrorDomain, str)
 
         self.assertIsInstance(AVFoundation.AVErrorDeviceKey, str)
@@ -121,9 +120,12 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorMediaExtensionDisabled, -11886)
         self.assertEqual(AVFoundation.AVErrorMediaExtensionConflict, -11887)
         self.assertEqual(AVFoundation.AVErrorNoSmartFramingsEnabled, -11890)
+        self.assertEqual(
+            AVFoundation.AVErrorNotEnoughSpaceForProVideoStorageReplenishment, -11897
+        )
 
     @min_os_level("10.10")
-    def testConstants10_10(self):
+    def test_constants10_10(self):
         self.assertIsInstance(AVFoundation.AVErrorPresentationTimeStampKey, str)
         self.assertIsInstance(AVFoundation.AVErrorPersistentTrackIDKey, str)
         self.assertIsInstance(AVFoundation.AVErrorFileTypeKey, str)

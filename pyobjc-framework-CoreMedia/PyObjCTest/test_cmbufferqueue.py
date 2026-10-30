@@ -49,7 +49,7 @@ class TestCMBufferQueue(TestCase):
             12,
         )
 
-    def test_cftypes(self):
+    def test_cftypess(self):
         self.assertIsCFType(CoreMedia.CMBufferQueueRef)
 
     def test_opaque(self):

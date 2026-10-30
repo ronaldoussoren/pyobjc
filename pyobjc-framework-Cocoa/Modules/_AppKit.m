@@ -3,37 +3,44 @@
 #include "pyobjc-api.h"
 #include <objc/runtime.h>
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <AppKit/AppKit.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_AppKit_appmain.m"
-#include "_AppKit_carbon.m"
 #include "_AppKit_nsbezierpath.m"
 #include "_AppKit_nsbitmap.m"
 #include "_AppKit_nsfont.m"
 #include "_AppKit_nsview.m"
 #include "_AppKit_protocols.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyMethodDef mod_methods[] = {
-    APPKIT_APPMAIN_METHODS APPKIT_NSFONT_METHODS{0, 0, 0, 0} /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                 // LCOV_EXCL_LINE
 
-    if (setup_carbon(m) == -1)
-        return -1;
-    if (setup_nsbezierpath(m) == -1)
-        return -1;
-    if (setup_nsbitmap(m) == -1)
-        return -1;
-    if (setup_nsview(m) == -1)
-        return -1;
+    if (setup_appmain(m) == -1)      // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsfont(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsbezierpath(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsbitmap(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsview(m) == -1)       // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
     return 0;
 }
 
@@ -79,3 +86,5 @@ PyInit__AppKit(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

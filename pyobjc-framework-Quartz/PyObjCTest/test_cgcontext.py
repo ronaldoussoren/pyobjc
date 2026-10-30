@@ -2,28 +2,32 @@ import os
 import objc
 
 import Quartz
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, NotBool
 
 
 class TestCGContext(TestCase):
-    def testTypes(self):
+    def test_types(self):
         self.assertIsCFType(Quartz.CGContextRef)
 
-    def testConstants(self):
+    def test_enums(self):
+        self.assertIsEnumType(Quartz.CGLineJoin)
         self.assertEqual(Quartz.kCGLineJoinMiter, 0)
         self.assertEqual(Quartz.kCGLineJoinRound, 1)
         self.assertEqual(Quartz.kCGLineJoinBevel, 2)
 
+        self.assertIsEnumType(Quartz.CGLineCap)
         self.assertEqual(Quartz.kCGLineCapButt, 0)
         self.assertEqual(Quartz.kCGLineCapRound, 1)
         self.assertEqual(Quartz.kCGLineCapSquare, 2)
 
+        self.assertIsEnumType(Quartz.CGPathDrawingMode)
         self.assertEqual(Quartz.kCGPathFill, 0)
         self.assertEqual(Quartz.kCGPathEOFill, 1)
         self.assertEqual(Quartz.kCGPathStroke, 2)
         self.assertEqual(Quartz.kCGPathFillStroke, 3)
         self.assertEqual(Quartz.kCGPathEOFillStroke, 4)
 
+        self.assertIsEnumType(Quartz.CGTextDrawingMode)
         self.assertEqual(Quartz.kCGTextFill, 0)
         self.assertEqual(Quartz.kCGTextStroke, 1)
         self.assertEqual(Quartz.kCGTextFillStroke, 2)
@@ -33,14 +37,17 @@ class TestCGContext(TestCase):
         self.assertEqual(Quartz.kCGTextFillStrokeClip, 6)
         self.assertEqual(Quartz.kCGTextClip, 7)
 
+        self.assertIsEnumType(Quartz.CGTextEncoding)
         self.assertEqual(Quartz.kCGEncodingFontSpecific, 0)
         self.assertEqual(Quartz.kCGEncodingMacRoman, 1)
 
+        self.assertIsEnumType(Quartz.CGInterpolationQuality)
         self.assertEqual(Quartz.kCGInterpolationDefault, 0)
         self.assertEqual(Quartz.kCGInterpolationNone, 1)
         self.assertEqual(Quartz.kCGInterpolationLow, 2)
         self.assertEqual(Quartz.kCGInterpolationHigh, 3)
 
+        self.assertIsEnumType(Quartz.CGBlendMode)
         self.assertEqual(Quartz.kCGBlendModeNormal, 0)
         self.assertEqual(Quartz.kCGBlendModeMultiply, 1)
         self.assertEqual(Quartz.kCGBlendModeScreen, 2)
@@ -88,8 +95,7 @@ class TestCGContext(TestCase):
         self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeLow, str)
         self.assertIsInstance(Quartz.kCGEXRToneMappingGammaKneeHigh, str)
 
-    @min_os_level("10.5")
-    def testFunctions10_5(self):
+    def test_functions(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -193,7 +199,6 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testFunctions(self):
         self.assertIsInstance(Quartz.CGContextGetTypeID(), int)
 
         url = Quartz.CFURLCreateWithFileSystemPath(
@@ -481,8 +486,130 @@ class TestCGContext(TestCase):
 
             myInfo = object()
 
+            lst = []
+
             def drawPattern(info, context):
+                lst.append((info, context))
                 pass
+
+            with self.assertRaisesRegex(TypeError, "expected 8 arguments, got 0"):
+                Quartz.CGPatternCreate()
+
+            with self.assertRaisesRegex(
+                TypeError, "depythonifying struct, got no sequence"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    42,
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                TypeError, "depythonifying struct, got no sequence"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    42,  # Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'double', got 'str'"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    "10.0",
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(
+                ValueError, "depythonifying 'double', got 'str'"
+            ):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    "10.0",
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(ValueError, "depythonifying 'int', got 'str'"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    "Quartz.kCGPatternTilingConstantSpacing",
+                    True,
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(TypeError, "this is not a bool"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    NotBool(),
+                    drawPattern,
+                )
+
+            with self.assertRaisesRegex(TypeError, "drawPattern must be a callable"):
+                Quartz.CGPatternCreate(
+                    myInfo,
+                    Quartz.CGRectMake(0, 0, 10, 10),
+                    Quartz.CGAffineTransformIdentity,
+                    10.0,
+                    10.0,
+                    Quartz.kCGPatternTilingConstantSpacing,
+                    True,
+                    42,
+                )
+
+            pattern = Quartz.CGPatternCreate(
+                myInfo,
+                Quartz.CGRectMake(0, 0, 10, 10),
+                Quartz.CGAffineTransformIdentity,
+                10.0,
+                10.0,
+                Quartz.kCGPatternTilingConstantSpacing,
+                False,
+                drawPattern,
+            )
+            self.assertIsInstance(pattern, Quartz.CGPatternRef)
+
+            pattern_nocb = Quartz.CGPatternCreate(
+                myInfo,
+                Quartz.CGRectMake(0, 0, 10, 10),
+                Quartz.CGAffineTransformIdentity,
+                10.0,
+                10.0,
+                Quartz.kCGPatternTilingConstantSpacing,
+                False,
+                None,
+            )
+            self.assertIs(pattern_nocb, None)
 
             pattern = Quartz.CGPatternCreate(
                 myInfo,
@@ -504,6 +631,12 @@ class TestCGContext(TestCase):
             )
             Quartz.CGContextSetFillPattern(context, pattern, (1.0, 1.0, 1.0, 1.0))
             Quartz.CGContextSetStrokePattern(context, pattern, (1.0, 1.0, 1.0, 1.0))
+            del lst
+            with self.assertRaisesRegex(NameError, "cannot access free variable 'lst'"):
+                Quartz.CGContextStrokeRect(context, ((0, 0), (100, 100)))
+            lst = []
+            Quartz.CGContextStrokeRect(context, ((0, 0), (100, 100)))
+            self.assertNotEqual(lst, [])
 
             fn = "/System/Library/CoreServices/DefaultDesktop.jpg"
             if not os.path.exists(fn):
@@ -534,7 +667,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testGlyphFunctions(self):
+    def test_functions_glyph(self):
         self.assertArgHasType(Quartz.CGContextShowGlyphsAtPositions, 1, b"n^S")
         self.assertArgSizeInArg(Quartz.CGContextShowGlyphsAtPositions, 1, 3)
         self.assertArgHasType(
@@ -567,8 +700,7 @@ class TestCGContext(TestCase):
         self.assertArgHasType(Quartz.CGContextDrawPDFDocument, 2, b"^{CGPDFDocument=}")
         self.assertArgHasType(Quartz.CGContextDrawPDFDocument, 3, objc._C_INT)
 
-    @min_os_level("10.5")
-    def testContextManager10_5(self):
+    def test_context_manager(self):
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -593,10 +725,6 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testContextManager(self):
-        """
-        Tests for some additional functionality
-        """
         url = Quartz.CFURLCreateWithFileSystemPath(
             None, "/tmp/pyobjc.test.pdf", Quartz.kCFURLPOSIXPathStyle, False
         )
@@ -632,7 +760,7 @@ class TestCGContext(TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-    def testFunctions_n(self):
+    def test_functions_untested(self):
         Quartz.CGContextResetClip
 
     @min_os_level("14.0")

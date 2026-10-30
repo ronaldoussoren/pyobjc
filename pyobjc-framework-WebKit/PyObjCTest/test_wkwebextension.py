@@ -3,7 +3,7 @@ import WebKit
 
 
 class TestWKWebExtensionDataRecord(TestCase):
-    def test_constants(self):
+    def test_enums(self):
         self.assertIsEnumType(WebKit.WKWebExtensionDataRecordError)
         self.assertEqual(WebKit.WKWebExtensionDataRecordErrorUnknown, 1)
         self.assertEqual(WebKit.WKWebExtensionDataRecordErrorLocalStorageFailed, 2)

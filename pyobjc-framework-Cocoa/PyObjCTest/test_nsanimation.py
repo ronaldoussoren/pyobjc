@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -15,24 +15,23 @@ class TestNSAnimationHelper(AppKit.NSObject):
 
 
 class TestNSAnimation(TestCase):
-    def test_typed_enum(self):
-        self.assertIsTypedEnum(AppKit.NSViewAnimationEffectName, str)
-        self.assertIsTypedEnum(AppKit.NSViewAnimationKey, str)
-
-    def test_enum_types(self):
-        self.assertIsEnumType(AppKit.NSAnimationBlockingMode)
+    def test_enums(self):
         self.assertIsEnumType(AppKit.NSAnimationCurve)
-
-    def testConstants(self):
         self.assertEqual(AppKit.NSAnimationEaseInOut, 0)
         self.assertEqual(AppKit.NSAnimationEaseIn, 1)
         self.assertEqual(AppKit.NSAnimationEaseOut, 2)
         self.assertEqual(AppKit.NSAnimationLinear, 3)
 
+        self.assertIsEnumType(AppKit.NSAnimationBlockingMode)
         self.assertEqual(AppKit.NSAnimationBlocking, 0)
         self.assertEqual(AppKit.NSAnimationNonblocking, 1)
         self.assertEqual(AppKit.NSAnimationNonblockingThreaded, 2)
 
+    def test_typed_enums(self):
+        self.assertIsTypedEnum(AppKit.NSViewAnimationEffectName, str)
+        self.assertIsTypedEnum(AppKit.NSViewAnimationKey, str)
+
+    def test_constants(self):
         self.assertIsInstance(AppKit.NSAnimationProgressMarkNotification, str)
         self.assertIsInstance(AppKit.NSAnimationProgressMark, str)
 
@@ -46,15 +45,14 @@ class TestNSAnimation(TestCase):
         self.assertIsInstance(AppKit.NSAnimationTriggerOrderIn, str)
         self.assertIsInstance(AppKit.NSAnimationTriggerOrderOut, str)
 
-    def testMethods(self):
+    def test_methods(self):
         self.assertResultIsBOOL(AppKit.NSAnimation.isAnimating)
 
-    @min_sdk_level("10.6")
-    def testProtocol(self):
-        self.assertProtocolExists("NSAnimationDelegate")
-        self.assertProtocolExists("NSAnimatablePropertyContainer")
+    def test_protocols(self):
+        self.assertProtocolExists("NSAnimationDelegate", AppKit)
+        self.assertProtocolExists("NSAnimatablePropertyContainer", AppKit)
 
-    def testProtocolMethods(self):
+    def test_protocol_methods(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
         self.assertResultHasType(

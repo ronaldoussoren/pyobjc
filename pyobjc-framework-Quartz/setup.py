@@ -51,7 +51,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from pyobjc_setup import Extension, setup  # noqa: E402
 
-VERSION = '12.2.3'
+VERSION = "13.0"
 
 setup(
     name="pyobjc-framework-Quartz",
@@ -71,8 +71,8 @@ setup(
     ext_modules=[
         # CoreVideo
         Extension(
-            "Quartz.CoreVideo._CVPixelBuffer",
-            ["Modules/_CVPixelBuffer.m"],
+            "Quartz.CoreVideo._CoreVideo",
+            ["Modules/_CoreVideo.m"],
             extra_link_args=["-framework", "Quartz"],
         ),
         # CoreGraphics
@@ -88,23 +88,18 @@ setup(
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.CoreGraphics._doubleindirect",
-            ["Modules/_doubleindirect.m"],
-            extra_link_args=["-framework", "Quartz"],
-        ),
-        Extension(
             "Quartz.CoreGraphics._sortandmap",
             ["Modules/_sortandmap.m"],
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.CoreGraphics._coregraphics",
-            ["Modules/_coregraphics.m"],
+            "Quartz.CoreGraphics._CoreGraphics",
+            ["Modules/_CoreGraphics.m"],
             extra_link_args=["-framework", "ApplicationServices"],
         ),
         Extension(
-            "Quartz.ImageKit._imagekit",
-            ["Modules/_imagekit.m"],
+            "Quartz.ImageKit._ImageKit",
+            ["Modules/_ImageKit.m"],
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
@@ -113,8 +108,8 @@ setup(
             extra_link_args=["-framework", "Quartz"],
         ),
         Extension(
-            "Quartz.QuartzCore._quartzcore",
-            ["Modules/_quartzcore.m"],
+            "Quartz.QuartzCore._QuartzCore",
+            ["Modules/_QuartzCore.m"],
             extra_link_args=["-framework", "QuartzCore"],
             depends=["Modules/_CoreImage_protocols.m"],
         ),

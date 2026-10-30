@@ -2,6 +2,10 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#ifdef USE_STATIC_ANALYZER
+#include "../../pyobjc-core/Modules/objc/python-api-used.h"
+#endif
+
 #import <Foundation/Foundation.h>
 
 /* We include the source code here instead of
@@ -13,19 +17,23 @@
 #include "_Foundation_string.m"
 #include "_Foundation_typecode.m"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyMethodDef mod_methods[] = {
-    FOUNDATION_TYPECODE_METHODS{0, 0, 0, 0} /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 static int
 mod_exec_module(PyObject* m)
 {
-    if (PyObjC_ImportAPI(m) == -1)
-        return -1;
-    if (setup_nsnetservice(m) == -1)
-        return -1;
-    if (setup_nssstring(m) == -1)
-        return -1;
+    if (PyObjC_ImportAPI(m) == -1)   // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nsnetservice(m) == -1) // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_nssstring(m) == -1)    // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
+    if (setup_typecode(m) == -1)     // LCOV_BR_EXCL_LINE
+        return -1;                   // LCOV_EXCL_LINE
 
     return 0;
 }
@@ -65,10 +73,12 @@ static struct PyModuleDef mod_module = {
     .m_free     = NULL,
 };
 
-PyObject* PyInit__Foundation(void);
+PyObject* _Nullable PyInit__Foundation(void);
 
-PyObject* __attribute__((__visibility__("default")))
+PyObject* _Nullable __attribute__((__visibility__("default")))
 PyInit__Foundation(void)
 {
     return PyModuleDef_Init(&mod_module);
 }
+
+NS_ASSUME_NONNULL_END

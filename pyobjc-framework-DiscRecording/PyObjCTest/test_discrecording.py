@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase
 
 
 class TestDiscRecording(TestCase):
-    def testFunctions(self):
+    def test_functions(self):
         DiscRecording.DRGetVersion
 
 
