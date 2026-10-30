@@ -20,5 +20,3 @@ These bindings are accessed through the ``ARKit`` package (that is, ``import ARK
 
 API Notes
 ---------
-
-Functions with SIMD types as arguments or return values are not supported at the moment.
