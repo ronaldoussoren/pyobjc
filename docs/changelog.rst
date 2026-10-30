@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 13.0.1
+--------------
+
+* :issue:`694`: Fix reference leak in the CGEventTap callback.
+
 Version 13.0
 ------------
 

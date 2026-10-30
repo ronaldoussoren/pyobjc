@@ -1222,8 +1222,10 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
     }
 
     if (PyObjC_PythonToObjC(@encode(CGEventRef), result, &event) < 0) {
+        Py_CLEAR(result);
         PyObjCErr_ToObjCWithGILState(&state);
     }
+    Py_CLEAR(result);
 
     PyGILState_Release(state);
 
