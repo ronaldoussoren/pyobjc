@@ -342,15 +342,24 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
 
         value = dlsym(RTLD_DEFAULT, c_name);
         if (value == NULL && cfBundle != NULL) {
-            if (!PyArg_ParseTuple(item, "O&y|UO:functionInfo", PyObjCObject_Convert,
-                                  &name, &signature, &doc, &meta)) {
+            /* XXX: this is not ideal used because there's currently a small
+             *      number of functions with a custom caller that require using
+             *      ``dlsym`` to get the same callable as used in the C extension.
+             *      Reconsider the internal interface for this.
+             */
+            if (!PyArg_ParseTuple(item, // LCOV_BR_EXCL_LINE
+                                  "O&y|UO:functionInfo", PyObjCObject_Convert, &name,
+                                  &signature, &doc, &meta)) {
+                // LCOV_EXCL_START
                 Py_DECREF(seq);
                 if (cfBundle != NULL) {
                     CFRelease(cfBundle);
                 }
                 return NULL;
+                // LCOV_EXCL_STOP
             }
-            if (![name isKindOfClass:[NSString class]]) {
+            if (![name isKindOfClass:[NSString class]]) { // LCOV_BR_EXCL_LINE
+                // LCOV_EXCL_START
                 PyErr_SetString(PyExc_TypeError,
                                 "functionInfo() argument 1 must be str, not bytes");
                 Py_DECREF(seq);
@@ -358,9 +367,11 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
                     CFRelease(cfBundle);
                 }
                 return NULL;
+                // LCOV_EXCL_STOP
             }
 
             value = CFBundleGetFunctionPointerForName(cfBundle, (CFStringRef)name);
+            // LCOV_EXCL_STOP
         }
 
         if (value == NULL) {
