@@ -135,6 +135,7 @@ html_baseurl = "https://pyobjc.readthedocs.io/en/latest/"
 html_theme_options = {
     "accent_color": "jade",
     "color_mode": "auto",
+    "show_ai_links": False,
     "nav_links": [
         {
             "title": "GitHub",
