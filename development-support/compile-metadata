@@ -7,7 +7,7 @@ TOP_DIR = pathlib.Path(__file__).parent.parent
 
 
 def main() -> None:
-    for item in TOP_DIR.iterdir():
+    for item in sorted(TOP_DIR.iterdir()):
         if not item.name.startswith("pyobjc-framework-"):
             continue
         if 'PubSub' in item.name:
@@ -17,6 +17,7 @@ def main() -> None:
 
         print(item.name)
         subprocess.check_call(["objective-metadata-tool", "compile"], cwd=str(item))
+        subprocess.check_call(["black", "Lib"], cwd=str(item))
 
 
 if __name__ == "__main__":
