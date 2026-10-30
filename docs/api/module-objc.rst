@@ -724,7 +724,6 @@ Types
 
       The class that defines this selector.
 
-
     .. attribute:: __objclass__
 
        Alias for *definingClass*.
@@ -740,11 +739,34 @@ Types
 
     .. attribute:: self
 
-       The *self* value for a bound selector.
+       Always :data:`None`.
+
+       .. versionchanged:: 13.0 Bound selectors are now instances of :class:`bound_selector`.
+
+       .. deprecated:: 13.0
 
     .. attribute:: selector
 
        Byte string with the Objective-C selector name.
+
+.. class:: bound_selector
+
+   Result of calling ``__get__`` on a :class:`selector` value. Instances have the
+   same interface as the bound selector.
+
+   .. versionadded:: 13.0
+
+   .. attribute:: self
+
+      The *self* value for a bound selector.
+
+   .. attribute:: __self__
+
+      The *self* value for a bound selector.
+
+    .. attribute:: __func__
+
+       The callable bound to ``self``.
 
 .. class:: objc_method(callable, *, selector=None, signature=None, isclass=None)
 

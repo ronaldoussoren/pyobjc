@@ -24,7 +24,7 @@ Additional methods on ``NSGraphicsContext``
 
 This module defines a method for :class:`NSGraphicsContext <AppKit.NSGraphicsContext>`:
 
-.. method:: NSGraphicsContext.savedGraphicsState()
+.. method:: AppKit.NSGraphicsContext.savedGraphicsState()
 
    Contextmanager that saves and restores the graphics state.
 

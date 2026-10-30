@@ -1,7 +1,3 @@
-.. module:: Foundation
-   :platform: macOS
-   :synopsis: Bindings for the Foundation framework
-
 API Notes: Foundation framework
 ===============================
 
@@ -69,21 +65,8 @@ NSData, NSMutableData
    This method is not supported.
 
 
-NSDebug
-.......
-
-* ``NSDebugEnabled``, ``NSZombieEnabled``, ``NSDeallocateZombies``,
-  ``NSHangOnUncaughtException``, ``NSKeepAllocationStatistics``: These values are not available
-  from Python.
-
-* ``NSIsFreedObject``, ``NSFrameAddress``, ``NSReturnAddress``, ``NSCountFrames``:
-   These functions are not available from Python.
-
-
 NSException
 ...........
-
-* ``NSSetUncaughtExceptionHandler`` is not supported
 
 * ``NSAssert5``, ``NSAssert4``, ``NSAssert3``, ``NSAssert2``, ``NSAssert1``, ``NSAssert``,
   ``NSParameterAssert``, ``NSCAssert5``, ``NSCAssert4``, ``NSCAssert3``, ``NSCAssert2``,

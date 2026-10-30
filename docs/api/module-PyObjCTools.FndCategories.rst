@@ -23,20 +23,18 @@ To use these new methods use the following code somewhere in your program:
 Additional methods on :class:`NSAffineTransform <Foundation.NSAffineTransform>`
 -------------------------------------------------------------------------------
 
-.. class:: Foundation.NSAffineTransform
+.. method:: Foundation.NSAffineTransform.rotateByDegrees_atPoint_(angle, point)
 
-   .. method:: rotateByDegrees_atPoint_(angle, point)
+   This is similar to :meth:`rotateByDegrees_ <Foundation.NSAffineTransform.rotateByDegrees_>` but rotates around *point* instead
+   of the origin.
 
-      This is similar to :meth:`rotateByDegrees_ <Foundation.NSAffineTransform.rotateByDegrees_>` but rotates around *point* instead
-      of the origin.
+   :param float angle: Angle the transform should be rotated by.
+   :param CGPoint point: Point the transform should be rotated around.
 
-      :param float angle: Angle the transform should be rotated by.
-      :param CGPoint point: Point the transform should be rotated around.
+.. method:: Foundation.NSAffineTransform.rotateByRadians_atPoint_(angle, point)
 
-   .. method:: rotateByRadians_atPoint_(angle, point)
+   This is similar to :meth:`rotateByRadians_ <Foundation.NSAffineTransform.rotateByRadians_>` but rotates around *point* instead
+   of the origin.
 
-      This is similar to :meth:`rotateByRadians_ <Foundation.NSAffineTransform.rotateByRadians_>` but rotates around *point* instead
-      of the origin.
-
-      :param float angle: Angle the transform should be rotated by.
-      :param CGPoint point: Point the transform should be rotated around.
+   :param float angle: Angle the transform should be rotated by.
+   :param CGPoint point: Point the transform should be rotated around.

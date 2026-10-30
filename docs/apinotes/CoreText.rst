@@ -68,3 +68,7 @@ API Notes
 
   The first argument is a tuple with the ``getAscent``, ``getDescent`` and ``getWidth`` functions,
   the second argument is an arbitrary python object.
+
+  .. note::  The callbacks will be called in a context where raising exceptions is not allowed. Any raised
+             exceptions will be printed as unraisable exceptions and ignored (like exceptions in an
+             ``__del__`` method).

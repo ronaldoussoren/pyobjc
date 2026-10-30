@@ -30,16 +30,6 @@ API Notes
   at the moment. We have bindings for a subsection of the APIs, but haven't
   those aren't complete nor fully tested.
 
-*  ``CGWaitForScreenUpdateRects``, ``CGWaitForScreenRefreshRects``
-
-   This functions are not yet supported.
-
-
-* ``CGDataProviderCreate``, ``CGDataProviderCreateDirectAccess``
-
-  These functions are not available when you build PyObjC on macOS 10.8,
-  even when you run on earlier releases of macOS.
-
 * ``CGPathCreateWithRoundedRect``, ``CGPathAddRoundedRect``
 
   These functions will crash hard when the parameters are inconsistent,
