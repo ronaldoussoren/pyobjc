@@ -3,6 +3,7 @@ sphinx-sitemap
 sphinxcontrib.spelling
 sphinx
 shibuya
+sphinx-iconify
 sphinx-copybutton
 sphinx-design
 sphinx-tabs

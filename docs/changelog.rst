@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 13.0a0
---------------
+Version 13.0
+------------
 
 * Main features
 
@@ -62,8 +62,8 @@ Version 13.0a0
   * This release drops support for Python 3.10
 
   * It is no longer possible to use :class:`objc.native_selector`
-     the create new selector values, it used to behave the same
-     as invoking :class:`objc.selector`.
+    the create new selector values, it used to behave the same
+    as invoking :class:`objc.selector`.
 
   * :class:`objc.formal_protocol` no longer accepts native of
     bound selectors in the lists of required and optional
