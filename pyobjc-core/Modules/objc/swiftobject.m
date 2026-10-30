@@ -40,18 +40,19 @@ PyObjCSwiftObject_Setup(PyObject* module __attribute__((__unused__)))
     unsigned int bufferLen = 0;
 
     buffer = objc_copyClassList(&bufferLen);
-    if (buffer != NULL) {
-        for (unsigned int i = 0; i < bufferLen; i++) {
+    if (buffer != NULL) {                              // LCOV_BR_EXCL_LINE
+        for (unsigned int i = 0; i < bufferLen; i++) { // LCOV_BR_EXCL_LINE
             const char* name = class_getName(buffer[i]);
             const char* n;
 
             if ((n = strstr(name, "SwiftObject")) != NULL
-                && strcmp(n, "SwiftObject") == 0) {
-                if (unlikely(!class_addMethod( // LCOV_BR_EXCL_LINE
+                && strcmp(n, "SwiftObject") == 0) { // LCOV_BR_EXCL_LINE
+                if (unlikely(!class_addMethod(      // LCOV_BR_EXCL_LINE
                         buffer[i], @selector(__pyobjc_PythonObject__),
                         (IMP)instance_pyobjc_PythonObject, encodingBuf))) {
 
                     // LCOV_EXCL_START
+                    free(buffer);
                     PyErr_Format(PyObjCExc_InternalError, "Cannot add category on %s",
                                  name);
                     return -1;
@@ -63,6 +64,7 @@ PyObjCSwiftObject_Setup(PyObject* module __attribute__((__unused__)))
                         (IMP)class_pyobjc_PythonObject, encodingBuf))) {
 
                     // LCOV_EXCL_START
+                    free(buffer);
                     PyErr_Format(PyObjCExc_InternalError, "Cannot add category on %s",
                                  name);
                     return -1;
@@ -70,6 +72,7 @@ PyObjCSwiftObject_Setup(PyObject* module __attribute__((__unused__)))
                 }
             }
         }
+        free(buffer);
     }
     return 0;
 }

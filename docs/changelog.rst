@@ -8,6 +8,12 @@ Version 13.0.1
 
 * :issue:`694`: Fix reference leak in the CGEventTap callback.
 
+* Fix memory leak during module initialization in the support for
+  Swift objects.
+
+  This used to leak a single memory segment containing pointers
+  to all Objective-C classes.
+
 Version 13.0
 ------------
 
