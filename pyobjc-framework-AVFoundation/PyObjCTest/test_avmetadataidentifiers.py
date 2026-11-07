@@ -975,3 +975,22 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraLensIrisFNumber,
             str,
         )
+
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAudioStreamLoudness,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataContentTypeForLoudnessControl,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierISOUserDataAudioStreamLoudness,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierISOUserDataContentTypeForLoudnessControl,
+            str,
+        )

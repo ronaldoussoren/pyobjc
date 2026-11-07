@@ -170373,6 +170373,37 @@
       "visibility": "public"
      },
      {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "disablesDirectTouchSystemGestures",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "disablesDirectTouchSystemGestures",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setDisablesDirectTouchSystemGestures:",
+      "visibility": "public"
+     },
+     {
       "args": [
        {
         "name": "rect",
@@ -172142,6 +172173,13 @@
        "readonly"
       ],
       "name": "areCursorRectsEnabled",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
+     },
+     {
+      "attributes": [],
+      "name": "disablesDirectTouchSystemGestures",
       "type_name": "BOOL",
       "typestr": "Z",
       "typestr_special": true
@@ -227617,6 +227655,6 @@
   "NSWritingToolsCoordinatorAnimationParameters.h",
   "NSWritingToolsCoordinatorContext.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

@@ -31,6 +31,8 @@ def _setup():
     for cls, sel in (
         ("IMLinkSecurityManager", b"init"),
         ("IMLinkSecurityManager", b"new"),
+        ("LSLinkSecurityManager", b"init"),
+        ("LSLinkSecurityManager", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

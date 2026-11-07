@@ -6318,6 +6318,34 @@
      {
       "args": [
        {
+        "name": "referenceSex",
+        "null_accepted": true,
+        "type_name": "HKReferenceSex *",
+        "typestr": "^q",
+        "typestr_special": false
+       },
+       {
+        "name": "error",
+        "null_accepted": true,
+        "type_modifier": "o",
+        "type_name": "NSError * _Nullable *",
+        "typestr": "^@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "getReferenceSex:error:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
         "name": "samples",
         "null_accepted": true,
         "type_name": "NSArray<HKSample *> *",
@@ -19766,6 +19794,18 @@
     "enum": "HKQueryOptions",
     "value": 1
    },
+   "HKReferenceSexFemale": {
+    "enum": "HKReferenceSex",
+    "value": 1
+   },
+   "HKReferenceSexMale": {
+    "enum": "HKReferenceSex",
+    "value": 2
+   },
+   "HKReferenceSexNotSet": {
+    "enum": "HKReferenceSex",
+    "value": 0
+   },
    "HKStateOfMindAssociationCommunity": {
     "enum": "HKStateOfMindAssociation",
     "value": 1
@@ -20887,6 +20927,9 @@
    "HKQueryOptions": {
     "type": "Q"
    },
+   "HKReferenceSex": {
+    "type": "q"
+   },
    "HKStateOfMindAssociation": {
     "type": "q"
    },
@@ -21334,6 +21377,11 @@
    },
    "HKCharacteristicTypeIdentifierFitzpatrickSkinType": {
     "introduced": "13.0",
+    "type_name": "const HKCharacteristicTypeIdentifier",
+    "typestr": "@"
+   },
+   "HKCharacteristicTypeIdentifierReferenceSex": {
+    "introduced": "27.3",
     "type_name": "const HKCharacteristicTypeIdentifier",
     "typestr": "@"
    },
@@ -22673,6 +22721,11 @@
     "type_name": "const HKQuantityTypeIdentifier",
     "typestr": "@"
    },
+   "HKQuantityTypeIdentifierHipCircumference": {
+    "introduced": "27.3",
+    "type_name": "const HKQuantityTypeIdentifier",
+    "typestr": "@"
+   },
    "HKQuantityTypeIdentifierInhalerUsage": {
     "introduced": "13.0",
     "type_name": "const HKQuantityTypeIdentifier",
@@ -23533,6 +23586,7 @@
    "HKQuantityAggregationStyle": "enum HKQuantityAggregationStyle",
    "HKQuantityTypeIdentifier": "NSString *",
    "HKQueryOptions": "enum HKQueryOptions",
+   "HKReferenceSex": "enum HKReferenceSex",
    "HKScoredAssessmentTypeIdentifier": "NSString *",
    "HKStateOfMindAssociation": "enum HKStateOfMindAssociation",
    "HKStateOfMindKind": "enum HKStateOfMindKind",
@@ -23657,6 +23711,6 @@
   "HKWorkoutRouteQuery.h",
   "HKWorkoutSession.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

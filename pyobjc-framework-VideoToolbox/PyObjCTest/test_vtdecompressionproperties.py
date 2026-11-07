@@ -185,3 +185,10 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecodeFrameOptionKey_ContentAnalyzerCropRectangle,
             str,
         )
+
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_EnableStrictBitstreamValidation,
+            str,
+        )

@@ -10136,6 +10136,10 @@
     "enum": "PHAssetEditOperation",
     "value": 3
    },
+   "PHAssetEditOperationSetLivePhotoVideoPlaybackEnabled": {
+    "enum": "PHAssetEditOperation",
+    "value": 4
+   },
    "PHAssetMediaSubtypeNone": {
     "enum": "PHAssetMediaSubtype",
     "value": 0
@@ -11121,6 +11125,6 @@
   "PHProjectChangeRequest.h",
   "PhotosTypes.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

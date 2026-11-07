@@ -47,6 +47,28 @@ class TestAVAudioSettings(TestCase):
         self.assertEqual(AVFoundation.AVAudioContentSource_AV_Traditional_Live, 40)
         self.assertEqual(AVFoundation.AVAudioContentSource_AV_Spatial_Live, 41)
         self.assertEqual(AVFoundation.AVAudioContentSource_Passthrough, 42)
+        self.assertEqual(
+            AVFoundation.AVAudioContentSource_Podcast_Audiobook_Traditional, 43
+        )
+        self.assertEqual(
+            AVFoundation.AVAudioContentSource_Podcast_Audiobook_Spatial, 44
+        )
+        self.assertEqual(AVFoundation.AVAudioContentSource_Alarm_Traditional, 45)
+        self.assertEqual(AVFoundation.AVAudioContentSource_Alarm_Spatial, 46)
+        self.assertEqual(AVFoundation.AVAudioContentSource_Ringtone_Traditional, 47)
+        self.assertEqual(AVFoundation.AVAudioContentSource_Ringtone_Spatial, 48)
+        self.assertEqual(
+            AVFoundation.AVAudioContentSource_SpokenResponse_Traditional, 49
+        )
+        self.assertEqual(AVFoundation.AVAudioContentSource_SpokenResponse_Spatial, 50)
+        self.assertEqual(
+            AVFoundation.AVAudioContentSource_FeedbackSound_Traditional, 51
+        )
+        self.assertEqual(AVFoundation.AVAudioContentSource_FeedbackSound_Spatial, 52)
+        self.assertEqual(
+            AVFoundation.AVAudioContentSource_OtherSystemSound_Traditional, 53
+        )
+        self.assertEqual(AVFoundation.AVAudioContentSource_OtherSystemSound_Spatial, 54)
 
     def test_constants(self):
         self.assertIsInstance(AVFoundation.AVSampleRateKey, str)

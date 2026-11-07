@@ -3759,6 +3759,34 @@
     "enum": "SecItemClass",
     "value": 15
    },
+   "kSecQWACTLSBindingErrorCertificate": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 5
+   },
+   "kSecQWACTLSBindingErrorExpired": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 7
+   },
+   "kSecQWACTLSBindingErrorMalformed": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 2
+   },
+   "kSecQWACTLSBindingErrorNotBound": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 6
+   },
+   "kSecQWACTLSBindingErrorProfile": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 3
+   },
+   "kSecQWACTLSBindingErrorSignature": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 4
+   },
+   "kSecQWACTLSBindingErrorUnavailable": {
+    "enum": "SecQWACTLSBindingError",
+    "value": 1
+   },
    "kSecRSAMax": {
     "enum": "SecKeySizes",
     "value": 4096
@@ -4418,6 +4446,9 @@
    },
    "SecProtocolType": {
     "type": "I"
+   },
+   "SecQWACTLSBindingError": {
+    "type": "q"
    },
    "SecRequirementType": {
     "type": "I"
@@ -7017,6 +7048,10 @@
     "type_name": "const CFStringRef",
     "typestr": "^{__CFString=}"
    },
+   "kSecPolicyAppleQWACTLSBinding": {
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
    "kSecPolicyAppleRevocation": {
     "introduced": "10.9",
     "type_name": "const CFStringRef",
@@ -7215,6 +7250,10 @@
    },
    "kSecPublicKeyAttrs": {
     "introduced": "10.8",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
+   "kSecQWACTLSBindingErrorDomain": {
     "type_name": "const CFStringRef",
     "typestr": "^{__CFString=}"
    },
@@ -14638,6 +14677,19 @@
      "typestr": "^{__SecPolicy=}"
     }
    },
+   "SecPolicyCreateQWACTLSBinding": {
+    "args": [
+     {
+      "name": "hostname",
+      "type_name": "CFStringRef",
+      "typestr": "^{__CFString=}"
+     }
+    ],
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{__SecPolicy=}"
+    }
+   },
    "SecPolicyCreateRevocation": {
     "args": [
      {
@@ -15955,6 +16007,32 @@
     "retval": {
      "already_cfretained": true,
      "typestr": "^{__CFDictionary=}"
+    }
+   },
+   "SecTrustCreateAndVerifyQWACTLSBinding": {
+    "args": [
+     {
+      "name": "bindingData",
+      "type_name": "CFDataRef",
+      "typestr": "^{__CFData=}"
+     },
+     {
+      "name": "tlsTrust",
+      "type_name": "SecTrustRef",
+      "typestr": "^{__SecTrust=}"
+     },
+     {
+      "already_cfretained": true,
+      "name": "error",
+      "null_accepted": true,
+      "type_modifier": "o",
+      "type_name": "CFErrorRef  _Nullable *",
+      "typestr": "^^{__CFError=}"
+     }
+    ],
+    "retval": {
+     "already_cfretained": true,
+     "typestr": "^{__SecTrust=}"
     }
    },
    "SecTrustCreateWithCertificates": {
@@ -18252,6 +18330,7 @@
    "SecPreferencesDomain": "enum SecPreferencesDomain",
    "SecProtocolType": "enum SecProtocolType",
    "SecPublicKeyHash": "UInt8[20]",
+   "SecQWACTLSBindingError": "enum SecQWACTLSBindingError",
    "SecRandomRef": "const struct __SecRandom *",
    "SecRequirementRef": "struct __SecRequirement *",
    "SecRequirementType": "enum SecRequirementType",
@@ -18336,6 +18415,7 @@
   "SecProtocolObject.h",
   "SecProtocolOptions.h",
   "SecProtocolTypes.h",
+  "SecQWACTLSBinding.h",
   "SecRandom.h",
   "SecReadTransform.h",
   "SecRequirement.h",
@@ -18376,6 +18456,6 @@
   "oidscrl.h",
   "x509defs.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

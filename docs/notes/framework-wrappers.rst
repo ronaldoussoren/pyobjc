@@ -578,7 +578,11 @@ The framework name links to API notes for that framework, the python packages li
 
    * - FoundationModels
      -
+     - :iconify:`devicon:swift` Swift-only framework.
+
+   * - FoundationModelsCore
      -
+     - :iconify:`devicon:swift` Swift-only framework.
 
    * - :doc:`FSKit </apinotes/FSKit>`
      - :iconify:`devicon:pypi` :pypi:`pyobjc-framework-FSKit`
@@ -1449,6 +1453,10 @@ The framework name links to API notes for that framework, the python packages li
      - :iconify:`devicon:swift` Swift-only framework.
 
    * - _CoreSpotlight_FoundationModels
+     -
+     - :iconify:`devicon:swift` Swift-only framework.
+
+   * - _DataDetection_SwiftUI
      -
      - :iconify:`devicon:swift` Swift-only framework.
 

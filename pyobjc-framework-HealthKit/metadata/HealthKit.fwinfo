@@ -257,6 +257,13 @@
    "HKHealthStore": {
     "methods": [
      {
+      "selector": "getReferenceSex:error:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
       "retval": {
        "callable": {
         "arguments": {

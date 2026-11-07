@@ -383,3 +383,8 @@ class TestHKTypeIdentifiers(TestCase):
         self.assertIsInstance(
             HealthKit.HKQuantityTypeIdentifierHeartRateVariabilityRMSSD, str
         )
+
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(HealthKit.HKQuantityTypeIdentifierHipCircumference, str)
+        self.assertIsInstance(HealthKit.HKCharacteristicTypeIdentifierReferenceSex, str)

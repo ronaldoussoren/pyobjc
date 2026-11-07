@@ -19093,6 +19093,7 @@ try:
         b"dataWithPDFInsideRect:",
         {"arguments": {2: {"type": "{CGRect={CGPoint=dd}{CGSize=dd}}"}}},
     )
+    r(b"NSWindow", b"disablesDirectTouchSystemGestures", {"retval": {"type": b"Z"}})
     r(
         b"NSWindow",
         b"displayLinkWithTarget:selector:",
@@ -19291,6 +19292,11 @@ try:
         {"arguments": {2: {"type": "{CGSize=dd}"}}},
     )
     r(b"NSWindow", b"setContentSize:", {"arguments": {2: {"type": "{CGSize=dd}"}}})
+    r(
+        b"NSWindow",
+        b"setDisablesDirectTouchSystemGestures:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"NSWindow",
         b"setDisplaysWhenScreenProfileChanges:",

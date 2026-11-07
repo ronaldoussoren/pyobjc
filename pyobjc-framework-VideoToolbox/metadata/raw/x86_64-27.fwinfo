@@ -5418,6 +5418,11 @@
     "type_name": "const CFStringRef",
     "typestr": "^{__CFString=}"
    },
+   "kVTDecompressionPropertyKey_EnableStrictBitstreamValidation": {
+    "introduced": "27.3",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
    "kVTDecompressionPropertyKey_FieldMode": {
     "introduced": "10.8",
     "type_name": "const CFStringRef",
@@ -8637,6 +8642,6 @@
   "VTUtilities.h",
   "VTVideoEncoderList.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

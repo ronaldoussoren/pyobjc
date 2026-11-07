@@ -192,6 +192,13 @@ class TestCMSampleBuffer(TestCase):
             str,
         )
 
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(
+            CoreMedia.kCMSampleAttachmentKey_SMPTE_ST_2094_50Data,
+            str,
+        )
+
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMSampleBufferRef)
 

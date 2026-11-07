@@ -14,6 +14,8 @@ Version 13.0.1
   This used to leak a single memory segment containing pointers
   to all Objective-C classes.
 
+* Update API bindings for macOS 27.3
+
 Version 13.0
 ------------
 

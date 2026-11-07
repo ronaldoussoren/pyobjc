@@ -406,6 +406,11 @@ class TestNSWindow(TestCase):
             b"v@",
         )
 
+    @min_os_level("27.3")
+    def test_methods27_3(self):
+        self.assertResultIsBOOL(AppKit.NSWindow.disablesDirectTouchSystemGestures)
+        self.assertArgIsBOOL(AppKit.NSWindow.setDisablesDirectTouchSystemGestures_, 0)
+
     def test_protocols(self):
         self.assertProtocolExists("NSWindowDelegate", AppKit)
 

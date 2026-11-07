@@ -2235,6 +2235,11 @@
     "type_name": "const CFStringRef",
     "typestr": "^{__CFString=}"
    },
+   "kCMSampleAttachmentKey_SMPTE_ST_2094_50Data": {
+    "introduced": "27.3",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
    "kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix": {
     "introduced": "10.13",
     "type_name": "const CFStringRef",
@@ -11439,6 +11444,6 @@
   "CMTime.h",
   "CMTimeRange.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

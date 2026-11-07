@@ -138,3 +138,9 @@ class TestHKHealthStore(TestCase):
                 1,
                 b"v@@",
             )
+
+    @min_os_level("27.3")
+    def test_methods27_3(self):
+        self.assertResultIsBOOL(HealthKit.HKHealthStore.getReferenceSex_error_)
+        self.assertArgIsOut(HealthKit.HKHealthStore.getReferenceSex_error_, 0)
+        self.assertArgIsOut(HealthKit.HKHealthStore.getReferenceSex_error_, 1)

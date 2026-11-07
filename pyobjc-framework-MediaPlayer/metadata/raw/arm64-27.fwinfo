@@ -8607,6 +8607,6 @@
   "MediaPlayerDefines.h",
   "NSUserActivity+MediaPlayerAdditions.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

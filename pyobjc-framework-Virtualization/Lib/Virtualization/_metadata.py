@@ -376,6 +376,13 @@ try:
         b"initCreatingStorageAtURL:hardwareModel:options:error:",
         {"arguments": {5: {"type_modifier": b"o"}}},
     )
+    r(b"VZMacGraphicsDisplay", b"isHDREnabled", {"retval": {"type": b"Z"}})
+    r(b"VZMacGraphicsDisplayConfiguration", b"enableHDR", {"retval": {"type": b"Z"}})
+    r(
+        b"VZMacGraphicsDisplayConfiguration",
+        b"setEnableHDR:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"VZMacGuestProvisioningOptions",
         b"enablesRemoteLogin",

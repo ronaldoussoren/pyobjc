@@ -53,6 +53,8 @@ try:
     r(b"LSLinkSecurityManager", b"hasFlaggedURLs", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
+
+objc.registerNewKeywordsFromSelector("LSLinkSecurityManager", b"init")
 expressions = {}
 
 # END OF FILE

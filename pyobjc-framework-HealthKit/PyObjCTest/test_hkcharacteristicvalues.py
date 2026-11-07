@@ -38,3 +38,8 @@ class TestHKCharacteristicValues(TestCase):
         self.assertEqual(HealthKit.HKWheelchairUseNotSet, 0)
         self.assertEqual(HealthKit.HKWheelchairUseNo, 1)
         self.assertEqual(HealthKit.HKWheelchairUseYes, 2)
+
+        self.assertIsEnumType(HealthKit.HKReferenceSex)
+        self.assertEqual(HealthKit.HKReferenceSexNotSet, 0)
+        self.assertEqual(HealthKit.HKReferenceSexFemale, 1)
+        self.assertEqual(HealthKit.HKReferenceSexMale, 2)

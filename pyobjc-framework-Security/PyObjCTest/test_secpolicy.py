@@ -63,6 +63,10 @@ class TestSecPolicy(TestCase):
         self.assertIsInstance(Security.kSecPolicyAppleIPSecServer, str)
         self.assertIsInstance(Security.kSecPolicyAppleIPSecClient, str)
 
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(Security.kSecPolicyAppleQWACTLSBinding, str)
+
     def test_functions(self):
         self.assertIsInstance(Security.SecPolicyGetTypeID(), int)
 
@@ -83,3 +87,7 @@ class TestSecPolicy(TestCase):
         self.assertResultIsCFRetained(Security.SecPolicyCreateRevocation)
 
         self.assertResultIsCFRetained(Security.SecPolicyCreateWithProperties)
+
+    @min_os_level("27.3")
+    def test_functions27_3(self):
+        self.assertResultIsCFRetained(Security.SecPolicyCreateQWACTLSBinding)

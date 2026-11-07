@@ -52,6 +52,7 @@ class TestNSMorphology(TestCase):
         self.assertEqual(Foundation.NSGrammaticalCaseInessive, 12)
         self.assertEqual(Foundation.NSGrammaticalCaseLocative, 13)
         self.assertEqual(Foundation.NSGrammaticalCaseTranslative, 14)
+        self.assertEqual(Foundation.NSGrammaticalCaseInstrumental, 15)
 
         self.assertIsEnumType(Foundation.NSGrammaticalPronounType)
         self.assertEqual(Foundation.NSGrammaticalPronounTypeNotSet, 0)

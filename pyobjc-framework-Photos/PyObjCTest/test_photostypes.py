@@ -50,6 +50,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetEditOperationDelete, 1)
         self.assertEqual(Photos.PHAssetEditOperationContent, 2)
         self.assertEqual(Photos.PHAssetEditOperationProperties, 3)
+        self.assertEqual(Photos.PHAssetEditOperationSetLivePhotoVideoPlaybackEnabled, 4)
 
         self.assertIsEnumType(Photos.PHAssetMediaSubtype)
         self.assertEqual(Photos.PHAssetMediaSubtypeNone, 0)

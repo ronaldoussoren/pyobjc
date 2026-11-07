@@ -542,6 +542,322 @@
      "NSItemProviderWriting"
     ]
    },
+   "SWCollaborationToolbarItem": {
+    "categories": [],
+    "methods": [
+     {
+      "args": [
+       {
+        "name": "itemProvider",
+        "null_accepted": true,
+        "type_name": "NSItemProvider *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "instancetype": true,
+       "type_name": "instancetype",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "initWithItemProvider:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "animated",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v",
+          "type_name": "void"
+         }
+        },
+        "name": "completion",
+        "null_accepted": true,
+        "type_name": "void (^)(void)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "dismissPopoverAnimated:completion:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSInteger",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "activeParticipantCount",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "activeParticipantCount",
+        "type_name": "NSInteger",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setActiveParticipantCount:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "showsParticipantCount",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "showsParticipantCount",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setShowsParticipantCount:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSInteger",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "pendingAccessRequestsCount",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "pendingAccessRequestsCount",
+        "type_name": "NSInteger",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPendingAccessRequestsCount:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "showManageButton",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "showManageButton",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setShowManageButton:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "manageButtonTitle",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "manageButtonTitle",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setManageButtonTitle:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSView *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "detailViewListContent",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "detailViewListContent",
+        "null_accepted": true,
+        "type_name": "NSView *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setDetailViewListContent:",
+      "visibility": "public"
+     }
+    ],
+    "name": "SWCollaborationToolbarItem",
+    "properties": [
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "activeParticipantCount",
+      "type_name": "NSInteger",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "showsParticipantCount",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "pendingAccessRequestsCount",
+      "type_name": "NSInteger",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "assign",
+       "nonatomic"
+      ],
+      "name": "showManageButton",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "manageButtonTitle",
+      "type_name": "NSString *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "strong"
+      ],
+      "name": "detailViewListContent",
+      "type_name": "NSView *",
+      "typestr": "@",
+      "typestr_special": false
+     }
+    ],
+    "protocols": [],
+    "super": "NSToolbarItem"
+   },
    "SWCollaborationView": {
     "categories": [],
     "methods": [
@@ -2257,7 +2573,9 @@
   "NSItemProvider+SWCollaborationMetadata.h",
   "NSPasteboardItem+SWCollaborationMetadata.h",
   "SWAttributionView.h",
+  "SWCollaborationBarButtonItem.h",
   "SWCollaborationHighlight.h",
+  "SWCollaborationToolbarItem.h",
   "SWCollaborationView.h",
   "SWErrors.h",
   "SWHighlight.h",
@@ -2269,6 +2587,6 @@
   "SWHighlightPersistenceEvent.h",
   "SWRemoveParticipantAlert.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

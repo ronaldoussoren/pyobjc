@@ -157,6 +157,10 @@ class TestNSAttributedString(TestCase):
     def test_constants26_0(self):
         self.assertIsInstance(Foundation.NSListItemDelimiterAttributeName, str)
 
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(Foundation.NSPossessorMorphologyAttributeName, str)
+
     def test_constants_appkit(self):
         self.assertIsInstance(AppKit.NSManagerDocumentAttribute, str)
         self.assertIsInstance(AppKit.NSFontAttributeName, str)

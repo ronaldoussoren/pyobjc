@@ -4009,6 +4009,18 @@
       },
       "selector": "pixelsPerInch",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "isHDREnabled",
+      "visibility": "public"
      }
     ],
     "name": "VZMacGraphicsDisplay",
@@ -4021,6 +4033,19 @@
       "type_name": "NSInteger",
       "typestr": "q",
       "typestr_special": false
+     },
+     {
+      "attributes": [
+       "readonly",
+       [
+        "getter",
+        "isHDREnabled"
+       ]
+      ],
+      "name": "HDREnabled",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
      }
     ],
     "protocols": [],
@@ -4180,6 +4205,37 @@
       },
       "selector": "setPixelsPerInch:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "enableHDR",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "enableHDR",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setEnableHDR:",
+      "visibility": "public"
      }
     ],
     "name": "VZMacGraphicsDisplayConfiguration",
@@ -4204,6 +4260,13 @@
       "type_name": "NSInteger",
       "typestr": "q",
       "typestr_special": false
+     },
+     {
+      "attributes": [],
+      "name": "enableHDR",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
      }
     ],
     "protocols": [],
@@ -11620,6 +11683,6 @@
   "VZXHCIController.h",
   "VZXHCIControllerConfiguration.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

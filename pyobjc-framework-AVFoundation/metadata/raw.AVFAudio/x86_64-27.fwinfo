@@ -19781,6 +19781,14 @@
     "enum": "AVAudioContentSource",
     "value": 38
    },
+   "AVAudioContentSource_Alarm_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 46
+   },
+   "AVAudioContentSource_Alarm_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 45
+   },
    "AVAudioContentSource_AppleAV_Spatial_Live": {
     "enum": "AVAudioContentSource",
     "value": 9
@@ -19833,6 +19841,14 @@
     "enum": "AVAudioContentSource",
     "value": 33
    },
+   "AVAudioContentSource_FeedbackSound_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 52
+   },
+   "AVAudioContentSource_FeedbackSound_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 51
+   },
    "AVAudioContentSource_Music_Spatial": {
     "enum": "AVAudioContentSource",
     "value": 37
@@ -19841,13 +19857,45 @@
     "enum": "AVAudioContentSource",
     "value": 36
    },
+   "AVAudioContentSource_OtherSystemSound_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 54
+   },
+   "AVAudioContentSource_OtherSystemSound_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 53
+   },
    "AVAudioContentSource_Passthrough": {
     "enum": "AVAudioContentSource",
     "value": 42
    },
+   "AVAudioContentSource_Podcast_Audiobook_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 44
+   },
+   "AVAudioContentSource_Podcast_Audiobook_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 43
+   },
    "AVAudioContentSource_Reserved": {
     "enum": "AVAudioContentSource",
     "value": 0
+   },
+   "AVAudioContentSource_Ringtone_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 48
+   },
+   "AVAudioContentSource_Ringtone_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 47
+   },
+   "AVAudioContentSource_SpokenResponse_Spatial": {
+    "enum": "AVAudioContentSource",
+    "value": 50
+   },
+   "AVAudioContentSource_SpokenResponse_Traditional": {
+    "enum": "AVAudioContentSource",
+    "value": 49
    },
    "AVAudioContentSource_Unspecified": {
     "enum": "AVAudioContentSource",
@@ -22860,6 +22908,6 @@
   "AVSpeechSynthesis.h",
   "AVSpeechSynthesisProvider.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

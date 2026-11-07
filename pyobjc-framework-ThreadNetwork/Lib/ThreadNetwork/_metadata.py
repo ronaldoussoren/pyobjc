@@ -184,6 +184,24 @@ try:
     )
     r(
         b"THClient",
+        b"retrieveNearbyNetworkCredentialsWithCompletion:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"THClient",
         b"retrievePreferredCredentials:",
         {
             "arguments": {
@@ -213,6 +231,11 @@ try:
                 }
             }
         },
+    )
+    r(
+        b"THNearbyNetworkCredentials",
+        b"isPreferredNetworkCredentials",
+        {"retval": {"type": b"Z"}},
     )
 finally:
     objc._updatingMetadata(False)

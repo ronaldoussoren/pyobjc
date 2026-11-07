@@ -111033,6 +111033,10 @@
     "enum": "NSGrammaticalCase",
     "value": 12
    },
+   "NSGrammaticalCaseInstrumental": {
+    "enum": "NSGrammaticalCase",
+    "value": 15
+   },
    "NSGrammaticalCaseLocative": {
     "enum": "NSGrammaticalCase",
     "value": 13
@@ -117113,6 +117117,11 @@
     "deprecated": "10.5",
     "introduced": "10.0",
     "type_name": "NSString *const",
+    "typestr": "@"
+   },
+   "NSPossessorMorphologyAttributeName": {
+    "introduced": "27.3",
+    "type_name": "const NSAttributedStringKey",
     "typestr": "@"
    },
    "NSPresentationIntentAttributeName": {
@@ -132103,6 +132112,6 @@
   "NSXPCConnection.h",
   "NSZone.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

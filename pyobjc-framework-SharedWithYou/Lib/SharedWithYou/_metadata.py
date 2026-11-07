@@ -80,6 +80,37 @@ try:
     r(b"SWAttributionView", b"enablesMarquee", {"retval": {"type": b"Z"}})
     r(b"SWAttributionView", b"setEnablesMarquee:", {"arguments": {2: {"type": b"Z"}}})
     r(
+        b"SWCollaborationToolbarItem",
+        b"dismissPopoverAnimated:completion:",
+        {
+            "arguments": {
+                2: {"type": b"Z"},
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}},
+                    }
+                },
+            }
+        },
+    )
+    r(
+        b"SWCollaborationToolbarItem",
+        b"setShowManageButton:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"SWCollaborationToolbarItem",
+        b"setShowsParticipantCount:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"SWCollaborationToolbarItem", b"showManageButton", {"retval": {"type": b"Z"}})
+    r(
+        b"SWCollaborationToolbarItem",
+        b"showsParticipantCount",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
         b"SWCollaborationView",
         b"dismissPopover:",
         {
@@ -171,6 +202,9 @@ try:
 finally:
     objc._updatingMetadata(False)
 
+objc.registerNewKeywordsFromSelector(
+    "SWCollaborationToolbarItem", b"initWithItemProvider:"
+)
 objc.registerNewKeywordsFromSelector("SWCollaborationView", b"initWithItemProvider:")
 objc.registerNewKeywordsFromSelector("SWHighlight", b"init")
 objc.registerNewKeywordsFromSelector("SWHighlightChangeEvent", b"init")

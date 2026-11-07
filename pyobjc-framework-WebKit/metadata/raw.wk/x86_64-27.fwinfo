@@ -42279,6 +42279,18 @@
      {
       "args": [],
       "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "SecTrustRef",
+       "typestr": "^{__SecTrust=}",
+       "typestr_special": false
+      },
+      "selector": "qualifiedServerTrust",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
       "introduced": "10.10",
       "retval": {
        "type_name": "BOOL",
@@ -42993,6 +43005,16 @@
        "readonly"
       ],
       "name": "serverTrust",
+      "type_name": "SecTrustRef",
+      "typestr": "^{__SecTrust=}",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "qualifiedServerTrust",
       "type_name": "SecTrustRef",
       "typestr": "^{__SecTrust=}",
       "typestr_special": false
@@ -62105,6 +62127,6 @@
   "WebUIDelegate.h",
   "WebView.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

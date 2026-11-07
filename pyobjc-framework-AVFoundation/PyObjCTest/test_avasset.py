@@ -156,6 +156,14 @@ class TestAVAsset(TestCase):
             b"v@@",
         )
 
+    @min_os_level("27.3")
+    def test_methods27_3(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVURLAsset.setUpConnectionForURL_options_completionHandler_,
+            2,
+            b"v@",
+        )
+
     @min_sdk_level("10.11")
     def test_protocols(self):
         self.assertProtocolExists("AVFragmentMinding", AVFoundation)

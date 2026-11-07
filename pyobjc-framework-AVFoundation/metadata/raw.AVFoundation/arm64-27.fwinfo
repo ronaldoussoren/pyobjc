@@ -72356,6 +72356,54 @@
       },
       "selector": "mayRequireContentKeysForMediaDataProcessing",
       "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "url",
+        "null_accepted": true,
+        "type_name": "NSURL *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "options",
+        "null_accepted": true,
+        "type_name": "NSDictionary<NSString *,id> *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@",
+           "type_name": "NSError *"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        },
+        "name": "completionHandler",
+        "null_accepted": true,
+        "type_name": "void (^)(NSError * _Nullable)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": true,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setUpConnectionForURL:options:completionHandler:",
+      "visibility": "public"
      }
     ],
     "name": "AVURLAsset",
@@ -79204,6 +79252,16 @@
     "type_name": "const AVMetadataIdentifier",
     "typestr": "@"
    },
+   "AVMetadataIdentifierISOUserDataAudioStreamLoudness": {
+    "introduced": "27.3",
+    "type_name": "const AVMetadataIdentifier",
+    "typestr": "@"
+   },
+   "AVMetadataIdentifierISOUserDataContentTypeForLoudnessControl": {
+    "introduced": "27.3",
+    "type_name": "const AVMetadataIdentifier",
+    "typestr": "@"
+   },
    "AVMetadataIdentifierISOUserDataCopyright": {
     "introduced": "10.10",
     "type_name": "const AVMetadataIdentifier",
@@ -79594,6 +79652,11 @@
     "type_name": "const AVMetadataIdentifier",
     "typestr": "@"
    },
+   "AVMetadataIdentifierQuickTimeUserDataAudioStreamLoudness": {
+    "introduced": "27.3",
+    "type_name": "const AVMetadataIdentifier",
+    "typestr": "@"
+   },
    "AVMetadataIdentifierQuickTimeUserDataAuthor": {
     "introduced": "10.10",
     "type_name": "const AVMetadataIdentifier",
@@ -79611,6 +79674,11 @@
    },
    "AVMetadataIdentifierQuickTimeUserDataComposer": {
     "introduced": "10.10",
+    "type_name": "const AVMetadataIdentifier",
+    "typestr": "@"
+   },
+   "AVMetadataIdentifierQuickTimeUserDataContentTypeForLoudnessControl": {
+    "introduced": "27.3",
     "type_name": "const AVMetadataIdentifier",
     "typestr": "@"
    },
@@ -86579,6 +86647,6 @@
   "AVVideoPerformanceMetrics.h",
   "AVVideoSettings.h"
  ],
- "release": "macOS 27.2",
- "sdk": "Xcode 27.2 (27B5038i)/MacOSX27.sdk"
+ "release": "macOS 27.3",
+ "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
 }

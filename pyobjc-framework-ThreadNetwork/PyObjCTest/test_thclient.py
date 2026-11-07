@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import ThreadNetwork
 
 
-class THClient(TestCase):
+class TestTHClient(TestCase):
     def test_methods(self):
         self.assertArgIsBlock(ThreadNetwork.THClient.retrieveAllCredentials_, 0, b"v@@")
         self.assertArgIsBlock(
@@ -31,4 +31,12 @@ class THClient(TestCase):
             ThreadNetwork.THClient.checkPreferredNetworkForActiveOperationalDataset_completion_,
             1,
             b"vZ",
+        )
+
+    @min_os_level("27.3")
+    def test_methods27_3(self):
+        self.assertArgIsBlock(
+            ThreadNetwork.THClient.retrieveNearbyNetworkCredentialsWithCompletion_,
+            0,
+            b"v@@",
         )
