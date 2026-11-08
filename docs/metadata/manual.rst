@@ -253,15 +253,20 @@ Loading frameworks and other bundles
 
 .. function:: loadBundle(module_name, module_globals [, bundle_path [, bundle_identifier[, scan_classes]]])
 
-   Load the bundle specified by *bundle_path* or *bundle_identifier* and add all classes
-   in in the process to *module_globals*. The classes are not added to the *module_globals* when
-   *scan_classes* is :data:`False` (it defaults to :data:`True`).
+   Load the specified bundle into the process.
 
-   If both a *bundle_path* and *bundle_identifier* are specified the function first tries
-   to locate the bundle using the identifier and then using the path.
+   :param str module_name:        Name of the module using this API
+   :param dict module_globals:    Module globals that's updated by this function
+   :param str  bundle_path:       Path to the bundle to load
+   :param str  bundle_identifier: Bundle identitifier for the bundle to load
+   :param bool scan_classes:      When true (default) add all classes in the process to *module_globals*
 
-   When *bundle_identifier* is specified the bundle is located using ``[NSBundle +bundleWithIdentifier:]``,
-   and when *bundle_path* is specified the bundle is located using ``[NSBundle +bundleWithPath:]``.
+   One *bundle_path* or *bundle_identifier* must be passed, when both are passed the *bundle_identifier* is ignored.
+
+   .. versionchanged: 13.1
+
+      Emit a :class:`DeprecationWarning` when the default for *scan_classes* is used. The default will flip
+      in PyObjC 14.
 
    .. note::
 
