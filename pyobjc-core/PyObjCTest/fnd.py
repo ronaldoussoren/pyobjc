@@ -5,7 +5,10 @@ Dummy Foundation wrappers, just those parts needed for the unittests.
 import objc as _objc
 
 __bundle__ = _objc.loadBundle(
-    "Foundation", globals(), bundle_identifier="com.apple.Foundation"
+    "Foundation",
+    globals(),
+    bundle_identifier="com.apple.Foundation",
+    scan_classes=True,
 )
 
 _objc.loadBundleVariables(

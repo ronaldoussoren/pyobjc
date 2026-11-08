@@ -1,4 +1,5 @@
 import objc
+import warnings
 from PyObjCTest.testbndl import PyObjC_TestClass4
 from PyObjCTools.TestSupport import TestCase, NotBool
 
@@ -130,3 +131,37 @@ class TestLoadBundle(TestCase):
                 bundle_identifier="com.apple.Foundation",
                 scan_classes=NotBool(),
             )
+
+    def test_scan_classes(self):
+        if int(objc.__version__.split(".")[0]) < 14:
+            with warnings.catch_warnings():
+                warnings.filterwarnings("error", category=DeprecationWarning)
+                with self.assertRaisesRegex(
+                    DeprecationWarning,
+                    "The default value for 'scan_classes' will change in PyObjC 14",
+                ):
+                    objc.loadBundle(
+                        "foo", {}, "/System/Library/Frameworks/Foundation.framework"
+                    )
+
+            gl = {}
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=DeprecationWarning)
+                objc.loadBundle(
+                    "foo", gl, "/System/Library/Frameworks/Foundation.framework"
+                )
+
+            self.assertIn("NSObject", gl)
+
+        else:
+            gl = {}
+            with warnings.catch_warnings():
+                warnings.filterwarnings("error", category=DeprecationWarning)
+                try:
+                    objc.loadBundle(
+                        "foo", gl, "/System/Library/Frameworks/Foundation.framework"
+                    )
+                except DeprecationWarning:
+                    self.fail("objc.loadBundle unexpectedly warned")
+
+                self.assertNotIn("NSObject", gl)

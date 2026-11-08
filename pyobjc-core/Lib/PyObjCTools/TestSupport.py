@@ -1797,6 +1797,8 @@ class TestCase(_unittest.TestCase):
         exclude_attrs.add("VisionCoreMetalContext")
         exclude_attrs.add("WiFiAwareDiscoveryResult")
         exclude_attrs.add("WiFiP2PXPCConnection")
+        exclude_attrs.add("RemoteDeviceQuery")
+        exclude_attrs.add("OS_remote_device")
         exclude_attrs.add("geo_isolater")
         exclude_attrs.add("geo_reentrant_isolater")
         exclude_attrs.add(

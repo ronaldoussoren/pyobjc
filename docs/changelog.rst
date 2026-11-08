@@ -16,6 +16,13 @@ Version 13.0.1
 
 * Update API bindings for macOS 27.3
 
+* :issue:`691`: :func:`objc.loadBundle` has a *scanClasses* parameter
+  that defaults to true. That default will change in PyObjC 14.
+
+  This release introduces a deprecation warning for now passing
+  a value for this parameter.
+
+
 Version 13.0
 ------------
 

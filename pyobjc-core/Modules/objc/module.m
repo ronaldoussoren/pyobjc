@@ -539,6 +539,14 @@ static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__))
         if (!r) {
             return pythonify_c_value(@encode(NSBundle*), &bundle);
         }
+    } else {
+        /* scanClasses not passed explicitly is deprecated */
+        if (PyErr_WarnEx(PyExc_DeprecationWarning,
+                         "The default value for 'scan_classes' will change in PyObjC 14",
+                         1)
+            == -1) {
+            return NULL;
+        }
     } // LCOV_EXCL_LINE
 
     class_list = PyObjC_GetClassList(1);
