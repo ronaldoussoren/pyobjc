@@ -438,8 +438,28 @@ class pyobjc_build_ext(build_ext.build_ext):
         if os.path.exists("Modules") and not os.path.isfile("Modules/pyobjc-api.h"):
             raise DistutilsError("pyobjc-api.h not included")
 
+        # Save mtimes for C extensions
+        prebuild_mtimes = {}
+        for ext in self.extensions:
+            fullname = self.get_ext_fullname(ext.name)
+            filename = self.get_ext_filename(fullname)
+            full_path = os.path.join(self.build_lib, filename)
+            if os.path.exists(full_path):
+                prebuild_mtimes[full_path] = os.stat(full_path).st_mtime
+
         # Run the actual build
         build_ext.build_ext.run(self)
+
+        # Ensure debug symbols are available:
+        for ext in self.extensions:
+            fullname = self.get_ext_fullname(ext.name)
+            filename = self.get_ext_filename(fullname)
+            full_path = os.path.join(self.build_lib, filename)
+
+            if full_path not in prebuild_mtimes or (
+                prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
+            ):
+                subprocess.check_call(["/usr/bin/dsymutil", "-q", full_path])
 
         # Then tweak the copy_extensions bit to ensure PyObjCTest gets
         # copied to the right place.
