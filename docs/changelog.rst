@@ -22,6 +22,15 @@ Version 13.1
   This release introduces a deprecation warning for now passing
   a value for this parameter.
 
+* :issue:`692`: Ensure binary wheels do not contain ``.dSYM`` files.
+
+  The ``.dSYM`` files are still created when running
+  ``python setup.py build_ext --inplace``, but are exccluded from wheels or
+  when using ``pip install -e``.
+
+  The debug symbols are primarily useful for debugging PyObjC itself,
+  and are relatively large.
+
 
 Version 13.0
 ------------

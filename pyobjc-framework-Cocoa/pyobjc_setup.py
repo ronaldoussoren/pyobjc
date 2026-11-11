@@ -22,12 +22,20 @@ import tempfile
 import textwrap
 import time
 import unittest
+import zipfile
 from fnmatch import fnmatch
 from sysconfig import get_config_var, get_config_vars
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
-from setuptools.command import build_ext, build_py, develop, egg_info, install_lib
+from setuptools.command import (
+    build_ext,
+    build_py,
+    develop,
+    egg_info,
+    install_lib,
+    bdist_wheel,
+)
 
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError
@@ -41,6 +49,29 @@ try:
     from setuptools.command import build
 except ImportError:
     from distutils.command import build
+
+
+class oc_bdist_wheel(bdist_wheel.bdist_wheel):
+    def run(self):
+        super().run()
+        if (
+            self.distribution.dist_files
+            and self.distribution.dist_files[-1][0] == "bdist_wheel"
+        ):
+            ok = True
+            zf = zipfile.ZipFile(self.distribution.dist_files[-1][-1], "r")
+            for nm in zf.namelist():
+                if ".dist-info/" in nm:
+                    continue
+
+                if nm.startswith("PyObjCTest/"):
+                    print("test file included in wheel:", nm)
+                if not any(nm.endswith(sfx) for sfx in (".pyi", ".py", ".so")):
+                    print("unexpected name in wheel:", nm)
+                    ok = False
+
+            if not ok:
+                raise DistutilsError("Wheel validation failed")
 
 
 class oc_build_py(build_py.build_py):
@@ -309,6 +340,10 @@ class pyobjc_install_lib(install_lib.install_lib):
         else:
             outputs = install_lib.orig.install_lib.get_outputs(self)
 
+        import pprint
+
+        pprint.pprint(outputs)
+
         exclusions = {}
         for fn in outputs:
             if "PyObjCTest" in fn:
@@ -456,10 +491,11 @@ class pyobjc_build_ext(build_ext.build_ext):
             filename = self.get_ext_filename(fullname)
             full_path = os.path.join(self.build_lib, filename)
 
-            if full_path not in prebuild_mtimes or (
-                prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
-            ):
-                subprocess.check_call(["/usr/bin/dsymutil", "-q", full_path])
+            if self.inplace:
+                if full_path not in prebuild_mtimes or (
+                    prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
+                ):
+                    subprocess.check_call(["/usr/bin/dsymutil", full_path])
 
         # Then tweak the copy_extensions bit to ensure PyObjCTest gets
         # copied to the right place.
@@ -586,6 +622,8 @@ def setup(
         cmdclass = {}
     else:
         cmdclass = cmdclass.copy()
+
+    cmdclass["bdist_wheel"] = oc_bdist_wheel
 
     if os_compatible or ("bdist_wheel" in sys.argv and "ext_modules" not in k):
         cmdclass["build_ext"] = pyobjc_build_ext

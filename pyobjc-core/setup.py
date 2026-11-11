@@ -8,9 +8,10 @@ import tempfile
 import sys
 import subprocess
 import textwrap
+import zipfile
 import warnings
 from setuptools import Extension, setup, Command
-from setuptools.command import build_ext, build_py, egg_info, install_lib
+from setuptools.command import build_ext, build_py, egg_info, install_lib, bdist_wheel
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
@@ -194,6 +195,29 @@ def verify_platform():
 
     if hasattr(sys, "pypy_version_info"):
         print("WARNING: PyPy is not a supported platform for PyObjC")
+
+
+class oc_bdist_wheel(bdist_wheel.bdist_wheel):
+    def run(self):
+        super().run()
+        if (
+            self.distribution.dist_files
+            and self.distribution.dist_files[-1][0] == "bdist_wheel"
+        ):
+            ok = True
+            zf = zipfile.ZipFile(self.distribution.dist_files[-1][-1], "r")
+            for nm in zf.namelist():
+                if ".dist-info/" in nm:
+                    continue
+
+                if nm.startswith("PyObjCTest/"):
+                    print("test file included in wheel:", nm)
+                if not any(nm.endswith(sfx) for sfx in (".pyi", ".py", ".so")):
+                    print("unexpected name in wheel:", nm)
+                    ok = False
+
+            if not ok:
+                raise DistutilsError("Wheel validation failed")
 
 
 class oc_build_py(build_py.build_py):
@@ -684,15 +708,16 @@ class oc_build_ext(build_ext.build_ext):
 
         build_ext.build_ext.run(self)
 
-        for ext in self.extensions:
-            fullname = self.get_ext_fullname(ext.name)
-            filename = self.get_ext_filename(fullname)
-            full_path = os.path.join(self.build_lib, filename)
+        if self.inplace:
+            for ext in self.extensions:
+                fullname = self.get_ext_fullname(ext.name)
+                filename = self.get_ext_filename(fullname)
+                full_path = os.path.join(self.build_lib, filename)
 
-            if full_path not in prebuild_mtimes or (
-                prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
-            ):
-                subprocess.check_call(["/usr/bin/dsymutil", "-q", full_path])
+                if full_path not in prebuild_mtimes or (
+                    prebuild_mtimes[full_path] != os.stat(full_path).st_mtime
+                ):
+                    subprocess.check_call(["/usr/bin/dsymutil", "-q", full_path])
 
         extensions = self.extensions
         self.extensions = [e for e in extensions if e.name.startswith("PyObjCTest")]
@@ -831,6 +856,7 @@ setup(
         "build_py": oc_build_py,
         "test": oc_test,
         "egg_info": oc_egg_info,
+        "bdist_wheel": oc_bdist_wheel,
     },
     package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
     options={"egg_info": {"egg_base": "Lib"}},
