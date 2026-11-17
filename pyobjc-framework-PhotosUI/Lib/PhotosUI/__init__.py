@@ -70,6 +70,8 @@ def _setup():
         ("PHSharedAlbumPostingViewController", b"initWithNibName:bundle:"),
         ("PHSharedAlbumPostingViewController", b"initWithCoder:"),
         ("PHSharedAlbumPostingViewController", b"new"),
+        ("PHPickerAspectRatio", b"init"),
+        ("PHPickerAspectRatio", b"new"),
     ):
         objc.registerUnavailableMethod(cls, sel)
 

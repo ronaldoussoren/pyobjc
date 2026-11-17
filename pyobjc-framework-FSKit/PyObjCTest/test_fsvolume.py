@@ -96,6 +96,14 @@ class TestFSVolumeHelper(FSKit.NSObject):
     def removeItem_named_fromDirectory_context_replyHandler_(self, a, b, c, d, e):
         pass
 
+    def supportedRenameFlags(self):
+        return 1
+
+    def renameItem_inDirectory_named_toNewName_inDirectory_overItem_flags_context_replyHandler_(
+        self, a, b, c, d, e, f, g, h, i
+    ):
+        pass
+
     def renameItem_inDirectory_named_toNewName_inDirectory_overItem_replyHandler_(
         self, a, b, c, d, e, f, g
     ):
@@ -351,6 +359,11 @@ class TestFSVolume(TestCase):
         self.assertEqual(FSKit.FSSeekRegionHole, 1)
         self.assertEqual(FSKit.FSSeekRegionData, 2)
 
+        self.assertIsEnumType(FSKit.FSRenameFlags)
+        self.assertEqual(FSKit.FSRenameFlagsNone, 0x00000000)
+        self.assertEqual(FSKit.FSRenameFlagsSwap, 0x00000002)
+        self.assertEqual(FSKit.FSRenameFlagsExclusive, 0x00000004)
+
     def test_protocols(self):
         self.assertProtocolExists("FSVolumePathConfOperations", FSKit)
         self.assertProtocolExists("FSVolumeOperations", FSKit)
@@ -490,6 +503,22 @@ class TestFSVolume(TestCase):
             self.assertArgIsBlock(
                 TestFSVolumeHelper.removeItem_named_fromDirectory_context_replyHandler_,
                 4,
+                b"v@@",
+            )
+
+            self.assertResultHasType(
+                TestFSVolumeHelper.supportedRenameFlags, objc._C_NSUInteger
+            )
+
+            self.assertArgHasType(
+                TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_flags_context_replyHandler_,
+                6,
+                objc._C_NSUInteger,
+            )
+
+            self.assertArgIsBlock(
+                TestFSVolumeHelper.renameItem_inDirectory_named_toNewName_inDirectory_overItem_flags_context_replyHandler_,
+                8,
                 b"v@@",
             )
 

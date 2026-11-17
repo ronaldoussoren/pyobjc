@@ -234,7 +234,7 @@ try:
     )
     r(
         b"THNearbyNetworkCredentials",
-        b"isPreferredNetworkCredentials",
+        b"isForPreferredNetwork",
         {"retval": {"type": b"Z"}},
     )
 finally:

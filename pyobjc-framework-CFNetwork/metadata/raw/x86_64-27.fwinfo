@@ -3372,5 +3372,5 @@
   "CFSocketStream.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

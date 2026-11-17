@@ -28,23 +28,27 @@ else:
 
 
 misc = {}
-constants = """$PHProjectCategoryBook$PHProjectCategoryCalendar$PHProjectCategoryCard$PHProjectCategoryOther$PHProjectCategoryPrints$PHProjectCategorySlideshow$PHProjectCategoryUndefined$PHProjectCategoryWallDecor$PHProjectTypeUndefined$"""
-enums = """$PHLivePhotoViewContentModeAspectFill@1$PHLivePhotoViewContentModeAspectFit@0$PHLivePhotoViewPlaybackStyleFull@1$PHLivePhotoViewPlaybackStyleHint@2$PHLivePhotoViewPlaybackStyleUndefined@0$PHPickerCapabilitiesCollectionNavigation@4$PHPickerCapabilitiesNone@0$PHPickerCapabilitiesSearch@1$PHPickerCapabilitiesSelectionActions@8$PHPickerCapabilitiesSensitivityAnalysisIntervention@16$PHPickerCapabilitiesStagingArea@2$PHPickerConfigurationAssetRepresentationModeAutomatic@0$PHPickerConfigurationAssetRepresentationModeCompatible@2$PHPickerConfigurationAssetRepresentationModeCurrent@1$PHPickerConfigurationSelectionContinuous@2$PHPickerConfigurationSelectionContinuousAndOrdered@3$PHPickerConfigurationSelectionDefault@0$PHPickerConfigurationSelectionOrdered@1$PHPickerMetadataOptionsNone@0$PHPickerMetadataOptionsRemoveCaptions@2$PHPickerMetadataOptionsRemoveLocation@1$PHPickerModeCompact@1$PHPickerModeDefault@0$PHProjectCreationSourceAlbum@2$PHProjectCreationSourceMemory@3$PHProjectCreationSourceMoment@4$PHProjectCreationSourceProject@20$PHProjectCreationSourceProjectBook@21$PHProjectCreationSourceProjectCalendar@22$PHProjectCreationSourceProjectCard@23$PHProjectCreationSourceProjectExtension@26$PHProjectCreationSourceProjectPrintOrder@24$PHProjectCreationSourceProjectSlideshow@25$PHProjectCreationSourceUndefined@0$PHProjectCreationSourceUserSelection@1$PHProjectSectionTypeAuxiliary@3$PHProjectSectionTypeContent@2$PHProjectSectionTypeCover@1$PHProjectSectionTypeUndefined@0$PHProjectTextElementTypeBody@0$PHProjectTextElementTypeSubtitle@2$PHProjectTextElementTypeTitle@1$PHSharedAlbumCreationSharingPolicyPrivate@0$PHSharedAlbumCreationSharingPolicyPublic@1$"""
+constants = """$PHPhotosUIErrorDomain$PHProjectCategoryBook$PHProjectCategoryCalendar$PHProjectCategoryCard$PHProjectCategoryOther$PHProjectCategoryPrints$PHProjectCategorySlideshow$PHProjectCategoryUndefined$PHProjectCategoryWallDecor$PHProjectTypeUndefined$"""
+enums = """$PHLivePhotoViewContentModeAspectFill@1$PHLivePhotoViewContentModeAspectFit@0$PHLivePhotoViewPlaybackStyleFull@1$PHLivePhotoViewPlaybackStyleHint@2$PHLivePhotoViewPlaybackStyleUndefined@0$PHPhotosUIAssetCollectionCreationFailedError@3$PHPhotosUIAssetCollectionNotFoundError@1$PHPhotosUIAssetCollectionNotWritableError@2$PHPhotosUIICloudPhotosNotEnabledError@101$PHPhotosUISharedAlbumMigrationInProgressError@100$PHPickerCapabilitiesAutomaticModalInPresentation@32$PHPickerCapabilitiesAutomaticPreferredContentSize@64$PHPickerCapabilitiesCollectionNavigation@4$PHPickerCapabilitiesNone@0$PHPickerCapabilitiesSearch@1$PHPickerCapabilitiesSelectionActions@8$PHPickerCapabilitiesSensitivityAnalysisIntervention@16$PHPickerCapabilitiesSidebar@128$PHPickerCapabilitiesStagingArea@2$PHPickerConfigurationAssetRepresentationModeAutomatic@0$PHPickerConfigurationAssetRepresentationModeCompatible@2$PHPickerConfigurationAssetRepresentationModeCurrent@1$PHPickerConfigurationSelectionContinuous@2$PHPickerConfigurationSelectionContinuousAndOrdered@3$PHPickerConfigurationSelectionDefault@0$PHPickerConfigurationSelectionOrdered@1$PHPickerMetadataOptionsNone@0$PHPickerMetadataOptionsRemoveAppleReferenceImage@4$PHPickerMetadataOptionsRemoveCaptions@2$PHPickerMetadataOptionsRemoveKeywords@8$PHPickerMetadataOptionsRemoveLocation@1$PHPickerModeCompact@1$PHPickerModeDefault@0$PHPickerPrimaryButtonTypeAdd@2$PHPickerPrimaryButtonTypeAutomatic@0$PHPickerPrimaryButtonTypeChoose@7$PHPickerPrimaryButtonTypeContinue@8$PHPickerPrimaryButtonTypeDone@3$PHPickerPrimaryButtonTypeEdit@4$PHPickerPrimaryButtonTypeNext@6$PHPickerPrimaryButtonTypeNone@1$PHPickerPrimaryButtonTypeSave@5$PHPickerResultThumbnailSizeSmall@1$PHPickerResultThumbnailSizeStandard@2$PHPickerSecondaryButtonTypeAutomatic@0$PHPickerSecondaryButtonTypeBack@3$PHPickerSecondaryButtonTypeCancel@2$PHPickerSecondaryButtonTypeClear@5$PHPickerSecondaryButtonTypeClose@4$PHPickerSecondaryButtonTypeNone@1$PHProjectCreationSourceAlbum@2$PHProjectCreationSourceMemory@3$PHProjectCreationSourceMoment@4$PHProjectCreationSourceProject@20$PHProjectCreationSourceProjectBook@21$PHProjectCreationSourceProjectCalendar@22$PHProjectCreationSourceProjectCard@23$PHProjectCreationSourceProjectExtension@26$PHProjectCreationSourceProjectPrintOrder@24$PHProjectCreationSourceProjectSlideshow@25$PHProjectCreationSourceUndefined@0$PHProjectCreationSourceUserSelection@1$PHProjectSectionTypeAuxiliary@3$PHProjectSectionTypeContent@2$PHProjectSectionTypeCover@1$PHProjectSectionTypeUndefined@0$PHProjectTextElementTypeBody@0$PHProjectTextElementTypeSubtitle@2$PHProjectTextElementTypeTitle@1$PHSharedAlbumCreationSharingPolicyPrivate@0$PHSharedAlbumCreationSharingPolicyPublic@1$"""
 misc.update(
     {
+        "PHPickerSecondaryButtonType": NewType("PHPickerSecondaryButtonType", int),
         "PHPickerConfigurationAssetRepresentationMode": NewType(
             "PHPickerConfigurationAssetRepresentationMode", int
         ),
         "PHProjectCreationSource": NewType("PHProjectCreationSource", int),
+        "PHPhotosUIError": NewType("PHPhotosUIError", int),
         "PHPickerMode": NewType("PHPickerMode", int),
         "PHAssetPlaybackStyle": NewType("PHAssetPlaybackStyle", int),
         "PHLivePhotoViewPlaybackStyle": NewType("PHLivePhotoViewPlaybackStyle", int),
         "PHProjectSectionType": NewType("PHProjectSectionType", int),
         "PHProjectTextElementType": NewType("PHProjectTextElementType", int),
+        "PHPickerResultThumbnailSize": NewType("PHPickerResultThumbnailSize", int),
         "PHSharedAlbumCreationSharingPolicy": NewType(
             "PHSharedAlbumCreationSharingPolicy", int
         ),
         "PHPickerCapabilities": NewType("PHPickerCapabilities", int),
+        "PHPickerPrimaryButtonType": NewType("PHPickerPrimaryButtonType", int),
         "PHPickerConfigurationSelection": NewType(
             "PHPickerConfigurationSelection", int
         ),
@@ -178,6 +182,16 @@ try:
     )
     r(
         b"NSObject",
+        b"pickerDidPerformPrimaryAction:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"pickerDidPerformSecondaryAction:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
         b"resumeProjectWithExtensionContext:completion:",
         {
             "required": True,
@@ -262,6 +276,30 @@ try:
     r(b"PHLivePhotoView", b"isMuted", {"retval": {"type": "Z"}})
     r(b"PHLivePhotoView", b"setMuted:", {"arguments": {2: {"type": "Z"}}})
     r(b"PHLivePhotoView", b"stopPlaybackAnimated:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"PHPickerResult",
+        b"requestThumbnailImageURLForPreferredSize:resultHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(b"PHPickerSearchText", b"prefersAutomaticFocus", {"retval": {"type": b"Z"}})
+    r(
+        b"PHPickerSearchText",
+        b"setPrefersAutomaticFocus:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"PHProjectAssetElement", b"horizontallyFlipped", {"retval": {"type": b"Z"}})
     r(b"PHProjectAssetElement", b"verticallyFlipped", {"retval": {"type": b"Z"}})
     r(
@@ -294,6 +332,8 @@ try:
 finally:
     objc._updatingMetadata(False)
 
+objc.registerNewKeywordsFromSelector("PHPickerAspectRatio", b"init")
+objc.registerNewKeywordsFromSelector("PHPickerAspectRatio", b"initWithAspectRatio:")
 objc.registerNewKeywordsFromSelector("PHPickerConfiguration", b"init")
 objc.registerNewKeywordsFromSelector("PHPickerConfiguration", b"initWithPhotoLibrary:")
 objc.registerNewKeywordsFromSelector("PHPickerFilter", b"init")

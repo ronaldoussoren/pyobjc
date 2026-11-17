@@ -93040,6 +93040,17 @@
       },
       "selector": "domainResolutionProtocol",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "retval": {
+       "type_name": "NSURLSessionTaskMetricsEarlyDataStatus",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "earlyDataStatus",
+      "visibility": "public"
      }
     ],
     "name": "NSURLSessionTaskTransactionMetrics",
@@ -93394,6 +93405,15 @@
       ],
       "name": "domainResolutionProtocol",
       "type_name": "NSURLSessionTaskMetricsDomainResolutionProtocol",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "earlyDataStatus",
+      "type_name": "NSURLSessionTaskMetricsEarlyDataStatus",
       "typestr": "q",
       "typestr_special": false
      }
@@ -113105,6 +113125,18 @@
     "enum": "NSURLSessionTaskMetricsDomainResolutionProtocol",
     "value": 0
    },
+   "NSURLSessionTaskMetricsEarlyDataStatusAttempted": {
+    "enum": "NSURLSessionTaskMetricsEarlyDataStatus",
+    "value": 1
+   },
+   "NSURLSessionTaskMetricsEarlyDataStatusAttemptedAndAccepted": {
+    "enum": "NSURLSessionTaskMetricsEarlyDataStatus",
+    "value": 2
+   },
+   "NSURLSessionTaskMetricsEarlyDataStatusNotAttempted": {
+    "enum": "NSURLSessionTaskMetricsEarlyDataStatus",
+    "value": 0
+   },
    "NSURLSessionTaskMetricsResourceFetchTypeLocalCache": {
     "enum": "NSURLSessionTaskMetricsResourceFetchType",
     "value": 3
@@ -114472,6 +114504,9 @@
     "type": "q"
    },
    "NSURLSessionTaskMetricsDomainResolutionProtocol": {
+    "type": "q"
+   },
+   "NSURLSessionTaskMetricsEarlyDataStatus": {
     "type": "q"
    },
    "NSURLSessionTaskMetricsResourceFetchType": {
@@ -131902,6 +131937,7 @@
    "NSURLSessionMultipathServiceType": "enum NSURLSessionMultipathServiceType",
    "NSURLSessionResponseDisposition": "enum NSURLSessionResponseDisposition",
    "NSURLSessionTaskMetricsDomainResolutionProtocol": "enum NSURLSessionTaskMetricsDomainResolutionProtocol",
+   "NSURLSessionTaskMetricsEarlyDataStatus": "enum NSURLSessionTaskMetricsEarlyDataStatus",
    "NSURLSessionTaskMetricsResourceFetchType": "enum NSURLSessionTaskMetricsResourceFetchType",
    "NSURLSessionTaskState": "enum NSURLSessionTaskState",
    "NSURLSessionWebSocketCloseCode": "enum NSURLSessionWebSocketCloseCode",
@@ -132107,5 +132143,5 @@
   "NSZone.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

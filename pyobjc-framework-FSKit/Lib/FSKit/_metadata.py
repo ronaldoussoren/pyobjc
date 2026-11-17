@@ -29,7 +29,7 @@ else:
 
 misc = {}
 constants = """$FSDirectoryCookieInitial@Q$FSDirectoryVerifierInitial@Q$FSKitErrorDomain$FSKitVersionNumber@d$FSOperationIDUnspecified@Q$"""
-enums = """$FSAccessAddFile@4$FSAccessAddSubdirectory@32$FSAccessAppendData@32$FSAccessDelete@16$FSAccessDeleteChild@64$FSAccessExecute@8$FSAccessListDirectory@2$FSAccessReadAttributes@128$FSAccessReadData@2$FSAccessReadSecurity@2048$FSAccessReadXattr@512$FSAccessSearch@8$FSAccessTakeOwnership@8192$FSAccessWriteAttributes@256$FSAccessWriteData@4$FSAccessWriteSecurity@4096$FSAccessWriteXattr@1024$FSBlockmapFlagsRead@256$FSBlockmapFlagsWrite@512$FSCompleteIOFlagsAsync@1024$FSCompleteIOFlagsRead@256$FSCompleteIOFlagsWrite@512$FSContainerStateActive@3$FSContainerStateBlocked@1$FSContainerStateNotReady@0$FSContainerStateReady@2$FSDataCacheModeNone@0$FSDataCacheModeReadWithCache@1$FSDataCacheModeReadWriteWithCache@2$FSDeactivateOptionsForce@1$FSErrorCacheFlushFailed@4512$FSErrorCacheInvalidationFailed@4513$FSErrorCacheOperationConflict@4514$FSErrorInvalidCacheModeCoherency@4510$FSErrorInvalidCacheTransition@4511$FSErrorInvalidDirectoryCookie@4506$FSErrorModuleLoadFailed@4500$FSErrorResourceDamaged@4502$FSErrorResourceUnrecognized@4501$FSErrorResourceUnusable@4503$FSErrorStatusOperationInProgress@4504$FSErrorStatusOperationPaused@4505$FSExtentTypeData@0$FSExtentTypeReadOnly@2$FSExtentTypeZeroFill@1$FSItemAttributeAccessTime@1024$FSItemAttributeAddedTime@32768$FSItemAttributeAllocSize@128$FSItemAttributeBackupTime@16384$FSItemAttributeBirthTime@8192$FSItemAttributeChangeTime@4096$FSItemAttributeFileID@256$FSItemAttributeFlags@32$FSItemAttributeGID@16$FSItemAttributeInhibitKernelOffloadedIO@131072$FSItemAttributeLinkCount@4$FSItemAttributeMode@2$FSItemAttributeModifyTime@2048$FSItemAttributeParentID@512$FSItemAttributeSize@64$FSItemAttributeSupportsLimitedXAttrs@65536$FSItemAttributeType@1$FSItemAttributeUID@8$FSItemDeactivationAlways@18446744073709551615$FSItemDeactivationForPreallocatedItems@2$FSItemDeactivationForRemovedItems@1$FSItemDeactivationNever@0$FSItemIDInvalid@0$FSItemIDParentOfRoot@1$FSItemIDRootDirectory@2$FSItemTypeBlockDevice@6$FSItemTypeCharDevice@5$FSItemTypeDirectory@2$FSItemTypeFIFO@4$FSItemTypeFile@1$FSItemTypeSocket@7$FSItemTypeSymlink@3$FSItemTypeUnknown@0$FSKernelCacheCoherencyActionInvalidate@2$FSKernelCacheCoherencyActionPush@0$FSKernelCacheCoherencyActionPushInvalidate@1$FSKernelCacheCoherencyActionRevoke@4$FSKernelCacheCoherencyActionUpdate@3$FSKernelCacheCoherencyTypeNoCache@0$FSKernelCacheCoherencyTypeReadCache@1$FSKernelCacheCoherencyTypeWriteBack@3$FSKernelCacheCoherencyTypeWriteThrough@2$FSMatchResultNotRecognized@0$FSMatchResultRecognized@1$FSMatchResultUsable@3$FSMatchResultUsableButLimited@2$FSMountOptionsReadOnly@1$FSPreallocateFlagsAll@4$FSPreallocateFlagsContiguous@2$FSPreallocateFlagsFromEOF@16$FSPreallocateFlagsPersist@8$FSSeekRegionData@2$FSSeekRegionHole@1$FSSetXattrPolicyAlwaysSet@0$FSSetXattrPolicyDelete@3$FSSetXattrPolicyMustCreate@1$FSSetXattrPolicyMustReplace@2$FSSyncFlagsDWait@4$FSSyncFlagsNoWait@2$FSSyncFlagsWait@1$FSVolumeCaseFormatInsensitive@1$FSVolumeCaseFormatInsensitiveCasePreserving@2$FSVolumeCaseFormatSensitive@0$FSVolumeOpenModesRead@1$FSVolumeOpenModesWrite@2$"""
+enums = """$FSAccessAddFile@4$FSAccessAddSubdirectory@32$FSAccessAppendData@32$FSAccessDelete@16$FSAccessDeleteChild@64$FSAccessExecute@8$FSAccessListDirectory@2$FSAccessReadAttributes@128$FSAccessReadData@2$FSAccessReadSecurity@2048$FSAccessReadXattr@512$FSAccessSearch@8$FSAccessTakeOwnership@8192$FSAccessWriteAttributes@256$FSAccessWriteData@4$FSAccessWriteSecurity@4096$FSAccessWriteXattr@1024$FSBlockmapFlagsRead@256$FSBlockmapFlagsWrite@512$FSCompleteIOFlagsAsync@1024$FSCompleteIOFlagsRead@256$FSCompleteIOFlagsWrite@512$FSContainerStateActive@3$FSContainerStateBlocked@1$FSContainerStateNotReady@0$FSContainerStateReady@2$FSDataCacheModeNone@0$FSDataCacheModeReadWithCache@1$FSDataCacheModeReadWriteWithCache@2$FSDeactivateOptionsForce@1$FSErrorCacheFlushFailed@4512$FSErrorCacheInvalidationFailed@4513$FSErrorCacheOperationConflict@4514$FSErrorInvalidCacheModeCoherency@4510$FSErrorInvalidCacheTransition@4511$FSErrorInvalidDirectoryCookie@4506$FSErrorModuleLoadFailed@4500$FSErrorResourceDamaged@4502$FSErrorResourceUnrecognized@4501$FSErrorResourceUnusable@4503$FSErrorStatusOperationInProgress@4504$FSErrorStatusOperationPaused@4505$FSExtentTypeData@0$FSExtentTypeReadOnly@2$FSExtentTypeZeroFill@1$FSItemAttributeAccessTime@1024$FSItemAttributeAddedTime@32768$FSItemAttributeAllocSize@128$FSItemAttributeBackupTime@16384$FSItemAttributeBirthTime@8192$FSItemAttributeChangeTime@4096$FSItemAttributeFileID@256$FSItemAttributeFlags@32$FSItemAttributeGID@16$FSItemAttributeInhibitKernelOffloadedIO@131072$FSItemAttributeLinkCount@4$FSItemAttributeMode@2$FSItemAttributeModifyTime@2048$FSItemAttributeParentID@512$FSItemAttributeSize@64$FSItemAttributeSupportsLimitedXAttrs@65536$FSItemAttributeType@1$FSItemAttributeUID@8$FSItemDeactivationAlways@18446744073709551615$FSItemDeactivationForPreallocatedItems@2$FSItemDeactivationForRemovedItems@1$FSItemDeactivationNever@0$FSItemIDInvalid@0$FSItemIDParentOfRoot@1$FSItemIDRootDirectory@2$FSItemTypeBlockDevice@6$FSItemTypeCharDevice@5$FSItemTypeDirectory@2$FSItemTypeFIFO@4$FSItemTypeFile@1$FSItemTypeSocket@7$FSItemTypeSymlink@3$FSItemTypeUnknown@0$FSKernelCacheCoherencyActionInvalidate@2$FSKernelCacheCoherencyActionPush@0$FSKernelCacheCoherencyActionPushInvalidate@1$FSKernelCacheCoherencyActionRevoke@4$FSKernelCacheCoherencyActionUpdate@3$FSKernelCacheCoherencyTypeNoCache@0$FSKernelCacheCoherencyTypeReadCache@1$FSKernelCacheCoherencyTypeWriteBack@3$FSKernelCacheCoherencyTypeWriteThrough@2$FSMatchResultNotRecognized@0$FSMatchResultRecognized@1$FSMatchResultUsable@3$FSMatchResultUsableButLimited@2$FSMountOptionsReadOnly@1$FSPreallocateFlagsAll@4$FSPreallocateFlagsContiguous@2$FSPreallocateFlagsFromEOF@16$FSPreallocateFlagsPersist@8$FSRenameFlagsExclusive@4$FSRenameFlagsNone@0$FSRenameFlagsSwap@2$FSSeekRegionData@2$FSSeekRegionHole@1$FSSetXattrPolicyAlwaysSet@0$FSSetXattrPolicyDelete@3$FSSetXattrPolicyMustCreate@1$FSSetXattrPolicyMustReplace@2$FSSyncFlagsDWait@4$FSSyncFlagsNoWait@2$FSSyncFlagsWait@1$FSVolumeCaseFormatInsensitive@1$FSVolumeCaseFormatInsensitiveCasePreserving@2$FSVolumeCaseFormatSensitive@0$FSVolumeOpenModesRead@1$FSVolumeOpenModesWrite@2$"""
 misc.update(
     {
         "FSItemDeactivationOptions": NewType("FSItemDeactivationOptions", int),
@@ -50,6 +50,7 @@ misc.update(
         "FSErrorCode": NewType("FSErrorCode", int),
         "FSBlockmapFlags": NewType("FSBlockmapFlags", int),
         "FSKernelCacheCoherencyAction": NewType("FSKernelCacheCoherencyAction", int),
+        "FSRenameFlags": NewType("FSRenameFlags", int),
         "FSSyncFlags": NewType("FSSyncFlags", int),
         "FSDataCacheMode": NewType("FSDataCacheMode", int),
         "FSVolumeOpenModes": NewType("FSVolumeOpenModes", int),
@@ -1992,6 +1993,35 @@ try:
     )
     r(
         b"NSObject",
+        b"renameItem:inDirectory:named:toNewName:inDirectory:overItem:flags:context:replyHandler:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {"type": b"@"},
+                5: {"type": b"@"},
+                6: {"type": b"@"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"@"},
+                10: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
         b"renameItem:inDirectory:named:toNewName:inDirectory:overItem:replyHandler:",
         {
             "required": True,
@@ -2246,6 +2276,11 @@ try:
                 4: {"type": b"^@", "type_modifier": b"o"},
             },
         },
+    )
+    r(
+        b"NSObject",
+        b"supportedRenameFlags",
+        {"required": False, "retval": {"type": b"Q"}},
     )
     r(
         b"NSObject",

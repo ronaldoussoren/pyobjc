@@ -10,6 +10,13 @@ class TestAXUIElement(TestCase):
     def test_constants(self):
         self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)
 
+    @min_os_level("27.3")
+    def test_constants27_3(self):
+        self.assertIsInstance(
+            HIServices.kAXTrustedCheckOptionTargetBundleIdentifier, str
+        )
+        self.assertIsInstance(HIServices.kAXTrustedCheckTargetAllApplications, str)
+
     def test_types(self):
         self.assertIsCFType(HIServices.AXUIElementRef)
         self.assertIsCFType(HIServices.AXObserverRef)

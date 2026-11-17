@@ -1148,6 +1148,16 @@
     "type_name": "CFStringRef",
     "typestr": "^{__CFString=}"
    },
+   "kAXTrustedCheckOptionTargetBundleIdentifier": {
+    "introduced": "27.3",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
+   "kAXTrustedCheckTargetAllApplications": {
+    "introduced": "27.3",
+    "type_name": "const CFStringRef",
+    "typestr": "^{__CFString=}"
+   },
    "kAXUnderlineColorTextAttribute": {
     "introduced": "10.4",
     "type_name": "CFStringRef",
@@ -7193,5 +7203,5 @@
   "UniversalAccess.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

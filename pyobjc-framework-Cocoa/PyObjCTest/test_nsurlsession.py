@@ -205,6 +205,15 @@ class TestNSURLSession(TestCase):
         self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeData, 0)
         self.assertEqual(Foundation.NSURLSessionWebSocketMessageTypeString, 1)
 
+        self.assertIsEnumType(Foundation.NSURLSessionTaskMetricsEarlyDataStatus)
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsEarlyDataStatusNotAttempted, 0
+        )
+        self.assertEqual(Foundation.NSURLSessionTaskMetricsEarlyDataStatusAttempted, 1)
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsEarlyDataStatusAttemptedAndAccepted, 2
+        )
+
     @min_os_level("10.10")
     def test_constants10_10(self):
         self.assertIsInstance(Foundation.NSURLSessionTransferSizeUnknown, int)

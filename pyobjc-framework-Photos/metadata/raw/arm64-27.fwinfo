@@ -1344,6 +1344,38 @@
      {
       "args": [],
       "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSTimeZone *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "timeZone",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "timeZone",
+        "null_accepted": true,
+        "type_name": "NSTimeZone *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setTimeZone:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
       "introduced": "10.15",
       "retval": {
        "type_name": "BOOL",
@@ -1490,6 +1522,17 @@
       ],
       "name": "location",
       "type_name": "CLLocation *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "timeZone",
+      "type_name": "NSTimeZone *",
       "typestr": "@",
       "typestr_special": false
      },
@@ -2423,6 +2466,18 @@
       },
       "selector": "keywords",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSTimeZone *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "timeZone",
+      "visibility": "public"
      }
     ],
     "name": "PHAssetExtendedMetadata",
@@ -2454,6 +2509,16 @@
       ],
       "name": "keywords",
       "type_name": "NSArray<NSString *> *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "readonly"
+      ],
+      "name": "timeZone",
+      "type_name": "NSTimeZone *",
       "typestr": "@",
       "typestr_special": false
      }
@@ -11126,5 +11191,5 @@
   "PhotosTypes.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

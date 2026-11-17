@@ -347,6 +347,74 @@
     "protocols": [],
     "super": "NSView"
    },
+   "PHPickerAspectRatio": {
+    "categories": [],
+    "methods": [
+     {
+      "args": [
+       {
+        "name": "aspectRatio",
+        "type_name": "CGFloat",
+        "typestr": "d",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "instancetype": true,
+       "type_name": "instancetype",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "initWithAspectRatio:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "13.-1",
+      "retval": {
+       "instancetype": true,
+       "type_name": "instancetype",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "init",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": true,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerAspectRatio *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "deviceAspectRatio",
+      "visibility": "public"
+     }
+    ],
+    "name": "PHPickerAspectRatio",
+    "properties": [
+     {
+      "attributes": [
+       "class",
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "deviceAspectRatio",
+      "type_name": "PHPickerAspectRatio *",
+      "typestr": "@",
+      "typestr_special": false
+     }
+    ],
+    "protocols": [
+     "NSCopying"
+    ],
+    "super": "NSObject"
+   },
    "PHPickerConfiguration": {
     "categories": [],
     "methods": [
@@ -475,6 +543,37 @@
        "typestr_special": false
       },
       "selector": "setSelectionLimit:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSInteger",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "minimumSelectionLimit",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "minimumSelectionLimit",
+        "type_name": "NSInteger",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setMinimumSelectionLimit:",
       "visibility": "public"
      },
      {
@@ -696,6 +795,196 @@
       },
       "selector": "setSearchText:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerPrimaryButtonType",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "primaryButtonType",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "primaryButtonType",
+        "type_name": "PHPickerPrimaryButtonType",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPrimaryButtonType:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerSecondaryButtonType",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "secondaryButtonType",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "secondaryButtonType",
+        "type_name": "PHPickerSecondaryButtonType",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setSecondaryButtonType:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerAspectRatio *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "aspectRatio",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "aspectRatio",
+        "null_accepted": true,
+        "type_name": "PHPickerAspectRatio *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setAspectRatio:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "containerIdentifier",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "containerIdentifier",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setContainerIdentifier:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "title",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "title",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setTitle:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "prompt",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "prompt",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPrompt:",
+      "visibility": "public"
      }
     ],
     "name": "PHPickerConfiguration",
@@ -723,6 +1012,15 @@
        "nonatomic"
       ],
       "name": "selectionLimit",
+      "type_name": "NSInteger",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "minimumSelectionLimit",
       "type_name": "NSInteger",
       "typestr": "q",
       "typestr_special": false
@@ -790,6 +1088,64 @@
       ],
       "name": "searchText",
       "type_name": "PHPickerSearchText *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "primaryButtonType",
+      "type_name": "PHPickerPrimaryButtonType",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "secondaryButtonType",
+      "type_name": "PHPickerSecondaryButtonType",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "aspectRatio",
+      "type_name": "PHPickerAspectRatio *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "containerIdentifier",
+      "type_name": "NSString *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "title",
+      "type_name": "NSString *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "prompt",
+      "type_name": "NSString *",
       "typestr": "@",
       "typestr_special": false
      }
@@ -1037,6 +1393,18 @@
       },
       "selector": "spatialMediaFilter",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": true,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerFilter *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "landscapeAspectRatioFilter",
+      "visibility": "public"
      }
     ],
     "name": "PHPickerFilter",
@@ -1172,6 +1540,17 @@
       "type_name": "PHPickerFilter *",
       "typestr": "@",
       "typestr_special": false
+     },
+     {
+      "attributes": [
+       "class",
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "landscapeAspectRatioFilter",
+      "type_name": "PHPickerFilter *",
+      "typestr": "@",
+      "typestr_special": false
      }
     ],
     "protocols": [
@@ -1182,6 +1561,51 @@
    "PHPickerResult": {
     "categories": [],
     "methods": [
+     {
+      "args": [
+       {
+        "name": "preferredSize",
+        "type_name": "PHPickerResultThumbnailSize",
+        "typestr": "q",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@",
+           "type_name": "NSURL *"
+          },
+          "2": {
+           "type": "@",
+           "type_name": "NSError *"
+          }
+         },
+         "retval": {
+          "type": "v",
+          "type_name": ""
+         }
+        },
+        "name": "resultHandler",
+        "null_accepted": true,
+        "type_name": "void (^)(NSURL * _Nullable, NSError * _Nullable)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "requestThumbnailImageURLForPreferredSize:resultHandler:",
+      "visibility": "public"
+     },
      {
       "args": [],
       "class_method": false,
@@ -1282,10 +1706,51 @@
       },
       "selector": "init",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "BOOL",
+       "typestr": "Z",
+       "typestr_special": true
+      },
+      "selector": "prefersAutomaticFocus",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "prefersAutomaticFocus",
+        "type_name": "BOOL",
+        "typestr": "Z",
+        "typestr_special": true
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPrefersAutomaticFocus:",
+      "visibility": "public"
      }
     ],
     "name": "PHPickerSearchText",
-    "properties": [],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "prefersAutomaticFocus",
+      "type_name": "BOOL",
+      "typestr": "Z",
+      "typestr_special": true
+     }
+    ],
     "protocols": [
      "NSCopying"
     ],
@@ -1323,6 +1788,37 @@
        "typestr_special": false
       },
       "selector": "setSelectionLimit:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSInteger",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "minimumSelectionLimit",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "minimumSelectionLimit",
+        "type_name": "NSInteger",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setMinimumSelectionLimit:",
       "visibility": "public"
      },
      {
@@ -1387,6 +1883,164 @@
       },
       "selector": "setSearchText:",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "title",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "title",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setTitle:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "prompt",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "prompt",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPrompt:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerPrimaryButtonType",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "primaryButtonType",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "primaryButtonType",
+        "type_name": "PHPickerPrimaryButtonType",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setPrimaryButtonType:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "PHPickerSecondaryButtonType",
+       "typestr": "q",
+       "typestr_special": false
+      },
+      "selector": "secondaryButtonType",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "secondaryButtonType",
+        "type_name": "PHPickerSecondaryButtonType",
+        "typestr": "q",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setSecondaryButtonType:",
+      "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "NSString *",
+       "typestr": "@",
+       "typestr_special": false
+      },
+      "selector": "containerIdentifier",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "containerIdentifier",
+        "null_accepted": true,
+        "type_name": "NSString *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "setContainerIdentifier:",
+      "visibility": "public"
      }
     ],
     "name": "PHPickerUpdateConfiguration",
@@ -1396,6 +2050,15 @@
        "nonatomic"
       ],
       "name": "selectionLimit",
+      "type_name": "NSInteger",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "minimumSelectionLimit",
       "type_name": "NSInteger",
       "typestr": "q",
       "typestr_special": false
@@ -1416,6 +2079,54 @@
       ],
       "name": "searchText",
       "type_name": "PHPickerSearchText *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "title",
+      "type_name": "NSString *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "prompt",
+      "type_name": "NSString *",
+      "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "primaryButtonType",
+      "type_name": "PHPickerPrimaryButtonType",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "secondaryButtonType",
+      "type_name": "PHPickerSecondaryButtonType",
+      "typestr": "q",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "copy",
+       "nonatomic"
+      ],
+      "name": "containerIdentifier",
+      "type_name": "NSString *",
       "typestr": "@",
       "typestr_special": false
      }
@@ -4064,6 +4775,34 @@
     "enum": "PHLivePhotoViewPlaybackStyle",
     "value": 0
    },
+   "PHPhotosUIAssetCollectionCreationFailedError": {
+    "enum": "PHPhotosUIError",
+    "value": 3
+   },
+   "PHPhotosUIAssetCollectionNotFoundError": {
+    "enum": "PHPhotosUIError",
+    "value": 1
+   },
+   "PHPhotosUIAssetCollectionNotWritableError": {
+    "enum": "PHPhotosUIError",
+    "value": 2
+   },
+   "PHPhotosUIICloudPhotosNotEnabledError": {
+    "enum": "PHPhotosUIError",
+    "value": 101
+   },
+   "PHPhotosUISharedAlbumMigrationInProgressError": {
+    "enum": "PHPhotosUIError",
+    "value": 100
+   },
+   "PHPickerCapabilitiesAutomaticModalInPresentation": {
+    "enum": "PHPickerCapabilities",
+    "value": 32
+   },
+   "PHPickerCapabilitiesAutomaticPreferredContentSize": {
+    "enum": "PHPickerCapabilities",
+    "value": 64
+   },
    "PHPickerCapabilitiesCollectionNavigation": {
     "enum": "PHPickerCapabilities",
     "value": 4
@@ -4083,6 +4822,10 @@
    "PHPickerCapabilitiesSensitivityAnalysisIntervention": {
     "enum": "PHPickerCapabilities",
     "value": 16
+   },
+   "PHPickerCapabilitiesSidebar": {
+    "enum": "PHPickerCapabilities",
+    "value": 128
    },
    "PHPickerCapabilitiesStagingArea": {
     "enum": "PHPickerCapabilities",
@@ -4120,9 +4863,17 @@
     "enum": "PHPickerMetadataOptions",
     "value": 0
    },
+   "PHPickerMetadataOptionsRemoveAppleReferenceImage": {
+    "enum": "PHPickerMetadataOptions",
+    "value": 4
+   },
    "PHPickerMetadataOptionsRemoveCaptions": {
     "enum": "PHPickerMetadataOptions",
     "value": 2
+   },
+   "PHPickerMetadataOptionsRemoveKeywords": {
+    "enum": "PHPickerMetadataOptions",
+    "value": 8
    },
    "PHPickerMetadataOptionsRemoveLocation": {
     "enum": "PHPickerMetadataOptions",
@@ -4135,6 +4886,74 @@
    "PHPickerModeDefault": {
     "enum": "PHPickerMode",
     "value": 0
+   },
+   "PHPickerPrimaryButtonTypeAdd": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 2
+   },
+   "PHPickerPrimaryButtonTypeAutomatic": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 0
+   },
+   "PHPickerPrimaryButtonTypeChoose": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 7
+   },
+   "PHPickerPrimaryButtonTypeContinue": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 8
+   },
+   "PHPickerPrimaryButtonTypeDone": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 3
+   },
+   "PHPickerPrimaryButtonTypeEdit": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 4
+   },
+   "PHPickerPrimaryButtonTypeNext": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 6
+   },
+   "PHPickerPrimaryButtonTypeNone": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 1
+   },
+   "PHPickerPrimaryButtonTypeSave": {
+    "enum": "PHPickerPrimaryButtonType",
+    "value": 5
+   },
+   "PHPickerResultThumbnailSizeSmall": {
+    "enum": "PHPickerResultThumbnailSize",
+    "value": 1
+   },
+   "PHPickerResultThumbnailSizeStandard": {
+    "enum": "PHPickerResultThumbnailSize",
+    "value": 2
+   },
+   "PHPickerSecondaryButtonTypeAutomatic": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 0
+   },
+   "PHPickerSecondaryButtonTypeBack": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 3
+   },
+   "PHPickerSecondaryButtonTypeCancel": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 2
+   },
+   "PHPickerSecondaryButtonTypeClear": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 5
+   },
+   "PHPickerSecondaryButtonTypeClose": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 4
+   },
+   "PHPickerSecondaryButtonTypeNone": {
+    "enum": "PHPickerSecondaryButtonType",
+    "value": 1
    },
    "PHProjectCreationSourceAlbum": {
     "enum": "PHProjectCreationSource",
@@ -4231,6 +5050,9 @@
    "PHLivePhotoViewPlaybackStyle": {
     "type": "q"
    },
+   "PHPhotosUIError": {
+    "type": "q"
+   },
    "PHPickerCapabilities": {
     "type": "Q"
    },
@@ -4244,6 +5066,15 @@
     "type": "Q"
    },
    "PHPickerMode": {
+    "type": "q"
+   },
+   "PHPickerPrimaryButtonType": {
+    "type": "q"
+   },
+   "PHPickerResultThumbnailSize": {
+    "type": "q"
+   },
+   "PHPickerSecondaryButtonType": {
     "type": "q"
    },
    "PHProjectCreationSource": {
@@ -4261,6 +5092,11 @@
   },
   "expressions": {},
   "externs": {
+   "PHPhotosUIErrorDomain": {
+    "introduced": "27.3",
+    "type_name": "const NSErrorDomain",
+    "typestr": "@"
+   },
    "PHProjectCategoryBook": {
     "introduced": "10.14",
     "type_name": "const PHProjectCategory",
@@ -4558,6 +5394,48 @@
        "typestr_special": false
       },
       "selector": "picker:didFinishPicking:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "picker",
+        "null_accepted": true,
+        "type_name": "PHPickerViewController *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "required": false,
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "pickerDidPerformPrimaryAction:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "picker",
+        "null_accepted": true,
+        "type_name": "PHPickerViewController *",
+        "typestr": "@",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "required": false,
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "pickerDidPerformSecondaryAction:",
       "visibility": "public"
      }
     ],
@@ -5002,11 +5880,15 @@
    "PHAssetPlaybackStyle": "enum PHAssetPlaybackStyle",
    "PHLivePhotoViewContentMode": "enum PHLivePhotoViewContentMode",
    "PHLivePhotoViewPlaybackStyle": "enum PHLivePhotoViewPlaybackStyle",
+   "PHPhotosUIError": "enum PHPhotosUIError",
    "PHPickerCapabilities": "enum PHPickerCapabilities",
    "PHPickerConfigurationAssetRepresentationMode": "enum PHPickerConfigurationAssetRepresentationMode",
    "PHPickerConfigurationSelection": "enum PHPickerConfigurationSelection",
    "PHPickerMetadataOptions": "enum PHPickerMetadataOptions",
    "PHPickerMode": "enum PHPickerMode",
+   "PHPickerPrimaryButtonType": "enum PHPickerPrimaryButtonType",
+   "PHPickerResultThumbnailSize": "enum PHPickerResultThumbnailSize",
+   "PHPickerSecondaryButtonType": "enum PHPickerSecondaryButtonType",
    "PHProjectCategory": "NSString *",
    "PHProjectCreationSource": "enum PHProjectCreationSource",
    "PHProjectRegionOfInterestIdentifier": "NSString *",
@@ -5021,6 +5903,7 @@
   "PHContentEditingController.h",
   "PHLivePhotoView.h",
   "PHPhotoLibrary+PhotosUISupport.h",
+  "PHPhotosUIError.h",
   "PHPicker.h",
   "PHProjectExtensionContext.h",
   "PHProjectExtensionController.h",
@@ -5033,5 +5916,5 @@
   "PhotosUITypes.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

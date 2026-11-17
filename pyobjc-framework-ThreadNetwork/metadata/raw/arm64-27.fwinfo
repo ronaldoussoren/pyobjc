@@ -776,7 +776,7 @@
        "typestr": "Z",
        "typestr_special": true
       },
-      "selector": "isPreferredNetworkCredentials",
+      "selector": "isForPreferredNetwork",
       "visibility": "public"
      }
     ],
@@ -788,7 +788,7 @@
        "nonatomic",
        "readonly"
       ],
-      "name": "isPreferredNetworkCredentials",
+      "name": "isForPreferredNetwork",
       "type_name": "BOOL",
       "typestr": "Z",
       "typestr_special": true
@@ -817,5 +817,5 @@
   "THNearbyNetworkCredentials.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }

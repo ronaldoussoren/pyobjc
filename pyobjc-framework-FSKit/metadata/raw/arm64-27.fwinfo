@@ -6773,6 +6773,18 @@
     "enum": "FSPreallocateFlags",
     "value": 8
    },
+   "FSRenameFlagsExclusive": {
+    "enum": "FSRenameFlags",
+    "value": 4
+   },
+   "FSRenameFlagsNone": {
+    "enum": "FSRenameFlags",
+    "value": 0
+   },
+   "FSRenameFlagsSwap": {
+    "enum": "FSRenameFlags",
+    "value": 2
+   },
    "FSSeekRegionData": {
     "enum": "FSSeekRegion",
     "value": 2
@@ -6883,6 +6895,9 @@
     "type": "Q"
    },
    "FSPreallocateFlags": {
+    "type": "Q"
+   },
+   "FSRenameFlags": {
     "type": "Q"
    },
    "FSSeekRegion": {
@@ -8574,6 +8589,101 @@
         "typestr_special": false
        },
        {
+        "name": "sourceDirectory",
+        "null_accepted": true,
+        "type_name": "FSItem *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "sourceName",
+        "null_accepted": true,
+        "type_name": "FSFileName *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "destinationName",
+        "null_accepted": true,
+        "type_name": "FSFileName *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "destinationDirectory",
+        "null_accepted": true,
+        "type_name": "FSItem *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "overItem",
+        "null_accepted": true,
+        "type_name": "FSItem *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "name": "flags",
+        "type_name": "FSRenameFlags",
+        "typestr": "Q",
+        "typestr_special": false
+       },
+       {
+        "name": "context",
+        "null_accepted": true,
+        "type_name": "FSContext *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@",
+           "type_name": "FSRenameItemResult *"
+          },
+          "2": {
+           "type": "@",
+           "type_name": "NSError *"
+          }
+         },
+         "retval": {
+          "type": "v",
+          "type_name": ""
+         }
+        },
+        "name": "reply",
+        "null_accepted": true,
+        "type_name": "void (^)(FSRenameItemResult * _Nullable, NSError * _Nullable)",
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "introduced": "27.3",
+      "required": false,
+      "retval": {
+       "type_name": "void",
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "renameItem:inDirectory:named:toNewName:inDirectory:overItem:flags:context:replyHandler:",
+      "visibility": "public"
+     },
+     {
+      "args": [
+       {
+        "name": "item",
+        "null_accepted": true,
+        "type_name": "FSItem *",
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
         "name": "name",
         "null_accepted": true,
         "type_name": "FSFileName *",
@@ -8913,6 +9023,19 @@
       },
       "selector": "volumeStatistics",
       "visibility": "public"
+     },
+     {
+      "args": [],
+      "class_method": false,
+      "introduced": "27.3",
+      "required": false,
+      "retval": {
+       "type_name": "FSRenameFlags",
+       "typestr": "Q",
+       "typestr_special": false
+      },
+      "selector": "supportedRenameFlags",
+      "visibility": "public"
      }
     ],
     "properties": [
@@ -8934,6 +9057,15 @@
       "name": "volumeStatistics",
       "type_name": "FSStatFSResult *",
       "typestr": "@",
+      "typestr_special": false
+     },
+     {
+      "attributes": [
+       "readonly"
+      ],
+      "name": "supportedRenameFlags",
+      "type_name": "FSRenameFlags",
+      "typestr": "Q",
       "typestr_special": false
      }
     ]
@@ -12397,6 +12529,7 @@
    "FSMountOptions": "enum FSMountOptions",
    "FSOperationID": "NSUInteger",
    "FSPreallocateFlags": "enum FSPreallocateFlags",
+   "FSRenameFlags": "enum FSRenameFlags",
    "FSSeekRegion": "enum FSSeekRegion",
    "FSSetXattrPolicy": "enum FSSetXattrPolicy",
    "FSSyncFlags": "enum FSSyncFlags",
@@ -12431,5 +12564,5 @@
   "FSVolumeHandlerResult.h"
  ],
  "release": "macOS 27.3",
- "sdk": "Xcode 27.3 (27C5020k)/MacOSX27.sdk"
+ "sdk": "Xcode 27.3 (27C5035f)/MacOSX27.sdk"
 }
