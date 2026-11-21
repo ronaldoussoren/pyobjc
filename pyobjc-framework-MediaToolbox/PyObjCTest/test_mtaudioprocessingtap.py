@@ -488,7 +488,7 @@ class TestMTAudioProcessingTap(TestCase):
             player.play()
 
             # Avoid actually playing sound:
-            # player.setVolume_(0)
+            player.setVolume_(0)
 
             CoreFoundation.CFRunLoopRunInMode(
                 CoreFoundation.kCFRunLoopDefaultMode, 2, False
