@@ -6,6 +6,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 13.1
 ------------
 
+* Update API bindings for macOS 27.3 (beta 2)
+
 * :issue:`694`: Fix reference leak in the CGEventTap callback.
 
 * Fix memory leak during module initialization in the support for
@@ -13,8 +15,6 @@ Version 13.1
 
   This used to leak a single memory segment containing pointers
   to all Objective-C classes.
-
-* Update API bindings for macOS 27.3
 
 * :issue:`691`: :func:`objc.loadBundle` has a *scanClasses* parameter
   that defaults to true. That default will change in PyObjC 14.
