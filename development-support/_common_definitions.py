@@ -166,6 +166,10 @@ def _install_virtualenv_software(interpreter: str, silent: bool) -> None:
             [interpreter, "-mpip", "install", "-U", "wheel"],
             stdout=subprocess.DEVNULL,
         )
+        subprocess.check_call(
+            [interpreter, "-mpip", "install", "-U", "build"],
+            stdout=subprocess.DEVNULL,
+        )
         # XXX: Temporarily use old version of readme renderer to avoid
         #      requiring a rust dependency without a binary 3.15 wheel.
         subprocess.run(

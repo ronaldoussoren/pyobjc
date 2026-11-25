@@ -114,9 +114,10 @@ def main() -> None:
                         status = subprocess.call(
                             [
                                 interpreter,
-                                "setup.py",
-                                "sdist",
-                                f"--dist-dir={DIST_DIR}",
+                                "-mbuild",
+                                "-q",
+                                "--sdist",
+                                "--outdir", DIST_DIR,
                             ],
                             stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL,
@@ -124,11 +125,11 @@ def main() -> None:
                         )
                         if status != 0:
                             if WHEEL_BUILD_FAILURE_IS_ERROR:
-                                raise RuntimeError(f"Building wheel for {nm} failed")
+                                raise RuntimeError(f"Building sdist for {nm} failed")
 
                             else:
                                 print(
-                                    f"{RED}WARNING: Building wheel for {nm} failed{RESET}"
+                                    f"{RED}WARNING: Building sdist for {nm} failed{RESET}"
                                 )
                                 failed.append((nm, "sdist", ""))
                     else:
@@ -165,12 +166,10 @@ def main() -> None:
                     status = subprocess.call(
                         [
                             interpreter,
-                            "setup.py",
-                            "build_ext",
-                            "-j",
-                            str(os.cpu_count()),
-                            "bdist_wheel",
-                            f"--dist-dir={DIST_DIR}",
+                            "-mbuild",
+                            "-q",
+                            "--wheel",
+                            "--outdir", DIST_DIR,
                         ],
                         stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL,
