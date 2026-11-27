@@ -217,7 +217,11 @@ def pythonCollectionFromPropertyList(aCollection, conversionHelper=None):
     elif isinstance(aCollection, Foundation.NSData):
         return bytes(aCollection)
     elif isinstance(aCollection, Foundation.NSDate):
-        return datetime.datetime.fromtimestamp(aCollection.timeIntervalSince1970())
+        timestamp = aCollection.timeIntervalSince1970()
+        if timestamp < 0:
+            return datetime.datetime.fromtimestamp(0) - datetime.timedelta(seconds=-timestamp)
+        else:
+            return datetime.datetime.fromtimestamp(timestamp)
     elif isinstance(aCollection, (objc.pyobjc_unicode, Foundation.NSString)):
         return str(aCollection)
     elif isinstance(aCollection, OC_PythonLong):
